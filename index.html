@@ -91,6 +91,129 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/08/19/lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值/" title="lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值" itemprop="url">lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-19T14:27:12.000Z" itemprop="datePublished"> Published Aug 19 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="要解决的问题">要解决的问题</h1>
+<p>希望在反序列化 json 为 bean 时，对于 json 中未出现的字段，在 bean 中赋上默认值。</p>
+<p>例如<br>Person 类如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Data</span></div><div class="line"><span class="annotation">@AllArgsConstructor</span></div><div class="line"><span class="annotation">@NoArgsConstructor</span></div><div class="line"><span class="annotation">@JsonIgnoreProperties</span>(ignoreUnknown = <span class="keyword">true</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>{</div><div class="line">  <span class="keyword">private</span> String name;</div><div class="line">  <span class="keyword">private</span> String address = <span class="string">"beijing"</span>; <span class="comment">// default value if json missing the age field</span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>json: </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">{"<span class="attribute">name</span>":<span class="value"><span class="string">"robert"</span></span>}</div></pre></td></tr></table></figure>
+
+<p>反序列化后的 bean 为 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Person(<span class="variable">name=</span><span class="string">"robert"</span>, <span class="variable">address=</span><span class="string">"beijing"</span>)</div></pre></td></tr></table></figure>
+
+<p>但实际上，发序列化的结果为</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Person(<span class="variable">name=</span><span class="string">"robert"</span>, <span class="variable">address=</span><span class="constant">null</span>)</div></pre></td></tr></table></figure>
+
+<h1 id="解决过程">解决过程</h1>
+<h2 id="1-_查看_maven_版本">1. 查看 maven 版本</h2>
+<p>项目中 jackson 的配置如下</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-annotations<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>${jackson.version}<span class="tag">&lt;/<span class="title">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>${jackson.version}<span class="tag">&lt;/<span class="title">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>${jackson.version}<span class="tag">&lt;/<span class="title">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Jackson dependency versions --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">jackson.version</span>&gt;</span>2.6.5<span class="tag">&lt;/<span class="title">jackson.version</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p>配置升到最新后问题仍然存在。</p>
+<h2 id="2-_debug_json_反序列化过程，找到原因">2. debug json 反序列化过程，找到原因</h2>
+<p>json 反序列化是从</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.ObjectMapper<span class="preprocessor">#_readMapAndClose</span></div></pre></td></tr></table></figure>
+
+<p>这个方法调用开始的，里面的一段代码为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="type">DeserializationConfig</span> cfg = getDeserializationConfig();</div><div class="line"><span class="type">DeserializationContext</span> ctxt = createDeserializationContext(jp, cfg);</div><div class="line"><span class="type">JsonDeserializer</span>&lt;<span class="type">Object</span>&gt; deser = _findRootDeserializer(ctxt, valueType);</div><div class="line"><span class="keyword">if</span> (cfg.useRootWrapping()) {</div><div class="line">    <span class="literal">result</span> = _unwrapAndDeserialize(jp, ctxt, cfg, valueType, deser);</div><div class="line">} <span class="keyword">else</span> {</div><div class="line">    <span class="literal">result</span> = deser.deserialize(jp, ctxt);</div><div class="line">}</div><div class="line">ctxt.checkUnresolvedObjectId();</div></pre></td></tr></table></figure>
+
+<p>在第 3 行找到的 JsonDeserializer 是 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer</code><br>从第 7 行代表进入 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer#deserialize(com.fasterxml.jackson.core.JsonParser, com.fasterxml.jackson.databind.DeserializationContext)</code></p>
+<p>函数实现如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Object <span class="title">deserialize</span>(JsonParser p, DeserializationContext ctxt) <span class="keyword">throws</span> IOException {</div><div class="line">    <span class="comment">// common case first</span></div><div class="line">    <span class="keyword">if</span> (p.isExpectedStartObjectToken()) {</div><div class="line">        <span class="keyword">if</span> (_vanillaProcessing) {</div><div class="line">            <span class="keyword">return</span> vanillaDeserialize(p, ctxt, p.nextToken());</div><div class="line">        }</div><div class="line">        p.nextToken();</div><div class="line">        <span class="keyword">if</span> (_objectIdReader != <span class="keyword">null</span>) {</div><div class="line">            <span class="keyword">return</span> deserializeWithObjectId(p, ctxt);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> deserializeFromObject(p, ctxt);</div><div class="line">    }</div><div class="line">    JsonToken t = p.getCurrentToken();</div><div class="line">    <span class="keyword">return</span> _deserializeOther(p, ctxt, t);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>vanillaDeserialize 为 false，最后走到了第 11 行，最后到了</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.deser.BeanDeserializer<span class="preprocessor">#_deserializeUsingPropertyBased</span></div></pre></td></tr></table></figure>
+
+<p>然后到 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.deser.impl.PropertyBasedCreator<span class="preprocessor">#build</span></div></pre></td></tr></table></figure>
+
+<p>在这个函数里有这样一段代码：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">Object bean </span>=<span class="string"> _valueInstantiator.createFromObjectWith(ctxt, buffer.getParameters(_allProperties));</span></div></pre></td></tr></table></figure>
+
+<p>调用的是</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.deser.ValueInstantiator#createFromObjectWith(<span class="keyword">com</span>.fasterxml.jackson.databind.DeserializationContext, java.lang.Object[])</div></pre></td></tr></table></figure>
+
+<p>可以发现，createFromObjectWith 的第二个参数是数组，json 解出来的字段都放在了这个数组里。然后调用了 Person 类的全参构造函数，对于<br>缺失的字段自动补 null 值，这样就导致了 address 字段为 null。</p>
+<h2 id="3-_解决方案">3. 解决方案</h2>
+<p>去掉 @AllArgsConstructor 时，没有问题了，因为此时找到的 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer</code> 的  vanillaDeserialize 字段为 true，会调用 <code>vanillaDeserialize(p, ctxt, p.nextToken());</code>，这个函数的实现非常明确：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Object <span class="title">vanillaDeserialize</span>(JsonParser p, DeserializationContext ctxt, JsonToken t) <span class="keyword">throws</span> IOException {</div><div class="line">        <span class="keyword">final</span> Object bean = _valueInstantiator.createUsingDefault(ctxt);</div><div class="line">        <span class="comment">// [databind#631]: Assign current value, to be accessible by custom serializers</span></div><div class="line">        p.setCurrentValue(bean);</div><div class="line">        <span class="keyword">if</span> (p.hasTokenId(JsonTokenId.ID_FIELD_NAME)) {</div><div class="line">            String propName = p.getCurrentName();</div><div class="line">            do {</div><div class="line">                p.nextToken();</div><div class="line">                SettableBeanProperty prop = _beanProperties.find(propName);</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (prop != <span class="keyword">null</span>) { <span class="comment">// normal case</span></div><div class="line">                    <span class="keyword">try</span> {</div><div class="line">                        prop.deserializeAndSet(p, ctxt, bean);</div><div class="line">                    } <span class="keyword">catch</span> (Exception e) {</div><div class="line">                        wrapAndThrow(e, bean, propName, ctxt);</div><div class="line">                    }</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                }</div><div class="line">                handleUnknownVanilla(p, ctxt, bean, propName);</div><div class="line">            } <span class="keyword">while</span> ((propName = p.nextFieldName()) != <span class="keyword">null</span>);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> bean;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>先用默认构造函数生成 bean，此时的 bean 是有默认值的，然后将 json 中出现的字段的值赋值给 bean，这样 address 就有值了。</p>
+<h2 id="4-_根本原因">4. 根本原因</h2>
+<p>看上去是声明了全参构造函数导致的，所以想尝试自己写全参构造函数，在 address 为 null 时给其赋默认值。<br>写完如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="title">Person</span>(String name, String address){</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.address = address;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.address == <span class="keyword">null</span>){</div><div class="line">            <span class="keyword">this</span>.address = <span class="string">"beijing"</span>;</div><div class="line">        }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>继续走刚才 debug 的流程，发现<strong>居然</strong>没有请求这个全参构造函数。</p>
+<p>那问题就是 @AllArgsConstructor 生成的全参函数有不同之处，jackson 能够识别出来并用于反序列化。查看 jar 包中 Person 类的代码发现其全参构造函数如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@ConstructorProperties</span>({<span class="string">"name"</span>, <span class="string">"address"</span>})</div><div class="line"><span class="keyword">public</span> <span class="title">Person</span>(String name, String address){</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.address = address;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>所以，区别就是 <code>@ConstructorProperties({&quot;name&quot;, &quot;address&quot;})</code> 这个注解，这个注解的作用是指定构造函数参数的名字，Spring 可根据参数的名字注入 bean。<br>但最终为什么这样注解了，jackson 就调用了全参构造函数还不得而知，猜测是 jackson 在 <code>_findRootDeserializer</code> 这一步时，是找最适合的构造函数。</p>
+<p>可以通过设置 @AllArgsConstructor(suppressConstructorProperties=true) 来禁用 @ConstructorProperties.</p>
+<h1 id="结论">结论</h1>
+<p>Lombok 的 @AllArgsConstructor 注解导致 Jackson 反序列化时调用了全参构造函数，将没有出现的字段都赋值为 null 了。</p>
+<p>修改方式：</p>
+<ol>
+<li>不使用 @AllArgsConstructor</li>
+<li>使用 @AllArgsConstructor 但是不让其在全参构造函数上加入 ConstructorProperties 注解，声明方式改为 @AllArgsConstructor(suppressConstructorProperties = true)</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/08/19/lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/08/13/服务调优/" title="服务调优" itemprop="url">服务调优</a>
   </h1>
   <p class="article-author">By
@@ -1244,77 +1367,6 @@ $$ -->
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/02/20/硬币找零问题/" title="硬币找零问题" itemprop="url">硬币找零问题</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-02-20T06:55:47.000Z" itemprop="datePublished"> Published Feb 20 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="硬币找零问题(Coin_Change)">硬币找零问题(Coin Change)</h1>
-<h2 id="Question">Question</h2>
-<p>You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.</p>
-<p>Example 1:<br>coins = [1, 2, 5], amount = 11<br>return 3 (11 = 5 + 5 + 1)</p>
-<p>Example 2:<br>coins = [2], amount = 3<br>return -1.</p>
-<p>Note:<br>You may assume that you have an infinite number of each kind of coin.</p>
-<h2 id="DP求解">DP求解</h2>
-<p>如果是用DP求解，那么思路首先就是找到子问题。子问题很容易确定，那就是amount-x是子问题的amount。比较容易想到的代码实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span>(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount) {</div><div class="line">        <span class="keyword">if</span> (amount == <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> n = amount + <span class="number">1</span>; <span class="comment">// the answer must smaller than [amount+1], nice!</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> coin : coins) {</div><div class="line">            <span class="keyword">int</span> curr = <span class="number">0</span>;</div><div class="line">            <span class="keyword">if</span> (amount &gt;= coin) {</div><div class="line">                <span class="keyword">int</span> next = coinChange(coins, amount - coin);</div><div class="line">                <span class="keyword">if</span> (next &gt;= <span class="number">0</span>)</div><div class="line">                    curr = <span class="number">1</span> + next;</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span> (curr &gt; <span class="number">0</span>)</div><div class="line">                n = Math.min(n, curr);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> (n == amount + <span class="number">1</span>) ? -<span class="number">1</span> : n;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<p>上述算法的时间复杂度为O(c^n),c是coin的数量，n是amount的值。</p>
-<p>时间复杂度较大的原因是，中间存在很多重复计算。那么需要用到DP的备忘录，不用全局变量来保存计算过的值，也不用递归的方法来实现，而是只用一个一维数组，再用循环来实现。代码如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span>(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount) {</div><div class="line">        <span class="keyword">if</span> (coins == <span class="keyword">null</span> || coins.length == <span class="number">0</span> || amount &lt;= <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span>[] minNumber = <span class="keyword">new</span> <span class="keyword">int</span>[amount + <span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= amount; i++) {</div><div class="line">            minNumber[i] = amount + <span class="number">1</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; coins.length; j++) {</div><div class="line">                <span class="keyword">if</span> (coins[j] &lt;= i && minNumber[i - coins[j]] != amount + <span class="number">1</span>)</div><div class="line">                    minNumber[i] = Integer.min(minNumber[i], <span class="number">1</span> + minNumber[i - coins[j]]);</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (minNumber[amount] == amount + <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">return</span> minNumber[amount];</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/02/20/硬币找零问题/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1334,7 +1386,7 @@ $$ -->
 	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+			<li><a href="/tags/java/" title="java">java<sup>14</sup></a></li>
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
 		
