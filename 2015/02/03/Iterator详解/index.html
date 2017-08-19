@@ -1,0 +1,535 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Iterator详解 | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="Iterator详解
+Iterator是java中的一个接口，借用源码中的注释：An iterator over a collection.  {@code Iterator} takes the place of {@link Enumeration} in the Java Collection">
+    
+    
+    <meta name="description" content="Iterator详解
+Iterator是java中的一个接口，借用源码中的注释：An iterator over a collection.  {@code Iterator} takes the place of {@link Enumeration} in the Java Collections Framework. Iterators differ from enumerations in">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Iterator详解">
+<meta property="og:url" content="http://luojinping.com/2015/02/03/Iterator详解/">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="Iterator详解
+Iterator是java中的一个接口，借用源码中的注释：An iterator over a collection.  {@code Iterator} takes the place of {@link Enumeration} in the Java Collections Framework. Iterators differ from enumerations in">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Iterator详解">
+<meta name="twitter:description" content="Iterator详解
+Iterator是java中的一个接口，借用源码中的注释：An iterator over a collection.  {@code Iterator} takes the place of {@link Enumeration} in the Java Collections Framework. Iterators differ from enumerations in">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/03/Iterator详解/" title="Iterator详解" itemprop="url">Iterator详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-03T02:56:08.000Z" itemprop="datePublished"> Published Feb 3 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Iterator详解"><span class="toc-number">1.</span> <span class="toc-text">Iterator详解</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="Iterator详解">Iterator详解</h1>
+<p>Iterator是java中的一个接口，借用源码中的注释：<br>An iterator over a collection.  {@code Iterator} takes the place of {@link Enumeration} in the Java Collections Framework. Iterators differ from enumerations in two ways:</p>
+<ul>
+<li>Iterators allow the caller to remove elements from the underlying collection during the iteration with well-defined semantics.</li>
+<li>Method names have been improved.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">	... ...	</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>需要迭代器的地方实现这个接口。集合的基本类Collection就实现了这个接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">	... ...</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>举例来看下java的ArrayList类迭代器的实现。<br>ArrayList中iterator()方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span>() {</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> Itr();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>再来看Itr的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="javadoc">/**</span></div><div class="line"> * An optimized version of AbstractList.Itr</div><div class="line"> */</div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">    <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></div><div class="line">    <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></div><div class="line">    <span class="keyword">int</span> expectedModCount = modCount;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">        <span class="keyword">return</span> cursor != size;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="keyword">public</span> E <span class="title">next</span>() {</div><div class="line">        checkForComodification();</div><div class="line">        <span class="keyword">int</span> i = cursor;</div><div class="line">        <span class="keyword">if</span> (i &gt;= size)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">        Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</div><div class="line">        <span class="keyword">if</span> (i &gt;= elementData.length)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        cursor = i + <span class="number">1</span>;</div><div class="line">        <span class="keyword">return</span> (E) elementData[lastRet = i];</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span>() {</div><div class="line">        <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</div><div class="line">        checkForComodification();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> {</div><div class="line">            ArrayList.<span class="keyword">this</span>.remove(lastRet); <span class="comment">// 见下文代码</span></div><div class="line">            cursor = lastRet;</div><div class="line">            lastRet = -<span class="number">1</span>;</div><div class="line">            expectedModCount = modCount;</div><div class="line">        } <span class="keyword">catch</span> (IndexOutOfBoundsException ex) {</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span>(Consumer&lt;? <span class="keyword">super</span> E&gt; consumer) {</div><div class="line">        Objects.requireNonNull(consumer);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> size = ArrayList.<span class="keyword">this</span>.size;</div><div class="line">        <span class="keyword">int</span> i = cursor;</div><div class="line">        <span class="keyword">if</span> (i &gt;= size) {</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">final</span> Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</div><div class="line">        <span class="keyword">if</span> (i &gt;= elementData.length) {</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        }</div><div class="line">        <span class="keyword">while</span> (i != size && modCount == expectedModCount) {</div><div class="line">            consumer.accept((E) elementData[i++]);</div><div class="line">        }</div><div class="line">        <span class="comment">// update once at end of iteration to reduce heap write traffic</span></div><div class="line">        cursor = i;</div><div class="line">        lastRet = i - <span class="number">1</span>;</div><div class="line">        checkForComodification();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">void</span> checkForComodification() {</div><div class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+
+<p>调ArrayList.this.remove(lastRet)时，remove的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> E <span class="title">remove</span>(<span class="keyword">int</span> index) {</div><div class="line">    rangeCheck(index);</div><div class="line"></div><div class="line">    modCount++;</div><div class="line">    E oldValue = elementData(index);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</div><div class="line">        System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index, numMoved);</div><div class="line">    elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></div><div class="line">    <span class="keyword">return</span> oldValue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>所以使用iterator来遍历List集合时，不能对list增删元素。</p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2015/02/03/Iterator详解/" data-title="Iterator详解 | Zane Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/02/04/JVM编码方式未设置引发的乱码/" title="JVM编码方式未设置引发的乱码">
+  <strong>上一篇：</strong><br/>
+  <span>
+  JVM编码方式未设置引发的乱码</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/02/03/HashMap源码分析/"  title="HashMap实现原理">
+ <strong>下一篇：</strong><br/> 
+ <span>HashMap实现原理
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Iterator详解"><span class="toc-number">1.</span> <span class="toc-text">Iterator详解</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>

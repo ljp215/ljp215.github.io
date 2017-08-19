@@ -1,0 +1,1048 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    
+    <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zane Blog">
+<meta property="og:url" content="http://luojinping.com/page/4/">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zane Blog">
+<meta name="twitter:description">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/13/Java线程中断/" title="Java线程中断" itemprop="url">Java线程中断</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-13T05:55:58.000Z" itemprop="datePublished"> Published Apr 13 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>一、Java中断的现象<br>首先，看看Thread类里的几个方法：<br>public static boolean interrupted    测试当前线程是否已经中断。线程的中断状态 由该方法清除。换句话说，如果连续两次调用该方法，则第二次调用将返回 false（在第一次调用已清除了其中断状态之后，且第二次调用检验完中断状态前，当前线程再次中断的情况除外）。<br>public boolean isInterrupted()    测试线程是否已经中断。线程的中断状态 不受该方法的影响。<br>public void interrupt()    中断线程。</p>
+<p>Thread.interrupt API:<br>Interrupts this thread. First the checkAccess method of this thread is invoked, which may cause a SecurityException to be thrown.</p>
+<p>If this thread is blocked in an invocation of the wait(), wait(long), or wait(long, int) methods of the Object class, or of the join(), join(long), join(long, int), sleep(long), or sleep(long, int), methods of this class, then its interrupt status will be cleared and it will receive an InterruptedException.</p>
+<p>If this thread is blocked in an I/O operation upon an interruptible channel then the channel will be closed, the thread’s interrupt status will be set, and the thread will receive a ClosedByInterruptException.</p>
+<p>If this thread is blocked in a Selector then the thread’s interrupt status will be set and it will return immediately from the selection operation, possibly with a non-zero value, just as if the selector’s wakeup method were invoked.</p>
+<p>If none of the previous conditions hold then this thread’s interrupt status will be set.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">interrupt</span>() {</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">this</span> != Thread.currentThread())</div><div class="line">            checkAccess();</div><div class="line"></div><div class="line">        <span class="keyword">synchronized</span> (blockerLock) {</div><div class="line">            Interruptible b = blocker;</div><div class="line">            <span class="keyword">if</span> (b != <span class="keyword">null</span>) {</div><div class="line">                interrupt0();           <span class="comment">// Just to set the interrupt flag</span></div><div class="line">                b.interrupt(<span class="keyword">this</span>);</div><div class="line">                <span class="keyword">return</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        interrupt0();</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<p>其实，Java的中断是一种协作机制。也就是说调用线程对象的interrupt方法并不一定就中断了正在运行的线程，它只是要求线程自己在合适的时机中断自己。每个线程都有一个boolean的中断状态（不一定就是对象的属性，事实上，该状态也确实不是Thread的字段），interrupt方法仅仅只是将该状态置为true<br>代码如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestInterrupt</span> </span>{ </div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) { </div><div class="line">Thread t = <span class="keyword">new</span> MyThread(); </div><div class="line">t.start(); </div><div class="line">t.interrupt(); </div><div class="line">System.out.println(<span class="string">"已调用线程的interrupt方法"</span>); </div><div class="line">} </div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="inheritance"><span class="keyword">extends</span></span> <span class="title">Thread</span> </span>{ </div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> run() { </div><div class="line"><span class="keyword">int</span> num = longTimeRunningNonInterruptMethod(<span class="number">2</span>, <span class="number">0</span>); </div><div class="line">System.out.println(<span class="string">"长时间任务运行结束,num="</span> + num); </div><div class="line">System.out.println(<span class="string">"线程的中断状态:"</span> + Thread.interrupted()); </div><div class="line">} </div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> longTimeRunningNonInterruptMethod(<span class="keyword">int</span> <span class="keyword">count</span>, <span class="keyword">int</span> initNum) { </div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="keyword">count</span>; i++) { </div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;Integer.MAX_VALUE; j++) { </div><div class="line">initNum ++; </div><div class="line">} </div><div class="line">} </div><div class="line"><span class="keyword">return</span> initNum; </div><div class="line">} </div><div class="line">} </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>一般情况下，会打印如下内容：<br>已调用线程的interrupt方法<br>长时间任务运行结束,num=-2<br>线程的中断状态:true<br>可见，interrupt方法并不一定能中断线程。但是，如果改成下面的程序，情况会怎样呢？<br>代码如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line">import java.util.concurrent.TimeUnit; </div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestInterrupt</span> </span>{ </div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) { </div><div class="line">Thread t = <span class="keyword">new</span> MyThread(); </div><div class="line">t.start(); </div><div class="line">t.interrupt(); </div><div class="line">System.out.println(<span class="string">"已调用线程的interrupt方法"</span>); </div><div class="line">} </div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="inheritance"><span class="keyword">extends</span></span> <span class="title">Thread</span> </span>{ </div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> run() { </div><div class="line"><span class="keyword">int</span> num = -<span class="number">1</span>; </div><div class="line"><span class="keyword">try</span> { </div><div class="line">num = longTimeRunningInterruptMethod(<span class="number">2</span>, <span class="number">0</span>); </div><div class="line">} <span class="keyword">catch</span> (InterruptedException e) { </div><div class="line">System.out.println(<span class="string">"线程被中断"</span>); </div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e); </div><div class="line">} </div><div class="line">System.out.println(<span class="string">"长时间任务运行结束,num="</span> + num); </div><div class="line">System.out.println(<span class="string">"线程的中断状态:"</span> + Thread.interrupted()); </div><div class="line">} </div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> longTimeRunningInterruptMethod(<span class="keyword">int</span> <span class="keyword">count</span>, <span class="keyword">int</span> initNum) throws InterruptedException{ </div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="keyword">count</span>; i++) { </div><div class="line">TimeUnit.SECONDS.sleep(<span class="number">5</span>); </div><div class="line">} </div><div class="line"><span class="keyword">return</span> initNum; </div><div class="line">} </div><div class="line">} </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>经运行可以发现，程序抛出异常停止了，run方法里的后两条打印语句没有执行。那么，区别在哪里？<br>一般说来，如果一个方法声明抛出InterruptedException，表示该方法是可中断的（没有在方法中处理中断却也声明抛出InterruptedException的除外），也就是说可中断方法会对interrupt调用做出响应（例如sleep响应interrupt的操作包括清除中断状态，抛出InterruptedException），如果interrupt调用是在可中断方法之前调用，可中断方法一定会处理中断，像上面的例子，interrupt方法极可能在run未进入sleep的时候就调用了，但sleep检测到中断，就会处理该中断。如果在可中断方法正在执行中的时候调用interrupt，会怎么样呢？这就要看可中断方法处理中断的时机了，只要可中断方法能检测到中断状态为true，就应该处理中断。让我们为开头的那段代码加上中断处理。<br>那么自定义的可中断方法该如何处理中断呢？那就是在适合处理中断的地方检测线程中断状态并处理。<br>代码如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestInterrupt</span> </span>{ </div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> main(String[] args) throws Exception { </div><div class="line">Thread t = <span class="keyword">new</span> MyThread(); </div><div class="line">t.start(); </div><div class="line"><span class="comment">// TimeUnit.SECONDS.sleep(1);//如果不能看到处理过程中被中断的情形，可以启用这句再看看效果 </span></div><div class="line">t.interrupt(); </div><div class="line">System.out.println(<span class="string">"已调用线程的interrupt方法"</span>); </div><div class="line">} </div><div class="line"><span class="keyword">static</span> <span class="class"><span class="keyword">class</span> <span class="title">MyThread</span> <span class="inheritance"><span class="keyword">extends</span></span> <span class="title">Thread</span> </span>{ </div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> run() { </div><div class="line"><span class="keyword">int</span> num; </div><div class="line"><span class="keyword">try</span> { </div><div class="line">num = longTimeRunningNonInterruptMethod(<span class="number">2</span>, <span class="number">0</span>); </div><div class="line">} <span class="keyword">catch</span> (InterruptedException e) { </div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> RuntimeException(e); </div><div class="line">} </div><div class="line">System.out.println(<span class="string">"长时间任务运行结束,num="</span> + num); </div><div class="line">System.out.println(<span class="string">"线程的中断状态:"</span> + Thread.interrupted()); </div><div class="line">} </div><div class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> longTimeRunningNonInterruptMethod(<span class="keyword">int</span> <span class="keyword">count</span>, <span class="keyword">int</span> initNum) throws InterruptedException { </div><div class="line"><span class="keyword">if</span>(interrupted()) { </div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> InterruptedException(<span class="string">"正式处理前线程已经被请求中断"</span>); </div><div class="line">} </div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>; i&lt;<span class="keyword">count</span>; i++) { </div><div class="line"><span class="keyword">for</span>(<span class="keyword">int</span> j=<span class="number">0</span>; j&lt;Integer.MAX_VALUE; j++) { </div><div class="line">initNum ++; </div><div class="line">} </div><div class="line"><span class="comment">//假如这就是一个合适的地方 </span></div><div class="line"><span class="keyword">if</span>(interrupted()) { </div><div class="line"><span class="comment">//回滚数据，清理操作等 </span></div><div class="line"><span class="keyword">throw</span> <span class="keyword">new</span> InterruptedException(<span class="string">"线程正在处理过程中被中断"</span>); </div><div class="line">} </div><div class="line">} </div><div class="line"><span class="keyword">return</span> initNum; </div><div class="line">} </div><div class="line">} </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>如上面的代码，方法longTimeRunningMethod此时已是一个可中断的方法了。在进入方法的时候判断是否被请求中断，如果是，就不进行相应的处理了；处理过程中，可能也有合适的地方处理中断，例如上面最内层循环结束后。<br>这段代码中检测中断用了Thread的静态方法interrupted，它将中断状态置为false，并将之前的状态返回，而isInterrupted只是检测中断，并不改变中断状态。一般来说，处理过了中断请求，应该将其状态置为false。但具体还要看实际情形。 </p>
+<p>二、Java中断的本质<br>在历史上，Java试图提供过抢占式限制中断，但问题多多，例如已被废弃的Thread.stop、Thread.suspend和 Thread.resume等。另一方面，出于Java应用代码的健壮性的考虑，降低了编程门槛，减少不清楚底层机制的程序员无意破坏系统的概率。<br>如今，Java的线程调度不提供抢占式中断，而采用协作式的中断。其实，协作式的中断，原理很简单，就是轮询某个表示中断的标记，我们在任何普通代码的中都可以实现。 例如下面的代码：<br>代码如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">bool</span> isInterrupted; </div><div class="line"><span class="comment">//… </span></div><div class="line"><span class="keyword">while</span>(!isInterrupted) { </div><div class="line">compute(); </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>但是，上述的代码问题也很明显。当compute执行时间比较长时，中断无法及时被响应。另一方面，利用轮询检查标志变量的方式，想要中断wait和sleep等线程阻塞操作也束手无策。<br>如果仍然利用上面的思路，要想让中断及时被响应，必须在虚拟机底层进行线程调度的对标记变量进行检查。是的，JVM中确实是这样做的。下面摘自java.lang.Thread的源代码：<br>代码如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">interrupted</span>() { </div><div class="line"><span class="keyword">return</span> currentThread().isInterrupted(<span class="keyword">true</span>); </div><div class="line">} </div><div class="line"><span class="comment">//… </span></div><div class="line"><span class="keyword">private</span> <span class="keyword">native</span> <span class="keyword">boolean</span> <span class="title">isInterrupted</span>(<span class="keyword">boolean</span> ClearInterrupted);</div></pre></td></tr></table></figure>
+
+<p>可以发现，isInterrupted被声明为native方法，取决于JVM底层的实现。<br>实际上，JVM内部确实为每个线程维护了一个中断标记。但应用程序不能直接访问这个中断变量，必须通过下面几个方法进行操作：<br>代码如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">public class Thread { </div><div class="line">//设置中断标记 </div><div class="line">public void interrupt() { <span class="keyword">...</span> } </div><div class="line">//获取中断标记的值 </div><div class="line">public boolean isInterrupted() { <span class="keyword">...</span> } </div><div class="line">//清除中断标记，并返回上一次中断标记的值 </div><div class="line">public static boolean interrupted() { <span class="keyword">...</span> } </div><div class="line"><span class="keyword">...</span> </div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>通常情况下，调用线程的interrupt方法，并不能立即引发中断，只是设置了JVM内部的中断标记。因此，通过检查中断标记，应用程序可以做一些特殊操作，也可以完全忽略中断。</p>
+<p>你可能想，如果JVM只提供了这种简陋的中断机制，那和应用程序自己定义中断变量并轮询的方法相比，基本也没有什么优势。</p>
+<p>JVM内部中断变量的主要优势，就是对于某些情况，提供了模拟自动“中断陷入”的机制。<br>在执行涉及线程调度的阻塞调用时（例如wait、sleep和join），如果发生中断，被阻塞线程会“尽可能快的”抛出InterruptedException。因此，我们就可以用下面的代码框架来处理线程阻塞中断：<br>代码如下:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">try</span> { </div><div class="line"><span class="comment">//wait、sleep或join </span></div><div class="line">} </div><div class="line"><span class="keyword">catch</span>(InterruptedException e) { </div><div class="line"><span class="comment">//某些中断处理工作 </span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>所谓“尽可能快”，我猜测JVM就是在线程调度调度的间隙检查中断变量，速度取决于JVM的实现和硬件的性能。 </p>
+<p>三、一些不会抛出 InterruptedException 的线程阻塞操作<br>然而，对于某些线程阻塞操作，JVM并不会自动抛出InterruptedException异常。例如，某些I/O操作和内部锁操作。对于这类操作，可以用其他方式模拟中断：<br>1）java.io中的异步socket I/O<br>读写socket的时候，InputStream和OutputStream的read和write方法会阻塞等待，但不会响应java中断。不过，调用Socket的close方法后，被阻塞线程会抛出SocketException异常。<br>2）利用Selector实现的异步I/O<br>如果线程被阻塞于Selector.select（在java.nio.channels中），调用wakeup方法会引起ClosedSelectorException异常。<br>3）锁获取<br>如果线程在等待获取一个内部锁，我们将无法中断它。但是，利用Lock类的lockInterruptibly方法，我们可以在等待锁的同时，提供中断能力。 </p>
+<p>四、两条编程原则<br>另外，在任务与线程分离的框架中，任务通常并不知道自身会被哪个线程调用，也就不知道调用线程处理中断的策略。所以，在任务设置了线程中断标记后，并不能确保任务会被取消。因此，有以下两条编程原则：<br>1）除非你知道线程的中断策略，否则不应该中断它。<br>这条原则告诉我们，不应该直接调用Executer之类框架中线程的interrupt方法，应该利用诸如Future.cancel的方法来取消任务。</p>
+<p>2）任务代码不该猜测中断对执行线程的含义。<br>这条原则告诉我们，一般代码遇在到InterruptedException异常时，不应该将其捕获后“吞掉”，而应该继续向上层代码抛出。<br>总之，Java中的非抢占式中断机制，要求我们必须改变传统的抢占式中断思路，在理解其本质的基础上，采用相应的原则和模式来编程。</p>
+<p>总结：</p>
+<p>要使任务和线程能安全、快速、可靠地停止下来，并不是一件容易的事。Java没有提供任何机制来安全地终止线程。但它提供了中断（Interruption），这是一种协作机制，能够使一个线程终止另一个线程的的工作。—— 『Java并发编程实战』 第7章 取消与关闭 p111</p>
+<p>中断是一种协作机制。一个线程不能强制其它线程停止正在执行的操作而去执行其它的操作。当线程A中断B时，A仅仅是要求B在执行到某个可以暂停的地方停止正在执行的操作——前提是如果线程B愿意停下来。—— 『Java并发编程实战』 第5章 基础构建模块 p77</p>
+<p>总之，中断只是一种协作机制，需要被中断的线程自己处理中断。停止一个线程最佳实践是 中断 + 条件变量。<br>refer：</p>
+<blockquote>
+<p><a href="http://www.infoq.com/cn/articles/java-interrupt-mechanism" target="_blank" rel="external">http://www.infoq.com/cn/articles/java-interrupt-mechanism</a><br>《Java Concurrency in Practice》<br>《Concurrent Programming in Java Design principles and patterns》<br><a href="http://docs.oracle.com/javase/1.4.2/docs/guide/misc/threadPrimitiveDeprecation.html" target="_blank" rel="external">http://docs.oracle.com/javase/1.4.2/docs/guide/misc/threadPrimitiveDeprecation.html</a><br><a href="http://ibruce.info/2013/12/19/how-to-stop-a-java-thread/" target="_blank" rel="external">http://ibruce.info/2013/12/19/how-to-stop-a-java-thread/</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/04/13/Java线程中断/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/13/-转-数据库的乐观锁和悲观锁/" title="[转]数据库的乐观锁和悲观锁" itemprop="url">[转]数据库的乐观锁和悲观锁</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-13T03:06:28.000Z" itemprop="datePublished"> Published Apr 13 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="悲观锁">悲观锁</h4>
+<p>悲观锁假定其他用户企图访问或者改变你正在访问、更改的对象的概率是很高的，因此在悲观锁的环境中，在你开始改变此对象之前就将该对象锁住，并且直到你提交了所作的更改之后才释放锁。悲观的缺陷是不论是页锁还是行锁，加锁的时间可能会很长，这样可能会长时间的限制其他用户的访问，也就是说悲观锁的并发访问性不好。</p>
+<p><br></p>
+<h4 id="乐观锁">乐观锁</h4>
+<p>乐观锁则认为其他用户企图改变你正在更改的对象的概率是很小的，因此乐观锁直到你准备提交所作的更改时才将对象锁住，当你读取以及改变该对象时并不加锁。可见乐观锁加锁的时间要比悲观锁短，乐观锁可以用较大的锁粒度获得较好的并发访问性能。但是如果第二个用户恰好在第一个用户提交更改之前读取了该对象，那么当他完成了自己的更改进行提交时，数据库就会发现该对象已经变化了，这样，第二个用户不得不重新读取该对象并作出更改。这说明在乐观锁环境中，会增加并发用户读取对象的次数。</p>
+<p><br></p>
+<h4 id="例子">例子</h4>
+<p>以版本控制系统为例，来说说两种最基本的并发性问题。  </p>
+<p><br></p>
+<h6 id="【丢失更新】">【丢失更新】</h6>
+<p>  小张想修改源代码里面的a方法，正在她修改的同时，小李打开了这个文件，修改了b方法并且保存了文件，等小张修改完成后，保存文件，小李所做的修改就被覆盖了。 </p>
+<p><br></p>
+<h6 id="【不一致的读】">【不一致的读】</h6>
+<p>  小张想要知道包里面一共有多少个类，包分了a，b两个子包。小张打开a包，看到了7个类。突然小张接到老婆打来的电话，在小张接电话的时候，小李往a包中加了2个类，b包中加了3个类（原先b包中是5个类）。  </p>
+<p>小张接完电话后再打开b包，看到了8个类，很自然得出结论：包中一共有15个类。  </p>
+<p>很遗憾，15个永远不是正确的答案。在小李修改前，正确答案是12（7+5），修改后是17（9+8）。这两个答案都是正确的，虽然有一个不是当前的。但15不对，因为小张读取的数据是不一致的。  </p>
+<p>小结：不一致读指你要读取两种数据，这两种数据都是正确的，但是在同一时刻两者并非都正确。  </p>
+<p><br></p>
+<h4 id="隔离和不可变">隔离和不可变</h4>
+<p><strong> 在企业应用中，解决并发冲突的两种常用手段是隔离和不可变。</strong> </p>
+<p>只有当多个活动（进程或者线程）同时访问同一数据时才会引发并发问题。一种很自然的思路就是同一时刻只允许一个活动访问数据。如果小张打开了文件，就不允许其他人打开，或者其他人只能通过只读的方式打开副本，就可以解决这个问题。  </p>
+<p>隔离能够有效减少发生错误的可能。我们经常见到程序员陷入到并发问题的泥潭里，每一段代码写完都要考虑并发问题，这样太累了。我们可以利用隔离技术创建出隔离区域，当程序进入隔离区域时不用关心并发问题。好的并发性设计就是创造这样的一些隔离区域，并保证代码尽可能的运行在其中。  </p>
+<p>另一种思路：只有当你需要修改共享的数据时才可能引发并发性问题，所以我们可以将要共享的数据制作为“不可变”的，以避免并发性问题。当然我们不可能将所有的数据都做成不可变的，但如果一些数据是不可变的，对它们进行并发操作时我们就可以放松自己的神经了。  </p>
+<p><br></p>
+<h4 id="乐观并发控制、悲观并发控制">乐观并发控制、悲观并发控制</h4>
+<p>如果数据是可变的，并且无法隔离呢？这种情况下最常用的两种控制就是乐观并发控制和悲观并发控制。  </p>
+<p>假设小张和小李想要同时修改同一个文件。如果使用乐观锁，俩人都能打开文件进行修改，如果小张先提交了内容，没有问题，他所做的改变会保存到服务器上。但小李提交时就会遇到麻烦，版本控制服务器会检测出两种修改的冲突，小李的提交会被具体，并由小李决定该如何处理这种情况（对于绝大部分版本控制软件来说，会读取并标识出小张做的改变，然后由小李决定是否合并）。  </p>
+<p>如果使用的是悲观锁，小张先检出（check out）文件，那么小李就无法再次检出同一文件，直到小张提交了他的改变。  </p>
+<p>建议你将乐观锁想成一种检测冲突的手段，而悲观锁是一种避免冲突的手段（严格来说，乐观锁其实不能称之为“锁”，但是这个名字已经流传开了，那就继续使用吧）。一些老的版本控制系统，比如VSS 6.0使用的是悲观锁的机制。而现代的版本控制系统一般两种都支持，默认使用乐观锁。  </p>
+<p><strong> 乐观锁可以提高并发访问的效率，但是如果出现了冲突只能向上抛出，然后重来一遍；悲观锁可以避免冲突的发生，但是会降低效率。 </strong></p>
+<p>选择使用那一种锁取决于访问频率和一旦产生冲突的严重性。如果系统被并发访问的概率很低，或者冲突发生后的后果不太严重（所谓后果应该指被检测到冲突的提交会失败，必须重来一次），可以使用乐观锁，否则使用悲观锁。  </p>
+<p><br></p>
+<h4 id="实现">实现</h4>
+<p>  我们经常会在访问数据库的时候用到锁，怎么实现乐观锁和悲观锁呢？以Hibernate为例，可以通过为记录添加版本或时间戳字段来实现乐观锁。可以用session.Lock()锁定对象来实现悲观锁（本质上就是执行了SELECT * FROM t FOR UPDATE语句）。 </p>
+<p><br></p>
+<h6 id="转至：">转至：</h6>
+<blockquote>
+<p><a href="http://www.cnblogs.com/chenlulouis/archive/2010/08/17/1801358.html" target="_blank" rel="external">http://www.cnblogs.com/chenlulouis/archive/2010/08/17/1801358.html</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mysql/">mysql</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/04/13/-转-数据库的乐观锁和悲观锁/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/04/10/Shell常用技巧/" title="Shell常用技巧" itemprop="url">Shell常用技巧</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-04-10T03:43:31.000Z" itemprop="datePublished"> Published Apr 10 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h4 id="grep常用技巧">grep常用技巧</h4>
+<p>grep匹配TAB</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">直接<span class="keyword">grep</span> <span class="keyword">tab</span>字符 //命令行下用”ESC TAB”输入</div><div class="line"><span class="keyword">grep</span> $<span class="string">'\t'</span></div></pre></td></tr></table></figure>
+
+<p>grep匹配减号</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cat</span> <span class="keyword">file</span> | <span class="keyword">grep</span> -- -<span class="number">1</span></div></pre></td></tr></table></figure>
+
+<p>去除所有空行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cat</span> <span class="keyword">file</span> | <span class="keyword">grep</span> -<span class="keyword">v</span> <span class="string">"^$"</span> &gt; file2</div></pre></td></tr></table></figure>
+
+<p>只显示以a开头的行。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cat</span> <span class="keyword">file</span> | <span class="keyword">grep</span> <span class="string">'^a'</span></div></pre></td></tr></table></figure>
+
+<p>显示log中error附近的内容</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cat</span> <span class="keyword">file</span> | <span class="keyword">grep</span> -C5 <span class="string">"error"</span></div></pre></td></tr></table></figure>
+
+<p><br></p>
+<h4 id="awk常用技巧">awk常用技巧</h4>
+<p>隔行显示</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cat</span> <span class="keyword">file</span> | awk <span class="string">'{getline; print $1;}'</span></div></pre></td></tr></table></figure>
+
+<p>取奇数/偶数行数据</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">awk <span class="string">'NR%2==1'</span> <span class="keyword">file</span>  <span class="comment">//显示奇数行</span></div><div class="line">awk <span class="string">'NR%2==0'</span> <span class="keyword">file</span>  <span class="comment">//显示偶数行</span></div></pre></td></tr></table></figure>
+
+<p><br></p>
+<h4 id="vim常用技巧">vim常用技巧</h4>
+<p>vim下将x替换成制表符</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="tag">%<span class="title">s</span></span>/x/^I</div><div class="line">p.s: 直接按TAB就可以啦 ,不需要用转义序列\t的</div></pre></td></tr></table></figure>
+
+<p>vim下将x替换成换行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="tag">%<span class="title">s</span></span>/x/\r</div></pre></td></tr></table></figure>
+
+<p><br></p>
+<h4 id="sed常用技巧">sed常用技巧</h4>
+<p>查看文件选定的行</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">wc -l  <span class="operator">a</span>.txt <span class="comment"> //统计a.txt 行数</span></div><div class="line">sed -n <span class="string">'190,196p'</span> <span class="operator">a</span>.txt<span class="comment"> //查看第190行到第196行</span></div><div class="line">sed -n <span class="string">'190,1p'</span> <span class="operator">a</span>.txt<span class="comment"> //查看第190行</span></div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/shell/">shell</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/04/10/Shell常用技巧/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/04/JVM编码方式未设置引发的乱码/" title="JVM编码方式未设置引发的乱码" itemprop="url">JVM编码方式未设置引发的乱码</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-04T14:37:58.000Z" itemprop="datePublished"> Published Feb 4 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h6 id="现象：">现象：</h6>
+<p>服务中出现大量乱码数据，并且全部入库。</p>
+<h6 id="原因：">原因：</h6>
+<p>虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。<br>发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。</p>
+<h6 id="分析：">分析：</h6>
+<p>这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -Dfile.encoding=UTF-<span class="number">8</span> XXX 后彻底解决。</div></pre></td></tr></table></figure>
+
+<p>但是这样发布服务时就太依赖发布脚本了，那能否在程序中就设置好编码呢？比如这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.setProperty(<span class="string">"file.encoding"</span>, <span class="string">"UTF-8"</span>);</div></pre></td></tr></table></figure>
+
+<p>其实，这样设置是不生效的，因为JVM在启动时就开始cache编码方式了，程序中再设置已然无效。不过可以在程序每个读写数据的地方都设置编码方式，但是这样未免太工程浩大，而且无法保证每个写代码的人都能做到。所以最后改为依赖在发布脚本中设置编码方式，并且在服务启动时对编码进行检查。</p>
+<h6 id="refer:">refer:</h6>
+<blockquote>
+<p>As Edward Grech points out, in a special case like this, the environment variable JAVA_TOOL_OPTIONS can be used to specify this property, but it’s normally done like this: java -Dfile.encoding=UTF-8 XXX</p>
+<p>Charset.defaultCharset() will reflect changes to the file.encoding property, but most of the code in the core Java libraries that need to determine the default character encoding do not use this mechanism.</p>
+<p><strong>Important points to note:</strong></p>
+<ul>
+<li>JVM caches value of default character encoding once JVM starts and so is the case for default constructors of InputStreamReader and other core Java classes. So calling System.setProperty(“file.encoding” , “UTF-16”) may not have desire effect.</li>
+<li>Always work with your own character encoding if you can, that is more accurate and precise way of converting bytes to Strings.</li>
+</ul>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/02/04/JVM编码方式未设置引发的乱码/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/03/Iterator详解/" title="Iterator详解" itemprop="url">Iterator详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-03T02:56:08.000Z" itemprop="datePublished"> Published Feb 3 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Iterator详解">Iterator详解</h1>
+<p>Iterator是java中的一个接口，借用源码中的注释：<br>An iterator over a collection.  {@code Iterator} takes the place of {@link Enumeration} in the Java Collections Framework. Iterators differ from enumerations in two ways:</p>
+<ul>
+<li>Iterators allow the caller to remove elements from the underlying collection during the iteration with well-defined semantics.</li>
+<li>Method names have been improved.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">	... ...	</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>需要迭代器的地方实现这个接口。集合的基本类Collection就实现了这个接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">	... ...</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>举例来看下java的ArrayList类迭代器的实现。<br>ArrayList中iterator()方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span>() {</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> Itr();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>再来看Itr的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="javadoc">/**</span></div><div class="line"> * An optimized version of AbstractList.Itr</div><div class="line"> */</div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">    <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></div><div class="line">    <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></div><div class="line">    <span class="keyword">int</span> expectedModCount = modCount;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">        <span class="keyword">return</span> cursor != size;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="keyword">public</span> E <span class="title">next</span>() {</div><div class="line">        checkForComodification();</div><div class="line">        <span class="keyword">int</span> i = cursor;</div><div class="line">        <span class="keyword">if</span> (i &gt;= size)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">        Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</div><div class="line">        <span class="keyword">if</span> (i &gt;= elementData.length)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        cursor = i + <span class="number">1</span>;</div><div class="line">        <span class="keyword">return</span> (E) elementData[lastRet = i];</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span>() {</div><div class="line">        <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</div><div class="line">        checkForComodification();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> {</div><div class="line">            ArrayList.<span class="keyword">this</span>.remove(lastRet); <span class="comment">// 见下文代码</span></div><div class="line">            cursor = lastRet;</div><div class="line">            lastRet = -<span class="number">1</span>;</div><div class="line">            expectedModCount = modCount;</div><div class="line">        } <span class="keyword">catch</span> (IndexOutOfBoundsException ex) {</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span>(Consumer&lt;? <span class="keyword">super</span> E&gt; consumer) {</div><div class="line">        Objects.requireNonNull(consumer);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> size = ArrayList.<span class="keyword">this</span>.size;</div><div class="line">        <span class="keyword">int</span> i = cursor;</div><div class="line">        <span class="keyword">if</span> (i &gt;= size) {</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">final</span> Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</div><div class="line">        <span class="keyword">if</span> (i &gt;= elementData.length) {</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        }</div><div class="line">        <span class="keyword">while</span> (i != size && modCount == expectedModCount) {</div><div class="line">            consumer.accept((E) elementData[i++]);</div><div class="line">        }</div><div class="line">        <span class="comment">// update once at end of iteration to reduce heap write traffic</span></div><div class="line">        cursor = i;</div><div class="line">        lastRet = i - <span class="number">1</span>;</div><div class="line">        checkForComodification();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">void</span> checkForComodification() {</div><div class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+
+<p>调ArrayList.this.remove(lastRet)时，remove的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> E <span class="title">remove</span>(<span class="keyword">int</span> index) {</div><div class="line">    rangeCheck(index);</div><div class="line"></div><div class="line">    modCount++;</div><div class="line">    E oldValue = elementData(index);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</div><div class="line">        System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index, numMoved);</div><div class="line">    elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></div><div class="line">    <span class="keyword">return</span> oldValue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>所以使用iterator来遍历List集合时，不能对list增删元素。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/02/03/Iterator详解/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/03/HashMap源码分析/" title="HashMap实现原理" itemprop="url">HashMap实现原理</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-02T16:30:01.000Z" itemprop="datePublished"> Published Feb 3 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="HashMap源码分析">HashMap源码分析</h1>
+<h2 id="1-_概要">1. 概要</h2>
+<ul>
+<li>HashMap是基于Map接口实现的，提供了所有Map支持的操作，并且允许key和value为null。HashMap可以近似地认为是HashTable，其差别仅在于前者允许null的key,value，并且操作不是同步的(unsynchronized)。</li>
+<li>Iteration遍历整个hashMap的时间与hashMap的capacity(buckets的数量)加上hashMap的size的值是成正比的，所以如果想要高效地遍历HashMap，就不要将capacity的初始值设置的太高，也不要将load factor设置的太低。</li>
+<li>衡量HashMap性能的指标只有两个，一个是capacity的初始值，一个是load factor。</li>
+<li>capacity是指hash表中buckets的数量，而capacity的初始值是指当hash表被创建时capacity被设定的值。</li>
+<li>load factor是用来衡量当hash表扩容之前有多满的指标。load_factor = put_size/size</li>
+<li>当hash表的元素超过了阈值(loadFactor*capacity)时会自动将内部数据重建一遍，并将buckets的数量翻倍，这个过程称为rehash。</li>
+<li>根据经验来讲，当load factor为0.75时，较好地权衡了时间和空间上的取舍。load factor高虽然能减少空间的消耗但是增加了查询的代价，主要反映在put和get操作。</li>
+<li>当设定capacity初始值时需要考虑map中期望地元素个数和load factor，这样能最小化rehash的次数。如果capacity初始值大于最大元素个数除以load factor的值，则永远不会发生load factor操作。</li>
+<li>如果有很多mapping都要存放到同一个HashMap，那么在最开始就设置一个充足的capacity比当hash表超过阈值后再rehash要高效地多。</li>
+<li><strong>请注意</strong>：所以的实现都不是synchronized的，如果有多个线程同时操作HashMap，并且有线程会修改HashMap的结构时，则必须要对此操作加synchronized标识。增加或删除HashMap中的元素都算是修改HashMap的结构，如果仅仅只是修改某个key的value则不算。</li>
+<li>如果没有可以对HashMap做synchronized的对象，那么可以使用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Map m = Collections.synchronizedMap(<span class="keyword">new</span> HashMap(…)</div></pre></td></tr></table></figure>
+
+<p>来生成一个同步操作的Map.</p>
+<h2 id="2-_HashMap的实现">2. HashMap的实现</h2>
+<h3 id="2-1_Fields">2.1 Fields</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;;<span class="comment">//存储元素的实体数组</span></div><div class="line"><span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet; <span class="comment">//Holds cached entrySet()</span></div><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size;<span class="comment">//存放元素的个数</span></div><div class="line"><span class="keyword">int</span> threshold; <span class="comment">//当实际大小超过临界值时，会进行扩容threshold = 加载因子*容量, DEFAULT_INITIAL_CAPACITY</span></div><div class="line"><span class="keyword">final</span> <span class="keyword">float</span> loadFactor; <span class="comment">//加载因子</span></div><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> modCount;<span class="comment">//This field is used to make iterators on Collection-views of the HashMap fail-fast</span></div></pre></td></tr></table></figure>
+
+<h3 id="2-2_实现">2.2 实现</h3>
+<h4 id="2-2-1_java8的改进点">2.2.1 java8的改进点</h4>
+<pre><code> java.util.HashMap 是JDK里散列的一个实现，JDK6里采用位桶+链表的形式实现，Java8里采用的是位桶+链表/红黑树的方式，this will improve <span class="operator">the</span> worst <span class="keyword">case</span> performance <span class="built_in">from</span> O(n) <span class="built_in">to</span> O(<span class="built_in">log</span> n).。
+</code></pre><h4 id="2-2-2_访问map的过程">2.2.2 访问map的过程</h4>
+<p>仅以put操作为例来说明，put操作的过程：<br>     当未冲突时；put的位置为 (tab.length-1)&amp;key.hashCode()<br>     当冲突时；如果冲突的位置上放的是TreeNode，则加入。否则加入冲突位置的元素链表的最末尾，如果加入后链表长度达到TREEIFY_THRESHOLD，则将链表转为红黑树。<br>     加入操作完成后，如果size大于threshold则resize。</p>
+<h4 id="2-2-3_hashCode和size">2.2.3 hashCode和size</h4>
+<p>hash函数如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> hash(Object key) {</div><div class="line">    <span class="keyword">int</span> h;</div><div class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>tab.length的大小为2的幂次方，实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="javadoc">/**</span></div><div class="line">* Returns a power of two size for the given target capacity.</div><div class="line">*/</div><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> tableSizeFor(<span class="keyword">int</span> cap) {</div><div class="line">    <span class="keyword">int</span> n = cap - <span class="number">1</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">1</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">2</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">4</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">8</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">16</span>;</div><div class="line">    <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="3-_遍历HashMap">3. 遍历HashMap</h2>
+<p>当需要取出key-value时，推荐</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Iterator iter = map.entrySet().iterator();</div><div class="line"><span class="keyword">while</span> (iter.hasNext()) {</div><div class="line">    Map.Entry entry = (Map.Entry) iter.next();</div><div class="line">    Object key = entry.getKey();</div><div class="line">    Object val = entry.getValue();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="4-_遍历时操作">4. 遍历时操作</h2>
+<h3 id="4-1_遍历时remove">4.1 遍历时remove</h3>
+<p>Removes the current element. Throws IllegalStateException if an attempt is made to call remove() that is not preceded by a call to next( ).</p>
+<h3 id="4-2_keySet的使用">4.2 keySet的使用</h3>
+<p>keySet没有实现add(E e)方法，所有当对keySet调用add方法时会抛出UnsupportedOperationException。<br>KeySet继承关系如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class KeySet extends AbstractSet&lt;K&gt;</div><div class="line"><span class="keyword">abstract</span> class AbstractSet&lt;E&gt; extends AbstractCollection&lt;E&gt; implements Set&lt;E&gt;</div><div class="line"><span class="keyword">abstract</span> class AbstractCollection&lt;E&gt; implements Collection&lt;E&gt;{</div><div class="line">     <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span>(E e) {</div><div class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="4-3_直接使用subclass遍历时不允许修改map">4.3 直接使用subclass遍历时不允许修改map</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (Instance key : InsMap.keySet()) {</div><div class="line">    keySet.remove(instance2);</div><div class="line">    System.out.println(InsMap.get(key));</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>remove后第二遍进入for循环时会抛ConcurrentModificationException。<br>原因是KeySet, Values, EntrySet这三个subclass都不允许在遍历过程中map被修改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">forEach</span>(Consumer&lt;? <span class="keyword">super</span> Map.Entry&lt;K,V&gt;&gt; action) {</div><div class="line">    Node&lt;K,V&gt;[] tab;</div><div class="line">    <span class="keyword">if</span> (action == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</div><div class="line">    <span class="keyword">if</span> (size &gt; <span class="number">0</span> && (tab = table) != <span class="keyword">null</span>) {</div><div class="line">        <span class="keyword">int</span> mc = modCount;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tab.length; ++i) {</div><div class="line">            <span class="keyword">for</span> (Node&lt;K,V&gt; e = tab[i]; e != <span class="keyword">null</span>; e = e.next)</div><div class="line">                action.accept(e);</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (modCount != mc)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/02/03/HashMap源码分析/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/12/25/Goog-Engineer-Keys/" title="Good Engineer Keys" itemprop="url">Good Engineer Keys</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2014-12-24T16:30:01.000Z" itemprop="datePublished"> Published Dec 25 2014</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>A good engineer has technical mastery.  A great engineer has these additional qualities:</p>
+<ul>
+<li><strong>Clear communication of complex ideas.</strong><br>Can the engineer explain themselves to non-technical stakeholders, as well as other engineers?  Many technically proficient engineers are not considered great because they can’t communicate their ideas.</li>
+<li><strong>They love to code.</strong><br>Being an engineer is a great high paying job, which is why many good developers do it.  Great engineers would code even if that wasn’t the case.  They keep their skills current, and they have the stamina to power through long hours because they are doing what they love.<br>Desire to simplify instead of making things more complex.  Hard, complex challenges are often fun for developers.  Great engineers want to simplify the problem instead of building something complicated.</li>
+<li><strong>A strong business and product sense.</strong><br>In the development of a feature, developers often need to make product decisions that aren’t covered in the spec.  Their ability to make the right call depends on an understanding of why a feature is good for the business, and how products should be built.</li>
+<li><strong>They focus on the highest impact items.</strong><br>Good engineers get distracted.  Great engineers spend their time where it matters. </li>
+<li><strong>Strong social skills.</strong><br>An engineer needs to effectively interact with people across the company to be great a their job. If they can only interact with other developers, then they are only good at their job.</li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/promote/">promote</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2014/12/25/Goog-Engineer-Keys/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2014/11/14/hello-world/" title="Hello World" itemprop="url">Hello World</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2014-11-13T16:30:01.000Z" itemprop="datePublished"> Published Nov 14 2014</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <p>Welcome to <a href="http://hexo.io/" target="_blank" rel="external">Hexo</a>! This is your very first post. Check <a href="http://hexo.io/docs/" target="_blank" rel="external">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="http://hexo.io/docs/troubleshooting.html" target="_blank" rel="external">trobuleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="external">GitHub</a>.</p>
+<p><em>single asterisks</em></p>
+<p><strong>double asterisks</strong></p>
+<ul>
+<li>Red</li>
+<li>Green</li>
+<li>Blue</li>
+</ul>
+<ol>
+<li>Bird</li>
+<li>McHale</li>
+<li>Parish</li>
+</ol>
+<h2 id="Quick_Start">Quick Start</h2>
+<h3 id="Create_a_new_post">Create a new post</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo new <span class="string">"My New Post"</span></div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/writing.html" target="_blank" rel="external">Writing</a></p>
+<h3 id="Run_server">Run server</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo server</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/server.html" target="_blank" rel="external">Server</a></p>
+<h3 id="Generate_static_files">Generate static files</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo generate</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/generating.html" target="_blank" rel="external">Generating</a></p>
+<h3 id="Deploy_to_remote_sites">Deploy to remote sites</h3>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">$ hexo deploy</div></pre></td></tr></table></figure>
+
+<p>More info: <a href="http://hexo.io/docs/deployment.html" target="_blank" rel="external">Deployment</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/test/">test</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2014/11/14/hello-world/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+ </html>

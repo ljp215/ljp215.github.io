@@ -1,0 +1,644 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>java锁优化 | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="1. 同步的原理
+JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指">
+    
+    
+    <meta name="description" content="1. 同步的原理
+JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java锁优化">
+<meta property="og:url" content="http://luojinping.com/2015/07/09/java锁优化/">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="1. 同步的原理
+JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit">
+<meta property="og:image" content="/img/markword_state.jpg">
+<meta property="og:image" content="/img/biased_lock_flow.jpg">
+<meta property="og:image" content="/img/biased_lock_convert_flow.jpg">
+<meta property="og:image" content="/img/light_lock_flow.jpg">
+<meta property="og:image" content="/img/light_lock_progress.jpg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java锁优化">
+<meta name="twitter:description" content="1. 同步的原理
+JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/07/09/java锁优化/" title="java锁优化" itemprop="url">java锁优化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-07-09T01:01:43.000Z" itemprop="datePublished"> Published Jul 9 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-_同步的原理"><span class="toc-number">1.</span> <span class="toc-text">1. 同步的原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-_Java对象头"><span class="toc-number">2.</span> <span class="toc-text">2. Java对象头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-_几种锁的类型"><span class="toc-number">3.</span> <span class="toc-text">3. 几种锁的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1_偏向锁"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 偏向锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的进一步理解"><span class="toc-number">3.1.1.</span> <span class="toc-text">偏向锁的进一步理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的获取"><span class="toc-number">3.1.2.</span> <span class="toc-text">偏向锁的获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的撤销"><span class="toc-number">3.1.3.</span> <span class="toc-text">偏向锁的撤销</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的设置"><span class="toc-number">3.1.4.</span> <span class="toc-text">偏向锁的设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2_自旋锁"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 自旋锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3_轻量级锁"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 轻量级锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级锁加锁"><span class="toc-number">3.3.1.</span> <span class="toc-text">轻量级锁加锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级锁解锁"><span class="toc-number">3.3.2.</span> <span class="toc-text">轻量级锁解锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4_重量级锁"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 重量级锁</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-_锁的优缺点对比"><span class="toc-number">4.</span> <span class="toc-text">4. 锁的优缺点对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#refers:"><span class="toc-number">5.</span> <span class="toc-text">refers:</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="1-_同步的原理">1. 同步的原理</h1>
+<p>JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到方法结束处和异常处， JVM要保证每个monitorenter必须有对应的monitorexit与之配对。任何对象都有一个 monitor 与之关联，当且一个monitor 被持有后，它将处于锁定状态。线程执行到 monitorenter 指令时，将会尝试获取对象所对应的 monitor 的所有权，即尝试获得对象的锁。</p>
+<h1 id="2-_Java对象头">2. Java对象头</h1>
+<p>锁存在Java对象头里。如果对象是数组类型，则虚拟机用3个Word（字宽）存储对象头，如果对象是非数组类型，则用2字宽存储对象头。在32位虚拟机中，一字宽等于四字节，即32bit。</p>
+<table>
+<thead>
+<tr>
+<th>长度</th>
+<th>内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>32/64bit</td>
+<td>Mark Word</td>
+<td>存储对象的hashCode或锁信息等</td>
+</tr>
+<tr>
+<td>32/64bit</td>
+<td>Class Metadata Address</td>
+<td>存储到对象类型数据的指针</td>
+</tr>
+<tr>
+<td>32/64bit</td>
+<td>Array length</td>
+<td>数组的长度（如果当前对象是数组）</td>
+</tr>
+</tbody>
+</table>
+<p>Java对象头里的Mark Word里默认存储对象的HashCode，分代年龄和锁标记位。32位JVM的Mark Word的默认存储结构如下：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>25 bit</th>
+<th>4bit</th>
+<th>1bit<br>是否是偏向锁</th>
+<th>2bit<br>锁标志位</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>无锁状态</td>
+<td>对象的hashCode</td>
+<td>对象分代年龄</td>
+<td>0</td>
+<td>01</td>
+</tr>
+</tbody>
+</table>
+<p>在运行期间Mark Word里存储的数据会随着锁标志位的变化而变化。Mark Word可能变化为存储以下4种数据：</p>
+<p><img src="/img/markword_state.jpg" alt=""></p>
+<h1 id="3-_几种锁的类型">3. 几种锁的类型</h1>
+<p><strong>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。</strong></p>
+<p>Java SE1.6为了减少获得锁和释放锁所带来的性能消耗，引入了“偏向锁”和“轻量级锁”，所以在Java SE1.6里锁一共有四种状态，无锁状态，偏向锁状态，轻量级锁状态和重量级锁状态，它会随着竞争情况逐渐升级。</p>
+<p><strong>锁可以升级但不能降级，意味着偏向锁升级成轻量级锁后不能降级成偏向锁。这种锁升级却不能降级的策略，目的是为了提高获得锁和释放锁的效率。</strong></p>
+<h2 id="3-1_偏向锁">3.1 偏向锁</h2>
+<p>Hotspot的作者经过以往的研究发现大多数情况下锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁的目的是在某个线程获得锁之后，消除这个线程锁重入（CAS）的开销，看起来让这个线程得到了偏护。<br><img src="/img/biased_lock_flow.jpg" alt=""></p>
+<h3 id="偏向锁的进一步理解">偏向锁的进一步理解</h3>
+<p>偏向锁的释放不需要做任何事情，这也就意味着加过偏向锁的MarkValue会一直保留偏向锁的状态，因此即便同一个线程持续不断地加锁解锁，也是没有开销的。 </p>
+<p>另一方面，偏向锁比轻量锁更容易被终结，轻量锁是在有锁竞争出现时升级为重量锁，而一般偏向锁是在有不同线程申请锁时升级为轻量锁，这也就意味着假如一个对象先被线程1加锁解锁，再被线程2加锁解锁，这过程中没有锁冲突，也一样会发生偏向锁失效，不同的是这回要先退化为无锁的状态，再加轻量锁，如图：<br><img src="/img/biased_lock_convert_flow.jpg" alt=""></p>
+<p>另外，JVM对那种会有多线程加锁，但不存在锁竞争的情况也做了优化，听起来比较拗口，但在现实应用中确实是可能出现这种情况，因为线程之前除了互斥之外也可能发生同步关系，被同步的两个线程（一前一后）对共享对象锁的竞争很可能是没有冲突的。对这种情况，JVM用一个epoch表示一个偏向锁的时间戳（真实地生成一个时间戳代价还是蛮大的，因此这里应当理解为一种类似时间戳的identifier），对epoch，官方是这么解释的：</p>
+<blockquote>
+<p>A similar mechanism, called bulk rebiasing, optimizes situations in which objects of a class are locked and unlocked by different threads but never concurrently. It invalidates the bias of all instances of a class without disabling biased locking. An epoch value in the class acts as a timestamp that indicates the validity of the bias. This value is copied into the header word upon object allocation. Bulk rebiasing can then efficiently be implemented as an increment of the epoch in the appropriate class. The next time an instance of this class is going to be locked, the code detects a different value in the header word and rebiases the object towards the current thread.</p>
+</blockquote>
+<h3 id="偏向锁的获取">偏向锁的获取</h3>
+<p>当一个线程访问同步块并获取锁时，会在对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程在进入和退出同步块时不需要花费CAS操作来加锁和解锁，而只需简单的测试一下对象头的Mark Word里是否存储着指向当前线程的偏向锁，如果测试成功，表示线程已经获得了锁，如果测试失败，则需要再测试下Mark Word中偏向锁的标识是否设置成1（表示当前是偏向锁），如果没有设置，则使用CAS竞争锁，如果设置了，则尝试使用CAS将对象头的偏向锁指向当前线程。</p>
+<h3 id="偏向锁的撤销">偏向锁的撤销</h3>
+<p>偏向锁使用了一种等到竞争出现才释放锁的机制，所以当其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，然后检查持有偏向锁的线程是否活着，如果线程不处于活动状态，则将对象头设置成无锁状态，如果线程仍然活着，拥有偏向锁的栈会被执行，遍历偏向对象的锁记录，栈中的锁记录和对象头的Mark Word要么重新偏向于其他线程，要么恢复到无锁或者标记对象不适合作为偏向锁，最后唤醒暂停的线程。下图中的线程1演示了偏向锁初始化的流程，线程2演示了偏向锁撤销的流程。</p>
+<h3 id="偏向锁的设置">偏向锁的设置</h3>
+<p>关闭偏向锁：偏向锁在Java 6和Java 7里是默认启用的，但是它在应用程序启动几秒钟之后才激活，如有必要可以使用JVM参数来关闭延迟-XX：BiasedLockingStartupDelay = 0。如果你确定自己应用程序里所有的锁通常情况下处于竞争状态，可以通过JVM参数关闭偏向锁-XX:-UseBiasedLocking=false，那么默认会进入轻量级锁状态。</p>
+<h2 id="3-2_自旋锁">3.2 自旋锁</h2>
+<p>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。同时我们可以发现，很多对象锁的锁定状态只会持续很短的一段时间，例如整数的自加操作，在很短的时间内阻塞并唤醒线程显然不值得，为此引入了自旋锁。</p>
+<p>所谓“自旋”，就是让线程去执行一个无意义的循环，循环结束后再去重新竞争锁，如果竞争不到继续循环，循环过程中线程会一直处于running状态，但是基于JVM的线程调度，会出让时间片，所以其他线程依旧有申请锁和释放锁的机会。</p>
+<p>自旋锁省去了阻塞锁的时间空间（队列的维护等）开销，但是长时间自旋就变成了“忙式等待”，忙式等待显然还不如阻塞锁。所以自旋的次数一般控制在一个范围内，例如10,100等，在超出这个范围后，自旋锁会升级为阻塞锁。</p>
+<p>对自旋锁周期的选择上，HotSpot认为最佳时间应是一个线程上下文切换的时间，但目前并没有做到。经过调查，目前只是通过汇编暂停了几个CPU周期，除了自旋周期选择，HotSpot还进行许多其他的自旋优化策略，具体如下：</p>
+<ul>
+<li>如果平均负载小于CPUs则一直自旋 </li>
+<li>如果有超过(CPUs/2)个线程正在自旋，则后来线程直接阻塞 </li>
+<li>如果正在自旋的线程发现Owner发生了变化则延迟自旋时间（自旋计数）或进入阻塞 如果CPU处于节电模式则停止自旋 </li>
+<li>自旋时间的最坏情况是CPU的存储延迟（CPU A存储了一个数据，到CPU B得知这个数据直接的时间差）</li>
+</ul>
+<h2 id="3-3_轻量级锁">3.3 轻量级锁</h2>
+<h3 id="轻量级锁加锁">轻量级锁加锁</h3>
+<p>线程在执行同步块之前，JVM会先在当前线程的栈桢中创建用于存储锁记录的空间，并将对象头中的Mark Word复制到锁记录中，官方称为Displaced Mark Word。<strong>然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针。如果成功，当前线程获得锁，如果失败，则自旋获取锁，当自旋获取锁仍然失败时，表示存在其他线程竞争锁(两条或两条以上的线程竞争同一个锁)，则轻量级锁会膨胀成重量级锁。</strong></p>
+<h3 id="轻量级锁解锁">轻量级锁解锁</h3>
+<p><strong>轻量级解锁时，会使用原子的CAS操作来将Displaced Mark Word替换回到对象头，如果成功，则表示同步过程已完成。</strong>如果失败，表示有其他线程尝试过获取该锁，则要在释放锁的同时唤醒被挂起的线程。下图是两个线程同时争夺锁，导致锁膨胀的流程图。</p>
+<p><img src="/img/light_lock_flow.jpg" alt=""><br><img src="/img/light_lock_progress.jpg" alt=""></p>
+<h2 id="3-4_重量级锁">3.4 重量级锁</h2>
+<p>重量锁在JVM中又叫对象监视器（Monitor），它很像C中的Mutex，除了具备Mutex互斥的功能，它还负责实现了Semaphore的功能，也就是说它至少包含一个竞争锁的队列，和一个信号阻塞队列（wait队列），前者负责做互斥，后一个用于做线程同步。</p>
+<h1 id="4-_锁的优缺点对比">4. 锁的优缺点对比</h1>
+<table>
+<thead>
+<tr>
+<th>锁</th>
+<th>优点</th>
+<th>缺点</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>偏向锁</td>
+<td>加锁和解锁不需要额外的消耗，和执行非同步方法比仅存在纳秒级的差距</td>
+<td>如果线程间存在锁竞争，会带来额外的锁撤销的消耗</td>
+<td>适用于只有一个线程访问同步块场景</td>
+</tr>
+<tr>
+<td>轻量级锁</td>
+<td>竞争的线程不会阻塞，提高了程序的响应速度</td>
+<td>如果始终得不到锁竞争的线程使用自旋会消耗CPU</td>
+<td>追求响应时间,锁占用时间很短</td>
+</tr>
+<tr>
+<td>重量级锁</td>
+<td>线程竞争不使用自旋，不会消耗CPU</td>
+<td>线程阻塞，响应时间缓慢</td>
+<td>追求吞吐量,锁占用时间较长</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<h1 id="refers:">refers:</h1>
+<blockquote>
+<p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="external">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="external">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="external">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="external">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="http://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="external">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="http://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="external">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="http://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="external">http://blog.csdn.net/coslay/article/details/41526635</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2015/07/09/java锁优化/" data-title="java锁优化 | Zane Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/07/14/synchronized详解/" title="synchronized详解">
+  <strong>上一篇：</strong><br/>
+  <span>
+  synchronized详解</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/22/volatile详解/"  title="volatile详解">
+ <strong>下一篇：</strong><br/> 
+ <span>volatile详解
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-_同步的原理"><span class="toc-number">1.</span> <span class="toc-text">1. 同步的原理</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-_Java对象头"><span class="toc-number">2.</span> <span class="toc-text">2. Java对象头</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-_几种锁的类型"><span class="toc-number">3.</span> <span class="toc-text">3. 几种锁的类型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#3-1_偏向锁"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 偏向锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的进一步理解"><span class="toc-number">3.1.1.</span> <span class="toc-text">偏向锁的进一步理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的获取"><span class="toc-number">3.1.2.</span> <span class="toc-text">偏向锁的获取</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的撤销"><span class="toc-number">3.1.3.</span> <span class="toc-text">偏向锁的撤销</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#偏向锁的设置"><span class="toc-number">3.1.4.</span> <span class="toc-text">偏向锁的设置</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-2_自旋锁"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 自旋锁</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-3_轻量级锁"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 轻量级锁</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级锁加锁"><span class="toc-number">3.3.1.</span> <span class="toc-text">轻量级锁加锁</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#轻量级锁解锁"><span class="toc-number">3.3.2.</span> <span class="toc-text">轻量级锁解锁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-4_重量级锁"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 重量级锁</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-_锁的优缺点对比"><span class="toc-number">4.</span> <span class="toc-text">4. 锁的优缺点对比</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#refers:"><span class="toc-number">5.</span> <span class="toc-text">refers:</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>

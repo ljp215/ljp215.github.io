@@ -1,0 +1,591 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>volatile详解 | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="volatile的含义
+volatile是一个类型修饰符（type specifier）。它是被设计用来修饰被不同线程访问和修改的变量。volatile变量自身具有下列特性：
+
+可见性：对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量的写入。
+原子性：对任意单个vol">
+    
+    
+    <meta name="description" content="volatile的含义
+volatile是一个类型修饰符（type specifier）。它是被设计用来修饰被不同线程访问和修改的变量。volatile变量自身具有下列特性：
+
+可见性：对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量的写入。
+原子性：对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。
+
+vola">
+<meta property="og:type" content="article">
+<meta property="og:title" content="volatile详解">
+<meta property="og:url" content="http://luojinping.com/2015/06/22/volatile详解/">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="volatile的含义
+volatile是一个类型修饰符（type specifier）。它是被设计用来修饰被不同线程访问和修改的变量。volatile变量自身具有下列特性：
+
+可见性：对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量的写入。
+原子性：对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。
+
+vola">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="volatile详解">
+<meta name="twitter:description" content="volatile的含义
+volatile是一个类型修饰符（type specifier）。它是被设计用来修饰被不同线程访问和修改的变量。volatile变量自身具有下列特性：
+
+可见性：对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量的写入。
+原子性：对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。
+
+vola">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/06/22/volatile详解/" title="volatile详解" itemprop="url">volatile详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-22T14:21:36.000Z" itemprop="datePublished"> Published Jun 22 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的含义"><span class="toc-number">1.</span> <span class="toc-text">volatile的含义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile与synchronized的比较"><span class="toc-number">2.</span> <span class="toc-text">volatile与synchronized的比较</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的适用范围"><span class="toc-number">3.</span> <span class="toc-text">volatile的适用范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的内存语义"><span class="toc-number">4.</span> <span class="toc-text">volatile的内存语义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile内存语义的实现"><span class="toc-number">5.</span> <span class="toc-text">volatile内存语义的实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的性能"><span class="toc-number">6.</span> <span class="toc-text">volatile的性能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的使用场景"><span class="toc-number">7.</span> <span class="toc-text">volatile的使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#场景1：状态标志"><span class="toc-number">7.1.</span> <span class="toc-text">场景1：状态标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#场景2：一次性安全发布（one-time_safe_publication）"><span class="toc-number">7.2.</span> <span class="toc-text">场景2：一次性安全发布（one-time safe publication）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#场景3：结合_volatile_和_synchronized_实现的“开销较低的读－写锁”"><span class="toc-number">7.3.</span> <span class="toc-text">场景3：结合 volatile 和 synchronized 实现的“开销较低的读－写锁”</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#refers"><span class="toc-number">9.</span> <span class="toc-text">refers</span></a></li></ol>
+		
+		</div>
+		
+		<h1 id="volatile的含义">volatile的含义</h1>
+<p>volatile是一个类型修饰符（type specifier）。它是被设计用来修饰被不同线程访问和修改的变量。<br>volatile变量自身具有下列特性：</p>
+<ul>
+<li>可见性：对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量的写入。</li>
+<li>原子性：对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。</li>
+</ul>
+<h1 id="volatile与synchronized的比较">volatile与synchronized的比较</h1>
+<p>Java语言包含两种内在的同步机制：被synchronized修饰的同步块（或方法）和被volatile修饰的变量。这两种机制都是为了实现代码线程的安全性。与 synchronized 块相比，volatile 变量的同步性较差，使用时容易出错，但它更简单且开销更低。</p>
+<p><strong>锁提供了两种主要特性：互斥(mutual exclusion)和可见性(visibility)。</strong>互斥即一次只允许一个线程持有某个特定的锁，因此可使用该特性实现对共享数据的协调访问协议，这样，一次就只有一个线程能够使用该共享数据。可见性要更加复杂一些，它必须确保释放锁之前对共享数据做出的更改对于随后获得该锁的另一个线程是可见的 —— 如果没有同步机制提供的这种可见性保证，线程看到的共享变量可能是修改前的值或不一致的值，这将引发许多严重问题。</p>
+<p>volatile 变量具有 synchronized 的可见性特性，但是不具备原子特性。这就是说线程能够自动发现 volatile 变量的最新值。volatile 变量可用于提供线程安全，但是只能应用于非常有限的一组用例：多个变量之间或者某个变量的当前值与修改后值之间没有约束。因此，单独使用 volatile 还不足以实现计数器、互斥锁或任何具有与多个变量相关的不变式（Invariants）的类（例如 “start &lt;=end”）。</p>
+<p>出于简易性或可伸缩性的考虑，一般倾向于使用 volatile 变量而不是锁。但是当使用 volatile 变量时，某些习惯用法（idiom）更加易于编码和阅读。此外，volatile 变量不会像锁那样造成线程阻塞。在某些情况下，如果读操作远远大于写操作，volatile 变量还可以提供优于锁的性能优势。</p>
+<h1 id="volatile的适用范围">volatile的适用范围</h1>
+<p>您只能在有限的一些情形下使用 volatile 变量替代锁。要使 volatile 变量提供理想的线程安全，必须同时满足下面两个条件：<br>对变量的写操作不依赖于当前值。<br>该变量没有包含在具有其他变量的不变式中。</p>
+<h1 id="volatile的内存语义">volatile的内存语义</h1>
+<p>volatile写的内存语义如下：</p>
+<ul>
+<li>当写一个volatile变量时，JMM会把该线程对应的本地内存中的共享变量刷新到主内存。<br>volatile读的内存语义如下：</li>
+<li>当读一个volatile变量时，JMM会把该线程对应的本地内存置为无效。后续线程读此变量时，将从主内存中读取并load到本地内存。</li>
+</ul>
+<h1 id="volatile内存语义的实现">volatile内存语义的实现</h1>
+<p>JMM(Java Memory Model) 如何实现volatile写/读的内存语义。<br>JMM内部会实现指令重排序。为了实现volatile内存语义，JMM会分别限制这两种类型的重排序类型。</p>
+<p>从JSR-133开始，volatile变量的写-读可以实现线程之间的通信。<br>从内存语义的角度来说，volatile与监视器锁有相同的效果：volatile写和监视器的释放有相同的内存语义；volatile读与监视器的获取有相同的内存语义。</p>
+<p><strong>更进一步地说明</strong></p>
+<blockquote>
+<p>处理器为了提高处理速度，不直接和内存进行通讯，而是先将系统内存的数据读到内部缓存（L1,L2或其他）后再进行操作，但操作完之后不知道何时会写到内存，如果对声明了Volatile变量进行写操作，JVM就会向处理器发送一条Lock前缀的指令，将这个变量所在缓存行的数据写回到系统内存。但是就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题，所以在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。</p>
+</blockquote>
+<p>为了实现volatile的内存语义，编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排序。对于编译器来说，发现一个最优布置来最小化插入屏障的总数几乎不可能，为此，JMM采取保守策略。下面是基于保守策略的JMM内存屏障插入策略：</p>
+<ul>
+<li>在每个volatile写操作的前面插入一个StoreStore屏障。</li>
+<li>在每个volatile写操作的后面插入一个StoreLoad屏障。</li>
+<li>在每个volatile读操作的后面插入一个LoadLoad屏障。</li>
+<li>在每个volatile读操作的后面插入一个LoadStore屏障。</li>
+<li>上述内存屏障插入策略非常保守，但它可以保证在任意处理器平台，任意的程序中都能得到正确的volatile内存语义。</li>
+</ul>
+<p>这里A线程写一个volatile变量后，B线程读同一个volatile变量。A线程在写volatile变量之前所有可见的共享变量，在B线程读同一个volatile变量后，将立即变得对B线程可见。</p>
+<p>下面对volatile写和volatile读的内存语义做个总结：<br>线程A写一个volatile变量，实质上是线程A向接下来将要读这个volatile变量的某个线程发出了（其对共享变量所在修改的）消息。<br>线程B读一个volatile变量，实质上是线程B接收了之前某个线程发出的（在写这个volatile变量之前对共享变量所做修改的）消息。<br>线程A写一个volatile变量，随后线程B读这个volatile变量，这个过程实质上是线程A通过主内存向线程B发送消息。</p>
+<h1 id="volatile的性能">volatile的性能</h1>
+<p>在目前大多数的处理器架构上，volatile 读操作开销非常低 —— 几乎和非 volatile 读操作一样。而 volatile 写操作的开销要比非 volatile 写操作多很多，因为要保证可见性需要实现内存栅栏(Memory barrier)，即便如此，volatile 的总开销仍然要比锁获取低。</p>
+<h1 id="volatile的使用场景">volatile的使用场景</h1>
+<p>很多并发性专家事实上往往引导用户远离 volatile 变量，因为使用它们要比使用锁更加容易出错。然而，如果谨慎地遵循一些良好定义的模式，就能够在很多场合内安全地使用 volatile 变量。要始终牢记使用 volatile 的限制 —— 只有在状态真正独立于程序内其他内容时才能使用 volatile —— 这条规则能够避免将这些模式扩展到不安全的用例。</p>
+<h2 id="场景1：状态标志">场景1：状态标志</h2>
+<p>一个布尔状态标志，用于指示发生了一个重要的一次性事件，例如完成初始化或请求停机。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> shutdownRequested;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shutdown</span>() { shutdownRequested = <span class="keyword">true</span>; }</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doWork</span>() { </div><div class="line">    <span class="keyword">while</span> (!shutdownRequested) { </div><div class="line">        <span class="comment">// do stuff</span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="场景2：一次性安全发布（one-time_safe_publication）">场景2：一次性安全发布（one-time safe publication）</h2>
+<p>缺乏同步会导致无法实现可见性，这使得确定何时写入对象引用而不是原语值变得更加困难。在缺乏同步的情况下，可能会遇到某个对象引用的更新值（由另一个线程写入）和该对象状态的旧值同时存在。（这就是造成著名的双重检查锁定（double-checked-locking）问题的根源，其中对象引用在没有同步的情况下进行读操作，产生的问题是您可能会看到一个更新的引用，但是仍然会通过该引用看到不完全构造的对象）。<br>实现安全发布对象的一种技术就是将对象引用定义为 volatile 类型。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> BackgroundFloobleLoader {</div><div class="line">    <span class="keyword">public</span> <span class="keyword">volatile</span> Flooble theFlooble;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initInBackground</span>() {</div><div class="line">        <span class="comment">// do lots of stuff</span></div><div class="line">        theFlooble = <span class="keyword">new</span> Flooble();  <span class="comment">// this is the only write to theFlooble</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SomeOtherClass {</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doWork</span>() {</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) { </div><div class="line">            <span class="comment">// do some stuff...</span></div><div class="line">            <span class="comment">// use the Flooble, but only if it is ready</span></div><div class="line">            <span class="keyword">if</span> (floobleLoader.theFlooble != <span class="keyword">null</span>) </div><div class="line">                doSomething(floobleLoader.theFlooble);</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>上面的代码中，如果 theFlooble 引用不是 volatile 类型，doWork() 中的代码在解除对 theFlooble 的引用时，将会得到一个不完全构造的 Flooble。volatile 类型的引用可以确保对象的发布形式的可见性，但是如果对象的状态在发布后将发生更改，那么就需要额外的同步。</p>
+<h2 id="场景3：结合_volatile_和_synchronized_实现的“开销较低的读－写锁”">场景3：结合 volatile 和 synchronized 实现的“开销较低的读－写锁”</h2>
+<p>目前为止，您应该了解了 volatile 的功能还不足以实现计数器。因为 ++x 实际上是三种操作（读、添加、存储）的简单组合，如果多个线程凑巧试图同时对 volatile 计数器执行增量操作，那么它的更新值有可能会丢失。</p>
+<p>然而，如果读操作远远超过写操作，您可以结合使用内部锁和 volatile 变量来减少公共代码路径的开销。清单 6 中显示的线程安全的计数器使用synchronized 确保增量操作是原子的，并使用 volatile 保证当前结果的可见性。如果更新不频繁的话，该方法可实现更好的性能，因为读路径的开销仅仅涉及 volatile 读操作，这通常要优于一个无竞争的锁获取的开销。 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@ThreadSafe</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> CheesyCounter {</div><div class="line">    <span class="comment">// Employs the cheap read-write lock trick</span></div><div class="line">    <span class="comment">// All mutative operations MUST be done with the 'this' lock held</span></div><div class="line">    @GuardedBy(<span class="string">"this"</span>) <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> <span class="keyword">value</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span>() { <span class="keyword">return</span> <span class="keyword">value</span>; }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> synchronized <span class="keyword">int</span> <span class="title">increment</span>() {</div><div class="line">        <span class="keyword">return</span> <span class="keyword">value</span>++;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>之所以将这种技术称之为 “开销较低的读－写锁” 是因为您使用了不同的同步机制进行读写操作。因为本例中的写操作违反了使用 volatile 的第一个条件，因此不能使用 volatile 安全地实现计数器 —— 您必须使用锁。然而，您可以在读操作中使用 volatile 确保当前值的可见性，因此可以使用锁进行所有变化的操作，使用 volatile 进行只读操作。其中，锁一次只允许一个线程访问值，volatile 允许多个线程执行读操作，因此当使用 volatile 保证读代码路径时，要比使用锁执行全部代码路径获得更高的共享度 —— 就像读－写操作一样。然而，要随时牢记这种模式的弱点：如果超越了该模式的最基本应用，结合这两个竞争的同步机制将变得非常困难。</p>
+<h1 id="总结">总结</h1>
+<p>与锁相比，volatile 变量是一种非常简单但同时又非常脆弱的同步机制，它在某些情况下将提供优于锁的性能和伸缩性。如果严格遵循 volatile 的使用条件 —— 即变量真正独立于其他变量和自己以前的值 —— 在某些情况下可以使用 volatile 代替 synchronized 来简化代码。然而，使用 volatile 的代码往往比使用锁的代码更加容易出错。本文介绍的模式涵盖了可以使用 volatile 代替 synchronized 的最常见的一些用例。遵循这些模式（注意使用时不要超过各自的限制）可以帮助您安全地实现大多数用例，使用 volatile 变量获得更佳性能。</p>
+<h1 id="refers">refers</h1>
+<blockquote>
+<p><a href="http://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-jtp06197.html</a><br><a href="http://www.infoq.com/cn/articles/java-memory-model-1" target="_blank" rel="external">http://www.infoq.com/cn/articles/java-memory-model-1</a><br><a href="http://www.infoq.com/cn/articles/ftf-java-volatile" target="_blank" rel="external">http://www.infoq.com/cn/articles/ftf-java-volatile</a><br><a href="http://zhhphappy.iteye.com/blog/2086149" target="_blank" rel="external">http://zhhphappy.iteye.com/blog/2086149</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2015/06/22/volatile详解/" data-title="volatile详解 | Zane Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/07/09/java锁优化/" title="java锁优化">
+  <strong>上一篇：</strong><br/>
+  <span>
+  java锁优化</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/06/22/内存栅栏/"  title="内存栅栏">
+ <strong>下一篇：</strong><br/> 
+ <span>内存栅栏
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的含义"><span class="toc-number">1.</span> <span class="toc-text">volatile的含义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile与synchronized的比较"><span class="toc-number">2.</span> <span class="toc-text">volatile与synchronized的比较</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的适用范围"><span class="toc-number">3.</span> <span class="toc-text">volatile的适用范围</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的内存语义"><span class="toc-number">4.</span> <span class="toc-text">volatile的内存语义</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile内存语义的实现"><span class="toc-number">5.</span> <span class="toc-text">volatile内存语义的实现</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的性能"><span class="toc-number">6.</span> <span class="toc-text">volatile的性能</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#volatile的使用场景"><span class="toc-number">7.</span> <span class="toc-text">volatile的使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#场景1：状态标志"><span class="toc-number">7.1.</span> <span class="toc-text">场景1：状态标志</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#场景2：一次性安全发布（one-time_safe_publication）"><span class="toc-number">7.2.</span> <span class="toc-text">场景2：一次性安全发布（one-time safe publication）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#场景3：结合_volatile_和_synchronized_实现的“开销较低的读－写锁”"><span class="toc-number">7.3.</span> <span class="toc-text">场景3：结合 volatile 和 synchronized 实现的“开销较低的读－写锁”</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#总结"><span class="toc-number">8.</span> <span class="toc-text">总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#refers"><span class="toc-number">9.</span> <span class="toc-text">refers</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>

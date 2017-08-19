@@ -1,0 +1,1458 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    
+    <meta name="description">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Zane Blog">
+<meta property="og:url" content="http://luojinping.com/page/2/">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Zane Blog">
+<meta name="twitter:description">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main">
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/02/判断图是否为树/" title="判断图是否为树" itemprop="url">判断图是否为树</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-02T11:43:46.000Z" itemprop="datePublished"> Published Feb 2 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="题目">题目</h2>
+<p>输入二维数组，a[i][j]=1 表示从i结点指向j结点。</p>
+<h3 id="eg1">eg1</h3>
+<p>0 1 1 0</p>
+<p>1 0 0 1</p>
+<p>1 0 0 0</p>
+<p>0 1 0 0</p>
+<p>是一棵树，树为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">       a</div><div class="line">       </div><div class="line">      /  \</div><div class="line">      </div><div class="line">    b    <span class="built_in">c</span></div><div class="line">    </div><div class="line">  /</div><div class="line">  </div><div class="line">d</div></pre></td></tr></table></figure>
+
+<h3 id="eg2">eg2</h3>
+<p>0 1 1 0</p>
+<p>1 0 0 1</p>
+<p>1 0 1 0</p>
+<p>0 1 1 0</p>
+<p>不是一颗树，是有环(a-b-d-c-a)的图：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">       a</div><div class="line">       </div><div class="line">      /  \</div><div class="line">      </div><div class="line">    b    <span class="built_in">c</span></div><div class="line">    </div><div class="line">  /      /</div><div class="line">  </div><div class="line">d  - — -</div></pre></td></tr></table></figure>
+
+<h2 id="关键点">关键点</h2>
+<p>判断一张图是否是一颗树的两个关键点：</p>
+<ul>
+<li>不存在环路(对于有向图，不存在环路也就意味着不存在强连通子图)</li>
+<li>满足边数加一等于顶点数的规律(不考虑重边和指向自身的边)</li>
+</ul>
+<h2 id="方法">方法</h2>
+<ol>
+<li><p>DFS</p>
+</li>
+<li><p>如果存在回路，则必存在一个子图，是一个环路。环路中所有顶点的度&gt;=2。时间复杂度O(ve)，v是顶点数，e是边数。</p><p>第一步：删除所有度&lt;=1的顶点及相关的边，并将另外与这些边相关的其它顶点的度减一。</p><p> 第二步：将度数变为1的顶点排入队列，并从该队列中取出一个顶点重复步骤一。如果最后还有未删除顶点，则存在环，否则没有环。这个复杂度也很高</p>
+</li>
+<li><p>结合树的特性(边数+1 = 顶点数)和并查集来做，代码见下文。</p>
+</li>
+</ol>
+<h2 id="实现">实现</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TreeJudgeUnionB {</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> Edge {</div><div class="line">        <span class="keyword">int</span> start;</div><div class="line">        <span class="keyword">int</span> end;</div><div class="line"></div><div class="line">        <span class="keyword">public</span> <span class="title">Edge</span>(<span class="keyword">int</span> start, <span class="keyword">int</span> end) {</div><div class="line">            <span class="keyword">this</span>.start = start;</div><div class="line">            <span class="keyword">this</span>.end = end;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// the number of edges</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n;</div><div class="line"></div><div class="line">    <span class="comment">// edge list</span></div><div class="line">    <span class="keyword">private</span> List&lt;Edge&gt; edges = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="comment">// the index of group</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] <span class="keyword">group</span>;</div><div class="line"></div><div class="line">    <span class="comment">// the size of tree</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] size;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="title">TreeJudgeUnionB</span>(<span class="keyword">int</span> n, List&lt;Edge&gt; edges) {</div><div class="line">        <span class="keyword">this</span>.n = n;</div><div class="line">        <span class="keyword">this</span>.edges = edges;</div><div class="line"></div><div class="line">        <span class="keyword">group</span> = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        size = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {</div><div class="line">            <span class="keyword">group</span>[i] = i;</div><div class="line">            size[i] = <span class="number">1</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">find</span>(<span class="keyword">int</span> i) {</div><div class="line">        <span class="comment">// find the root of a tree which contains i node</span></div><div class="line">        <span class="keyword">while</span> (i != <span class="keyword">group</span>[i]) {</div><div class="line">            i = <span class="keyword">group</span>[i];</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> i;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> boolean <span class="title">union</span>(<span class="keyword">int</span> groupI, <span class="keyword">int</span> groupJ) {</div><div class="line">        <span class="keyword">int</span> iRoot = find(groupI);</div><div class="line">        <span class="keyword">int</span> jRoot = find(groupJ);</div><div class="line">        <span class="keyword">if</span> (iRoot != jRoot) {</div><div class="line">            <span class="keyword">if</span> (size[iRoot] &lt; size[jRoot]) {</div><div class="line">                <span class="keyword">group</span>[iRoot] = jRoot;</div><div class="line">                size[jRoot] += size[iRoot];</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                <span class="keyword">group</span>[jRoot] = iRoot;</div><div class="line">                size[iRoot] += size[jRoot];</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        } <span class="keyword">else</span> {</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> boolean <span class="title">isTree</span>() {</div><div class="line">        <span class="keyword">for</span> (Edge edge : edges) {</div><div class="line">            <span class="keyword">if</span> (!union(edge.start, edge.end)) {</div><div class="line">                System.<span class="keyword">out</span>.println(<span class="string">"input two nodes in the same tree"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        boolean hasRoot = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">group</span>.length; i++) {</div><div class="line">            <span class="keyword">if</span> (i == <span class="keyword">group</span>[i]) {</div><div class="line">                <span class="keyword">if</span> (!hasRoot) {</div><div class="line">                    hasRoot = <span class="keyword">true</span>;</div><div class="line">                } <span class="keyword">else</span> {</div><div class="line">                    System.<span class="keyword">out</span>.println(<span class="string">"exist more than one tree root"</span>);</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        printGroup();</div><div class="line"></div><div class="line">        <span class="keyword">return</span> hasRoot;</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printGroup</span>() {</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {</div><div class="line">            System.<span class="keyword">out</span>.print(<span class="keyword">group</span>[i] + <span class="string">", "</span>);</div><div class="line">        }</div><div class="line">        System.<span class="keyword">out</span>.println();</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">        <span class="keyword">int</span> n = <span class="number">5</span>;</div><div class="line">        List&lt;Edge&gt; edges = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">4</span>);</div><div class="line">        isTree(n, edges); <span class="comment">// true</span></div><div class="line"></div><div class="line">        n = <span class="number">5</span>;</div><div class="line">        edges.clear();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">4</span>);</div><div class="line">        isTree(n, edges); <span class="comment">// false</span></div><div class="line"></div><div class="line">        n = <span class="number">4</span>;</div><div class="line">        edges.clear();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        isTree(n, edges);  <span class="comment">// false</span></div><div class="line"></div><div class="line">        n = <span class="number">7</span>;</div><div class="line">        edges.clear();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">4</span>, <span class="number">5</span>);</div><div class="line">        addEdge(edges, <span class="number">3</span>, <span class="number">4</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">6</span>);</div><div class="line">        isTree(n, edges);  <span class="comment">// true</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addEdge</span>(List&lt;Edge&gt; edges, <span class="keyword">int</span> i, <span class="keyword">int</span> j) {</div><div class="line">        edges.add(<span class="keyword">new</span> Edge(i, j));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">isTree</span>(<span class="keyword">int</span> n, List&lt;Edge&gt; edges) {</div><div class="line">        TreeJudgeUnionB treeJudgeUnionA = <span class="keyword">new</span> TreeJudgeUnionB(n, edges);</div><div class="line"></div><div class="line">        boolean isTree = treeJudgeUnionA.isTree();</div><div class="line"></div><div class="line">        System.<span class="keyword">out</span>.println(<span class="string">"This is a tree? "</span> + isTree);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/02/判断图是否为树/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/02/02/并查集-Union-Find-算法/" title="并查集(Union-Find)算法" itemprop="url">并查集(Union-Find)算法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-02T09:52:22.000Z" itemprop="datePublished"> Published Feb 2 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="介绍">介绍</h2>
+<p>在计算机科学中，并查集是一种树型的数据结构，其保持着用于处理一些不相交集合（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个操作用于此数据结构：</p>
+<p>Find：确定元素属于哪一个子集。它可以被用来确定两个元素是否属于同一子集。</p>
+<p>Union：将两个子集合并成同一个集合。</p>
+<h2 id="适用场景">适用场景</h2>
+<p>适合于判断，给出一组结点，判断他们是否联通。</p>
+<h2 id="实现思路">实现思路</h2>
+<ol>
+<li>建立n个分组，每个分组代表一堆可以互相联通的结点。</li>
+<li>遍历每对结点，找到他们各自所属的分组A, B</li>
+<li>如果A != B，则将A, B分组union起来，表示A, B分组联通了</li>
+<li>如果A == B，则跳过</li>
+</ol>
+<h3 id="Simple_Find_操作">Simple Find 操作</h3>
+<p>用 group[] 数组来判断某个id属于的组。初始状态时，每个id都属于不同的组。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(int <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span> &lt; <span class="built_in">size</span>; <span class="built_in">i</span>++)  </div><div class="line">    group<span class="matrix">[i]</span> = <span class="built_in">i</span>;</div></pre></td></tr></table></figure>
+
+<h3 id="Simple_Union_操作">Simple Union 操作</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span>(<span class="keyword">int</span> p, <span class="keyword">int</span> q) {   </div><div class="line">  <span class="comment">// get the groupId of every node</span></div><div class="line">  <span class="keyword">int</span> pId = find(p);  </div><div class="line">  <span class="keyword">int</span> qId = find(q);  </div><div class="line">  </div><div class="line">  <span class="comment">// the two nodes are connected, return</span></div><div class="line">  <span class="keyword">if</span> (pId == qId) {</div><div class="line">    <span class="keyword">return</span>;  </div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="comment">// union the two nodes, change groupId</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; id.length; i++) {</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">group</span>[i] == pId) {</div><div class="line">        <span class="keyword">group</span>[i] = qId;  </div><div class="line">      }</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="优化">优化</h3>
+<p>上面最后一步的union操作存在性能问题，即每次都需要改变其中一个分组中的所有结点的分组id。优化的做法是，用一颗树来表示每个分组，树的根节点表示当前组的id。</p>
+<p>但如果用树来表示会引入一个问题，即可能存在树退化为链表的情况，这样一来，每一次加入一个结点再找根结点也会很耗时，没有达到优化的目的。<br>针对树可能退化为链表的解决方案是，每次合并树时，总是将矮的树挂到高的树下。这种方式也称为「按秩合并」</p>
+<p>除了使用树来优化union性能以外，还有一种方式，称为「路径压缩」，即 Find 递归地经过树，改变每一个节点的引用到根节点。得到的树将更加扁平，为以后直接或者间接引用节点的操作加速。</p>
+<p>总结：</p>
+<ol>
+<li>使用树来存储分组，Union时「按秩合并」</li>
+<li>「路径压缩」，Find时改变每一个节点的引用到根节点</li>
+</ol>
+<h3 id="Find_操作">Find 操作</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// store every tree's size</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)  </div><div class="line">    <span class="keyword">size</span>[i] = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">find</span>(<span class="keyword">int</span> p)  </div><div class="line">{    </div><div class="line">  <span class="keyword">if</span>(p != <span class="keyword">group</span>[p]){</div><div class="line">    <span class="keyword">group</span>[p] = find(<span class="keyword">group</span>[p])</div><div class="line">  }</div><div class="line">    </div><div class="line">  <span class="keyword">return</span> <span class="keyword">group</span>[p]</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Union_操作">Union 操作</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p, <span class="keyword">int</span> q)</div><div class="line">{</div><div class="line">	<span class="keyword">int</span> i = <span class="keyword">find</span>(p);</div><div class="line">	<span class="keyword">int</span> j = <span class="keyword">find</span>(q);</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (i == j) {</div><div class="line">	  <span class="keyword">return</span>;</div><div class="line">	} </div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">size</span>[i] &lt; <span class="keyword">size</span>[j]) { </div><div class="line">	  <span class="keyword">group</span>[i] = j; </div><div class="line">	  <span class="keyword">size</span>[j] += <span class="keyword">size</span>[i]; </div><div class="line">	}	<span class="keyword">else</span> { </div><div class="line">	  <span class="keyword">group</span>[j] = i; </div><div class="line">	  <span class="keyword">size</span>[i] += <span class="keyword">size</span>[j]; </div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="时间复杂度">时间复杂度</h3>
+<p>Statement: If m operations, either Union or Find, are applied to n elements, the total run time is O(m log<em>n), where log</em> is the iterated logarithm.<br>Proof of O(log<em>n) time complexity of union-find: <a href="https://en.wikipedia.org/wiki/Proof_of_O\(log" target="_blank" rel="external">https://en.wikipedia.org/wiki/Proof_of_O\(log</a></em>n)_time_complexity_of_union%E2%80%93find</p>
+<h2 id="Refer">Refer</h2>
+<blockquote>
+<p><a href="https://zh.wikipedia.org/wiki/%E5%B9%B6%E6%9F%A5%E9%9B%86" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E5%B9%B6%E6%9F%A5%E9%9B%86</a><br><a href="http://blog.csdn.net/dm_vincent/article/details/7655764" target="_blank" rel="external">http://blog.csdn.net/dm_vincent/article/details/7655764</a><br><a href="https://en.wikipedia.org/wiki/Proof_of_O(log*n)_time_complexity_of_union%E2%80%93find" target="_blank" rel="external">https://en.wikipedia.org/wiki/Proof_of_O(log*n)_time_complexity_of_union%E2%80%93find</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/02/并查集-Union-Find-算法/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/22/初学Spark/" title="初学Spark" itemprop="url">初学Spark</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-22T03:41:20.000Z" itemprop="datePublished"> Published Jan 22 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="避免使用_GroupByKey">避免使用 GroupByKey</h1>
+<p>当调用 groupByKey 时，所有的键值对(key-value pair) 都会被移动。在网络上传输这些数据非常没有必要。</p>
+<p>以下函数应该优先于 groupByKey :</p>
+<ul>
+<li><p>combineByKey<br>组合数据，但是组合之后的数据类型与输入时值的类型不一样。</p>
+</li>
+<li><p>foldByKey<br>合并每一个 key 的所有值，在级联函数和“零值”中使用。</p>
+</li>
+</ul>
+<h1 id="combineByKey">combineByKey</h1>
+<h2 id="combineByKey的定义">combineByKey的定义</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">combineByKey</span>[<span class="title">C</span>]<span class="params">(</span></span></div><div class="line">  createCombiner: V =&gt; C,</div><div class="line">  mergeValue: <span class="params">(C, V)</span> =&gt; C, </div><div class="line">  mergeCombiners: <span class="params">(C, C)</span> =&gt; C, </div><div class="line">  partitioner: Partitioner, </div><div class="line">  mapSideCombine: Boolean = true, </div><div class="line">  serializer: Serializer = null): RDD[(K, C)] = {</div><div class="line">  // do something</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>combineByKey函数主要接受了三个函数作为参数，分别为createCombiner、mergeValue、mergeCombiners。这三个函数足以说明它究竟做了什么。理解了这三个函数，就可以很好地理解combineByKey。</p>
+<h3 id="createCombiner">createCombiner</h3>
+<p>createCombiner：在遍历RDD的过程中，对于遍历到的(k,v)，如果是第一次遇到，则对这个(k,v)调用createCombiner函数，它的作用是将v转换为c(类型是C，即聚合对象的类型，c作为聚合对象的初始值)</p>
+<h3 id="mergeValue">mergeValue</h3>
+<p>mergeValue：在遍历RDD的过程中，对于遍历到的(k,v)，如果不是第一次(而是第i次, 1 &lt; i &lt;= n)遇到，那么将对这个(k,v)调用mergeValue函数，它的作用是将v累加到聚合对象（类型C）中，mergeValue的类型是(C,V)=&gt;C,参数中的C遍历到此处的聚合对象，然后对v进行聚合得到新的聚合对象值</p>
+<h3 id="mergeCombiners">mergeCombiners</h3>
+<p>mergeCombiners：<strong>因为combineByKey是在分布式环境下执行，RDD的每个分区单独进行combineByKey操作，最后需要对各个分区的结果进行最后的聚合</strong>。它的函数类型是(C,C)=&gt;C，每个参数是分区聚合得到的聚合对象。</p>
+<h3 id="combineByKey的流程">combineByKey的流程</h3>
+<ul>
+<li>假设一组具有相同 K 的 <k, v=""> records 正在一个个流向 combineByKey()，createCombiner 将第一个 record 的value 初始化为 c （比如，c = value），然后从第二个 record 开始，来一个 record 就使用 mergeValue(c,</k,></li>
+<li>record.value) 来更新 c，比如想要对这些 records 的所有 values 做 sum，那么使用 c = c + record.value。等到records 全部被 mergeValue()，得到结果 c。假设还有一组 records（key 与前面那组的 key 均相同）一个个到来，</li>
+<li>combineByKey() 使用前面的方法不断计算得到 c’。现在如果要求这两组 records 总的 combineByKey() 后的结果，那么可以使用 final c = mergeCombiners(c, c’) 来计算。</li>
+</ul>
+<h2 id="Example">Example</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rdd1 = sc.makeRDD(<span class="type">Array</span>((<span class="string">"A"</span>,<span class="number">1</span>),(<span class="string">"A"</span>,<span class="number">2</span>),(<span class="string">"A"</span>,<span class="number">3</span>),(<span class="string">"B"</span>,<span class="number">1</span>),(<span class="string">"B"</span>,<span class="number">2</span>),(<span class="string">"C"</span>,<span class="number">3</span>)))</div><div class="line"></div><div class="line">// <span class="literal">result</span>: ((A,<span class="number">1_</span>$<span class="number">2_</span>@<span class="number">3</span>), (B,<span class="number">1_</span>$<span class="number">2_</span>), (C,<span class="number">3_</span>))</div><div class="line">rdd1.combineByKey(</div><div class="line">  (v : <span class="type">Int</span>) =&gt; v + <span class="string">"_"</span>,</div><div class="line">  (c : <span class="type">String</span>, v : <span class="type">Int</span>) =&gt; c + <span class="string">"@"</span> + v,</div><div class="line">  (c1 : <span class="type">String</span>, c2 : <span class="type">String</span>) =&gt; c1 + <span class="string">"$"</span> + c2 ).collect</div></pre></td></tr></table></figure>
+
+<h2 id="combineByKey应用举例">combineByKey应用举例</h2>
+<h3 id="求均值">求均值</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">val rdd = sc.textFile(<span class="string">"气象数据"</span>)</div><div class="line">val rdd2 = rdd.map(x=&gt;x.split(<span class="string">" "</span>)).map(x<span class="function"> =&gt;</span> (x(<span class="number">0</span>).substring(<span class="string">"从年月日中提取年月"</span>),x(<span class="number">1</span>).toInt))</div><div class="line">val <span class="function"><span class="title">createCombiner</span> = <span class="params">(k: String, v: Int)</span>=&gt;</span> {</div><div class="line">  (v,<span class="number">1</span>)</div><div class="line">}</div><div class="line">val <span class="function"><span class="title">mergeValue</span> = <span class="params">(c:(Int, Int), v:Int)</span> =&gt;</span> {</div><div class="line">  (c._1 + v, c._2 + <span class="number">1</span>)</div><div class="line">}</div><div class="line"></div><div class="line">val <span class="function"><span class="title">mergeCombiners</span> = <span class="params">(c1:(Int,Int),c2:(Int,Int))</span>=&gt;</span>{</div><div class="line">  (c1._1 + c2._1, c1._2 + c2._2)</div><div class="line">}</div><div class="line"></div><div class="line">val vdd3 = vdd2.combineByKey(</div><div class="line">  createCombiner,</div><div class="line">  mergeValue,</div><div class="line">  mergeCombiners</div><div class="line">)</div><div class="line"></div><div class="line">rdd3.foreach(x=&gt;println(x._1 + <span class="string">": average tempreture is "</span> + x._2._1/x._2._2)</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spark/">spark</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/22/初学Spark/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/04/Run-Age-of-Empires-II-in-Max-OS-10-11/" title="Run Age of Empires II in Max OS 10.11" itemprop="url">Run Age of Empires II in Max OS 10.11</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-04T12:52:39.000Z" itemprop="datePublished"> Published Jan 4 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Step1_Find_the_resource">Step1 Find the resource</h2>
+<p>search in Google， steam 上已经没有了。</p>
+<h2 id="Step2_Fix_the_Max_OS_10-11_bug">Step2 Fix the Max OS 10.11 bug</h2>
+<p>An error occured while starting the X11 server:<br>    Failed to activate core devices”<br>    Click Quit to quit X11. Click Report to see more details or send a report to Apple. </p>
+<p>在 <a href="https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/" target="_blank" rel="external">https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/</a> 找到解决方法。即:<br>open terminal: </p>
+<p><code>mkdir</code>/lib<br><code>cp -r /Applications/aoeHD.app/Contents/Frameworks/</code>* /lib </p>
+<p>此时再打开游戏，成功运行，听到了熟悉的声音。</p>
+<p>Reference<br><a href="https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/" target="_blank" rel="external">https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/skill/">skill</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/04/Run-Age-of-Empires-II-in-Max-OS-10-11/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/03/skills/" title="skills" itemprop="url">skills</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-03T04:28:17.000Z" itemprop="datePublished"> Published Jan 3 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="将数据转成json格式：python_-m_json-tool">将数据转成json格式：python -m json.tool</h3>
+<pre><code>$ echo '{<span class="string">"json"</span>:<span class="string">"obj"</span>}' <span class="string">| python -m json.tool</span>
+{
+<span class="string">"json"</span>: <span class="string">"obj"</span>
+}
+</code></pre><h3 id="查看gzip数据">查看gzip数据</h3>
+<p>使用python的zlib库来解压</p>
+<pre><code>s='<span class="command">\x</span>1F<span class="command">\x</span>8B<span class="command">\x</span>08<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>005N<span class="command">\xCD</span><span class="command">\x</span>0A<span class="command">\xC</span>3 <span class="command">\x</span>18<span class="special">{</span><span class="command">\x</span>97<span class="command">\xEF</span>,<span class="command">\xE</span>5s<span class="command">\xF</span>3gz<span class="command">\xAB</span><span class="command">\xA</span>0/1z<span class="command">\x</span>18<span class="command">\xC</span>31<span class="command">\x</span>87m<span class="command">\xA</span>5<span class="command">\xEA</span><span class="command">\xA</span>1<span class="command">\x</span>94<span class="command">\xBE</span><span class="command">\xFB</span><span class="command">\xBE</span><span class="command">\xC</span>3vJHB<span class="command">\x</span>92<span class="command">\x</span>03z<span class="command">\x</span>8D<span class="command">\xDBXJ</span><span class="command">\x</span>05<span class="special">{</span>?<span class="command">\xA</span>0,`<span class="command">\xE</span>1<span class="command">\xB</span>9<span class="command">\xCEC</span><span class="command">\xEB</span><span class="command">\x</span>9F<span class="command">\xF</span>4<span class="command">\x</span>18<span class="command">\xDEk</span><span class="command">\x</span>8B<span class="command">\x</span>19<span class="command">\x</span>18<span class="command">\xD</span>4<span class="command">\x</span>99d<span class="command">\xC</span>9/<span class="command">\xCE</span><span class="command">\xF</span>9<span class="command">\x</span>10Ft<span class="command">\xE</span>1<span class="command">\xAA</span><span class="command">\x</span>9DFm<span class="command">\x</span>8C<span class="command">\x</span>92B)w<span class="command">\xF</span>3<span class="command">\x</span>02<span class="command">\xBD</span><span class="command">\xA</span>1<span class="command">\x</span>5C<span class="command">\xA</span>3<span class="command">\x</span>16.<span class="command">\x</span>84<span class="command">\xE</span>4<span class="command">\x</span>5CHD<span class="command">\x</span>94<span class="command">\x</span>82Ao`<span class="command">\x</span>97<span class="command">\x</span>9E3<span class="command">\x</span>83Df<span class="command">\xDBzdP</span><span class="command">\xD</span>2_<span class="special">{</span><span class="command">\x</span>11C<span class="command">\x</span>06<span class="command">\xB</span>9<span class="command">\x</span>13<span class="command">\x</span>9C<span class="command">\x</span>13<span class="command">\x</span>0D<span class="command">\xED</span><span class="command">\xF</span>5<span class="command">\xF</span>7e:<span class="command">\xBF</span><span class="command">\xAB</span> <span class="command">\xDB</span><span class="command">\x</span>10<span class="command">\x</span>9B<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00' 
+
+import zlib
+d=zlib.decompressobj(16+zlib.MAX_WBITS) 
+data=d.decompress(s)
+</code></pre><h3 id="统计服务器上的历史登录记录">统计服务器上的历史登录记录</h3>
+<pre><code><span class="keyword">last</span> -ad | awk <span class="string">'{print $1}'</span> | <span class="built_in">sort</span> | uniq -<span class="keyword">c</span> | <span class="built_in">sort</span> -<span class="keyword">t</span>$<span class="string">'\t'</span> -k1,<span class="number">1</span> -nr 
+</code></pre><h3 id="linux文件格式转换">linux文件格式转换</h3>
+<p>在linux下，不可避免的会用VIM打开一些windows下编辑过的文本文件。我们会发现文件的每行结尾都会有一个^M符号，这是因为DOS下的编辑器和Linux编辑器对文件行末的回车符处理不一致，<br>对于回车符的定义： </p>
+<ul>
+<li>windows：0D0A </li>
+<li>unix\linux: 0A </li>
+<li>MAC: 0D<br>去除这些符号的方法有： </li>
+<li>vim下 <code>:set fileformat=unix</code></li>
+<li>终端  <code>dos2unix filename</code></li>
+</ul>
+<h3 id="git图形化提交历史">git图形化提交历史</h3>
+<pre><code>git <span class="keyword">log</span> --pretty=<span class="keyword">format</span>:<span class="string">"<span class="variable">%h</span> <span class="variable">%an</span> <span class="variable">%s</span>"</span> --graph
+</code></pre><h3 id="echo_总结">echo 总结</h3>
+<ol>
+<li>echo默认是带换行符做结尾的</li>
+<li>echo -n 可以去掉换行符</li>
+<li>printf是没有换行符结尾的</li>
+<li>tr可以删掉一个字符，如 tr -d ‘\n’ </li>
+</ol>
+<h3 id="删除空行">删除空行</h3>
+<ol>
+<li>grep: grep -v ‘^$’ file</li>
+<li>sed: sed ‘/^$/d’  file 或 sed -n ‘/./p’ file</li>
+<li>awk: awk ‘/./ {print}’ file</li>
+</ol>
+<h3 id="shell读文件">shell读文件</h3>
+<p>读取 md5s 文件，对每行做处理。</p>
+<pre><code>cat md5s | <span class="keyword">while</span> <span class="built_in">read</span> line 
+<span class="keyword">do</span> 
+     md5=<span class="variable">$line</span> 
+     level2Path=`expr substr <span class="string">"<span class="variable">$md5</span>"</span> <span class="number">30</span> <span class="number">2</span>` <span class="comment">#50 </span>
+     level1Path=`expr substr <span class="string">"<span class="variable">$md5</span>"</span> <span class="number">32</span> <span class="number">1</span>` <span class="comment">#a </span>
+     storagePath=hdfs:///ljp/apk/path/<span class="variable">$level1Path</span>/<span class="variable">$level2Path</span>/<span class="variable">$md5</span> 
+     <span class="built_in">echo</span> <span class="variable">$storagePath</span>
+<span class="keyword">done</span> 
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/调试/">调试</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/03/skills/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/03/Java序列化/" title="Java序列化" itemprop="url">Java序列化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-03T01:49:17.000Z" itemprop="datePublished"> Published Jan 3 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="什么是序列化">什么是序列化</h2>
+<p>java 序列化是将对象转化为二进制流。不同的序列化框架会将对象转成不同的二进制流。通过 <a href="http://www.solinx.co/archives/377" target="_blank" rel="external">透过byte数组简单分析Java序列化、Kryo、ProtoBuf序列化</a> 这篇文章里可以看到，不同的序列化框架最终转成的二进制流是不一样的。</p>
+<h2 id="Java_默认序列化">Java 默认序列化</h2>
+<h3 id="默认序列化机制">默认序列化机制</h3>
+<p>如果仅仅只是让某个类实现Serializable接口，而没有其它任何处理的话，则就是使用默认序列化机制。使用默认机制，在序列化对象时，不仅会序列化当前对象本身，还会对该对象引用的其它对象也进行序列化，同样地，这些其它对象引用的另外对象也将被序列化，以此类推。所以，如果一个对象包含的成员变量是容器类对象，而这些容器所含有的元素也是容器类对象，那么这个序列化的过程就会较复杂，开销也较大。</p>
+<p>整个过程都是Java虚拟机（JVM）独立的，也就是说，在一个平台上序列化的对象可以在另一个完全不同的平台上反序列化该对象。</p>
+<h3 id="serialVersionUID">serialVersionUID</h3>
+<p>serialVersionUID的作用<br>不仅取决于类路径和功能代码是否一致，一个非常重要的一点是两个类的序列化 ID 是否一致（就是 <code>private static final long serialVersionUID = 1L</code>）</p>
+<h3 id="Java_序列化实现">Java 序列化实现</h3>
+<h4 id="ObjectInputStream_&amp;&amp;_ObjectOutputStream">ObjectInputStream &amp;&amp; ObjectOutputStream</h4>
+<p>类ObjectInputStream 和ObjectOutputStream是高层次的数据流，它们包含序列化和反序列化对象的方法。<br>ObjectOutputStream 类包含很多写方法来写各种数据类型，但是一个特别的方法例外：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeObject</span>(Object x) <span class="keyword">throws</span> IOException
+</code></pre><p>上面的方法序列化一个对象，并将它发送到输出流。相似的ObjectInputStream 类包含如下反序列化一个对象的方法：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">readObject</span>() <span class="keyword">throws</span> IOException, ClassNotFoundException
+</code></pre><p>该方法从流中取出下一个对象，并将对象反序列化。它的返回值为Object，因此，你需要将它转换成合适的数据类型。</p>
+<h4 id="Serializable_接口">Serializable 接口</h4>
+<p>情境：一个子类实现了 Serializable 接口，它的父类都没有实现 Serializable 接口，序列化该子类对象，然后反序列化后输出父类定义的某变量的数值，该变量数值与序列化时的数值不同。<br>解决：要想将父类对象也序列化，就需要让父类也实现Serializable 接口。如果父类不实现的话的，就 需要有默认的无参的构造函数。在父类没有实现 Serializable 接口时，虚拟机是不会序列化父对象的，而一个 Java 对象的构造必须先有父对象，才有子对象，反序列化也不例外。所以反序列化时，为了构造父对象，只能调用父类的无参构造函数作为默认的父对象。因此当我们取父对象的变量值时，它的值是调用父类无参构造函数后的值。如果你考虑到这种序列化的情况，在父类无参构造函数中对变量进行初始化，否则的话，父类变量值都是默认声明的值，如 int 型的默认是 0，string 型的默认是 null。</p>
+<h4 id="Externalizable_接口">Externalizable 接口</h4>
+<p>无论是使用transient关键字，还是使用writeObject()和readObject()方法，其实都是基于Serializable接口的序列化。JDK中提供了另一个序列化接口—Externalizable，使用该接口之后，之前基于Serializable接口的序列化机制就将失效。<br>writeExternal：把一个Java对象写入到流中<br>readExternal：从流中读取一个Java对象</p>
+<h2 id="java序列化一览">java序列化一览</h2>
+<p><img src="img/java_serialize_%20summary.png" alt=""></p>
+<h2 id="Java_序列化框架比较">Java 序列化框架比较</h2>
+<h3 id="性能比较">性能比较</h3>
+<p><img src="img/serialize_performance_compare.png" alt=""></p>
+<h3 id="测试方法">测试方法</h3>
+<p><a href="https://github.com/eishay/jvm-serializers" target="_blank" rel="external">jvm-serializers</a> 提供了一个很好的比较各种Java序列化的的测试套件。 它罗列了各种序列化框架， 可以自动生成测试报告。</p>
+<h3 id="适用性比较">适用性比较</h3>
+<ul>
+<li>json<br>json的序列化框架有fastjson,jackson,gson等。<br>适用于数据量小，实时性较低（例如秒级别）的服务。JSON格式具有非常强的前后兼容性，并且调式方便，所以对客户端与服务端的通讯尤其适用。</li>
+<li>xml<br>xml的序列化框架有XStream。XML的序列化和反序列化的空间和时间开销都比较大，对于对性能要求在ms级别的服务，不推荐使用。</li>
+<li>hessian<br>hessian主要用于java序列化。它的实现机制是着重于数据，附带简单的类型信息的方法：</li>
+<li>对于简单的数据类型。就像Integer a = 1，hessian会序列化成I 1这样的流，I表示int or Integer，1就是数据内容。<ul>
+<li>对于复杂对象，通过Java的反射机制，hessian把对象所有的属性当成一个Map来序列化，产生类似M className propertyName1 I 1 propertyName S stringValue</li>
+<li>对于引用对象，在序列化过程中，如果一个对象之前出现过，hessian会直接插入一个R index这样的块来表示一个引用位置，从而省去再次序列化和反序列化的时间。</li>
+</ul>
+</li>
+<li>thift<br>Thrift是Facebook开源提供的一个高性能，轻量级RPC服务框架，其产生正是为了满足当前大数据量、分布式、跨语言、跨平台数据通讯的需求。 但是，Thrift并不仅仅是序列化协议，而是一个RPC框架。相对于JSON和XML而言，Thrift在空间开销和解析性能上有了比较大的提升，对于对性能要求比较高的分布式系统，它是一个优秀的RPC解决方案；但是由于Thrift的序列化被嵌入到Thrift框架里面，Thrift框架本身并没有透出序列化和反序列化接口，这导致其很难和其他传输层协议共同使用（例如HTTP）。</li>
+<li>protobuf<br>  序列化数据非常简洁，紧凑，析速度非常快，提供了非常友好的动态库。使用简介，反序列化只需要一行代码。但是在JavaBean和proto之间的转换较麻烦。</li>
+<li>avro<br>Avro的产生解决了JSON的冗长和没有IDL的问题。 Avro提供两种序列化格式：JSON格式或者Binary格式。Binary格式在空间开销和解析性能方面可以和Protobuf媲美，JSON格式方便测试阶段的调试。</li>
+<li>动态类型：Avro并不需要生成代码，模式和数据存放在一起，而模式使得整个数据的处理过程并不生成代码、静态数据类型等等。这方便了数据处理系统和语言的构造。<ul>
+<li>未标记的数据：由于读取数据的时候模式是已知的，那么需要和数据一起编码的类型信息就很少了，这样序列化的规模也就小了。</li>
+<li>不需要用户指定字段号：即使模式改变，处理数据时新旧模式都是已知的，所以通过使用字段名称可以解决差异问题。</li>
+</ul>
+</li>
+</ul>
+<p>Reference</p>
+<blockquote>
+<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-serial/" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/java/j-lo-serial/</a><br><a href="http://www.infoq.com/cn/articles/serialization-and-deserialization" target="_blank" rel="external">http://www.infoq.com/cn/articles/serialization-and-deserialization</a><br><a href="http://sqtds.github.io/2015/05/13/2015/java-serizable/" target="_blank" rel="external">http://sqtds.github.io/2015/05/13/2015/java-serizable/</a><br><a href="http://www.solinx.co/archives/377" target="_blank" rel="external">http://www.solinx.co/archives/377</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/03/Java序列化/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/13/本地连机房Spark的调试过程/" title="本地连机房Spark的调试过程" itemprop="url">本地连机房Spark的调试过程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-13T13:19:27.000Z" itemprop="datePublished"> Published Nov 13 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="调试过程">调试过程</h2>
+<p>本地运行代码，输出如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">12</span>:<span class="number">09</span>:<span class="number">51</span> INFO SparkContext: Running Spark <span class="property">version</span> <span class="number">1.5</span><span class="number">.1</span></div><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$<span class="type">class</span></div><div class="line">    <span class="keyword">at</span> org.apache.spark.util.TimeStampedWeakValueHashMap.&lt;init&gt;(TimeStampedWeakValueHashMap.scala:<span class="number">42</span>)</div><div class="line">    <span class="keyword">at</span> org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:<span class="number">287</span>)</div><div class="line">Caused <span class="keyword">by</span>: java.lang.ClassNotFoundException: scala.collection.GenTraversableOnce$<span class="type">class</span></div></pre></td></tr></table></figure>
+
+<p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="http://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="external">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
+<p>spark日志：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ReliableDeliverySupervisor: Association <span class="operator">with</span> remote <span class="keyword">system</span> [akka.tcp://sparkDriver@<span class="number">100.64</span><span class="number">.80</span><span class="number">.93</span>:<span class="number">57108</span>] has failed, address is now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. Reason is: [scala.Option; <span class="built_in">local</span> class incompatible: stream classdesc serialVersionUID = -<span class="number">114498752079829388</span>, <span class="built_in">local</span> class serialVersionUID = -<span class="number">2062608324514658839</span>].</div></pre></td></tr></table></figure>
+
+<p>根据 scala.Option; local class incompatible 可以发现是 scala 的版本不对，spark 默认的是 scala-2.10，需要改变依赖的scala版本。</p>
+<p>改完以后又发现，还是连接不上。本地的输出：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">22</span> ERROR SparkUncaughtExceptionHandler: Uncaught exception <span class="operator">in</span> thread Thread[appclient-registration-retry-thread,<span class="number">5</span>,main]</div><div class="line">java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@<span class="number">5430</span>d0ff rejected <span class="built_in">from</span> java.util.concurrent.ThreadPoolExecutor@<span class="number">7819693</span>b[Running, pool size = <span class="number">1</span>, active threads = <span class="number">0</span>, queued tasks = <span class="number">0</span>, completed tasks = <span class="number">1</span>]</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:<span class="number">2047</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:<span class="number">823</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:<span class="number">1369</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:<span class="number">112</span>)</div></pre></td></tr></table></figure>
+
+<p>spark的日志如下：</p>
+<p>A</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span><span class="regexp">/11/</span><span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">03</span> ERROR ErrorMonitor: dropping message [<span class="keyword">class</span> akka.actor.ActorSelectionMessage] <span class="keyword">for</span> non-local recipient [Actor[akka.tcp:<span class="comment">//sparkMaster@10.19.27.215:4041/]] arriving at [akka.tcp://sparkMaster@10.19.27.215:4041] inbound addresses are [akka.tcp://sparkMaster@master1:4041]</span></div></pre></td></tr></table></figure>
+
+<p>B</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">41</span> <span class="type">WARN</span> <span class="type">ReliableDeliverySupervisor</span>: <span class="type">Association</span> <span class="keyword">with</span> remote system [akka.tcp://sparkDriver@<span class="number">100</span>.<span class="number">64</span>.<span class="number">80</span>.<span class="number">93</span>:<span class="number">61812</span>] has failed, address <span class="keyword">is</span> now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. <span class="type">Reason</span> <span class="keyword">is</span>: [<span class="type">Disassociated</span>].</div></pre></td></tr></table></figure>
+
+<p>关于B这部分的log，怀疑是测试环境的spark的网络访问权限没有打开！最后打开网络访问权限后解决。spark master和worker之间的通信使用的是akka，tcp协议。</p>
+<p>spark的A部分log和本地的log是一致的。</p>
+<p>第二天接着查，查了很多地方。怀疑是Spark的配置不正确。<br>对于Spark的配置，官网说的是：</p>
+<p>Options for the daemons used in the standalone deploy mode</p>
+<p>SPARK_MASTER_IP, to bind the master to a different IP address or hostname</p>
+<p>而我spark机器上的设置是：</p>
+<ol>
+<li>conf/spark-env.sh: export SPARK_MASTER_IP=master1</li>
+<li>/etc/hosts: 10.x.xxx.215 master1</li>
+</ol>
+<p>一切配置正确但依然不行。Google上到处寻觅，找到 spark 的 group 里面的一个帖子，<a href="https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8" target="_blank" rel="external">https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8</a>，提到</p>
+<blockquote>
+<p>Yes, this message means that one of the workers tried to contact you using your IP address (10.129.7.154), but Akka is (somewhat stupidly) configured to rely on a DNS name (namely ip-10-129-7-154). If you’ve set up the Spark standalone mode, there was a bug in the scripts where they would use an IP address for the master instead of a hostname.</p>
+</blockquote>
+<p>所以当我将 SMART_IP 改成 ip 而不是 hostname 后，本地终于能连上spark了，设置如下：</p>
+<p>conf/spark-env.sh: export SPARK_MASTER_IP=10.x.xxx.215</p>
+<h2 id="几点备忘">几点备忘</h2>
+<ol>
+<li><p>通过 %% 方法获取正确的 Scala 版本<br>如果你用是 groupID %% artifactID % revision 而不是 groupID % artifactID % revision（区别在于 groupID 后面是 %%），sbt 会在 工件名称中加上项目的 Scala 版本号。 这只是一种快捷方法。你可以这样写不用 %%：</p>
+</li>
+<li><p>enable build.sbt auto import<br>修改了 build.sbt，但是包没有引入生效</p>
+</li>
+<li><p>./spark-shell 加载配置文件<br>在Spark 集群上运行一个应用,只需通过master的 spark://IP:PORT 链接传递到SparkContext构造器<br>在集群上运行交互式的Spark 命令, 运行如下命令：<br>MASTER=spark://IP:PORT ./spark-shell<br>注意，如果你在一个 spark集群上运行了spark-shell脚本，spark-shell 将通过在conf/spark-env.sh下的SPARK_MASTER_IP和SPARK_MASTER_PORT自动设置MASTER</p>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spark/">Spark</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/13/本地连机房Spark的调试过程/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/10/Mysql-Memo/" title="Mysql Memo" itemprop="url">Mysql Memo</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-10T15:08:03.000Z" itemprop="datePublished"> Published Nov 10 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_contact">1. contact</h2>
+<p>MySQL CONCAT function is used to concatenate two strings to form a single string.</p>
+<p>MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group.</p>
+<p>数据库Person表的内容如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">id</th>
+<th style="text-align:center">name</th>
+<th style="text-align:center">source</th>
+<th style="text-align:center">age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">GP</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">GP</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">TW</td>
+<td style="text-align:center">7</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>1.SQL:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> source) <span class="keyword">as</span> sourceCount,</div><div class="line">group_concat(<span class="keyword">distinct</span> source separator <span class="string">"/"</span>) <span class="keyword">as</span> sources</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span></div><div class="line">group by name;</div></pre></td></tr></table></figure>
+
+<p>Query Result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">sourceCount</th>
+<th style="text-align:center">sources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">GP/FB</td>
+</tr>
+<tr>
+<td style="text-align:center">B</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">GP</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">GP/TW</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">FB</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>2.SQL:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> source) <span class="keyword">as</span> sourceCount,</div><div class="line">group_concat(<span class="keyword">distinct</span> source separator <span class="string">"/"</span>) <span class="keyword">as</span> sources</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span></div><div class="line">group by name</div><div class="line">having sourceCount = <span class="number">1</span> <span class="keyword">and</span> sources = '<span class="type">FB</span>';</div></pre></td></tr></table></figure>
+
+<p>Query Result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">sourceCount</th>
+<th style="text-align:center">sources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">FB</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>3.SQL:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> age) <span class="keyword">as</span> ageCount,</div><div class="line">group_concat(age order by age separator <span class="string">"#"</span>) <span class="keyword">as</span> ages</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span>;</div></pre></td></tr></table></figure>
+
+<p>Query Result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">ageCount</th>
+<th style="text-align:center">ages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">1#3#6</td>
+</tr>
+<tr>
+<td style="text-align:center">B</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4#7</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-_mysql_-N_不显示字段名">2. mysql -N 不显示字段名</h2>
+<p>普通的查询语句，查询结果中带字段名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> mysql -h xxxx -P <span class="number">8000</span> -<span class="string">u'xxx'</span> -p<span class="string">'xxx'</span> -D xxdb</div><div class="line">-e <span class="string">"select name from Person where name = 'A'"</span>;</div></pre></td></tr></table></figure>
+
+<p>+—————-+</p>
+<p>| name      |</p>
+<p>+—————-+</p>
+<p>| not found |</p>
+<p>+—————-+</p>
+<p>带-N的查询语句，查询结果中不带字段名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> mysql -N -h xxxx -P <span class="number">8000</span> -<span class="string">u'xxx'</span> -p<span class="string">'xxx'</span> -D xxdb</div><div class="line">-e <span class="string">"select name from Person where name = 'A'"</span>;</div></pre></td></tr></table></figure>
+
+<p>+—————-+</p>
+<p>| not found |</p>
+<p>+—————-+</p>
+<h2 id="3-_IFNULL">3. IFNULL</h2>
+<p>使用IFNULL能判断是否有查到结果。<br>在shell中跑mysql的指令容易出现空行，此时用IFNULL是最合适的了。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> mysql -N -h xxxx -P 8000 -u'xxx' -p'xxx' -D xxdb</div><div class="line">-e "<span class="operator"><span class="keyword">select</span> <span class="keyword">IFNULL</span>(</span></div><div class="line">(<span class="keyword">select</span> name <span class="keyword">from</span> Person <span class="keyword">where</span> name = <span class="string">'A'</span> <span class="keyword">and</span> age = <span class="number">100</span>),</div><div class="line"><span class="string">'not found'</span>)<span class="string">"</span></div></pre></td></tr></table></figure>
+
+<p>+—————-+</p>
+<p>| not found |</p>
+<p>+—————-+</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mysql/">mysql</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/10/Mysql-Memo/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/02/Java的内存泄露与垃圾回收/" title="Java的内存泄露与垃圾回收" itemprop="url">Java的内存泄露与垃圾回收</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-02T03:39:53.000Z" itemprop="datePublished"> Published Nov 2 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="什么是内存泄露">什么是内存泄露</h2>
+<p>内存泄露 memory leak，是指已申请的无用内存无法被回收。</p>
+<p>内存泄漏有两种情况：</p>
+<ul>
+<li><p>一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)</p>
+</li>
+<li><p><strong> 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）</strong></p>
+</li>
+</ul>
+<p>第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决。所以，Java中的内存泄漏，主要指的是第二种情况。</p>
+<p>内存泄露的一个例子：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) {</div><div class="line">      <span class="built_in">Object</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>(</div><div class="line">      list.add(obj);</div><div class="line">      obj = <span class="literal">null</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这段代码是：for循环中，new一个Object对象obj，然后将其添加到list中，最后将obj置空。</p>
+<p>这个时候就发生了内存泄露，因为obj是可达的无用对象。发生GC时，尽管obj已经被置空成为了无用对象，但是obj能够从list可达，从而GC无法将其释放掉。次数obj占用的内存就是泄露了。</p>
+<h2 id="内存泄露与内存溢出">内存泄露与内存溢出</h2>
+<p>内存溢出 out of memory，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory。当发生内存溢出时，程序将无法进行，强制终止。在java中常见的java.lang.OutOfMemoryError就是内存溢出的log。</p>
+<p><strong>内存长期泄露终将导致内存溢出。</strong></p>
+<h2 id="内存泄露的危害">内存泄露的危害</h2>
+<p>一次内存泄露危害可以忽略，但内存长期泄露，可用内存会逐渐减少，导致降低性能，最终内存溢出。</p>
+<p>在移动设备对于内存和CPU都有较严格的限制的情况下，Java的内存泄露还会导致程序性能降低甚至崩溃。</p>
+<h2 id="怎么产生内存泄露">怎么产生内存泄露</h2>
+<p>容易引起内存泄漏的几大原因</p>
+<ol>
+<li><p>静态集合类</p>
+<p> 像HashMap、Vector 等静态集合类的使用最容易引起内存泄漏，因为这些静态变量的生命周期与应用程序一致，如示例1，如果该Vector 是静态的，那么它将一直存在，而其中所有的Object对象也不能被释放，因为它们也将一直被该Vector 引用着。</p>
+</li>
+<li><p>监听器</p>
+<p> 在java 编程中，我们都需要和监听器打交道，通常一个应用当中会用到很多监听器，我们会调用一个控件的诸如addXXXListener()等方法来增加监听器，但往往在释放对象的时候却没有记住去删除这些监听器，从而增加了内存泄漏的机会。</p>
+</li>
+<li><p>物理连接</p>
+<p> 一些物理连接，比如数据库连接和网络连接，除非其显式的关闭了连接，否则是不会自动被GC 回收的。Java 数据库连接一般用DataSource.getConnection()来创建，当不再使用时必须用Close()方法来释放，因为这些连接是独立于JVM的。对于Resultset 和Statement 对象可以不进行显式回收，但Connection 一定要显式回收，因为Connection 在任何时候都无法自动回收，而Connection一旦回收，Resultset 和Statement 对象就会立即为NULL。但是如果使用连接池，情况就不一样了，除了要显式地关闭连接，还必须显式地关闭Resultset Statement 对象（关闭其中一个，另外一个也会关闭），否则就会造成大量的Statement 对象无法释放，从而引起内存泄漏。</p>
+</li>
+<li><p>内部类和外部模块等的引用</p>
+<p> 内部类的引用是比较容易遗忘的一种，而且一旦没释放可能导致一系列的后继类对象没有释放。</p>
+</li>
+</ol>
+<h2 id="垃圾回收">垃圾回收</h2>
+<p><strong>可以手动执行垃圾回收吗？</strong></p>
+<p>只能建议jvm进行GC，但什么时候做GC由JVM决定</p>
+<h3 id="System-gc()">System.gc()</h3>
+<p>可以通过调用System.gc()建议JVM执行垃圾回收，但JVM不保证一定会执行GC操作。通常不推荐使用System.gc()。</p>
+<h3 id="finalize()">finalize()</h3>
+<p>finalize()方法存在于java.lang.Object类中，可以被所有对象所使用。默认情况下其不执行任何动作。当垃圾回收器确定了一个对象没有任何引用时，其会调用finalize()方法。但是，finalize方法并不一定会被执行，因此也不建议覆写finalize()该方法。</p>
+<h2 id="内存泄露，会被垃圾回收吗">内存泄露，会被垃圾回收吗</h2>
+<p>内存泄露 memory leak，是指已申请的无用内存无法被回收。GC只能回收第一种情况的内存泄露，见前面的释义。</p>
+<h2 id="设置null能防止内存泄露吗">设置null能防止内存泄露吗</h2>
+<p>最基本的建议就是尽早释放无用对象的引用，大多数程序员在使用临时变量的时候，都是让引用变量在退出活动域后，自动设置为null。</p>
+<p><strong>不过这个真的有用吗？</strong></p>
+<p>查阅了网上的一些讨论以后有以下结论：</p>
+<p>首先，jdk远比我们想象中的聪明，完全能判断出对象是否已经可以回收。但是在极少数情况下，这么做依然是有效的。</p>
+<p><strong>这些情况是：方法前面中有定义大的对象,然后又跟着非常耗时的操作,且没有触发JIT编译。</strong></p>
+<blockquote>
+<p>JVM即时编译器：即时编译器（Just In Time Compiler) 简称JIT<br>     JAVA程序最初是通过解释器（Interpreter）进行解释执行的，当JVM发现某个方法或代码块运行特别频繁的时候，就会认为这是“热点代码”（Hot Spot Code)。<br>     为了提高热点代码的执行效率，就会将这些“热点代码”编译成与本地机器相关的机器码，进行各个层次的优化。 完成这个任务的编译器就是即时编译器（JIT）。</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processObj</span>() {</div><div class="line">     BigObject obj = … <span class="comment">// 声明大对象obj</span></div><div class="line">     doSomethingWith(obj); <span class="comment">// 使用obj</span></div><div class="line">     obj = <span class="keyword">null</span>;    <span class="comment">// explicitly set to null</span></div><div class="line">     doSomethingElse(); <span class="comment">//非常耗时的操作</span></div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>此时显示的设置无用的对象obj为null才有效。</p>
+<h2 id="How_to_avoid_Memory_Leak_in_Java">How to avoid Memory Leak in Java</h2>
+<p>贴出 <a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="external"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
+<p>How  to avoid Memory Leak in Java?</p>
+<p>While coding if we take care of a few points we can avoid memory leak issue.</p>
+<ol>
+<li>Use time out time for the session as low as possible.</li>
+<li>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</li>
+<li>Try to store as less data as possible in the HttpSession.</li>
+<li><p>Avoid creating HttpSession in jsp page by default by using the page directive</p>
+<p>  &lt;%@page session=”false”%&gt;</p>
+</li>
+<li><p>Try to use StringBuffer’s append() method instead of string concatenation. String is an immutable object and if we use string concatenation, it will unnecessarily create many temporary objects on heap which results in poor performance.</p>
+<p> For ex. if we write String query =  “SELECT id, name FROM   t_customer whereMsoNormal” style=”margin-bottom: 0.0001pt;”&gt;     it will create 4 String Objects. But if we write the same query using StringBuffer’s append() it will create only one object as StringBuffer is mutable i.e. can be modified over and  over again.</p>
+</li>
+<li>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</li>
+<li>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</li>
+<li>Try to close the ResultSet and Statement before reusing those.</li>
+<li>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</li>
+<li>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</li>
+</ol>
+<h2 id="在测试内存泄露时，对GC有一些收获">在测试内存泄露时，对GC有一些收获</h2>
+<ol>
+<li>cannot disable java gc</li>
+<li>我们不能决定什么时候发生GC。</li>
+<li>System.gc() vs GC button in JVisualVM/JConsole<br>As far as I know, Jconsole or any other tool, uses System.gc() only. There is no other option. As everyone know, java tells everyone not to rely on System.gc(), but that doesn’t mean it doesn’t work at all.</li>
+</ol>
+<h2 id="References">References</h2>
+<p>&gt;</p>
+<ul>
+<li><a href="http://wwsun.me/posts/jvm-gc.html" target="_blank" rel="external">http://wwsun.me/posts/jvm-gc.html</a></li>
+<li><a href="http://java.dzone.com/articles/jvm-and-garbage-collection" target="_blank" rel="external">http://java.dzone.com/articles/jvm-and-garbage-collection</a></li>
+<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="external">http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html</a></li>
+<li><a href="http://chenjingbo.iteye.com/blog/1980908" target="_blank" rel="external">http://chenjingbo.iteye.com/blog/1980908</a></li>
+<li><a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="external">http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php</a></li>
+<li><a href="http://www.infoq.com/cn/articles/cf-java-garbage-references" target="_blank" rel="external">http://www.infoq.com/cn/articles/cf-java-garbage-references</a></li>
+</ul>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/02/Java的内存泄露与垃圾回收/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/10/29/跨域请求/" title="跨域请求" itemprop="url">跨域请求</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-29T03:42:06.000Z" itemprop="datePublished"> Published Oct 29 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="碰到的问题">碰到的问题</h2>
+<p>今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a><br>但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样就导致了前端跨域传cookie会有问题。</p>
+<h2 id="解决的方案">解决的方案</h2>
+<h3 id="1-_nginx_做请求转发">1. nginx 做请求转发</h3>
+<p>目前的做法是在服务端之前做一个反向代理，admin请求同域名的<br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="external">http://admin-test.company.com/api/abc/feature</a><br>然后在nginx层将请求转发到<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a></p>
+<p>对于staging和online不同的环境，将请求转发到不同的server即可。</p>
+<p><strong><em>请求转发</em></strong><br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="external">http://admin-test.company.com/api/abc/feature</a><br>-&gt;<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a></p>
+<p><strong><em>ngin配置</em></strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">server</span> {</div><div class="line">    <span class="title">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="title">server_name</span> admin-test.company.com;</div><div class="line"></div><div class="line">    <span class="title">location</span> /api/abc {</div><div class="line">        <span class="title">rewrite</span> /api/abc/(.*) /api/xxv/<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        <span class="title">proxy_set_header</span> Host <span class="variable">$http_host</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="title">proxy_pass</span> <span class="url">http://staging.server.hostname:8080</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">server</span> {</div><div class="line">    <span class="title">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="title">server_name</span> admin.company.com;</div><div class="line"></div><div class="line">    <span class="title">location</span> /api/abc {</div><div class="line">        <span class="title">rewrite</span> /api/abc/(.*) /api/xxv/<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        <span class="title">proxy_set_header</span> Host <span class="variable">$http_host</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="title">proxy_pass</span> <span class="url">http://myserver-write-nodes</span>;</div><div class="line">     }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="2-_服务端处理跨域请求">2. 服务端处理跨域请求</h3>
+<p>在返回的response header中加入允许跨域访问的属性。例如：</p>
+<p>Access-Control-Allow-Origin: {允许的域名}</p>
+<p>更多信息参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="external">跨域 HTTP 请求(Cross-site HTTP request)</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/网络/">网络</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/10/29/跨域请求/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+
+  <nav id="page-nav" class="clearfix">
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+  </nav>
+
+</div>
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+ </html>

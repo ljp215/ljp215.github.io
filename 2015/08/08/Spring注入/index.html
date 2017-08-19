@@ -1,0 +1,530 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Spring注入 | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="1. 设值注入（推荐）
+1234&amp;lt;bean id=&quot;myService&quot; class=&quot;com.zane.test.MyServiceImpl&quot;&amp;gt;    &amp;lt;property name=&quot;serializer&quot; ref=&quot;Serializer&quot;/&amp;gt;    &amp;lt;propert">
+    
+    
+    <meta name="description" content="1. 设值注入（推荐）
+1234&lt;bean id='myService' class='com.zane.test.MyServiceImpl'&gt;    &lt;property name='serializer' ref='Serializer'/&gt;    &lt;property name='httpService' ref='httpService'/&gt;&lt;/be">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Spring注入">
+<meta property="og:url" content="http://luojinping.com/2015/08/08/Spring注入/">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="1. 设值注入（推荐）
+1234&lt;bean id='myService' class='com.zane.test.MyServiceImpl'&gt;    &lt;property name='serializer' ref='Serializer'/&gt;    &lt;property name='httpService' ref='httpService'/&gt;&lt;/be">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Spring注入">
+<meta name="twitter:description" content="1. 设值注入（推荐）
+1234&lt;bean id='myService' class='com.zane.test.MyServiceImpl'&gt;    &lt;property name='serializer' ref='Serializer'/&gt;    &lt;property name='httpService' ref='httpService'/&gt;&lt;/be">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/08/08/Spring注入/" title="Spring注入" itemprop="url">Spring注入</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-08-08T07:24:18.000Z" itemprop="datePublished"> Published Aug 8 2015</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_设值注入（推荐）"><span class="toc-number">1.</span> <span class="toc-text">1. 设值注入（推荐）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_构造器注入（死的应用）"><span class="toc-number">2.</span> <span class="toc-text">2.  构造器注入（死的应用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_注入List"><span class="toc-number">3.</span> <span class="toc-text">3. 注入List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-_注入Map"><span class="toc-number">4.</span> <span class="toc-text">4. 注入Map</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="1-_设值注入（推荐）">1. 设值注入（推荐）</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=<span class="string">"myService"</span> class=<span class="string">"com.zane.test.MyServiceImpl"</span>&gt;</div><div class="line">    &lt;property name=<span class="string">"serializer"</span> <span class="keyword">ref</span>=<span class="string">"Serializer"</span>/&gt;</div><div class="line">    &lt;property name=<span class="string">"httpService"</span> <span class="keyword">ref</span>=<span class="string">"httpService"</span>/&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+
+<h2 id="2-_构造器注入（死的应用）">2.  构造器注入（死的应用）</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean <span class="variable">id=</span><span class="string">"myModel"</span> <span class="variable">class=</span><span class="string">"com.zane.test.MyModel"</span>&gt;</div><div class="line">    &lt;constructor-arg <span class="variable">index=</span><span class="string">"0"</span> <span class="variable">value=</span><span class="string">"<span class="subst">${name}</span>"</span>/&gt;</div><div class="line">    &lt;constructor-arg <span class="variable">index=</span><span class="string">"1"</span> <span class="variable">value=</span>“<span class="number">20</span><span class="string">"/&gt;</span></div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+
+<h2 id="3-_注入List">3. 注入List</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=<span class="string">"myTypes"</span> <span class="keyword">class</span>=<span class="string">"java.util.ArrayList"</span>&gt;</div><div class="line">    &lt;constructor-arg&gt;</div><div class="line">        &lt;<span class="built_in">list</span>&gt;</div><div class="line">            &lt;<span class="keyword">value</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"com.zane.test.MyType"</span>&gt;A&lt;/<span class="keyword">value</span>&gt;</div><div class="line">            &lt;<span class="keyword">value</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"com.zane.test.MyType"</span>&gt;B&lt;/<span class="keyword">value</span>&gt;</div><div class="line">            &lt;<span class="keyword">value</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"com.zane.test.MyType"</span>&gt;C&lt;/<span class="keyword">value</span>&gt;</div><div class="line">        &lt;/<span class="built_in">list</span>&gt;</div><div class="line">    &lt;/constructor-arg&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
+
+<h2 id="4-_注入Map">4. 注入Map</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"myTypeValueMap"</span> <span class="attribute">class</span>=<span class="value">"java.util.HashMap"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">constructor-arg</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">map</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"#{T(com.zane.test.MyType).A}"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">value</span> <span class="attribute">type</span>=<span class="value">"java.lang.Integer"</span>&gt;</span>3<span class="tag">&lt;/<span class="title">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">entry</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"#{T(com.zane.test.MyType).B}"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">value</span> <span class="attribute">type</span>=<span class="value">"java.lang.Integer"</span>&gt;</span>4<span class="tag">&lt;/<span class="title">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">entry</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"#{T(com.zane.test.MyType).C}"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">value</span> <span class="attribute">type</span>=<span class="value">"java.lang.Integer"</span>&gt;</span>5<span class="tag">&lt;/<span class="title">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">entry</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="title">map</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">constructor-arg</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></div></pre></td></tr></table></figure>
+
+<p><strong>当注入的是第三方的jar包的key类型时，需要使用@Resource注入</strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Resource</span></div><div class="line"><span class="annotation">@Qualifier</span>(<span class="string">"myTypeValueMap"</span>)</div><div class="line"><span class="keyword">private</span> Map&lt;MyType, String&gt; myTypeValueMap;</div></pre></td></tr></table></figure>
+
+<p>否则使用Autowired即可</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Autowired</span></div><div class="line"><span class="annotation">@Qualifier</span>(<span class="string">"myTypeValueMap"</span>)</div><div class="line"><span class="keyword">private</span> Map&lt;MyType, String&gt; myTypeValueMap;</div></pre></td></tr></table></figure>
+
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spring/">Spring</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2015/08/08/Spring注入/" data-title="Spring注入 | Zane Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2015/08/20/Btrace详解/" title="Btrace详解">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Btrace详解</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2015/07/30/Java的wait和notify/"  title="Java的wait和notify">
+ <strong>下一篇：</strong><br/> 
+ <span>Java的wait和notify
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_设值注入（推荐）"><span class="toc-number">1.</span> <span class="toc-text">1. 设值注入（推荐）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_构造器注入（死的应用）"><span class="toc-number">2.</span> <span class="toc-text">2.  构造器注入（死的应用）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_注入List"><span class="toc-number">3.</span> <span class="toc-text">3. 注入List</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-_注入Map"><span class="toc-number">4.</span> <span class="toc-text">4. 注入Map</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>
