@@ -91,6 +91,81 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/02/27/快排算法/" title="快排算法" itemprop="url">快排算法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-27T02:52:46.000Z" itemprop="datePublished"> Published Feb 27 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="快速排序的思路">快速排序的思路</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">algorithm quicksort(<span class="literal">A</span>, lo, hi) is</div><div class="line">    <span class="keyword">if</span> lo &lt; hi then</div><div class="line">        p := partition(<span class="literal">A</span>, lo, hi)</div><div class="line">        quicksort(<span class="literal">A</span>, lo, p – <span class="number">1</span>)</div><div class="line">        quicksort(<span class="literal">A</span>, p + <span class="number">1</span>, hi)</div></pre></td></tr></table></figure>
+
+<h2 id="快速排序的partition方式">快速排序的partition方式</h2>
+<p>一种是Lomuto partition scheme，另外一种是Hoare partition scheme。</p>
+<h2 id="Lomuto_partition">Lomuto partition</h2>
+<p>This scheme is attributed to Nico Lomuto and popularized by Bentley in his book</p>
+<h3 id="lomuto的partition实现方式">lomuto的partition实现方式</h3>
+<p>i指示最前面的大于pivot的元素位置，j从前往后滑动来调整元素位置。每次j碰到小于pivot的元素，则swap i位置的元素和j位置的元素，再i指向下一个大于pivot的元素。<br>最后，记得swap i位置的元素和最末尾的元素。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">lomutoPartition</span>(<span class="keyword">int</span> nums[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi) {</div><div class="line">        <span class="keyword">int</span> pivot = nums[hi];</div><div class="line">        <span class="keyword">int</span> i = lo;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = lo; j &lt; hi; j++) {</div><div class="line">            <span class="keyword">if</span> (nums[j] &lt;= pivot) {</div><div class="line">                swap(nums, i, j);</div><div class="line">                i++;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        swap(nums, i, hi); <span class="comment">// replace the guard element</span></div><div class="line">        <span class="keyword">return</span> i;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<h2 id="Hoare_partition_scheme">Hoare partition scheme</h2>
+<p>The original partition scheme described by C.A.R. Hoare uses two indices that start at the ends of the array being partitioned, then move toward each other, until they detect an inversion.</p>
+<p><strong>Hoare’s scheme is more efficient than Lomuto’s partition scheme because it does three times fewer swaps on average, and it creates efficient partitions even when all values are equal.</strong></p>
+<h3 id="hoare的partition实现方式">hoare的partition实现方式</h3>
+<p>i从前往后找到大于pivot的元素，j从后往前找到小于pivot的元素，然后两者swap.</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hoarePartition</span>(<span class="keyword">int</span> nums[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi) {</div><div class="line">        <span class="keyword">int</span> pivot = nums[lo];</div><div class="line">        <span class="keyword">int</span> i = lo, j = hi;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) {</div><div class="line">            <span class="keyword">while</span> (nums[i] &lt; pivot) {</div><div class="line">                i++;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">while</span> (nums[j] &gt;= pivot) {</div><div class="line">                j--;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (i &gt;= j) {</div><div class="line">                <span class="keyword">return</span> j;</div><div class="line">            }</div><div class="line"></div><div class="line">            swap(nums, i, j);</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/27/快排算法/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/02/20/硬币找零问题/" title="硬币找零问题" itemprop="url">硬币找零问题</a>
   </h1>
   <p class="article-author">By
@@ -1048,158 +1123,6 @@ data=d.decompress(s)
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/11/02/Java的内存泄露与垃圾回收/" title="Java的内存泄露与垃圾回收" itemprop="url">Java的内存泄露与垃圾回收</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-11-02T03:39:53.000Z" itemprop="datePublished"> Published Nov 2 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="什么是内存泄露">什么是内存泄露</h2>
-<p>内存泄露 memory leak，是指已申请的无用内存无法被回收。</p>
-<p>内存泄漏有两种情况：</p>
-<ul>
-<li><p>一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)</p>
-</li>
-<li><p><strong> 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）</strong></p>
-</li>
-</ul>
-<p>第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决。所以，Java中的内存泄漏，主要指的是第二种情况。</p>
-<p>内存泄露的一个例子：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) {</div><div class="line">      <span class="built_in">Object</span> obj = <span class="keyword">new</span> <span class="built_in">Object</span>(</div><div class="line">      list.add(obj);</div><div class="line">      obj = <span class="literal">null</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>这段代码是：for循环中，new一个Object对象obj，然后将其添加到list中，最后将obj置空。</p>
-<p>这个时候就发生了内存泄露，因为obj是可达的无用对象。发生GC时，尽管obj已经被置空成为了无用对象，但是obj能够从list可达，从而GC无法将其释放掉。次数obj占用的内存就是泄露了。</p>
-<h2 id="内存泄露与内存溢出">内存泄露与内存溢出</h2>
-<p>内存溢出 out of memory，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory。当发生内存溢出时，程序将无法进行，强制终止。在java中常见的java.lang.OutOfMemoryError就是内存溢出的log。</p>
-<p><strong>内存长期泄露终将导致内存溢出。</strong></p>
-<h2 id="内存泄露的危害">内存泄露的危害</h2>
-<p>一次内存泄露危害可以忽略，但内存长期泄露，可用内存会逐渐减少，导致降低性能，最终内存溢出。</p>
-<p>在移动设备对于内存和CPU都有较严格的限制的情况下，Java的内存泄露还会导致程序性能降低甚至崩溃。</p>
-<h2 id="怎么产生内存泄露">怎么产生内存泄露</h2>
-<p>容易引起内存泄漏的几大原因</p>
-<ol>
-<li><p>静态集合类</p>
-<p> 像HashMap、Vector 等静态集合类的使用最容易引起内存泄漏，因为这些静态变量的生命周期与应用程序一致，如示例1，如果该Vector 是静态的，那么它将一直存在，而其中所有的Object对象也不能被释放，因为它们也将一直被该Vector 引用着。</p>
-</li>
-<li><p>监听器</p>
-<p> 在java 编程中，我们都需要和监听器打交道，通常一个应用当中会用到很多监听器，我们会调用一个控件的诸如addXXXListener()等方法来增加监听器，但往往在释放对象的时候却没有记住去删除这些监听器，从而增加了内存泄漏的机会。</p>
-</li>
-<li><p>物理连接</p>
-<p> 一些物理连接，比如数据库连接和网络连接，除非其显式的关闭了连接，否则是不会自动被GC 回收的。Java 数据库连接一般用DataSource.getConnection()来创建，当不再使用时必须用Close()方法来释放，因为这些连接是独立于JVM的。对于Resultset 和Statement 对象可以不进行显式回收，但Connection 一定要显式回收，因为Connection 在任何时候都无法自动回收，而Connection一旦回收，Resultset 和Statement 对象就会立即为NULL。但是如果使用连接池，情况就不一样了，除了要显式地关闭连接，还必须显式地关闭Resultset Statement 对象（关闭其中一个，另外一个也会关闭），否则就会造成大量的Statement 对象无法释放，从而引起内存泄漏。</p>
-</li>
-<li><p>内部类和外部模块等的引用</p>
-<p> 内部类的引用是比较容易遗忘的一种，而且一旦没释放可能导致一系列的后继类对象没有释放。</p>
-</li>
-</ol>
-<h2 id="垃圾回收">垃圾回收</h2>
-<p><strong>可以手动执行垃圾回收吗？</strong></p>
-<p>只能建议jvm进行GC，但什么时候做GC由JVM决定</p>
-<h3 id="System-gc()">System.gc()</h3>
-<p>可以通过调用System.gc()建议JVM执行垃圾回收，但JVM不保证一定会执行GC操作。通常不推荐使用System.gc()。</p>
-<h3 id="finalize()">finalize()</h3>
-<p>finalize()方法存在于java.lang.Object类中，可以被所有对象所使用。默认情况下其不执行任何动作。当垃圾回收器确定了一个对象没有任何引用时，其会调用finalize()方法。但是，finalize方法并不一定会被执行，因此也不建议覆写finalize()该方法。</p>
-<h2 id="内存泄露，会被垃圾回收吗">内存泄露，会被垃圾回收吗</h2>
-<p>内存泄露 memory leak，是指已申请的无用内存无法被回收。GC只能回收第一种情况的内存泄露，见前面的释义。</p>
-<h2 id="设置null能防止内存泄露吗">设置null能防止内存泄露吗</h2>
-<p>最基本的建议就是尽早释放无用对象的引用，大多数程序员在使用临时变量的时候，都是让引用变量在退出活动域后，自动设置为null。</p>
-<p><strong>不过这个真的有用吗？</strong></p>
-<p>查阅了网上的一些讨论以后有以下结论：</p>
-<p>首先，jdk远比我们想象中的聪明，完全能判断出对象是否已经可以回收。但是在极少数情况下，这么做依然是有效的。</p>
-<p><strong>这些情况是：方法前面中有定义大的对象,然后又跟着非常耗时的操作,且没有触发JIT编译。</strong></p>
-<blockquote>
-<p>JVM即时编译器：即时编译器（Just In Time Compiler) 简称JIT<br>     JAVA程序最初是通过解释器（Interpreter）进行解释执行的，当JVM发现某个方法或代码块运行特别频繁的时候，就会认为这是“热点代码”（Hot Spot Code)。<br>     为了提高热点代码的执行效率，就会将这些“热点代码”编译成与本地机器相关的机器码，进行各个层次的优化。 完成这个任务的编译器就是即时编译器（JIT）。</p>
-</blockquote>
-<p>例如：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processObj</span>() {</div><div class="line">     BigObject obj = … <span class="comment">// 声明大对象obj</span></div><div class="line">     doSomethingWith(obj); <span class="comment">// 使用obj</span></div><div class="line">     obj = <span class="keyword">null</span>;    <span class="comment">// explicitly set to null</span></div><div class="line">     doSomethingElse(); <span class="comment">//非常耗时的操作</span></div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>此时显示的设置无用的对象obj为null才有效。</p>
-<h2 id="How_to_avoid_Memory_Leak_in_Java">How to avoid Memory Leak in Java</h2>
-<p>贴出 <a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="external"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
-<p>How  to avoid Memory Leak in Java?</p>
-<p>While coding if we take care of a few points we can avoid memory leak issue.</p>
-<ol>
-<li>Use time out time for the session as low as possible.</li>
-<li>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</li>
-<li>Try to store as less data as possible in the HttpSession.</li>
-<li><p>Avoid creating HttpSession in jsp page by default by using the page directive</p>
-<p>  &lt;%@page session=”false”%&gt;</p>
-</li>
-<li><p>Try to use StringBuffer’s append() method instead of string concatenation. String is an immutable object and if we use string concatenation, it will unnecessarily create many temporary objects on heap which results in poor performance.</p>
-<p> For ex. if we write String query =  “SELECT id, name FROM   t_customer whereMsoNormal” style=”margin-bottom: 0.0001pt;”&gt;     it will create 4 String Objects. But if we write the same query using StringBuffer’s append() it will create only one object as StringBuffer is mutable i.e. can be modified over and  over again.</p>
-</li>
-<li>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</li>
-<li>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</li>
-<li>Try to close the ResultSet and Statement before reusing those.</li>
-<li>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</li>
-<li>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</li>
-</ol>
-<h2 id="在测试内存泄露时，对GC有一些收获">在测试内存泄露时，对GC有一些收获</h2>
-<ol>
-<li>cannot disable java gc</li>
-<li>我们不能决定什么时候发生GC。</li>
-<li>System.gc() vs GC button in JVisualVM/JConsole<br>As far as I know, Jconsole or any other tool, uses System.gc() only. There is no other option. As everyone know, java tells everyone not to rely on System.gc(), but that doesn’t mean it doesn’t work at all.</li>
-</ol>
-<h2 id="References">References</h2>
-<p>&gt;</p>
-<ul>
-<li><a href="http://wwsun.me/posts/jvm-gc.html" target="_blank" rel="external">http://wwsun.me/posts/jvm-gc.html</a></li>
-<li><a href="http://java.dzone.com/articles/jvm-and-garbage-collection" target="_blank" rel="external">http://java.dzone.com/articles/jvm-and-garbage-collection</a></li>
-<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="external">http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html</a></li>
-<li><a href="http://chenjingbo.iteye.com/blog/1980908" target="_blank" rel="external">http://chenjingbo.iteye.com/blog/1980908</a></li>
-<li><a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="external">http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php</a></li>
-<li><a href="http://www.infoq.com/cn/articles/cf-java-garbage-references" target="_blank" rel="external">http://www.infoq.com/cn/articles/cf-java-garbage-references</a></li>
-</ul>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/11/02/Java的内存泄露与垃圾回收/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -1219,7 +1142,7 @@ data=d.decompress(s)
 	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/java/" title="java">java<sup>14</sup></a></li>
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
 		

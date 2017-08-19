@@ -91,6 +91,96 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/08/19/Jackson反序列化忽略为null的字段/" title="Jackson反序列化忽略为null的字段" itemprop="url">Jackson反序列化忽略为null的字段</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-19T15:02:30.000Z" itemprop="datePublished"> Published Aug 19 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="要解决的问题">要解决的问题</h1>
+<p>json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。</p>
+<p>Person 类我们改造下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Person {</div><div class="line">  <span class="keyword">private</span> String name;</div><div class="line">  <span class="comment">// Address is a enum: {CH, US, GZ}</span></div><div class="line">  <span class="keyword">private</span> Region region = Region.GZ;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>仍然以 Person 类举例，如果 json 串是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">{"<span class="attribute">name</span>":<span class="value"><span class="string">"robert"</span></span>, "<span class="attribute">region</span>":<span class="value"><span class="literal">null</span></span>}</div></pre></td></tr></table></figure>
+
+<p>希望反序列化后的 bean 为 </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Person(<span class="variable">name=</span><span class="string">"robert"</span>, <span class="variable">region=</span>Region.GZ)</div></pre></td></tr></table></figure>
+
+<h1 id="解决过程">解决过程</h1>
+<p>在上一篇文章 <code>lombok 的 AllArgs 导致 Jackson 反序列化丢失字段默认值</code> 中可以看到 json 反序列化为 bean 的过程，一般情况下，是先调用默认构造函数生成 bean，然后根据 json 中出现的字段挨个赋值。<br>所以反序列化生成的 bean 的 region 肯定为 null。</p>
+<h1 id="解决方案">解决方案</h1>
+<h2 id="1-_@JsonInclude(Include-NON_NULL)_可行吗？">1. @JsonInclude(Include.NON_NULL) 可行吗？</h2>
+<p>不可行，这个注解是序列化时忽略 null 值，反序列化时不生效，基本上反序列化时我们不能做什么事情。</p>
+<h2 id="2-_JsonCreator_可行吗？">2. JsonCreator 可行吗？</h2>
+<p>在 Region 枚举里写 JsonCreator:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">@JsonCreator</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> Region <span class="title">getRegion</span>(String <span class="keyword">value</span>) {</div><div class="line">    <span class="keyword">for</span> (Region region : Region.values()) {</div><div class="line">        <span class="keyword">if</span> (region.name().equals(<span class="keyword">value</span>)) {</div><div class="line">            <span class="keyword">return</span> region;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">return</span> Region.GZ;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>直接将 <code>{&quot;region&quot;: null}</code> 反序列化为 Region 是可行的，会调用 JsonCreator，但是如果是反序列化 Person 则不会调用到 JsonCreator，为什么呢？</p>
+<p>debug 过程：<br>如前文所述，会调用到 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer#deserialize</code> 这个函数中，然后会调用到<br><code>com.fasterxml.jackson.databind.deser.SettableBeanProperty#deserialize</code>，这个函数的实现是：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">deserialize</span>(JsonParser p, DeserializationContext ctxt) <span class="keyword">throws</span> IOException {</div><div class="line">    JsonToken t = p.getCurrentToken();</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (t == JsonToken.VALUE_NULL) {</div><div class="line">        <span class="keyword">return</span> _valueDeserializer.getNullValue(ctxt);</div><div class="line">    }</div><div class="line">    <span class="keyword">if</span> (_valueTypeDeserializer != <span class="keyword">null</span>) {</div><div class="line">        <span class="keyword">return</span> _valueDeserializer.deserializeWithType(p, ctxt, _valueTypeDeserializer);</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> _valueDeserializer.deserialize(p, ctxt);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>所以在这里会把 null 值拦住，直接返回 getNullValue 的结果。</p>
+<h2 id="3-自定义_deserializer">3.自定义 deserializer</h2>
+<p>实现如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RegionDeserializer</span> <span class="keyword">extends</span> <span class="title">JsonDeserializer</span>&lt;<span class="title">Region</span>&gt; </span>{</div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">public</span> Region <span class="title">deserialize</span>(JsonParser jsonParser, DeserializationContext deserializationContext)</div><div class="line">            <span class="keyword">throws</span> IOException {</div><div class="line">        JsonNode node = jsonParser.getCodec().readTree(jsonParser);</div><div class="line">        Region region = Region.GZ;</div><div class="line"></div><div class="line">        <span class="keyword">try</span> {</div><div class="line">            <span class="keyword">if</span> (StringUtils.isNotEmpty(node.textValue())) {</div><div class="line">                <span class="keyword">return</span> Region.getRegion(node.textValue());</div><div class="line">            }</div><div class="line">        } <span class="keyword">catch</span> (Exception e) {</div><div class="line">            type = Region.GZ;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> region;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="keyword">public</span> Region <span class="title">getNullValue</span>(DeserializationContext ctxt) {</div><div class="line">        <span class="keyword">return</span> Region.GZ;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>Person 类改为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> Person {</div><div class="line">  <span class="keyword">private</span> String name;</div><div class="line">  </div><div class="line">  <span class="comment">// Address is a enum: {CH, US, GZ}</span></div><div class="line">  @JsonDeserialize(<span class="keyword">using</span> = RegionDeserializer.class)</div><div class="line">  <span class="keyword">private</span> Region region = Region.GZ;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>这样，在<code>com.fasterxml.jackson.databind.deser.SettableBeanProperty#deserialize</code>这个方法里，碰到 null 值，就会返回 getNullValue 的结果，即 Region.GZ，如果不是 null 会进入 getRegion 函数处理，也能处理其他情况。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/08/19/Jackson反序列化忽略为null的字段/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/08/19/lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值/" title="lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值" itemprop="url">lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值</a>
   </h1>
   <p class="article-author">By
@@ -1292,81 +1382,6 @@ $$ -->
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/02/27/快排算法/" title="快排算法" itemprop="url">快排算法</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-02-27T02:52:46.000Z" itemprop="datePublished"> Published Feb 27 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="快速排序的思路">快速排序的思路</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">algorithm quicksort(<span class="literal">A</span>, lo, hi) is</div><div class="line">    <span class="keyword">if</span> lo &lt; hi then</div><div class="line">        p := partition(<span class="literal">A</span>, lo, hi)</div><div class="line">        quicksort(<span class="literal">A</span>, lo, p – <span class="number">1</span>)</div><div class="line">        quicksort(<span class="literal">A</span>, p + <span class="number">1</span>, hi)</div></pre></td></tr></table></figure>
-
-<h2 id="快速排序的partition方式">快速排序的partition方式</h2>
-<p>一种是Lomuto partition scheme，另外一种是Hoare partition scheme。</p>
-<h2 id="Lomuto_partition">Lomuto partition</h2>
-<p>This scheme is attributed to Nico Lomuto and popularized by Bentley in his book</p>
-<h3 id="lomuto的partition实现方式">lomuto的partition实现方式</h3>
-<p>i指示最前面的大于pivot的元素位置，j从前往后滑动来调整元素位置。每次j碰到小于pivot的元素，则swap i位置的元素和j位置的元素，再i指向下一个大于pivot的元素。<br>最后，记得swap i位置的元素和最末尾的元素。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">lomutoPartition</span>(<span class="keyword">int</span> nums[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi) {</div><div class="line">        <span class="keyword">int</span> pivot = nums[hi];</div><div class="line">        <span class="keyword">int</span> i = lo;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = lo; j &lt; hi; j++) {</div><div class="line">            <span class="keyword">if</span> (nums[j] &lt;= pivot) {</div><div class="line">                swap(nums, i, j);</div><div class="line">                i++;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        swap(nums, i, hi); <span class="comment">// replace the guard element</span></div><div class="line">        <span class="keyword">return</span> i;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h2 id="Hoare_partition_scheme">Hoare partition scheme</h2>
-<p>The original partition scheme described by C.A.R. Hoare uses two indices that start at the ends of the array being partitioned, then move toward each other, until they detect an inversion.</p>
-<p><strong>Hoare’s scheme is more efficient than Lomuto’s partition scheme because it does three times fewer swaps on average, and it creates efficient partitions even when all values are equal.</strong></p>
-<h3 id="hoare的partition实现方式">hoare的partition实现方式</h3>
-<p>i从前往后找到大于pivot的元素，j从后往前找到小于pivot的元素，然后两者swap.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hoarePartition</span>(<span class="keyword">int</span> nums[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi) {</div><div class="line">        <span class="keyword">int</span> pivot = nums[lo];</div><div class="line">        <span class="keyword">int</span> i = lo, j = hi;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) {</div><div class="line">            <span class="keyword">while</span> (nums[i] &lt; pivot) {</div><div class="line">                i++;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">while</span> (nums[j] &gt;= pivot) {</div><div class="line">                j--;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (i &gt;= j) {</div><div class="line">                <span class="keyword">return</span> j;</div><div class="line">            }</div><div class="line"></div><div class="line">            swap(nums, i, j);</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/02/27/快排算法/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1386,7 +1401,7 @@ $$ -->
 	<p class="asidetitle">Tags</p>
 		<ul class="clearfix">
 		
-			<li><a href="/tags/java/" title="java">java<sup>14</sup></a></li>
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
 		
