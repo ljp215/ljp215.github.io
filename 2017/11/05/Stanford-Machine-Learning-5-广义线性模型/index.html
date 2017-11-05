@@ -130,7 +130,7 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2_高斯分布的推导"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 高斯分布的推导</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2_高斯分布的推导"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 高斯分布的推导</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_广义线性模型(Generalized_Linear_Model)"><span class="toc-number">3.</span> <span class="toc-text">3. 广义线性模型(Generalized Linear Model)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-_多分类算法(Softmax_Regression)"><span class="toc-number">4.</span> <span class="toc-text">4. 多分类算法(Softmax Regression)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referecen"><span class="toc-number">5.</span> <span class="toc-text">Referecen</span></a></li></ol>
 		
 		</div>
 		
@@ -157,12 +157,26 @@ var _hmt = _hmt || [];
 <p>高斯分布(Gaussian)和伯努利(Bernoulli)分布都可以推导为指数分布族。</p>
 <h3 id="2-1_伯努利分布的推导">2.1 伯努利分布的推导</h3>
 <p>伯努利分布的概率公式为：$P(y=1;\phi)=\phi; P(y=0;\phi)=1-\phi;$</p>
-<p>公式可经如下变换：<br>\begin{align<em>}<br>P(y;\phi)<br>&amp; =\phi^y(1-\phi)^y \<br>&amp; =exp(log(\phi^y(1-\phi)^y)) \<br>&amp; =exp(ylog(\phi)+ (1-y)log(1-\phi)) \<br>&amp; =exp(log(\frac\phi{1-\phi})y + log(1-\phi))<br>\end{align</em>}</p>
+<p>公式可经如下变换：<br>$$P(y;\phi)=\phi^y(1-\phi)^y$$<br>$$=exp(log(\phi^y(1-\phi)^y))=exp(ylog(\phi)+ (1-y)log(1-\phi))$$<br>$$=exp(log(\frac\phi{1-\phi})y + log(1-\phi))$$</p>
 <p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
 <h3 id="2-2_高斯分布的推导">2.2 高斯分布的推导</h3>
-<p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：<br>$P(y;\mu)$</p>
-<p>\begin{align<em>}<br>P(y;\mu)\<br>&amp; = \frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2) \<br>&amp; = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)</em>exp({\mu}y-\frac12\mu^2) \<br>\end{align*}</p>
+<p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：<br>$$P(y;\mu)=\frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2)$$<br>$$=\frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}y^2) * exp({\mu}y-\frac{1}{2}\mu^2)$$</p>
 <p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{{\mu}^2}2 = \frac{{\eta}^2}2$</p>
+<h2 id="3-_广义线性模型(Generalized_Linear_Model)">3. 广义线性模型(Generalized Linear Model)</h2>
+<p>想用 广义线性模型对一般问题进行建模首先需要明确几个 假设：</p>
+<ol>
+<li>$y | x;θ \sim ExponentialFamily(\eta)$ y的条件概率属于指数分布族;</li>
+<li>给定 x 广义线性模型的目标是求解 T(y) | x， 不过由于 很多情况下 T(y) = y  所以我们的目标变成了 y | x , 也即 我们希望拟合函数为 h(x) = E[y|x] (这个条件在线性回归和逻辑回归中都满足， 例如在逻辑回归中 $hθ(x) = p(y = 1|x;\theta) = 0 \cdot p(y = 0|x; \theta) + 1 \cdot  p(y = 1|x; \theta) = E[y|x;\theta])$</li>
+<li>自然参数 $\eta$ 与 x 是线性关系：$\eta=\theta^Tx$ ($\eta 为向量时 \eta_{i} = \theta_{i}^Tx$)</li>
+</ol>
+<p>有了如上假设，就可以进行建模和求解了。</p>
+<p>对于伯努利分布，可以推导出：<br>…<br>这也就是逻辑回归中 sigmod 函数的由来。</p>
+<h2 id="4-_多分类算法(Softmax_Regression)">4. 多分类算法(Softmax Regression)</h2>
+<p>y有多个可能的分类：{1, 2, …, k}</p>
+<p>=======具体的公式略=======</p>
+<p>最后求借寻找最佳参数时，跟最小二乘和逻辑回归的解法类似，可以用梯度下降法或者牛顿迭代法。</p>
+<h2 id="Referecen">Referecen</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/22876460" target="_blank" rel="external">广义线性模型(Generalized Linear Model)</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -218,7 +232,7 @@ var _hmt = _hmt || [];
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2_高斯分布的推导"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 高斯分布的推导</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2_高斯分布的推导"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 高斯分布的推导</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_广义线性模型(Generalized_Linear_Model)"><span class="toc-number">3.</span> <span class="toc-text">3. 广义线性模型(Generalized Linear Model)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-_多分类算法(Softmax_Regression)"><span class="toc-number">4.</span> <span class="toc-text">4. 多分类算法(Softmax Regression)</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Referecen"><span class="toc-number">5.</span> <span class="toc-text">Referecen</span></a></li></ol>
  
   </div>
 
@@ -261,11 +275,11 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
 		
-			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
 		
 			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
 		
-			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
 		
 			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
 		
