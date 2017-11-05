@@ -91,6 +91,289 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/03/27/LeetCode-Perfect-Squares/" title="LeetCode - Perfect Squares" itemprop="url">LeetCode - Perfect Squares</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-27T02:41:50.000Z" itemprop="datePublished"> Published Mar 27 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Problem_Description：">Problem Description：</h2>
+<p>Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, …) which sum to n.<br>For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.</p>
+<h2 id="Solution:">Solution:</h2>
+<h3 id="Solution1:">Solution1:</h3>
+<p>Dynamic Programming<br>Time Complexity: O(n*sqrt(n))<br>Space: O(n)</p>
+<h3 id="Solution2:">Solution2:</h3>
+<p>Number Theory</p>
+<ul>
+<li>Legendre’s three-square theorem </li>
+<li>Lagrange’s four-square theorem</li>
+</ul>
+<p>Time Complexity: O(sqrt(n))<br>Space: O(1)</p>
+<h2 id="Code">Code</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.zane.algorithm.leetcode;</div><div class="line"></div><div class="line"><span class="javadoc">/**</span></div><div class="line"> * Author: luojinping</div><div class="line"> * Date: 15/9/23</div><div class="line"> * Time: 17:23</div><div class="line"> * &lt;p/&gt;</div><div class="line"> * &lt;p/&gt;</div><div class="line"> * Given a positive integer n, find the least number of perfect square numbers</div><div class="line"> * (for example, 1, 4, 9, 16, ...) which sum to n.</div><div class="line"> * For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13,</div><div class="line"> * return 2 because 13 = 4 + 9.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PerfectSquares_279</span> </span>{</div><div class="line">    <span class="javadoc">/**</span></div><div class="line">     * cannot use greedy algorithm, counter example：</div><div class="line">     * 98=81+16+1=49+49</div><div class="line">     * 101=100+1=49+1+49+2</div><div class="line">     * 7=4+1+1+1</div><div class="line">     * 12=4+4+4=9+1+1+1</div><div class="line">     * 思路:</div><div class="line">     * 使用DP, dp[]数组记录历史使用最少平方数的情况.例如dp[5]=2,记录的是使用最少(1+4)平方数的数量,即2.</div><div class="line">     *</div><div class="line">     *<span class="javadoctag"> @param</span> n</div><div class="line">     *<span class="javadoctag"> @return</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numSquares</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">2</span>) {</div><div class="line">            <span class="keyword">return</span> n;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// record the least number of perfect numbers when index = i</span></div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</div><div class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        dp[<span class="number">2</span>] = <span class="number">2</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++) {</div><div class="line">            <span class="keyword">int</span> leastNum = i;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j * j &lt;= i; j++) {</div><div class="line">                leastNum = Math.min(leastNum, dp[i - j * j] + <span class="number">1</span>);</div><div class="line"></div><div class="line">            }</div><div class="line">            dp[i] = leastNum;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> dp[n];</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSquare</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">int</span> sqrt_n = (<span class="keyword">int</span>) (Math.sqrt(n));</div><div class="line">        <span class="keyword">return</span> (sqrt_n * sqrt_n == n);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="javadoc">/**</span></div><div class="line">     * Legendre's three-square theorem:</div><div class="line">     * The three squares theorem tells you that a positive integer n can be represented as the sum</div><div class="line">     * of 3 squares (n = x^2 + y^2 + z^2) if and only if it is not of the form n = 4^a * (8 * b+7)</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * Lagrange's four-square theorem:</div><div class="line">     * Every natural number can be represented as the sum of four integer squares:</div><div class="line">     * n= a^2 + b^2 + c^2 + d^2</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * So the are only 4 possible results: 1, 2, 3, 4.</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * Refer:</div><div class="line">     * https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numSquaresByMath</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="comment">// If n is a perfect square, return 1.</span></div><div class="line">        <span class="keyword">if</span> (isSquare(n)) {</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// The result is 4 if and only if n can be written in the</span></div><div class="line">        <span class="comment">// form of 4^k*(8*m + 7). Please refer to</span></div><div class="line">        <span class="comment">// Legendre's three-square theorem.</span></div><div class="line">        <span class="keyword">while</span> ((n & <span class="number">3</span>) == <span class="number">0</span>) <span class="comment">// n%4 == 0</span></div><div class="line">        {</div><div class="line">            n &gt;&gt;= <span class="number">2</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> ((n & <span class="number">7</span>) == <span class="number">7</span>) <span class="comment">// n%8 == 7</span></div><div class="line">        {</div><div class="line">            <span class="keyword">return</span> <span class="number">4</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// Check whether 2 is the result.</span></div><div class="line">        <span class="keyword">int</span> sqrt_n = (<span class="keyword">int</span>) (Math.sqrt(n));</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sqrt_n; i++) {</div><div class="line">            <span class="keyword">if</span> (isSquare(n - i * i)) {</div><div class="line">                <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="number">3</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">        PerfectSquares_279 perfectSquares279 = <span class="keyword">new</span> PerfectSquares_279();</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">4</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">7</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">12</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">61</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">100</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">101</span>));</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="Refer:">Refer:</h2>
+<blockquote>
+<p><a href="https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics" target="_blank" rel="external">https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/03/27/LeetCode-Perfect-Squares/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/26/LeetCode-The-Skyline-Problem/" title="LeetCode - The Skyline Problem" itemprop="url">LeetCode - The Skyline Problem</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-26T14:47:52.000Z" itemprop="datePublished"> Published Mar 26 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Problem_Description">Problem Description</h2>
+<p>A city’s skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Now suppose you are given the locations and height of all the buildings as shown on a cityscape photo (Figure A), write a program to output the skyline formed by these buildings collectively (Figure B).</p>
+<p> Buildings  Skyline Contour<br>The geometric information of each building is represented by a triplet of integers [Li, Ri, Hi], where Li and Ri are the x coordinates of the left and right edge of the ith building, respectively, and Hi is its height. It is guaranteed that 0 ≤ Li, Ri ≤ INT_MAX, 0 &lt; Hi ≤ INT_MAX, and Ri - Li &gt; 0. You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.</p>
+<p>For instance, the dimensions of all buildings in Figure A are recorded as: [ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ] .</p>
+<p>The output is a list of “key points” (red dots in Figure B) in the format of [ [x1,y1], [x2, y2], [x3, y3], … ] that uniquely defines a skyline. A key point is the left endpoint of a horizontal line segment. Note that the last key point, where the rightmost building ends, is merely used to mark the termination of the skyline, and always has zero height. Also, the ground in between any two adjacent buildings should be considered part of the skyline contour.</p>
+<p>For instance, the skyline in Figure B should be represented as:[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ].</p>
+<p>Notes:</p>
+<ul>
+<li>The number of buildings in any input list is guaranteed to be in the range [0, 10000].</li>
+<li>The input list is already sorted in ascending order by the left x position Li.</li>
+<li>The output list must be sorted by the x position.<br>There must be no consecutive horizontal lines of equal height in the output skyline. For instance, […[2 3], [4 5], [7 5], [11 5], [12 7]…] is not acceptable; the three lines of height 5 should be merged into one in the final output as such: […[2 3], [4 5], [12 7], …]</li>
+</ul>
+<p><strong>problem link:</strong><br><a href="https://leetcode.com/problems/the-skyline-problem/" target="_blank" rel="external">https://leetcode.com/problems/the-skyline-problem/</a></p>
+<h2 id="Solution">Solution</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class <span class="type">TheSkylineProblem_218</span> {</div><div class="line">    public <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; getSkylineSimpleSolution(<span class="type">int</span>[][] buildings) {</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; <span class="literal">result</span> = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; height = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line"></div><div class="line">        // height &lt; <span class="number">0</span>: the height <span class="keyword">of</span> building started</div><div class="line">        // height &gt; <span class="number">0</span>: the height <span class="keyword">of</span> building ended</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] b : buildings) {</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">0</span>], -b[<span class="number">2</span>]});</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">1</span>], b[<span class="number">2</span>]});</div><div class="line">        }</div><div class="line"></div><div class="line">        // sorted by x value, <span class="keyword">if</span> x equals then sorted by y value</div><div class="line">        <span class="type">Collections</span>.sort(height, (a, b) -&gt; {</div><div class="line">            <span class="keyword">if</span> (a[<span class="number">0</span>] != b[<span class="number">0</span>])</div><div class="line">                <span class="keyword">return</span> a[<span class="number">0</span>] - b[<span class="number">0</span>];</div><div class="line">            <span class="keyword">return</span> a[<span class="number">1</span>] - b[<span class="number">1</span>];</div><div class="line">        });</div><div class="line"></div><div class="line">        // record the height <span class="keyword">of</span> visited buildings by reverse order</div><div class="line">        <span class="type">Queue</span>&lt;<span class="type">Integer</span>&gt; pq = new <span class="type">PriorityQueue</span>&lt;&gt;((a, b) -&gt; (b - a));</div><div class="line">        pq.offer(<span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="type">int</span> prevHeight = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] h : height) {</div><div class="line">            <span class="keyword">if</span> (h[<span class="number">1</span>] &lt; <span class="number">0</span>) {</div><div class="line">                // save the height <span class="keyword">of</span> building</div><div class="line">                pq.offer(-h[<span class="number">1</span>]);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                // remove the height <span class="keyword">of</span> building</div><div class="line">                pq.remove(h[<span class="number">1</span>]);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="type">int</span> curHeight = pq.peek();</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (prevHeight != curHeight) {</div><div class="line">                // find the turn point</div><div class="line">                <span class="literal">result</span>.add(new <span class="type">int</span>[]{h[<span class="number">0</span>], curHeight});</div><div class="line">                prevHeight = curHeight;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="literal">result</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="算法解释">算法解释</h2>
+<h3 id="算法思路">算法思路</h3>
+<ol>
+<li>遍历所有的点，height用来存放每个顶点，左顶点的高度转为负数，右顶点的高度仍然是正数</li>
+<li>对height数组排序，首先按x的值排序，当x的值相等时按z排序，这样保证了即使矩形的起点一样，也是最先处理最高的点。对于[{1,2,1},{1,2,2},{1,2,3}]这样的情况会优先处理{1,2,3}这个点。</li>
+<li>使用优先级队列pq来保存当前最近buildings的高度，这个结构很重要！</li>
+<li>遍历height数组，碰到左顶点时，将高度放入pq中，否则，碰到右顶点时则将高度从pq从移除。这样做的好处是，每次走完一个矩形时，高度能回归到之前的buildings的高度。</li>
+<li>获取当前的最高高度，因为如果比当前矮的话，是不需要放入拐点中的，这点很重要！</li>
+<li>如果当前的最高高度和之前的高度不一致，说明出现了拐点。**如果当前的最高高度矮于之前的值，说明之前的很高的建筑遇到了它的右顶点从而被移除了，所以目前的最高高度即使矮于之前的点，但是是新的隔离的building了，所以可以加入。那么如果高呢？当前高度比之前高，那肯定会是拐点了。</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>几个关键点：</p>
+<ol>
+<li>对顶点进行排序保存，对左右顶点根据正负号来加以区分</li>
+<li>使用一个优先级队列来保存目前最高的建筑</li>
+<li>碰到右顶点时消除目前的建筑高度</li>
+<li>根据之前的高度和处理目前顶点以后(可能是加入了高度也可能是消除了之前的高度)的高度，对两者进行比较来找到拐点</li>
+</ol>
+<h2 id="Reference">Reference</h2>
+<blockquote>
+<p><a href="https://leetcode.com/discuss/54201/short-java-solution" target="_blank" rel="external">https://leetcode.com/discuss/54201/short-java-solution</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/03/26/LeetCode-The-Skyline-Problem/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/03/03/扔鸡蛋测楼层/" title="扔鸡蛋测楼层" itemprop="url">扔鸡蛋测楼层</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-03T12:26:36.000Z" itemprop="datePublished"> Published Mar 3 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="扔瓶子测楼层">扔瓶子测楼层</h2>
+<p>一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？</p>
+<h2 id="A-_只用一个瓶子从第一层扔到第n层">A. 只用一个瓶子从第一层扔到第n层</h2>
+<p>找到临界值的扔瓶子次数的期望为每一层的期望次数之和</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">E(x) = <span class="number">1</span>/n * <span class="number">1</span> + <span class="number">1</span>/n * <span class="number">2</span> + <span class="number">1</span>/n * <span class="number">3</span> + <span class="keyword">...</span> + <span class="number">1</span>/n * n = (<span class="number">1</span>+n)/<span class="number">2</span></div></pre></td></tr></table></figure>
+
+
+<p>所以时间复杂度是O(n)</p>
+<h2 id="B-_用贪心的思维">B. 用贪心的思维</h2>
+<p>第一个瓶子从第1层开始扔，每次层数翻倍，依次为，1，2，4，8，16，直至在第 2^k 层碎掉。<br>第二个瓶子从第 2^(k-1) 层开始扔，直至第 2^k 层为止，中间肯定能找到临界值。<br>所以时间复杂度是O(lgn)</p>
+<h2 id="C-_用二分法">C. 用二分法</h2>
+<p>第一个瓶子每次以(i, j)为区间，扔的位置为(i+j)/2, 初始情况, i=0,j=n, 如果瓶子没碎，则i=j，直至碎掉。<br>第二个瓶子从第 i 层开始扔，直至第 j 层为止，中间肯定能找到临界值。</p>
+<p>对于第 i 层，扔的情况为：</p>
+<ul>
+<li>第一个瓶子：n/2, $/2+n/4 i, n/2+n/4+n/8</li>
+<li>第二个瓶子：n/2+n/4, (n/2+n/k+1), …, i</li>
+</ul>
+<p>显而易见，时间复杂度是O(n)</p>
+<h2 id="D-_数学推算">D. 数学推算</h2>
+<p>这个题目是需要最快的找出临界值，可以转换为，即使在最坏的情况下，也能最快地找出临界值。</p>
+<p>我们先假设最坏情况下，瓶子下落次数为x，即我们为了找出N，一共用瓶子做了x次的实验。 </p>
+<p>那么，我们第一次应该在哪层楼往下扔瓶子呢？</p>
+<p>先让我们假设第一次是在第y层楼扔的瓶子，如果第一个瓶子在第一次扔就碎了，我们就只剩下一个瓶子，要用它准确地找出N，只能从第一层向上，一层一层的往上测试，直到它摔坏为止，答案就出来了。</p>
+<p>由于第一个瓶子在第y层就摔破了，所以最坏的情况是第二个瓶子要把第1到第y-1层的楼都测试一遍，最后得出结果，噢，原来瓶子在第y-1层才能摔破(或是在第y-1层仍没摔破，答案就是第y层。) 这样一来测试次数是1+(y-1)=x，即第一次测试要在第x层。</p>
+<p>OK，那如果第一次测试鸡蛋没摔破呢，那N肯定要比x大，要继续往上找，需要在哪一层扔呢？我们可以模仿前面的操作，如果第一个瓶子在第二次测试中摔破了，那么第二个瓶子的测试次数就只剩下x-2次了(第一个瓶子已经用了2次)。这样一来，第二次扔瓶子的楼层和第一次扔瓶子的楼层之间就隔着x-2层。 </p>
+<p>我们再回过头来看一看，第一次扔瓶子的楼层在第x层，第1层到第x层间共x层；第1次扔鸡蛋的楼层到第2次扔瓶子的楼层间共有x-1层(包含第2次扔瓶子的那一层)，同理继续往下，我们可以得出，第2次扔瓶子的楼层到第3次扔瓶子的楼层间共有x-2层，最后把这些互不包含的区间数加起来，应该大于等于总共的楼层数量100，即</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x + (x-<span class="number">1</span>) + (x-<span class="number">2</span>) + <span class="keyword">...</span> + <span class="number">1</span> &gt;= <span class="number">100</span></div><div class="line">(x+<span class="number">1</span>)*x/<span class="number">2</span> &gt;= <span class="number">100</span></div><div class="line">得出答案是<span class="number">14</span></div></pre></td></tr></table></figure>
+
+<p>即我先用第1个瓶子在以下序列表示的楼层数不断地向上测试，直到它摔破。 再用第2个瓶子从上一个没摔破的序列数的下一层开始，向上测试，即可保证在最坏情况下也只需要测试14次，就能用2个瓶子找出从哪一层开始，往下扔鸡蛋，瓶子就会摔破。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100</div></pre></td></tr></table></figure>
+
+<h2 id="E-_DP的解法">E. DP的解法</h2>
+<p>假设f(n)表示从第n层楼扔下鸡蛋，没有摔碎的最少尝试次数。第一个鸡蛋，可能的落下位置[1,n],第一个鸡蛋从第i层扔下，有两种情况：</p>
+<ul>
+<li>碎了，第二个鸡蛋，需要从第一层开始试验，有i-1次机会</li>
+<li>没碎，两个鸡蛋，还有n-i层。这个就是子问题了f(n-i)</li>
+</ul>
+<p>所以，当第一个鸡蛋，由第i个位置落下的时候，要尝试的次数为 1 + max{i - 1, f(n - i)}，那么对于每一个i，尝试次数最少的，就是f(n)的值。<br>状态转移方程如下： </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span> = <span class="title">min</span>{1 + <span class="title">max</span>{<span class="title">i</span> - 1, <span class="title">f</span><span class="params">(n - <span class="number">1</span>)</span>}}</span></div></pre></td></tr></table></figure>
+
+<p>其中: i的范围为[1, n], f(1) = 1.</p>
+<h2 id="F-_推广到一般化的问题">F. 推广到一般化的问题</h2>
+<p>为n层楼，m个鸡蛋。<br>如下分析： 假设f(n,m)表示n层楼、m个鸡蛋时找到最高楼层的最少尝试次数。当第一个鸡蛋从第i层扔下，有两种情况：</p>
+<ul>
+<li>碎了，还剩m-1个鸡蛋，为确定下面楼层中的安全楼层，还需要f(i-1,m-1)次，找到子问题</li>
+<li>不碎，上面还有n-i层，还需要f(n-i,m)次，又一个子问题。</li>
+</ul>
+<p>状态转移方程如下： </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">f</span><span class="params">(n, m)</span> = <span class="title">min</span>{1 + <span class="title">max</span>{<span class="title">f</span><span class="params">(n - <span class="number">1</span>, m - <span class="number">1</span>)</span>, <span class="title">f</span><span class="params">(n - i, m)</span>}}</span></div></pre></td></tr></table></figure>
+
+<p>其中： i为[1, n], f(i, 1) = 1</p>
+<h2 id="Reference">Reference</h2>
+<blockquote>
+<p><a href="http://www.cricode.com/3558.html" target="_blank" rel="external">http://www.cricode.com/3558.html</a><br><a href="https://gist.github.com/sing1ee/5971946" target="_blank" rel="external">https://gist.github.com/sing1ee/5971946</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/03/03/扔鸡蛋测楼层/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/02/27/快排算法/" title="快排算法" itemprop="url">快排算法</a>
   </h1>
   <p class="article-author">By
@@ -686,446 +969,9 @@ data=d.decompress(s)
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/01/03/Java序列化/" title="Java序列化" itemprop="url">Java序列化</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-01-03T01:49:17.000Z" itemprop="datePublished"> Published Jan 3 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="什么是序列化">什么是序列化</h2>
-<p>java 序列化是将对象转化为二进制流。不同的序列化框架会将对象转成不同的二进制流。通过 <a href="http://www.solinx.co/archives/377" target="_blank" rel="external">透过byte数组简单分析Java序列化、Kryo、ProtoBuf序列化</a> 这篇文章里可以看到，不同的序列化框架最终转成的二进制流是不一样的。</p>
-<h2 id="Java_默认序列化">Java 默认序列化</h2>
-<h3 id="默认序列化机制">默认序列化机制</h3>
-<p>如果仅仅只是让某个类实现Serializable接口，而没有其它任何处理的话，则就是使用默认序列化机制。使用默认机制，在序列化对象时，不仅会序列化当前对象本身，还会对该对象引用的其它对象也进行序列化，同样地，这些其它对象引用的另外对象也将被序列化，以此类推。所以，如果一个对象包含的成员变量是容器类对象，而这些容器所含有的元素也是容器类对象，那么这个序列化的过程就会较复杂，开销也较大。</p>
-<p>整个过程都是Java虚拟机（JVM）独立的，也就是说，在一个平台上序列化的对象可以在另一个完全不同的平台上反序列化该对象。</p>
-<h3 id="serialVersionUID">serialVersionUID</h3>
-<p>serialVersionUID的作用<br>不仅取决于类路径和功能代码是否一致，一个非常重要的一点是两个类的序列化 ID 是否一致（就是 <code>private static final long serialVersionUID = 1L</code>）</p>
-<h3 id="Java_序列化实现">Java 序列化实现</h3>
-<h4 id="ObjectInputStream_&amp;&amp;_ObjectOutputStream">ObjectInputStream &amp;&amp; ObjectOutputStream</h4>
-<p>类ObjectInputStream 和ObjectOutputStream是高层次的数据流，它们包含序列化和反序列化对象的方法。<br>ObjectOutputStream 类包含很多写方法来写各种数据类型，但是一个特别的方法例外：</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeObject</span>(Object x) <span class="keyword">throws</span> IOException
-</code></pre><p>上面的方法序列化一个对象，并将它发送到输出流。相似的ObjectInputStream 类包含如下反序列化一个对象的方法：</p>
-<pre><code><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">readObject</span>() <span class="keyword">throws</span> IOException, ClassNotFoundException
-</code></pre><p>该方法从流中取出下一个对象，并将对象反序列化。它的返回值为Object，因此，你需要将它转换成合适的数据类型。</p>
-<h4 id="Serializable_接口">Serializable 接口</h4>
-<p>情境：一个子类实现了 Serializable 接口，它的父类都没有实现 Serializable 接口，序列化该子类对象，然后反序列化后输出父类定义的某变量的数值，该变量数值与序列化时的数值不同。<br>解决：要想将父类对象也序列化，就需要让父类也实现Serializable 接口。如果父类不实现的话的，就 需要有默认的无参的构造函数。在父类没有实现 Serializable 接口时，虚拟机是不会序列化父对象的，而一个 Java 对象的构造必须先有父对象，才有子对象，反序列化也不例外。所以反序列化时，为了构造父对象，只能调用父类的无参构造函数作为默认的父对象。因此当我们取父对象的变量值时，它的值是调用父类无参构造函数后的值。如果你考虑到这种序列化的情况，在父类无参构造函数中对变量进行初始化，否则的话，父类变量值都是默认声明的值，如 int 型的默认是 0，string 型的默认是 null。</p>
-<h4 id="Externalizable_接口">Externalizable 接口</h4>
-<p>无论是使用transient关键字，还是使用writeObject()和readObject()方法，其实都是基于Serializable接口的序列化。JDK中提供了另一个序列化接口—Externalizable，使用该接口之后，之前基于Serializable接口的序列化机制就将失效。<br>writeExternal：把一个Java对象写入到流中<br>readExternal：从流中读取一个Java对象</p>
-<h2 id="java序列化一览">java序列化一览</h2>
-<p><img src="img/java_serialize_%20summary.png" alt=""></p>
-<h2 id="Java_序列化框架比较">Java 序列化框架比较</h2>
-<h3 id="性能比较">性能比较</h3>
-<p><img src="img/serialize_performance_compare.png" alt=""></p>
-<h3 id="测试方法">测试方法</h3>
-<p><a href="https://github.com/eishay/jvm-serializers" target="_blank" rel="external">jvm-serializers</a> 提供了一个很好的比较各种Java序列化的的测试套件。 它罗列了各种序列化框架， 可以自动生成测试报告。</p>
-<h3 id="适用性比较">适用性比较</h3>
-<ul>
-<li>json<br>json的序列化框架有fastjson,jackson,gson等。<br>适用于数据量小，实时性较低（例如秒级别）的服务。JSON格式具有非常强的前后兼容性，并且调式方便，所以对客户端与服务端的通讯尤其适用。</li>
-<li>xml<br>xml的序列化框架有XStream。XML的序列化和反序列化的空间和时间开销都比较大，对于对性能要求在ms级别的服务，不推荐使用。</li>
-<li>hessian<br>hessian主要用于java序列化。它的实现机制是着重于数据，附带简单的类型信息的方法：</li>
-<li>对于简单的数据类型。就像Integer a = 1，hessian会序列化成I 1这样的流，I表示int or Integer，1就是数据内容。<ul>
-<li>对于复杂对象，通过Java的反射机制，hessian把对象所有的属性当成一个Map来序列化，产生类似M className propertyName1 I 1 propertyName S stringValue</li>
-<li>对于引用对象，在序列化过程中，如果一个对象之前出现过，hessian会直接插入一个R index这样的块来表示一个引用位置，从而省去再次序列化和反序列化的时间。</li>
-</ul>
-</li>
-<li>thift<br>Thrift是Facebook开源提供的一个高性能，轻量级RPC服务框架，其产生正是为了满足当前大数据量、分布式、跨语言、跨平台数据通讯的需求。 但是，Thrift并不仅仅是序列化协议，而是一个RPC框架。相对于JSON和XML而言，Thrift在空间开销和解析性能上有了比较大的提升，对于对性能要求比较高的分布式系统，它是一个优秀的RPC解决方案；但是由于Thrift的序列化被嵌入到Thrift框架里面，Thrift框架本身并没有透出序列化和反序列化接口，这导致其很难和其他传输层协议共同使用（例如HTTP）。</li>
-<li>protobuf<br>  序列化数据非常简洁，紧凑，析速度非常快，提供了非常友好的动态库。使用简介，反序列化只需要一行代码。但是在JavaBean和proto之间的转换较麻烦。</li>
-<li>avro<br>Avro的产生解决了JSON的冗长和没有IDL的问题。 Avro提供两种序列化格式：JSON格式或者Binary格式。Binary格式在空间开销和解析性能方面可以和Protobuf媲美，JSON格式方便测试阶段的调试。</li>
-<li>动态类型：Avro并不需要生成代码，模式和数据存放在一起，而模式使得整个数据的处理过程并不生成代码、静态数据类型等等。这方便了数据处理系统和语言的构造。<ul>
-<li>未标记的数据：由于读取数据的时候模式是已知的，那么需要和数据一起编码的类型信息就很少了，这样序列化的规模也就小了。</li>
-<li>不需要用户指定字段号：即使模式改变，处理数据时新旧模式都是已知的，所以通过使用字段名称可以解决差异问题。</li>
-</ul>
-</li>
-</ul>
-<p>Reference</p>
-<blockquote>
-<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-serial/" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/java/j-lo-serial/</a><br><a href="http://www.infoq.com/cn/articles/serialization-and-deserialization" target="_blank" rel="external">http://www.infoq.com/cn/articles/serialization-and-deserialization</a><br><a href="http://sqtds.github.io/2015/05/13/2015/java-serizable/" target="_blank" rel="external">http://sqtds.github.io/2015/05/13/2015/java-serizable/</a><br><a href="http://www.solinx.co/archives/377" target="_blank" rel="external">http://www.solinx.co/archives/377</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/01/03/Java序列化/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/11/13/本地连机房Spark的调试过程/" title="本地连机房Spark的调试过程" itemprop="url">本地连机房Spark的调试过程</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-11-13T13:19:27.000Z" itemprop="datePublished"> Published Nov 13 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="调试过程">调试过程</h2>
-<p>本地运行代码，输出如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">12</span>:<span class="number">09</span>:<span class="number">51</span> INFO SparkContext: Running Spark <span class="property">version</span> <span class="number">1.5</span><span class="number">.1</span></div><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$<span class="type">class</span></div><div class="line">    <span class="keyword">at</span> org.apache.spark.util.TimeStampedWeakValueHashMap.&lt;init&gt;(TimeStampedWeakValueHashMap.scala:<span class="number">42</span>)</div><div class="line">    <span class="keyword">at</span> org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:<span class="number">287</span>)</div><div class="line">Caused <span class="keyword">by</span>: java.lang.ClassNotFoundException: scala.collection.GenTraversableOnce$<span class="type">class</span></div></pre></td></tr></table></figure>
-
-<p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="http://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="external">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
-<p>spark日志：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ReliableDeliverySupervisor: Association <span class="operator">with</span> remote <span class="keyword">system</span> [akka.tcp://sparkDriver@<span class="number">100.64</span><span class="number">.80</span><span class="number">.93</span>:<span class="number">57108</span>] has failed, address is now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. Reason is: [scala.Option; <span class="built_in">local</span> class incompatible: stream classdesc serialVersionUID = -<span class="number">114498752079829388</span>, <span class="built_in">local</span> class serialVersionUID = -<span class="number">2062608324514658839</span>].</div></pre></td></tr></table></figure>
-
-<p>根据 scala.Option; local class incompatible 可以发现是 scala 的版本不对，spark 默认的是 scala-2.10，需要改变依赖的scala版本。</p>
-<p>改完以后又发现，还是连接不上。本地的输出：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">22</span> ERROR SparkUncaughtExceptionHandler: Uncaught exception <span class="operator">in</span> thread Thread[appclient-registration-retry-thread,<span class="number">5</span>,main]</div><div class="line">java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@<span class="number">5430</span>d0ff rejected <span class="built_in">from</span> java.util.concurrent.ThreadPoolExecutor@<span class="number">7819693</span>b[Running, pool size = <span class="number">1</span>, active threads = <span class="number">0</span>, queued tasks = <span class="number">0</span>, completed tasks = <span class="number">1</span>]</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:<span class="number">2047</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:<span class="number">823</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:<span class="number">1369</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:<span class="number">112</span>)</div></pre></td></tr></table></figure>
-
-<p>spark的日志如下：</p>
-<p>A</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span><span class="regexp">/11/</span><span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">03</span> ERROR ErrorMonitor: dropping message [<span class="keyword">class</span> akka.actor.ActorSelectionMessage] <span class="keyword">for</span> non-local recipient [Actor[akka.tcp:<span class="comment">//sparkMaster@10.19.27.215:4041/]] arriving at [akka.tcp://sparkMaster@10.19.27.215:4041] inbound addresses are [akka.tcp://sparkMaster@master1:4041]</span></div></pre></td></tr></table></figure>
-
-<p>B</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">41</span> <span class="type">WARN</span> <span class="type">ReliableDeliverySupervisor</span>: <span class="type">Association</span> <span class="keyword">with</span> remote system [akka.tcp://sparkDriver@<span class="number">100</span>.<span class="number">64</span>.<span class="number">80</span>.<span class="number">93</span>:<span class="number">61812</span>] has failed, address <span class="keyword">is</span> now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. <span class="type">Reason</span> <span class="keyword">is</span>: [<span class="type">Disassociated</span>].</div></pre></td></tr></table></figure>
-
-<p>关于B这部分的log，怀疑是测试环境的spark的网络访问权限没有打开！最后打开网络访问权限后解决。spark master和worker之间的通信使用的是akka，tcp协议。</p>
-<p>spark的A部分log和本地的log是一致的。</p>
-<p>第二天接着查，查了很多地方。怀疑是Spark的配置不正确。<br>对于Spark的配置，官网说的是：</p>
-<p>Options for the daemons used in the standalone deploy mode</p>
-<p>SPARK_MASTER_IP, to bind the master to a different IP address or hostname</p>
-<p>而我spark机器上的设置是：</p>
-<ol>
-<li>conf/spark-env.sh: export SPARK_MASTER_IP=master1</li>
-<li>/etc/hosts: 10.x.xxx.215 master1</li>
-</ol>
-<p>一切配置正确但依然不行。Google上到处寻觅，找到 spark 的 group 里面的一个帖子，<a href="https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8" target="_blank" rel="external">https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8</a>，提到</p>
-<blockquote>
-<p>Yes, this message means that one of the workers tried to contact you using your IP address (10.129.7.154), but Akka is (somewhat stupidly) configured to rely on a DNS name (namely ip-10-129-7-154). If you’ve set up the Spark standalone mode, there was a bug in the scripts where they would use an IP address for the master instead of a hostname.</p>
-</blockquote>
-<p>所以当我将 SMART_IP 改成 ip 而不是 hostname 后，本地终于能连上spark了，设置如下：</p>
-<p>conf/spark-env.sh: export SPARK_MASTER_IP=10.x.xxx.215</p>
-<h2 id="几点备忘">几点备忘</h2>
-<ol>
-<li><p>通过 %% 方法获取正确的 Scala 版本<br>如果你用是 groupID %% artifactID % revision 而不是 groupID % artifactID % revision（区别在于 groupID 后面是 %%），sbt 会在 工件名称中加上项目的 Scala 版本号。 这只是一种快捷方法。你可以这样写不用 %%：</p>
-</li>
-<li><p>enable build.sbt auto import<br>修改了 build.sbt，但是包没有引入生效</p>
-</li>
-<li><p>./spark-shell 加载配置文件<br>在Spark 集群上运行一个应用,只需通过master的 spark://IP:PORT 链接传递到SparkContext构造器<br>在集群上运行交互式的Spark 命令, 运行如下命令：<br>MASTER=spark://IP:PORT ./spark-shell<br>注意，如果你在一个 spark集群上运行了spark-shell脚本，spark-shell 将通过在conf/spark-env.sh下的SPARK_MASTER_IP和SPARK_MASTER_PORT自动设置MASTER</p>
-</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Spark/">Spark</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/11/13/本地连机房Spark的调试过程/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/11/10/Mysql-Memo/" title="Mysql Memo" itemprop="url">Mysql Memo</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-11-10T15:08:03.000Z" itemprop="datePublished"> Published Nov 10 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="1-_contact">1. contact</h2>
-<p>MySQL CONCAT function is used to concatenate two strings to form a single string.</p>
-<p>MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group.</p>
-<p>数据库Person表的内容如下：</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">id</th>
-<th style="text-align:center">name</th>
-<th style="text-align:center">source</th>
-<th style="text-align:center">age</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">GP</td>
-<td style="text-align:center">6</td>
-</tr>
-<tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center">B</td>
-<td style="text-align:center">GP</td>
-<td style="text-align:center">2</td>
-</tr>
-<tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">1</td>
-</tr>
-<tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">C</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">4</td>
-</tr>
-<tr>
-<td style="text-align:center">5</td>
-<td style="text-align:center">D</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">5</td>
-</tr>
-<tr>
-<td style="text-align:center">6</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">3</td>
-</tr>
-<tr>
-<td style="text-align:center">7</td>
-<td style="text-align:center">C</td>
-<td style="text-align:center">TW</td>
-<td style="text-align:center">7</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p>1.SQL:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> source) <span class="keyword">as</span> sourceCount,</div><div class="line">group_concat(<span class="keyword">distinct</span> source separator <span class="string">"/"</span>) <span class="keyword">as</span> sources</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span></div><div class="line">group by name;</div></pre></td></tr></table></figure>
-
-<p>Query Result:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">sourceCount</th>
-<th style="text-align:center">sources</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">GP/FB</td>
-</tr>
-<tr>
-<td style="text-align:center">B</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">GP</td>
-</tr>
-<tr>
-<td style="text-align:center">C</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">GP/TW</td>
-</tr>
-<tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">FB</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p>2.SQL:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> source) <span class="keyword">as</span> sourceCount,</div><div class="line">group_concat(<span class="keyword">distinct</span> source separator <span class="string">"/"</span>) <span class="keyword">as</span> sources</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span></div><div class="line">group by name</div><div class="line">having sourceCount = <span class="number">1</span> <span class="keyword">and</span> sources = '<span class="type">FB</span>';</div></pre></td></tr></table></figure>
-
-<p>Query Result:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">sourceCount</th>
-<th style="text-align:center">sources</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">FB</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<p>3.SQL:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> age) <span class="keyword">as</span> ageCount,</div><div class="line">group_concat(age order by age separator <span class="string">"#"</span>) <span class="keyword">as</span> ages</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span>;</div></pre></td></tr></table></figure>
-
-<p>Query Result:</p>
-<table>
-<thead>
-<tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">ageCount</th>
-<th style="text-align:center">ages</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">1#3#6</td>
-</tr>
-<tr>
-<td style="text-align:center">B</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">2</td>
-</tr>
-<tr>
-<td style="text-align:center">C</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4#7</td>
-</tr>
-<tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">5</td>
-</tr>
-</tbody>
-</table>
-<h2 id="2-_mysql_-N_不显示字段名">2. mysql -N 不显示字段名</h2>
-<p>普通的查询语句，查询结果中带字段名</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> mysql -h xxxx -P <span class="number">8000</span> -<span class="string">u'xxx'</span> -p<span class="string">'xxx'</span> -D xxdb</div><div class="line">-e <span class="string">"select name from Person where name = 'A'"</span>;</div></pre></td></tr></table></figure>
-
-<p>+—————-+</p>
-<p>| name      |</p>
-<p>+—————-+</p>
-<p>| not found |</p>
-<p>+—————-+</p>
-<p>带-N的查询语句，查询结果中不带字段名</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> mysql -N -h xxxx -P <span class="number">8000</span> -<span class="string">u'xxx'</span> -p<span class="string">'xxx'</span> -D xxdb</div><div class="line">-e <span class="string">"select name from Person where name = 'A'"</span>;</div></pre></td></tr></table></figure>
-
-<p>+—————-+</p>
-<p>| not found |</p>
-<p>+—————-+</p>
-<h2 id="3-_IFNULL">3. IFNULL</h2>
-<p>使用IFNULL能判断是否有查到结果。<br>在shell中跑mysql的指令容易出现空行，此时用IFNULL是最合适的了。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> mysql -N -h xxxx -P 8000 -u'xxx' -p'xxx' -D xxdb</div><div class="line">-e "<span class="operator"><span class="keyword">select</span> <span class="keyword">IFNULL</span>(</span></div><div class="line">(<span class="keyword">select</span> name <span class="keyword">from</span> Person <span class="keyword">where</span> name = <span class="string">'A'</span> <span class="keyword">and</span> age = <span class="number">100</span>),</div><div class="line"><span class="string">'not found'</span>)<span class="string">"</span></div></pre></td></tr></table></figure>
-
-<p>+—————-+</p>
-<p>| not found |</p>
-<p>+—————-+</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/mysql/">mysql</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/11/10/Mysql-Memo/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1148,39 +994,39 @@ data=d.decompress(s)
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
-		
-			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
-		
-			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
-		
-			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
-		
-			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
-		
-			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-		
-			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
-		
-			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
-		
-			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
 			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
 		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>

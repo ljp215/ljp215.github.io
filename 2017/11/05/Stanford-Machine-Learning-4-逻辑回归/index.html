@@ -1,0 +1,580 @@
+
+ <!DOCTYPE HTML>
+<html >
+<head>
+  <meta charset="UTF-8">
+  
+    <title>Stanford Machine Learning - 4 逻辑回归 | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="1. 逻辑回归
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+其中$$g(z)=\frac1{1+e^{-z}}$$；
+g(z) 被称为 logistic function 或 s">
+    
+    
+    <meta name="description" content="1. 逻辑回归
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+其中$$g(z)=\frac1{1+e^{-z}}$$；
+g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:
+我们先取 g(z) 为 sigmoid fu">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stanford Machine Learning - 4 逻辑回归">
+<meta property="og:url" content="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="1. 逻辑回归
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+其中$$g(z)=\frac1{1+e^{-z}}$$；
+g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:
+我们先取 g(z) 为 sigmoid fu">
+<meta property="og:image" content="/img/sigmoid_function.png">
+<meta property="og:image" content="/img/logistic_regression_delta_ljp_derived.png">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stanford Machine Learning - 4 逻辑回归">
+<meta name="twitter:description" content="1. 逻辑回归
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+其中$$g(z)=\frac1{1+e^{-z}}$$；
+g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:
+我们先取 g(z) 为 sigmoid fu">
+
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css" type="text/css">
+
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/" title="Stanford Machine Learning - 4 逻辑回归" itemprop="url">Stanford Machine Learning - 4 逻辑回归</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T15:06:43.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_逻辑回归"><span class="toc-number">1.</span> <span class="toc-text">1. 逻辑回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_梯度上升法求解逻辑回归"><span class="toc-number">2.</span> <span class="toc-text">2. 梯度上升法求解逻辑回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_牛顿迭代法求解逻辑回归"><span class="toc-number">3.</span> <span class="toc-text">3. 牛顿迭代法求解逻辑回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1_牛顿迭代法简述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 牛顿迭代法简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2_迭代过程"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 迭代过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#从泰勒展开到牛顿迭代"><span class="toc-number">3.2.1.</span> <span class="toc-text">从泰勒展开到牛顿迭代</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3_多维向量的牛顿迭代"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 多维向量的牛顿迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4_牛顿迭代法的特点"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 牛顿迭代法的特点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#是否收敛"><span class="toc-number">3.4.1.</span> <span class="toc-text">是否收敛</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代速度"><span class="toc-number">3.4.2.</span> <span class="toc-text">迭代速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优缺点"><span class="toc-number">3.4.3.</span> <span class="toc-text">优缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+		
+		</div>
+		
+		<h2 id="1-_逻辑回归">1. 逻辑回归</h2>
+<p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h<em>θ(x)$ 可以写为<br>$$h</em>θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$</p>
+<p>其中<br>$$g(z)=\frac1{1+e^{-z}}$$；</p>
+<p>g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:<br><img src="/img/sigmoid_function.png" alt="sigmoid function"></p>
+<p>我们先取 g(z) 为 sigmoid function，如果有其他使得 y 值从 0 到 1 平滑递增的函数也可以使用。但由于一些列原因(在后续的一般化回归模型 GLM 中会谈到为什么选用这个函数)，g(z) is a fairly natural one.</p>
+<p>g(z) 的导数我们可以先进行推导:<br>$$g’(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})$$<br>$$= \frac{1}{1+e^{-z}}*(1 - \frac{1}{1+e^{-z}})= g(z)(1-g(z))$$</p>
+<h2 id="2-_梯度上升法求解逻辑回归">2. 梯度上升法求解逻辑回归</h2>
+<p>对于给定的逻辑回归函数，我们使用最小二乘法来推导出最大似然估计，假设:<br>$P(y=1|x;θ)=h_θ(x)$，代表对于给定的 θ，y 取值为 1 的概率。<br>$P(y=0|x;θ)=1-h_θ(x)$，代表对于给定的 θ，y 取值为 0 的概率。</p>
+<p>以上两者可以合并为：<br>$$P(y|x;θ)=(h_θ(x))^y(1 − h_θ(x))^{(1−y)}$$</p>
+<p>假设 m 个训练集是相互独立的，则似然估计为：<br>$$L(θ)=P(\overrightarrow{y}|X;θ)$$<br>$$= \prod^m_{i=1}P(y^i|x^i;θ)$$<br>$$= \prod^m_{i=1}{(h_θ(x^{(i)}))^{y^{(i)}}(1 − h_θ(x^{(i)}))^{(1−y^{(i)})}}$$</p>
+<p>和之前一样，上式可以简化为：</p>
+<p></p><p><br>$l(θ) = logL(θ)<br>= \sum_{m}^{i=1}{y^{(i)}}log{h(x^{(i)}) + {(1−y^{(i)})}log(1 − h(x^{(i)}))}$</p>
+<p>那么，<br>如何去最大化似然函数呢，可以应用梯度上升法，因为我们要使 P 的取值足够大，也是就预测准确的概率最够大。</p>
+<p>随机梯度上升的公式为：<br>$$θ:= θ + \alpha\Deltaθl(θ)$$</p>
+<p>下面来求$\Deltaθl(θ)$的取值：</p>
+<p>$$\frac\partial{\partial\theta_j}l(\theta)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)})\frac\partial{\partial\theta_j}g(\theta^Tx)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)}) g(\theta^Tx)(1-g(\theta^Tx))\frac\partial{\partial\theta_j}\theta^Tx$$<br>$$= ({y(1-g(\theta^Tx))-(1-y)g(\theta^Tx)})x_j$$<br>$$= (y - h_{\theta}(x))x_j$$</p>
+<p>附上手写的推导过程：<br><img src="/img/logistic_regression_delta_ljp_derived.png" alt="手写推导过程"></p>
+<p>所以，最终随机梯度上升的公式为：<br>$$θ_j:=θ_j + \alpha\sum_{i=1}^{m}(y^{(i)} - h_{\theta}(x^{(i))})x_j^{(i)}$$</p>
+<p>如何和线性回归的公式放在一起比较，</p>
+<p>$$θ_j = θ_j - α \frac1m <em> \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}</em>x_j^{(i)}$$</p>
+<p>会发现，这两者非常相似，实际上却不然，因为这里的 $(h_θ(x^{(i)})$ 定义的不是线性函数。后续我们谈到 GLM 时会发现这并不是巧合，而是有更深层次的原因。</p>
+<h2 id="3-_牛顿迭代法求解逻辑回归">3. 牛顿迭代法求解逻辑回归</h2>
+<p>牛顿迭代法可以利用到曲线本身的信息，比梯度下降法更容易收敛，即迭代更少次数。</p>
+<h3 id="3-1_牛顿迭代法简述">3.1 牛顿迭代法简述</h3>
+<p>假设我们要求解方程 f(x)=0 的根，首先随便找一个初始值 x0，如果 x0 不是解，做一个经过 (x0,f(x0))  这个点的切线，与 x 轴的交点为 x1。同样的道理，如果 x1 不是解，做一个经过 (x1,f(x1)) 这个点的切线，与 x 轴的交点为 x2。 以此类推。以这样的方式得到的 xi 会无限趋近于 f(x)=0 的解。</p>
+<p>对于任意一点 $(x_n,y_n)$ 做切线，切线的斜率为 $f’(x_n)$，则有方程：<br>$$ y-f(x_n) = f’(x_n)(x-x_n) $$</p>
+<h3 id="3-2_迭代过程">3.2 迭代过程</h3>
+<p>求解 $f(\theta)$ = 0 时 $\theta$ 的取值。<br>设下一次迭代时 $\theta^{(t+1)}$ 的取值与前一次迭代 $\theta^{(t)}$ 的取值(在 x 轴)距离为 $\Delta$。</p>
+<p>则 $\theta^{(t+1)} = \theta^{(t)} - \Delta$，且 $\Delta = \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$，<br>所以有：<br>$$\theta^{(t+1)} = \theta^{(t)} - \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$$</p>
+<h4 id="从泰勒展开到牛顿迭代">从泰勒展开到牛顿迭代</h4>
+<p>也可以由泰勒展开中推导牛顿迭代的公式。这次为了求解方程 f′=0 的根，把原函数 f(x) 的做泰勒展开，展开到二阶形式：<br>$$ f(x+\Delta x) = f(x)+f’(x)\Delta x+ \frac1{2}f’’(x)\Delta x^2 $$</p>
+<p>当且仅当 $\Delta x$ 逼近 0 时，上式成立，此时忽略 1/2 系数的作用，所以有：<br>$$ f’(x)+ \frac1{2}f’’(x)\Delta x = 0 $$<br>故：<br>$$\Delta x = -\frac{f’(x)}{f’’(x)} $$</p>
+<p><strong>对函数求极大值的方法</strong><br>&gt;</p>
+<blockquote>
+<ol>
+<li>将原函数y=f(x)，对x求一次导数，得到dy/dx；</li>
+<li>令dy/dx = 0，解得一次导函数的零点；</li>
+<li>将原函数对x求二次导函数；</li>
+<li>将解得的零点坐标的x值代入二次导函数，<br>如果是正值，零点所在位置，就是极小值点，再将该x值代入原函数，得到极小值；<br>如果是值值，零点所在位置，就是极大值点，再将该x值代入原函数，得到极大值；<br>如果是0，零点所在位置，既不是极小值点，也不是极大值点，是拐点。</li>
+</ol>
+</blockquote>
+<p>所以求 $l(\theta)$ 在极大值处 $\theta$ 的取值，则是求 $l’(\theta) = 0$ 时 $\theta$ 的值，应用牛顿迭代法则有：</p>
+<p>$$\theta^{(t+1)} = \theta^{(t)} - \frac{l’(\theta^{(t)})}{l’’(\theta^{(t)})}$$</p>
+<h3 id="3-3_多维向量的牛顿迭代">3.3 多维向量的牛顿迭代</h3>
+<p>对于多维向量 $\overrightarrow{X}$ 求解。<br>$$\theta := \theta - H^{-1} \nabla l(\theta)$$<br>其中<br>$\nabla l(\theta)$ 是对 $l(\theta)$ 求导的值。</p>
+<p>H 是一个 n*n 的矩阵，n 是特征数量，元素的计算公式为：<br>$$H_ij= \frac{\partial^2{l({\theta)}}}{\partial{\theta_i}\partial{\theta_j}}$$</p>
+<h3 id="3-4_牛顿迭代法的特点">3.4 牛顿迭代法的特点</h3>
+<h4 id="是否收敛">是否收敛</h4>
+<p>通常情况下是收敛的，但是需要满足一些条件，对于逻辑回归来讲，是收敛的。</p>
+<h4 id="迭代速度">迭代速度</h4>
+<p>每次迭代后，有解数字的误差是成平方倍减小的，是二次收敛函数。</p>
+<h4 id="优缺点">优缺点</h4>
+<p>优点：收敛快<br>缺点：特征多(上千个)时，每次迭代成本大</p>
+<h2 id="Reference">Reference</h2>
+<p><a href="http://blog.csdn.net/baimafujinji/article/details/51179381" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51179381</a><br><a href="http://blog.csdn.net/baimafujinji/article/details/51167852" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51167852</a><br><a href="https://www.jiqizhixin.com/articles/2017-08-09-3" target="_blank" rel="external">如何通过牛顿方法解决Logistic回归问题</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/" data-title="Stanford Machine Learning - 4 逻辑回归 | Zane Blog" data-tsina="null" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/" title="Stanford Machine Learning - 5 广义线性模型">
+  <strong>上一篇：</strong><br/>
+  <span>
+  Stanford Machine Learning - 5 广义线性模型</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/"  title="Stanford Machine Learning - 3 线性回归的概率解释">
+ <strong>下一篇：</strong><br/> 
+ <span>Stanford Machine Learning - 3 线性回归的概率解释
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_逻辑回归"><span class="toc-number">1.</span> <span class="toc-text">1. 逻辑回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_梯度上升法求解逻辑回归"><span class="toc-number">2.</span> <span class="toc-text">2. 梯度上升法求解逻辑回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_牛顿迭代法求解逻辑回归"><span class="toc-number">3.</span> <span class="toc-text">3. 牛顿迭代法求解逻辑回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1_牛顿迭代法简述"><span class="toc-number">3.1.</span> <span class="toc-text">3.1 牛顿迭代法简述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2_迭代过程"><span class="toc-number">3.2.</span> <span class="toc-text">3.2 迭代过程</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#从泰勒展开到牛顿迭代"><span class="toc-number">3.2.1.</span> <span class="toc-text">从泰勒展开到牛顿迭代</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-3_多维向量的牛顿迭代"><span class="toc-number">3.3.</span> <span class="toc-text">3.3 多维向量的牛顿迭代</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-4_牛顿迭代法的特点"><span class="toc-number">3.4.</span> <span class="toc-text">3.4 牛顿迭代法的特点</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#是否收敛"><span class="toc-number">3.4.1.</span> <span class="toc-text">是否收敛</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#迭代速度"><span class="toc-number">3.4.2.</span> <span class="toc-text">迭代速度</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#优缺点"><span class="toc-number">3.4.3.</span> <span class="toc-text">优缺点</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3Fnull' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>

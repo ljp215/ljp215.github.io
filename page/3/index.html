@@ -91,6 +91,443 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/01/03/Java序列化/" title="Java序列化" itemprop="url">Java序列化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-03T01:49:17.000Z" itemprop="datePublished"> Published Jan 3 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="什么是序列化">什么是序列化</h2>
+<p>java 序列化是将对象转化为二进制流。不同的序列化框架会将对象转成不同的二进制流。通过 <a href="http://www.solinx.co/archives/377" target="_blank" rel="external">透过byte数组简单分析Java序列化、Kryo、ProtoBuf序列化</a> 这篇文章里可以看到，不同的序列化框架最终转成的二进制流是不一样的。</p>
+<h2 id="Java_默认序列化">Java 默认序列化</h2>
+<h3 id="默认序列化机制">默认序列化机制</h3>
+<p>如果仅仅只是让某个类实现Serializable接口，而没有其它任何处理的话，则就是使用默认序列化机制。使用默认机制，在序列化对象时，不仅会序列化当前对象本身，还会对该对象引用的其它对象也进行序列化，同样地，这些其它对象引用的另外对象也将被序列化，以此类推。所以，如果一个对象包含的成员变量是容器类对象，而这些容器所含有的元素也是容器类对象，那么这个序列化的过程就会较复杂，开销也较大。</p>
+<p>整个过程都是Java虚拟机（JVM）独立的，也就是说，在一个平台上序列化的对象可以在另一个完全不同的平台上反序列化该对象。</p>
+<h3 id="serialVersionUID">serialVersionUID</h3>
+<p>serialVersionUID的作用<br>不仅取决于类路径和功能代码是否一致，一个非常重要的一点是两个类的序列化 ID 是否一致（就是 <code>private static final long serialVersionUID = 1L</code>）</p>
+<h3 id="Java_序列化实现">Java 序列化实现</h3>
+<h4 id="ObjectInputStream_&amp;&amp;_ObjectOutputStream">ObjectInputStream &amp;&amp; ObjectOutputStream</h4>
+<p>类ObjectInputStream 和ObjectOutputStream是高层次的数据流，它们包含序列化和反序列化对象的方法。<br>ObjectOutputStream 类包含很多写方法来写各种数据类型，但是一个特别的方法例外：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeObject</span>(Object x) <span class="keyword">throws</span> IOException
+</code></pre><p>上面的方法序列化一个对象，并将它发送到输出流。相似的ObjectInputStream 类包含如下反序列化一个对象的方法：</p>
+<pre><code><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">readObject</span>() <span class="keyword">throws</span> IOException, ClassNotFoundException
+</code></pre><p>该方法从流中取出下一个对象，并将对象反序列化。它的返回值为Object，因此，你需要将它转换成合适的数据类型。</p>
+<h4 id="Serializable_接口">Serializable 接口</h4>
+<p>情境：一个子类实现了 Serializable 接口，它的父类都没有实现 Serializable 接口，序列化该子类对象，然后反序列化后输出父类定义的某变量的数值，该变量数值与序列化时的数值不同。<br>解决：要想将父类对象也序列化，就需要让父类也实现Serializable 接口。如果父类不实现的话的，就 需要有默认的无参的构造函数。在父类没有实现 Serializable 接口时，虚拟机是不会序列化父对象的，而一个 Java 对象的构造必须先有父对象，才有子对象，反序列化也不例外。所以反序列化时，为了构造父对象，只能调用父类的无参构造函数作为默认的父对象。因此当我们取父对象的变量值时，它的值是调用父类无参构造函数后的值。如果你考虑到这种序列化的情况，在父类无参构造函数中对变量进行初始化，否则的话，父类变量值都是默认声明的值，如 int 型的默认是 0，string 型的默认是 null。</p>
+<h4 id="Externalizable_接口">Externalizable 接口</h4>
+<p>无论是使用transient关键字，还是使用writeObject()和readObject()方法，其实都是基于Serializable接口的序列化。JDK中提供了另一个序列化接口—Externalizable，使用该接口之后，之前基于Serializable接口的序列化机制就将失效。<br>writeExternal：把一个Java对象写入到流中<br>readExternal：从流中读取一个Java对象</p>
+<h2 id="java序列化一览">java序列化一览</h2>
+<p><img src="img/java_serialize_%20summary.png" alt=""></p>
+<h2 id="Java_序列化框架比较">Java 序列化框架比较</h2>
+<h3 id="性能比较">性能比较</h3>
+<p><img src="img/serialize_performance_compare.png" alt=""></p>
+<h3 id="测试方法">测试方法</h3>
+<p><a href="https://github.com/eishay/jvm-serializers" target="_blank" rel="external">jvm-serializers</a> 提供了一个很好的比较各种Java序列化的的测试套件。 它罗列了各种序列化框架， 可以自动生成测试报告。</p>
+<h3 id="适用性比较">适用性比较</h3>
+<ul>
+<li>json<br>json的序列化框架有fastjson,jackson,gson等。<br>适用于数据量小，实时性较低（例如秒级别）的服务。JSON格式具有非常强的前后兼容性，并且调式方便，所以对客户端与服务端的通讯尤其适用。</li>
+<li>xml<br>xml的序列化框架有XStream。XML的序列化和反序列化的空间和时间开销都比较大，对于对性能要求在ms级别的服务，不推荐使用。</li>
+<li>hessian<br>hessian主要用于java序列化。它的实现机制是着重于数据，附带简单的类型信息的方法：</li>
+<li>对于简单的数据类型。就像Integer a = 1，hessian会序列化成I 1这样的流，I表示int or Integer，1就是数据内容。<ul>
+<li>对于复杂对象，通过Java的反射机制，hessian把对象所有的属性当成一个Map来序列化，产生类似M className propertyName1 I 1 propertyName S stringValue</li>
+<li>对于引用对象，在序列化过程中，如果一个对象之前出现过，hessian会直接插入一个R index这样的块来表示一个引用位置，从而省去再次序列化和反序列化的时间。</li>
+</ul>
+</li>
+<li>thift<br>Thrift是Facebook开源提供的一个高性能，轻量级RPC服务框架，其产生正是为了满足当前大数据量、分布式、跨语言、跨平台数据通讯的需求。 但是，Thrift并不仅仅是序列化协议，而是一个RPC框架。相对于JSON和XML而言，Thrift在空间开销和解析性能上有了比较大的提升，对于对性能要求比较高的分布式系统，它是一个优秀的RPC解决方案；但是由于Thrift的序列化被嵌入到Thrift框架里面，Thrift框架本身并没有透出序列化和反序列化接口，这导致其很难和其他传输层协议共同使用（例如HTTP）。</li>
+<li>protobuf<br>  序列化数据非常简洁，紧凑，析速度非常快，提供了非常友好的动态库。使用简介，反序列化只需要一行代码。但是在JavaBean和proto之间的转换较麻烦。</li>
+<li>avro<br>Avro的产生解决了JSON的冗长和没有IDL的问题。 Avro提供两种序列化格式：JSON格式或者Binary格式。Binary格式在空间开销和解析性能方面可以和Protobuf媲美，JSON格式方便测试阶段的调试。</li>
+<li>动态类型：Avro并不需要生成代码，模式和数据存放在一起，而模式使得整个数据的处理过程并不生成代码、静态数据类型等等。这方便了数据处理系统和语言的构造。<ul>
+<li>未标记的数据：由于读取数据的时候模式是已知的，那么需要和数据一起编码的类型信息就很少了，这样序列化的规模也就小了。</li>
+<li>不需要用户指定字段号：即使模式改变，处理数据时新旧模式都是已知的，所以通过使用字段名称可以解决差异问题。</li>
+</ul>
+</li>
+</ul>
+<p>Reference</p>
+<blockquote>
+<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-serial/" target="_blank" rel="external">https://www.ibm.com/developerworks/cn/java/j-lo-serial/</a><br><a href="http://www.infoq.com/cn/articles/serialization-and-deserialization" target="_blank" rel="external">http://www.infoq.com/cn/articles/serialization-and-deserialization</a><br><a href="http://sqtds.github.io/2015/05/13/2015/java-serizable/" target="_blank" rel="external">http://sqtds.github.io/2015/05/13/2015/java-serizable/</a><br><a href="http://www.solinx.co/archives/377" target="_blank" rel="external">http://www.solinx.co/archives/377</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/03/Java序列化/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/13/本地连机房Spark的调试过程/" title="本地连机房Spark的调试过程" itemprop="url">本地连机房Spark的调试过程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-13T13:19:27.000Z" itemprop="datePublished"> Published Nov 13 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="调试过程">调试过程</h2>
+<p>本地运行代码，输出如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">12</span>:<span class="number">09</span>:<span class="number">51</span> INFO SparkContext: Running Spark <span class="property">version</span> <span class="number">1.5</span><span class="number">.1</span></div><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$<span class="type">class</span></div><div class="line">    <span class="keyword">at</span> org.apache.spark.util.TimeStampedWeakValueHashMap.&lt;init&gt;(TimeStampedWeakValueHashMap.scala:<span class="number">42</span>)</div><div class="line">    <span class="keyword">at</span> org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:<span class="number">287</span>)</div><div class="line">Caused <span class="keyword">by</span>: java.lang.ClassNotFoundException: scala.collection.GenTraversableOnce$<span class="type">class</span></div></pre></td></tr></table></figure>
+
+<p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="http://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="external">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
+<p>spark日志：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ReliableDeliverySupervisor: Association <span class="operator">with</span> remote <span class="keyword">system</span> [akka.tcp://sparkDriver@<span class="number">100.64</span><span class="number">.80</span><span class="number">.93</span>:<span class="number">57108</span>] has failed, address is now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. Reason is: [scala.Option; <span class="built_in">local</span> class incompatible: stream classdesc serialVersionUID = -<span class="number">114498752079829388</span>, <span class="built_in">local</span> class serialVersionUID = -<span class="number">2062608324514658839</span>].</div></pre></td></tr></table></figure>
+
+<p>根据 scala.Option; local class incompatible 可以发现是 scala 的版本不对，spark 默认的是 scala-2.10，需要改变依赖的scala版本。</p>
+<p>改完以后又发现，还是连接不上。本地的输出：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">22</span> ERROR SparkUncaughtExceptionHandler: Uncaught exception <span class="operator">in</span> thread Thread[appclient-registration-retry-thread,<span class="number">5</span>,main]</div><div class="line">java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@<span class="number">5430</span>d0ff rejected <span class="built_in">from</span> java.util.concurrent.ThreadPoolExecutor@<span class="number">7819693</span>b[Running, pool size = <span class="number">1</span>, active threads = <span class="number">0</span>, queued tasks = <span class="number">0</span>, completed tasks = <span class="number">1</span>]</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:<span class="number">2047</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:<span class="number">823</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:<span class="number">1369</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:<span class="number">112</span>)</div></pre></td></tr></table></figure>
+
+<p>spark的日志如下：</p>
+<p>A</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span><span class="regexp">/11/</span><span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">03</span> ERROR ErrorMonitor: dropping message [<span class="keyword">class</span> akka.actor.ActorSelectionMessage] <span class="keyword">for</span> non-local recipient [Actor[akka.tcp:<span class="comment">//sparkMaster@10.19.27.215:4041/]] arriving at [akka.tcp://sparkMaster@10.19.27.215:4041] inbound addresses are [akka.tcp://sparkMaster@master1:4041]</span></div></pre></td></tr></table></figure>
+
+<p>B</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">41</span> <span class="type">WARN</span> <span class="type">ReliableDeliverySupervisor</span>: <span class="type">Association</span> <span class="keyword">with</span> remote system [akka.tcp://sparkDriver@<span class="number">100</span>.<span class="number">64</span>.<span class="number">80</span>.<span class="number">93</span>:<span class="number">61812</span>] has failed, address <span class="keyword">is</span> now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. <span class="type">Reason</span> <span class="keyword">is</span>: [<span class="type">Disassociated</span>].</div></pre></td></tr></table></figure>
+
+<p>关于B这部分的log，怀疑是测试环境的spark的网络访问权限没有打开！最后打开网络访问权限后解决。spark master和worker之间的通信使用的是akka，tcp协议。</p>
+<p>spark的A部分log和本地的log是一致的。</p>
+<p>第二天接着查，查了很多地方。怀疑是Spark的配置不正确。<br>对于Spark的配置，官网说的是：</p>
+<p>Options for the daemons used in the standalone deploy mode</p>
+<p>SPARK_MASTER_IP, to bind the master to a different IP address or hostname</p>
+<p>而我spark机器上的设置是：</p>
+<ol>
+<li>conf/spark-env.sh: export SPARK_MASTER_IP=master1</li>
+<li>/etc/hosts: 10.x.xxx.215 master1</li>
+</ol>
+<p>一切配置正确但依然不行。Google上到处寻觅，找到 spark 的 group 里面的一个帖子，<a href="https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8" target="_blank" rel="external">https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8</a>，提到</p>
+<blockquote>
+<p>Yes, this message means that one of the workers tried to contact you using your IP address (10.129.7.154), but Akka is (somewhat stupidly) configured to rely on a DNS name (namely ip-10-129-7-154). If you’ve set up the Spark standalone mode, there was a bug in the scripts where they would use an IP address for the master instead of a hostname.</p>
+</blockquote>
+<p>所以当我将 SMART_IP 改成 ip 而不是 hostname 后，本地终于能连上spark了，设置如下：</p>
+<p>conf/spark-env.sh: export SPARK_MASTER_IP=10.x.xxx.215</p>
+<h2 id="几点备忘">几点备忘</h2>
+<ol>
+<li><p>通过 %% 方法获取正确的 Scala 版本<br>如果你用是 groupID %% artifactID % revision 而不是 groupID % artifactID % revision（区别在于 groupID 后面是 %%），sbt 会在 工件名称中加上项目的 Scala 版本号。 这只是一种快捷方法。你可以这样写不用 %%：</p>
+</li>
+<li><p>enable build.sbt auto import<br>修改了 build.sbt，但是包没有引入生效</p>
+</li>
+<li><p>./spark-shell 加载配置文件<br>在Spark 集群上运行一个应用,只需通过master的 spark://IP:PORT 链接传递到SparkContext构造器<br>在集群上运行交互式的Spark 命令, 运行如下命令：<br>MASTER=spark://IP:PORT ./spark-shell<br>注意，如果你在一个 spark集群上运行了spark-shell脚本，spark-shell 将通过在conf/spark-env.sh下的SPARK_MASTER_IP和SPARK_MASTER_PORT自动设置MASTER</p>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spark/">Spark</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/13/本地连机房Spark的调试过程/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/11/10/Mysql-Memo/" title="Mysql Memo" itemprop="url">Mysql Memo</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-10T15:08:03.000Z" itemprop="datePublished"> Published Nov 10 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_contact">1. contact</h2>
+<p>MySQL CONCAT function is used to concatenate two strings to form a single string.</p>
+<p>MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group.</p>
+<p>数据库Person表的内容如下：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">id</th>
+<th style="text-align:center">name</th>
+<th style="text-align:center">source</th>
+<th style="text-align:center">age</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">1</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">GP</td>
+<td style="text-align:center">6</td>
+</tr>
+<tr>
+<td style="text-align:center">2</td>
+<td style="text-align:center">B</td>
+<td style="text-align:center">GP</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">3</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">4</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">4</td>
+</tr>
+<tr>
+<td style="text-align:center">5</td>
+<td style="text-align:center">D</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">5</td>
+</tr>
+<tr>
+<td style="text-align:center">6</td>
+<td style="text-align:center">A</td>
+<td style="text-align:center">FB</td>
+<td style="text-align:center">3</td>
+</tr>
+<tr>
+<td style="text-align:center">7</td>
+<td style="text-align:center">C</td>
+<td style="text-align:center">TW</td>
+<td style="text-align:center">7</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>1.SQL:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> source) <span class="keyword">as</span> sourceCount,</div><div class="line">group_concat(<span class="keyword">distinct</span> source separator <span class="string">"/"</span>) <span class="keyword">as</span> sources</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span></div><div class="line">group by name;</div></pre></td></tr></table></figure>
+
+<p>Query Result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">sourceCount</th>
+<th style="text-align:center">sources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">GP/FB</td>
+</tr>
+<tr>
+<td style="text-align:center">B</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">GP</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">GP/TW</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">FB</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>2.SQL:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> source) <span class="keyword">as</span> sourceCount,</div><div class="line">group_concat(<span class="keyword">distinct</span> source separator <span class="string">"/"</span>) <span class="keyword">as</span> sources</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span></div><div class="line">group by name</div><div class="line">having sourceCount = <span class="number">1</span> <span class="keyword">and</span> sources = '<span class="type">FB</span>';</div></pre></td></tr></table></figure>
+
+<p>Query Result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">sourceCount</th>
+<th style="text-align:center">sources</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">FB</td>
+</tr>
+</tbody>
+</table>
+<p><br></p>
+<p>3.SQL:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">select name, count(<span class="keyword">distinct</span> age) <span class="keyword">as</span> ageCount,</div><div class="line">group_concat(age order by age separator <span class="string">"#"</span>) <span class="keyword">as</span> ages</div><div class="line"><span class="keyword">from</span> <span class="type">Person</span>;</div></pre></td></tr></table></figure>
+
+<p>Query Result:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">name</th>
+<th style="text-align:center">ageCount</th>
+<th style="text-align:center">ages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">A</td>
+<td style="text-align:center">3</td>
+<td style="text-align:center">1#3#6</td>
+</tr>
+<tr>
+<td style="text-align:center">B</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">2</td>
+</tr>
+<tr>
+<td style="text-align:center">C</td>
+<td style="text-align:center">2</td>
+<td style="text-align:center">4#7</td>
+</tr>
+<tr>
+<td style="text-align:center">D</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">5</td>
+</tr>
+</tbody>
+</table>
+<h2 id="2-_mysql_-N_不显示字段名">2. mysql -N 不显示字段名</h2>
+<p>普通的查询语句，查询结果中带字段名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> mysql -h xxxx -P <span class="number">8000</span> -<span class="string">u'xxx'</span> -p<span class="string">'xxx'</span> -D xxdb</div><div class="line">-e <span class="string">"select name from Person where name = 'A'"</span>;</div></pre></td></tr></table></figure>
+
+<p>+—————-+</p>
+<p>| name      |</p>
+<p>+—————-+</p>
+<p>| not found |</p>
+<p>+—————-+</p>
+<p>带-N的查询语句，查询结果中不带字段名</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> mysql -N -h xxxx -P <span class="number">8000</span> -<span class="string">u'xxx'</span> -p<span class="string">'xxx'</span> -D xxdb</div><div class="line">-e <span class="string">"select name from Person where name = 'A'"</span>;</div></pre></td></tr></table></figure>
+
+<p>+—————-+</p>
+<p>| not found |</p>
+<p>+—————-+</p>
+<h2 id="3-_IFNULL">3. IFNULL</h2>
+<p>使用IFNULL能判断是否有查到结果。<br>在shell中跑mysql的指令容易出现空行，此时用IFNULL是最合适的了。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"> mysql -N -h xxxx -P 8000 -u'xxx' -p'xxx' -D xxdb</div><div class="line">-e "<span class="operator"><span class="keyword">select</span> <span class="keyword">IFNULL</span>(</span></div><div class="line">(<span class="keyword">select</span> name <span class="keyword">from</span> Person <span class="keyword">where</span> name = <span class="string">'A'</span> <span class="keyword">and</span> age = <span class="number">100</span>),</div><div class="line"><span class="string">'not found'</span>)<span class="string">"</span></div></pre></td></tr></table></figure>
+
+<p>+—————-+</p>
+<p>| not found |</p>
+<p>+—————-+</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/mysql/">mysql</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/10/Mysql-Memo/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/11/02/Java的内存泄露与垃圾回收/" title="Java的内存泄露与垃圾回收" itemprop="url">Java的内存泄露与垃圾回收</a>
   </h1>
   <p class="article-author">By
@@ -830,395 +1267,9 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/22/volatile详解/" title="volatile详解" itemprop="url">volatile详解</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-22T14:21:36.000Z" itemprop="datePublished"> Published Jun 22 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="volatile的含义">volatile的含义</h1>
-<p>volatile是一个类型修饰符（type specifier）。它是被设计用来修饰被不同线程访问和修改的变量。<br>volatile变量自身具有下列特性：</p>
-<ul>
-<li>可见性：对一个volatile变量的读，总是能看到（任意线程）对这个volatile变量的写入。</li>
-<li>原子性：对任意单个volatile变量的读/写具有原子性，但类似于volatile++这种复合操作不具有原子性。</li>
-</ul>
-<h1 id="volatile与synchronized的比较">volatile与synchronized的比较</h1>
-<p>Java语言包含两种内在的同步机制：被synchronized修饰的同步块（或方法）和被volatile修饰的变量。这两种机制都是为了实现代码线程的安全性。与 synchronized 块相比，volatile 变量的同步性较差，使用时容易出错，但它更简单且开销更低。</p>
-<p><strong>锁提供了两种主要特性：互斥(mutual exclusion)和可见性(visibility)。</strong>互斥即一次只允许一个线程持有某个特定的锁，因此可使用该特性实现对共享数据的协调访问协议，这样，一次就只有一个线程能够使用该共享数据。可见性要更加复杂一些，它必须确保释放锁之前对共享数据做出的更改对于随后获得该锁的另一个线程是可见的 —— 如果没有同步机制提供的这种可见性保证，线程看到的共享变量可能是修改前的值或不一致的值，这将引发许多严重问题。</p>
-<p>volatile 变量具有 synchronized 的可见性特性，但是不具备原子特性。这就是说线程能够自动发现 volatile 变量的最新值。volatile 变量可用于提供线程安全，但是只能应用于非常有限的一组用例：多个变量之间或者某个变量的当前值与修改后值之间没有约束。因此，单独使用 volatile 还不足以实现计数器、互斥锁或任何具有与多个变量相关的不变式（Invariants）的类（例如 “start &lt;=end”）。</p>
-<p>出于简易性或可伸缩性的考虑，一般倾向于使用 volatile 变量而不是锁。但是当使用 volatile 变量时，某些习惯用法（idiom）更加易于编码和阅读。此外，volatile 变量不会像锁那样造成线程阻塞。在某些情况下，如果读操作远远大于写操作，volatile 变量还可以提供优于锁的性能优势。</p>
-<h1 id="volatile的适用范围">volatile的适用范围</h1>
-<p>您只能在有限的一些情形下使用 volatile 变量替代锁。要使 volatile 变量提供理想的线程安全，必须同时满足下面两个条件：<br>对变量的写操作不依赖于当前值。<br>该变量没有包含在具有其他变量的不变式中。</p>
-<h1 id="volatile的内存语义">volatile的内存语义</h1>
-<p>volatile写的内存语义如下：</p>
-<ul>
-<li>当写一个volatile变量时，JMM会把该线程对应的本地内存中的共享变量刷新到主内存。<br>volatile读的内存语义如下：</li>
-<li>当读一个volatile变量时，JMM会把该线程对应的本地内存置为无效。后续线程读此变量时，将从主内存中读取并load到本地内存。</li>
-</ul>
-<h1 id="volatile内存语义的实现">volatile内存语义的实现</h1>
-<p>JMM(Java Memory Model) 如何实现volatile写/读的内存语义。<br>JMM内部会实现指令重排序。为了实现volatile内存语义，JMM会分别限制这两种类型的重排序类型。</p>
-<p>从JSR-133开始，volatile变量的写-读可以实现线程之间的通信。<br>从内存语义的角度来说，volatile与监视器锁有相同的效果：volatile写和监视器的释放有相同的内存语义；volatile读与监视器的获取有相同的内存语义。</p>
-<p><strong>更进一步地说明</strong></p>
-<blockquote>
-<p>处理器为了提高处理速度，不直接和内存进行通讯，而是先将系统内存的数据读到内部缓存（L1,L2或其他）后再进行操作，但操作完之后不知道何时会写到内存，如果对声明了Volatile变量进行写操作，JVM就会向处理器发送一条Lock前缀的指令，将这个变量所在缓存行的数据写回到系统内存。但是就算写回到内存，如果其他处理器缓存的值还是旧的，再执行计算操作就会有问题，所以在多处理器下，为了保证各个处理器的缓存是一致的，就会实现缓存一致性协议，每个处理器通过嗅探在总线上传播的数据来检查自己缓存的值是不是过期了，当处理器发现自己缓存行对应的内存地址被修改，就会将当前处理器的缓存行设置成无效状态，当处理器要对这个数据进行修改操作的时候，会强制重新从系统内存里把数据读到处理器缓存里。</p>
-</blockquote>
-<p>为了实现volatile的内存语义，编译器在生成字节码时，会在指令序列中插入内存屏障来禁止特定类型的处理器重排序。对于编译器来说，发现一个最优布置来最小化插入屏障的总数几乎不可能，为此，JMM采取保守策略。下面是基于保守策略的JMM内存屏障插入策略：</p>
-<ul>
-<li>在每个volatile写操作的前面插入一个StoreStore屏障。</li>
-<li>在每个volatile写操作的后面插入一个StoreLoad屏障。</li>
-<li>在每个volatile读操作的后面插入一个LoadLoad屏障。</li>
-<li>在每个volatile读操作的后面插入一个LoadStore屏障。</li>
-<li>上述内存屏障插入策略非常保守，但它可以保证在任意处理器平台，任意的程序中都能得到正确的volatile内存语义。</li>
-</ul>
-<p>这里A线程写一个volatile变量后，B线程读同一个volatile变量。A线程在写volatile变量之前所有可见的共享变量，在B线程读同一个volatile变量后，将立即变得对B线程可见。</p>
-<p>下面对volatile写和volatile读的内存语义做个总结：<br>线程A写一个volatile变量，实质上是线程A向接下来将要读这个volatile变量的某个线程发出了（其对共享变量所在修改的）消息。<br>线程B读一个volatile变量，实质上是线程B接收了之前某个线程发出的（在写这个volatile变量之前对共享变量所做修改的）消息。<br>线程A写一个volatile变量，随后线程B读这个volatile变量，这个过程实质上是线程A通过主内存向线程B发送消息。</p>
-<h1 id="volatile的性能">volatile的性能</h1>
-<p>在目前大多数的处理器架构上，volatile 读操作开销非常低 —— 几乎和非 volatile 读操作一样。而 volatile 写操作的开销要比非 volatile 写操作多很多，因为要保证可见性需要实现内存栅栏(Memory barrier)，即便如此，volatile 的总开销仍然要比锁获取低。</p>
-<h1 id="volatile的使用场景">volatile的使用场景</h1>
-<p>很多并发性专家事实上往往引导用户远离 volatile 变量，因为使用它们要比使用锁更加容易出错。然而，如果谨慎地遵循一些良好定义的模式，就能够在很多场合内安全地使用 volatile 变量。要始终牢记使用 volatile 的限制 —— 只有在状态真正独立于程序内其他内容时才能使用 volatile —— 这条规则能够避免将这些模式扩展到不安全的用例。</p>
-<h2 id="场景1：状态标志">场景1：状态标志</h2>
-<p>一个布尔状态标志，用于指示发生了一个重要的一次性事件，例如完成初始化或请求停机。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">volatile</span> <span class="keyword">boolean</span> shutdownRequested;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">shutdown</span>() { shutdownRequested = <span class="keyword">true</span>; }</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doWork</span>() { </div><div class="line">    <span class="keyword">while</span> (!shutdownRequested) { </div><div class="line">        <span class="comment">// do stuff</span></div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="场景2：一次性安全发布（one-time_safe_publication）">场景2：一次性安全发布（one-time safe publication）</h2>
-<p>缺乏同步会导致无法实现可见性，这使得确定何时写入对象引用而不是原语值变得更加困难。在缺乏同步的情况下，可能会遇到某个对象引用的更新值（由另一个线程写入）和该对象状态的旧值同时存在。（这就是造成著名的双重检查锁定（double-checked-locking）问题的根源，其中对象引用在没有同步的情况下进行读操作，产生的问题是您可能会看到一个更新的引用，但是仍然会通过该引用看到不完全构造的对象）。<br>实现安全发布对象的一种技术就是将对象引用定义为 volatile 类型。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> BackgroundFloobleLoader {</div><div class="line">    <span class="keyword">public</span> <span class="keyword">volatile</span> Flooble theFlooble;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">initInBackground</span>() {</div><div class="line">        <span class="comment">// do lots of stuff</span></div><div class="line">        theFlooble = <span class="keyword">new</span> Flooble();  <span class="comment">// this is the only write to theFlooble</span></div><div class="line">    }</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> SomeOtherClass {</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">doWork</span>() {</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) { </div><div class="line">            <span class="comment">// do some stuff...</span></div><div class="line">            <span class="comment">// use the Flooble, but only if it is ready</span></div><div class="line">            <span class="keyword">if</span> (floobleLoader.theFlooble != <span class="keyword">null</span>) </div><div class="line">                doSomething(floobleLoader.theFlooble);</div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>上面的代码中，如果 theFlooble 引用不是 volatile 类型，doWork() 中的代码在解除对 theFlooble 的引用时，将会得到一个不完全构造的 Flooble。volatile 类型的引用可以确保对象的发布形式的可见性，但是如果对象的状态在发布后将发生更改，那么就需要额外的同步。</p>
-<h2 id="场景3：结合_volatile_和_synchronized_实现的“开销较低的读－写锁”">场景3：结合 volatile 和 synchronized 实现的“开销较低的读－写锁”</h2>
-<p>目前为止，您应该了解了 volatile 的功能还不足以实现计数器。因为 ++x 实际上是三种操作（读、添加、存储）的简单组合，如果多个线程凑巧试图同时对 volatile 计数器执行增量操作，那么它的更新值有可能会丢失。</p>
-<p>然而，如果读操作远远超过写操作，您可以结合使用内部锁和 volatile 变量来减少公共代码路径的开销。清单 6 中显示的线程安全的计数器使用synchronized 确保增量操作是原子的，并使用 volatile 保证当前结果的可见性。如果更新不频繁的话，该方法可实现更好的性能，因为读路径的开销仅仅涉及 volatile 读操作，这通常要优于一个无竞争的锁获取的开销。 </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">@ThreadSafe</div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> CheesyCounter {</div><div class="line">    <span class="comment">// Employs the cheap read-write lock trick</span></div><div class="line">    <span class="comment">// All mutative operations MUST be done with the 'this' lock held</span></div><div class="line">    @GuardedBy(<span class="string">"this"</span>) <span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">int</span> <span class="keyword">value</span>;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span>() { <span class="keyword">return</span> <span class="keyword">value</span>; }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> synchronized <span class="keyword">int</span> <span class="title">increment</span>() {</div><div class="line">        <span class="keyword">return</span> <span class="keyword">value</span>++;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>之所以将这种技术称之为 “开销较低的读－写锁” 是因为您使用了不同的同步机制进行读写操作。因为本例中的写操作违反了使用 volatile 的第一个条件，因此不能使用 volatile 安全地实现计数器 —— 您必须使用锁。然而，您可以在读操作中使用 volatile 确保当前值的可见性，因此可以使用锁进行所有变化的操作，使用 volatile 进行只读操作。其中，锁一次只允许一个线程访问值，volatile 允许多个线程执行读操作，因此当使用 volatile 保证读代码路径时，要比使用锁执行全部代码路径获得更高的共享度 —— 就像读－写操作一样。然而，要随时牢记这种模式的弱点：如果超越了该模式的最基本应用，结合这两个竞争的同步机制将变得非常困难。</p>
-<h1 id="总结">总结</h1>
-<p>与锁相比，volatile 变量是一种非常简单但同时又非常脆弱的同步机制，它在某些情况下将提供优于锁的性能和伸缩性。如果严格遵循 volatile 的使用条件 —— 即变量真正独立于其他变量和自己以前的值 —— 在某些情况下可以使用 volatile 代替 synchronized 来简化代码。然而，使用 volatile 的代码往往比使用锁的代码更加容易出错。本文介绍的模式涵盖了可以使用 volatile 代替 synchronized 的最常见的一些用例。遵循这些模式（注意使用时不要超过各自的限制）可以帮助您安全地实现大多数用例，使用 volatile 变量获得更佳性能。</p>
-<h1 id="refers">refers</h1>
-<blockquote>
-<p><a href="http://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-jtp06197.html</a><br><a href="http://www.infoq.com/cn/articles/java-memory-model-1" target="_blank" rel="external">http://www.infoq.com/cn/articles/java-memory-model-1</a><br><a href="http://www.infoq.com/cn/articles/ftf-java-volatile" target="_blank" rel="external">http://www.infoq.com/cn/articles/ftf-java-volatile</a><br><a href="http://zhhphappy.iteye.com/blog/2086149" target="_blank" rel="external">http://zhhphappy.iteye.com/blog/2086149</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/06/22/volatile详解/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/22/内存栅栏/" title="内存栅栏" itemprop="url">内存栅栏</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-22T06:02:48.000Z" itemprop="datePublished"> Published Jun 22 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="什么是内存栅栏？">什么是内存栅栏？</h1>
-<p>内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
-<p><strong>内存栅栏提供了两个功能</strong></p>
-<ul>
-<li>确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性；</li>
-<li>实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。</li>
-</ul>
-<h1 id="为什么需要内存栅栏？">为什么需要内存栅栏？</h1>
-<p>对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用Cache来达到高效获取数据的目的。然后Cache为了提高性能，会对指令进行重排序。<br>当重排序对最终的结果没有影响的时候，这种优化是有益的。但是当多线程共享数据时，重排序将导致错误的结果。所以为了在共享变量的情况下依然可以使用指令重排序，产生了内存栅栏来保证程序的正确性。</p>
-<h1 id="内存栅栏是怎么实现的？">内存栅栏是怎么实现的？</h1>
-<p>在底层，内存栅栏是一组指令，一般包括Store Barrier、Load Barrier和Full Barrier。</p>
-<p>几乎所有的处理器至少支持一种粗粒度的屏障指令，通常被称为“栅栏（Fence）”，它保证在栅栏前初始化的load和store指令，能够严格有序的在栅栏后的load和store指令之前执行。</p>
-<p>不同的CPU架构有不同的实现方式，以X86为例：</p>
-<ul>
-<li>Store Barrier,强制所有在store屏障指令之前的store指令，都在该store屏障指令执行之前被执行，并把store缓冲区的数据都刷到主存</li>
-<li>Load Barrier,强制所有在load屏障指令之后的load指令，都在该load屏障指令执行之后被执行，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。</li>
-<li>Full Barrier，复合了load和store屏蔽指令。<br>无论在何种处理器上，这几乎都是最耗时的操作之一（与原子指令差不多，甚至更消耗资源），所以大部分处理器还会支持更细粒度的屏障指令。</li>
-</ul>
-<p>下图是CPU的Local Memory与主存的通信过程：<br><img src="/img/memory_barrier_comm.jpg" alt=""></p>
-<h1 id="Java中内存栅栏的使用">Java中内存栅栏的使用</h1>
-<p>Java内存模型中volatile变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。一个类的final字段会在初始化后插入一个store屏障，来确保final字段在构造函数初始化完成并可被使用时可见。</p>
-<h1 id="内存栅栏对性能的影响">内存栅栏对性能的影响</h1>
-<p>内存栅栏阻止了 CPU 很多隐式的内存延迟技术的执行，因此是有性能损耗的，不过在上层看来这种损耗并不大。在合适的时候使用内存栅栏，仍然是一种高效的做法。</p>
-<h1 id="refers:">refers:</h1>
-<blockquote>
-<p><a href="http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="external">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="http://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="external">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="external">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/06/22/内存栅栏/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/19/这些年数据挖掘及反思/" title="这些年数据挖掘及反思" itemprop="url">这些年数据挖掘及反思</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-19T03:56:14.000Z" itemprop="datePublished"> Published Jun 19 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>转至： <a href="http://news.dbanotes.net/item?id=23383" target="_blank" rel="external">http://news.dbanotes.net/item?id=23383</a></p>
-<p>写这篇文章，缘自于前几天部门内部成员们进行了一次部门内部现有涉及的一些算法的review以及整理。不过比较囧的就是，由于Boss不在，我们讨论讨论着就成了吐槽大会，倒是有一半时间在吐槽产品以及业务部门了。<br>不过这也算是一件可喜可贺的事情了，这也可以看做是我们数据部门，已经由开轻型挖掘机向深挖阶段迈步了。</p>
-<p>因此，借此机会，也对自己接触过的，了解过的，或者做过的一些勉强称得上算法的东西做一个梳理。其实，就个人来说，本身就不是做算法出身的，在大学时代，学习的反倒是网络方面多一些，更不知数据挖掘算法为何物。</p>
-<p>其实，就所谓算法而言，个人认为，我有个同事说的很对：所谓算法，并不是说那些复杂的数学模型才是算法，哪怕是你写的一个简单的计算公式，只要能够解决现有业务的痛点，有了自己的模型思路，它就是一个算法，只是它可能不够通用，只能解决特定业务需求而已。</p>
-<p>在大规模的数据前提下，其实很多复杂的算法过程，反而效果没有这么好，或者说，我们会想方设法去简化其过程。</p>
-<p>举个简单栗子：假设有一批大规模数据集，就以近千万篇博文为例。如果提供一篇博文，让你去查询与其相似度最高的top N，那我们的通常思路是什么？通常的做法是计算这篇博文与其他博文的相似度，至于相似度的计算方法就很多了，最简单的就是计算其向量夹角，根据向量夹角判定相似程度。OK，就算你用最简单的计算过程，你试想一下，运算近千万次需要多久？或许，有的人说，俺使用hadoop，利用分布式的计算能力来完成这个任务，但如果实际操作起来，你就会发现这是一个多么蛋疼的事情。</p>
-<p>再举一个简单栗子（好吧，多吃点栗子）：比如SVM，这是一种难以收敛的算法，在大数据的前提下，有些人希望使用它，但又希望使用更多的数据来训练模型，毕竟手里数据量太大，很多人还是希望使用尽量多的数据训练的，以达到模型更准确的目的。但是，随着训练数据量的增大，像SVM这种难以收敛的算法，其耗费的计算资源还是很巨大的。</p>
-<p>东拉西扯说了这么多，自个的梳理工作还没有完成呢！</p>
-<p>一、这些年，我开过的挖掘机</p>
-<p>（1）最早接触的应该是贝叶斯的分类了</p>
-<p>贝叶斯算是分类算法中最简单的算法了，初学挖掘机算法的人十有八九第一个爱上的绝对是它。其实，贝叶斯的原理真的很简单，就是依据统计学的最大概率原理。这么简单，但是就是尼玛这么好用，多年依然屹立不倒。</p>
-<p>训练过程就缺乏可陈了，基本上贝叶斯的都这样，由于是文本，所以一套流程下来，分词，去停词，作为最基本的知识点向量，然后就计算模型概率了。不过比较有趣的是，分类过程是放在Storm里头做的，相当于这是一个实时的分类业务。</p>
-<p>（2）说到了文本，自然少不了分词算法了</p>
-<p>其实说到分词算法，反倒没啥可说的。如今互联网上各种开源的分词工具，都已经做的很好了，效果也差不了多少，想进一步改进的话也够呛。至于说深入到分词算法的内部，涉及上下文法分析，隐含马尔科夫模型等东西，如果是个人出于兴趣去研究，那我没话说；如果是小公司，花费人力物力去优化分词效果，我只能说他们闲着蛋疼；如果是大公司，人家金多任性也是可以理解的。</p>
-<p>所以，至今来说，个人对于分词方面的东西，也仅限于初步了解分词算法的衍变，内部大概涉及的算法，以及几种分词工具的使用。</p>
-<p>其实，在文本挖掘方面，仅仅针对于文本的分词是不够的，因为我们使用分词拆分出来的单词，往往很多跟业务都是没有关系的，通常做法是，建立对应业务字典，至于字典的建立，当然也是需要分词的，再进行进一步的加工，甚至可能会加上一些人工的工作。</p>
-<p>（3）下一个就是实时热点分析了</p>
-<p>我也不知道这算不算是算法，说到实时，自然跟Storm又有关系了（好吧，我承认我是搞这个之后开始接触数据的）。说到实时热点，可能大伙儿都摸不着头脑，举个简单栗子就明了了。</p>
-<p>玩hadoop的童鞋都知道WordCount这个经典栗子，MapReduce在Map到Reduce的过程中，自动将相同的Key通过类似hash的方法聚合到一起了，所以，统计单词这个需求通过MR来做是辣么的简单。</p>
-<p>那Storm的实时WordCount呢？好吧，这也是一个能够记录到实时技术领域史书上的经典案例（好吧，其实它就是一个Storm的HelloWorld）。Storm虽然没有类似MR那种自动Hash的功能，不过它也提供了一种数据分组流策略，也能达到类似的效果，并且它不像MR那样是批量的，它是实时的、流式的，也就是说你能动态的获取到当前变换的单词词频。</p>
-<p>实时热点分析，如果我们把热点映射成单词，那我们是不是就可以实时的获取到当前Top N的热点了。这个方向可是有很大的研究价值的，实时地掌握了用户的热点导向，我们就可以动态的调整业务策略，从而衍生更大的数据价值。</p>
-<p>不过，总体来说，这个数据模型更多依靠的是Storm这个实时工具的本身功能，模型设计上的东西反倒是少了。至于说算不算是算法模型，就跟前面所说的那样，看个人看法吧，你说是就是了~~</p>
-<p>（4）国内很成熟的一种建模——推荐</p>
-<p>就目前在国内做数据挖掘的来说，可能分类与推荐是做的最多的两种方向。分类就不多说了，就比如刚才所说的贝叶斯，简直就是分类中的鼻祖算法了。</p>
-<p>可能一说到推荐算法，有人脑海里立马就闪现出关联规则、协同过滤、余弦相似性等这些词。这是没错的，但我要说的不是这个。其实个人想说的是推荐就两个方向：基于用户，基于内容。</p>
-<p>我们需要注意两点，我们推荐的对象是用户，或者说是类似用户这种有动作行为的实体；而推荐的东西则就是内容，他没有动作行为，但是他有不同的属性，或者用更砖业说法描述就是他必然有知识点。</p>
-<p>基于用户推荐，我们看重的不是内容这个实体，而是用户本身的行为，我们认为用户的行为必然隐含着一些信息，比如，人的兴趣导向，那么既然你有了相关的行为，那么我按照你的行为去给你推荐一些东西，这总是有一定道理的。</p>
-<p>基于内容的推荐，我们的侧重点则是内容，这就跟用户的历史行为无关了。我们潜意识的认为，既然你会看这个内容，那么跟这个内容有关系的内容，你是不是也感兴趣呢？或许这样说有失偏颇，但是大体方向是对的。</p>
-<p>至于之前说的那些关联规则也好，协同过滤也好，余弦相似性也好，其实就是研究知识点与知识点之间关系所建立的模型。</p>
-<p>针对于基于内容推荐，其知识点就是内容之中的各种属性，比如影片推荐，其知识点可能就是各种评论数据、点播数据、顶踩数据、影片类型、演员、导演以及其中的一些情感分析等等；又比如博文，其知识点可能就是一个个带权的词，至于这个词就涉及到词的抽取了，再说到词的权重，可能就会涉及到TFIDF模型、LDA模型了。</p>
-<p>而针对基于用户，其知识点最直接的体现就是用户的行为了，就是用户与内容之间的关系，不过深究下去，又会发现，其实跟内容的知识点也紧密联系，只不过这可能不止一个内容实体，而是多个内容实体的集合。</p>
-<p>（5）文本单词的加权模型</p>
-<p>前面正好提到了TFIDF以及LDA模型，所以顺带也就讲讲文本单词相关的加权模型吧。</p>
-<p>说到文本挖掘，可能大部分人都熟悉TFIDF模型，既然涉及到了，那就简单的说一说。我们知道，文本的知识点就是一个个的单词，虽然都是单词，但也总有哪个词重要程度高一点，哪些词重要程度会低一点吧。</p>
-<p>或许有人会说，出现多的词就重要。没错，那就是词频，简单的来想，这种思路并没有错，并且，早期的文本挖掘模型就是这么做的。当然，效果肯定是一般般的。因为那些经常出现的词往往都是一些没用的常用词，对文章的作用并不大。</p>
-<p>直到TFIDF模型的出现，才根本性地解决了文本挖掘知识点建模的问题。如何判断一个词的重要程度，或者专业点的说法就是判断其对文章的贡献度？TFIDF通过词的词频来加大词在文章中的权重，然后通过其在多个文章中的文档频率来降低其在文章中的权重。说白了就是降低了那些公共词的权重，把真正贡献度大的词给暴露出来。这基本就是TFIDF的基本思路了，至于词频权重怎么加大，文档频的权重怎么降低，这就涉及到具体的模型公式了，根据不同的需求进行调整就OK了。</p>
-<p>关于文章知识点主题建模的另外一种很重要的模型，那就是LDA模型了。它是一种比较通用的文章主题模型，它通过概率学原理，说白了就是贝叶斯，建立起知识点（也就是词），主题和文章的三层关系结构。词到主题有一个概率矩阵，主题到文章也有一个概率矩阵的映射关系。</p>
-<p>好吧，LDA不能再说下去了，再说下去就露馅了。因为，俺也不是很懂啊。对于LDA，虽然部门内部有在使用，但是我没有做过具体的模型，只是和同事讨论过它，或者更确切的说向同事请教过它的一些原理以及一些设计思路。</p>
-<p>（6）相似度计算</p>
-<p>相似度计算，比如文本的相似度计算。它是一个很基础的建模，很多地方就用的到它，比如刚才我们说到的推荐，其内部关联的时候，有时候就会涉及到计算实体间的相似度。</p>
-<p>关于文本的相似度，其实方法有很多。通常会涉及到TFIDF模型，拿到文本的知识点，也就是带权的词，然后通过这些带权的词去做一些相似度的计算。</p>
-<p>比如，余弦相似模型，就是计算两个文本的余弦夹角，其向量自然就是那些带权的词了；又比如，各种算距离的方法，最著名的欧式距离，其向量也依然是这些词。还有很多诸如最长公共子串、最长公共子序列之类的模型，个人就不是很清楚了。</p>
-<p>总之，方法很多，也都不是很复杂，原理都很像。至于哪个合适，就得看具体的业务场景了。</p>
-<p>（7）文本主题程度——信息熵</p>
-<p>曾经和同事尝试对数百万的博文进行领域划分，把技术博文划分成不同的领域，比如大数据领域、移动互联网领域、安全领域等等，其实说白了还是分类。</p>
-<p>一开始我们使用贝叶斯进行分类，效果还行，不过最终还是使用SVM去建模了。这都不是重点，重点是我们想对划分到某一领域下的技术博文进行领域程度判断。</p>
-<p>我们想了很多办法，尝试建立了数据模型，但效果都不是很理想，最终回归到了一个最本质的方法，那就是使用文本的信息熵去尝试描述程度，最终结果还是不错。这又让我再一次想到同事说过的那句话：简单的东西不一定不好用！</p>
-<p>信息熵描述的是一个实体的信息量，通俗一点说就是它能够描述一个实体的信息混乱程度。在某一个领域内，知识点都是相似的，都是那些TFIDF权重的词，因此，是不是可以认为，一个文本其信息熵越小，其主题越集中越明显，信息的混乱度越低，反过来说，有些文本主题很杂乱，可能包含了多种领域的一些东西，其领域的程度就会降低。</p>
-<p>最起码表面上，这种说法是行得通的，并且实际的效果还不错。</p>
-<p>（8）用户画像</p>
-<p>用户画像这个方向可能是近两年比较火的方向了。近年来，各大互联网公司，各大IT企业，都有意识的开始从传统的推荐到个性化推荐的道路衍变，有些可能做的深一些，有些可能浅一些。</p>
-<p>商业价值的核心是用户，这自然不用多说。那么如何结合用户进行推荐呢，那就是用户的属性，那关键是用户的属性也不是一开始就有的，我们所有的只是少量用户的固有属性以及用户的各种行为记录。我们连用户是啥子里情况都不清楚，推个毛啊！</p>
-<p>所以，我们需要了解用户，于是对用户进行用户画像分析就很有必要了，其实就是把用户标签化，把用户标记成一个个属性标签，这样，我们就知道每一个用户大概是什么情况了。一些商业行为，也就有了目的性。</p>
-<p>至于说如何对用户的每一个画像属性进行填充，这就看具体的情况了。简单的，用几个简单模型抽取到一些信息填充进去；复杂的，使用复杂的算法，通过一些复杂的转换，给用户打上标签。</p>
-<p>（9）文章热度计算</p>
-<p>给你一大坨文章，你如何判断哪篇文章比较热，哪篇文章比较矬，换个说法就是，我进入一个文章列表页，你能给我提供一个热文章的排序列表吗？</p>
-<p>可能大部分的思路都很直接，拿到文章能够体现热度的属性，比如点击率、评论情感分析、文章的顶踩情况，弄个简单加权计算模型，咔咔就出来了。</p>
-<p>本质上这没错，简单的模型在实际的情况中不一定不好使，部分属性也的确能够体现出一篇文章的热度，通过加权计算的方式也是对的，具体的权重就需要看具体情况了。</p>
-<p>但如果这么做的话，实际上会出现什么情况？今天我来了，看见了这个热度推荐列表，明天我来了，还是看到这个列表，后天我来了，依然是这个列表。</p>
-<p>尼玛，这是啥情况，咋天天都是这个破列表，你要我看几遍？！不错，这就是现实情况，造成的结果就是，越热的文章越来越热，越冷的文章越冷，永远的沉底了，而热的文章永远在前头。</p>
-<p>如何解决这个问题？我们把时间也加入参考，我们要把老文章通过降权的方式，把他人为的沉下去，让新文章有出头的机会。这就是说，需要我们把创建时间也加入权重中，并且随着时间推移，衰减其热度权重，这样，就不会出现热的一直热，冷的一直冷了。至于衰减的曲线，就需要看具体业务了。</p>
-<p>这样就能解决根本问题了吗？如果文章本身信息量就不够呢，比如，本身大部分就是新文章，没有顶踩，没有评论，甚至连点击曝光都很少，那用之前的模型就行不通了。</p>
-<p>那是不是就无解了呢？方法还是有的，比如，我们寻找到一个相似的站点，他也提供了类似最热文章推荐的功能，并且效果还很不错。那么，我们是不是就可以借助它的热度呢？我们通过计算文章相似度的方法，复刻出一个最热列表出来，如果站点性质相似，用户性质相似，文章质量不错，相似度计算够准确，相信这个热度列表的效果也是会不错滴（这方法太猥琐了~~）。</p>
-<p>（10）Google的PageRank</p>
-<p>首先，别误会，我真心没有写过这个模型，我也没有条件去写这个模型。</p>
-<p>认识它了解它，缘自于跟几个老同学合伙搞网站（酷抉网）。既然搞网站吧，作为IT人猿，一些基本的SEO的技术还是需要了解的。于是，我了解到：想要增大网站的权重，外链是不可缺少的。</p>
-<p>我跟我几个老同学说，你们去做外链吧，就是逮住网站就放咱网站的链接。他们问到：一个网站放的链接越多越好吗？放的网站越多越好吗？啥网站放比较好？这都不是重点，关键是他们问：为毛啊？</p>
-<p>把我问的那个是哑口无言啊，于是我一怒之下就去研究PageRank了。PageRank具体的推演过程我就不说了（况且凭借我这半吊子的水平也不一定能说清楚），其核心思想有几个：当一个网页被引用的次数越多时，其权重越大；当一个网页的权重越大时，其引用的网页权重也随之增大；当一个网页引用的次数越多时，它引用的网页给它带来的权重越低。</p>
-<p>当我们反复迭代路上过程时，我们会发现某个网页的的排名基本就固定了，这就是PageRank的基本思路。当然也有个问题需要解决，比如，初始网页如何给定其初始权重，高计算迭代过程如何简化其计算过程等等。这些问题，在Google的实际操作中，都做了比较好的优化。</p>
-<p>（11）从互联网上定向抓取数据</p>
-<p>其实我估摸着这跟算法没很大关系了，不过既然有数据的获取设计流程，也勉强算是吧。</p>
-<p>之所以有这个需求，是那段时间搞网站搞嗨了，给自己整了个工作室网站，想给别人尤其是一些小企业搭建包括轻度定制企业网站（是不是挺瞎折腾的-_-），也确实是做了几个案例（我的工作室网站：www.mite8.com，有兴趣去看看）。</p>
-<p>于是乎，俺就想啊，如何给自己找客户？工作室的客户应该是那些小企业的老板，并且还必须是目前没有企业门户的。作为一个搞数据的程序猿，并且还是开挖掘机的，虽然是半路出身非蓝翔毕业且无证上岗，但好歹是挖过几座山头的呀。</p>
-<p>如今是互联网横行的时代，他们总会在互联网上留下一些蛛丝马迹，我要把它给逮出来！我的目标很明确，我要拿到那些无企业网站的企业邮箱，然后做自己EDM营销（电子邮件营销）。</p>
-<p>1）我先从智联检索页面，抓取了企业规模小于40人的企业名称，事实证明智联招聘的页面还是很好解析的，都是静态的，并且格式很规整，所以很容易就分析出一批小企业的企业名来了；</p>
-<p>2）拿到了企业名，我如何判断这个企业已经有了独立的企业官网？通过分析，我发现通过搜索引擎检索这个企业名的时候，如果有企业官网的话，一定是在首页。并且其页面地址也是有一定规律的，那就是：独立官网的开头通常是www开头的，长度一般不会太长，收尾通常是index.html、index.php以及index.asp等等。</p>
-<p>通过这些规则，我就可以将那些有企业官网的企业名给pass掉了。其中遇到了两个难点，一个就是搜索引擎的很多页面源码都是动态加载的，于是我模拟了浏览器访问的过程，把页面源码给抓取下来了，这也是爬虫的通用做法；第二个就是，一开始我尝试的是通过百度去获取，结果百度貌似是有放结果抓取的一些措施，导致结果不如人意，于是我换了目的，使用的是360的检索，问题就解决了（事实证明百度在搜索引擎方面比360还是强了不少的），并且效果也差不多。</p>
-<p>3）解决了排除的问题，那根本的问题就来了，我如何拿到企业的企业邮箱？通过分析搜索引擎的返回结果，我发现很多小企业喜欢用第三方网站提供的一些公司黄页，里头包含了企业联系邮箱；还有部分公司发布的招聘信息上会带有企业邮箱。</p>
-<p>通过数据解析，终于拿到了这部分数据，最后还做了一些类似邮箱是否有效的基本解析等等。最终拿到了大概3000多个企业邮箱，有效率达到了80%以上。</p>
-<p>问题是解决了，但还是有些地方需要优化的：首先就是效率问题，我整整跑了近12个小时，才把这3000多个邮箱给跑出来，太多需要解析的地方，并且模拟的浏览器在效率上不高；其次就是对邮箱的有效不是很好判断，有些邮箱根本就是人为瞎写的；还有就是部分网站对邮箱进行了图片化混杂处理，即做成了类似的验证码的东西，防抓取，我没有对图片类的邮箱数据进行解析，其实这个问题也是有解决办法的，我们拿到一些样本图片，进行图片字母识别的训练，这样就能解析出其中的邮箱了。</p>
-<p>总体来说，这次体验还是挺有成就感的，毕竟在业余的时间解决了自己实际中的一些痛点，熟练了一些所学到的东西，或者说实施的过程中学到了很多东西。</p>
-<p>ps：github上检索webmite就是这个项目了，我把代码托管到了github上，或者从我的博客上进入。</p>
-<p>二、对自己做一个总结吧</p>
-<p>其实个人的缺点很明显，首先就是没有经过系统的数据挖掘学习（没去过蓝翔，挖掘机自学的），也就是野路子出身。因此对很多算法的原理不够清楚，这样的话，对于有些业务场景，可能就提不出有建设性的意见了。并且，对于很多算法库的使用，还是不够了解的。</p>
-<p>其次就是在数学功底上有所欠缺。我们知道，一些复杂的算法，是需要有强大的数学基础的。算法模型，其本质就是数学模型。因此，这方面也是我的短板吧。</p>
-<p>由于个人是由做大数据偏向挖掘的，基于大数据模式下的数据挖掘过程，可能跟传统的数据过程有很大的不一样。比如，数据的预处理过程，大数据挖掘的预处理很多依赖的是目前比较流行的分布式的一些开源系统，比如实时处理系统Storm、消息队列Kafka、分布式数据收集系统Flume、数据离线批处理Hadoop等等，在数据分析存储上可能依赖的Hive以及一些Nosql会多一些。反倒对于传统的一些挖掘工具，比如SAS、SPSS、Excel等工具，个人还是比较陌生的。不过这也说不上是缺点吧，侧重点不一样。总体而言，大规模数据的挖掘将会是趋势。</p>
-<p>三、给小伙伴们的一些建议</p>
-<p>说了这么多，前面的那些东西可能对大伙儿的用处并不是很大，当然对于开挖掘机的朋友还是有一定帮助的。现在我想表达的东西可能跟挖掘就没有直接的关系了，更多的给动物园动物（程序猿，攻城狮）的学习以及自我进化的建议。</p>
-<p>（1）为了学到东西，脸皮是毛玩意儿？</p>
-<p>对于这点，个人可是深有体会。想当年（好吧，这个词还是很蛋疼的），大学那会儿专业是信息安全，偏向于网络多一点，因此在语言方面更多的是c和c++，对于java可是连课都没有开的，说白了就是用java写个HelloWorld都不会。</p>
-<p>刚毕业那会儿，兴冲冲地跑去公司写c，结果不到一个月，新项目来了，需求变了（尼玛，开发最怕的就是这句话），变了就变了吧，尼玛要研究大数据，用c能干毛啊！一些个开源系统工具，十个倒是有九个是java写的。当时我就哭了！</p>
-<p>于是就纠缠着一个同组的伙伴，逮住时间就问他问题，有些问题在熟悉java的人看来，绝对是白痴又白痴的。但是对于初学者来说，绝对是金玉良言，人家一句话的事，如果自己去查找，可能是几个小时都搞不定。一个月之后，总算入门了，后面就轻松多了。</p>
-<p>往后的一些日子里，遇到了一些问题，总是会厚着脸皮缠着交流群中的一些大拿们死问，慢慢地就进步了。近段时间，开始学习scala，幸好旁边有个scala小高手，哈哈，可苦了他了~~</p>
-<p>所以，遇到自己不懂的东西，不要怕自己的问题简单不好意思问，一定要脸皮厚！你连这么简单的问题都不懂，你还有资格担心自己的脸皮？！</p>
-<p>（2）交流与分享</p>
-<p>对于交流与分享这点感想，缘自于2012年末研究Storm的那段时间。Storm在2012年那会儿，并不像今天这样火，研究的人也不多，无处交流，可用的资料就更少了，所以解决起问题来很费事。</p>
-<p>当然其中有几个博客给我的帮助还是很大的，包括了“大园那些事儿”、“庄周梦蝶”等几个博客，都是早期研究Storm并且分享经验技术的博客。当时我就萌生了写博客的想法。</p>
-<p>在往后的时间里，我花费了很大一部分精力，将我学到的Storm相关的东西整理了出来，并且由于当时感叹没有一个很好的交流平台，创建了“Storm-分布式-IT”技术群（群号191321336，主要搞Storm以及大数据方面的，有兴趣的可以进来），并把整理的资料、代码、经验分享到了平台以及博客中。</p>
-<p>由于我一直主张“进步始于交流，收获源于分享”这个理念，不断有搞技术的朋友加入到这个大家庭中，并且不断的把一些经验技术反馈到群贡献中，达到了一个良性的循环。 短短不到两年的时间，群已经发展到了千人，并且无论是技术氛围还是群员素质，在IT技术群中绝对可以算的上名列前茅的。</p>
-<p>就个人从中的收获来看，这种交流是能够学到很多的东西的，你要相信三人行必有我师，这句话是有道理的。而分享则是促进交流的基石，只有让大家意识到自己所收获的东西是源自于别人的分享，这样才能让更多的人参与进来。</p>
-<p>其实说了这么多，想表达的意思就两点：多多与他人交流，听取他人的意见；至于分享自己的所得，这就是属于良心发现了。</p>
-<p>（3）多看书，随时给自己大脑补充营养</p>
-<p>其实这点也不止是给大伙儿的建议，也算是给自己的一个告诫吧。</p>
-<p>个人在这方面做的也不是很好，很久之前给自己定了一个目标：一个月看完一本书。结果工作的问题，其他杂七杂八的事情很多，这个一直没有落实下来，至今买来的《我的互联网方法论》才看了前几章。最好的案例算是上上一个月，我花费了近一个月上下班等地铁、倒地铁的零碎时间，终于把《构建之法：现代软件工程》给看完了。</p>
-<p>书中有没有颜如玉我不知道，但书中肯定有黄金屋。平时多看一些书，多学一些，跳槽时跟面试官总是能多唠一些的，哈哈，提薪酬的时候是不是底气就足了些？！</p>
-<p>关于说看书的内容，工作中涉及的一些必须了解，必须看的我就不多说了。如果业余时间比较多，还是推荐多涉猎一些其他相关领域，毕竟，人不可能一辈子就只窝在自己那一亩三分地上的；就算你一直坚持某个技术方向，随着时间的推移，技术的升华也必然会涉及到其他很多的相关知识。</p>
-<p>所以，多看书，多充实一下自己，这一定是对的！</p>
-<p>（4）经常梳理一下自己，整理一下自己</p>
-<p><strong>经常给自己做一下梳理工作：自己目前掌握了哪些东西，目前自己缺乏什么东西，掌握的东西够不够，缺乏的东西如何去弥补。这些都是需要我们经常去反思的，只有整理清楚了自己，才知道自己要干什么，才有目标。</strong></p>
-<p>当然梳理完了，你还需要去实际操作，不然的话，你会发现，每一次梳理，结果都是一样的。我们需要在每一次梳理过后，进行对比，了解自己进步了多少。当然每一次梳理，都是为了给自己做一个计划，计划自己大概需要在哪些方向进行加强。</p>
-<p>其实很多人一到了跳槽季就犹犹豫豫，其实他们对目前的工作已经是有所不满的了，但是总感觉自己能力不够，可能辞了也难找工作。这是因为他们对自己认识的不够，连他自己都不明白自己到底有多少料，那么，请问面试官会知道吗？</p>
-<p>如果，你对自己掌握了多少东西都一清二楚，核心领域已经熟悉了，相关领域也有所涉猎，那么你还在担心什么呢？如果真有面试官对你说no，你可以说：hi，刚好我也没什么时间，我还回去挑选offer呢！</p>
-<p>（5）善于在实际生活中寻找学习的动力</p>
-<p><strong>人是懒惰的，很多时候，有些事情可做可不做的，往往人都是不去做的，也不愿意去深根究底。</strong></p>
-<p>　　这个我很想学，那个我也很想了解，关键是一到大周末，我更想躺被窝！说到底，就是没有学习的动力！也就是说，我们要善于在实际的生活中，寻找到推动我们取学习的理由。<br>举几个简单的栗子：</p>
-<p>1）之前也说过，有段时间在研究网站。为了让网站推广出去，各种去研究SEO，现在来看，自己虽然远远达不到一个SEO专业人员的标准，但最起码是知道了为毛通过搜索引擎检索，有些网页就排在前面有些就排在后面（PageRank算法）；也知道了怎么去编译一篇文章，更好的方便搜索引擎收录（等俺失业了，不搞挨踢了，去做网编估计也是行的，又多了一条活路，哈哈）等等。</p>
-<p>2）为了给EDM寻找目标，我自己使用业余的时间去分析互联网上的数据，然后写代码，跑数据，测试数据等。其实，在那之前，我对爬虫的了解是不多的，对于网页数据的解析也不在行，这完全都是通过“从互联网抓取有用数据”的个人需求上去驱动的。还不止如此，拿到邮箱之后，为了让EDM邮件看起来更“砖业”一点，我开始自学如何使用html来制作好看的电子营销邮件页面。</p>
-<p>3）曾经有一段时间，工作很是清闲，突发奇想的把大学时想写小说的梦给圆了。于是就开始在纵横小说网上写小说。不过，这都不是重点，重点是纵横要求每一个作者给自己的小说配小说封面。我去问了一下，尼玛一张破封面需要20多大洋。心想，一张破封面就要20大洋，自己都是搞IT的人，干脆不自己P一个呢。于是，我开始捡起了大学时期放弃的PS学习计划，只用了两个星期，PS基本功能就熟练了。后来的话，自己的封面当然是搞定了，并且还服务了至少数十位作者朋友们。当然，这都是题外话了。至于小说，哈哈，不但签约了，稿费还是挣了上千大洋，关键是过了一把写小说的瘾。在PS技术方面，虽然跟专业的前端人员比不得，但是改改图、修修照片还是木有问题滴。</p>
-<p>4）远的太远，说一个近一点的事吧。前一段时间开始学习scala，其实就个人需求来说，写那个项目用java来写也完全能够搞定，但关键是我对我自己说，错过了这次机会，下次说不定啥时候才有决心去学习这个很有前途的语言了。于是，狠下心使用这个全新的语言去开发，过程虽然磕磕绊绊，毕竟马上使用一种陌生的语言去敲代码是很蛋疼的事，但一个星期来，结果还是不错的，最起码一些基本的用法是会了。完事开头难，熟悉了一些基本的东西，剩下的就是累积的过程了。</p>
-<p>其实这些归结起来就一个观点：我们要适时的给自己找一些理由，逼着我们自己去学习，去获取新的东西，去提升自己。</p>
-<p>或许有人会说，哥我天天加班，还有毛线时间去问问题、去交流、去看书，大周末的好不容易有假期了，吃饱了我不去睡觉去给自己找动力干不给钱的活，我脑抽啊？！好吧，如果你是这么想的，抱歉耽误了你这么多睡觉的时间。</p>
-<p>其实上面说了这么多零碎的栗子，关键还是在于态度！你有没有想学习的欲望，有没有提升自己、升华自己的想法，有没有升职、加薪、当上UFO、迎娶白富美的念头。是的，这些东西都是自己去做的，没人逼你。如果你有这些想法的话，那么这些东西多多少少还是有一些帮助的。</p>
-<p>除了对待事情的态度，我们的心态也很重要，看待事情要乐观一点。前几天，群里有个搞互联网招聘的朋友问我：你是搞技术的吧？我说是。他说我认识很多搞技术的都很闷，不像你这么开朗。我说我不想哪天死在了马桶上~~</p>
-<p>搞IT的给大部分人的映象确实是闷骚、不善言谈、不善交际。其实也是，每天大量的工作，领导又开会训人了、产品这边需求又改了，确实让人疯狂。工作压力大是IT人的标准属性了。</p>
-<p>我们需要调整好自己的心态，就像之前所说的，学习一个东西，虽然可能会占用本来就不多的业余时间，但是我们应该不是那种单纯为了解决问题而去学习，去获取，当成一种提升自己、升华自己的途径，而不是逼不得已的无奈之举。如果一份工作，你确认自己不喜欢，那就别犹豫，果断跳吧！脑中有货还怕找不到买家！</p>
-<p>时刻警醒自己对待任何事情要有一个好的态度，认清自己，抓住一切机会提升自己、升华自我，保持一个良好的心态，这就是我想说的东西。</p>
-<p>吭吭唧唧说了一大坨，其实我也知道很多是废话，但是我依然希望，我的这些废话能够帮助到你，做为同一个动物园里的人，一起努力吧！</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/数据挖掘/">数据挖掘</a><a href="/tags/总结/">总结</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/06/19/这些年数据挖掘及反思/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1241,39 +1292,39 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
-		
-			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
-		
-			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
-		
-			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
-		
-			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
-		
-			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-		
-			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
-		
-			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
-		
-			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
 			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
 		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>

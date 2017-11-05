@@ -91,6 +91,578 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/" title="Stanford Machine Learning - 5 广义线性模型" itemprop="url">Stanford Machine Learning - 5 广义线性模型</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T15:20:39.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <!--
+##1. 指数分布族(Exponential Family)
+####指数分布族的定义
+若一类概率分布可以写成如下形式，那么它就属于指数分布族：
+$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$
+
+- $\eta$: 自然参数，通常是一个实数
+- T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识）
+- a($\eta$) 被称为 log partition function
+
+对于给定的 a，b，T 三个函数，上式定义了一个以 $\eta$ 为参数的概率分布集合，即改变 $\eta$ 可以得到不同的概率分布，例如高斯分布和伯努利分布。
+
+#### 指数分布族以及它们的特征
+* 正态分布（高斯分布）——总体噪音（由中心极限定理得）
+* 伯努利分布——逻辑回归（对01问题建模）
+* 多项式分布——K种结果的事情进行建模
+* 泊松分布——对计数过程进行建模（一个样本中放射性衰变的数目，网站的访客数目，商店的顾客数目）
+* 伽马分布，指数分布——正数的分布，对间隔进行建模（在公交车站等车的时间）
+* β分布，Dirichlet分布——对小数进行分布，对概率分布进行建模
+* Wishart分布——协方差的分布
+
+##2. 指数分布簇推导
+高斯分布(Gaussian)和伯努利(Bernoulli)分布都可以推导为指数分布族。-->
+
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/" title="Stanford Machine Learning - 4 逻辑回归" itemprop="url">Stanford Machine Learning - 4 逻辑回归</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T15:06:43.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_逻辑回归">1. 逻辑回归</h2>
+<p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h<em>θ(x)$ 可以写为<br>$$h</em>θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$</p>
+<p>其中<br>$$g(z)=\frac1{1+e^{-z}}$$；</p>
+<p>g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:<br><img src="/img/sigmoid_function.png" alt="sigmoid function"></p>
+<p>我们先取 g(z) 为 sigmoid function，如果有其他使得 y 值从 0 到 1 平滑递增的函数也可以使用。但由于一些列原因(在后续的一般化回归模型 GLM 中会谈到为什么选用这个函数)，g(z) is a fairly natural one.</p>
+<p>g(z) 的导数我们可以先进行推导:<br>$$g’(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})$$<br>$$= \frac{1}{1+e^{-z}}*(1 - \frac{1}{1+e^{-z}})= g(z)(1-g(z))$$</p>
+<h2 id="2-_梯度上升法求解逻辑回归">2. 梯度上升法求解逻辑回归</h2>
+<p>对于给定的逻辑回归函数，我们使用最小二乘法来推导出最大似然估计，假设:<br>$P(y=1|x;θ)=h_θ(x)$，代表对于给定的 θ，y 取值为 1 的概率。<br>$P(y=0|x;θ)=1-h_θ(x)$，代表对于给定的 θ，y 取值为 0 的概率。</p>
+<p>以上两者可以合并为：<br>$$P(y|x;θ)=(h_θ(x))^y(1 − h_θ(x))^{(1−y)}$$</p>
+<p>假设 m 个训练集是相互独立的，则似然估计为：<br>$$L(θ)=P(\overrightarrow{y}|X;θ)$$<br>$$= \prod^m_{i=1}P(y^i|x^i;θ)$$<br>$$= \prod^m_{i=1}{(h_θ(x^{(i)}))^{y^{(i)}}(1 − h_θ(x^{(i)}))^{(1−y^{(i)})}}$$</p>
+<p>和之前一样，上式可以简化为：</p>
+<p></p><p><br>$l(θ) = logL(θ)<br>= \sum_{m}^{i=1}{y^{(i)}}log{h(x^{(i)}) + {(1−y^{(i)})}log(1 − h(x^{(i)}))}$</p>
+<p>那么，<br>如何去最大化似然函数呢，可以应用梯度上升法，因为我们要使 P 的取值足够大，也是就预测准确的概率最够大。</p>
+<p>随机梯度上升的公式为：<br>$$θ:= θ + \alpha\Deltaθl(θ)$$</p>
+<p>下面来求$\Deltaθl(θ)$的取值：</p>
+<p>$$\frac\partial{\partial\theta_j}l(\theta)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)})\frac\partial{\partial\theta_j}g(\theta^Tx)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)}) g(\theta^Tx)(1-g(\theta^Tx))\frac\partial{\partial\theta_j}\theta^Tx$$<br>$$= ({y(1-g(\theta^Tx))-(1-y)g(\theta^Tx)})x_j$$<br>$$= (y - h_{\theta}(x))x_j$$</p>
+<p>附上手写的推导过程：<br><img src="/img/logistic_regression_delta_ljp_derived.png" alt="手写推导过程"></p>
+<p>所以，最终随机梯度上升的公式为：<br>$$θ_j:=θ_j + \alpha\sum_{i=1}^{m}(y^{(i)} - h_{\theta}(x^{(i))})x_j^{(i)}$$</p>
+<p>如何和线性回归的公式放在一起比较，</p>
+<p>$$θ_j = θ_j - α \frac1m <em> \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}</em>x_j^{(i)}$$</p>
+<p>会发现，这两者非常相似，实际上却不然，因为这里的 $(h_θ(x^{(i)})$ 定义的不是线性函数。后续我们谈到 GLM 时会发现这并不是巧合，而是有更深层次的原因。</p>
+<h2 id="3-_牛顿迭代法求解逻辑回归">3. 牛顿迭代法求解逻辑回归</h2>
+<p>牛顿迭代法可以利用到曲线本身的信息，比梯度下降法更容易收敛，即迭代更少次数。</p>
+<h3 id="3-1_牛顿迭代法简述">3.1 牛顿迭代法简述</h3>
+<p>假设我们要求解方程 f(x)=0 的根，首先随便找一个初始值 x0，如果 x0 不是解，做一个经过 (x0,f(x0))  这个点的切线，与 x 轴的交点为 x1。同样的道理，如果 x1 不是解，做一个经过 (x1,f(x1)) 这个点的切线，与 x 轴的交点为 x2。 以此类推。以这样的方式得到的 xi 会无限趋近于 f(x)=0 的解。</p>
+<p>对于任意一点 $(x_n,y_n)$ 做切线，切线的斜率为 $f’(x_n)$，则有方程：<br>$$ y-f(x_n) = f’(x_n)(x-x_n) $$</p>
+<h3 id="3-2_迭代过程">3.2 迭代过程</h3>
+<p>求解 $f(\theta)$ = 0 时 $\theta$ 的取值。<br>设下一次迭代时 $\theta^{(t+1)}$ 的取值与前一次迭代 $\theta^{(t)}$ 的取值(在 x 轴)距离为 $\Delta$。</p>
+<p>则 $\theta^{(t+1)} = \theta^{(t)} - \Delta$，且 $\Delta = \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$，<br>所以有：<br>$$\theta^{(t+1)} = \theta^{(t)} - \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$$</p>
+<h4 id="从泰勒展开到牛顿迭代">从泰勒展开到牛顿迭代</h4>
+<p>也可以由泰勒展开中推导牛顿迭代的公式。这次为了求解方程 f′=0 的根，把原函数 f(x) 的做泰勒展开，展开到二阶形式：<br>$$ f(x+\Delta x) = f(x)+f’(x)\Delta x+ \frac1{2}f’’(x)\Delta x^2 $$</p>
+<p>当且仅当 $\Delta x$ 逼近 0 时，上式成立，此时忽略 1/2 系数的作用，所以有：<br>$$ f’(x)+ \frac1{2}f’’(x)\Delta x = 0 $$<br>故：<br>$$\Delta x = -\frac{f’(x)}{f’’(x)} $$</p>
+<p><strong>对函数求极大值的方法</strong><br>&gt;</p>
+<blockquote>
+<ol>
+<li>将原函数y=f(x)，对x求一次导数，得到dy/dx；</li>
+<li>令dy/dx = 0，解得一次导函数的零点；</li>
+<li>将原函数对x求二次导函数；</li>
+<li>将解得的零点坐标的x值代入二次导函数，<br>如果是正值，零点所在位置，就是极小值点，再将该x值代入原函数，得到极小值；<br>如果是值值，零点所在位置，就是极大值点，再将该x值代入原函数，得到极大值；<br>如果是0，零点所在位置，既不是极小值点，也不是极大值点，是拐点。</li>
+</ol>
+</blockquote>
+<p>所以求 $l(\theta)$ 在极大值处 $\theta$ 的取值，则是求 $l’(\theta) = 0$ 时 $\theta$ 的值，应用牛顿迭代法则有：</p>
+<p>$$\theta^{(t+1)} = \theta^{(t)} - \frac{l’(\theta^{(t)})}{l’’(\theta^{(t)})}$$</p>
+<h3 id="3-3_多维向量的牛顿迭代">3.3 多维向量的牛顿迭代</h3>
+<p>对于多维向量 $\overrightarrow{X}$ 求解。<br>$$\theta := \theta - H^{-1} \nabla l(\theta)$$<br>其中<br>$\nabla l(\theta)$ 是对 $l(\theta)$ 求导的值。</p>
+<p>H 是一个 n*n 的矩阵，n 是特征数量，元素的计算公式为：<br>$$H_ij= \frac{\partial^2{l({\theta)}}}{\partial{\theta_i}\partial{\theta_j}}$$</p>
+<h3 id="3-4_牛顿迭代法的特点">3.4 牛顿迭代法的特点</h3>
+<h4 id="是否收敛">是否收敛</h4>
+<p>通常情况下是收敛的，但是需要满足一些条件，对于逻辑回归来讲，是收敛的。</p>
+<h4 id="迭代速度">迭代速度</h4>
+<p>每次迭代后，有解数字的误差是成平方倍减小的，是二次收敛函数。</p>
+<h4 id="优缺点">优缺点</h4>
+<p>优点：收敛快<br>缺点：特征多(上千个)时，每次迭代成本大</p>
+<h2 id="Reference">Reference</h2>
+<p><a href="http://blog.csdn.net/baimafujinji/article/details/51179381" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51179381</a><br><a href="http://blog.csdn.net/baimafujinji/article/details/51167852" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51167852</a><br><a href="https://www.jiqizhixin.com/articles/2017-08-09-3" target="_blank" rel="external">如何通过牛顿方法解决Logistic回归问题</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/" title="Stanford Machine Learning - 3 线性回归的概率解释" itemprop="url">Stanford Machine Learning - 3 线性回归的概率解释</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T14:04:40.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_欠拟合与过拟合">1. 欠拟合与过拟合</h2>
+<p>欠拟合：underfitting，与训练数据贴合的不够好，不能准确预测未来目标值。<br>过拟合：overfitting，与训练数据贴合的太好了，预测未来目标值的准确性有较大风险。</p>
+<p><img src="/img/LR_underfitting_and_overfitting.png" alt=""></p>
+<h2 id="2-_线性模型的概率解释">2. 线性模型的概率解释</h2>
+<p>思考：我们为什么要用最小二乘的指标作为 cost function？为什么不是绝对值或四次方？</p>
+<blockquote>
+<p>最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。<br>最小二乘是从函数形式上来看的，极大似然是从概率意义上来看的。事实上，最小二乘可以由高斯噪声假设+极大似然估计推导出来。当然极大似然估计还可以推导出其他的loss function， 比如logistic回归中，loss function是交叉熵。<br><a href="http://www.cnblogs.com/little-YTMM/p/5700226.html" target="_blank" rel="external">最大似然估计与最小二乘估计的区别</a></p>
+</blockquote>
+<p>一般的最小二乘法实际上是在假设误差项满足高斯分布且独立同分布的情况下，使似然性最大化。</p>
+<h3 id="推导过程">推导过程</h3>
+<p>回到预测房价的例子，假设最终的预测函数，每一次预测都有误差，用$ε^{(i)}$表示误差，则预测函数可以写为：<br>$$y^{(i)}=\theta^Tx^{(i)} + ε^{(i)} $$</p>
+<p>其中，误差是随机分布的，均值为 0，服从高斯分布 $N(0,σ^2)$。</p>
+<blockquote>
+<p>Andrew Ng 讲到在大多数情况下，线性回归的误差值如果综合来看，就是符合高斯分布的。并且根据中心极限定律，正态分布确实是对误差项分布的合理猜想。</p>
+</blockquote>
+<p>所以<br>$$P(y^{(i)}|x^{(i)}; θ) = \frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})$$</p>
+<p>$P(y^{(i)}|x^{(i)}; θ)$ 表示：在 θ 为给定的参数的情况下，概率 $y^{(i)}$ 以 $x^{(i)}$ 为随机变量的概率分布，注意 θ 不是随机变量。</p>
+<p>由于 ε(i) 是独立的同分布（IID：independentlyidentically distribution），所以以 θ 为变量的似然函数为：<br>$$<br>L(θ)=L(θ;X,Y)=p(Y|X;θ) = \prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$</p>
+<p>对 L(θ) 取对数有：<br>$$<br>l(\theta)=logL(\theta)<br>= log\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$<br>$$<br>= m\sum_{i=1}^{m}log\frac{1}{\sqrt{2\pi}\sigma} - \frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2<br>$$</p>
+<p>最大化 $l(\theta)$ 即是最小化 $\frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2$，这样就是 cost function.</p>
+<p>由于目标变量服从正态分布，但分布的均值和方差都未知，对均值和方差两个参数的合理估计是选取两个参数使得在正态分布的前提下，抽到各样本中的 y 值的概率最大，这就是最大似然估计的思想。</p>
+<h1 id="Reference">Reference</h1>
+<p><a href="http://www.holehouse.org/mlclass/07_Regularization.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/07_Regularization.html</a><br><a href="http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html" target="_blank" rel="external">http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html</a><br><a href="https://rpubs.com/badbye/ml03" target="_blank" rel="external">https://rpubs.com/badbye/ml03</a><br><a href="http://www.qiujiawei.com/linear-algebra-15/" target="_blank" rel="external">http://www.qiujiawei.com/linear-algebra-15/</a><br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="external">最大似然估计</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" title="Stanford Machine Learning - 2 线性回归进阶" itemprop="url">Stanford Machine Learning - 2 线性回归进阶</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T14:00:04.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_多变量的线性回归">1. 多变量的线性回归</h2>
+<p>n: 特征(features) 数量<br>m: 训练集数量<br>$x^{(i)}$: </p>
+<ul>
+<li>表示一条训练数据的向量</li>
+<li>i is an index into the training set</li>
+<li>So <ul>
+<li>x is an n-dimensional feature vector</li>
+<li>$x^{(3)}$ is, for example, the 3rd training data</li>
+</ul>
+</li>
+</ul>
+<p>$x^{(j)}_i$: The value of feature j in the ith training example</p>
+<p>例如，当 n=4 时:<br>$$h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4$$</p>
+<p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：<br>$$h_θ(x)=θ^TX$$<br>$θ^T$: [1 * (n+1)] matrix</p>
+<h3 id="1-1_多变量的梯度下降">1.1 多变量的梯度下降</h3>
+<h3 id="Cost_Function">Cost Function</h3>
+<p>$$J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}$$</p>
+<h3 id="Gradient_descent">Gradient descent</h3>
+<p>Repeat {<br>  $$ θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>}</p>
+<p>every iterator</p>
+<ul>
+<li>θj = θj - learning rate (α) times the partial derivative of J(θ) with respect to θJ(…)</li>
+<li>We do this through a simultaneous update of every θj value</li>
+</ul>
+<p>$$ \frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>$$ = \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)} $$</p>
+<h2 id="2-_Gradient_Decent_in_practice">2. Gradient Decent in practice</h2>
+<h3 id="2-1_Feature_Scaling">2.1 Feature Scaling</h3>
+<p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
+<h3 id="Learning_Rate_α">Learning Rate α</h3>
+<ul>
+<li>working correctly: If gradient descent is working then J(θ) should decrease after every iteration</li>
+<li>convergence: 收敛是指每经过一次迭代，J(θ)的值都变化甚小。</li>
+<li>choose α<ol>
+<li>When to use a smaller α<ul>
+<li>If J(θ) is increasing, see below picture</li>
+<li>If J(θ) looks like a series of waves, decreasing and increasing again</li>
+<li>But if α is too small then rate is too slow</li>
+</ul>
+</li>
+<li>Try a range of α values<ul>
+<li>Plot J(θ) vs number of iterations for each version of alpha</li>
+<li>Go for roughly threefold increases: 0.001, 0.003, 0.01, 0.03. 0.1, 0.3</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="/img/gradient_descent_plot.jpg" alt=""></p>
+<h2 id="2-2_Features_and_polynomial_regression">2.2 Features and polynomial regression</h2>
+<h3 id="Can_create_new_features">Can create new features</h3>
+<p>如何选择 features 和表达式尤为关键，例如房价与房子的长，房子的宽组成的表达式就会麻烦很多，若将房子的长乘以房子的宽得出面积，则有房价与房子面积的表达式，将会更容易拟合出房价的走势。</p>
+<h3 id="Polynomial_regression">Polynomial regression</h3>
+<p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
+<p><strong>所以选择合适的 Features 和 Polynomial regression 都非常重要。</strong></p>
+<p><img src="/img/polynomial_regression_choose.jpg" alt=""></p>
+<h2 id="3-_Normal_equation_求解多变量线性回归">3. Normal equation 求解多变量线性回归</h2>
+<h3 id="3-1_Normal_equation">3.1 Normal equation</h3>
+<p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 $$ \frac{d}{dθ}J(θ)=2aθ+b=0$$ 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
+<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：<br>$$ J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2} $$<br>只需要令：<br>$$ \frac\partial{\partial θ_j}J(θ_0, θ_1, …,θ_n) = … = 0 $$，其中 j = 0,1,2,…,n<br>设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m*n) 的矩阵，y 为 (m*1) 的矩阵，可以推导出求 θ 向量的公式如下：<br>$$θ = (X^TX)^{-1}X^Ty$$</p>
+<h2 id="4-_Gradient_descent_Vs_Normal_equation">4. Gradient descent Vs Normal equation</h2>
+<h3 id="Gradient_descent-1">Gradient descent</h3>
+<ul>
+<li>Need to chose learning rate</li>
+<li>Needs many iterations - could make it slower</li>
+<li>Works well even when n is massive (millions)</li>
+<li>Better suited to big data</li>
+<li>What is a big n though: 100 or even a 1000 is still (relativity) small, If n is 10000 then look at using gradient descent</li>
+<li>适用于线性回归会逻辑回归</li>
+</ul>
+<h3 id="Normal_equation">Normal equation</h3>
+<ul>
+<li>No need to chose a learning rate</li>
+<li>No need to iterate, check for convergence etc.</li>
+<li>Normal equation needs to compute $(X^TX)^{-1}$<ul>
+<li>This is the inverse of an n x n matrix</li>
+<li>With most implementations computing a matrix inverse grows by O(n3), So not great</li>
+</ul>
+</li>
+<li>Slow of n is large, Can be much slower</li>
+<li>仅适用于线性回归</li>
+</ul>
+<h2 id="5-_局部加权线性回归">5. 局部加权线性回归</h2>
+<p>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：<br>$$J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2$$</p>
+<p>其中<br>$$ w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})$$</p>
+<p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
+<p>$\tau^2$ 是波长函数(bandwidth)， 控制权重随距离下降的速度，τ 越小则 x 离 $x^{(i)}$ 越远时 $w^{(i)}$ 的值下降的越快。</p>
+<p>所以，如果沿着 x 轴的每个点都进行局部直线拟合，那么你会发现对于这个数据集合来说，局部加权的预测结果，能够最终跟踪这条非线性的曲线。</p>
+<p>但局部加权回归也有其缺点：</p>
+<ul>
+<li>每次对一个点的预测都需要整个数据集的参与，样本量大且需要多点预测时效率低。提高效率的方法参考 Andrew More’s KD Tree</li>
+<li>不可外推，对样本所包含的区域外的点进行预测时效果不好，事实上这也是一般线性回归的弱点</li>
+</ul>
+<p>对于线性回归算法，一旦拟合出适合训练数据的参数θ，保存这些参数θ，对于之后的预测，不需要再使用原始训练数据集，所以是参数学习算法。</p>
+<p>对于局部加权线性回归算法，每次进行预测都需要全部的训练数据（每次进行的预测得到不同的参数θ），没有固定的参数θ，所以是非参数算法(non-parametric algorithm)。</p>
+<h2 id="Reference">Reference</h2>
+<blockquote>
+<p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/05/Stanford Machine Learning-Week 1- Linear Regression with One Variable/" title="Stanford Machine Learning - 1 线性回归入门" itemprop="url">Stanford Machine Learning - 1 线性回归入门</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T13:55:04.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="引言">引言</h2>
+<p>本系列的课程来源是 <a href="https://see.stanford.edu/Course/CS229" target="_blank" rel="external">斯坦福大学公开课 CS229: 机器学习课程</a>，也可以看<a href="http://open.163.com/special/opencourse/machinelearning.html" target="_blank" rel="external">网易公开课的资源</a>，是带字幕的。斯坦福的 CS229 课程相比于 Course 上的 <a href="https://zh.coursera.org/learn/machine-learning" target="_blank" rel="external">Machine Learning</a> 课程，理论更强，讲解的也更深入，需要有一些的高数基础。两个课程都看了前半部分，更推荐前者，所以相关笔记对应的都是 CS229 课程。</p>
+<h2 id="1-_线性回归的定义">1. 线性回归的定义</h2>
+<p>适用于监督学习，根据已有的数据集合(x, y)，来推断出将来的数据趋势。</p>
+<h2 id="2-_单变量线性回归">2. 单变量线性回归</h2>
+<p>最后的函数应该是 y = ax + b，假设 hypothesis 为：</p>
+<p>$h_{\theta}$(x) = $\theta_{0}$ + $\theta_{1}$</p>
+<p>则问题转化为求 $\theta_{0}$ 和 $\theta_{1}$ 的值。要求这两个值需要转化上式，并根据已有的数据来求解。下面介绍损失函数，又叫代价函数的概念。</p>
+<h2 id="3-_Cost_Function">3. Cost Function</h2>
+<p>针对每一组数据，公式的值是 $h_{\theta}$($x_{i}$), 实际的值是 $y_{i}$，我们要达到的效果则是公式能够尽量表达已有的 m 组数据集合，即 $( h_{\theta}(x^{(i)}) - y_{i})^{2}$ 的值尽量小。<br>所以，对于所有数据集合，需要求使得<br>$$ \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(i)})^2}$$ 最小的 $\theta$ 值。</p>
+<p>上式又称为 Cost Function，可以写为：</p>
+<p>$$ J(\theta_0, \theta_1) =  \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(i)})^2} $$</p>
+<p>我们需要最小化这个 Cost Function。</p>
+<h4 id="Cost_Function_的作用">Cost Function 的作用</h4>
+<p>假设 $\theta_0$ = 0，则有 $\theta_1$ 和 J($\theta_1$) 的关系，且图形如下：<br><img src="/img/cost_function_theta1.jpg" alt=""></p>
+<p>所以当 $\theta_1$ = 1 时，<br>$$ J(\theta_1)= \frac1{2m}\sum_{i=1}^{m}{(\theta_1x^{(i)} - y^{(i)})^2} $$<br>很容易看出，$J(\theta_1)$ 是关于 $\theta_1$ 的一元二次方程，对于所有的训练数据，每个 $\theta_1$ 的取值都会得到一个 $J(\theta_1)$ 值，而 $J(\theta_1)$ 和 $\theta_1$ 的对应关系根据一元二次方程可知，函数曲线如上图。<br>当 $J(\theta_1)$ 最小时，求得 $\theta_1$ 结果。</p>
+<p>当 $\theta_0$ 和 $\theta_1$ 都不为 0 时，J($\theta_0$, $\theta_1$) 的图形如下：<br><img src="/img/cost_function_theta0_theta1.jpg" alt=""></p>
+<p>对于两个系数的情况不如一个系数是一个二维坐标系的抛物线那么简单。下面将介绍梯度下降法。</p>
+<h2 id="4-_梯度下降法">4. 梯度下降法</h2>
+<ul>
+<li>Start with initial guesses</li>
+<li>Start at 0,0 (or any other value)</li>
+<li>Keeping changing $\theta_0$ and $\theta_1$ a little bit to try and reduce J($\theta_0$, $\theta_1$)</li>
+<li>Each time you change the parameters, you select the gradient which reduces J($\theta_0$, $\theta_1$) the most possible </li>
+<li>Repeat</li>
+<li>Do so until you converge to a local minimum<br>Has an interesting property<ul>
+<li>Where you start can determine which minimum you end up</li>
+<li>Here we can see one initialization point led to one local minimum</li>
+<li>The other led to a different one</li>
+</ul>
+</li>
+</ul>
+<p><img src="/img/gradient_descent_progress.jpg" alt=""></p>
+<h3 id="4-1_具体的计算过程">4.1 具体的计算过程</h3>
+<p>$$ \theta_j := \theta_j - \alpha \frac\partial{\partial\theta_j}J(\theta_0, \theta_1)$$<br>(for j = 0 and j = 1)</p>
+<h3 id="4-2_Notation">4.2 Notation</h3>
+<p><strong>$\alpha$</strong></p>
+<ul>
+<li>Is a number called the learning rate</li>
+<li>Controls how big a step you take<ul>
+<li>If α is big have an aggressive gradient descent</li>
+<li>If α is small take tiny steps</li>
+</ul>
+</li>
+<li>Too small<ul>
+<li>Take baby steps</li>
+<li>Takes too long</li>
+</ul>
+</li>
+<li>Too large<ul>
+<li>Can overshoot the minimum and fail to converge</li>
+</ul>
+</li>
+</ul>
+<h3 id="4-3_Computer">4.3 Computer</h3>
+<p>每次都是<strong>同时</strong>计算 $\theta_0, \theta_1$ 的值，如下：<br>$$ temp0:= \theta_0 - \alpha \frac\partial{\partial\theta_0}J(\theta_0, \theta_1)$$<br>$$ temp1:= \theta_1 - \alpha \frac\partial{\partial\theta_1}J(\theta_0, \theta_1)$$<br>$$ \theta_0 := temp0 $$<br>$$ \theta_1 := temp1 $$</p>
+<p><img src="/img/gradient_descent_demo.jpg" alt=""></p>
+<h4 id="4-4_利用梯度下降法求解线性回归问题">4.4 利用梯度下降法求解线性回归问题</h4>
+<!-- $$
+\begin{aligned}
+& \frac\partial{\partial\theta\_j}J(\theta\_0, \theta\_1) \\
+& = \frac\partial{\partial\theta\_j} * \frac1{2m}\sum\_{i=1}^{m}{(h\_{\theta}(x^{(i)}) - y^{(i)})^2} \\
+& = \frac\partial{\partial\theta\_j} * \frac1{2m}\sum\_{i=1}^{m}{(\theta\_0 +\theta\_1x^{(i)} - y^{(i)})^2} \\
+\end{aligned}
+$$ -->
+
+
+<p>$$ \frac\partial{\partial\theta_j}J(\theta_0, \theta_1) $$</p>
+<p>$$ =\frac\partial{\partial\theta_j} * \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(i)})^2} $$</p>
+<p>$$ =\frac\partial{\partial\theta_j} * \frac1{2m}\sum_{i=1}^{m}{(\theta_0 +\theta_1x^{(i)} - y^{(i)})^2} $$</p>
+<p>对于 j = 0 or 1 的情况有：<br>j = 0:<br>$$ \frac\partial{\partial\theta_0}J(\theta_0, \theta_1) = \frac1{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})$$<br>j = 1:<br>$$ \frac\partial{\partial\theta_1}J(\theta_0, \theta_1) = \frac1{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})*x^{(i)}$$</p>
+<h3 id="4-5_梯度下降法的证明">4.5 梯度下降法的证明</h3>
+<p>1、如果优化函数存在解析解。例如我们求最值一般是对优化函数求导，找到导数为0的点。如果代价函数能简单求导，并且求导后为0的式子存在解析解，那么我们就可以直接得到最优的参数。</p>
+<p>2、如果式子很难求导，例如函数里面存在隐含的变量或者变量相互间存在耦合，互相依赖的情况。或者求导后式子得不到解释解，或者未知参数的个数大于方程组的个数等。这时候使用迭代算法来一步一步找到最优解。</p>
+<ul>
+<li>当目标函数是凸函数时，梯度下降法的解是全局最优解</li>
+<li>一般情况下，其解不保证是全局最优解</li>
+</ul>
+<h4 id="凸函数">凸函数</h4>
+<p>凸函数就是一个定义在某个向量空间的凸子集C（区间）上的实值函数 f，而且对于凸子集C中任意两个向量 $x_1$, $x_2$ 有：<br>$$f(\frac{x_1+x_2}{2}) \le \frac{f(x_1)+f(x_2)}{2}$$<br>于是容易得出对于任意（0,1)中有理数 p，有：<br>$$f(px_1+(1-p)x_2) \le pf(x_1)+(1-p)f(x_2)$$<br>如果 f 连续，那么 p 可以改成任意（0,1）中实数。则 f 称为 I 上的凸函数，当且仅当其上境图（在函数图像上方的点集）为一个凸集。</p>
+<h2 id="梯度下降法的使用">梯度下降法的使用</h2>
+<p>我们首先在函数上任选一点，计算其损失（即我们上面的L(w)） ，然后按照某一规则寻找更低的一点计算新的损失，只要新损失更小（最小化问题），我们就继续下降，直到达到一个可接受的优化目标。<br>梯度下降方法分为两个部分，第一部分是整体上，我们使用某步长不断下降求损失函数，第二部分是为了防止步长太长导致最后无法收敛，每次当损失上升的时候都调整步长。<br>通常实践中使用时，都是用一些开源算法，很少需要深度改进，比如使用 libsvm 可以直接求解逻辑回归。</p>
+<h2 id="Reference">Reference</h2>
+<blockquote>
+<p><a href="http://www.cnblogs.com/yysblog/p/3268508.html" target="_blank" rel="external">http://www.cnblogs.com/yysblog/p/3268508.html</a><br><a href="http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression" target="_blank" rel="external">http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression</a><br><a href="http://www.cnblogs.com/chaoren399/p/4851658.html" target="_blank" rel="external">http://www.cnblogs.com/chaoren399/p/4851658.html</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford Machine Learning-Week 1- Linear Regression with One Variable/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/08/19/Jackson反序列化忽略为null的字段/" title="Jackson反序列化忽略为null的字段" itemprop="url">Jackson反序列化忽略为null的字段</a>
   </h1>
   <p class="article-author">By
@@ -496,290 +1068,6 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/07/31/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" title="Stanford Machine Learning - Week 2 - Linear Regression with multiple features" itemprop="url">Stanford Machine Learning - Week 2 - Linear Regression with multiple features</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-07-31T05:07:10.000Z" itemprop="datePublished"> Published Jul 31 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="使用_Gradient_descent_求解多变量的线性回归问题">使用 Gradient descent 求解多变量的线性回归问题</h1>
-<h2 id="多变量的线性回归">多变量的线性回归</h2>
-<p>n: 特征(features) 数量<br>m: 训练集数量<br>$x^{(i)}$: </p>
-<ul>
-<li>表示一条训练数据的向量</li>
-<li>i is an index into the training set</li>
-<li>So <ul>
-<li>x is an n-dimensional feature vector</li>
-<li>$x^{(3)}$ is, for example, the 3rd training data</li>
-</ul>
-</li>
-</ul>
-<p>$x^{(j)}_i$: The value of feature j in the ith training example</p>
-<p>例如，当 n=4 时:<br>$$h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4$$</p>
-<p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：<br>$$h_θ(x)=θ^TX$$<br>$θ^T$: [1 * (n+1)] matrix</p>
-<h2 id="多变量的梯度下降">多变量的梯度下降</h2>
-<h3 id="Cost_Function">Cost Function</h3>
-<p>$$J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}$$</p>
-<h3 id="Gradient_descent">Gradient descent</h3>
-<p>Repeat {<br>  $$ θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>}</p>
-<p>every iterator</p>
-<ul>
-<li>θj = θj - learning rate (α) times the partial derivative of J(θ) with respect to θJ(…)</li>
-<li>We do this through a simultaneous update of every θj value</li>
-</ul>
-<p>$$ \frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>$$ = \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)} $$</p>
-<h2 id="Gradient_Decent_in_practice">Gradient Decent in practice</h2>
-<h3 id="Feature_Scaling">Feature Scaling</h3>
-<p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
-<h3 id="Learning_Rate_α">Learning Rate α</h3>
-<ul>
-<li>working correctly: If gradient descent is working then J(θ) should decrease after every iteration</li>
-<li>convergence: 收敛是指每经过一次迭代，J(θ)的值都变化甚小。</li>
-<li>choose α<ol>
-<li>When to use a smaller α<ul>
-<li>If J(θ) is increasing, see below picture</li>
-<li>If J(θ) looks like a series of waves, decreasing and increasing again</li>
-<li>But if α is too small then rate is too slow</li>
-</ul>
-</li>
-<li>Try a range of α values<ul>
-<li>Plot J(θ) vs number of iterations for each version of alpha</li>
-<li>Go for roughly threefold increases: 0.001, 0.003, 0.01, 0.03. 0.1, 0.3</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<p><img src="/img/gradient_descent_plot.jpg" alt=""></p>
-<h2 id="Features_and_polynomial_regression">Features and polynomial regression</h2>
-<h3 id="Can_create_new_features">Can create new features</h3>
-<p>如何选择 features 和表达式尤为关键，例如房价与房子的长，房子的宽组成的表达式就会麻烦很多，若将房子的长乘以房子的宽得出面积，则有房价与房子面积的表达式，将会更容易拟合出房价的走势。</p>
-<h3 id="Polynomial_regression">Polynomial regression</h3>
-<p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
-<p><strong>所以选择合适的 Features 和 Polynomial regression 都非常重要。</strong></p>
-<p><img src="/img/polynomial_regression_choose.jpg" alt=""></p>
-<h1 id="使用_Normal_equation_求解多变量的线性回归问题">使用 Normal equation 求解多变量的线性回归问题</h1>
-<h2 id="Normal_equation">Normal equation</h2>
-<p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 $$ \frac{d}{dθ}J(θ)=2aθ+b=0$$ 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
-<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：<br>$$ J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2} $$<br>只需要令：<br>$$ \frac\partial{\partial θ_j}J(θ_0, θ_1, …,θ_n) = … = 0 $$，其中 j = 0,1,2,…,n<br>设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m*n) 的矩阵，y 为 (m*1) 的矩阵，可以推导出求 θ 向量的公式如下：<br>$$θ = (X^TX)^{-1}X^Ty$$</p>
-<h1 id="Gradient_descent_Vs_Normal_equation">Gradient descent Vs Normal equation</h1>
-<h2 id="Gradient_descent-1">Gradient descent</h2>
-<ul>
-<li>Need to chose learning rate</li>
-<li>Needs many iterations - could make it slower</li>
-<li>Works well even when n is massive (millions)</li>
-<li>Better suited to big data</li>
-<li>What is a big n though: 100 or even a 1000 is still (relativity) small, If n is 10000 then look at using gradient descent</li>
-<li>适用于线性回归会逻辑回归</li>
-</ul>
-<h2 id="Normal_equation-1">Normal equation</h2>
-<ul>
-<li>No need to chose a learning rate</li>
-<li>No need to iterate, check for convergence etc.</li>
-<li>Normal equation needs to compute $(X^TX)^{-1}$<ul>
-<li>This is the inverse of an n x n matrix</li>
-<li>With most implementations computing a matrix inverse grows by O(n3), So not great</li>
-</ul>
-</li>
-<li>Slow of n is large, Can be much slower</li>
-<li>仅适用于线性回归</li>
-</ul>
-<h1 id="Reference">Reference</h1>
-<blockquote>
-<p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/coursera/">coursera</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/07/31/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/07/30/Stanford Machine Learning-Week 1- Linear Regression with One Variable/" title="Stanford Machine Learning - Week 1 - Linear Regression with One Variable" itemprop="url">Stanford Machine Learning - Week 1 - Linear Regression with One Variable</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-07-30T03:55:04.000Z" itemprop="datePublished"> Published Jul 30 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="线性回归">线性回归</h2>
-<p>适用于监督学习，根据已有的数据集合(x, y)，来推断出将来的数据趋势。</p>
-<h2 id="只有一个变量的线性回归">只有一个变量的线性回归</h2>
-<p>最后的函数应该是 y = ax + b，假设 hypothesis 为：</p>
-<p>$h_{\theta}$(x) = $\theta_{0}$ + $\theta_{1}$x</p>
-<p>则问题转化为求 $\theta_{0}$ 和 $\theta_{1}$ 的值。要求这两个值需要转化上式，并根据已有的数据来求解。下面介绍损失函数，又叫代价函数的概念。</p>
-<h2 id="Cost_Function">Cost Function</h2>
-<p>针对每一组数据，公式的值是 $h_{\theta}$($x_{i}$), 实际的值是 $y_{i}$，我们要达到的效果则是公式能够尽量表达已有的 m 组数据集合，即 $( h_{\theta}(x^{(i)}) - y_{i})^{2}$ 的值尽量小。<br>所以，对于所有数据集合，需要求使得<br>$$ \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(i)})^2}$$ 最小的 $\theta$ 值。</p>
-<p>上式又称为 Cost Function，可以写为：</p>
-<p>$$ J(\theta_0, \theta_1) =  \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(i)})^2} $$</p>
-<p>我们需要最小化这个 Cost Function。</p>
-<h2 id="Cost_Function_的作用">Cost Function 的作用</h2>
-<p>假设 $\theta_0$ = 0，则有 $\theta_1$ 和 J($\theta_1$) 的关系，且图形如下：<br><img src="/img/cost_function_theta1.jpg" alt=""></p>
-<p>所以当 $\theta_1$ = 1 时，<br>$$ J(\theta_1)= \frac1{2m}\sum_{i=1}^{m}{(\theta_1x^{(i)} - y^{(i)})^2} $$<br>很容易看出，$J(\theta_1)$ 是关于 $\theta_1$ 的一元二次方程，对于所有的训练数据，每个 $\theta_1$ 的取值都会得到一个 $J(\theta_1)$ 值，而 $J(\theta_1)$ 和 $\theta_1$ 的对应关系根据一元二次方程可知，函数曲线如上图。<br>当 $J(\theta_1)$ 最小时，求得 $\theta_1$ 结果。</p>
-<p>当 $\theta_0$ 和 $\theta_1$ 都不为 0 时，J($\theta_0$, $\theta_1$) 的图形如下：<br><img src="/img/cost_function_theta0_theta1.jpg" alt=""></p>
-<p>对于两个系数的情况不如一个系数是一个二维坐标系的抛物线那么简单。下面将介绍梯度下降法。</p>
-<h2 id="梯度下降法">梯度下降法</h2>
-<ul>
-<li>Start with initial guesses</li>
-<li>Start at 0,0 (or any other value)</li>
-<li>Keeping changing $\theta_0$ and $\theta_1$ a little bit to try and reduce J($\theta_0$, $\theta_1$)</li>
-<li>Each time you change the parameters, you select the gradient which reduces J($\theta_0$, $\theta_1$) the most possible </li>
-<li>Repeat</li>
-<li>Do so until you converge to a local minimum<br>Has an interesting property<ul>
-<li>Where you start can determine which minimum you end up</li>
-<li>Here we can see one initialization point led to one local minimum</li>
-<li>The other led to a different one</li>
-</ul>
-</li>
-</ul>
-<p><img src="/img/gradient_descent_progress.jpg" alt=""></p>
-<h3 id="具体的计算过程">具体的计算过程</h3>
-<p>$$ \theta_j := \theta_j - \alpha \frac\partial{\partial\theta_j}J(\theta_0, \theta_1)$$<br>(for j = 0 and j = 1)</p>
-<h4 id="Notation">Notation</h4>
-<p><strong>$\alpha$</strong></p>
-<ul>
-<li>Is a number called the learning rate</li>
-<li>Controls how big a step you take<ul>
-<li>If α is big have an aggressive gradient descent</li>
-<li>If α is small take tiny steps</li>
-</ul>
-</li>
-<li>Too small<ul>
-<li>Take baby steps</li>
-<li>Takes too long</li>
-</ul>
-</li>
-<li>Too large<ul>
-<li>Can overshoot the minimum and fail to converge</li>
-</ul>
-</li>
-</ul>
-<h4 id="Computer">Computer</h4>
-<p>每次都是<strong>同时</strong>计算 $\theta_0, \theta_1$ 的值，如下：<br>$$ temp0:= \theta_0 - \alpha \frac\partial{\partial\theta_0}J(\theta_0, \theta_1)$$<br>$$ temp1:= \theta_1 - \alpha \frac\partial{\partial\theta_1}J(\theta_0, \theta_1)$$<br>$$ \theta_0 := temp0 $$<br>$$ \theta_1 := temp1 $$</p>
-<p><img src="/img/gradient_descent_demo.jpg" alt=""></p>
-<h2 id="利用梯度下降法求解线性回归问题">利用梯度下降法求解线性回归问题</h2>
-<!-- $$
-\begin{aligned}
-& \frac\partial{\partial\theta\_j}J(\theta\_0, \theta\_1) \\
-& = \frac\partial{\partial\theta\_j} * \frac1{2m}\sum\_{i=1}^{m}{(h\_{\theta}(x^{(i)}) - y^{(i)})^2} \\
-& = \frac\partial{\partial\theta\_j} * \frac1{2m}\sum\_{i=1}^{m}{(\theta\_0 +\theta\_1x^{(i)} - y^{(i)})^2} \\
-\end{aligned}
-$$ -->
-
-
-<p>$$ \frac\partial{\partial\theta_j}J(\theta_0, \theta_1) $$</p>
-<p>$$ =\frac\partial{\partial\theta_j} * \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(i)})^2} $$</p>
-<p>$$ =\frac\partial{\partial\theta_j} * \frac1{2m}\sum_{i=1}^{m}{(\theta_0 +\theta_1x^{(i)} - y^{(i)})^2} $$</p>
-<p>对于 j = 0 or 1 的情况有：<br>j = 0:<br>$$ \frac\partial{\partial\theta_0}J(\theta_0, \theta_1) = \frac1{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})$$<br>j = 1:<br>$$ \frac\partial{\partial\theta_1}J(\theta_0, \theta_1) = \frac1{m}\sum_{i=1}^{m}(h_{\theta}(x^{(i)}) - y^{(i)})*x^{(i)}$$</p>
-<h2 id="梯度下降法的证明">梯度下降法的证明</h2>
-<p>1、如果优化函数存在解析解。例如我们求最值一般是对优化函数求导，找到导数为0的点。如果代价函数能简单求导，并且求导后为0的式子存在解析解，那么我们就可以直接得到最优的参数。</p>
-<p>2、如果式子很难求导，例如函数里面存在隐含的变量或者变量相互间存在耦合，互相依赖的情况。或者求导后式子得不到解释解，或者未知参数的个数大于方程组的个数等。这时候使用迭代算法来一步一步找到最优解。</p>
-<ul>
-<li>当目标函数是凸函数时，梯度下降法的解是全局最优解</li>
-<li>一般情况下，其解不保证是全局最优解</li>
-</ul>
-<h3 id="凸函数">凸函数</h3>
-<p>凸函数就是一个定义在某个向量空间的凸子集C（区间）上的实值函数 f，而且对于凸子集C中任意两个向量 $x_1$, $x_2$ 有：<br>$$f(\frac{x_1+x_2}{2}) \le \frac{f(x_1)+f(x_2)}{2}$$<br>于是容易得出对于任意（0,1)中有理数 p，有：<br>$$f(px_1+(1-p)x_2) \le pf(x_1)+(1-p)f(x_2)$$<br>如果 f 连续，那么 p 可以改成任意（0,1）中实数。则 f 称为 I 上的凸函数，当且仅当其上境图（在函数图像上方的点集）为一个凸集。</p>
-<h2 id="梯度下降法的使用">梯度下降法的使用</h2>
-<p>我们首先在函数上任选一点，计算其损失（即我们上面的L(w)） ，然后按照某一规则寻找更低的一点计算新的损失，只要新损失更小（最小化问题），我们就继续下降，直到达到一个可接受的优化目标。<br>梯度下降方法分为两个部分，第一部分是整体上，我们使用某步长不断下降求损失函数，第二部分是为了防止步长太长导致最后无法收敛，每次当损失上升的时候都调整步长。<br>通常实践中使用时，都是用一些开源算法，很少需要深度改进，比如使用 libsvm 可以直接求解逻辑回归。</p>
-<h1 id="Reference">Reference</h1>
-<blockquote>
-<p><a href="http://www.cnblogs.com/yysblog/p/3268508.html" target="_blank" rel="external">http://www.cnblogs.com/yysblog/p/3268508.html</a><br><a href="http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression" target="_blank" rel="external">http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression</a><br><a href="http://www.cnblogs.com/chaoren399/p/4851658.html" target="_blank" rel="external">http://www.cnblogs.com/chaoren399/p/4851658.html</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/coursera/">coursera</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/07/30/Stanford Machine Learning-Week 1- Linear Regression with One Variable/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
       <a href="/2016/05/22/使用-HBase-总结/" title="使用 HBase 总结" itemprop="url">使用 HBase 总结</a>
   </h1>
   <p class="article-author">By
@@ -1099,292 +1387,9 @@ $$ -->
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/27/LeetCode-Perfect-Squares/" title="LeetCode - Perfect Squares" itemprop="url">LeetCode - Perfect Squares</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-27T02:41:50.000Z" itemprop="datePublished"> Published Mar 27 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Problem_Description：">Problem Description：</h2>
-<p>Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, …) which sum to n.<br>For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.</p>
-<h2 id="Solution:">Solution:</h2>
-<h3 id="Solution1:">Solution1:</h3>
-<p>Dynamic Programming<br>Time Complexity: O(n*sqrt(n))<br>Space: O(n)</p>
-<h3 id="Solution2:">Solution2:</h3>
-<p>Number Theory</p>
-<ul>
-<li>Legendre’s three-square theorem </li>
-<li>Lagrange’s four-square theorem</li>
-</ul>
-<p>Time Complexity: O(sqrt(n))<br>Space: O(1)</p>
-<h2 id="Code">Code</h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.zane.algorithm.leetcode;</div><div class="line"></div><div class="line"><span class="javadoc">/**</span></div><div class="line"> * Author: luojinping</div><div class="line"> * Date: 15/9/23</div><div class="line"> * Time: 17:23</div><div class="line"> * &lt;p/&gt;</div><div class="line"> * &lt;p/&gt;</div><div class="line"> * Given a positive integer n, find the least number of perfect square numbers</div><div class="line"> * (for example, 1, 4, 9, 16, ...) which sum to n.</div><div class="line"> * For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13,</div><div class="line"> * return 2 because 13 = 4 + 9.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PerfectSquares_279</span> </span>{</div><div class="line">    <span class="javadoc">/**</span></div><div class="line">     * cannot use greedy algorithm, counter example：</div><div class="line">     * 98=81+16+1=49+49</div><div class="line">     * 101=100+1=49+1+49+2</div><div class="line">     * 7=4+1+1+1</div><div class="line">     * 12=4+4+4=9+1+1+1</div><div class="line">     * 思路:</div><div class="line">     * 使用DP, dp[]数组记录历史使用最少平方数的情况.例如dp[5]=2,记录的是使用最少(1+4)平方数的数量,即2.</div><div class="line">     *</div><div class="line">     *<span class="javadoctag"> @param</span> n</div><div class="line">     *<span class="javadoctag"> @return</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numSquares</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">2</span>) {</div><div class="line">            <span class="keyword">return</span> n;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// record the least number of perfect numbers when index = i</span></div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</div><div class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        dp[<span class="number">2</span>] = <span class="number">2</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++) {</div><div class="line">            <span class="keyword">int</span> leastNum = i;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j * j &lt;= i; j++) {</div><div class="line">                leastNum = Math.min(leastNum, dp[i - j * j] + <span class="number">1</span>);</div><div class="line"></div><div class="line">            }</div><div class="line">            dp[i] = leastNum;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> dp[n];</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSquare</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">int</span> sqrt_n = (<span class="keyword">int</span>) (Math.sqrt(n));</div><div class="line">        <span class="keyword">return</span> (sqrt_n * sqrt_n == n);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="javadoc">/**</span></div><div class="line">     * Legendre's three-square theorem:</div><div class="line">     * The three squares theorem tells you that a positive integer n can be represented as the sum</div><div class="line">     * of 3 squares (n = x^2 + y^2 + z^2) if and only if it is not of the form n = 4^a * (8 * b+7)</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * Lagrange's four-square theorem:</div><div class="line">     * Every natural number can be represented as the sum of four integer squares:</div><div class="line">     * n= a^2 + b^2 + c^2 + d^2</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * So the are only 4 possible results: 1, 2, 3, 4.</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * Refer:</div><div class="line">     * https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numSquaresByMath</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="comment">// If n is a perfect square, return 1.</span></div><div class="line">        <span class="keyword">if</span> (isSquare(n)) {</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// The result is 4 if and only if n can be written in the</span></div><div class="line">        <span class="comment">// form of 4^k*(8*m + 7). Please refer to</span></div><div class="line">        <span class="comment">// Legendre's three-square theorem.</span></div><div class="line">        <span class="keyword">while</span> ((n & <span class="number">3</span>) == <span class="number">0</span>) <span class="comment">// n%4 == 0</span></div><div class="line">        {</div><div class="line">            n &gt;&gt;= <span class="number">2</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> ((n & <span class="number">7</span>) == <span class="number">7</span>) <span class="comment">// n%8 == 7</span></div><div class="line">        {</div><div class="line">            <span class="keyword">return</span> <span class="number">4</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// Check whether 2 is the result.</span></div><div class="line">        <span class="keyword">int</span> sqrt_n = (<span class="keyword">int</span>) (Math.sqrt(n));</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sqrt_n; i++) {</div><div class="line">            <span class="keyword">if</span> (isSquare(n - i * i)) {</div><div class="line">                <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="number">3</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">        PerfectSquares_279 perfectSquares279 = <span class="keyword">new</span> PerfectSquares_279();</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">4</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">7</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">12</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">61</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">100</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">101</span>));</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="Refer:">Refer:</h2>
-<blockquote>
-<p><a href="https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics" target="_blank" rel="external">https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/27/LeetCode-Perfect-Squares/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/26/LeetCode-The-Skyline-Problem/" title="LeetCode - The Skyline Problem" itemprop="url">LeetCode - The Skyline Problem</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-26T14:47:52.000Z" itemprop="datePublished"> Published Mar 26 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Problem_Description">Problem Description</h2>
-<p>A city’s skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Now suppose you are given the locations and height of all the buildings as shown on a cityscape photo (Figure A), write a program to output the skyline formed by these buildings collectively (Figure B).</p>
-<p> Buildings  Skyline Contour<br>The geometric information of each building is represented by a triplet of integers [Li, Ri, Hi], where Li and Ri are the x coordinates of the left and right edge of the ith building, respectively, and Hi is its height. It is guaranteed that 0 ≤ Li, Ri ≤ INT_MAX, 0 &lt; Hi ≤ INT_MAX, and Ri - Li &gt; 0. You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.</p>
-<p>For instance, the dimensions of all buildings in Figure A are recorded as: [ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ] .</p>
-<p>The output is a list of “key points” (red dots in Figure B) in the format of [ [x1,y1], [x2, y2], [x3, y3], … ] that uniquely defines a skyline. A key point is the left endpoint of a horizontal line segment. Note that the last key point, where the rightmost building ends, is merely used to mark the termination of the skyline, and always has zero height. Also, the ground in between any two adjacent buildings should be considered part of the skyline contour.</p>
-<p>For instance, the skyline in Figure B should be represented as:[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ].</p>
-<p>Notes:</p>
-<ul>
-<li>The number of buildings in any input list is guaranteed to be in the range [0, 10000].</li>
-<li>The input list is already sorted in ascending order by the left x position Li.</li>
-<li>The output list must be sorted by the x position.<br>There must be no consecutive horizontal lines of equal height in the output skyline. For instance, […[2 3], [4 5], [7 5], [11 5], [12 7]…] is not acceptable; the three lines of height 5 should be merged into one in the final output as such: […[2 3], [4 5], [12 7], …]</li>
-</ul>
-<p><strong>problem link:</strong><br><a href="https://leetcode.com/problems/the-skyline-problem/" target="_blank" rel="external">https://leetcode.com/problems/the-skyline-problem/</a></p>
-<h2 id="Solution">Solution</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class <span class="type">TheSkylineProblem_218</span> {</div><div class="line">    public <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; getSkylineSimpleSolution(<span class="type">int</span>[][] buildings) {</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; <span class="literal">result</span> = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; height = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line"></div><div class="line">        // height &lt; <span class="number">0</span>: the height <span class="keyword">of</span> building started</div><div class="line">        // height &gt; <span class="number">0</span>: the height <span class="keyword">of</span> building ended</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] b : buildings) {</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">0</span>], -b[<span class="number">2</span>]});</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">1</span>], b[<span class="number">2</span>]});</div><div class="line">        }</div><div class="line"></div><div class="line">        // sorted by x value, <span class="keyword">if</span> x equals then sorted by y value</div><div class="line">        <span class="type">Collections</span>.sort(height, (a, b) -&gt; {</div><div class="line">            <span class="keyword">if</span> (a[<span class="number">0</span>] != b[<span class="number">0</span>])</div><div class="line">                <span class="keyword">return</span> a[<span class="number">0</span>] - b[<span class="number">0</span>];</div><div class="line">            <span class="keyword">return</span> a[<span class="number">1</span>] - b[<span class="number">1</span>];</div><div class="line">        });</div><div class="line"></div><div class="line">        // record the height <span class="keyword">of</span> visited buildings by reverse order</div><div class="line">        <span class="type">Queue</span>&lt;<span class="type">Integer</span>&gt; pq = new <span class="type">PriorityQueue</span>&lt;&gt;((a, b) -&gt; (b - a));</div><div class="line">        pq.offer(<span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="type">int</span> prevHeight = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] h : height) {</div><div class="line">            <span class="keyword">if</span> (h[<span class="number">1</span>] &lt; <span class="number">0</span>) {</div><div class="line">                // save the height <span class="keyword">of</span> building</div><div class="line">                pq.offer(-h[<span class="number">1</span>]);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                // remove the height <span class="keyword">of</span> building</div><div class="line">                pq.remove(h[<span class="number">1</span>]);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="type">int</span> curHeight = pq.peek();</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (prevHeight != curHeight) {</div><div class="line">                // find the turn point</div><div class="line">                <span class="literal">result</span>.add(new <span class="type">int</span>[]{h[<span class="number">0</span>], curHeight});</div><div class="line">                prevHeight = curHeight;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="literal">result</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="算法解释">算法解释</h2>
-<h3 id="算法思路">算法思路</h3>
-<ol>
-<li>遍历所有的点，height用来存放每个顶点，左顶点的高度转为负数，右顶点的高度仍然是正数</li>
-<li>对height数组排序，首先按x的值排序，当x的值相等时按z排序，这样保证了即使矩形的起点一样，也是最先处理最高的点。对于[{1,2,1},{1,2,2},{1,2,3}]这样的情况会优先处理{1,2,3}这个点。</li>
-<li>使用优先级队列pq来保存当前最近buildings的高度，这个结构很重要！</li>
-<li>遍历height数组，碰到左顶点时，将高度放入pq中，否则，碰到右顶点时则将高度从pq从移除。这样做的好处是，每次走完一个矩形时，高度能回归到之前的buildings的高度。</li>
-<li>获取当前的最高高度，因为如果比当前矮的话，是不需要放入拐点中的，这点很重要！</li>
-<li>如果当前的最高高度和之前的高度不一致，说明出现了拐点。**如果当前的最高高度矮于之前的值，说明之前的很高的建筑遇到了它的右顶点从而被移除了，所以目前的最高高度即使矮于之前的点，但是是新的隔离的building了，所以可以加入。那么如果高呢？当前高度比之前高，那肯定会是拐点了。</li>
-</ol>
-<h2 id="总结">总结</h2>
-<p>几个关键点：</p>
-<ol>
-<li>对顶点进行排序保存，对左右顶点根据正负号来加以区分</li>
-<li>使用一个优先级队列来保存目前最高的建筑</li>
-<li>碰到右顶点时消除目前的建筑高度</li>
-<li>根据之前的高度和处理目前顶点以后(可能是加入了高度也可能是消除了之前的高度)的高度，对两者进行比较来找到拐点</li>
-</ol>
-<h2 id="Reference">Reference</h2>
-<blockquote>
-<p><a href="https://leetcode.com/discuss/54201/short-java-solution" target="_blank" rel="external">https://leetcode.com/discuss/54201/short-java-solution</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/26/LeetCode-The-Skyline-Problem/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/03/扔鸡蛋测楼层/" title="扔鸡蛋测楼层" itemprop="url">扔鸡蛋测楼层</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-03T12:26:36.000Z" itemprop="datePublished"> Published Mar 3 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="扔瓶子测楼层">扔瓶子测楼层</h2>
-<p>一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？</p>
-<h2 id="A-_只用一个瓶子从第一层扔到第n层">A. 只用一个瓶子从第一层扔到第n层</h2>
-<p>找到临界值的扔瓶子次数的期望为每一层的期望次数之和</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">E(x) = <span class="number">1</span>/n * <span class="number">1</span> + <span class="number">1</span>/n * <span class="number">2</span> + <span class="number">1</span>/n * <span class="number">3</span> + <span class="keyword">...</span> + <span class="number">1</span>/n * n = (<span class="number">1</span>+n)/<span class="number">2</span></div></pre></td></tr></table></figure>
-
-
-<p>所以时间复杂度是O(n)</p>
-<h2 id="B-_用贪心的思维">B. 用贪心的思维</h2>
-<p>第一个瓶子从第1层开始扔，每次层数翻倍，依次为，1，2，4，8，16，直至在第 2^k 层碎掉。<br>第二个瓶子从第 2^(k-1) 层开始扔，直至第 2^k 层为止，中间肯定能找到临界值。<br>所以时间复杂度是O(lgn)</p>
-<h2 id="C-_用二分法">C. 用二分法</h2>
-<p>第一个瓶子每次以(i, j)为区间，扔的位置为(i+j)/2, 初始情况, i=0,j=n, 如果瓶子没碎，则i=j，直至碎掉。<br>第二个瓶子从第 i 层开始扔，直至第 j 层为止，中间肯定能找到临界值。</p>
-<p>对于第 i 层，扔的情况为：</p>
-<ul>
-<li>第一个瓶子：n/2, $/2+n/4 i, n/2+n/4+n/8</li>
-<li>第二个瓶子：n/2+n/4, (n/2+n/k+1), …, i</li>
-</ul>
-<p>显而易见，时间复杂度是O(n)</p>
-<h2 id="D-_数学推算">D. 数学推算</h2>
-<p>这个题目是需要最快的找出临界值，可以转换为，即使在最坏的情况下，也能最快地找出临界值。</p>
-<p>我们先假设最坏情况下，瓶子下落次数为x，即我们为了找出N，一共用瓶子做了x次的实验。 </p>
-<p>那么，我们第一次应该在哪层楼往下扔瓶子呢？</p>
-<p>先让我们假设第一次是在第y层楼扔的瓶子，如果第一个瓶子在第一次扔就碎了，我们就只剩下一个瓶子，要用它准确地找出N，只能从第一层向上，一层一层的往上测试，直到它摔坏为止，答案就出来了。</p>
-<p>由于第一个瓶子在第y层就摔破了，所以最坏的情况是第二个瓶子要把第1到第y-1层的楼都测试一遍，最后得出结果，噢，原来瓶子在第y-1层才能摔破(或是在第y-1层仍没摔破，答案就是第y层。) 这样一来测试次数是1+(y-1)=x，即第一次测试要在第x层。</p>
-<p>OK，那如果第一次测试鸡蛋没摔破呢，那N肯定要比x大，要继续往上找，需要在哪一层扔呢？我们可以模仿前面的操作，如果第一个瓶子在第二次测试中摔破了，那么第二个瓶子的测试次数就只剩下x-2次了(第一个瓶子已经用了2次)。这样一来，第二次扔瓶子的楼层和第一次扔瓶子的楼层之间就隔着x-2层。 </p>
-<p>我们再回过头来看一看，第一次扔瓶子的楼层在第x层，第1层到第x层间共x层；第1次扔鸡蛋的楼层到第2次扔瓶子的楼层间共有x-1层(包含第2次扔瓶子的那一层)，同理继续往下，我们可以得出，第2次扔瓶子的楼层到第3次扔瓶子的楼层间共有x-2层，最后把这些互不包含的区间数加起来，应该大于等于总共的楼层数量100，即</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x + (x-<span class="number">1</span>) + (x-<span class="number">2</span>) + <span class="keyword">...</span> + <span class="number">1</span> &gt;= <span class="number">100</span></div><div class="line">(x+<span class="number">1</span>)*x/<span class="number">2</span> &gt;= <span class="number">100</span></div><div class="line">得出答案是<span class="number">14</span></div></pre></td></tr></table></figure>
-
-<p>即我先用第1个瓶子在以下序列表示的楼层数不断地向上测试，直到它摔破。 再用第2个瓶子从上一个没摔破的序列数的下一层开始，向上测试，即可保证在最坏情况下也只需要测试14次，就能用2个瓶子找出从哪一层开始，往下扔鸡蛋，瓶子就会摔破。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100</div></pre></td></tr></table></figure>
-
-<h2 id="E-_DP的解法">E. DP的解法</h2>
-<p>假设f(n)表示从第n层楼扔下鸡蛋，没有摔碎的最少尝试次数。第一个鸡蛋，可能的落下位置[1,n],第一个鸡蛋从第i层扔下，有两种情况：</p>
-<ul>
-<li>碎了，第二个鸡蛋，需要从第一层开始试验，有i-1次机会</li>
-<li>没碎，两个鸡蛋，还有n-i层。这个就是子问题了f(n-i)</li>
-</ul>
-<p>所以，当第一个鸡蛋，由第i个位置落下的时候，要尝试的次数为 1 + max{i - 1, f(n - i)}，那么对于每一个i，尝试次数最少的，就是f(n)的值。<br>状态转移方程如下： </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span> = <span class="title">min</span>{1 + <span class="title">max</span>{<span class="title">i</span> - 1, <span class="title">f</span><span class="params">(n - <span class="number">1</span>)</span>}}</span></div></pre></td></tr></table></figure>
-
-<p>其中: i的范围为[1, n], f(1) = 1.</p>
-<h2 id="F-_推广到一般化的问题">F. 推广到一般化的问题</h2>
-<p>为n层楼，m个鸡蛋。<br>如下分析： 假设f(n,m)表示n层楼、m个鸡蛋时找到最高楼层的最少尝试次数。当第一个鸡蛋从第i层扔下，有两种情况：</p>
-<ul>
-<li>碎了，还剩m-1个鸡蛋，为确定下面楼层中的安全楼层，还需要f(i-1,m-1)次，找到子问题</li>
-<li>不碎，上面还有n-i层，还需要f(n-i,m)次，又一个子问题。</li>
-</ul>
-<p>状态转移方程如下： </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">f</span><span class="params">(n, m)</span> = <span class="title">min</span>{1 + <span class="title">max</span>{<span class="title">f</span><span class="params">(n - <span class="number">1</span>, m - <span class="number">1</span>)</span>, <span class="title">f</span><span class="params">(n - i, m)</span>}}</span></div></pre></td></tr></table></figure>
-
-<p>其中： i为[1, n], f(i, 1) = 1</p>
-<h2 id="Reference">Reference</h2>
-<blockquote>
-<p><a href="http://www.cricode.com/3558.html" target="_blank" rel="external">http://www.cricode.com/3558.html</a><br><a href="https://gist.github.com/sing1ee/5971946" target="_blank" rel="external">https://gist.github.com/sing1ee/5971946</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/03/扔鸡蛋测楼层/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1407,39 +1412,39 @@ $$ -->
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
-		
-			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
-		
-			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
-		
-			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
-		
-			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
-		
-			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-		
-			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
-		
-			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
-		
-			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
 			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
 		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>

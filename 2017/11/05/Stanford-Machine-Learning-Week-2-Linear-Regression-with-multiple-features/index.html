@@ -4,56 +4,65 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>Stanford Machine Learning - Week 2 - Linear Regression with multiple features | Zane Blog</title>
+    <title>Stanford Machine Learning - 2 线性回归进阶 | Zane Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Jinping Luo">
     
-    <meta name="description" content="使用 Gradient descent 求解多变量的线性回归问题
-多变量的线性回归
-n: 特征(features) 数量m: 训练集数量$x^{(i)}$: 
-
-表示一条训练数据的向量
-i is an index into the training set
-So 
-x is an n-dimensi">
-    
-    
-    <meta name="description" content="使用 Gradient descent 求解多变量的线性回归问题
-多变量的线性回归
+    <meta name="description" content="1. 多变量的线性回归
 n: 特征(features) 数量m: 训练集数量$x^{(i)}$: 
 
 表示一条训练数据的向量
 i is an index into the training set
 So 
 x is an n-dimensional feature vector
-$x^{(3)}$ is, for example, the">
+$x^{(3)}$ ">
+    
+    
+    <meta name="description" content="1. 多变量的线性回归
+n: 特征(features) 数量m: 训练集数量$x^{(i)}$: 
+
+表示一条训练数据的向量
+i is an index into the training set
+So 
+x is an n-dimensional feature vector
+$x^{(3)}$ is, for example, the 3rd training data
+
+
+
+$x^{(j)}">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Stanford Machine Learning - Week 2 - Linear Regression with multiple features">
-<meta property="og:url" content="http://luojinping.com/2016/07/31/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/">
+<meta property="og:title" content="Stanford Machine Learning - 2 线性回归进阶">
+<meta property="og:url" content="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="使用 Gradient descent 求解多变量的线性回归问题
-多变量的线性回归
+<meta property="og:description" content="1. 多变量的线性回归
 n: 特征(features) 数量m: 训练集数量$x^{(i)}$: 
 
 表示一条训练数据的向量
 i is an index into the training set
 So 
 x is an n-dimensional feature vector
-$x^{(3)}$ is, for example, the">
+$x^{(3)}$ is, for example, the 3rd training data
+
+
+
+$x^{(j)}">
 <meta property="og:image" content="/img/gradient_descent_plot.jpg">
 <meta property="og:image" content="/img/polynomial_regression_choose.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Stanford Machine Learning - Week 2 - Linear Regression with multiple features">
-<meta name="twitter:description" content="使用 Gradient descent 求解多变量的线性回归问题
-多变量的线性回归
+<meta name="twitter:title" content="Stanford Machine Learning - 2 线性回归进阶">
+<meta name="twitter:description" content="1. 多变量的线性回归
 n: 特征(features) 数量m: 训练集数量$x^{(i)}$: 
 
 表示一条训练数据的向量
 i is an index into the training set
 So 
 x is an n-dimensional feature vector
-$x^{(3)}$ is, for example, the">
+$x^{(3)}$ is, for example, the 3rd training data
+
+
+
+$x^{(j)}">
 
 
     
@@ -124,14 +133,14 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2016/07/31/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" title="Stanford Machine Learning - Week 2 - Linear Regression with multiple features" itemprop="url">Stanford Machine Learning - Week 2 - Linear Regression with multiple features</a>
+      <a href="/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" title="Stanford Machine Learning - 2 线性回归进阶" itemprop="url">Stanford Machine Learning - 2 线性回归进阶</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
 		
   <p class="article-time">
-    <time datetime="2016-07-31T05:07:10.000Z" itemprop="datePublished"> Published Jul 31 2016</time>
+    <time datetime="2017-11-05T14:00:04.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
     
   </p>
 </header>
@@ -140,12 +149,11 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用_Gradient_descent_求解多变量的线性回归问题"><span class="toc-number">1.</span> <span class="toc-text">使用 Gradient descent 求解多变量的线性回归问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#多变量的线性回归"><span class="toc-number">1.1.</span> <span class="toc-text">多变量的线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多变量的梯度下降"><span class="toc-number">1.2.</span> <span class="toc-text">多变量的梯度下降</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost_Function"><span class="toc-number">1.2.1.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient_descent"><span class="toc-number">1.2.2.</span> <span class="toc-text">Gradient descent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient_Decent_in_practice"><span class="toc-number">1.3.</span> <span class="toc-text">Gradient Decent in practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature_Scaling"><span class="toc-number">1.3.1.</span> <span class="toc-text">Feature Scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Learning_Rate_α"><span class="toc-number">1.3.2.</span> <span class="toc-text">Learning Rate α</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features_and_polynomial_regression"><span class="toc-number">1.4.</span> <span class="toc-text">Features and polynomial regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Can_create_new_features"><span class="toc-number">1.4.1.</span> <span class="toc-text">Can create new features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial_regression"><span class="toc-number">1.4.2.</span> <span class="toc-text">Polynomial regression</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用_Normal_equation_求解多变量的线性回归问题"><span class="toc-number">2.</span> <span class="toc-text">使用 Normal equation 求解多变量的线性回归问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Normal_equation"><span class="toc-number">2.1.</span> <span class="toc-text">Normal equation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gradient_descent_Vs_Normal_equation"><span class="toc-number">3.</span> <span class="toc-text">Gradient descent Vs Normal equation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient_descent-1"><span class="toc-number">3.1.</span> <span class="toc-text">Gradient descent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Normal_equation-1"><span class="toc-number">3.2.</span> <span class="toc-text">Normal equation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_多变量的线性回归"><span class="toc-number">1.</span> <span class="toc-text">1. 多变量的线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1_多变量的梯度下降"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 多变量的梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost_Function"><span class="toc-number">1.2.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient_descent"><span class="toc-number">1.3.</span> <span class="toc-text">Gradient descent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_Gradient_Decent_in_practice"><span class="toc-number">2.</span> <span class="toc-text">2. Gradient Decent in practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_Feature_Scaling"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Feature Scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Learning_Rate_α"><span class="toc-number">2.2.</span> <span class="toc-text">Learning Rate α</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2_Features_and_polynomial_regression"><span class="toc-number">3.</span> <span class="toc-text">2.2 Features and polynomial regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Can_create_new_features"><span class="toc-number">3.1.</span> <span class="toc-text">Can create new features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial_regression"><span class="toc-number">3.2.</span> <span class="toc-text">Polynomial regression</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_Normal_equation_求解多变量线性回归"><span class="toc-number">4.</span> <span class="toc-text">3. Normal equation 求解多变量线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1_Normal_equation"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 Normal equation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-_Gradient_descent_Vs_Normal_equation"><span class="toc-number">5.</span> <span class="toc-text">4. Gradient descent Vs Normal equation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient_descent-1"><span class="toc-number">5.1.</span> <span class="toc-text">Gradient descent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Normal_equation"><span class="toc-number">5.2.</span> <span class="toc-text">Normal equation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-_局部加权线性回归"><span class="toc-number">6.</span> <span class="toc-text">5. 局部加权线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
 		
 		</div>
 		
-		<h1 id="使用_Gradient_descent_求解多变量的线性回归问题">使用 Gradient descent 求解多变量的线性回归问题</h1>
-<h2 id="多变量的线性回归">多变量的线性回归</h2>
+		<h2 id="1-_多变量的线性回归">1. 多变量的线性回归</h2>
 <p>n: 特征(features) 数量<br>m: 训练集数量<br>$x^{(i)}$: </p>
 <ul>
 <li>表示一条训练数据的向量</li>
@@ -159,7 +167,7 @@ var _hmt = _hmt || [];
 <p>$x^{(j)}_i$: The value of feature j in the ith training example</p>
 <p>例如，当 n=4 时:<br>$$h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4$$</p>
 <p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：<br>$$h_θ(x)=θ^TX$$<br>$θ^T$: [1 * (n+1)] matrix</p>
-<h2 id="多变量的梯度下降">多变量的梯度下降</h2>
+<h3 id="1-1_多变量的梯度下降">1.1 多变量的梯度下降</h3>
 <h3 id="Cost_Function">Cost Function</h3>
 <p>$$J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}$$</p>
 <h3 id="Gradient_descent">Gradient descent</h3>
@@ -170,8 +178,8 @@ var _hmt = _hmt || [];
 <li>We do this through a simultaneous update of every θj value</li>
 </ul>
 <p>$$ \frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>$$ = \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)} $$</p>
-<h2 id="Gradient_Decent_in_practice">Gradient Decent in practice</h2>
-<h3 id="Feature_Scaling">Feature Scaling</h3>
+<h2 id="2-_Gradient_Decent_in_practice">2. Gradient Decent in practice</h2>
+<h3 id="2-1_Feature_Scaling">2.1 Feature Scaling</h3>
 <p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
 <h3 id="Learning_Rate_α">Learning Rate α</h3>
 <ul>
@@ -193,19 +201,19 @@ var _hmt = _hmt || [];
 </li>
 </ul>
 <p><img src="/img/gradient_descent_plot.jpg" alt=""></p>
-<h2 id="Features_and_polynomial_regression">Features and polynomial regression</h2>
+<h2 id="2-2_Features_and_polynomial_regression">2.2 Features and polynomial regression</h2>
 <h3 id="Can_create_new_features">Can create new features</h3>
 <p>如何选择 features 和表达式尤为关键，例如房价与房子的长，房子的宽组成的表达式就会麻烦很多，若将房子的长乘以房子的宽得出面积，则有房价与房子面积的表达式，将会更容易拟合出房价的走势。</p>
 <h3 id="Polynomial_regression">Polynomial regression</h3>
 <p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
 <p><strong>所以选择合适的 Features 和 Polynomial regression 都非常重要。</strong></p>
 <p><img src="/img/polynomial_regression_choose.jpg" alt=""></p>
-<h1 id="使用_Normal_equation_求解多变量的线性回归问题">使用 Normal equation 求解多变量的线性回归问题</h1>
-<h2 id="Normal_equation">Normal equation</h2>
+<h2 id="3-_Normal_equation_求解多变量线性回归">3. Normal equation 求解多变量线性回归</h2>
+<h3 id="3-1_Normal_equation">3.1 Normal equation</h3>
 <p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 $$ \frac{d}{dθ}J(θ)=2aθ+b=0$$ 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
 <p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：<br>$$ J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2} $$<br>只需要令：<br>$$ \frac\partial{\partial θ_j}J(θ_0, θ_1, …,θ_n) = … = 0 $$，其中 j = 0,1,2,…,n<br>设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m*n) 的矩阵，y 为 (m*1) 的矩阵，可以推导出求 θ 向量的公式如下：<br>$$θ = (X^TX)^{-1}X^Ty$$</p>
-<h1 id="Gradient_descent_Vs_Normal_equation">Gradient descent Vs Normal equation</h1>
-<h2 id="Gradient_descent-1">Gradient descent</h2>
+<h2 id="4-_Gradient_descent_Vs_Normal_equation">4. Gradient descent Vs Normal equation</h2>
+<h3 id="Gradient_descent-1">Gradient descent</h3>
 <ul>
 <li>Need to chose learning rate</li>
 <li>Needs many iterations - could make it slower</li>
@@ -214,7 +222,7 @@ var _hmt = _hmt || [];
 <li>What is a big n though: 100 or even a 1000 is still (relativity) small, If n is 10000 then look at using gradient descent</li>
 <li>适用于线性回归会逻辑回归</li>
 </ul>
-<h2 id="Normal_equation-1">Normal equation</h2>
+<h3 id="Normal_equation">Normal equation</h3>
 <ul>
 <li>No need to chose a learning rate</li>
 <li>No need to iterate, check for convergence etc.</li>
@@ -226,7 +234,20 @@ var _hmt = _hmt || [];
 <li>Slow of n is large, Can be much slower</li>
 <li>仅适用于线性回归</li>
 </ul>
-<h1 id="Reference">Reference</h1>
+<h2 id="5-_局部加权线性回归">5. 局部加权线性回归</h2>
+<p>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：<br>$$J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2$$</p>
+<p>其中<br>$$ w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})$$</p>
+<p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
+<p>$\tau^2$ 是波长函数(bandwidth)， 控制权重随距离下降的速度，τ 越小则 x 离 $x^{(i)}$ 越远时 $w^{(i)}$ 的值下降的越快。</p>
+<p>所以，如果沿着 x 轴的每个点都进行局部直线拟合，那么你会发现对于这个数据集合来说，局部加权的预测结果，能够最终跟踪这条非线性的曲线。</p>
+<p>但局部加权回归也有其缺点：</p>
+<ul>
+<li>每次对一个点的预测都需要整个数据集的参与，样本量大且需要多点预测时效率低。提高效率的方法参考 Andrew More’s KD Tree</li>
+<li>不可外推，对样本所包含的区域外的点进行预测时效果不好，事实上这也是一般线性回归的弱点</li>
+</ul>
+<p>对于线性回归算法，一旦拟合出适合训练数据的参数θ，保存这些参数θ，对于之后的预测，不需要再使用原始训练数据集，所以是参数学习算法。</p>
+<p>对于局部加权线性回归算法，每次进行预测都需要全部的训练数据（每次进行的预测得到不同的参数θ），没有固定的参数θ，所以是非参数算法(non-parametric algorithm)。</p>
+<h2 id="Reference">Reference</h2>
 <blockquote>
 <p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
 </blockquote>
@@ -238,7 +259,7 @@ var _hmt = _hmt || [];
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/coursera/">coursera</a>
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
   </div>
 
 </div>
@@ -247,7 +268,7 @@ var _hmt = _hmt || [];
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://luojinping.com/2016/07/31/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" data-title="Stanford Machine Learning - Week 2 - Linear Regression with multiple features | Zane Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" data-title="Stanford Machine Learning - 2 线性回归进阶 | Zane Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -261,18 +282,18 @@ var _hmt = _hmt || [];
 <nav class="article-nav clearfix">
  
  <div class="prev" >
- <a href="/2017/08/13/服务调优/" title="服务调优">
+ <a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/" title="Stanford Machine Learning - 3 线性回归的概率解释">
   <strong>上一篇：</strong><br/>
   <span>
-  服务调优</span>
+  Stanford Machine Learning - 3 线性回归的概率解释</span>
 </a>
 </div>
 
 
 <div class="next">
-<a href="/2016/07/30/Stanford Machine Learning-Week 1- Linear Regression with One Variable/"  title="Stanford Machine Learning - Week 1 - Linear Regression with One Variable">
+<a href="/2017/11/05/Stanford Machine Learning-Week 1- Linear Regression with One Variable/"  title="Stanford Machine Learning - 1 线性回归入门">
  <strong>下一篇：</strong><br/> 
- <span>Stanford Machine Learning - Week 1 - Linear Regression with One Variable
+ <span>Stanford Machine Learning - 1 线性回归入门
 </span>
 </a>
 </div>
@@ -293,7 +314,7 @@ var _hmt = _hmt || [];
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用_Gradient_descent_求解多变量的线性回归问题"><span class="toc-number">1.</span> <span class="toc-text">使用 Gradient descent 求解多变量的线性回归问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#多变量的线性回归"><span class="toc-number">1.1.</span> <span class="toc-text">多变量的线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#多变量的梯度下降"><span class="toc-number">1.2.</span> <span class="toc-text">多变量的梯度下降</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost_Function"><span class="toc-number">1.2.1.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient_descent"><span class="toc-number">1.2.2.</span> <span class="toc-text">Gradient descent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient_Decent_in_practice"><span class="toc-number">1.3.</span> <span class="toc-text">Gradient Decent in practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Feature_Scaling"><span class="toc-number">1.3.1.</span> <span class="toc-text">Feature Scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Learning_Rate_α"><span class="toc-number">1.3.2.</span> <span class="toc-text">Learning Rate α</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Features_and_polynomial_regression"><span class="toc-number">1.4.</span> <span class="toc-text">Features and polynomial regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Can_create_new_features"><span class="toc-number">1.4.1.</span> <span class="toc-text">Can create new features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial_regression"><span class="toc-number">1.4.2.</span> <span class="toc-text">Polynomial regression</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#使用_Normal_equation_求解多变量的线性回归问题"><span class="toc-number">2.</span> <span class="toc-text">使用 Normal equation 求解多变量的线性回归问题</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Normal_equation"><span class="toc-number">2.1.</span> <span class="toc-text">Normal equation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Gradient_descent_Vs_Normal_equation"><span class="toc-number">3.</span> <span class="toc-text">Gradient descent Vs Normal equation</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Gradient_descent-1"><span class="toc-number">3.1.</span> <span class="toc-text">Gradient descent</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Normal_equation-1"><span class="toc-number">3.2.</span> <span class="toc-text">Normal equation</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Reference"><span class="toc-number">4.</span> <span class="toc-text">Reference</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_多变量的线性回归"><span class="toc-number">1.</span> <span class="toc-text">1. 多变量的线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1_多变量的梯度下降"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 多变量的梯度下降</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Cost_Function"><span class="toc-number">1.2.</span> <span class="toc-text">Cost Function</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient_descent"><span class="toc-number">1.3.</span> <span class="toc-text">Gradient descent</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_Gradient_Decent_in_practice"><span class="toc-number">2.</span> <span class="toc-text">2. Gradient Decent in practice</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_Feature_Scaling"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 Feature Scaling</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Learning_Rate_α"><span class="toc-number">2.2.</span> <span class="toc-text">Learning Rate α</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2_Features_and_polynomial_regression"><span class="toc-number">3.</span> <span class="toc-text">2.2 Features and polynomial regression</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Can_create_new_features"><span class="toc-number">3.1.</span> <span class="toc-text">Can create new features</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Polynomial_regression"><span class="toc-number">3.2.</span> <span class="toc-text">Polynomial regression</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-_Normal_equation_求解多变量线性回归"><span class="toc-number">4.</span> <span class="toc-text">3. Normal equation 求解多变量线性回归</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1_Normal_equation"><span class="toc-number">4.1.</span> <span class="toc-text">3.1 Normal equation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-_Gradient_descent_Vs_Normal_equation"><span class="toc-number">5.</span> <span class="toc-text">4. Gradient descent Vs Normal equation</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Gradient_descent-1"><span class="toc-number">5.1.</span> <span class="toc-text">Gradient descent</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Normal_equation"><span class="toc-number">5.2.</span> <span class="toc-text">Normal equation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-_局部加权线性回归"><span class="toc-number">6.</span> <span class="toc-text">5. 局部加权线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">7.</span> <span class="toc-text">Reference</span></a></li></ol>
  
   </div>
 
@@ -314,39 +335,39 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
-		
-			<li><a href="/tags/coursera/" title="coursera">coursera<sup>2</sup></a></li>
-		
-			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
-		
-			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>2</sup></a></li>
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
-		
-			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
-		
-			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
-		
-			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
-		
-			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
-		
-			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
 			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
 		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
