@@ -130,7 +130,7 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li></ol></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2_高斯分布的推导"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 高斯分布的推导</span></a></li></ol></li></ol>
 		
 		</div>
 		
@@ -159,6 +159,10 @@ var _hmt = _hmt || [];
 <p>伯努利分布的概率公式为：$P(y=1;\phi)=\phi; P(y=0;\phi)=1-\phi;$</p>
 <p>公式可经如下变换：<br>\begin{align<em>}<br>P(y;\phi)<br>&amp; =\phi^y(1-\phi)^y \<br>&amp; =exp(log(\phi^y(1-\phi)^y)) \<br>&amp; =exp(ylog(\phi)+ (1-y)log(1-\phi)) \<br>&amp; =exp(log(\frac\phi{1-\phi})y + log(1-\phi))<br>\end{align</em>}</p>
 <p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
+<h3 id="2-2_高斯分布的推导">2.2 高斯分布的推导</h3>
+<p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：<br>$P(y;\mu)$</p>
+<p>\begin{align<em>}<br>P(y;\mu)\<br>&amp; = \frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2) \<br>&amp; = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)</em>exp({\mu}y-\frac12\mu^2) \<br>\end{align*}</p>
+<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{{\mu}^2}2 = \frac{{\eta}^2}2$</p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -214,7 +218,7 @@ var _hmt = _hmt || [];
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li></ol></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-_指数分布族(Exponential_Family)"><span class="toc-number">1.</span> <span class="toc-text">1. 指数分布族(Exponential Family)</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族的定义"><span class="toc-number">1.0.1.</span> <span class="toc-text">指数分布族的定义</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#指数分布族以及它们的特征"><span class="toc-number">1.0.2.</span> <span class="toc-text">指数分布族以及它们的特征</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-_指数分布簇推导"><span class="toc-number">2.</span> <span class="toc-text">2. 指数分布簇推导</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1_伯努利分布的推导"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 伯努利分布的推导</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2_高斯分布的推导"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 高斯分布的推导</span></a></li></ol></li></ol>
  
   </div>
 
