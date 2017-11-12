@@ -91,6 +91,165 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/02/04/JVM编码方式未设置引发的乱码/" title="JVM编码方式未设置引发的乱码" itemprop="url">JVM编码方式未设置引发的乱码</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-04T14:37:58.000Z" itemprop="datePublished"> Published Feb 4 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h6 id="现象：">现象：</h6>
+<p>服务中出现大量乱码数据，并且全部入库。</p>
+<h6 id="原因：">原因：</h6>
+<p>虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。<br>发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。</p>
+<h6 id="分析：">分析：</h6>
+<p>这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">java -Dfile.encoding=UTF-<span class="number">8</span> XXX 后彻底解决。</div></pre></td></tr></table></figure>
+
+<p>但是这样发布服务时就太依赖发布脚本了，那能否在程序中就设置好编码呢？比如这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">System.setProperty(<span class="string">"file.encoding"</span>, <span class="string">"UTF-8"</span>);</div></pre></td></tr></table></figure>
+
+<p>其实，这样设置是不生效的，因为JVM在启动时就开始cache编码方式了，程序中再设置已然无效。不过可以在程序每个读写数据的地方都设置编码方式，但是这样未免太工程浩大，而且无法保证每个写代码的人都能做到。所以最后改为依赖在发布脚本中设置编码方式，并且在服务启动时对编码进行检查。</p>
+<h6 id="refer:">refer:</h6>
+<blockquote>
+<p>As Edward Grech points out, in a special case like this, the environment variable JAVA_TOOL_OPTIONS can be used to specify this property, but it’s normally done like this: java -Dfile.encoding=UTF-8 XXX</p>
+<p>Charset.defaultCharset() will reflect changes to the file.encoding property, but most of the code in the core Java libraries that need to determine the default character encoding do not use this mechanism.</p>
+<p><strong>Important points to note:</strong></p>
+<ul>
+<li>JVM caches value of default character encoding once JVM starts and so is the case for default constructors of InputStreamReader and other core Java classes. So calling System.setProperty(“file.encoding” , “UTF-16”) may not have desire effect.</li>
+<li>Always work with your own character encoding if you can, that is more accurate and precise way of converting bytes to Strings.</li>
+</ul>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/02/04/JVM编码方式未设置引发的乱码/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2015/02/03/Iterator详解/" title="Iterator详解" itemprop="url">Iterator详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-03T02:56:08.000Z" itemprop="datePublished"> Published Feb 3 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="Iterator详解">Iterator详解</h1>
+<p>Iterator是java中的一个接口，借用源码中的注释：<br>An iterator over a collection.  {@code Iterator} takes the place of {@link Enumeration} in the Java Collections Framework. Iterators differ from enumerations in two ways:</p>
+<ul>
+<li>Iterators allow the caller to remove elements from the underlying collection during the iteration with well-defined semantics.</li>
+<li>Method names have been improved.</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">	... ...	</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>需要迭代器的地方实现这个接口。集合的基本类Collection就实现了这个接口</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">Collection</span>&lt;<span class="title">E</span>&gt; <span class="keyword">extends</span> <span class="title">Iterable</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">	... ...</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>举例来看下java的ArrayList类迭代器的实现。<br>ArrayList中iterator()方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Iterator&lt;E&gt; <span class="title">iterator</span>() {</div><div class="line">	<span class="keyword">return</span> <span class="keyword">new</span> Itr();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>再来看Itr的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div></pre></td><td class="code"><pre><div class="line"><span class="javadoc">/**</span></div><div class="line"> * An optimized version of AbstractList.Itr</div><div class="line"> */</div><div class="line"><span class="keyword">private</span> <span class="class"><span class="keyword">class</span> <span class="title">Itr</span> <span class="keyword">implements</span> <span class="title">Iterator</span>&lt;<span class="title">E</span>&gt; </span>{</div><div class="line">    <span class="keyword">int</span> cursor;       <span class="comment">// index of next element to return</span></div><div class="line">    <span class="keyword">int</span> lastRet = -<span class="number">1</span>; <span class="comment">// index of last element returned; -1 if no such</span></div><div class="line">    <span class="keyword">int</span> expectedModCount = modCount;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">hasNext</span>() {</div><div class="line">        <span class="keyword">return</span> cursor != size;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="keyword">public</span> E <span class="title">next</span>() {</div><div class="line">        checkForComodification();</div><div class="line">        <span class="keyword">int</span> i = cursor;</div><div class="line">        <span class="keyword">if</span> (i &gt;= size)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> NoSuchElementException();</div><div class="line">        Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</div><div class="line">        <span class="keyword">if</span> (i &gt;= elementData.length)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        cursor = i + <span class="number">1</span>;</div><div class="line">        <span class="keyword">return</span> (E) elementData[lastRet = i];</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">remove</span>() {</div><div class="line">        <span class="keyword">if</span> (lastRet &lt; <span class="number">0</span>)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalStateException();</div><div class="line">        checkForComodification();</div><div class="line"></div><div class="line">        <span class="keyword">try</span> {</div><div class="line">            ArrayList.<span class="keyword">this</span>.remove(lastRet); <span class="comment">// 见下文代码</span></div><div class="line">            cursor = lastRet;</div><div class="line">            lastRet = -<span class="number">1</span>;</div><div class="line">            expectedModCount = modCount;</div><div class="line">        } <span class="keyword">catch</span> (IndexOutOfBoundsException ex) {</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="annotation">@Override</span></div><div class="line">    <span class="annotation">@SuppressWarnings</span>(<span class="string">"unchecked"</span>)</div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">forEachRemaining</span>(Consumer&lt;? <span class="keyword">super</span> E&gt; consumer) {</div><div class="line">        Objects.requireNonNull(consumer);</div><div class="line">        <span class="keyword">final</span> <span class="keyword">int</span> size = ArrayList.<span class="keyword">this</span>.size;</div><div class="line">        <span class="keyword">int</span> i = cursor;</div><div class="line">        <span class="keyword">if</span> (i &gt;= size) {</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">final</span> Object[] elementData = ArrayList.<span class="keyword">this</span>.elementData;</div><div class="line">        <span class="keyword">if</span> (i &gt;= elementData.length) {</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">        }</div><div class="line">        <span class="keyword">while</span> (i != size && modCount == expectedModCount) {</div><div class="line">            consumer.accept((E) elementData[i++]);</div><div class="line">        }</div><div class="line">        <span class="comment">// update once at end of iteration to reduce heap write traffic</span></div><div class="line">        cursor = i;</div><div class="line">        lastRet = i - <span class="number">1</span>;</div><div class="line">        checkForComodification();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">final</span> <span class="keyword">void</span> checkForComodification() {</div><div class="line">        <span class="keyword">if</span> (modCount != expectedModCount)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+
+<p>调ArrayList.this.remove(lastRet)时，remove的实现</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> E <span class="title">remove</span>(<span class="keyword">int</span> index) {</div><div class="line">    rangeCheck(index);</div><div class="line"></div><div class="line">    modCount++;</div><div class="line">    E oldValue = elementData(index);</div><div class="line"></div><div class="line">    <span class="keyword">int</span> numMoved = size - index - <span class="number">1</span>;</div><div class="line">    <span class="keyword">if</span> (numMoved &gt; <span class="number">0</span>)</div><div class="line">        System.arraycopy(elementData, index+<span class="number">1</span>, elementData, index, numMoved);</div><div class="line">    elementData[--size] = <span class="keyword">null</span>; <span class="comment">// clear to let GC do its work</span></div><div class="line">    <span class="keyword">return</span> oldValue;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>所以使用iterator来遍历List集合时，不能对list增删元素。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/02/03/Iterator详解/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/02/03/HashMap源码分析/" title="HashMap实现原理" itemprop="url">HashMap实现原理</a>
   </h1>
   <p class="article-author">By
@@ -372,6 +531,8 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
 		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
+		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
@@ -382,13 +543,11 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
 		
-			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
-		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
 		
 			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
 		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>1</sup></a></li>
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
 		
 			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
 		
