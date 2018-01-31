@@ -91,6 +91,198 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/02/02/并查集-Union-Find-算法/" title="并查集(Union-Find)算法" itemprop="url">并查集(Union-Find)算法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-02T09:52:22.000Z" itemprop="datePublished"> Published Feb 2 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="介绍">介绍</h2>
+<p>在计算机科学中，并查集是一种树型的数据结构，其保持着用于处理一些不相交集合（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个操作用于此数据结构：</p>
+<p>Find：确定元素属于哪一个子集。它可以被用来确定两个元素是否属于同一子集。</p>
+<p>Union：将两个子集合并成同一个集合。</p>
+<h2 id="适用场景">适用场景</h2>
+<p>适合于判断，给出一组结点，判断他们是否联通。</p>
+<h2 id="实现思路">实现思路</h2>
+<ol>
+<li>建立n个分组，每个分组代表一堆可以互相联通的结点。</li>
+<li>遍历每对结点，找到他们各自所属的分组A, B</li>
+<li>如果A != B，则将A, B分组union起来，表示A, B分组联通了</li>
+<li>如果A == B，则跳过</li>
+</ol>
+<h3 id="Simple_Find_操作">Simple Find 操作</h3>
+<p>用 group[] 数组来判断某个id属于的组。初始状态时，每个id都属于不同的组。</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span>(int <span class="built_in">i</span> = <span class="number">0</span>; <span class="built_in">i</span> &lt; <span class="built_in">size</span>; <span class="built_in">i</span>++)  </div><div class="line">    group<span class="matrix">[i]</span> = <span class="built_in">i</span>;</div></pre></td></tr></table></figure>
+
+<h3 id="Simple_Union_操作">Simple Union 操作</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span>(<span class="keyword">int</span> p, <span class="keyword">int</span> q) {   </div><div class="line">  <span class="comment">// get the groupId of every node</span></div><div class="line">  <span class="keyword">int</span> pId = find(p);  </div><div class="line">  <span class="keyword">int</span> qId = find(q);  </div><div class="line">  </div><div class="line">  <span class="comment">// the two nodes are connected, return</span></div><div class="line">  <span class="keyword">if</span> (pId == qId) {</div><div class="line">    <span class="keyword">return</span>;  </div><div class="line">  }</div><div class="line">  </div><div class="line">  <span class="comment">// union the two nodes, change groupId</span></div><div class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; id.length; i++) {</div><div class="line">      <span class="keyword">if</span> (<span class="keyword">group</span>[i] == pId) {</div><div class="line">        <span class="keyword">group</span>[i] = qId;  </div><div class="line">      }</div><div class="line">  }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="优化">优化</h3>
+<p>上面最后一步的union操作存在性能问题，即每次都需要改变其中一个分组中的所有结点的分组id。优化的做法是，用一颗树来表示每个分组，树的根节点表示当前组的id。</p>
+<p>但如果用树来表示会引入一个问题，即可能存在树退化为链表的情况，这样一来，每一次加入一个结点再找根结点也会很耗时，没有达到优化的目的。<br>针对树可能退化为链表的解决方案是，每次合并树时，总是将矮的树挂到高的树下。这种方式也称为「按秩合并」</p>
+<p>除了使用树来优化union性能以外，还有一种方式，称为「路径压缩」，即 Find 递归地经过树，改变每一个节点的引用到根节点。得到的树将更加扁平，为以后直接或者间接引用节点的操作加速。</p>
+<p>总结：</p>
+<ol>
+<li>使用树来存储分组，Union时「按秩合并」</li>
+<li>「路径压缩」，Find时改变每一个节点的引用到根节点</li>
+</ol>
+<h3 id="Find_操作">Find 操作</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// store every tree's size</span></div><div class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)  </div><div class="line">    <span class="keyword">size</span>[i] = <span class="number">1</span>;</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">find</span>(<span class="keyword">int</span> p)  </div><div class="line">{    </div><div class="line">  <span class="keyword">if</span>(p != <span class="keyword">group</span>[p]){</div><div class="line">    <span class="keyword">group</span>[p] = find(<span class="keyword">group</span>[p])</div><div class="line">  }</div><div class="line">    </div><div class="line">  <span class="keyword">return</span> <span class="keyword">group</span>[p]</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="Union_操作">Union 操作</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> union(<span class="keyword">int</span> p, <span class="keyword">int</span> q)</div><div class="line">{</div><div class="line">	<span class="keyword">int</span> i = <span class="keyword">find</span>(p);</div><div class="line">	<span class="keyword">int</span> j = <span class="keyword">find</span>(q);</div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (i == j) {</div><div class="line">	  <span class="keyword">return</span>;</div><div class="line">	} </div><div class="line">	</div><div class="line">	<span class="keyword">if</span> (<span class="keyword">size</span>[i] &lt; <span class="keyword">size</span>[j]) { </div><div class="line">	  <span class="keyword">group</span>[i] = j; </div><div class="line">	  <span class="keyword">size</span>[j] += <span class="keyword">size</span>[i]; </div><div class="line">	}	<span class="keyword">else</span> { </div><div class="line">	  <span class="keyword">group</span>[j] = i; </div><div class="line">	  <span class="keyword">size</span>[i] += <span class="keyword">size</span>[j]; </div><div class="line">	}</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="时间复杂度">时间复杂度</h3>
+<p>Statement: If m operations, either Union or Find, are applied to n elements, the total run time is O(m log<em>n), where log</em> is the iterated logarithm.<br>Proof of O(log<em>n) time complexity of union-find: <a href="https://en.wikipedia.org/wiki/Proof_of_O\(log" target="_blank" rel="external">https://en.wikipedia.org/wiki/Proof_of_O\(log</a></em>n)_time_complexity_of_union%E2%80%93find</p>
+<h2 id="Refer">Refer</h2>
+<blockquote>
+<p><a href="https://zh.wikipedia.org/wiki/%E5%B9%B6%E6%9F%A5%E9%9B%86" target="_blank" rel="external">https://zh.wikipedia.org/wiki/%E5%B9%B6%E6%9F%A5%E9%9B%86</a><br><a href="http://blog.csdn.net/dm_vincent/article/details/7655764" target="_blank" rel="external">http://blog.csdn.net/dm_vincent/article/details/7655764</a><br><a href="https://en.wikipedia.org/wiki/Proof_of_O(log*n)_time_complexity_of_union%E2%80%93find" target="_blank" rel="external">https://en.wikipedia.org/wiki/Proof_of_O(log*n)_time_complexity_of_union%E2%80%93find</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/02/并查集-Union-Find-算法/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/22/初学Spark/" title="初学Spark" itemprop="url">初学Spark</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-22T03:41:20.000Z" itemprop="datePublished"> Published Jan 22 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="避免使用_GroupByKey">避免使用 GroupByKey</h1>
+<p>当调用 groupByKey 时，所有的键值对(key-value pair) 都会被移动。在网络上传输这些数据非常没有必要。</p>
+<p>以下函数应该优先于 groupByKey :</p>
+<ul>
+<li><p>combineByKey<br>组合数据，但是组合之后的数据类型与输入时值的类型不一样。</p>
+</li>
+<li><p>foldByKey<br>合并每一个 key 的所有值，在级联函数和“零值”中使用。</p>
+</li>
+</ul>
+<h1 id="combineByKey">combineByKey</h1>
+<h2 id="combineByKey的定义">combineByKey的定义</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">combineByKey</span>[<span class="title">C</span>]<span class="params">(</span></span></div><div class="line">  createCombiner: V =&gt; C,</div><div class="line">  mergeValue: <span class="params">(C, V)</span> =&gt; C, </div><div class="line">  mergeCombiners: <span class="params">(C, C)</span> =&gt; C, </div><div class="line">  partitioner: Partitioner, </div><div class="line">  mapSideCombine: Boolean = true, </div><div class="line">  serializer: Serializer = null): RDD[(K, C)] = {</div><div class="line">  // do something</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>combineByKey函数主要接受了三个函数作为参数，分别为createCombiner、mergeValue、mergeCombiners。这三个函数足以说明它究竟做了什么。理解了这三个函数，就可以很好地理解combineByKey。</p>
+<h3 id="createCombiner">createCombiner</h3>
+<p>createCombiner：在遍历RDD的过程中，对于遍历到的(k,v)，如果是第一次遇到，则对这个(k,v)调用createCombiner函数，它的作用是将v转换为c(类型是C，即聚合对象的类型，c作为聚合对象的初始值)</p>
+<h3 id="mergeValue">mergeValue</h3>
+<p>mergeValue：在遍历RDD的过程中，对于遍历到的(k,v)，如果不是第一次(而是第i次, 1 &lt; i &lt;= n)遇到，那么将对这个(k,v)调用mergeValue函数，它的作用是将v累加到聚合对象（类型C）中，mergeValue的类型是(C,V)=&gt;C,参数中的C遍历到此处的聚合对象，然后对v进行聚合得到新的聚合对象值</p>
+<h3 id="mergeCombiners">mergeCombiners</h3>
+<p>mergeCombiners：<strong>因为combineByKey是在分布式环境下执行，RDD的每个分区单独进行combineByKey操作，最后需要对各个分区的结果进行最后的聚合</strong>。它的函数类型是(C,C)=&gt;C，每个参数是分区聚合得到的聚合对象。</p>
+<h3 id="combineByKey的流程">combineByKey的流程</h3>
+<ul>
+<li>假设一组具有相同 K 的 <k, v=""> records 正在一个个流向 combineByKey()，createCombiner 将第一个 record 的value 初始化为 c （比如，c = value），然后从第二个 record 开始，来一个 record 就使用 mergeValue(c,</k,></li>
+<li>record.value) 来更新 c，比如想要对这些 records 的所有 values 做 sum，那么使用 c = c + record.value。等到records 全部被 mergeValue()，得到结果 c。假设还有一组 records（key 与前面那组的 key 均相同）一个个到来，</li>
+<li>combineByKey() 使用前面的方法不断计算得到 c’。现在如果要求这两组 records 总的 combineByKey() 后的结果，那么可以使用 final c = mergeCombiners(c, c’) 来计算。</li>
+</ul>
+<h2 id="Example">Example</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rdd1 = sc.makeRDD(<span class="type">Array</span>((<span class="string">"A"</span>,<span class="number">1</span>),(<span class="string">"A"</span>,<span class="number">2</span>),(<span class="string">"A"</span>,<span class="number">3</span>),(<span class="string">"B"</span>,<span class="number">1</span>),(<span class="string">"B"</span>,<span class="number">2</span>),(<span class="string">"C"</span>,<span class="number">3</span>)))</div><div class="line"></div><div class="line">// <span class="literal">result</span>: ((A,<span class="number">1_</span>$<span class="number">2_</span>@<span class="number">3</span>), (B,<span class="number">1_</span>$<span class="number">2_</span>), (C,<span class="number">3_</span>))</div><div class="line">rdd1.combineByKey(</div><div class="line">  (v : <span class="type">Int</span>) =&gt; v + <span class="string">"_"</span>,</div><div class="line">  (c : <span class="type">String</span>, v : <span class="type">Int</span>) =&gt; c + <span class="string">"@"</span> + v,</div><div class="line">  (c1 : <span class="type">String</span>, c2 : <span class="type">String</span>) =&gt; c1 + <span class="string">"$"</span> + c2 ).collect</div></pre></td></tr></table></figure>
+
+<h2 id="combineByKey应用举例">combineByKey应用举例</h2>
+<h3 id="求均值">求均值</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">val rdd = sc.textFile(<span class="string">"气象数据"</span>)</div><div class="line">val rdd2 = rdd.map(x=&gt;x.split(<span class="string">" "</span>)).map(x<span class="function"> =&gt;</span> (x(<span class="number">0</span>).substring(<span class="string">"从年月日中提取年月"</span>),x(<span class="number">1</span>).toInt))</div><div class="line">val <span class="function"><span class="title">createCombiner</span> = <span class="params">(k: String, v: Int)</span>=&gt;</span> {</div><div class="line">  (v,<span class="number">1</span>)</div><div class="line">}</div><div class="line">val <span class="function"><span class="title">mergeValue</span> = <span class="params">(c:(Int, Int), v:Int)</span> =&gt;</span> {</div><div class="line">  (c._1 + v, c._2 + <span class="number">1</span>)</div><div class="line">}</div><div class="line"></div><div class="line">val <span class="function"><span class="title">mergeCombiners</span> = <span class="params">(c1:(Int,Int),c2:(Int,Int))</span>=&gt;</span>{</div><div class="line">  (c1._1 + c2._1, c1._2 + c2._2)</div><div class="line">}</div><div class="line"></div><div class="line">val vdd3 = vdd2.combineByKey(</div><div class="line">  createCombiner,</div><div class="line">  mergeValue,</div><div class="line">  mergeCombiners</div><div class="line">)</div><div class="line"></div><div class="line">rdd3.foreach(x=&gt;println(x._1 + <span class="string">": average tempreture is "</span> + x._2._1/x._2._2)</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spark/">spark</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/22/初学Spark/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/01/04/Run-Age-of-Empires-II-in-Max-OS-10-11/" title="Run Age of Empires II in Max OS 10.11" itemprop="url">Run Age of Empires II in Max OS 10.11</a>
   </h1>
   <p class="article-author">By
@@ -1017,166 +1209,6 @@ data=d.decompress(s)
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/08/Spring注入/" title="Spring注入" itemprop="url">Spring注入</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-08T07:24:18.000Z" itemprop="datePublished"> Published Aug 8 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="1-_设值注入（推荐）">1. 设值注入（推荐）</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=<span class="string">"myService"</span> class=<span class="string">"com.zane.test.MyServiceImpl"</span>&gt;</div><div class="line">    &lt;property name=<span class="string">"serializer"</span> <span class="keyword">ref</span>=<span class="string">"Serializer"</span>/&gt;</div><div class="line">    &lt;property name=<span class="string">"httpService"</span> <span class="keyword">ref</span>=<span class="string">"httpService"</span>/&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
-
-<h2 id="2-_构造器注入（死的应用）">2.  构造器注入（死的应用）</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&lt;bean <span class="variable">id=</span><span class="string">"myModel"</span> <span class="variable">class=</span><span class="string">"com.zane.test.MyModel"</span>&gt;</div><div class="line">    &lt;constructor-arg <span class="variable">index=</span><span class="string">"0"</span> <span class="variable">value=</span><span class="string">"<span class="subst">${name}</span>"</span>/&gt;</div><div class="line">    &lt;constructor-arg <span class="variable">index=</span><span class="string">"1"</span> <span class="variable">value=</span>“<span class="number">20</span><span class="string">"/&gt;</span></div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
-
-<h2 id="3-_注入List">3. 注入List</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">&lt;bean id=<span class="string">"myTypes"</span> <span class="keyword">class</span>=<span class="string">"java.util.ArrayList"</span>&gt;</div><div class="line">    &lt;constructor-arg&gt;</div><div class="line">        &lt;<span class="built_in">list</span>&gt;</div><div class="line">            &lt;<span class="keyword">value</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"com.zane.test.MyType"</span>&gt;A&lt;/<span class="keyword">value</span>&gt;</div><div class="line">            &lt;<span class="keyword">value</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"com.zane.test.MyType"</span>&gt;B&lt;/<span class="keyword">value</span>&gt;</div><div class="line">            &lt;<span class="keyword">value</span> <span class="class"><span class="keyword">type</span></span>=<span class="string">"com.zane.test.MyType"</span>&gt;C&lt;/<span class="keyword">value</span>&gt;</div><div class="line">        &lt;/<span class="built_in">list</span>&gt;</div><div class="line">    &lt;/constructor-arg&gt;</div><div class="line">&lt;/bean&gt;</div></pre></td></tr></table></figure>
-
-<h2 id="4-_注入Map">4. 注入Map</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">bean</span> <span class="attribute">id</span>=<span class="value">"myTypeValueMap"</span> <span class="attribute">class</span>=<span class="value">"java.util.HashMap"</span>&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="title">constructor-arg</span>&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="title">map</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"#{T(com.zane.test.MyType).A}"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">value</span> <span class="attribute">type</span>=<span class="value">"java.lang.Integer"</span>&gt;</span>3<span class="tag">&lt;/<span class="title">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">entry</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"#{T(com.zane.test.MyType).B}"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">value</span> <span class="attribute">type</span>=<span class="value">"java.lang.Integer"</span>&gt;</span>4<span class="tag">&lt;/<span class="title">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">entry</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="title">entry</span> <span class="attribute">key</span>=<span class="value">"#{T(com.zane.test.MyType).C}"</span>&gt;</span></div><div class="line">                <span class="tag">&lt;<span class="title">value</span> <span class="attribute">type</span>=<span class="value">"java.lang.Integer"</span>&gt;</span>5<span class="tag">&lt;/<span class="title">value</span>&gt;</span></div><div class="line">            <span class="tag">&lt;/<span class="title">entry</span>&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="title">map</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="title">constructor-arg</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">bean</span>&gt;</span></div></pre></td></tr></table></figure>
-
-<p><strong>当注入的是第三方的jar包的key类型时，需要使用@Resource注入</strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Resource</span></div><div class="line"><span class="annotation">@Qualifier</span>(<span class="string">"myTypeValueMap"</span>)</div><div class="line"><span class="keyword">private</span> Map&lt;MyType, String&gt; myTypeValueMap;</div></pre></td></tr></table></figure>
-
-<p>否则使用Autowired即可</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Autowired</span></div><div class="line"><span class="annotation">@Qualifier</span>(<span class="string">"myTypeValueMap"</span>)</div><div class="line"><span class="keyword">private</span> Map&lt;MyType, String&gt; myTypeValueMap;</div></pre></td></tr></table></figure>
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Spring/">Spring</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/08/08/Spring注入/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/30/Java的wait和notify/" title="Java的wait和notify" itemprop="url">Java的wait和notify</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-30T14:24:01.000Z" itemprop="datePublished"> Published Jul 30 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="1-java线程同步原理">1.java线程同步原理</h1>
-<p>java会为每个object对象分配一个monitor，当某个对象的同步方法（synchronized methods ）或同步快被多个线程调用时，该对象的monitor将负责处理这些访问的并发独占要求。</p>
-<p>当一个线程调用一个对象的同步方法时，JVM会检查该对象的monitor。如果monitor没有被占用，那么这个线程就得到了monitor的占有权，可以继续执行该对象的同步方法；如果monitor被其他线程所占用，那么该线程将被挂起，直到monitor被释放。</p>
-<p>当线程退出同步方法调用时，该线程会释放monitor，这将允许其他等待的线程获得monitor以使对同步方法的调用执行下去。</p>
-<p>注意：java对象的monitor机制和传统的临界检查代码区技术不一样。java的一个类一个同步方法并不意味着同时只有一个线程独占执行（不同对象的同步方法可以同时执行），但临界检查代码区技术确会保证同步方法在一个时刻只被一个线程独占执行。</p>
-<p><strong>java的monitor机制的准确含义是：任何时刻，对一个指定object对象的某同步方法只能由一个线程来调用。</strong></p>
-<p>java对象的monitor是跟随object实例来使用的，而不是跟随程序代码。两个线程可以同时执行相同的同步方法，比如：一个类的同步方法是xMethod()，有a,b两个对象实例，一个线程执行a.xMethod()，另一个线程执行b.xMethod(). 互不冲突。</p>
-<h1 id="2-_wait(),_notify(),notifyAll()">2. wait(), notify(),notifyAll()</h1>
-<p>首先看一下Java中java.lang.Object类的实现：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Object</span> </span>{</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">registerNatives</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> {</div><div class="line">		registerNatives();</div><div class="line">  	}</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> Class&lt;?&gt; <span class="title">getClass</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">hashCode</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span>(Object obj) {</div><div class="line">		<span class="keyword">return</span> (<span class="keyword">this</span> == obj);</div><div class="line">	}</div><div class="line">    </div><div class="line">	<span class="keyword">protected</span> <span class="keyword">native</span> Object <span class="title">clone</span>() <span class="keyword">throws</span> CloneNotSupportedException;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> String <span class="title">toString</span>() {</div><div class="line">		<span class="keyword">return</span> getClass().getName() + <span class="string">"@"</span> + Integer.toHexString(hashCode());</div><div class="line">	}</div><div class="line">    </div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">notify</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">notifyAll</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">wait</span>(<span class="keyword">long</span> timeout) <span class="keyword">throws</span> InterruptedException;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">wait</span>(<span class="keyword">long</span> timeout, <span class="keyword">int</span> nanos) <span class="keyword">throws</span> InterruptedException {</div><div class="line">		<span class="keyword">if</span> (timeout &lt; <span class="number">0</span>) {</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"timeout value is negative"</span>);</div><div class="line">		}</div><div class="line">		</div><div class="line">		<span class="keyword">if</span> (nanos &lt; <span class="number">0</span> || nanos &gt; <span class="number">999999</span>) {</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"nanosecond timeout value out of range"</span>);</div><div class="line">		}</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (nanos &gt;= <span class="number">500000</span> || (nanos != <span class="number">0</span> && timeout == <span class="number">0</span>)) {</div><div class="line">			timeout++;</div><div class="line">		}</div><div class="line"></div><div class="line">        wait(timeout);</div><div class="line">	}</div><div class="line">    </div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">wait</span>() <span class="keyword">throws</span> InterruptedException {</div><div class="line">        wait(<span class="number">0</span>);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span>() <span class="keyword">throws</span> Throwable { }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>wait()方法是object类的方法，解决的问题是线程间的同步，该过程包含了同步锁的获取和释放，调用wait方法将会将调用者的线程挂起，直到其他线程调用同一个对象的notify()方法才会重新激活调用者。</p>
-<p><strong>注意:线程调用notify()之后，只有该线程完全从 synchronized代码里面执行完毕后，monitor才会被释放，被唤醒线程才可以真正得到执行权。</strong></p>
-<p>使用：</p>
-<ul>
-<li>obj.wait()方法使本线程挂起，并释放obj对象的monitor，只有其他线程调用obj对象的notify()或notifyAll()时，才可以被唤醒。</li>
-<li>obj.notifyAll()方法唤醒所有阻塞在obj对象上的沉睡线程，然后被唤醒的众多线程竞争obj对象的monitor占有权，最终得到的那个线程会继续执行下去，但其他线程继续等待。</li>
-<li>obj.notify()方法是随机唤醒一个沉睡线程，过程更obj.notifyAll()方法类似。</li>
-</ul>
-<p>wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，例如：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">synchronized</span>(x){</div><div class="line">	x.notify()	</div><div class="line">	<span class="comment">//或者wait()</span></div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>以上内容说明了为什么调用wait()，notify()，notifyAll()的线程必须要拥有obj实例对象的monitor占有权。</p>
-<p>每个对象实例都有一个等待线程队列。这些线程都是等待对该对象的同步方法的调用许可。对一个线程来说，有两种方法可以进入这个等待线程队列。一个是当其他线程执行同步方法时，自身同时也要执行该同步方法；另一个是调用obj.wait()方法。</p>
-<p>当同步方法执行完毕或者执行wait()时，其他某个线程将获得对象的访问权。当一个线程被放入等待队列时，必须要确保可以通过notify()的调用来解冻该线程，以使其能够继续执行下去。</p>
-<h1 id="3-_native">3. native</h1>
-<p>native is a java keyword. It marks a method, that it will be implemented in other languages, not in Java. The method is declared without a body and cannot be abstract. It works together with JNI (Java Native Interface).<br>Native methods were used in the past to write performance critical sections but with java getting faster this is now less common. Native methods are currently needed when</p>
-<p>You need to call from java a library, written in another language.<br>You need to access system or hardware resources that are only reachable from the other language (typically C). Actually, many system functions that interact with real computer (disk and network IO, for instance) can only do this because they call native code.</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/30/Java的wait和notify/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -1198,19 +1230,19 @@ data=d.decompress(s)
 		
 			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
-			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		
 			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
 		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
-		
-			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
 			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
@@ -1285,7 +1317,7 @@ data=d.decompress(s)
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2018 
 		
 		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
 		

@@ -91,6 +91,147 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/01/31/LeetCode-Binary-Tree-Maximum-Path-Sum/" title="LeetCode-Binary-Tree-Maximum-Path-Sum" itemprop="url">LeetCode-Binary-Tree-Maximum-Path-Sum</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-01-31T00:13:03.000Z" itemprop="datePublished"> Published Jan 31 2018</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Problem_Description">Problem Description</h2>
+<p>Given a binary tree, find the maximum path sum.</p>
+<p>For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.</p>
+<p>For example:<br>Given the below binary tree,   </p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">  1</div><div class="line"> / <span class="command">\</span></div><div class="line">2   3</div></pre></td></tr></table></figure>
+
+<p>Return 6.</p>
+<p><strong> problem link: </strong><br><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/description/" target="_blank" rel="external">https://leetcode.com/problems/binary-tree-maximum-path-sum/description/</a></p>
+<h2 id="Solution">Solution</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>{</div><div class="line">    <span class="keyword">int</span> maxValue;</div><div class="line">    </div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span>(TreeNode root) {</div><div class="line">        maxValue = Integer.MIN_VALUE;</div><div class="line">        maxPathDown(root);</div><div class="line">        <span class="keyword">return</span> maxValue;</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">maxPathDown</span>(TreeNode node) {</div><div class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> left = Math.max(<span class="number">0</span>, maxPathDown(node.left));</div><div class="line">        <span class="keyword">int</span> right = Math.max(<span class="number">0</span>, maxPathDown(node.right));</div><div class="line">        maxValue = Math.max(maxValue, left + right + node.val);</div><div class="line">        <span class="keyword">return</span> Math.max(left, right) + node.val;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="解题思路">解题思路</h2>
+<p>每一个结点可以选和不选，处理方法就是：<code>int left = Math.max(0, maxPathDown(node.left));</code>，其中的 Math.max(0, x)，当取值为 0 时就是不取这个结点。</p>
+<p>全局变量 maxValue 就覆盖了子树中的 ^ 这种类型，例如子树如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">       x</div><div class="line">   a     y</div><div class="line">b    <span class="built_in">c</span></div></pre></td></tr></table></figure>
+
+<p>则 b-&gt;a-&gt;c 这种路径的最大值被 maxValue 保存了。而 b-&gt;a-&gt;x-&gt;y 这种经过根节点的路径被 <code>Math.max(left, right) + node.val;</code> 覆盖了。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2018/01/31/LeetCode-Binary-Tree-Maximum-Path-Sum/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/01/31/LeetCode-Trapping-Rain-Water/" title="LeetCode-Trapping-Rain-Water" itemprop="url">LeetCode-Trapping-Rain-Water</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-01-31T00:10:48.000Z" itemprop="datePublished"> Published Jan 31 2018</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Problem_Description">Problem Description</h2>
+<p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.</p>
+<p>For example,<br>Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.</p>
+<p><strong> problem link: </strong><br><a href="https://leetcode.com/problems/trapping-rain-water" target="_blank" rel="external">https://leetcode.com/problems/trapping-rain-water</a></p>
+<p><img src="/img/LeetCode_Trapping_Rain_Water.jpg" alt=""></p>
+<h2 id="Solution">Solution</h2>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrappingRainWater_42</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span>(<span class="keyword">int</span>[] height) {</div><div class="line">        <span class="keyword">int</span> a = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> b = height.length - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> leftMax = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> rightMax = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (a &lt;= b) {</div><div class="line">            leftMax = Math.max(leftMax, height[a]);</div><div class="line">            rightMax = Math.max(rightMax, height[b]);</div><div class="line">            <span class="keyword">if</span> (leftMax &lt; rightMax) {</div><div class="line">                <span class="comment">// leftMax is smaller than rightMax, so the (leftMax-A[a]) water can be stored</span></div><div class="line">                max += (leftMax - height[a]);</div><div class="line">                a++;</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                max += (rightMax - height[b]);</div><div class="line">                b--;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="算法解释">算法解释</h2>
+<p>对任意位置 i，在 i 上的积水，由左右两边最高的 bar 决定。</p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2018/01/31/LeetCode-Trapping-Rain-Water/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/11/12/Kafka-Consumer-的实现/" title="Kafka Consumer 的实现" itemprop="url">Kafka Consumer 的实现</a>
   </h1>
   <p class="article-author">By
@@ -1023,321 +1164,6 @@ $$ -->
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/19/lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值/" title="lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值" itemprop="url">lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-19T14:27:12.000Z" itemprop="datePublished"> Published Aug 19 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="要解决的问题">要解决的问题</h1>
-<p>希望在反序列化 json 到 bean 时，对于 json 中未出现的字段，在 bean 中赋上默认值。</p>
-<p>例如<br>Person 类如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Data</span></div><div class="line"><span class="annotation">@AllArgsConstructor</span></div><div class="line"><span class="annotation">@NoArgsConstructor</span></div><div class="line"><span class="annotation">@JsonIgnoreProperties</span>(ignoreUnknown = <span class="keyword">true</span>)</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>{</div><div class="line">  <span class="keyword">private</span> String name;</div><div class="line">  <span class="keyword">private</span> String address = <span class="string">"beijing"</span>; <span class="comment">// default value if json missing the age field</span></div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>json: </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">{"<span class="attribute">name</span>":<span class="value"><span class="string">"robert"</span></span>}</div></pre></td></tr></table></figure>
-
-<p>反序列化后的 bean 为 </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Person(<span class="variable">name=</span><span class="string">"robert"</span>, <span class="variable">address=</span><span class="string">"beijing"</span>)</div></pre></td></tr></table></figure>
-
-<p>但实际上，发序列化的结果为</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Person(<span class="variable">name=</span><span class="string">"robert"</span>, <span class="variable">address=</span><span class="constant">null</span>)</div></pre></td></tr></table></figure>
-
-<h1 id="解决过程">解决过程</h1>
-<h2 id="1-_查看_maven_版本">1. 查看 maven 版本</h2>
-<p>项目中 jackson 的配置如下</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-annotations<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>${jackson.version}<span class="tag">&lt;/<span class="title">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-core<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>${jackson.version}<span class="tag">&lt;/<span class="title">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">dependency</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">groupId</span>&gt;</span>com.fasterxml.jackson.core<span class="tag">&lt;/<span class="title">groupId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">artifactId</span>&gt;</span>jackson-databind<span class="tag">&lt;/<span class="title">artifactId</span>&gt;</span></div><div class="line">  <span class="tag">&lt;<span class="title">version</span>&gt;</span>${jackson.version}<span class="tag">&lt;/<span class="title">version</span>&gt;</span></div><div class="line"><span class="tag">&lt;/<span class="title">dependency</span>&gt;</span></div><div class="line"></div><div class="line"><span class="comment">&lt;!-- Jackson dependency versions --&gt;</span></div><div class="line"><span class="tag">&lt;<span class="title">jackson.version</span>&gt;</span>2.6.5<span class="tag">&lt;/<span class="title">jackson.version</span>&gt;</span></div></pre></td></tr></table></figure>
-
-<p>配置升到最新后问题仍然存在。</p>
-<h2 id="2-_debug_json_反序列化过程，找到原因">2. debug json 反序列化过程，找到原因</h2>
-<p>json 反序列化是从</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.ObjectMapper<span class="preprocessor">#_readMapAndClose</span></div></pre></td></tr></table></figure>
-
-<p>这个方法调用开始的，里面的一段代码为：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="type">DeserializationConfig</span> cfg = getDeserializationConfig();</div><div class="line"><span class="type">DeserializationContext</span> ctxt = createDeserializationContext(jp, cfg);</div><div class="line"><span class="type">JsonDeserializer</span>&lt;<span class="type">Object</span>&gt; deser = _findRootDeserializer(ctxt, valueType);</div><div class="line"><span class="keyword">if</span> (cfg.useRootWrapping()) {</div><div class="line">    <span class="literal">result</span> = _unwrapAndDeserialize(jp, ctxt, cfg, valueType, deser);</div><div class="line">} <span class="keyword">else</span> {</div><div class="line">    <span class="literal">result</span> = deser.deserialize(jp, ctxt);</div><div class="line">}</div><div class="line">ctxt.checkUnresolvedObjectId();</div></pre></td></tr></table></figure>
-
-<p>在第 3 行找到的 JsonDeserializer 是 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer</code><br>从第 7 行代表进入 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer#deserialize(com.fasterxml.jackson.core.JsonParser, com.fasterxml.jackson.databind.DeserializationContext)</code></p>
-<p>函数实现如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> Object <span class="title">deserialize</span>(JsonParser p, DeserializationContext ctxt) <span class="keyword">throws</span> IOException {</div><div class="line">    <span class="comment">// common case first</span></div><div class="line">    <span class="keyword">if</span> (p.isExpectedStartObjectToken()) {</div><div class="line">        <span class="keyword">if</span> (_vanillaProcessing) {</div><div class="line">            <span class="keyword">return</span> vanillaDeserialize(p, ctxt, p.nextToken());</div><div class="line">        }</div><div class="line">        p.nextToken();</div><div class="line">        <span class="keyword">if</span> (_objectIdReader != <span class="keyword">null</span>) {</div><div class="line">            <span class="keyword">return</span> deserializeWithObjectId(p, ctxt);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> deserializeFromObject(p, ctxt);</div><div class="line">    }</div><div class="line">    JsonToken t = p.getCurrentToken();</div><div class="line">    <span class="keyword">return</span> _deserializeOther(p, ctxt, t);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>vanillaDeserialize 为 false，最后走到了第 11 行，最后到了</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.deser.BeanDeserializer<span class="preprocessor">#_deserializeUsingPropertyBased</span></div></pre></td></tr></table></figure>
-
-<p>然后到 </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.deser.impl.PropertyBasedCreator<span class="preprocessor">#build</span></div></pre></td></tr></table></figure>
-
-<p>在这个函数里有这样一段代码：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">Object bean </span>=<span class="string"> _valueInstantiator.createFromObjectWith(ctxt, buffer.getParameters(_allProperties));</span></div></pre></td></tr></table></figure>
-
-<p>调用的是</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">com</span>.fasterxml.jackson.databind.deser.ValueInstantiator#createFromObjectWith(<span class="keyword">com</span>.fasterxml.jackson.databind.DeserializationContext, java.lang.Object[])</div></pre></td></tr></table></figure>
-
-<p>可以发现，createFromObjectWith 的第二个参数是数组，json 解出来的字段都放在了这个数组里。然后调用了 Person 类的全参构造函数，对于<br>缺失的字段自动补 null 值，这样就导致了 address 字段为 null。</p>
-<h2 id="3-_解决方案">3. 解决方案</h2>
-<p>去掉 @AllArgsConstructor 时，没有问题了，因为此时找到的 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer</code> 的  vanillaDeserialize 字段为 true，会调用 <code>vanillaDeserialize(p, ctxt, p.nextToken());</code>，这个函数的实现非常明确：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">final</span> Object <span class="title">vanillaDeserialize</span>(JsonParser p, DeserializationContext ctxt, JsonToken t) <span class="keyword">throws</span> IOException {</div><div class="line">        <span class="keyword">final</span> Object bean = _valueInstantiator.createUsingDefault(ctxt);</div><div class="line">        <span class="comment">// [databind#631]: Assign current value, to be accessible by custom serializers</span></div><div class="line">        p.setCurrentValue(bean);</div><div class="line">        <span class="keyword">if</span> (p.hasTokenId(JsonTokenId.ID_FIELD_NAME)) {</div><div class="line">            String propName = p.getCurrentName();</div><div class="line">            do {</div><div class="line">                p.nextToken();</div><div class="line">                SettableBeanProperty prop = _beanProperties.find(propName);</div><div class="line"></div><div class="line">                <span class="keyword">if</span> (prop != <span class="keyword">null</span>) { <span class="comment">// normal case</span></div><div class="line">                    <span class="keyword">try</span> {</div><div class="line">                        prop.deserializeAndSet(p, ctxt, bean);</div><div class="line">                    } <span class="keyword">catch</span> (Exception e) {</div><div class="line">                        wrapAndThrow(e, bean, propName, ctxt);</div><div class="line">                    }</div><div class="line">                    <span class="keyword">continue</span>;</div><div class="line">                }</div><div class="line">                handleUnknownVanilla(p, ctxt, bean, propName);</div><div class="line">            } <span class="keyword">while</span> ((propName = p.nextFieldName()) != <span class="keyword">null</span>);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> bean;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>先用默认构造函数生成 bean，此时的 bean 是有默认值的，然后将 json 中出现的字段的值赋值给 bean，这样 address 就有值了。</p>
-<h2 id="4-_根本原因">4. 根本原因</h2>
-<p>看上去是声明了全参构造函数导致的，所以想尝试自己写全参构造函数，在 address 为 null 时给其赋默认值。<br>写完如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="title">Person</span>(String name, String address){</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.address = address;</div><div class="line">        <span class="keyword">if</span>(<span class="keyword">this</span>.address == <span class="keyword">null</span>){</div><div class="line">            <span class="keyword">this</span>.address = <span class="string">"beijing"</span>;</div><div class="line">        }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>继续走刚才 debug 的流程，发现<strong>居然</strong>没有请求这个全参构造函数。</p>
-<p>那问题就是 @AllArgsConstructor 生成的全参函数有不同之处，jackson 能够识别出来并用于反序列化。查看 jar 包中 Person 类的代码发现其全参构造函数如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@ConstructorProperties</span>({<span class="string">"name"</span>, <span class="string">"address"</span>})</div><div class="line"><span class="keyword">public</span> <span class="title">Person</span>(String name, String address){</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.address = address;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>所以，区别就是 <code>@ConstructorProperties({&quot;name&quot;, &quot;address&quot;})</code> 这个注解，这个注解的作用是指定构造函数参数的名字，Spring 可根据参数的名字注入 bean。<br>但最终为什么这样注解了，jackson 就调用了全参构造函数还不得而知，猜测是 jackson 在 <code>_findRootDeserializer</code> 这一步时，是找最适合的构造函数。</p>
-<p>可以通过设置 @AllArgsConstructor(suppressConstructorProperties=true) 来禁用 @ConstructorProperties.</p>
-<h1 id="结论">结论</h1>
-<p>Lombok 的 @AllArgsConstructor 注解导致 Jackson 反序列化时调用了全参构造函数，将没有出现的字段都赋值为 null 了。</p>
-<p>修改方式：</p>
-<ol>
-<li>不使用 @AllArgsConstructor</li>
-<li>使用 @AllArgsConstructor 但是不让其在全参构造函数上加入 ConstructorProperties 注解，声明方式改为 @AllArgsConstructor(suppressConstructorProperties = true)</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/08/19/lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/08/13/服务调优/" title="服务调优" itemprop="url">服务调优</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-08-13T13:03:50.000Z" itemprop="datePublished"> Published Aug 13 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="目录">目录</h1>
-<ol>
-<li>服务异常的处理流程</li>
-<li>负载</li>
-<li>内存</li>
-<li>服务指标</li>
-<li>工具</li>
-</ol>
-<h1 id="1-_服务异常的处理流程">1. 服务异常的处理流程</h1>
-<p><img src="/img/server_debug_online.jpg" alt=""></p>
-<h1 id="2-_负载">2. 负载</h1>
-<h2 id="2-1_查看机器_cpu_的负载">2.1 查看机器 cpu 的负载</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">top -b -n <span class="number">1</span> |grep java|awk '{<span class="literal">print</span> <span class="string">"VIRT:"</span><span class="variable">$5</span>,<span class="string">"RES:"</span><span class="variable">$6</span>,<span class="string">"cpu:"</span><span class="variable">$9</span><span class="string">"%"</span>,<span class="string">"mem:"</span><span class="variable">$10</span><span class="string">"%"</span>}'</div></pre></td></tr></table></figure>
-
-<h2 id="2-2_查找_cpu_占用率高的线程">2.2 查找 cpu 占用率高的线程</h2>
-<p>top -p 25603 -H<br>printf 0x%x 25842<br>jstack 25603 | grep 0x64f2</p>
-<p>cat /proc/interrupts</p>
-<p>（1）CPU<br>（2）Memory<br>（3）IO<br>（4）Network</p>
-<p>可以从以下几个方面监控CPU的信息：<br>（1）中断；<br>（2）上下文切换；<br>（3）可运行队列；<br>（4）CPU 利用率。</p>
-<h1 id="3-_内存">3. 内存</h1>
-<h2 id="3-1_系统内存">3.1 系统内存</h2>
-<p>free 命令<br>[root@server ~]# free</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:       3266180    3250000      10000          0     201000    3002000</div><div class="line">-<span class="ruby">/+ buffers/<span class="symbol">cache:</span>      <span class="number">47000</span>    <span class="number">3213000</span></span></div><div class="line">Swap:      2048276      80160    1968116</div></pre></td></tr></table></figure>
-
-<p>这里的默认显示单位是kb。<br>各项指标解释</p>
-<ul>
-<li>total:总计物理内存的大小。</li>
-<li>used:已使用多大。</li>
-<li>free:可用有多少。</li>
-<li>Shared:多个进程共享的内存总额。</li>
-<li>buffers: 磁盘缓存的大小。</li>
-<li>cache:磁盘缓存的大小。</li>
-<li>-/+ buffers/cached): used:已使用多大，free:可用有多少。</li>
-<li>已用内存 = 系统used memory - buffers - cached<br>（47000 = 3250000-201000-3002000）</li>
-<li>可用内存 = 系统free memory + buffers + cached<br>（3213000 = 10000+201000+3002000）</li>
-</ul>
-<h4 id="什么是buffer/cache？">什么是buffer/cache？</h4>
-<ul>
-<li>buffer 指 Linux 内存的：Buffer cache，缓冲区缓</li>
-<li>cache 指 Linux内存中的：Page cache，页面缓存</li>
-</ul>
-<p><strong>page cache</strong><br>page cache 主要用来作为<strong>文件系统上的文件数据的缓存</strong>来用，尤其是针对当进程对文件有 read／write 操作的时候。如果你仔细想想的话，作为可以映射文件到内存的系统调用：mmap是不是很自然的也应该用到 page cache？在当前的系统实现里，page cache 也被作为其它文件类型的缓存设备来用，所以事实上 page cache 也负责了大部分的块设备文件的缓存工作。</p>
-<p><strong>buffer cache</strong><br>buffer cache 主要用来在<strong>系统对块设备进行读写</strong>的时候，对块进行数据缓存的系统来使用。这意味着某些对块的操作会使用 buffer cache 进行缓存，比如我们在格式化文件系统的时候。一般情况下两个缓存系统是一起配合使用的，比如当我们对一个文件进行写操作的时候，page cache 的内容会被改变，而 buffer cache 则可以用来将 page 标记为不同的缓冲区，并记录是哪一个缓冲区被修改了。这样，内核在后续执行脏数据的回写（writeback）时，就不用将整个 page 写回，而只需要写回修改的部分即可。</p>
-<p>在当前的内核中，page cache 是针对内存页的缓存，说白了就是，如果有内存是以page进行分配管理的，都可以使用page cache作为其缓存来管理使用。<br>当然，不是所有的内存都是以页（page）进行管理的，也有很多是针对块（block）进行管理的，这部分内存使用如果要用到 cache 功能，则都集中到buffer cache中来使用。（从这个角度出发，是不是buffer cache改名叫做block cache更好？）然而，也不是所有块（block）都有固定长度，系统上块的长度主要是根据所使用的块设备决定的，而页长度在X86上无论是32位还是64位都是4k。</p>
-<h4 id="系统如何回收cache？">系统如何回收cache？</h4>
-<p>Linux内核会在内存将要耗尽的时候，触发内存回收的工作，以便释放出内存给急需内存的进程使用。一般情况下，这个操作中主要的内存释放都来自于对buffer／cache的释放。尤其是被使用更多的cache空间。既然它主要用来做缓存，只是在内存够用的时候加快进程对文件的读写速度，那么在内存压力较大的情况下，当然有必要清空释放cache，作为free空间分给相关进程使用。所以一般情况下，我们认为buffer/cache空间可以被释放，这个理解是正确的。</p>
-<p>但是这种清缓存的工作也并不是没有成本。理解cache是干什么的就可以明白清缓存必须保证cache中的数据跟对应文件中的数据一致，才能对cache进行释放。所以伴随着cache清除的行为的，一般都是系统IO飙高。因为内核要对比cache中的数据和对应硬盘文件上的数据是否一致，如果不一致需要写回，之后才能回收。</p>
-<p>在系统中除了内存将被耗尽的时候可以清缓存以外，我们还可以人工触发缓存清除的操作。</p>
-<h2 id="3-2_进程内存">3.2 进程内存</h2>
-<h3 id="3-2-1_进程内存统计">3.2.1 进程内存统计</h3>
-<p>/proc/[pid]/status<br>通过/proc/<pid>/status可以查看进程的内存使用情况，包括虚拟内存大小（VmSize），物理内存大小（VmRSS），数据段大小（VmData），栈的大小（VmStk），代码段的大小（VmExe），共享库的代码段大小（VmLib）等等。</pid></p>
-<p>cat /proc/[pid]/status</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">Name</span>: <span class="string">gedit /*进程的程序名*/</span></div><div class="line"><span class="attribute">State</span>: <span class="string">S (sleeping) /*进程的状态信息,具体参见http://blog.chinaunix.net/u2/73528/showart_1106510.html*/</span></div><div class="line"><span class="attribute">Tgid</span>: <span class="string">9744 /*线程组号*/</span></div><div class="line"><span class="attribute">Pid</span>: <span class="string">9744 /*进程pid*/</span></div><div class="line"><span class="attribute">PPid</span>: <span class="string">7672 /*父进程的pid*/</span></div><div class="line"><span class="attribute">TracerPid</span>: <span class="string">0 /*跟踪进程的pid*/</span></div><div class="line"><span class="attribute">VmPeak</span>: <span class="string">60184 kB /*进程地址空间的大小*/</span></div><div class="line"><span class="attribute">VmSize</span>: <span class="string">60180 kB /*进程虚拟地址空间的大小reserved_vm：进程在预留或特殊的内存间的物理页*/</span></div><div class="line"><span class="attribute">VmLck</span>: <span class="string">0 kB /*进程已经锁住的物理内存的大小.锁住的物理内存不能交换到硬盘*/</span></div><div class="line"><span class="attribute">VmHWM</span>: <span class="string">18020 kB /*文件内存映射和匿名内存映射的大小*/</span></div><div class="line"><span class="attribute">VmRSS</span>: <span class="string">18020 kB /*应用程序正在使用的物理内存的大小，就是用ps命令的参数rss的值 (rss)*/</span></div><div class="line"><span class="attribute">VmData</span>: <span class="string">12240 kB /*程序数据段的大小（所占虚拟内存的大小），存放初始化了的数据*/</span></div><div class="line"><span class="attribute">VmStk</span>: <span class="string">84 kB /*进程在用户态的栈的大小*/</span></div><div class="line"><span class="attribute">VmExe</span>: <span class="string">576 kB /*程序所拥有的可执行虚拟内存的大小,代码段,不包括任务使用的库 */</span></div><div class="line"><span class="attribute">VmLib</span>: <span class="string">21072 kB /*被映像到任务的虚拟内存空间的库的大小*/</span></div><div class="line"><span class="attribute">VmPTE</span>: <span class="string">56 kB /*该进程的所有页表的大小*/</span></div><div class="line"><span class="attribute">Threads</span>: <span class="string">1 /*共享使用该信号描述符的任务的个数*/</span></div></pre></td></tr></table></figure>
-
-<h3 id="3-2-2_JVM_内存分配">3.2.2 JVM 内存分配</h3>
-<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
-<p>按照官方的说法：“Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。”“在JVM中堆之外的内存称为非堆内存(Non-heap memory)”。可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。</p>
-<p><img src="quiver-image-url/590323FD2C5869E67568351DED266A03.jpg =501x363" alt="IMAGE"></p>
-<ol>
-<li>JVM本身需要的内存，包括其加载的第三方库以及这些库分配的内存</li>
-<li>NIO的DirectBuffer是分配的native memory</li>
-<li>内存映射文件，包括JVM加载的一些JAR和第三方库，以及程序内部用到的。上面 pmap 输出的内容里，有一些静态文件所占用的大小不在Java的heap里，因此作为一个Web服务器，赶紧把静态文件从这个Web服务器中人移开吧，放到nginx或者CDN里去吧。</li>
-<li>JIT， JVM会将Class编译成native代码，这些内存也不会少，如果使用了Spring的AOP，CGLIB会生成更多的类，JIT的内存开销也会随之变大，而且Class本身JVM的GC会将其放到Perm Generation里去，很难被回收掉，面对这种情况，应该让JVM使用ConcurrentMarkSweep GC，并启用这个GC的相关参数允许将不使用的class从Perm Generation中移除， 参数配置： -XX:+UseConcMarkSweepGC -X:+CMSPermGenSweepingEnabled -X:+CMSClassUnloadingEnabled，如果不需要移除而Perm Generation空间不够，可以加大一点： -X:PermSize=256M -X:MaxPermSize=512M</li>
-<li>JNI，一些JNI接口调用的native库也会分配一些内存，如果遇到JNI库的内存泄露，可以使用valgrind等内存泄露工具来检测</li>
-<li>线程栈，每个线程都会有自己的栈空间，如果线程一多，这个的开销就很明显了</li>
-<li>jmap/jstack 采样，频繁的采样也会增加内存占用，如果你有服务器健康监控，记得这个频率别太高，否则健康监控变成致病监控了。</li>
-</ol>
-<h4 id="1-方法区">1.方法区</h4>
-<p>也称”永久代” 、“非堆”，它用于存储虚拟机加载的类信息、常量、静态变量、是各个线程共享的内存区域。默认最小值为16MB，最大值为64MB，可以通过-XX:PermSize 和 -XX:MaxPermSize 参数限制方法区的大小。</p>
-<p>运行时常量池：是方法区的一部分，Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分内容将在类加载后放到方法区的运行时常量池中。</p>
-<h4 id="2-虚拟机栈">2.虚拟机栈</h4>
-<p>描述的是java 方法执行的内存模型：每个方法被执行的时候 都会创建一个“栈帧”用于存储局部变量表(包括参数)、操作栈、方法出口等信息。每个方法被调用到执行完的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。声明周期与线程相同，是线程私有的。</p>
-<p>局部变量表存放了编译器可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用(引用指针，并非对象本身)，其中64位长度的long和double类型的数据会占用2个局部变量的空间，其余数据类型只占1个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在栈帧中分配多大的局部变量是完全确定的，在运行期间栈帧不会改变局部变量表的大小空间。</p>
-<h4 id="3-本地方法栈">3.本地方法栈</h4>
-<p>与虚拟机栈基本类似，区别在于虚拟机栈为虚拟机执行的java方法服务，而本地方法栈则是为Native方法服务。</p>
-<h4 id="4-堆">4.堆</h4>
-<p>也叫做java 堆、GC堆是java虚拟机所管理的内存中最大的一块内存区域，也是被各个线程共享的内存区域，在JVM启动时创建。该内存区域存放了对象实例及数组(所有new的对象)。其大小通过-Xms(最小值)和-Xmx(最大值)参数设置，-Xms为JVM启动时申请的最小内存，默认为操作系统物理内存的1/64但小于1G，-Xmx为JVM可申请的最大内存，默认为物理内存的1/4但小于1G，默认当空余堆内存小于40%时，JVM会增大Heap到-Xmx指定的大小，可通过-XX:MinHeapFreeRation=来指定这个比列；当空余堆内存大于70%时，JVM会减小heap的大小到-Xms指定的大小，可通过XX:MaxHeapFreeRation=来指定这个比列，对于运行系统，为避免在运行时频繁调整Heap的大小，通常-Xms与-Xmx的值设成一样。</p>
-<p>由于现在收集器都是采用分代收集算法，堆被划分为新生代和老年代。新生代主要存储新创建的对象和尚未进入老年代的对象。老年代存储经过多次新生代GC(Minor GC)任然存活的对象。</p>
-<h4 id="5-程序计数器">5.程序计数器</h4>
-<p>是最小的一块内存区域，它的作用是当前线程所执行的字节码的行号指示器，在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成。</p>
-<h4 id="3-2-3_直接内存">3.2.3 直接内存</h4>
-<p>直接内存并不是虚拟机内存的一部分，也不是Java虚拟机规范中定义的内存区域。jdk1.4中新加入的NIO，引入了通道与缓冲区的IO方式，它可以调用Native方法直接分配堆外内存，这个堆外内存就是本机内存，不会影响到堆内存的大小。</p>
-<h3 id="3-2-4_JVM_内存分析">3.2.4 JVM 内存分析</h3>
-<h4 id="查看_JVM_堆内存情况">查看 JVM 堆内存情况</h4>
-<p>jmap -heap [pid]</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">[root@server ~]$ jmap -heap <span class="number">837</span></div><div class="line">Attaching to process ID <span class="number">837</span>, please wait...</div><div class="line">Debugger attached successfully.</div><div class="line">Server compiler detected.</div><div class="line">JVM version is <span class="number">24.71</span>-b01</div><div class="line"></div><div class="line">using thread-local object allocation.</div><div class="line">Parallel GC <span class="keyword">with</span> <span class="number">4</span> thread(s)//GC 方式</div><div class="line"></div><div class="line">Heap Configuration: //堆内存初始化配置</div><div class="line">   <span class="variable">MinHeapFreeRatio =</span> <span class="number">0</span> //对应jvm启动参数-XX:MinHeapFreeRatio设置JVM堆最小空闲比率(default <span class="number">40</span>)</div><div class="line">   <span class="variable">MaxHeapFreeRatio =</span> <span class="number">100</span> //对应jvm启动参数 -XX:MaxHeapFreeRatio设置JVM堆最大空闲比率(default <span class="number">70</span>)</div><div class="line">   <span class="variable">MaxHeapSize      =</span> <span class="number">2082471936</span> (<span class="number">1986.0</span>MB) //对应jvm启动参数-XX:<span class="variable">MaxHeapSize=</span>设置JVM堆的最大大小</div><div class="line">   <span class="variable">NewSize          =</span> <span class="number">1310720</span> (<span class="number">1.25</span>MB)//对应jvm启动参数-XX:<span class="variable">NewSize=</span>设置JVM堆的‘新生代’的默认大小</div><div class="line">   <span class="variable">MaxNewSize       =</span> <span class="number">17592186044415</span> MB//对应jvm启动参数-XX:<span class="variable">MaxNewSize=</span>设置JVM堆的‘新生代’的最大大小</div><div class="line">   <span class="variable">OldSize          =</span> <span class="number">5439488</span> (<span class="number">5.1875</span>MB)//对应jvm启动参数-XX:<span class="variable">OldSize=</span>&lt;value&gt;:设置JVM堆的‘老生代’的大小</div><div class="line">   <span class="variable">NewRatio         =</span> <span class="number">2</span> //对应jvm启动参数-XX:<span class="variable">NewRatio=</span>:‘新生代’和‘老生代’的大小比率</div><div class="line">   <span class="variable">SurvivorRatio    =</span> <span class="number">8</span> //对应jvm启动参数-XX:<span class="variable">SurvivorRatio=</span>设置年轻代中Eden区与Survivor区的大小比值 </div><div class="line">   <span class="variable">PermSize         =</span> <span class="number">21757952</span> (<span class="number">20.75</span>MB)  //对应jvm启动参数-XX:<span class="variable">PermSize=</span>&lt;value&gt;:设置JVM堆的‘永生代’的初始大小</div><div class="line">   <span class="variable">MaxPermSize      =</span> <span class="number">85983232</span> (<span class="number">82.0</span>MB)//对应jvm启动参数-XX:<span class="variable">MaxPermSize=</span>&lt;value&gt;:设置JVM堆的‘永生代’的最大大小</div><div class="line">   <span class="variable">G1HeapRegionSize =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line"></div><div class="line">Heap Usage://堆内存使用情况</div><div class="line">PS Young Generation</div><div class="line">Eden Space://Eden区内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">33030144</span> (<span class="number">31.5</span>MB)//Eden区总容量</div><div class="line">   <span class="variable">used     =</span> <span class="number">1524040</span> (<span class="number">1.4534378051757812</span>MB)  //Eden区已使用</div><div class="line">   <span class="variable">free     =</span> <span class="number">31506104</span> (<span class="number">30.04656219482422</span>MB)  //Eden区剩余容量</div><div class="line">   <span class="number">4.614088270399305</span>% used //Eden区使用比率</div><div class="line">From Space:  //其中一个Survivor区的内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="number">0.0</span>% used</div><div class="line">To Space:  //另一个Survivor区的内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="number">0.0</span>% used</div><div class="line">PS Old Generation //当前的Old区内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">86507520</span> (<span class="number">82.5</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">86507520</span> (<span class="number">82.5</span>MB)</div><div class="line">   <span class="number">0.0</span>% used</div><div class="line">PS Perm Generation//当前的 “永生代” 内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">22020096</span> (<span class="number">21.0</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">2496528</span> (<span class="number">2.3808746337890625</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">19523568</span> (<span class="number">18.619125366210938</span>MB)</div><div class="line">   <span class="number">11.337498256138392</span>% used</div><div class="line"></div><div class="line"><span class="number">670</span> interned Strings occupying <span class="number">43720</span> bytes.</div></pre></td></tr></table></figure>
-
-<p>关于这里的几个generation网上资料一大把就不细说了，这里算一下求和可以得知前者总共给Java环境分配了644M的内存，而ps输出的VSZ和RSS分别是7.4G和2.9G，这到底是怎么回事呢？<br>前面jmap输出的内容里，MaxHeapSize 是在命令行上配的，-Xmx4096m，这个java程序可以用到的最大堆内存。<br>VSZ是指已分配的线性空间大小，这个大小通常并不等于程序实际用到的内存大小，产生这个的可能性很多，比如内存映射，共享的动态库，或者向系统申请了更多的堆，都会扩展线性空间大小，要查看一个进程有哪些内存映射，可以使用 pmap 命令来查看：<br>pmap -x [pid]</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@server ~]$ pmap -x <span class="number">837</span></div><div class="line"><span class="number">837</span>:   java</div><div class="line">Address           Kbytes     RSS   Dirty Mode   Mapping</div><div class="line"><span class="number">0000000040000000</span>      <span class="number">36</span>       <span class="number">4</span>       <span class="number">0</span> r-x--  java</div><div class="line"><span class="number">0000000040108000</span>       <span class="number">8</span>       <span class="number">8</span>       <span class="number">8</span> rwx--  java</div><div class="line">00000000418c9000   <span class="number">13676</span>   <span class="number">13676</span>   <span class="number">13676</span> rwx--    [ anon ]</div><div class="line">00000006fae00000   <span class="number">83968</span>   <span class="number">83968</span>   <span class="number">83968</span> rwx--    [ anon ]</div><div class="line"><span class="number">0000000700000000</span>  <span class="number">527168</span>  <span class="number">451636</span>  <span class="number">451636</span> rwx--    [ anon ]</div><div class="line">00000007202d0000  <span class="number">127040</span>       <span class="number">0</span>       <span class="number">0</span> -----    [ anon ]</div><div class="line"><span class="keyword">...</span></div><div class="line"><span class="keyword">...</span></div><div class="line">00007f55ee124000       <span class="number">4</span>       <span class="number">4</span>       <span class="number">0</span> r-xs-  az.png</div><div class="line">00007fff017ff000       <span class="number">4</span>       <span class="number">4</span>       <span class="number">0</span> r-x--    [ anon ]</div><div class="line">ffffffffff600000       <span class="number">4</span>       <span class="number">0</span>       <span class="number">0</span> r-x--    [ anon ]</div><div class="line">----------------  ------  ------  ------</div><div class="line">total kB         <span class="number">7796020</span> <span class="number">3037264</span> <span class="number">3023928</span></div></pre></td></tr></table></figure>
-
-<p>这里可以看到很多anon，这些表示这块内存是由mmap分配的。</p>
-<p>RSZ是Resident Set Size，常驻内存大小，即进程实际占用的物理内存大小， 在现在这个例子当中，RSZ和实际堆内存占用差了2.3G，这2.3G的内存组成分别为：</p>
-<h4 id="查看_JVM_堆各个分区的内存情况">查看 JVM 堆各个分区的内存情况</h4>
-<p>jstat -gcutil [pid]</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root<span class="variable">@server</span> ~]<span class="variable">$ </span>jstat -gcutil <span class="number">837</span> <span class="number">1000</span> <span class="number">20</span></div><div class="line">  <span class="constant">S0</span>     <span class="constant">S1</span>     <span class="constant">E</span>      <span class="constant">O</span>      <span class="constant">P</span>     <span class="constant">YGC</span>     <span class="constant">YGCT</span>    <span class="constant">FGC</span>    <span class="constant">FGCT</span>     <span class="constant">GCT</span>   </div><div class="line">  <span class="number">0</span>.<span class="number">00</span>  <span class="number">80.43</span>  <span class="number">24.62</span>  <span class="number">87.44</span>  <span class="number">98.29</span>   <span class="number">7101</span>  <span class="number">119.652</span>    <span class="number">40</span>   <span class="number">19.719</span>  <span class="number">139.371</span></div><div class="line">  <span class="number">0</span>.<span class="number">00</span>  <span class="number">80.43</span>  <span class="number">33.14</span>  <span class="number">87.44</span>  <span class="number">98.29</span>   <span class="number">7101</span>  <span class="number">119.652</span>    <span class="number">40</span>   <span class="number">19.719</span>  <span class="number">139.371</span></div></pre></td></tr></table></figure>
-
-<h4 id="分析_JVM_堆内存中的对象">分析 JVM 堆内存中的对象</h4>
-<p><strong>查看存活的对象统计</strong><br>jmap -histo:live [pid]</p>
-<p><strong>dump 内存</strong><br>jmap -dump:format=b,file=heapDump [pid]</p>
-<p>然后用jhat命令可以参看<br>jhat -port 5000 heapDump<br>在浏览器中访问：<a href="http://localhost:5000/" target="_blank" rel="external">http://localhost:5000/</a> 查看详细信息</p>
-<h1 id="4-_服务指标">4. 服务指标</h1>
-<h2 id="4-1_响应时间(RT)">4.1 响应时间(RT)</h2>
-<p>响应时间是指系统对请求作出响应的时间。直观上看，这个指标与人对软件性能的主观感受是非常一致的，因为它完整地记录了整个计算机系统处理请求的时间。由于一个系统通常会提供许多功能，而不同功能的处理逻辑也千差万别，因而不同功能的响应时间也不尽相同，甚至同一功能在不同输入数据的情况下响应时间也不相同。所以，在讨论一个系统的响应时间时，人们通常是指该系统所有功能的平均时间或者所有功能的最大响应时间。当然，往往也需要对每个或每组功能讨论其平均响应时间和最大响应时间。</p>
-<p>对于单机的没有并发操作的应用系统而言，人们普遍认为响应时间是一个合理且准确的性能指标。需要指出的是，响应时间的绝对值并不能直接反映软件的性能的高低，软件性能的高低实际上取决于用户对该响应时间的接受程度。对于一个游戏软件来说，响应时间小于100毫秒应该是不错的，响应时间在1秒左右可能属于勉强可以接受，如果响应时间达到3秒就完全难以接受了。而对于编译系统来说，完整编译一个较大规模软件的源代码可能需要几十分钟甚至更长时间，但这些响应时间对于用户来说都是可以接受的。</p>
-<h2 id="4-2_吞吐量(Throughput)">4.2 吞吐量(Throughput)</h2>
-<p>吞吐量是指系统在单位时间内处理请求的数量。对于无并发的应用系统而言，吞吐量与响应时间成严格的反比关系，实际上此时吞吐量就是响应时间的倒数。前面已经说过，对于单用户的系统，响应时间（或者系统响应时间和应用延迟时间）可以很好地度量系统的性能，但对于并发系统，通常需要用吞吐量作为性能指标。</p>
-<p>对于一个多用户的系统，如果只有一个用户使用时系统的平均响应时间是t，当有你n个用户使用时，每个用户看到的响应时间通常并不是n×t，而往往比n×t小很多（当然，在某些特殊情况下也可能比n×t大，甚至大很多）。这是因为处理每个请求需要用到很多资源，由于每个请求的处理过程中有许多不走难以并发执行，这导致在具体的一个时间点，所占资源往往并不多。也就是说在处理单个请求时，在每个时间点都可能有许多资源被闲置，当处理多个请求时，如果资源配置合理，每个用户看到的平均响应时间并不随用户数的增加而线性增加。实际上，不同系统的平均响应时间随用户数增加而增长的速度也不大相同，这也是采用吞吐量来度量并发系统的性能的主要原因。一般而言，吞吐量是一个比较通用的指标，两个具有不同用户数和用户使用模式的系统，如果其最大吞吐量基本一致，则可以判断两个系统的处理能力基本一致。</p>
-<h2 id="4-3_并发用户数">4.3 并发用户数</h2>
-<p>并发用户数是指系统可以同时承载的正常使用系统功能的用户的数量。与吞吐量相比，并发用户数是一个更直观但也更笼统的性能指标。实际上，并发用户数是一个非常不准确的指标，因为用户不同的使用模式会导致不同用户在单位时间发出不同数量的请求。一网站系统为例，假设用户只有注册后才能使用，但注册用户并不是每时每刻都在使用该网站，因此具体一个时刻只有部分注册用户同时在线，在线用户就在浏览网站时会花很多时间阅读网站上的信息，因而具体一个时刻只有部分在线用户同时向系统发出请求。这样，对于网站系统我们会有三个关于用户数的统计数字：注册用户数、在线用户数和同时发请求用户数。由于注册用户可能长时间不登陆网站，使用注册用户数作为性能指标会造成很大的误差。而在线用户数和同事发请求用户数都可以作为性能指标。相比而言，以在线用户作为性能指标更直观些，而以同时发请求用户数作为性能指标更准确些。</p>
-<h2 id="4-4_QPS每秒查询率(Query_Per_Second)">4.4 QPS每秒查询率(Query Per Second)</h2>
-<p>每秒查询率QPS是对一个特定的查询服务器在规定时间内所处理流量多少的衡量标准，在因特网上，作为域名系统服务器的机器的性能经常用每秒查询率来衡量。对应fetches/sec，即每秒的响应请求数，也即是最大吞吐能力。</p>
-<p>从以上概念来看吞吐量和响应时间是衡量系统性能的重要指标，QPS虽然和吞吐量的计量单位不同，但应该是成正比的，任何一个指标都可以含量服务器的并行处理能力。当然Throughput更关心数据量，QPS更关心处理笔数。</p>
-<h2 id="4-5_CPU利用率">4.5 CPU利用率</h2>
-<p>CPU Load Average &lt; CPU个数 <em> 核数 </em> 0.7 </p>
-<p><strong>Context Switch Rate</strong><br>就是Process（Thread）的切换，如果切换过多，会让CPU忙于切换，也会导致影响吞吐量。《高性能服务器架构 》这篇文章的第2节就是说的是这个问题的。究竟多少算合适？google了一大圈，没有一个确切的解释。Context Switch大体上由两个部分组成：中断和进程(包括线程)切换，一次中断（Interrupt）会引起一次切换，进程（线程）的创建、激活之类的也会引起一次切换。CS的值也和TPS（Transaction Per Second）相关的，假设每次调用会引起N次CS，那么就可以得出</p>
-<p>Context Switch Rate = Interrupt Rate + TPS* N</p>
-<p>CSR减掉IR，就是进程/线程的切换，假如主进程收到请求交给线程处理，线程处理完毕归还给主进程，这里就是2次切换。也可以用CSR、IR、TPS的值代入公式中，得出每次事物导致的切换数。因此，要降低CSR，就必须在每个TPS引起的切换上下功夫，只有N这个值降下去，CSR就能降低，理想情况下N=0，但是无论如何如果N &gt;= 4，则要好好检查检查。另外网上说的CSR&lt;5000，我认为标准不该如此单一。</p>
-<p>这三个指标在 LoadRunner 中可以监控到；另外，在 linux 中，也可以用 vmstat 查看r（Load Arerage），in（Interrupt）和cs（Context Switch）</p>
-<h1 id="5-_工具">5. 工具</h1>
-<p>uptime</p>
-<p>dmesg</p>
-<p>top<br>查看进程活动状态以及一些系统状况</p>
-<p>vmstat<br>查看系统状态、硬件和系统信息等</p>
-<p>iostat<br>查看CPU 负载，硬盘状况</p>
-<p>sar<br>综合工具，查看系统状况</p>
-<p>mpstat<br>查看多处理器状况</p>
-<p>netstat<br>查看网络状况</p>
-<p>iptraf<br>实时网络状况监测</p>
-<p>tcpdump<br>抓取网络数据包，详细分析</p>
-<p>mpstat<br>查看多处理器状况</p>
-<p>tcptrace<br>数据包分析工具</p>
-<p>netperf<br>网络带宽工具</p>
-<p>dstat<br>综合工具，综合了 vmstat, iostat, ifstat, netstat 等多个信息</p>
-<h1 id="Reference">Reference</h1>
-<p><a href="http://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/" target="_blank" rel="external">http://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/</a><br><a href="https://www.ibm.com/developerworks/java/library/j-nativememory-linux/" target="_blank" rel="external">https://www.ibm.com/developerworks/java/library/j-nativememory-linux/</a><br><a href="http://www.oracle.com/technetwork/java/javase/index-137495.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/index-137495.html</a><br><a href="http://www.hollischuang.com/archives/303" target="_blank" rel="external">http://www.hollischuang.com/archives/303</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/调试/">调试</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/08/13/服务调优/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1359,19 +1185,19 @@ $$ -->
 		
 			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
-			<li><a href="/tags/算法/" title="算法">算法<sup>8</sup></a></li>
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		
 			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
 		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
-		
-			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>2</sup></a></li>
 		
 			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
@@ -1446,7 +1272,7 @@ $$ -->
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2017 
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2018 
 		
 		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
 		
