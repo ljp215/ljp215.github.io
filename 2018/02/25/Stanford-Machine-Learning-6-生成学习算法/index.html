@@ -4,31 +4,46 @@
 <head>
   <meta charset="UTF-8">
   
-    <title>LeetCode-Trapping-Rain-Water | Zane Blog</title>
+    <title>Stanford Machine Learning - 6 生成学习算法 | Zane Blog</title>
     <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
     
     <meta name="author" content="Jinping Luo">
     
-    <meta name="description" content="Problem Description
-Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to">
+    <meta name="description" content="生成学习算法介绍
+有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。
+
+判别学习算法常见的有：逻辑回顾，支持向量机等。
+生成学习算法常见的有：混合高斯模型、朴素贝叶斯法">
     
     
-    <meta name="description" content="Problem Description
-Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
-For example,Given [0,1,0,2,1,">
+    <meta name="description" content="生成学习算法介绍
+有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。
+
+判别学习算法常见的有：逻辑回顾，支持向量机等。
+生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。
+
+判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LeetCode-Trapping-Rain-Water">
-<meta property="og:url" content="http://luojinping.com/2018/01/31/LeetCode-Trapping-Rain-Water/">
+<meta property="og:title" content="Stanford Machine Learning - 6 生成学习算法">
+<meta property="og:url" content="http://luojinping.com/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="Problem Description
-Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
-For example,Given [0,1,0,2,1,">
-<meta property="og:image" content="/img/LeetCode_Trapping_Rain_Water.jpg">
+<meta property="og:description" content="生成学习算法介绍
+有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。
+
+判别学习算法常见的有：逻辑回顾，支持向量机等。
+生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。
+
+判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。">
+<meta property="og:image" content="/img/gaussian_discriminant_analysis_probability_distribution.jpg">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="LeetCode-Trapping-Rain-Water">
-<meta name="twitter:description" content="Problem Description
-Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.
-For example,Given [0,1,0,2,1,">
+<meta name="twitter:title" content="Stanford Machine Learning - 6 生成学习算法">
+<meta name="twitter:description" content="生成学习算法介绍
+有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。
+
+判别学习算法常见的有：逻辑回顾，支持向量机等。
+生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。
+
+判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。">
 
 
     
@@ -99,14 +114,14 @@ var _hmt = _hmt || [];
 		<header class="article-info clearfix">
   <h1 itemprop="name">
     
-      <a href="/2018/01/31/LeetCode-Trapping-Rain-Water/" title="LeetCode-Trapping-Rain-Water" itemprop="url">LeetCode-Trapping-Rain-Water</a>
+      <a href="/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/" title="Stanford Machine Learning - 6 生成学习算法" itemprop="url">Stanford Machine Learning - 6 生成学习算法</a>
   </h1>
   <p class="article-author">By
        
 		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
 		
   <p class="article-time">
-    <time datetime="2018-01-31T00:10:48.000Z" itemprop="datePublished"> Published Jan 31 2018</time>
+    <time datetime="2018-02-25T02:24:02.000Z" itemprop="datePublished"> Published Feb 25 2018</time>
     
   </p>
 </header>
@@ -115,20 +130,42 @@ var _hmt = _hmt || [];
 		<div id="toc" class="toc-article">
 			<strong class="toc-title">Contents</strong>
 		
-			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem_Description"><span class="toc-number">1.</span> <span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solution"><span class="toc-number">2.</span> <span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法解释"><span class="toc-number">3.</span> <span class="toc-text">算法解释</span></a></li></ol>
+			<ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成学习算法介绍"><span class="toc-number">1.</span> <span class="toc-text">生成学习算法介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯判别分析"><span class="toc-number">2.</span> <span class="toc-text">高斯判别分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多维正态分布(The_multivariate_normal_distribution)"><span class="toc-number">2.1.</span> <span class="toc-text">多维正态分布(The multivariate normal distribution)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯判别分析-1"><span class="toc-number">2.2.</span> <span class="toc-text">高斯判别分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDA_与_LR"><span class="toc-number">3.</span> <span class="toc-text">GDA 与 LR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#朴素贝叶斯"><span class="toc-number">4.</span> <span class="toc-text">朴素贝叶斯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉普拉斯平滑"><span class="toc-number">5.</span> <span class="toc-text">拉普拉斯平滑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
 		
 		</div>
 		
-		<h2 id="Problem_Description">Problem Description</h2>
-<p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.</p>
-<p>For example,<br>Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.</p>
-<p><strong> problem link: </strong><br><a href="https://leetcode.com/problems/trapping-rain-water" target="_blank" rel="external">https://leetcode.com/problems/trapping-rain-water</a></p>
-<p><img src="/img/LeetCode_Trapping_Rain_Water.jpg" alt=""></p>
-<h2 id="Solution">Solution</h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrappingRainWater_42</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span>(<span class="keyword">int</span>[] height) {</div><div class="line">        <span class="keyword">int</span> a = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> b = height.length - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> leftMax = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> rightMax = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (a &lt;= b) {</div><div class="line">            leftMax = Math.max(leftMax, height[a]);</div><div class="line">            rightMax = Math.max(rightMax, height[b]);</div><div class="line">            <span class="keyword">if</span> (leftMax &lt; rightMax) {</div><div class="line">                <span class="comment">// leftMax is smaller than rightMax, so the (leftMax-A[a]) water can be stored</span></div><div class="line">                max += (leftMax - height[a]);</div><div class="line">                a++;</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                max += (rightMax - height[b]);</div><div class="line">                b--;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="算法解释">算法解释</h2>
-<p>对任意位置 i，在 i 上的积水，由左右两边最高的 bar 决定。</p>
+		<h2 id="生成学习算法介绍">生成学习算法介绍</h2>
+<p>有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。</p>
+<ul>
+<li>判别学习算法常见的有：逻辑回顾，支持向量机等。</li>
+<li>生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。</li>
+</ul>
+<p>判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。</p>
+<p>生成学习算法是计算变量x在变量y上的条件分布p(x|y)和变量y的分布p(y) ，然后使用贝叶斯公式:  $p(y|x)=\frac{p(x,y)}{p(x)}=\frac{p(y)*p(x|y)}{p(x)}$ 计算出p(y|x)。</p>
+<p>针对课程中提到的两种生成学习算法中，高斯判别分析(Gaussian Discriminant Analysis)和朴素贝叶斯(Navie Bayes)分别解决了两种场景下的问题。<br>GDA 是针对的是特征向量 X 为连续值时的问题，而 Navie Bayes 则针对的是特征向量为离散值时的问题。</p>
+<h2 id="高斯判别分析">高斯判别分析</h2>
+<h3 id="多维正态分布(The_multivariate_normal_distribution)">多维正态分布(The multivariate normal distribution)</h3>
+<p>假设随机变量 $X$ 满足 $n$ 维的多项正态分布，参数为均值向量 $μ ∈ R^{n} $，协方差矩阵$Σ ∈ R^{n×n}$，记为 $N(μ,Σ)$ 其概率密度表示为：</p>
+<p>$$p(x;μ,Σ)=\frac{1}{(2π)^{\frac{n}2}(detΣ)^{\frac12}}exp(−\frac12(x−μ)^TΣ^{−1}(x−μ))$$</p>
+<p>$detΣ$ 表示矩阵 $Σ$ 的行列式(determinant)。<br>均值向量: $μ$<br>协方差矩阵: $Σ=E[(X−E[X])(X−E[X])T]=E[(x−μ)(x−μ)T]$</p>
+<h3 id="高斯判别分析-1">高斯判别分析</h3>
+<p>GDA 模型针对的是输入特征为连续值时的分类问题，这个模型的基本假设是目标值 y 服从伯努利分布(0-1分布)，条件概率 P(x|y) 服从多元正态分布((multivariate normal distribution))，即:<br>$y∼Bernoulli(\phi)$<br>$P(x|y=0)∼N(μ_0,\Sigma)$<br>$P(x|y=1)∼N(μ_1,\Sigma)$</p>
+<p>它们的概率密度为：<br>$$p(y)=\phi^y(1−\phi)^{1−y}$$<br>$$p(x|y=0)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_0)^T\Sigma^{−1}(x−μ_0))$$<br>$$p(x|y=1)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_1)^T\Sigma^{−1}(x−μ_1))$$</p>
+<p>我们模型的参数包括，$\phi,\Sigma,μ_0,μ_1$ 注意到，我们使用了两种不同的均值向量$μ_0$和$μ_1$，但是使用了同一种协方差矩阵 $\Sigma$, 则我们的极大似然函数的对数如下所示：<br>$$L(\phi,μ_0,μ_1,\Sigma)=log\Pi_{i=1}^mp(x^{(i)},y^{(i)};\phi,μ_0,μ_1,\Sigma)$$<br>$$=log\Pi_{i=1}^mp(x^{(i)}|y^{(i)};\phi,μ_0,μ_1,\Sigma)p(y^{(i)};\phi)$$</p>
+<p>对极大似然函数对数最大化，我们就得到了GDA模型各参数的极大虽然估计(略)。</p>
+<h2 id="GDA_与_LR">GDA 与 LR</h2>
+<p>前面我们提到：<br>$${argmax}_yp(y|x)={argmax}_y\frac{p(x|y)p(y)}{p(x)}={argmax}_yp(x|y)p(y)$$<br>我们有：<br>$$p(y=1|x)=\frac{p(x|y=1)p(y=1)}{p(x|y=1)p(y=1)+p(x|y=0)p(y=0)}$$<br>上式实际上可以表示成logistic函数的形式：<br>$$p(y=1|x;ϕ,μ0,μ1,Σ)=\frac1{1+exp(−θ^TX)}$$<br>其中，θ是参数ϕ,μ0,μ1,Σθ是参数ϕ,μ0,μ1,Σ某种形式的函数。GDA的后验分布可以表示logistic函数的形式。<br>　<br>下图为用 GDA 对两类样本分别拟合高斯概率密度函数p(x|y=0)和p(x|y=1)，得到两个钟形曲线。沿x轴遍历样本，在x轴上方画出相应的p(y=1|x)。如选x轴靠左的点，那么它属于1的概率几乎为0，p(y=1|x)=0，两条钟形曲线交点处，属于0或1的概率相同，p(y=1|x)=0.5，x轴靠右的点，输出1的概率几乎为1，p(y=1|x)=1。最终发现，得到的曲线和sigmoid函数曲线很相似。<br><img src="/img/gaussian_discriminant_analysis_probability_distribution.jpg" alt="gaussian discriminant analysis probability distribution"><br>　<br>　<br>实际上，可以证明，不仅仅当先验概率分布服从多变量正态分布时可以推导出逻辑回归的模型，当先验分布属于指数分布簇中的任何一个分布，如泊松分布时，都可以推导出逻辑回归模型。而反之不成立，逻辑回归的先验概率分布不一定必须得是指数分布簇中的成员。基于这些原因，在实践中使用逻辑回归比使用GDA更普遍。</p>
+<p>生成学习算法比判决学习算法需要更少的数据。如GDA的假设较强，所以用较少的数据能拟合出不错的模型。而逻辑回归的假设较弱，对模型的假设更为健壮，拟合数据需要更多的样本。</p>
+<h2 id="朴素贝叶斯">朴素贝叶斯</h2>
+<p>考虑自变量比较多的情况，比如垃圾邮件的识别需要检测成百上千甚至上万的字符是否出现，如有<em>免费</em>、<em>购买</em>等类似的词出现的邮件很大可能是垃圾邮件。这种情况下若有k个自变量，考虑各变量之间的交互作用就需要计算$2^k$次，为了简化计算量对模型作一个更强的假设：<br><strong>给定因变量 y 的值，各自变量之间相互独立.</strong></p>
+<p>所以有<br>$$p(x_1,…,x_n|y)=p(x_1|y)p(x_2|y,x_1)p(x_3|y,x_1,x_2)…p(x_n|y,x_1,x_2,…,x_{n-1})$$<br>$$=p(x_1|y)p(x_2|y)p(x_3|y)…p(x_n|y)=\Pi_{i=1}^np(x_i|y)$$</p>
+<p>第一个等式是根据通常的概率论得到的，第二个等式是根据贝叶斯假设得到的。虽然贝叶斯假设是个很强的假设，但是实践证明在许多问题上都表现得很好。</p>
+<p>参数的极大似然估计及p(y|x)的推导过程略。</p>
+<h2 id="拉普拉斯平滑">拉普拉斯平滑</h2>
+<p>拉普拉斯平滑(Laplace Smoothing)又称为加1平滑。平滑方法的存在是为了解决零概率问题。</p>
+<p>所谓的零概率问题，就是在计算新实例的概率时，如果某个分量在训练集中从没出现过，会导致整个实例的概率计算结果为０，针对文本分类问题就是当一个词语在训练集中没有出现过，那么该词语的概率为０，使用连乘计算文本出现的概率时，整个文本出现的概率也为０，这显然不合理，因为不能因为一个事件没有观测到就判断该事件的概率为０.</p>
+<h2 id="Reference">Reference</h2>
+<p><a href="http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/" target="_blank" rel="external">http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/</a><br><a href="http://blog.csdn.net/v1_vivian/article/details/52190572" target="_blank" rel="external">http://blog.csdn.net/v1_vivian/article/details/52190572</a><br><a href="http://www.cnblogs.com/mikewolf2002/p/7763475.html" target="_blank" rel="external">http://www.cnblogs.com/mikewolf2002/p/7763475.html</a></p>
   
 	</div>
 		<footer class="article-footer clearfix">
@@ -137,7 +174,7 @@ var _hmt = _hmt || [];
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
   </div>
 
 </div>
@@ -146,7 +183,7 @@ var _hmt = _hmt || [];
 
 	<div class="article-share" id="share">
 	
-	  <div data-url="http://luojinping.com/2018/01/31/LeetCode-Trapping-Rain-Water/" data-title="LeetCode-Trapping-Rain-Water | Zane Blog" data-tsina="null" class="share clearfix">
+	  <div data-url="http://luojinping.com/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/" data-title="Stanford Machine Learning - 6 生成学习算法 | Zane Blog" data-tsina="null" class="share clearfix">
 	  </div>
 	
 	</div>
@@ -159,19 +196,11 @@ var _hmt = _hmt || [];
 	
 <nav class="article-nav clearfix">
  
- <div class="prev" >
- <a href="/2018/01/31/LeetCode-Binary-Tree-Maximum-Path-Sum/" title="LeetCode-Binary-Tree-Maximum-Path-Sum">
-  <strong>上一篇：</strong><br/>
-  <span>
-  LeetCode-Binary-Tree-Maximum-Path-Sum</span>
-</a>
-</div>
-
 
 <div class="next">
-<a href="/2017/11/12/Kafka-Consumer-的实现/"  title="Kafka Consumer 的实现">
+<a href="/2018/01/31/LeetCode-Binary-Tree-Maximum-Path-Sum/"  title="LeetCode-Binary-Tree-Maximum-Path-Sum">
  <strong>下一篇：</strong><br/> 
- <span>Kafka Consumer 的实现
+ <span>LeetCode-Binary-Tree-Maximum-Path-Sum
 </span>
 </a>
 </div>
@@ -192,7 +221,7 @@ var _hmt = _hmt || [];
   <div id="toc" class="toc-aside">
   <strong class="toc-title">Contents</strong>
  
- <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#Problem_Description"><span class="toc-number">1.</span> <span class="toc-text">Problem Description</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Solution"><span class="toc-number">2.</span> <span class="toc-text">Solution</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#算法解释"><span class="toc-number">3.</span> <span class="toc-text">算法解释</span></a></li></ol>
+ <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#生成学习算法介绍"><span class="toc-number">1.</span> <span class="toc-text">生成学习算法介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#高斯判别分析"><span class="toc-number">2.</span> <span class="toc-text">高斯判别分析</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#多维正态分布(The_multivariate_normal_distribution)"><span class="toc-number">2.1.</span> <span class="toc-text">多维正态分布(The multivariate normal distribution)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#高斯判别分析-1"><span class="toc-number">2.2.</span> <span class="toc-text">高斯判别分析</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GDA_与_LR"><span class="toc-number">3.</span> <span class="toc-text">GDA 与 LR</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#朴素贝叶斯"><span class="toc-number">4.</span> <span class="toc-text">朴素贝叶斯</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#拉普拉斯平滑"><span class="toc-number">5.</span> <span class="toc-text">拉普拉斯平滑</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Reference"><span class="toc-number">6.</span> <span class="toc-text">Reference</span></a></li></ol>
  
   </div>
 

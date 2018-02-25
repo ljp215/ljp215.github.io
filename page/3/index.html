@@ -91,6 +91,99 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/02/02/判断图是否为树/" title="判断图是否为树" itemprop="url">判断图是否为树</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-02T11:43:46.000Z" itemprop="datePublished"> Published Feb 2 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="题目">题目</h2>
+<p>输入二维数组，a[i][j]=1 表示从i结点指向j结点。</p>
+<h3 id="eg1">eg1</h3>
+<p>0 1 1 0</p>
+<p>1 0 0 1</p>
+<p>1 0 0 0</p>
+<p>0 1 0 0</p>
+<p>是一棵树，树为：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">       a</div><div class="line">       </div><div class="line">      /  \</div><div class="line">      </div><div class="line">    b    <span class="built_in">c</span></div><div class="line">    </div><div class="line">  /</div><div class="line">  </div><div class="line">d</div></pre></td></tr></table></figure>
+
+<h3 id="eg2">eg2</h3>
+<p>0 1 1 0</p>
+<p>1 0 0 1</p>
+<p>1 0 1 0</p>
+<p>0 1 1 0</p>
+<p>不是一颗树，是有环(a-b-d-c-a)的图：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line">       a</div><div class="line">       </div><div class="line">      /  \</div><div class="line">      </div><div class="line">    b    <span class="built_in">c</span></div><div class="line">    </div><div class="line">  /      /</div><div class="line">  </div><div class="line">d  - — -</div></pre></td></tr></table></figure>
+
+<h2 id="关键点">关键点</h2>
+<p>判断一张图是否是一颗树的两个关键点：</p>
+<ul>
+<li>不存在环路(对于有向图，不存在环路也就意味着不存在强连通子图)</li>
+<li>满足边数加一等于顶点数的规律(不考虑重边和指向自身的边)</li>
+</ul>
+<h2 id="方法">方法</h2>
+<ol>
+<li><p>DFS</p>
+</li>
+<li><p>如果存在回路，则必存在一个子图，是一个环路。环路中所有顶点的度&gt;=2。时间复杂度O(ve)，v是顶点数，e是边数。</p><p>第一步：删除所有度&lt;=1的顶点及相关的边，并将另外与这些边相关的其它顶点的度减一。</p><p> 第二步：将度数变为1的顶点排入队列，并从该队列中取出一个顶点重复步骤一。如果最后还有未删除顶点，则存在环，否则没有环。这个复杂度也很高</p>
+</li>
+<li><p>结合树的特性(边数+1 = 顶点数)和并查集来做，代码见下文。</p>
+</li>
+</ol>
+<h2 id="实现">实现</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div><div class="line">111</div><div class="line">112</div><div class="line">113</div><div class="line">114</div><div class="line">115</div><div class="line">116</div><div class="line">117</div><div class="line">118</div><div class="line">119</div><div class="line">120</div><div class="line">121</div><div class="line">122</div><div class="line">123</div><div class="line">124</div><div class="line">125</div><div class="line">126</div><div class="line">127</div><div class="line">128</div><div class="line">129</div><div class="line">130</div><div class="line">131</div><div class="line">132</div><div class="line">133</div><div class="line">134</div><div class="line">135</div><div class="line">136</div><div class="line">137</div><div class="line">138</div><div class="line">139</div><div class="line">140</div><div class="line">141</div><div class="line">142</div><div class="line">143</div><div class="line">144</div><div class="line">145</div><div class="line">146</div></pre></td><td class="code"><pre><div class="line">import java.util.ArrayList;</div><div class="line">import java.util.List;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TreeJudgeUnionB {</div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">class</span> Edge {</div><div class="line">        <span class="keyword">int</span> start;</div><div class="line">        <span class="keyword">int</span> end;</div><div class="line"></div><div class="line">        <span class="keyword">public</span> <span class="title">Edge</span>(<span class="keyword">int</span> start, <span class="keyword">int</span> end) {</div><div class="line">            <span class="keyword">this</span>.start = start;</div><div class="line">            <span class="keyword">this</span>.end = end;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="comment">// the number of edges</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> n;</div><div class="line"></div><div class="line">    <span class="comment">// edge list</span></div><div class="line">    <span class="keyword">private</span> List&lt;Edge&gt; edges = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line"></div><div class="line">    <span class="comment">// the index of group</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] <span class="keyword">group</span>;</div><div class="line"></div><div class="line">    <span class="comment">// the size of tree</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span>[] size;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="title">TreeJudgeUnionB</span>(<span class="keyword">int</span> n, List&lt;Edge&gt; edges) {</div><div class="line">        <span class="keyword">this</span>.n = n;</div><div class="line">        <span class="keyword">this</span>.edges = edges;</div><div class="line"></div><div class="line">        <span class="keyword">group</span> = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        size = <span class="keyword">new</span> <span class="keyword">int</span>[n];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {</div><div class="line">            <span class="keyword">group</span>[i] = i;</div><div class="line">            size[i] = <span class="number">1</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">int</span> <span class="title">find</span>(<span class="keyword">int</span> i) {</div><div class="line">        <span class="comment">// find the root of a tree which contains i node</span></div><div class="line">        <span class="keyword">while</span> (i != <span class="keyword">group</span>[i]) {</div><div class="line">            i = <span class="keyword">group</span>[i];</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> i;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">private</span> boolean <span class="title">union</span>(<span class="keyword">int</span> groupI, <span class="keyword">int</span> groupJ) {</div><div class="line">        <span class="keyword">int</span> iRoot = find(groupI);</div><div class="line">        <span class="keyword">int</span> jRoot = find(groupJ);</div><div class="line">        <span class="keyword">if</span> (iRoot != jRoot) {</div><div class="line">            <span class="keyword">if</span> (size[iRoot] &lt; size[jRoot]) {</div><div class="line">                <span class="keyword">group</span>[iRoot] = jRoot;</div><div class="line">                size[jRoot] += size[iRoot];</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                <span class="keyword">group</span>[jRoot] = iRoot;</div><div class="line">                size[iRoot] += size[jRoot];</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        } <span class="keyword">else</span> {</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> boolean <span class="title">isTree</span>() {</div><div class="line">        <span class="keyword">for</span> (Edge edge : edges) {</div><div class="line">            <span class="keyword">if</span> (!union(edge.start, edge.end)) {</div><div class="line">                System.<span class="keyword">out</span>.println(<span class="string">"input two nodes in the same tree"</span>);</div><div class="line">                <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        boolean hasRoot = <span class="keyword">false</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="keyword">group</span>.length; i++) {</div><div class="line">            <span class="keyword">if</span> (i == <span class="keyword">group</span>[i]) {</div><div class="line">                <span class="keyword">if</span> (!hasRoot) {</div><div class="line">                    hasRoot = <span class="keyword">true</span>;</div><div class="line">                } <span class="keyword">else</span> {</div><div class="line">                    System.<span class="keyword">out</span>.println(<span class="string">"exist more than one tree root"</span>);</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">                }</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        printGroup();</div><div class="line"></div><div class="line">        <span class="keyword">return</span> hasRoot;</div><div class="line"></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">void</span> <span class="title">printGroup</span>() {</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; i++) {</div><div class="line">            System.<span class="keyword">out</span>.print(<span class="keyword">group</span>[i] + <span class="string">", "</span>);</div><div class="line">        }</div><div class="line">        System.<span class="keyword">out</span>.println();</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">        <span class="keyword">int</span> n = <span class="number">5</span>;</div><div class="line">        List&lt;Edge&gt; edges = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">4</span>);</div><div class="line">        isTree(n, edges); <span class="comment">// true</span></div><div class="line"></div><div class="line">        n = <span class="number">5</span>;</div><div class="line">        edges.clear();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">4</span>);</div><div class="line">        isTree(n, edges); <span class="comment">// false</span></div><div class="line"></div><div class="line">        n = <span class="number">4</span>;</div><div class="line">        edges.clear();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        isTree(n, edges);  <span class="comment">// false</span></div><div class="line"></div><div class="line">        n = <span class="number">7</span>;</div><div class="line">        edges.clear();</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">1</span>);</div><div class="line">        addEdge(edges, <span class="number">1</span>, <span class="number">2</span>);</div><div class="line">        addEdge(edges, <span class="number">4</span>, <span class="number">5</span>);</div><div class="line">        addEdge(edges, <span class="number">3</span>, <span class="number">4</span>);</div><div class="line">        addEdge(edges, <span class="number">2</span>, <span class="number">3</span>);</div><div class="line">        addEdge(edges, <span class="number">0</span>, <span class="number">6</span>);</div><div class="line">        isTree(n, edges);  <span class="comment">// true</span></div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">addEdge</span>(List&lt;Edge&gt; edges, <span class="keyword">int</span> i, <span class="keyword">int</span> j) {</div><div class="line">        edges.add(<span class="keyword">new</span> Edge(i, j));</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">protected</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">isTree</span>(<span class="keyword">int</span> n, List&lt;Edge&gt; edges) {</div><div class="line">        TreeJudgeUnionB treeJudgeUnionA = <span class="keyword">new</span> TreeJudgeUnionB(n, edges);</div><div class="line"></div><div class="line">        boolean isTree = treeJudgeUnionA.isTree();</div><div class="line"></div><div class="line">        System.<span class="keyword">out</span>.println(<span class="string">"This is a tree? "</span> + isTree);</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/02/判断图是否为树/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/02/02/并查集-Union-Find-算法/" title="并查集(Union-Find)算法" itemprop="url">并查集(Union-Find)算法</a>
   </h1>
   <p class="article-author">By
@@ -1111,104 +1204,6 @@ data=d.decompress(s)
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/08/20/Btrace详解/" title="Btrace详解" itemprop="url">Btrace详解</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-08-20T08:01:19.000Z" itemprop="datePublished"> Published Aug 20 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="1-_Btrace的简介">1. Btrace的简介</h1>
-<p>Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。</p>
-<h1 id="2-_官方参考手册">2. 官方参考手册</h1>
-<p><a href="https://kenai.com/projects/btrace/pages/UserGuide" target="_blank" rel="external">https://kenai.com/projects/btrace/pages/UserGuide</a></p>
-<h1 id="3-_实例">3. 实例</h1>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</div><div class="line"><span class="keyword">import</span> com.sun.btrace.AnyType;</div><div class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</div><div class="line"></div><div class="line"><span class="keyword">@BTrace</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">class</span> TestServiceImplTrace {</div><div class="line">    <span class="keyword">@TLS</span></div><div class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="built_in">long</span> service_get_data_startTime = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="keyword">@OnMethod</span>(</div><div class="line">            clazz = <span class="string">"com.xxx.mms.test.impl.TestServiceImpl"</span>,</div><div class="line">            method = <span class="string">"getTestData"</span></div><div class="line">    )</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> startTestServiceImplExecute() {</div><div class="line">        section_facade_impl_startTime = timeMillis();</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">@OnMethod</span>(</div><div class="line">            clazz = <span class="string">"com.xxx.mms.test.impl.TestServiceImpl"</span>,</div><div class="line">            method = <span class="string">"getTestData"</span></div><div class="line">            location = <span class="keyword">@Location</span>(Kind.RETURN)</div><div class="line">    )</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> endTestServiceImplExecute(AnyType[] args) { <span class="comment">// 传入所有参数</span></div><div class="line">        <span class="built_in">long</span> time = timeMillis() - section_facade_impl_startTime;</div><div class="line"></div><div class="line">        Object obj = args[<span class="number">4</span>];</div><div class="line">        Integer end = (Integer)obj; <span class="comment">// 将第5个参数转成Integer</span></div><div class="line"></div><div class="line">        printFields(args[<span class="number">0</span>]); <span class="comment">// 打印第1个参数的所有成员变量的值</span></div><div class="line"></div><div class="line">        <span class="keyword">if</span>(end == <span class="number">6</span>){</div><div class="line">                print(strcat(“service getTestData execute time(millis): <span class="string">", str(time)));</span></div><div class="line">                print(strcat(“\t string param: ", str(args[<span class="number">3</span>]))); <span class="comment">// 将第4个参数转成string并打印</span></div><div class="line">                println(strcat(“\t end: <span class="string">", str(end)));</span></div><div class="line">        }</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h1 id="4-_心得">4. 心得</h1>
-<ol>
-<li>btrace脚本的函数都没有走进去时，btrace pid tracing.java 是得不到结果的。</li>
-<li>Kind.LINE指向的行必须是代码能运行到的行。比如，以括号结束的行和空行都是无效的。</li>
-<li>在刚启动btrace脚本监控时，会存在较大的耗时</li>
-<li>print有很多功能：<br>  printNumberMap<br>  printFields： print 每个域<br>  printArray：print 数组</li>
-<li>如果服务的qps较低(0.2),直接去机器上app222通过ip请求，btrace的event不好用也达不到触发某个请求的目的，这个时候可以直接在本机请求此server的api，虽然与实际情况不符，但是能知道耗时的比例关系。</li>
-</ol>
-<h1 id="5-_Btrace的原理">5. Btrace的原理</h1>
-<p>Btrace是由：Attach API + BTrace脚本解析引擎 + ASM + JDK6 Instumentation组成。简单来说就是：用Attach API附加*.jar然后使用BTrace脚本解析引擎 + ASM来实现对类的修改，在使用Instumentation实现类的内存替换。可详细的说明可以看refers的几篇文章。</p>
-<h1 id="6-_使用Btrace对java进程的影响">6. 使用Btrace对java进程的影响</h1>
-<ul>
-<li>装载时的影响：<br>btrace每次使用，都会重新load所有的class。当然如果OnMethod不匹配，是不会被重新装载。所以跟你的OnMethod的匹配规则很有关系，如果使用+java.lang.Object。那就死定了。</li>
-<li>退出后的影响：<br>btrace监控每次退出后，原先所有的class都不会被恢复，你的所有的监控代码依然一直在运行</li>
-</ul>
-<p>抓取了下btrace改写过后的类：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> InstrumentServer(<span class="built_in">String</span> ip, <span class="built_in">String</span> port)</div><div class="line">{</div><div class="line">     <span class="variable">$btrace</span><span class="variable">$com</span><span class="variable">$agapple</span><span class="variable">$btrace</span><span class="variable">$Instrumentor</span><span class="variable">$InstrumentTracer</span><span class="variable">$bufferMonitor</span>(this);</div><div class="line">     this<span class="built_in">.</span>ip <span class="subst">=</span> ip;</div><div class="line">     this<span class="built_in">.</span>port <span class="subst">=</span> port;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> static <span class="literal">void</span> <span class="variable">$btrace</span><span class="variable">$com</span><span class="variable">$agapple</span><span class="variable">$btrace</span><span class="variable">$Instrumentor</span><span class="variable">$InstrumentTracer</span><span class="variable">$bufferMonitor</span>(@<span class="built_in">Self</span> Object arg0)</div><div class="line">{</div><div class="line">     <span class="keyword">if</span> (<span class="subst">!</span>BTraceRuntime<span class="built_in">.</span>enter(InstrumentTracer<span class="built_in">.</span>runtime)) <span class="keyword">return</span>;</div><div class="line">     try {</div><div class="line">          Field ipField <span class="subst">=</span> BTraceUtils<span class="built_in">.</span>field(<span class="string">"com.agapple.btrace.Instrumentor.InstrumentServer"</span>, <span class="string">"ip"</span>);</div><div class="line">          Field portField <span class="subst">=</span> BTraceUtils<span class="built_in">.</span>field(<span class="string">"com.agapple.btrace.Instrumentor.InstrumentServer"</span>, <span class="string">"port"</span>);</div><div class="line"> </div><div class="line">          <span class="built_in">String</span> ip <span class="subst">=</span> (<span class="built_in">String</span>)BTraceUtils<span class="built_in">.</span>get(ipField, <span class="built_in">self</span>);</div><div class="line">          <span class="built_in">String</span> port <span class="subst">=</span> (<span class="built_in">String</span>)BTraceUtils<span class="built_in">.</span>get(portField, <span class="built_in">self</span>);</div><div class="line"></div><div class="line">          BTraceUtils<span class="built_in">.</span>println(BTraceUtils<span class="built_in">.</span>strcat(BTraceUtils<span class="built_in">.</span>strcat(BTraceUtils<span class="built_in">.</span>strcat(<span class="string">"ip : "</span>, BTraceUtils<span class="built_in">.</span>str(ip)), <span class="string">" port : "</span>), BTraceUtils<span class="built_in">.</span>str(port)));</div><div class="line">          BTraceRuntime<span class="built_in">.</span>leave(); <span class="keyword">return</span>; } catch (Throwable localThrowable) { BTraceRuntime<span class="built_in">.</span>handleException(localThrowable);</div><div class="line">     }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>注意其中的</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> (!BTraceRuntime.enter(InstrumentTracer.<span class="keyword">runtime</span>)) <span class="keyword">return</span>;</div></pre></td></tr></table></figure>
-
-<p>再看一下BTraceRuntime中对应方法的实现：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> disabled;</div><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">enter</span>(BTraceRuntime current) {</div><div class="line">     <span class="keyword">if</span> (current.disabled) <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">     <span class="keyword">return</span> map.enter(current);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>每次执行你的监控代码之前会先进行一个判断，判断当前是否处于监控中。你的客户端发起了exit指令后，该方法判断false，直接return。</p>
-<p><strong>所以btrace使用退出后会让你的代码多走了一个方法调用+一个对象属性判断，所以说影响还是非常少的。</strong></p>
-<h1 id="7-_推荐阅读">7. 推荐阅读</h1>
-<p>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="external">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="external">http://agapple.iteye.com/blog/1005918</a></p>
-<h1 id="refers">refers</h1>
-<p>&gt;<br>Java SE 6 新特性: Instrumentation 新功能 <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/" target="_blank" rel="external">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="external">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="external">http://agapple.iteye.com/blog/1005918</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/调试/">调试</a><a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/08/20/Btrace详解/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -1234,7 +1229,7 @@ data=d.decompress(s)
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>5</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		
