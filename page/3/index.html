@@ -91,6 +91,77 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/02/20/硬币找零问题/" title="硬币找零问题" itemprop="url">硬币找零问题</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-02-20T06:55:47.000Z" itemprop="datePublished"> Published Feb 20 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="硬币找零问题(Coin_Change)">硬币找零问题(Coin Change)</h1>
+<h2 id="Question">Question</h2>
+<p>You are given coins of different denominations and a total amount of money amount. Write a function to compute the fewest number of coins that you need to make up that amount. If that amount of money cannot be made up by any combination of the coins, return -1.</p>
+<p>Example 1:<br>coins = [1, 2, 5], amount = 11<br>return 3 (11 = 5 + 5 + 1)</p>
+<p>Example 2:<br>coins = [2], amount = 3<br>return -1.</p>
+<p>Note:<br>You may assume that you have an infinite number of each kind of coin.</p>
+<h2 id="DP求解">DP求解</h2>
+<p>如果是用DP求解，那么思路首先就是找到子问题。子问题很容易确定，那就是amount-x是子问题的amount。比较容易想到的代码实现如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span>(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount) {</div><div class="line">        <span class="keyword">if</span> (amount == <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> n = amount + <span class="number">1</span>; <span class="comment">// the answer must smaller than [amount+1], nice!</span></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> coin : coins) {</div><div class="line">            <span class="keyword">int</span> curr = <span class="number">0</span>;</div><div class="line">            <span class="keyword">if</span> (amount &gt;= coin) {</div><div class="line">                <span class="keyword">int</span> next = coinChange(coins, amount - coin);</div><div class="line">                <span class="keyword">if</span> (next &gt;= <span class="number">0</span>)</div><div class="line">                    curr = <span class="number">1</span> + next;</div><div class="line">            }</div><div class="line">            <span class="keyword">if</span> (curr &gt; <span class="number">0</span>)</div><div class="line">                n = Math.min(n, curr);</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> (n == amount + <span class="number">1</span>) ? -<span class="number">1</span> : n;</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+<p>上述算法的时间复杂度为O(c^n),c是coin的数量，n是amount的值。</p>
+<p>时间复杂度较大的原因是，中间存在很多重复计算。那么需要用到DP的备忘录，不用全局变量来保存计算过的值，也不用递归的方法来实现，而是只用一个一维数组，再用循环来实现。代码如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">coinChange</span>(<span class="keyword">int</span>[] coins, <span class="keyword">int</span> amount) {</div><div class="line">        <span class="keyword">if</span> (coins == <span class="keyword">null</span> || coins.length == <span class="number">0</span> || amount &lt;= <span class="number">0</span>)</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span>[] minNumber = <span class="keyword">new</span> <span class="keyword">int</span>[amount + <span class="number">1</span>];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= amount; i++) {</div><div class="line">            minNumber[i] = amount + <span class="number">1</span>;</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">0</span>; j &lt; coins.length; j++) {</div><div class="line">                <span class="keyword">if</span> (coins[j] &lt;= i && minNumber[i - coins[j]] != amount + <span class="number">1</span>)</div><div class="line">                    minNumber[i] = Integer.min(minNumber[i], <span class="number">1</span> + minNumber[i - coins[j]]);</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (minNumber[amount] == amount + <span class="number">1</span>)</div><div class="line">            <span class="keyword">return</span> -<span class="number">1</span>;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">return</span> minNumber[amount];</div><div class="line">    }</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/02/20/硬币找零问题/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/02/02/判断图是否为树/" title="判断图是否为树" itemprop="url">判断图是否为树</a>
   </h1>
   <p class="article-author">By
@@ -1129,81 +1200,6 @@ data=d.decompress(s)
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/10/29/跨域请求/" title="跨域请求" itemprop="url">跨域请求</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-10-29T03:42:06.000Z" itemprop="datePublished"> Published Oct 29 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="碰到的问题">碰到的问题</h2>
-<p>今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a><br>但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样就导致了前端跨域传cookie会有问题。</p>
-<h2 id="解决的方案">解决的方案</h2>
-<h3 id="1-_nginx_做请求转发">1. nginx 做请求转发</h3>
-<p>目前的做法是在服务端之前做一个反向代理，admin请求同域名的<br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="external">http://admin-test.company.com/api/abc/feature</a><br>然后在nginx层将请求转发到<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a></p>
-<p>对于staging和online不同的环境，将请求转发到不同的server即可。</p>
-<p><strong><em>请求转发</em></strong><br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="external">http://admin-test.company.com/api/abc/feature</a><br>-&gt;<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a></p>
-<p><strong><em>ngin配置</em></strong></p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">server</span> {</div><div class="line">    <span class="title">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="title">server_name</span> admin-test.company.com;</div><div class="line"></div><div class="line">    <span class="title">location</span> /api/abc {</div><div class="line">        <span class="title">rewrite</span> /api/abc/(.*) /api/xxv/<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        <span class="title">proxy_set_header</span> Host <span class="variable">$http_host</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="title">proxy_pass</span> <span class="url">http://staging.server.hostname:8080</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-
-
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">server</span> {</div><div class="line">    <span class="title">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="title">server_name</span> admin.company.com;</div><div class="line"></div><div class="line">    <span class="title">location</span> /api/abc {</div><div class="line">        <span class="title">rewrite</span> /api/abc/(.*) /api/xxv/<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        <span class="title">proxy_set_header</span> Host <span class="variable">$http_host</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="title">proxy_pass</span> <span class="url">http://myserver-write-nodes</span>;</div><div class="line">     }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="2-_服务端处理跨域请求">2. 服务端处理跨域请求</h3>
-<p>在返回的response header中加入允许跨域访问的属性。例如：</p>
-<p>Access-Control-Allow-Origin: {允许的域名}</p>
-<p>更多信息参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="external">跨域 HTTP 请求(Cross-site HTTP request)</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/网络/">网络</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/10/29/跨域请求/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -1227,9 +1223,9 @@ data=d.decompress(s)
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>6</sup></a></li>
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		

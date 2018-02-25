@@ -91,6 +91,81 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/10/29/跨域请求/" title="跨域请求" itemprop="url">跨域请求</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-10-29T03:42:06.000Z" itemprop="datePublished"> Published Oct 29 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="碰到的问题">碰到的问题</h2>
+<p>今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a><br>但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样就导致了前端跨域传cookie会有问题。</p>
+<h2 id="解决的方案">解决的方案</h2>
+<h3 id="1-_nginx_做请求转发">1. nginx 做请求转发</h3>
+<p>目前的做法是在服务端之前做一个反向代理，admin请求同域名的<br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="external">http://admin-test.company.com/api/abc/feature</a><br>然后在nginx层将请求转发到<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a></p>
+<p>对于staging和online不同的环境，将请求转发到不同的server即可。</p>
+<p><strong><em>请求转发</em></strong><br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="external">http://admin-test.company.com/api/abc/feature</a><br>-&gt;<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="external">http://ttt.company.com/api/xxv/abc/feature</a></p>
+<p><strong><em>ngin配置</em></strong></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">server</span> {</div><div class="line">    <span class="title">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="title">server_name</span> admin-test.company.com;</div><div class="line"></div><div class="line">    <span class="title">location</span> /api/abc {</div><div class="line">        <span class="title">rewrite</span> /api/abc/(.*) /api/xxv/<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        <span class="title">proxy_set_header</span> Host <span class="variable">$http_host</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="title">proxy_pass</span> <span class="url">http://staging.server.hostname:8080</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="title">server</span> {</div><div class="line">    <span class="title">listen</span> <span class="number">80</span>;</div><div class="line">    <span class="title">server_name</span> admin.company.com;</div><div class="line"></div><div class="line">    <span class="title">location</span> /api/abc {</div><div class="line">        <span class="title">rewrite</span> /api/abc/(.*) /api/xxv/<span class="variable">$1</span> <span class="built_in">break</span>;</div><div class="line">        <span class="title">proxy_set_header</span> Host <span class="variable">$http_host</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Real-IP <span class="variable">$remote_addr</span>;</div><div class="line">        <span class="title">proxy_set_header</span> X-Forwarded-For <span class="variable">$proxy_add_x_forwarded_for</span>;</div><div class="line">        <span class="title">proxy_pass</span> <span class="url">http://myserver-write-nodes</span>;</div><div class="line">     }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="2-_服务端处理跨域请求">2. 服务端处理跨域请求</h3>
+<p>在返回的response header中加入允许跨域访问的属性。例如：</p>
+<p>Access-Control-Allow-Origin: {允许的域名}</p>
+<p>更多信息参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="external">跨域 HTTP 请求(Cross-site HTTP request)</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/网络/">网络</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/10/29/跨域请求/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/08/20/Btrace详解/" title="Btrace详解" itemprop="url">Btrace详解</a>
   </h1>
   <p class="article-author">By
@@ -1261,120 +1336,6 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/05/21/动态规划算法/" title="动态规划算法" itemprop="url">动态规划算法</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-05-21T15:13:37.000Z" itemprop="datePublished"> Published May 21 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="1-_动态规划的适用场景">1. 动态规划的适用场景</h2>
-<p>动态规划常常适用于有重叠子问题和最优子结构性质的问题，动态规划方法所耗时间往往远少于朴素解法。</p>
-<h2 id="2-_动态规划的基本思想">2. 动态规划的基本思想</h2>
-<p>动态规划背后的基本思想非常简单。大致上，若要解一个给定问题，我们需要解其不同部分（即子问题），再合并子问题的解以得出原问题的解。<br>通常许多子问题非常相似，为此动态规划法试图仅仅解决每个子问题一次，从而减少计算量：一旦某个给定子问题的解已经算出，则将其记忆化存储，以便下次需要同一个子问题解之时直接查表。这种做法在重复子问题的数目关于输入的规模呈指数增长时特别有用。</p>
-<h3 id="2-1_重叠子问题">2.1 重叠子问题</h3>
-<p>动态规划在查找有很多重叠子问题的情况的最优解时有效。它将问题重新组合成子问题。为了避免多次解决这些子问题，它们的结果都逐渐被计算并被保存，从简单的问题直到整个问题都被解决。因此，动态规划保存递归时的结果，因而不会在解决同样的问题时花费时间。</p>
-<h3 id="2-2_最优子结构">2.2 最优子结构</h3>
-<p>动态规划只能应用于有最优子结构的问题。最优子结构的意思是局部最优解能决定全局最优解（对有些问题这个要求并不能完全满足，故有时需要引入一定的近似）。简单地说，问题能够分解成子问题来解决。</p>
-<h2 id="3-_动态规划的三要素">3. 动态规划的三要素</h2>
-<ul>
-<li>最优子结构性质。如果问题的最优解所包含的子问题的解也是最优的，我们就称该问题具有最优子结构性质（即满足最优化原理）。最优子结构性质为动态规划算法解决问题提供了重要线索。</li>
-<li>无后效性。即子问题的解一旦确定，就不再改变，不受在这之后、包含它的更大的问题的求解决策影响。</li>
-<li>子问题重叠性质。子问题重叠性质是指在用递归算法自顶向下对问题进行求解时，每次产生的子问题并不总是新问题，有些子问题会被重复计算多次。动态规划算法正是利用了这种子问题的重叠性质，对每一个子问题只计算一次，然后将其计算结果保存在一个表格中，当再次需要计算已经计算过的子问题时，只是在表格中简单地查看一下结果，从而获得较高的效率。</li>
-</ul>
-<h2 id="4-_动态规划算法的设计步骤：">4. 动态规划算法的设计步骤：</h2>
-<ol>
-<li>刻画最优解的结构特征（寻找最优子结构）</li>
-<li>递归地定义最优解的值（确定状态转移方程）</li>
-<li>计算最优解的值（有两种方法：带备忘录自顶向下法、自底向上法）</li>
-<li>利用计算出的信息构造一个最优解（通常是将具体的最优解输出）</li>
-</ol>
-<h2 id="5-_一般的解法">5. 一般的解法</h2>
-<p>把动态规划的解法分为自顶向下和自底向上两种方式。<br>自顶向下的方式其实就是使用递归来求解子问题，最终解只需要调用递归式，子问题逐步往下层递归的求解。我们可以使用缓存把每次求解出来的子问题缓存起来，下次调用的时候就不必再递归计算了。<br>自底向上是另一种求解动态规划问题的方法，它不使用递归式，而是直接使用循环来计算所有可能的结果，往上层逐渐累加子问题的解。</p>
-<h2 id="6-_LeetCode题">6. LeetCode题</h2>
-<p><strong>1. House Robber题目，转化过来的意思是，一个数组nums[]，求最大的不存在相邻元素的子数组的和。</strong></p>
-<p>用动态规划的递归解法,自顶向下。时间复杂度O(nlogn)，空间复杂度O(1)</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line">//Time Limit Exceeded</div><div class="line">public <span class="keyword">int</span> robRecursiveDP(<span class="keyword">int</span>[] nums, <span class="keyword">int</span> <span class="keyword">length</span>) {</div><div class="line">    <span class="keyword">if</span> (<span class="keyword">length</span> == <span class="number">0</span>) {</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">length</span> == <span class="number">1</span>) {</div><div class="line">        <span class="keyword">return</span> nums[<span class="number">0</span>];</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (<span class="keyword">length</span> == <span class="number">2</span>) {</div><div class="line">        <span class="keyword">return</span> Math.max(nums[<span class="number">0</span>], nums[<span class="number">1</span>]);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">int</span> rob1 = robRecursiveDP(nums, <span class="keyword">length</span> - <span class="number">1</span>);</div><div class="line">    <span class="keyword">int</span> rob2 = robRecursiveDP(nums, <span class="keyword">length</span> - <span class="number">2</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (rob1 == rob2) {</div><div class="line">        <span class="keyword">return</span> rob1 + nums[<span class="keyword">length</span> - <span class="number">1</span>];</div><div class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (rob1 &gt; rob2) {</div><div class="line">        <span class="keyword">return</span> Math.max(rob2 + nums[<span class="keyword">length</span> - <span class="number">1</span>], rob1);</div><div class="line">    } <span class="keyword">else</span> {</div><div class="line">        System.out.println(<span class="string">"data error"</span>);</div><div class="line">        <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<p>动态规划的状态转移方程：<br>dp[i][0] = Math.max(dp[i - 1][0], dp[i - 1][1]);<br>dp[i][1] = num[i - 1] + dp[i - 1][0];</p>
-<p>用动态规划的自底向上解法, 时间复杂度O(n)，空间复杂度O(n)</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 300ms</span></div><div class="line">public <span class="keyword">int</span> robDP(<span class="keyword">int</span>[] num) {</div><div class="line">    <span class="comment">// dp[i][1] means we rob the current house and dp[i][0] means we don't</span></div><div class="line">    <span class="keyword">int</span>[][] dp = new <span class="keyword">int</span>[num.<span class="built_in">length</span> + <span class="number">1</span>][<span class="number">2</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= num.<span class="built_in">length</span>; i++) {</div><div class="line">        dp[i][<span class="number">0</span>] = Math.<span class="built_in">max</span>(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">1</span>]);</div><div class="line">        dp[i][<span class="number">1</span>] = num[i - <span class="number">1</span>] + dp[i - <span class="number">1</span>][<span class="number">0</span>];</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> Math.<span class="built_in">max</span>(dp[num.<span class="built_in">length</span>][<span class="number">0</span>], dp[num.<span class="built_in">length</span>][<span class="number">1</span>]);</div></pre></td></tr></table></figure>
-
-<p>用带备忘录的自底向上动态规划的解法, 时间复杂度O(n)，空间复杂度O(1)</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 250ms</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">rob</span>(<span class="keyword">int</span>[] num) {</div><div class="line">	<span class="keyword">int</span> prevNo = <span class="number">0</span>;</div><div class="line">    <span class="keyword">int</span> prevYes = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> n : num) {</div><div class="line">        <span class="keyword">int</span> temp = prevNo;</div><div class="line">        prevNo = Math.max(prevNo, prevYes);</div><div class="line">        prevYes = n + temp;</div><div class="line">    }</div><div class="line">    <span class="keyword">return</span> Math.max(prevNo, prevYes);</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p><strong>2. House Robber2题目，转化过来的意思是，一个数组nums[], 首尾看成相邻，求最大的不存在相邻元素的子数组的和。</strong></p>
-<p>Actually, extending from the logic that if house i is not robbed, then you are free to choose whether to rob house i + 1, you can break the circle by assuming a house is not robbed.<br>For example, 1 -&gt; 2 -&gt; 3 -&gt; 1 becomes 2 -&gt; 3 if 1 is not robbed.<br>Since every house is either robbed or not robbed and at least half of the houses are not robbed, the solution is simply the larger of two cases with consecutive houses, i.e. house i not robbed, break the circle, solve it, or house i + 1 not robbed. Hence, the following solution. I chose i = n and i + 1 = 0 for simpler coding. But, you can choose whichever two consecutive ones.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line">public <span class="keyword">int</span> robCycle(<span class="keyword">int</span>[] nums) {</div><div class="line">        <span class="keyword">if</span> (nums.<span class="built_in">length</span> == <span class="number">0</span>) {</div><div class="line">            <span class="keyword">return</span> <span class="number">0</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (nums.<span class="built_in">length</span> == <span class="number">1</span>) {</div><div class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>];</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (nums.<span class="built_in">length</span> == <span class="number">2</span>) {</div><div class="line">            <span class="keyword">return</span> Math.<span class="built_in">max</span>(nums[<span class="number">0</span>], nums[<span class="number">1</span>]);</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> Math.<span class="built_in">max</span>(rob(Arrays.copyOfRange(nums, <span class="number">0</span>, nums.<span class="built_in">length</span> - <span class="number">1</span>)),</div><div class="line">                rob(Arrays.copyOfRange(nums, <span class="number">1</span>, nums.<span class="built_in">length</span>)));</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p><strong>3. Maximum Subarray题目，求最大连续子数组和。</strong></p>
-<p>不用动态规划的解法</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> maxSubArray(<span class="keyword">int</span>[] nums) {</div><div class="line">    <span class="keyword">int</span> sumMax = nums[<span class="number">0</span>], <span class="keyword">sum</span> = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> num : nums) {</div><div class="line">        <span class="keyword">sum</span> += num;</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">sum</span> &lt; num) {</div><div class="line">            <span class="keyword">sum</span> = num;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (<span class="keyword">sum</span> &gt;= sumMax) {</div><div class="line">            sumMax = <span class="keyword">sum</span>;</div><div class="line">        }</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">return</span> sumMax;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>动态规划的状态转移方程：dp[i] = Math.max(dp[i - 1] + nums[i - 1], nums[i - 1]);</p>
-<p>用动态规划的自底向上解法, 时间复杂度O(n)，空间复杂度O(n)</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArrayDP</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">    <span class="keyword">int</span> sumMax = nums[<span class="number">0</span>];</div><div class="line">    <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[nums.length + <span class="number">1</span>];</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= nums.length; i++) {</div><div class="line">        dp[i] = Math.max(dp[i - <span class="number">1</span>] + nums[i - <span class="number">1</span>], nums[i - <span class="number">1</span>]);</div><div class="line">        sumMax = Math.max(sumMax, dp[i]);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">return</span> sumMax;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>用带备忘录的自底向上动态规划的解法, 时间复杂度O(n)，空间复杂度O(1)</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxSubArrayDPWithMem</span>(<span class="keyword">int</span>[] nums) {</div><div class="line">    <span class="keyword">int</span> sumMax = nums[<span class="number">0</span>], sumPre = <span class="number">0</span>;</div><div class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= nums.length; i++) {</div><div class="line">        sumPre = Math.max(sumPre + nums[i - <span class="number">1</span>], nums[i - <span class="number">1</span>]);</div><div class="line">        sumMax = Math.max(sumMax, sumPre);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">return</span> sumMax;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p><strong>4. Interleaving String题目，Given s1, s2, s3, find whether s3 is formed by the interleaving of s1 and s2.</strong><br>For example,<br>Given:<br>s1 = “aabcc”,<br>s2 = “dbbca”,<br>When s3 = “aadbbcbcac”, return true.<br>When s3 = “aadbbbaccc”, return false.</p>
-<p>动态规划的递归调用解法，时间复杂度不符合要求。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line">public <span class="type">boolean</span> isInterleaveRecursiveDP(String s1, String s2, String s3) {</div><div class="line">    <span class="keyword">if</span> (s3.<span class="property">length</span>() != s1.<span class="property">length</span>() + s2.<span class="property">length</span>()) {</div><div class="line"><span class="command">        return</span> <span class="constant">false</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (s1.<span class="property">length</span>() == <span class="number">0</span> && s2.<span class="property">length</span>() == <span class="number">0</span> && s3.<span class="property">length</span>() == <span class="number">0</span>) {</div><div class="line"><span class="command">        return</span> <span class="constant">true</span>;</div><div class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (s3.<span class="property">length</span>() == <span class="number">0</span>) {</div><div class="line"><span class="command">        return</span> <span class="constant">false</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    String newS3 = s3.substring(<span class="number">0</span>, s3.<span class="property">length</span>() - <span class="number">1</span>);</div><div class="line">    String newS1 = s1.<span class="property">length</span>() &gt; <span class="number">0</span> ? s1.substring(<span class="number">0</span>, s1.<span class="property">length</span>() - <span class="number">1</span>) : <span class="string">""</span>;</div><div class="line">    String newS2 = s2.<span class="property">length</span>() &gt; <span class="number">0</span> ? s2.substring(<span class="number">0</span>, s2.<span class="property">length</span>() - <span class="number">1</span>) : <span class="string">""</span>;</div><div class="line"></div><div class="line">    <span class="type">boolean</span> equalS1 = s1.<span class="property">length</span>() &gt; <span class="number">0</span> && (s1.charAt(s1.<span class="property">length</span>() - <span class="number">1</span>) == s3.charAt(s3.<span class="property">length</span>() -</div><div class="line">            <span class="number">1</span>));</div><div class="line">    <span class="type">boolean</span> equalS2 = s2.<span class="property">length</span>() &gt; <span class="number">0</span> && s2.charAt(s2.<span class="property">length</span>() - <span class="number">1</span>) == s3.charAt(s3.<span class="property">length</span>() -</div><div class="line">            <span class="number">1</span>);</div><div class="line"></div><div class="line">    <span class="keyword">if</span> (equalS1 && !equalS2) {</div><div class="line"><span class="command">        return</span> isInterleaveRecursiveDP(newS1, s2, newS3);</div><div class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (!equalS1 && equalS2) {</div><div class="line"><span class="command">        return</span> isInterleaveRecursiveDP(s1, newS2, newS3);</div><div class="line">    } <span class="keyword">else</span> <span class="keyword">if</span> (equalS1 && equalS2) {</div><div class="line"><span class="command">        return</span> isInterleaveRecursiveDP(newS1, s2, newS3) || isInterleaveRecursiveDP(s1, newS2, newS3);</div><div class="line">    } <span class="keyword">else</span> {</div><div class="line"><span class="command">        return</span> <span class="constant">false</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>动态规划带备忘录自底向上的解法，难点就在于如何将解法1的递归公式转化为动态转移方程，下述代码构造的二维数组很好地诠释了这一点。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line">public <span class="type">boolean</span> isInterleaveDP(String s1, String s2, String s3) {</div><div class="line">    <span class="keyword">if</span> (s3.<span class="property">length</span>() != s1.<span class="property">length</span>() + s2.<span class="property">length</span>())</div><div class="line"><span class="command">        return</span> <span class="constant">false</span>;</div><div class="line"></div><div class="line">    <span class="type">boolean</span>[][] table = new <span class="type">boolean</span>[s1.<span class="property">length</span>() + <span class="number">1</span>][s2.<span class="property">length</span>() + <span class="number">1</span>];</div><div class="line"></div><div class="line">    <span class="keyword">for</span> (int i = <span class="number">0</span>; i &lt; s1.<span class="property">length</span>() + <span class="number">1</span>; i++)</div><div class="line">        <span class="keyword">for</span> (int j = <span class="number">0</span>; j &lt; s2.<span class="property">length</span>() + <span class="number">1</span>; j++) {</div><div class="line">            <span class="keyword">if</span> (i == <span class="number">0</span> && j == <span class="number">0</span>)</div><div class="line">                table[i][j] = <span class="constant">true</span>;</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (i == <span class="number">0</span>)</div><div class="line">                table[i][j] = (table[i][j - <span class="number">1</span>] && s2.charAt(j - <span class="number">1</span>) == s3.charAt(i + j - <span class="number">1</span>));</div><div class="line">            <span class="keyword">else</span> <span class="keyword">if</span> (j == <span class="number">0</span>)</div><div class="line">                table[i][j] = (table[i - <span class="number">1</span>][j] && s1.charAt(i - <span class="number">1</span>) == s3.charAt(i + j - <span class="number">1</span>));</div><div class="line">            <span class="keyword">else</span></div><div class="line">                table[i][j] = (table[i - <span class="number">1</span>][j] && s1.charAt(i - <span class="number">1</span>) == s3.charAt(i + j - <span class="number">1</span>) ||</div><div class="line">                        (table[i][j - <span class="number">1</span>] && s2.charAt(j - <span class="number">1</span>) == s3.charAt(i + j - <span class="number">1</span>)));</div><div class="line">        }</div><div class="line"><span class="command"></span></div><div class="line">    return table[s1.<span class="property">length</span>()][s2.<span class="property">length</span>()];</div><div class="line">}</div></pre></td></tr></table></figure>
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/05/21/动态规划算法/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/5/">Next<span></span></a>
@@ -1398,9 +1359,9 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>6</sup></a></li>
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		
