@@ -27,6 +27,7 @@
 希望在反序列化 json 到 bean 时，对于 json 中未出现的字段，在 bean 中赋上默认值。
 例如Person 类如下：
 12345678@Data@AllArgsConstructor@NoArgsConstructor@JsonIgnoreProperties(ignoreUnknown = true)public class Person {  private St">
+<meta property="og:image" content="/img/jackson_constructor.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="lombok的AllArgsConstructor注解导致Jackson反序列化后丢失字段默认值">
 <meta name="twitter:description" content="要解决的问题
@@ -180,7 +181,8 @@ var _hmt = _hmt || [];
 <p>那问题就是 @AllArgsConstructor 生成的全参函数有不同之处，jackson 能够识别出来并用于反序列化。查看 jar 包中 Person 类的代码发现其全参构造函数如下：</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@ConstructorProperties</span>({<span class="string">"name"</span>, <span class="string">"address"</span>})</div><div class="line"><span class="keyword">public</span> <span class="title">Person</span>(String name, String address){</div><div class="line">        <span class="keyword">this</span>.name = name;</div><div class="line">        <span class="keyword">this</span>.address = address;</div><div class="line">}</div></pre></td></tr></table></figure>
 
-<p>所以，区别就是 <code>@ConstructorProperties({&quot;name&quot;, &quot;address&quot;})</code> 这个注解，这个注解的作用是指定构造函数参数的名字，Spring 可根据参数的名字注入 bean。<br>但最终为什么这样注解了，jackson 就调用了全参构造函数还不得而知，猜测是 jackson 在 <code>_findRootDeserializer</code> 这一步时，是找最适合的构造函数。</p>
+<p>所以，区别就是 <code>@ConstructorProperties({&quot;name&quot;, &quot;address&quot;})</code> 这个注解，这个注解的作用是指定构造函数参数的名字，Spring 可根据参数的名字注入 bean。</p>
+<p>(补充自 liwei)<br>jackson 调用了全参构造函数的原因在于@AllArgsConstructor 的构造函数有ConstructorProperties ,jackson在选择构造函数的时候会调用BasicDeserializerFactory._addDeserialzerContructors方法，他首先选择无参构造函数，并遍历所有的构造函数，如果存在具有@ConstructProperties注解的构造函数，则把该构造函数作为默认创建bean的构造函数，如下：<br><img src="/img/jackson_constructor.png" alt=""></p>
 <p>可以通过设置 @AllArgsConstructor(suppressConstructorProperties=true) 来禁用 @ConstructorProperties.</p>
 <h1 id="结论">结论</h1>
 <p>Lombok 的 @AllArgsConstructor 注解导致 Jackson 反序列化时调用了全参构造函数，将没有出现的字段都赋值为 null 了。</p>
