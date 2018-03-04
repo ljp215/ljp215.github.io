@@ -91,6 +91,190 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/03/04/拉格朗日乘子法/" title="拉格朗日乘子法" itemprop="url">拉格朗日乘子法</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-04T12:23:40.000Z" itemprop="datePublished"> Published Mar 4 2018</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="拉格朗日乘子法">拉格朗日乘子法</h2>
+<h3 id="定义">定义</h3>
+<p>在数学中的最优化问题中，拉格朗日乘数法（以数学家约瑟夫·拉格朗日命名）是一种寻找多元函数在其变量受到一个或多个条件的约束时的极值的方法。这种方法可以将一个有n个变量与k个约束条件的最优化问题转换为一个解有n + k个变量的方程组的解的问题。这种方法中引入了一个或一组新的未知数，即拉格朗日乘数，又称拉格朗日乘子，或拉氏乘子，它们是在转换后的方程，即约束方程中作为梯度（gradient）的线性组合中各个向量的系数。</p>
+<p><img src="img/lagrange_definition.jpg" alt=""></p>
+<h3 id="用处">用处</h3>
+<p>现要解决以下问题，在满足 g(x,y)=c 这个等式的前提下，求 f(x,y) 函数的最小值（最大值道理相同）。这样的问题我们在高中的时候就遇到过了，只不过高中时遇到的限制条件 g(x,y)=c 都比较简单，一般而言都可以将 y 用 x 的式子表示出来，然后用变量替换的方法代回 f(x,y) 求解。但是，如果 g(x,y) 的形式过于复杂，或者变量太多时，这种方法就失效了。而拉格朗日乘子法就是解决这类问题的通用策略。</p>
+<h2 id="二维函数的例子">二维函数的例子</h2>
+<p>设 $f(x,y)=x^2+y^2$, 约束条件为： $g(x,y)=xy−1=0$。<br>将三维的 $ f(x,y)$ 图像投影到二维平面上，为下图中红色曲线，也称为 $f(x,y)$ 的等高线。g(x,y) 为图中蓝色曲线。</p>
+<p><img src="img/lagrange_multiplier.jpg" alt="IMAGE"></p>
+<p>沿着蓝线往内部的圆走，经过橙色点，此时不是最优解，当走到黑色点时，找到了最优解。此时可认为找到了在蓝线这个限制条件下 $f(x,y )$ 的最低点。</p>
+<p>拉格朗日观察到，黑点位置，蓝线与圆是相切的，而橙点位置显然不满足这个性质。且拉格朗日还指出黑点位置蓝线与圆一定是相切的，这正是拉格朗日乘子法的核心。</p>
+<p>在最低点，蓝线的切线方向都指向橙线的等高线方向。换句话说，在切点的位置沿蓝线移动很小的一步，都相当于在橙线的等高线上移动，这个时候，可以认为函数值已经趋于稳定了。所以，我们认为这个点的值“可能”是最低（高）的。<br>相切，意味着在切点的位置，等高线和蓝色曲线的等高线方向是平行的，考虑到梯度与等高线垂直，我们可以用两条曲线的梯度平行来求出切点位置（最低点）。</p>
+<p>所以有：∇f=λ∇g，其中 λ 表示一个标量，因为我们虽然能保证两个梯度平行，但不能保证它们的长度一样（或者方向相同）。在高维函数中，∇f 表示的是函数在各个自变量方向的偏导。对于上面的例子，我们可以求出函数 f 和 g 的偏导，再根据方程组(1)：<br>$\frac{∂f}{∂x}=λ\frac{∂g}{∂x}$<br>$\frac{∂f}{∂y}=λ\frac{∂g}{∂y}$<br>$g(x,y)=0$</p>
+<p>求解时，使用一个统一的拉格朗日函数：$L(x,y,λ)=f(x,y)+λg(x,y)$，令这个函数偏导为 0，可以得到方程组(2)：<br>$\frac{∂L}{∂x}=\frac{∂f}{∂x}−λ\frac{∂g}{∂x}=0$<br>$\frac{∂L}{∂y}=\frac{∂f}{∂y}−λ\frac{∂g}{∂y}=0$<br>$\frac{∂L}{∂λ}=g(x,y)=0$</p>
+<p>可以发现方程组(2)与方程组(1)一样，联立以上三式即可求出 x, y, λ 的值。</p>
+<p>如果是多个约束条件，则拉格朗日函数为：<br>$L(x_1,…,x_n,λ_1,…,λ_k)=f(x1,…,xn)−\sum_{j=1}^{k}λ_jg_j(x_1,…,x_n)$</p>
+<p>二维情况下的另一个图示，便于理解两个曲线的梯度变化情况：<br><img src="img/lagrange_multiplier_2.jpg" alt="IMAGE"></p>
+<h3 id="局限性">局限性</h3>
+<p>根据拉格朗日乘子法的定义，这是一种寻找极值的策略，换句话说，该方法并不能保证找到的一定是最低点或者最高点。事实上，它只是一种寻找极值点的过程，而且，拉格朗日乘子法找到的切点可能不只一个（也就是上面的方程组可能找到多个解），例如下图：<br><img src="img/lagrange_multiplier_3.jpg" alt="IMAGE"></p>
+<h2 id="KKT条件">KKT条件</h2>
+<p>已经解决的在等式约束条件下的求函数极值的问题，那不等式约束条件下，应该如何解决呢？</p>
+<p>有不等式约束条件的最优化问题描述如下:<br>$min.:f(x)$<br>$s.t.:$<br>    $g_i(x) ≤ 0, i=1,2,…,p,$<br>    $h_j(x) = 0, j=1,2,…,q,$<br>    $x∈Ω⊂Rn$<br>其中. $f(x)$为目标函数, $g_i(x)≤0,i=1,2,…,p$ 为不等式约束条件, $h_j(x)=0,k=1,2,…,q$为等式约束条件。</p>
+<p>这就需要引出 KKT 条件(Karush-Kuhn-Tucker Conditions)，是指在满足一些有规则的条件下, 一个非线性规划(Nonlinear Programming)问题能有最优化解法的一个必要和充分条件，这是一个广义化拉格朗日乘数的成果。</p>
+<p>可以发现最优解要么在 $g_i(x) = 0$ 上，要么在 $g_i(x) &lt; 0$ 范围内。</p>
+<p>定义不等式约束下的拉格朗日函数L：<br>$$L(x,λ,μ)=f(x)+\sum_{i=1}^{p}μ_ig_i(x)+\sum_{j=1}^{q}λ_jh_j(x)$$</p>
+<p>所谓 KKT 最优化条件，就是指上式的最优点$x^<em>$必须满足下面的条件:<br>1) 约束条件满足 $g_i(x^</em>)≤0,i=1,2,…,p$, 以及$h_j(x^<em>)=0,j=1,2,…,q$<br>2) $∇f(x^</em>)+\sum_{i=1}^{p}μ_i∇g_i(x^<em>)+\sum_{j=1}^{q}λ_j∇h_j(x^</em>)=0$, 其中$∇$为梯度算子，也就是 L(x,u,λ) 对 x 求导为 0<br>3) $λ_j≠0$ 且不等式约束条件满足 $μ_i≥0$, $μ_ig_i(x^*)=0,i=1,2,…,p$，因为 $g(x)&lt;=0$，如果要满足这个等式，必须 $a=0$ 或者 $g(x)=0$</p>
+<p><img src="img/lagrange_KKT.jpg" alt="IMAGE"></p>
+<h2 id="Reference">Reference</h2>
+<blockquote>
+<p><a href="http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/" target="_blank" rel="external">http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/</a><br><a href="https://www.zhihu.com/question/38586401/answer/134473412" target="_blank" rel="external">https://www.zhihu.com/question/38586401/answer/134473412</a><br><a href="https://zhuanlan.zhihu.com/p/27731819" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/27731819</a><br><a href="http://blog.csdn.net/Mr_KkTian/article/details/53750424" target="_blank" rel="external">http://blog.csdn.net/Mr_KkTian/article/details/53750424</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/数学/">数学</a><a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2018/03/04/拉格朗日乘子法/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/04/导数与微分/" title="导数与微分" itemprop="url">导数与微分</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-04T12:16:31.000Z" itemprop="datePublished"> Published Mar 4 2018</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="连续">连续</h2>
+<p>设 $y=f(x)$ 在 $x_0$ 有定义，若<br>$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$<br>则函数 $f(x)$ 在点 $x_0$ 处连续。</p>
+<p>另外一种定义：<br>在点 $x_0$ 附近，如果自变量的该变量是无穷小时，对应的因变量的该变量也是无穷小，则这个函数在点 $x_0$ 处连续。</p>
+<p>通俗地说，所谓“连续”，就是不间断。放到函数上，就是没有“断点”（但是可以有“拐点”）。</p>
+<p>二元函数的连续性定义与一元函数类似。</p>
+<h2 id="导数">导数</h2>
+<p>导数（Derivative）是微积分学中重要的基础概念。一个函数在某一点的导数描述了这个函数在这一点附近的变化率。导数的本质是通过极限的概念对函数进行局部的线性逼近。</p>
+<p>导数的几何定义是：曲线上的纵坐标对点的横坐标的导数是曲线在该点的切线的斜率。</p>
+<p>导数的物理意义之一是：位移s对时间t的导数是瞬时速度，即 $v=\frac{ds}{dt}$</p>
+<h3 id="可导">可导</h3>
+<h3 id="定义">定义</h3>
+<p>函数可导定义：<br>（1）设 f(x)在 $x_0$ 及其附近有定义,则当  $\displaystyle\lim_{\Delta{x}\to0}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$ 存在, 则称 f(x) 在 $x_0$ 处可导。<br>（2）若对于区间 (a,b) 上任意一点 (x，f(x)) 均可导，则称 f(x) 在 (a，b) 上可导。</p>
+<p>左导数：$\displaystyle\lim_{\Delta{x}\to0^-}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$<br>右导数：$\displaystyle\lim_{\Delta{x}\to0^+}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$</p>
+<p>连续函数可导条件：函数在该点的左右偏导数都存在且相等。<br>即就是一个函数在某一点求极限，如果极限存在，则为可导，若所得导数等于函数在该点的函数值，则函数为连续可导函数，否则为不连续可导函数。</p>
+<h2 id="微分">微分</h2>
+<p>在数学中，微分是对函数的局部变化率的一种线性描述。微分可以近似地描述当函数自变量的取值作足够小的改变时，函数的值是怎样改变的。</p>
+<h3 id="定义-1">定义</h3>
+<p>若 y=f(x) 在处可导，则函数的增量，<br>$\Delta{y}=f(x+\Delta{x})-f(x)=f’(x)\Delta{x}+\alpha(\Delta{x})\Delta{x}$<br>其中 $\alpha(\Delta{x})$ 是$\Delta{x}(\Delta{x} \to 0)$ 的高阶无穷小。<br>称 $f’(x)\Delta{x}$ 为 $f(x)$ 在 $x$ 处的微分。<br>而 $f’(x)$ 是 $f(x)$ 在 $x$ 处的导数。</p>
+<h3 id="可微">可微</h3>
+<p>设函数$y= f(x)$，若自变量在点x的改变量Δx与函数相应的改变量Δy有关系$Δy=AΔx+ο(Δx)$<br>其中A与Δx无关，则称函数f(x)在点x可微，并称AΔx为函数f(x)在点x的微分，记作dy，即$dy=AΔx$<br>当$x=x_0$时，则记作$dy∣x=x_0$.</p>
+<p>可微条件：<br>必要条件：若函数在某点可微，则该函数在该点对x和y的偏导数必存在。<br>充分条件：若函数对x和y的偏导数在这点的某一邻域内都存在，且均在这点连续，则该函数在这点可微。</p>
+<p>连续但不可微的例子：<br><img src="/img/function_ differential_counterexample.jpg" alt=""><br>魏尔斯特拉斯函数连续，但在任一点都不可微</p>
+<h2 id="连续，可导，可微的关系">连续，可导，可微的关系</h2>
+<ul>
+<li>一元函数：可导必然连续，连续推不出可导，可导与可微等价。</li>
+<li>多元函数：可偏导与连续之间没有联系，也就是说可偏导推不出连续，连续推不出可偏导。</li>
+<li>多元函数中可微必可偏导，可微必连续，可偏导推不出可微，但若一阶偏导具有连续性则可推出可微。</li>
+</ul>
+<h2 id="全微分">全微分</h2>
+<p>对于多元函数，如果两个自变量都变化的话，这时候函数的微分就称为全微分。如果函数z=f(x,y)在(x,y)处的全增量$\Delta z=f(x+\Delta x,y+\Delta y)-f(x,y)$可以写成$\Delta z=A\Delta x+B\Delta y+o(\rho)$，<br>取其线性主部，称为二元函数的全微分 $\Delta z=A\Delta x+B\Delta y$</p>
+<p>可以证明全微分又可写成$dz=f_x dx+f_ydy =\frac{\partial z}{\partial x}dx+\frac{\partial z}{\partial y}dy$</p>
+<p>上式又称为全微分的叠加原理。可以这么理解：全增量包含两个部分，$\Delta x$引起的函数值增量和$\Delta y$引起的函数值增量。</p>
+<p>一句话感性说全微分其实就在表达曲面在某一点处的切平面。</p>
+<h2 id="梯度">梯度</h2>
+<p>梯度的本意是一个向量（矢量），表示某一函数在该点处的方向导数沿着该方向取得最大值，即函数在该点处沿着该方向（此梯度的方向）变化最快，变化率最大（为该梯度的模）。</p>
+<p>例如：在一元函数 f(x) 中，梯度只能沿 x 轴正方向或负方向，而在二元函数 f(x,y) 中，梯度则是一个二维向量 (∂f/∂x,∂f/∂y)。</p>
+<p>梯度一个重要的性质：梯度跟函数等高线是垂直的。<br>证明：<br>假设 Δx，Δy 是两个极小的变化量，根据全微分的知识，可以得到：<br>f(x+Δx,y+Δy)≈f(x,y)+∂f∂xΔx+∂f∂yΔy<br>如果 (Δx,Δy) 是在等高线方向的增量，那么 f(x+Δx,y+Δy)≈f(x,y)，这意味着 ∂f∂xΔx+∂f∂yΔy=0，换句话说，向量 ∇f 和向量 (Δx,Δy) 的内积为 0。所以，梯度和函数的等高线是垂直的。</p>
+<h1 id="Referen">Referen</h1>
+<p><a href="http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/" target="_blank" rel="external">http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/数学/">数学</a><a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2018/03/04/导数与微分/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/02/25/概率论知识/" title="概率论知识" itemprop="url">概率论知识</a>
   </h1>
   <p class="article-author">By
@@ -146,7 +330,7 @@ var _hmt = _hmt || [];
 
   <div class="article-tags">
   
-  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  <span></span> <a href="/tags/数学/">数学</a><a href="/tags/机器学习/">机器学习</a>
   </div>
 
 </div>
@@ -871,244 +1055,9 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/" title="Stanford Machine Learning - 3 线性回归的概率解释" itemprop="url">Stanford Machine Learning - 3 线性回归的概率解释</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-05T14:04:40.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="1-_欠拟合与过拟合">1. 欠拟合与过拟合</h2>
-<p>欠拟合：underfitting，与训练数据贴合的不够好，不能准确预测未来目标值。<br>过拟合：overfitting，与训练数据贴合的太好了，预测未来目标值的准确性有较大风险。</p>
-<p><img src="/img/LR_underfitting_and_overfitting.png" alt=""></p>
-<h2 id="2-_线性模型的概率解释">2. 线性模型的概率解释</h2>
-<p>思考：我们为什么要用最小二乘的指标作为 cost function？为什么不是绝对值或四次方？</p>
-<blockquote>
-<p>最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。<br>最小二乘是从函数形式上来看的，极大似然是从概率意义上来看的。事实上，最小二乘可以由高斯噪声假设+极大似然估计推导出来。当然极大似然估计还可以推导出其他的loss function， 比如logistic回归中，loss function是交叉熵。<br><a href="http://www.cnblogs.com/little-YTMM/p/5700226.html" target="_blank" rel="external">最大似然估计与最小二乘估计的区别</a></p>
-</blockquote>
-<p>一般的最小二乘法实际上是在假设误差项满足高斯分布且独立同分布的情况下，使似然性最大化。</p>
-<h3 id="推导过程">推导过程</h3>
-<p>回到预测房价的例子，假设最终的预测函数，每一次预测都有误差，用$ε^{(i)}$表示误差，则预测函数可以写为：<br>$$y^{(i)}=\theta^Tx^{(i)} + ε^{(i)} $$</p>
-<p>其中，误差是随机分布的，均值为 0，服从高斯分布 $N(0,σ^2)$。</p>
-<blockquote>
-<p>Andrew Ng 讲到在大多数情况下，线性回归的误差值如果综合来看，就是符合高斯分布的。并且根据中心极限定律，正态分布确实是对误差项分布的合理猜想。</p>
-</blockquote>
-<p>所以<br>$$P(y^{(i)}|x^{(i)}; θ) = \frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})$$</p>
-<p>$P(y^{(i)}|x^{(i)}; θ)$ 表示：在 θ 为给定的参数的情况下，概率 $y^{(i)}$ 以 $x^{(i)}$ 为随机变量的概率分布，注意 θ 不是随机变量。</p>
-<p>由于 ε(i) 是独立的同分布（IID：independentlyidentically distribution），所以以 θ 为变量的似然函数为：<br>$$<br>L(θ)=L(θ;X,Y)=p(Y|X;θ) = \prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$</p>
-<p>对 L(θ) 取对数有：<br>$$<br>l(\theta)=logL(\theta)<br>= log\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$<br>$$<br>= m\sum_{i=1}^{m}log\frac{1}{\sqrt{2\pi}\sigma} - \frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2<br>$$</p>
-<p>最大化 $l(\theta)$ 即是最小化 $\frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2$，这样就是 cost function.</p>
-<p>由于目标变量服从正态分布，但分布的均值和方差都未知，对均值和方差两个参数的合理估计是选取两个参数使得在正态分布的前提下，抽到各样本中的 y 值的概率最大，这就是最大似然估计的思想。</p>
-<h1 id="Reference">Reference</h1>
-<p><a href="http://www.holehouse.org/mlclass/07_Regularization.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/07_Regularization.html</a><br><a href="http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html" target="_blank" rel="external">http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html</a><br><a href="https://rpubs.com/badbye/ml03" target="_blank" rel="external">https://rpubs.com/badbye/ml03</a><br><a href="http://www.qiujiawei.com/linear-algebra-15/" target="_blank" rel="external">http://www.qiujiawei.com/linear-algebra-15/</a><br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="external">最大似然估计</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/机器学习/">机器学习</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" title="Stanford Machine Learning - 2 线性回归进阶" itemprop="url">Stanford Machine Learning - 2 线性回归进阶</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-05T14:00:04.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="1-_多变量的线性回归">1. 多变量的线性回归</h2>
-<p>n: 特征(features) 数量<br>m: 训练集数量<br>$x^{(i)}$: </p>
-<ul>
-<li>表示一条训练数据的向量</li>
-<li>i is an index into the training set</li>
-<li>So <ul>
-<li>x is an n-dimensional feature vector</li>
-<li>$x^{(3)}$ is, for example, the 3rd training data</li>
-</ul>
-</li>
-</ul>
-<p>$x^{(j)}_i$: The value of feature j in the ith training example</p>
-<p>例如，当 n=4 时:<br>$$h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4$$</p>
-<p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：<br>$$h_θ(x)=θ^TX$$<br>$θ^T$: [1 * (n+1)] matrix</p>
-<h3 id="1-1_多变量的梯度下降">1.1 多变量的梯度下降</h3>
-<h3 id="Cost_Function">Cost Function</h3>
-<p>$$J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}$$</p>
-<h3 id="Gradient_descent">Gradient descent</h3>
-<p>Repeat {<br>  $$ θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>}</p>
-<p>every iterator</p>
-<ul>
-<li>θj = θj - learning rate (α) times the partial derivative of J(θ) with respect to θJ(…)</li>
-<li>We do this through a simultaneous update of every θj value</li>
-</ul>
-<p>$$ \frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>$$ = \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)} $$</p>
-<h2 id="2-_Gradient_Decent_in_practice">2. Gradient Decent in practice</h2>
-<h3 id="2-1_Feature_Scaling">2.1 Feature Scaling</h3>
-<p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
-<h3 id="Learning_Rate_α">Learning Rate α</h3>
-<ul>
-<li>working correctly: If gradient descent is working then J(θ) should decrease after every iteration</li>
-<li>convergence: 收敛是指每经过一次迭代，J(θ)的值都变化甚小。</li>
-<li>choose α<ol>
-<li>When to use a smaller α<ul>
-<li>If J(θ) is increasing, see below picture</li>
-<li>If J(θ) looks like a series of waves, decreasing and increasing again</li>
-<li>But if α is too small then rate is too slow</li>
-</ul>
-</li>
-<li>Try a range of α values<ul>
-<li>Plot J(θ) vs number of iterations for each version of alpha</li>
-<li>Go for roughly threefold increases: 0.001, 0.003, 0.01, 0.03. 0.1, 0.3</li>
-</ul>
-</li>
-</ol>
-</li>
-</ul>
-<p><img src="/img/gradient_descent_plot.jpg" alt=""></p>
-<h2 id="2-2_Features_and_polynomial_regression">2.2 Features and polynomial regression</h2>
-<h3 id="Can_create_new_features">Can create new features</h3>
-<p>如何选择 features 和表达式尤为关键，例如房价与房子的长，房子的宽组成的表达式就会麻烦很多，若将房子的长乘以房子的宽得出面积，则有房价与房子面积的表达式，将会更容易拟合出房价的走势。</p>
-<h3 id="Polynomial_regression">Polynomial regression</h3>
-<p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
-<p><strong>所以选择合适的 Features 和 Polynomial regression 都非常重要。</strong></p>
-<p><img src="/img/polynomial_regression_choose.jpg" alt=""></p>
-<h2 id="3-_Normal_equation_求解多变量线性回归">3. Normal equation 求解多变量线性回归</h2>
-<h3 id="3-1_Normal_equation">3.1 Normal equation</h3>
-<p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 $$ \frac{d}{dθ}J(θ)=2aθ+b=0$$ 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
-<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：<br>$$ J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2} $$<br>只需要令：<br>$$ \frac\partial{\partial θ_j}J(θ_0, θ_1, …,θ_n) = … = 0 $$，其中 j = 0,1,2,…,n<br>设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m*n) 的矩阵，y 为 (m*1) 的矩阵，可以推导出求 θ 向量的公式如下：<br>$$θ = (X^TX)^{-1}X^Ty$$</p>
-<h2 id="4-_Gradient_descent_Vs_Normal_equation">4. Gradient descent Vs Normal equation</h2>
-<h3 id="Gradient_descent-1">Gradient descent</h3>
-<ul>
-<li>Need to chose learning rate</li>
-<li>Needs many iterations - could make it slower</li>
-<li>Works well even when n is massive (millions)</li>
-<li>Better suited to big data</li>
-<li>What is a big n though: 100 or even a 1000 is still (relativity) small, If n is 10000 then look at using gradient descent</li>
-<li>适用于线性回归会逻辑回归</li>
-</ul>
-<h3 id="Normal_equation">Normal equation</h3>
-<ul>
-<li>No need to chose a learning rate</li>
-<li>No need to iterate, check for convergence etc.</li>
-<li>Normal equation needs to compute $(X^TX)^{-1}$<ul>
-<li>This is the inverse of an n x n matrix</li>
-<li>With most implementations computing a matrix inverse grows by O(n3), So not great</li>
-</ul>
-</li>
-<li>Slow of n is large, Can be much slower</li>
-<li>仅适用于线性回归</li>
-</ul>
-<h2 id="5-_局部加权线性回归">5. 局部加权线性回归</h2>
-<p>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：<br>$$J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2$$</p>
-<p>其中<br>$$ w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})$$</p>
-<p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
-<p>$\tau^2$ 是波长函数(bandwidth)， 控制权重随距离下降的速度，τ 越小则 x 离 $x^{(i)}$ 越远时 $w^{(i)}$ 的值下降的越快。</p>
-<p>所以，如果沿着 x 轴的每个点都进行局部直线拟合，那么你会发现对于这个数据集合来说，局部加权的预测结果，能够最终跟踪这条非线性的曲线。</p>
-<p>但局部加权回归也有其缺点：</p>
-<ul>
-<li>每次对一个点的预测都需要整个数据集的参与，样本量大且需要多点预测时效率低。提高效率的方法参考 Andrew More’s KD Tree</li>
-<li>不可外推，对样本所包含的区域外的点进行预测时效果不好，事实上这也是一般线性回归的弱点</li>
-</ul>
-<p>对于线性回归算法，一旦拟合出适合训练数据的参数θ，保存这些参数θ，对于之后的预测，不需要再使用原始训练数据集，所以是参数学习算法。</p>
-<p>对于局部加权线性回归算法，每次进行预测都需要全部的训练数据（每次进行的预测得到不同的参数θ），没有固定的参数θ，所以是非参数算法(non-parametric algorithm)。</p>
-<h2 id="Reference">Reference</h2>
-<blockquote>
-<p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/机器学习/">机器学习</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1129,11 +1078,13 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>9</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+		
+			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
 		
 			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
 		
@@ -1145,23 +1096,21 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
 		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
 		
 			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
 		
-			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
-		
 			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
 		
 			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
 		
-			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
-		
 			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
 		
-			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
 		
 			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		

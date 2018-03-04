@@ -91,6 +91,241 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/" title="Stanford Machine Learning - 3 线性回归的概率解释" itemprop="url">Stanford Machine Learning - 3 线性回归的概率解释</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T14:04:40.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_欠拟合与过拟合">1. 欠拟合与过拟合</h2>
+<p>欠拟合：underfitting，与训练数据贴合的不够好，不能准确预测未来目标值。<br>过拟合：overfitting，与训练数据贴合的太好了，预测未来目标值的准确性有较大风险。</p>
+<p><img src="/img/LR_underfitting_and_overfitting.png" alt=""></p>
+<h2 id="2-_线性模型的概率解释">2. 线性模型的概率解释</h2>
+<p>思考：我们为什么要用最小二乘的指标作为 cost function？为什么不是绝对值或四次方？</p>
+<blockquote>
+<p>最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。<br>最小二乘是从函数形式上来看的，极大似然是从概率意义上来看的。事实上，最小二乘可以由高斯噪声假设+极大似然估计推导出来。当然极大似然估计还可以推导出其他的loss function， 比如logistic回归中，loss function是交叉熵。<br><a href="http://www.cnblogs.com/little-YTMM/p/5700226.html" target="_blank" rel="external">最大似然估计与最小二乘估计的区别</a></p>
+</blockquote>
+<p>一般的最小二乘法实际上是在假设误差项满足高斯分布且独立同分布的情况下，使似然性最大化。</p>
+<h3 id="推导过程">推导过程</h3>
+<p>回到预测房价的例子，假设最终的预测函数，每一次预测都有误差，用$ε^{(i)}$表示误差，则预测函数可以写为：<br>$$y^{(i)}=\theta^Tx^{(i)} + ε^{(i)} $$</p>
+<p>其中，误差是随机分布的，均值为 0，服从高斯分布 $N(0,σ^2)$。</p>
+<blockquote>
+<p>Andrew Ng 讲到在大多数情况下，线性回归的误差值如果综合来看，就是符合高斯分布的。并且根据中心极限定律，正态分布确实是对误差项分布的合理猜想。</p>
+</blockquote>
+<p>所以<br>$$P(y^{(i)}|x^{(i)}; θ) = \frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})$$</p>
+<p>$P(y^{(i)}|x^{(i)}; θ)$ 表示：在 θ 为给定的参数的情况下，概率 $y^{(i)}$ 以 $x^{(i)}$ 为随机变量的概率分布，注意 θ 不是随机变量。</p>
+<p>由于 ε(i) 是独立的同分布（IID：independentlyidentically distribution），所以以 θ 为变量的似然函数为：<br>$$<br>L(θ)=L(θ;X,Y)=p(Y|X;θ) = \prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$</p>
+<p>对 L(θ) 取对数有：<br>$$<br>l(\theta)=logL(\theta)<br>= log\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$<br>$$<br>= m\sum_{i=1}^{m}log\frac{1}{\sqrt{2\pi}\sigma} - \frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2<br>$$</p>
+<p>最大化 $l(\theta)$ 即是最小化 $\frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2$，这样就是 cost function.</p>
+<p>由于目标变量服从正态分布，但分布的均值和方差都未知，对均值和方差两个参数的合理估计是选取两个参数使得在正态分布的前提下，抽到各样本中的 y 值的概率最大，这就是最大似然估计的思想。</p>
+<h1 id="Reference">Reference</h1>
+<p><a href="http://www.holehouse.org/mlclass/07_Regularization.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/07_Regularization.html</a><br><a href="http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html" target="_blank" rel="external">http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html</a><br><a href="https://rpubs.com/badbye/ml03" target="_blank" rel="external">https://rpubs.com/badbye/ml03</a><br><a href="http://www.qiujiawei.com/linear-algebra-15/" target="_blank" rel="external">http://www.qiujiawei.com/linear-algebra-15/</a><br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="external">最大似然估计</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/" title="Stanford Machine Learning - 2 线性回归进阶" itemprop="url">Stanford Machine Learning - 2 线性回归进阶</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T14:00:04.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_多变量的线性回归">1. 多变量的线性回归</h2>
+<p>n: 特征(features) 数量<br>m: 训练集数量<br>$x^{(i)}$: </p>
+<ul>
+<li>表示一条训练数据的向量</li>
+<li>i is an index into the training set</li>
+<li>So <ul>
+<li>x is an n-dimensional feature vector</li>
+<li>$x^{(3)}$ is, for example, the 3rd training data</li>
+</ul>
+</li>
+</ul>
+<p>$x^{(j)}_i$: The value of feature j in the ith training example</p>
+<p>例如，当 n=4 时:<br>$$h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4$$</p>
+<p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：<br>$$h_θ(x)=θ^TX$$<br>$θ^T$: [1 * (n+1)] matrix</p>
+<h3 id="1-1_多变量的梯度下降">1.1 多变量的梯度下降</h3>
+<h3 id="Cost_Function">Cost Function</h3>
+<p>$$J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}$$</p>
+<h3 id="Gradient_descent">Gradient descent</h3>
+<p>Repeat {<br>  $$ θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>}</p>
+<p>every iterator</p>
+<ul>
+<li>θj = θj - learning rate (α) times the partial derivative of J(θ) with respect to θJ(…)</li>
+<li>We do this through a simultaneous update of every θj value</li>
+</ul>
+<p>$$ \frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>$$ = \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)} $$</p>
+<h2 id="2-_Gradient_Decent_in_practice">2. Gradient Decent in practice</h2>
+<h3 id="2-1_Feature_Scaling">2.1 Feature Scaling</h3>
+<p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
+<h3 id="Learning_Rate_α">Learning Rate α</h3>
+<ul>
+<li>working correctly: If gradient descent is working then J(θ) should decrease after every iteration</li>
+<li>convergence: 收敛是指每经过一次迭代，J(θ)的值都变化甚小。</li>
+<li>choose α<ol>
+<li>When to use a smaller α<ul>
+<li>If J(θ) is increasing, see below picture</li>
+<li>If J(θ) looks like a series of waves, decreasing and increasing again</li>
+<li>But if α is too small then rate is too slow</li>
+</ul>
+</li>
+<li>Try a range of α values<ul>
+<li>Plot J(θ) vs number of iterations for each version of alpha</li>
+<li>Go for roughly threefold increases: 0.001, 0.003, 0.01, 0.03. 0.1, 0.3</li>
+</ul>
+</li>
+</ol>
+</li>
+</ul>
+<p><img src="/img/gradient_descent_plot.jpg" alt=""></p>
+<h2 id="2-2_Features_and_polynomial_regression">2.2 Features and polynomial regression</h2>
+<h3 id="Can_create_new_features">Can create new features</h3>
+<p>如何选择 features 和表达式尤为关键，例如房价与房子的长，房子的宽组成的表达式就会麻烦很多，若将房子的长乘以房子的宽得出面积，则有房价与房子面积的表达式，将会更容易拟合出房价的走势。</p>
+<h3 id="Polynomial_regression">Polynomial regression</h3>
+<p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
+<p><strong>所以选择合适的 Features 和 Polynomial regression 都非常重要。</strong></p>
+<p><img src="/img/polynomial_regression_choose.jpg" alt=""></p>
+<h2 id="3-_Normal_equation_求解多变量线性回归">3. Normal equation 求解多变量线性回归</h2>
+<h3 id="3-1_Normal_equation">3.1 Normal equation</h3>
+<p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 $$ \frac{d}{dθ}J(θ)=2aθ+b=0$$ 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
+<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：<br>$$ J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2} $$<br>只需要令：<br>$$ \frac\partial{\partial θ_j}J(θ_0, θ_1, …,θ_n) = … = 0 $$，其中 j = 0,1,2,…,n<br>设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m*n) 的矩阵，y 为 (m*1) 的矩阵，可以推导出求 θ 向量的公式如下：<br>$$θ = (X^TX)^{-1}X^Ty$$</p>
+<h2 id="4-_Gradient_descent_Vs_Normal_equation">4. Gradient descent Vs Normal equation</h2>
+<h3 id="Gradient_descent-1">Gradient descent</h3>
+<ul>
+<li>Need to chose learning rate</li>
+<li>Needs many iterations - could make it slower</li>
+<li>Works well even when n is massive (millions)</li>
+<li>Better suited to big data</li>
+<li>What is a big n though: 100 or even a 1000 is still (relativity) small, If n is 10000 then look at using gradient descent</li>
+<li>适用于线性回归会逻辑回归</li>
+</ul>
+<h3 id="Normal_equation">Normal equation</h3>
+<ul>
+<li>No need to chose a learning rate</li>
+<li>No need to iterate, check for convergence etc.</li>
+<li>Normal equation needs to compute $(X^TX)^{-1}$<ul>
+<li>This is the inverse of an n x n matrix</li>
+<li>With most implementations computing a matrix inverse grows by O(n3), So not great</li>
+</ul>
+</li>
+<li>Slow of n is large, Can be much slower</li>
+<li>仅适用于线性回归</li>
+</ul>
+<h2 id="5-_局部加权线性回归">5. 局部加权线性回归</h2>
+<p>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：<br>$$J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2$$</p>
+<p>其中<br>$$ w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})$$</p>
+<p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
+<p>$\tau^2$ 是波长函数(bandwidth)， 控制权重随距离下降的速度，τ 越小则 x 离 $x^{(i)}$ 越远时 $w^{(i)}$ 的值下降的越快。</p>
+<p>所以，如果沿着 x 轴的每个点都进行局部直线拟合，那么你会发现对于这个数据集合来说，局部加权的预测结果，能够最终跟踪这条非线性的曲线。</p>
+<p>但局部加权回归也有其缺点：</p>
+<ul>
+<li>每次对一个点的预测都需要整个数据集的参与，样本量大且需要多点预测时效率低。提高效率的方法参考 Andrew More’s KD Tree</li>
+<li>不可外推，对样本所包含的区域外的点进行预测时效果不好，事实上这也是一般线性回归的弱点</li>
+</ul>
+<p>对于线性回归算法，一旦拟合出适合训练数据的参数θ，保存这些参数θ，对于之后的预测，不需要再使用原始训练数据集，所以是参数学习算法。</p>
+<p>对于局部加权线性回归算法，每次进行预测都需要全部的训练数据（每次进行的预测得到不同的参数θ），没有固定的参数θ，所以是非参数算法(non-parametric algorithm)。</p>
+<h2 id="Reference">Reference</h2>
+<blockquote>
+<p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="external">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-Week-2-Linear-Regression-with-multiple-features/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/11/05/Stanford Machine Learning-Week 1- Linear Regression with One Variable/" title="Stanford Machine Learning - 1 线性回归入门" itemprop="url">Stanford Machine Learning - 1 线性回归入门</a>
   </h1>
   <p class="article-author">By
@@ -1129,196 +1364,9 @@ $$ -->
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/03/扔鸡蛋测楼层/" title="扔鸡蛋测楼层" itemprop="url">扔鸡蛋测楼层</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-03T12:26:36.000Z" itemprop="datePublished"> Published Mar 3 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="扔瓶子测楼层">扔瓶子测楼层</h2>
-<p>一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？</p>
-<h2 id="A-_只用一个瓶子从第一层扔到第n层">A. 只用一个瓶子从第一层扔到第n层</h2>
-<p>找到临界值的扔瓶子次数的期望为每一层的期望次数之和</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">E(x) = <span class="number">1</span>/n * <span class="number">1</span> + <span class="number">1</span>/n * <span class="number">2</span> + <span class="number">1</span>/n * <span class="number">3</span> + <span class="keyword">...</span> + <span class="number">1</span>/n * n = (<span class="number">1</span>+n)/<span class="number">2</span></div></pre></td></tr></table></figure>
-
-
-<p>所以时间复杂度是O(n)</p>
-<h2 id="B-_用贪心的思维">B. 用贪心的思维</h2>
-<p>第一个瓶子从第1层开始扔，每次层数翻倍，依次为，1，2，4，8，16，直至在第 2^k 层碎掉。<br>第二个瓶子从第 2^(k-1) 层开始扔，直至第 2^k 层为止，中间肯定能找到临界值。<br>所以时间复杂度是O(lgn)</p>
-<h2 id="C-_用二分法">C. 用二分法</h2>
-<p>第一个瓶子每次以(i, j)为区间，扔的位置为(i+j)/2, 初始情况, i=0,j=n, 如果瓶子没碎，则i=j，直至碎掉。<br>第二个瓶子从第 i 层开始扔，直至第 j 层为止，中间肯定能找到临界值。</p>
-<p>对于第 i 层，扔的情况为：</p>
-<ul>
-<li>第一个瓶子：n/2, $/2+n/4 i, n/2+n/4+n/8</li>
-<li>第二个瓶子：n/2+n/4, (n/2+n/k+1), …, i</li>
-</ul>
-<p>显而易见，时间复杂度是O(n)</p>
-<h2 id="D-_数学推算">D. 数学推算</h2>
-<p>这个题目是需要最快的找出临界值，可以转换为，即使在最坏的情况下，也能最快地找出临界值。</p>
-<p>我们先假设最坏情况下，瓶子下落次数为x，即我们为了找出N，一共用瓶子做了x次的实验。 </p>
-<p>那么，我们第一次应该在哪层楼往下扔瓶子呢？</p>
-<p>先让我们假设第一次是在第y层楼扔的瓶子，如果第一个瓶子在第一次扔就碎了，我们就只剩下一个瓶子，要用它准确地找出N，只能从第一层向上，一层一层的往上测试，直到它摔坏为止，答案就出来了。</p>
-<p>由于第一个瓶子在第y层就摔破了，所以最坏的情况是第二个瓶子要把第1到第y-1层的楼都测试一遍，最后得出结果，噢，原来瓶子在第y-1层才能摔破(或是在第y-1层仍没摔破，答案就是第y层。) 这样一来测试次数是1+(y-1)=x，即第一次测试要在第x层。</p>
-<p>OK，那如果第一次测试鸡蛋没摔破呢，那N肯定要比x大，要继续往上找，需要在哪一层扔呢？我们可以模仿前面的操作，如果第一个瓶子在第二次测试中摔破了，那么第二个瓶子的测试次数就只剩下x-2次了(第一个瓶子已经用了2次)。这样一来，第二次扔瓶子的楼层和第一次扔瓶子的楼层之间就隔着x-2层。 </p>
-<p>我们再回过头来看一看，第一次扔瓶子的楼层在第x层，第1层到第x层间共x层；第1次扔鸡蛋的楼层到第2次扔瓶子的楼层间共有x-1层(包含第2次扔瓶子的那一层)，同理继续往下，我们可以得出，第2次扔瓶子的楼层到第3次扔瓶子的楼层间共有x-2层，最后把这些互不包含的区间数加起来，应该大于等于总共的楼层数量100，即</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">x + (x-<span class="number">1</span>) + (x-<span class="number">2</span>) + <span class="keyword">...</span> + <span class="number">1</span> &gt;= <span class="number">100</span></div><div class="line">(x+<span class="number">1</span>)*x/<span class="number">2</span> &gt;= <span class="number">100</span></div><div class="line">得出答案是<span class="number">14</span></div></pre></td></tr></table></figure>
-
-<p>即我先用第1个瓶子在以下序列表示的楼层数不断地向上测试，直到它摔破。 再用第2个瓶子从上一个没摔破的序列数的下一层开始，向上测试，即可保证在最坏情况下也只需要测试14次，就能用2个瓶子找出从哪一层开始，往下扔鸡蛋，瓶子就会摔破。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100</div></pre></td></tr></table></figure>
-
-<h2 id="E-_DP的解法">E. DP的解法</h2>
-<p>假设f(n)表示从第n层楼扔下鸡蛋，没有摔碎的最少尝试次数。第一个鸡蛋，可能的落下位置[1,n],第一个鸡蛋从第i层扔下，有两种情况：</p>
-<ul>
-<li>碎了，第二个鸡蛋，需要从第一层开始试验，有i-1次机会</li>
-<li>没碎，两个鸡蛋，还有n-i层。这个就是子问题了f(n-i)</li>
-</ul>
-<p>所以，当第一个鸡蛋，由第i个位置落下的时候，要尝试的次数为 1 + max{i - 1, f(n - i)}，那么对于每一个i，尝试次数最少的，就是f(n)的值。<br>状态转移方程如下： </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">f</span><span class="params">(n)</span> = <span class="title">min</span>{1 + <span class="title">max</span>{<span class="title">i</span> - 1, <span class="title">f</span><span class="params">(n - <span class="number">1</span>)</span>}}</span></div></pre></td></tr></table></figure>
-
-<p>其中: i的范围为[1, n], f(1) = 1.</p>
-<h2 id="F-_推广到一般化的问题">F. 推广到一般化的问题</h2>
-<p>为n层楼，m个鸡蛋。<br>如下分析： 假设f(n,m)表示n层楼、m个鸡蛋时找到最高楼层的最少尝试次数。当第一个鸡蛋从第i层扔下，有两种情况：</p>
-<ul>
-<li>碎了，还剩m-1个鸡蛋，为确定下面楼层中的安全楼层，还需要f(i-1,m-1)次，找到子问题</li>
-<li>不碎，上面还有n-i层，还需要f(n-i,m)次，又一个子问题。</li>
-</ul>
-<p>状态转移方程如下： </p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">f</span><span class="params">(n, m)</span> = <span class="title">min</span>{1 + <span class="title">max</span>{<span class="title">f</span><span class="params">(n - <span class="number">1</span>, m - <span class="number">1</span>)</span>, <span class="title">f</span><span class="params">(n - i, m)</span>}}</span></div></pre></td></tr></table></figure>
-
-<p>其中： i为[1, n], f(i, 1) = 1</p>
-<h2 id="Reference">Reference</h2>
-<blockquote>
-<p><a href="http://www.cricode.com/3558.html" target="_blank" rel="external">http://www.cricode.com/3558.html</a><br><a href="https://gist.github.com/sing1ee/5971946" target="_blank" rel="external">https://gist.github.com/sing1ee/5971946</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/03/扔鸡蛋测楼层/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/02/27/快排算法/" title="快排算法" itemprop="url">快排算法</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-02-27T02:52:46.000Z" itemprop="datePublished"> Published Feb 27 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="快速排序的思路">快速排序的思路</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">algorithm quicksort(<span class="literal">A</span>, lo, hi) is</div><div class="line">    <span class="keyword">if</span> lo &lt; hi then</div><div class="line">        p := partition(<span class="literal">A</span>, lo, hi)</div><div class="line">        quicksort(<span class="literal">A</span>, lo, p – <span class="number">1</span>)</div><div class="line">        quicksort(<span class="literal">A</span>, p + <span class="number">1</span>, hi)</div></pre></td></tr></table></figure>
-
-<h2 id="快速排序的partition方式">快速排序的partition方式</h2>
-<p>一种是Lomuto partition scheme，另外一种是Hoare partition scheme。</p>
-<h2 id="Lomuto_partition">Lomuto partition</h2>
-<p>This scheme is attributed to Nico Lomuto and popularized by Bentley in his book</p>
-<h3 id="lomuto的partition实现方式">lomuto的partition实现方式</h3>
-<p>i指示最前面的大于pivot的元素位置，j从前往后滑动来调整元素位置。每次j碰到小于pivot的元素，则swap i位置的元素和j位置的元素，再i指向下一个大于pivot的元素。<br>最后，记得swap i位置的元素和最末尾的元素。</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">lomutoPartition</span>(<span class="keyword">int</span> nums[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi) {</div><div class="line">        <span class="keyword">int</span> pivot = nums[hi];</div><div class="line">        <span class="keyword">int</span> i = lo;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> j = lo; j &lt; hi; j++) {</div><div class="line">            <span class="keyword">if</span> (nums[j] &lt;= pivot) {</div><div class="line">                swap(nums, i, j);</div><div class="line">                i++;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        swap(nums, i, hi); <span class="comment">// replace the guard element</span></div><div class="line">        <span class="keyword">return</span> i;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h2 id="Hoare_partition_scheme">Hoare partition scheme</h2>
-<p>The original partition scheme described by C.A.R. Hoare uses two indices that start at the ends of the array being partitioned, then move toward each other, until they detect an inversion.</p>
-<p><strong>Hoare’s scheme is more efficient than Lomuto’s partition scheme because it does three times fewer swaps on average, and it creates efficient partitions even when all values are equal.</strong></p>
-<h3 id="hoare的partition实现方式">hoare的partition实现方式</h3>
-<p>i从前往后找到大于pivot的元素，j从后往前找到小于pivot的元素，然后两者swap.</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">hoarePartition</span>(<span class="keyword">int</span> nums[], <span class="keyword">int</span> lo, <span class="keyword">int</span> hi) {</div><div class="line">        <span class="keyword">int</span> pivot = nums[lo];</div><div class="line">        <span class="keyword">int</span> i = lo, j = hi;</div><div class="line">        <span class="keyword">while</span> (<span class="keyword">true</span>) {</div><div class="line">            <span class="keyword">while</span> (nums[i] &lt; pivot) {</div><div class="line">                i++;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">while</span> (nums[j] &gt;= pivot) {</div><div class="line">                j--;</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (i &gt;= j) {</div><div class="line">                <span class="keyword">return</span> j;</div><div class="line">            }</div><div class="line"></div><div class="line">            swap(nums, i, j);</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/02/27/快排算法/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
-    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
+    <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
   </nav>
 
 </div>
@@ -1339,11 +1387,13 @@ $$ -->
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>7</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>9</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+		
+			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
 		
 			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
 		
@@ -1355,23 +1405,21 @@ $$ -->
 		
 			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
 		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
 		
 			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
 		
-			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
-		
 			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
 		
 			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
 		
-			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
-		
-			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
-		
 			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
 		
-			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
 		
 			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
