@@ -10,34 +10,34 @@
     <meta name="author" content="Jinping Luo">
     
     <meta name="description" content="1. 逻辑回归
-对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
 其中$$g(z)=\frac1{1+e^{-z}}$$；
-g(z) 被称为 logistic function 或 s">
+g(z) 被称为 logistic function 或">
     
     
     <meta name="description" content="1. 逻辑回归
-对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
 其中$$g(z)=\frac1{1+e^{-z}}$$；
 g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:
-我们先取 g(z) 为 sigmoid fu">
+我们先取 g(z) 为 sigmoid">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Stanford Machine Learning - 4 逻辑回归">
 <meta property="og:url" content="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/">
 <meta property="og:site_name" content="Zane Blog">
 <meta property="og:description" content="1. 逻辑回归
-对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
 其中$$g(z)=\frac1{1+e^{-z}}$$；
 g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:
-我们先取 g(z) 为 sigmoid fu">
+我们先取 g(z) 为 sigmoid">
 <meta property="og:image" content="/img/sigmoid_function.png">
 <meta property="og:image" content="/img/logistic_regression_delta_ljp_derived.png">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stanford Machine Learning - 4 逻辑回归">
 <meta name="twitter:description" content="1. 逻辑回归
-对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $hθ(x)$ 可以写为$$hθ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
+对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$
 其中$$g(z)=\frac1{1+e^{-z}}$$；
 g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:
-我们先取 g(z) 为 sigmoid fu">
+我们先取 g(z) 为 sigmoid">
 
 
     
@@ -129,7 +129,7 @@ var _hmt = _hmt || [];
 		</div>
 		
 		<h2 id="1-_逻辑回归">1. 逻辑回归</h2>
-<p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h<em>θ(x)$ 可以写为<br>$$h</em>θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$</p>
+<p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为<br>$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$</p>
 <p>其中<br>$$g(z)=\frac1{1+e^{-z}}$$；</p>
 <p>g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:<br><img src="/img/sigmoid_function.png" alt="sigmoid function"></p>
 <p>我们先取 g(z) 为 sigmoid function，如果有其他使得 y 值从 0 到 1 平滑递增的函数也可以使用。但由于一些列原因(在后续的一般化回归模型 GLM 中会谈到为什么选用这个函数)，g(z) is a fairly natural one.</p>
@@ -147,7 +147,7 @@ var _hmt = _hmt || [];
 <p>附上手写的推导过程：<br><img src="/img/logistic_regression_delta_ljp_derived.png" alt="手写推导过程"></p>
 <p>所以，最终随机梯度上升的公式为：<br>$$θ_j:=θ_j + \alpha\sum_{i=1}^{m}(y^{(i)} - h_{\theta}(x^{(i))})x_j^{(i)}$$</p>
 <p>如何和线性回归的公式放在一起比较，</p>
-<p>$$θ_j = θ_j - α \frac1m <em> \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}</em>x_j^{(i)}$$</p>
+<p>$$θ_j = θ_j - α \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)}$$</p>
 <p>会发现，这两者非常相似，实际上却不然，因为这里的 $(h_θ(x^{(i)})$ 定义的不是线性函数。后续我们谈到 GLM 时会发现这并不是巧合，而是有更深层次的原因。</p>
 <h2 id="3-_牛顿迭代法求解逻辑回归">3. 牛顿迭代法求解逻辑回归</h2>
 <p>牛顿迭代法可以利用到曲线本身的信息，比梯度下降法更容易收敛，即迭代更少次数。</p>
