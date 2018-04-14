@@ -91,6 +91,135 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/04/14/Stanford-Machine-Learning-7-SVM/" title="Stanford Machine Learning - 7 SVM" itemprop="url">Stanford Machine Learning - 7 SVM</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-14T10:33:50.000Z" itemprop="datePublished"> Published Apr 14 2018</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_SVM_定义">1. SVM 定义</h2>
+<p>支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
+<h2 id="2-_函数间隔和几何间隔">2. 函数间隔和几何间隔</h2>
+<p><img src="img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
+<h3 id="2-1_符号定义">2.1 符号定义</h3>
+<p>为了方便介绍 SVM，重新定义以下符号。<br>1.在logstic回归中我们用0,1代表两个类, 现在我们改用-1,+1, 即 y∈{-1，-1}<br>2.在logistic回归中, 我们的 g 是sigmoid函数, 现在改为:<br>g(z)=1, z&gt;=0<br>g(z)=-1, z&lt;0<br>3.在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,<br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中<br>w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</p>
+<h3 id="2-2_函数间隔(functional_margin)">2.2 函数间隔(functional margin)</h3>
+<p>对于一个训练样本 $(x^{(i)}, y^{(i)})$，我们定义它到超平面 (w,b) 的函数间隔为:<br>$$\widehat\gamma=y^{(i)}(w^{T}x^{(i)}+b)$$<br>我们希望函数间隔越大越好, 即:<br>if $y^{(i)}=1$, want $(w^{T}x^{(i)}+b) \gg 0 $ (&gt;&gt;代表远大于)<br>if $y^{(i)}=-1$, want $(w^{T}x^{(i)}+b) \ll 0$</p>
+<p>函数间隔越大，代表我们对于分类的结果非常确定。</p>
+<p>但这里有一个漏洞，即可以在不改变这个超平面的情况下可以让函数间隔任意大，只要我们成比增加 w,b 就可以达到这个目的了。例如，我们将 w 变为 2w， b 变为 2b，那么我们的函数间隔将会是原来的两倍。</p>
+<p>所以对于整个训练集, <strong>函数间隔</strong>定义为：<br>$$\widehat\gamma=min{\widehat\gamma^{(i)}}$$</p>
+<h3 id="2-3_几何间隔(geometric_margin)">2.3 几何间隔(geometric margin)</h3>
+<p>定义对于一个训练样本 $A(x^{(i)}, y^{(i)})$，它到超平面 $w^{T}x^{(i)}+b$ 的几何距离为 $\gamma^{(i)}$。<br>设 B 为 A 在超平面上的投影，易得超平面的法向量为 $\frac{w}{||w||}$，则有 $A=B+\gamma^{(i)}\frac{w}{||w||}$，<br>即 $B = A - \gamma^{(i)}\frac{w}{||w||}$。又因为 B 在超平面上，所以有<br>$w^{T}(x^{(i)} - \gamma^{(i)}\frac{w}{||w||})+b=0$<br>故几何距离为:<br>$$\gamma^{(i)}=(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}$$</p>
+<p>定义其几何间隔：<br>$$\gamma^{(i)}=y^{(i)}[(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}]$$</p>
+<p>所以对于整个训练集, <strong>几何间隔</strong>定义为：<br>$$\gamma=min{\gamma^{(i)}}$$</p>
+<p>可以发现，当 $||w||=1$时，$\widehat\gamma^{(i)}=\gamma^{(i)}$</p>
+<h2 id="3-_最优间隔分类器">3. 最优间隔分类器</h2>
+<p>几何间隔就是在求 $\frac{\widehat\gamma}{||w||}$ 的最小值，可以发现函数间隔 $\widehat\gamma$ 可放大缩小，且其对结果不产生影响，所以不妨设令${\widehat\gamma}=1$。<br>现在，目标函数转为了：<br>$$max \frac{1}{||w||}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$<br>等价于<br>$$min{\frac12{||w||^2}}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$</p>
+<p>利用拉格朗日乘子法可得：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
+<p>令<br>$$\theta(w)=\displaystyle\max_{\alpha_i\ge0}L(w, b, \alpha)$$</p>
+<p>则目标函数变成了：<br>$$\displaystyle\min_{w,b}\theta(w)=\displaystyle\min_{w,b}\max_{\alpha_i\ge0}L(w, b, \alpha)=p^*$$</p>
+<h2 id="4-_求解目标函数">4. 求解目标函数</h2>
+<h3 id="4-1_使用对偶问题求解">4.1 使用对偶问题求解</h3>
+<p>SVM 中用到了高维映射，将线性不可分的问题映射为线性可分，且映射函数的具体形式无法提前确定，而往往使用核函数映射后，维度 w 会提升很多，甚至至无穷维。<br>在原问题下，求解算法的复杂度与样本维度（w 的维度）相关；<br>在对偶问题下，求解算法的复杂度与样本数量（等于拉格朗日算子 a 的数量）相关。</p>
+<p>因此，如果是做线性分类，且样本维度低于样本数量的话，可以在原问题下求解。例如 Liblinear 的线性 SVM 默认做法就是这样的；<br>但如果是做非线性分类，那就会涉及到升维（比如使用高斯核做核函数，其实是将样本升到无穷维），升维后的样本维度往往会远大于样本数量，此时显然在对偶问题下求解会更好。</p>
+<p><strong>直接求解原问题有多难？</strong> TBD</p>
+<h4 id="4-1-1_使用对偶问题的解法">4.1.1 使用对偶问题的解法</h4>
+<p>对于不等书约束条件的最优化问题，使用拉格朗日对偶问题来求解。具体介绍见之前的 blog:  <a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/" target="_blank" rel="external">拉格朗日乘子法</a></p>
+<p>用 $p^*$ 表示这个问题的最优值，这个问题和我们最初的问题是等价的。<br>不过，把最小和最大的位置交换一下：<br>$$\displaystyle\max_{\alpha_i\ge0}\min_{w,b}L(w, b, \alpha)=d^*$$</p>
+<p>交换以后的问题不再等价于原问题，新问题的最优值用 $d^*$ 来表示。并且，有 $d^*$ ≤ $p^*$。</p>
+<p>第二个问题的最优值 $d^*$ 提供了一个第一个问题的最优<br>值 $p^*$ 的一个下界。经过论证，原始问题满足强对偶所需要的条件，故这两者相等，所以可以通过求解第二个问题来间接地求解第一个问题。 </p>
+<h4 id="4-1-2_优化公式">4.1.2 优化公式</h4>
+<p>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：<br>$$\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0$$<br>$$\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0$$</p>
+<p>将上式代入：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
+<p>推导过程如下：<br><img src="img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
+<p>这样求出 $\alpha$ 后即可得到 w 和 b。</p>
+<p><img src="img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
+<p>现在我们的优化问题变成了如上的形式。对于这个问题，我们有更高效的优化算法，即序列最小优化（SMO）算法。我们通过这个优化算法能得到α，再根据α，我们就可以求解出w和b，进而求得我们最初的目的：找到超平面，即”决策平面”。</p>
+<h3 id="4-2_SMO_算法">4.2 SMO 算法</h3>
+<p><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/29212107</a><br><a href="https://cloud.tencent.com/developer/article/1076970" target="_blank" rel="external">https://cloud.tencent.com/developer/article/1076970</a> </p>
+<p><img src="img/svm_smo_1.jpg" alt="SMO_JP_1.jpeg"><br><img src="img/svm_smo_2.jpg" alt="SMO_JP_2.jpeg"></p>
+<h2 id="5-_核函数">5. 核函数</h2>
+<p>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
+<p>一般使用高斯核，但这样会导致映射后的维度非常巨大，也就是 w 的维度很大，这也是为什么要转化为对偶问题来求解的原因，对偶问题的时间复杂度只和数据集的数量有关，与维度无关。</p>
+<h2 id="总结_SVM">总结 SVM</h2>
+<p>SVM 是神经网络出现之前最好的分类算法。求解 SVM 的过程也就是找到区分正负数据的最优超平面，所以引入了几何间隔的概念。而求解最大的几何间隔的问题即是在不等式约束条件下求解最优解的问题。这就引入了拉格朗日对偶问题，接着针对对偶问题求解，引入快速学习算法 SMO，最终找到超平面。<br>对于原始数据线性不可分的情况，引入核函数映射到高维计算，这其中 SVM 求解过程的时间复杂度与维度无关。</p>
+<p>附一个很精髓的 <a href="http://guoze.me/2014/11/26/svm-knowledge/" target="_blank" rel="external">SVM十问十答</a>。</p>
+<h2 id="7-_SVM_优缺点">7. SVM 优缺点</h2>
+<p>优点：</p>
+<ol>
+<li>可用于线性/非线性分类</li>
+<li>可以解决高维问题，即大型特征空间;</li>
+<li>泛化错误率低</li>
+<li>结果容易解释</li>
+<li>可以避免神经网络结构选择和局部极小点问题</li>
+<li>SVM 尽量保持与样本间距离的性质导致它抗攻击的能力更强</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>对参数调节和和函数的选择敏感，原始分类器不加修改仅适用于处理二分类问题</li>
+<li>在大规模训练样本下，效率不高</li>
+<li>对非线性问题有时很难找到一个合适的核函数</li>
+<li>解决多分类问题存在困难 </li>
+</ol>
+<h1 id="附录">附录</h1>
+<h2 id="点到平面的距离">点到平面的距离</h2>
+<p><img src="img/svm_distance.jpg" alt="IMAGE"></p>
+<p>$d$ 维空间中的超平面由下面的方程确定: $w^Tx+b=0$，其中，$w$ 与 $x$ 都是 $d$ 维列向量， $x=(x_1,x_2,…,x_d)^T$ 为平面上的点， $w=(w_1,w_2,…,w_d)^T$为平面的法向量。$b$ 是一个实数， 代表平面与原点之间的距离。</p>
+<h1 id="Reference">Reference</h1>
+<blockquote>
+<p><a href="http://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="external">http://blog.csdn.net/v_july_v/article/details/7624837</a><br><a href="http://guoze.me/2014/11/26/svm-knowledge/" target="_blank" rel="external">http://guoze.me/2014/11/26/svm-knowledge/</a><br><a href="https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf" target="_blank" rel="external">https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf</a><br><a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/" target="_blank" rel="external">http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2018/04/14/Stanford-Machine-Learning-7-SVM/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/03/04/拉格朗日乘子法/" title="拉格朗日乘子法" itemprop="url">拉格朗日乘子法</a>
   </h1>
   <p class="article-author">By
@@ -1003,118 +1132,6 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/" title="Stanford Machine Learning - 4 逻辑回归" itemprop="url">Stanford Machine Learning - 4 逻辑回归</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-05T15:06:43.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="1-_逻辑回归">1. 逻辑回归</h2>
-<p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为<br>$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$</p>
-<p>其中<br>$$g(z)=\frac1{1+e^{-z}}$$；</p>
-<p>g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:<br><img src="/img/sigmoid_function.png" alt="sigmoid function"></p>
-<p>我们先取 g(z) 为 sigmoid function，如果有其他使得 y 值从 0 到 1 平滑递增的函数也可以使用。但由于一些列原因(在后续的一般化回归模型 GLM 中会谈到为什么选用这个函数)，g(z) is a fairly natural one.</p>
-<p>g(z) 的导数我们可以先进行推导:<br>$$g’(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})$$<br>$$= \frac{1}{1+e^{-z}}*(1 - \frac{1}{1+e^{-z}})= g(z)(1-g(z))$$</p>
-<h2 id="2-_梯度上升法求解逻辑回归">2. 梯度上升法求解逻辑回归</h2>
-<p>对于给定的逻辑回归函数，我们使用最小二乘法来推导出最大似然估计，假设:<br>$P(y=1|x;θ)=h_θ(x)$，代表对于给定的 θ，y 取值为 1 的概率。<br>$P(y=0|x;θ)=1-h_θ(x)$，代表对于给定的 θ，y 取值为 0 的概率。</p>
-<p>以上两者可以合并为：<br>$$P(y|x;θ)=(h_θ(x))^y(1 − h_θ(x))^{(1−y)}$$</p>
-<p>假设 m 个训练集是相互独立的，则似然估计为：<br>$$L(θ)=P(\overrightarrow{y}|X;θ)$$<br>$$= \prod^m_{i=1}P(y^i|x^i;θ)$$<br>$$= \prod^m_{i=1}{(h_θ(x^{(i)}))^{y^{(i)}}(1 − h_θ(x^{(i)}))^{(1−y^{(i)})}}$$</p>
-<p>和之前一样，上式可以简化为：</p>
-<p></p><p><br>$l(θ) = logL(θ)<br>= \sum_{m}^{i=1}{y^{(i)}}log{h(x^{(i)}) + {(1−y^{(i)})}log(1 − h(x^{(i)}))}$</p>
-<p>那么，<br>如何去最大化似然函数呢，可以应用梯度上升法，因为我们要使 P 的取值足够大，也是就预测准确的概率最够大。</p>
-<p>随机梯度上升的公式为：<br>$$θ:= θ + \alpha\Deltaθl(θ)$$</p>
-<p>下面来求$\Deltaθl(θ)$的取值：</p>
-<p>$$\frac\partial{\partial\theta_j}l(\theta)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)})\frac\partial{\partial\theta_j}g(\theta^Tx)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)}) g(\theta^Tx)(1-g(\theta^Tx))\frac\partial{\partial\theta_j}\theta^Tx$$<br>$$= ({y(1-g(\theta^Tx))-(1-y)g(\theta^Tx)})x_j$$<br>$$= (y - h_{\theta}(x))x_j$$</p>
-<p>附上手写的推导过程：<br><img src="/img/logistic_regression_delta_ljp_derived.png" alt="手写推导过程"></p>
-<p>所以，最终随机梯度上升的公式为：<br>$$θ_j:=θ_j + \alpha\sum_{i=1}^{m}(y^{(i)} - h_{\theta}(x^{(i))})x_j^{(i)}$$</p>
-<p>如何和线性回归的公式放在一起比较，</p>
-<p>$$θ_j = θ_j - α \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)}$$</p>
-<p>会发现，这两者非常相似，实际上却不然，因为这里的 $(h_θ(x^{(i)})$ 定义的不是线性函数。后续我们谈到 GLM 时会发现这并不是巧合，而是有更深层次的原因。</p>
-<h2 id="3-_牛顿迭代法求解逻辑回归">3. 牛顿迭代法求解逻辑回归</h2>
-<p>牛顿迭代法可以利用到曲线本身的信息，比梯度下降法更容易收敛，即迭代更少次数。</p>
-<h3 id="3-1_牛顿迭代法简述">3.1 牛顿迭代法简述</h3>
-<p>假设我们要求解方程 f(x)=0 的根，首先随便找一个初始值 x0，如果 x0 不是解，做一个经过 (x0,f(x0))  这个点的切线，与 x 轴的交点为 x1。同样的道理，如果 x1 不是解，做一个经过 (x1,f(x1)) 这个点的切线，与 x 轴的交点为 x2。 以此类推。以这样的方式得到的 xi 会无限趋近于 f(x)=0 的解。</p>
-<p>对于任意一点 $(x_n,y_n)$ 做切线，切线的斜率为 $f’(x_n)$，则有方程：<br>$$ y-f(x_n) = f’(x_n)(x-x_n) $$</p>
-<h3 id="3-2_迭代过程">3.2 迭代过程</h3>
-<p>求解 $f(\theta)$ = 0 时 $\theta$ 的取值。<br>设下一次迭代时 $\theta^{(t+1)}$ 的取值与前一次迭代 $\theta^{(t)}$ 的取值(在 x 轴)距离为 $\Delta$。</p>
-<p>则 $\theta^{(t+1)} = \theta^{(t)} - \Delta$，且 $\Delta = \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$，<br>所以有：<br>$$\theta^{(t+1)} = \theta^{(t)} - \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$$</p>
-<h4 id="从泰勒展开到牛顿迭代">从泰勒展开到牛顿迭代</h4>
-<p>也可以由泰勒展开中推导牛顿迭代的公式。这次为了求解方程 f′=0 的根，把原函数 f(x) 的做泰勒展开，展开到二阶形式：<br>$$ f(x+\Delta x) = f(x)+f’(x)\Delta x+ \frac1{2}f’’(x)\Delta x^2 $$</p>
-<p>当且仅当 $\Delta x$ 逼近 0 时，上式成立，此时忽略 1/2 系数的作用，所以有：<br>$$ f’(x)+ \frac1{2}f’’(x)\Delta x = 0 $$<br>故：<br>$$\Delta x = -\frac{f’(x)}{f’’(x)} $$</p>
-<p><strong>对函数求极大值的方法</strong><br>&gt;</p>
-<blockquote>
-<ol>
-<li>将原函数y=f(x)，对x求一次导数，得到dy/dx；</li>
-<li>令dy/dx = 0，解得一次导函数的零点；</li>
-<li>将原函数对x求二次导函数；</li>
-<li>将解得的零点坐标的x值代入二次导函数，<br>如果是正值，零点所在位置，就是极小值点，再将该x值代入原函数，得到极小值；<br>如果是值值，零点所在位置，就是极大值点，再将该x值代入原函数，得到极大值；<br>如果是0，零点所在位置，既不是极小值点，也不是极大值点，是拐点。</li>
-</ol>
-</blockquote>
-<p>所以求 $l(\theta)$ 在极大值处 $\theta$ 的取值，则是求 $l’(\theta) = 0$ 时 $\theta$ 的值，应用牛顿迭代法则有：</p>
-<p>$$\theta^{(t+1)} = \theta^{(t)} - \frac{l’(\theta^{(t)})}{l’’(\theta^{(t)})}$$</p>
-<h3 id="3-3_多维向量的牛顿迭代">3.3 多维向量的牛顿迭代</h3>
-<p>对于多维向量 $\overrightarrow{X}$ 求解。<br>$$\theta := \theta - H^{-1} \nabla l(\theta)$$<br>其中<br>$\nabla l(\theta)$ 是对 $l(\theta)$ 求导的值。</p>
-<p>H 是一个 n*n 的矩阵，n 是特征数量，元素的计算公式为：<br>$$H_ij= \frac{\partial^2{l({\theta)}}}{\partial{\theta_i}\partial{\theta_j}}$$</p>
-<h3 id="3-4_牛顿迭代法的特点">3.4 牛顿迭代法的特点</h3>
-<h4 id="是否收敛">是否收敛</h4>
-<p>通常情况下是收敛的，但是需要满足一些条件，对于逻辑回归来讲，是收敛的。</p>
-<h4 id="迭代速度">迭代速度</h4>
-<p>每次迭代后，有解数字的误差是成平方倍减小的，是二次收敛函数。</p>
-<h4 id="优缺点">优缺点</h4>
-<p>优点：收敛快<br>缺点：特征多(上千个)时，每次迭代成本大</p>
-<h2 id="Reference">Reference</h2>
-<p><a href="http://blog.csdn.net/baimafujinji/article/details/51179381" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51179381</a><br><a href="http://blog.csdn.net/baimafujinji/article/details/51167852" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51167852</a><br><a href="https://www.jiqizhixin.com/articles/2017-08-09-3" target="_blank" rel="external">如何通过牛顿方法解决Logistic回归问题</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/机器学习/">机器学习</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1138,7 +1155,7 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>9</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		

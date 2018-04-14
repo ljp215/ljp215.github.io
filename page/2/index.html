@@ -91,6 +91,118 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/" title="Stanford Machine Learning - 4 逻辑回归" itemprop="url">Stanford Machine Learning - 4 逻辑回归</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T15:06:43.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_逻辑回归">1. 逻辑回归</h2>
+<p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为<br>$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$</p>
+<p>其中<br>$$g(z)=\frac1{1+e^{-z}}$$；</p>
+<p>g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:<br><img src="/img/sigmoid_function.png" alt="sigmoid function"></p>
+<p>我们先取 g(z) 为 sigmoid function，如果有其他使得 y 值从 0 到 1 平滑递增的函数也可以使用。但由于一些列原因(在后续的一般化回归模型 GLM 中会谈到为什么选用这个函数)，g(z) is a fairly natural one.</p>
+<p>g(z) 的导数我们可以先进行推导:<br>$$g’(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})$$<br>$$= \frac{1}{1+e^{-z}}*(1 - \frac{1}{1+e^{-z}})= g(z)(1-g(z))$$</p>
+<h2 id="2-_梯度上升法求解逻辑回归">2. 梯度上升法求解逻辑回归</h2>
+<p>对于给定的逻辑回归函数，我们使用最小二乘法来推导出最大似然估计，假设:<br>$P(y=1|x;θ)=h_θ(x)$，代表对于给定的 θ，y 取值为 1 的概率。<br>$P(y=0|x;θ)=1-h_θ(x)$，代表对于给定的 θ，y 取值为 0 的概率。</p>
+<p>以上两者可以合并为：<br>$$P(y|x;θ)=(h_θ(x))^y(1 − h_θ(x))^{(1−y)}$$</p>
+<p>假设 m 个训练集是相互独立的，则似然估计为：<br>$$L(θ)=P(\overrightarrow{y}|X;θ)$$<br>$$= \prod^m_{i=1}P(y^i|x^i;θ)$$<br>$$= \prod^m_{i=1}{(h_θ(x^{(i)}))^{y^{(i)}}(1 − h_θ(x^{(i)}))^{(1−y^{(i)})}}$$</p>
+<p>和之前一样，上式可以简化为：</p>
+<p></p><p><br>$l(θ) = logL(θ)<br>= \sum_{m}^{i=1}{y^{(i)}}log{h(x^{(i)}) + {(1−y^{(i)})}log(1 − h(x^{(i)}))}$</p>
+<p>那么，<br>如何去最大化似然函数呢，可以应用梯度上升法，因为我们要使 P 的取值足够大，也是就预测准确的概率最够大。</p>
+<p>随机梯度上升的公式为：<br>$$θ:= θ + \alpha\Deltaθl(θ)$$</p>
+<p>下面来求$\Deltaθl(θ)$的取值：</p>
+<p>$$\frac\partial{\partial\theta_j}l(\theta)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)})\frac\partial{\partial\theta_j}g(\theta^Tx)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)}) g(\theta^Tx)(1-g(\theta^Tx))\frac\partial{\partial\theta_j}\theta^Tx$$<br>$$= ({y(1-g(\theta^Tx))-(1-y)g(\theta^Tx)})x_j$$<br>$$= (y - h_{\theta}(x))x_j$$</p>
+<p>附上手写的推导过程：<br><img src="/img/logistic_regression_delta_ljp_derived.png" alt="手写推导过程"></p>
+<p>所以，最终随机梯度上升的公式为：<br>$$θ_j:=θ_j + \alpha\sum_{i=1}^{m}(y^{(i)} - h_{\theta}(x^{(i))})x_j^{(i)}$$</p>
+<p>如何和线性回归的公式放在一起比较，</p>
+<p>$$θ_j = θ_j - α \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)}$$</p>
+<p>会发现，这两者非常相似，实际上却不然，因为这里的 $(h_θ(x^{(i)})$ 定义的不是线性函数。后续我们谈到 GLM 时会发现这并不是巧合，而是有更深层次的原因。</p>
+<h2 id="3-_牛顿迭代法求解逻辑回归">3. 牛顿迭代法求解逻辑回归</h2>
+<p>牛顿迭代法可以利用到曲线本身的信息，比梯度下降法更容易收敛，即迭代更少次数。</p>
+<h3 id="3-1_牛顿迭代法简述">3.1 牛顿迭代法简述</h3>
+<p>假设我们要求解方程 f(x)=0 的根，首先随便找一个初始值 x0，如果 x0 不是解，做一个经过 (x0,f(x0))  这个点的切线，与 x 轴的交点为 x1。同样的道理，如果 x1 不是解，做一个经过 (x1,f(x1)) 这个点的切线，与 x 轴的交点为 x2。 以此类推。以这样的方式得到的 xi 会无限趋近于 f(x)=0 的解。</p>
+<p>对于任意一点 $(x_n,y_n)$ 做切线，切线的斜率为 $f’(x_n)$，则有方程：<br>$$ y-f(x_n) = f’(x_n)(x-x_n) $$</p>
+<h3 id="3-2_迭代过程">3.2 迭代过程</h3>
+<p>求解 $f(\theta)$ = 0 时 $\theta$ 的取值。<br>设下一次迭代时 $\theta^{(t+1)}$ 的取值与前一次迭代 $\theta^{(t)}$ 的取值(在 x 轴)距离为 $\Delta$。</p>
+<p>则 $\theta^{(t+1)} = \theta^{(t)} - \Delta$，且 $\Delta = \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$，<br>所以有：<br>$$\theta^{(t+1)} = \theta^{(t)} - \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$$</p>
+<h4 id="从泰勒展开到牛顿迭代">从泰勒展开到牛顿迭代</h4>
+<p>也可以由泰勒展开中推导牛顿迭代的公式。这次为了求解方程 f′=0 的根，把原函数 f(x) 的做泰勒展开，展开到二阶形式：<br>$$ f(x+\Delta x) = f(x)+f’(x)\Delta x+ \frac1{2}f’’(x)\Delta x^2 $$</p>
+<p>当且仅当 $\Delta x$ 逼近 0 时，上式成立，此时忽略 1/2 系数的作用，所以有：<br>$$ f’(x)+ \frac1{2}f’’(x)\Delta x = 0 $$<br>故：<br>$$\Delta x = -\frac{f’(x)}{f’’(x)} $$</p>
+<p><strong>对函数求极大值的方法</strong><br>&gt;</p>
+<blockquote>
+<ol>
+<li>将原函数y=f(x)，对x求一次导数，得到dy/dx；</li>
+<li>令dy/dx = 0，解得一次导函数的零点；</li>
+<li>将原函数对x求二次导函数；</li>
+<li>将解得的零点坐标的x值代入二次导函数，<br>如果是正值，零点所在位置，就是极小值点，再将该x值代入原函数，得到极小值；<br>如果是值值，零点所在位置，就是极大值点，再将该x值代入原函数，得到极大值；<br>如果是0，零点所在位置，既不是极小值点，也不是极大值点，是拐点。</li>
+</ol>
+</blockquote>
+<p>所以求 $l(\theta)$ 在极大值处 $\theta$ 的取值，则是求 $l’(\theta) = 0$ 时 $\theta$ 的值，应用牛顿迭代法则有：</p>
+<p>$$\theta^{(t+1)} = \theta^{(t)} - \frac{l’(\theta^{(t)})}{l’’(\theta^{(t)})}$$</p>
+<h3 id="3-3_多维向量的牛顿迭代">3.3 多维向量的牛顿迭代</h3>
+<p>对于多维向量 $\overrightarrow{X}$ 求解。<br>$$\theta := \theta - H^{-1} \nabla l(\theta)$$<br>其中<br>$\nabla l(\theta)$ 是对 $l(\theta)$ 求导的值。</p>
+<p>H 是一个 n*n 的矩阵，n 是特征数量，元素的计算公式为：<br>$$H_ij= \frac{\partial^2{l({\theta)}}}{\partial{\theta_i}\partial{\theta_j}}$$</p>
+<h3 id="3-4_牛顿迭代法的特点">3.4 牛顿迭代法的特点</h3>
+<h4 id="是否收敛">是否收敛</h4>
+<p>通常情况下是收敛的，但是需要满足一些条件，对于逻辑回归来讲，是收敛的。</p>
+<h4 id="迭代速度">迭代速度</h4>
+<p>每次迭代后，有解数字的误差是成平方倍减小的，是二次收敛函数。</p>
+<h4 id="优缺点">优缺点</h4>
+<p>优点：收敛快<br>缺点：特征多(上千个)时，每次迭代成本大</p>
+<h2 id="Reference">Reference</h2>
+<p><a href="http://blog.csdn.net/baimafujinji/article/details/51179381" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51179381</a><br><a href="http://blog.csdn.net/baimafujinji/article/details/51167852" target="_blank" rel="external">http://blog.csdn.net/baimafujinji/article/details/51167852</a><br><a href="https://www.jiqizhixin.com/articles/2017-08-09-3" target="_blank" rel="external">如何通过牛顿方法解决Logistic回归问题</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/11/05/Stanford-Machine-Learning-3-线性回归的概率解释/" title="Stanford Machine Learning - 3 线性回归的概率解释" itemprop="url">Stanford Machine Learning - 3 线性回归的概率解释</a>
   </h1>
   <p class="article-author">By
@@ -1270,101 +1382,6 @@ $$ -->
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/26/LeetCode-The-Skyline-Problem/" title="LeetCode - The Skyline Problem" itemprop="url">LeetCode - The Skyline Problem</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-26T14:47:52.000Z" itemprop="datePublished"> Published Mar 26 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Problem_Description">Problem Description</h2>
-<p>A city’s skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Now suppose you are given the locations and height of all the buildings as shown on a cityscape photo (Figure A), write a program to output the skyline formed by these buildings collectively (Figure B).</p>
-<p> Buildings  Skyline Contour<br>The geometric information of each building is represented by a triplet of integers [Li, Ri, Hi], where Li and Ri are the x coordinates of the left and right edge of the ith building, respectively, and Hi is its height. It is guaranteed that 0 ≤ Li, Ri ≤ INT_MAX, 0 &lt; Hi ≤ INT_MAX, and Ri - Li &gt; 0. You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.</p>
-<p>For instance, the dimensions of all buildings in Figure A are recorded as: [ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ] .</p>
-<p>The output is a list of “key points” (red dots in Figure B) in the format of [ [x1,y1], [x2, y2], [x3, y3], … ] that uniquely defines a skyline. A key point is the left endpoint of a horizontal line segment. Note that the last key point, where the rightmost building ends, is merely used to mark the termination of the skyline, and always has zero height. Also, the ground in between any two adjacent buildings should be considered part of the skyline contour.</p>
-<p>For instance, the skyline in Figure B should be represented as:[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ].</p>
-<p>Notes:</p>
-<ul>
-<li>The number of buildings in any input list is guaranteed to be in the range [0, 10000].</li>
-<li>The input list is already sorted in ascending order by the left x position Li.</li>
-<li>The output list must be sorted by the x position.<br>There must be no consecutive horizontal lines of equal height in the output skyline. For instance, […[2 3], [4 5], [7 5], [11 5], [12 7]…] is not acceptable; the three lines of height 5 should be merged into one in the final output as such: […[2 3], [4 5], [12 7], …]</li>
-</ul>
-<p><strong>problem link:</strong><br><a href="https://leetcode.com/problems/the-skyline-problem/" target="_blank" rel="external">https://leetcode.com/problems/the-skyline-problem/</a></p>
-<h2 id="Solution">Solution</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class <span class="type">TheSkylineProblem_218</span> {</div><div class="line">    public <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; getSkylineSimpleSolution(<span class="type">int</span>[][] buildings) {</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; <span class="literal">result</span> = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; height = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line"></div><div class="line">        // height &lt; <span class="number">0</span>: the height <span class="keyword">of</span> building started</div><div class="line">        // height &gt; <span class="number">0</span>: the height <span class="keyword">of</span> building ended</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] b : buildings) {</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">0</span>], -b[<span class="number">2</span>]});</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">1</span>], b[<span class="number">2</span>]});</div><div class="line">        }</div><div class="line"></div><div class="line">        // sorted by x value, <span class="keyword">if</span> x equals then sorted by y value</div><div class="line">        <span class="type">Collections</span>.sort(height, (a, b) -&gt; {</div><div class="line">            <span class="keyword">if</span> (a[<span class="number">0</span>] != b[<span class="number">0</span>])</div><div class="line">                <span class="keyword">return</span> a[<span class="number">0</span>] - b[<span class="number">0</span>];</div><div class="line">            <span class="keyword">return</span> a[<span class="number">1</span>] - b[<span class="number">1</span>];</div><div class="line">        });</div><div class="line"></div><div class="line">        // record the height <span class="keyword">of</span> visited buildings by reverse order</div><div class="line">        <span class="type">Queue</span>&lt;<span class="type">Integer</span>&gt; pq = new <span class="type">PriorityQueue</span>&lt;&gt;((a, b) -&gt; (b - a));</div><div class="line">        pq.offer(<span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="type">int</span> prevHeight = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] h : height) {</div><div class="line">            <span class="keyword">if</span> (h[<span class="number">1</span>] &lt; <span class="number">0</span>) {</div><div class="line">                // save the height <span class="keyword">of</span> building</div><div class="line">                pq.offer(-h[<span class="number">1</span>]);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                // remove the height <span class="keyword">of</span> building</div><div class="line">                pq.remove(h[<span class="number">1</span>]);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="type">int</span> curHeight = pq.peek();</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (prevHeight != curHeight) {</div><div class="line">                // find the turn point</div><div class="line">                <span class="literal">result</span>.add(new <span class="type">int</span>[]{h[<span class="number">0</span>], curHeight});</div><div class="line">                prevHeight = curHeight;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="literal">result</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="算法解释">算法解释</h2>
-<h3 id="算法思路">算法思路</h3>
-<ol>
-<li>遍历所有的点，height用来存放每个顶点，左顶点的高度转为负数，右顶点的高度仍然是正数</li>
-<li>对height数组排序，首先按x的值排序，当x的值相等时按z排序，这样保证了即使矩形的起点一样，也是最先处理最高的点。对于[{1,2,1},{1,2,2},{1,2,3}]这样的情况会优先处理{1,2,3}这个点。</li>
-<li>使用优先级队列pq来保存当前最近buildings的高度，这个结构很重要！</li>
-<li>遍历height数组，碰到左顶点时，将高度放入pq中，否则，碰到右顶点时则将高度从pq从移除。这样做的好处是，每次走完一个矩形时，高度能回归到之前的buildings的高度。</li>
-<li>获取当前的最高高度，因为如果比当前矮的话，是不需要放入拐点中的，这点很重要！</li>
-<li>如果当前的最高高度和之前的高度不一致，说明出现了拐点。**如果当前的最高高度矮于之前的值，说明之前的很高的建筑遇到了它的右顶点从而被移除了，所以目前的最高高度即使矮于之前的点，但是是新的隔离的building了，所以可以加入。那么如果高呢？当前高度比之前高，那肯定会是拐点了。</li>
-</ol>
-<h2 id="总结">总结</h2>
-<p>几个关键点：</p>
-<ol>
-<li>对顶点进行排序保存，对左右顶点根据正负号来加以区分</li>
-<li>使用一个优先级队列来保存目前最高的建筑</li>
-<li>碰到右顶点时消除目前的建筑高度</li>
-<li>根据之前的高度和处理目前顶点以后(可能是加入了高度也可能是消除了之前的高度)的高度，对两者进行比较来找到拐点</li>
-</ol>
-<h2 id="Reference">Reference</h2>
-<blockquote>
-<p><a href="https://leetcode.com/discuss/54201/short-java-solution" target="_blank" rel="external">https://leetcode.com/discuss/54201/short-java-solution</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/26/LeetCode-The-Skyline-Problem/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/3/">Next<span></span></a>
@@ -1388,7 +1405,7 @@ $$ -->
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>9</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		

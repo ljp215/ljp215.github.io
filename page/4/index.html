@@ -91,6 +91,107 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/11/13/本地连机房Spark的调试过程/" title="本地连机房Spark的调试过程" itemprop="url">本地连机房Spark的调试过程</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-11-13T13:19:27.000Z" itemprop="datePublished"> Published Nov 13 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="调试过程">调试过程</h2>
+<p>本地运行代码，输出如下：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">12</span>:<span class="number">09</span>:<span class="number">51</span> INFO SparkContext: Running Spark <span class="property">version</span> <span class="number">1.5</span><span class="number">.1</span></div><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$<span class="type">class</span></div><div class="line">    <span class="keyword">at</span> org.apache.spark.util.TimeStampedWeakValueHashMap.&lt;init&gt;(TimeStampedWeakValueHashMap.scala:<span class="number">42</span>)</div><div class="line">    <span class="keyword">at</span> org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:<span class="number">287</span>)</div><div class="line">Caused <span class="keyword">by</span>: java.lang.ClassNotFoundException: scala.collection.GenTraversableOnce$<span class="type">class</span></div></pre></td></tr></table></figure>
+
+<p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="http://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="external">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
+<p>spark日志：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ReliableDeliverySupervisor: Association <span class="operator">with</span> remote <span class="keyword">system</span> [akka.tcp://sparkDriver@<span class="number">100.64</span><span class="number">.80</span><span class="number">.93</span>:<span class="number">57108</span>] has failed, address is now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. Reason is: [scala.Option; <span class="built_in">local</span> class incompatible: stream classdesc serialVersionUID = -<span class="number">114498752079829388</span>, <span class="built_in">local</span> class serialVersionUID = -<span class="number">2062608324514658839</span>].</div></pre></td></tr></table></figure>
+
+<p>根据 scala.Option; local class incompatible 可以发现是 scala 的版本不对，spark 默认的是 scala-2.10，需要改变依赖的scala版本。</p>
+<p>改完以后又发现，还是连接不上。本地的输出：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">22</span> ERROR SparkUncaughtExceptionHandler: Uncaught exception <span class="operator">in</span> thread Thread[appclient-registration-retry-thread,<span class="number">5</span>,main]</div><div class="line">java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@<span class="number">5430</span>d0ff rejected <span class="built_in">from</span> java.util.concurrent.ThreadPoolExecutor@<span class="number">7819693</span>b[Running, pool size = <span class="number">1</span>, active threads = <span class="number">0</span>, queued tasks = <span class="number">0</span>, completed tasks = <span class="number">1</span>]</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:<span class="number">2047</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:<span class="number">823</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:<span class="number">1369</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:<span class="number">112</span>)</div></pre></td></tr></table></figure>
+
+<p>spark的日志如下：</p>
+<p>A</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span><span class="regexp">/11/</span><span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">03</span> ERROR ErrorMonitor: dropping message [<span class="keyword">class</span> akka.actor.ActorSelectionMessage] <span class="keyword">for</span> non-local recipient [Actor[akka.tcp:<span class="comment">//sparkMaster@10.19.27.215:4041/]] arriving at [akka.tcp://sparkMaster@10.19.27.215:4041] inbound addresses are [akka.tcp://sparkMaster@master1:4041]</span></div></pre></td></tr></table></figure>
+
+<p>B</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">41</span> <span class="type">WARN</span> <span class="type">ReliableDeliverySupervisor</span>: <span class="type">Association</span> <span class="keyword">with</span> remote system [akka.tcp://sparkDriver@<span class="number">100</span>.<span class="number">64</span>.<span class="number">80</span>.<span class="number">93</span>:<span class="number">61812</span>] has failed, address <span class="keyword">is</span> now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. <span class="type">Reason</span> <span class="keyword">is</span>: [<span class="type">Disassociated</span>].</div></pre></td></tr></table></figure>
+
+<p>关于B这部分的log，怀疑是测试环境的spark的网络访问权限没有打开！最后打开网络访问权限后解决。spark master和worker之间的通信使用的是akka，tcp协议。</p>
+<p>spark的A部分log和本地的log是一致的。</p>
+<p>第二天接着查，查了很多地方。怀疑是Spark的配置不正确。<br>对于Spark的配置，官网说的是：</p>
+<p>Options for the daemons used in the standalone deploy mode</p>
+<p>SPARK_MASTER_IP, to bind the master to a different IP address or hostname</p>
+<p>而我spark机器上的设置是：</p>
+<ol>
+<li>conf/spark-env.sh: export SPARK_MASTER_IP=master1</li>
+<li>/etc/hosts: 10.x.xxx.215 master1</li>
+</ol>
+<p>一切配置正确但依然不行。Google上到处寻觅，找到 spark 的 group 里面的一个帖子，<a href="https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8" target="_blank" rel="external">https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8</a>，提到</p>
+<blockquote>
+<p>Yes, this message means that one of the workers tried to contact you using your IP address (10.129.7.154), but Akka is (somewhat stupidly) configured to rely on a DNS name (namely ip-10-129-7-154). If you’ve set up the Spark standalone mode, there was a bug in the scripts where they would use an IP address for the master instead of a hostname.</p>
+</blockquote>
+<p>所以当我将 SMART_IP 改成 ip 而不是 hostname 后，本地终于能连上spark了，设置如下：</p>
+<p>conf/spark-env.sh: export SPARK_MASTER_IP=10.x.xxx.215</p>
+<h2 id="几点备忘">几点备忘</h2>
+<ol>
+<li><p>通过 %% 方法获取正确的 Scala 版本<br>如果你用是 groupID %% artifactID % revision 而不是 groupID % artifactID % revision（区别在于 groupID 后面是 %%），sbt 会在 工件名称中加上项目的 Scala 版本号。 这只是一种快捷方法。你可以这样写不用 %%：</p>
+</li>
+<li><p>enable build.sbt auto import<br>修改了 build.sbt，但是包没有引入生效</p>
+</li>
+<li><p>./spark-shell 加载配置文件<br>在Spark 集群上运行一个应用,只需通过master的 spark://IP:PORT 链接传递到SparkContext构造器<br>在集群上运行交互式的Spark 命令, 运行如下命令：<br>MASTER=spark://IP:PORT ./spark-shell<br>注意，如果你在一个 spark集群上运行了spark-shell脚本，spark-shell 将通过在conf/spark-env.sh下的SPARK_MASTER_IP和SPARK_MASTER_PORT自动设置MASTER</p>
+</li>
+</ol>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/Spark/">Spark</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/11/13/本地连机房Spark的调试过程/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/11/10/Mysql-Memo/" title="Mysql Memo" itemprop="url">Mysql Memo</a>
   </h1>
   <p class="article-author">By
@@ -1178,90 +1279,6 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/06/22/内存栅栏/" title="内存栅栏" itemprop="url">内存栅栏</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-06-22T06:02:48.000Z" itemprop="datePublished"> Published Jun 22 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="什么是内存栅栏？">什么是内存栅栏？</h1>
-<p>内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
-<p><strong>内存栅栏提供了两个功能</strong></p>
-<ul>
-<li>确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性；</li>
-<li>实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。</li>
-</ul>
-<h1 id="为什么需要内存栅栏？">为什么需要内存栅栏？</h1>
-<p>对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用Cache来达到高效获取数据的目的。然后Cache为了提高性能，会对指令进行重排序。<br>当重排序对最终的结果没有影响的时候，这种优化是有益的。但是当多线程共享数据时，重排序将导致错误的结果。所以为了在共享变量的情况下依然可以使用指令重排序，产生了内存栅栏来保证程序的正确性。</p>
-<h1 id="内存栅栏是怎么实现的？">内存栅栏是怎么实现的？</h1>
-<p>在底层，内存栅栏是一组指令，一般包括Store Barrier、Load Barrier和Full Barrier。</p>
-<p>几乎所有的处理器至少支持一种粗粒度的屏障指令，通常被称为“栅栏（Fence）”，它保证在栅栏前初始化的load和store指令，能够严格有序的在栅栏后的load和store指令之前执行。</p>
-<p>不同的CPU架构有不同的实现方式，以X86为例：</p>
-<ul>
-<li>Store Barrier,强制所有在store屏障指令之前的store指令，都在该store屏障指令执行之前被执行，并把store缓冲区的数据都刷到主存</li>
-<li>Load Barrier,强制所有在load屏障指令之后的load指令，都在该load屏障指令执行之后被执行，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。</li>
-<li>Full Barrier，复合了load和store屏蔽指令。<br>无论在何种处理器上，这几乎都是最耗时的操作之一（与原子指令差不多，甚至更消耗资源），所以大部分处理器还会支持更细粒度的屏障指令。</li>
-</ul>
-<p>下图是CPU的Local Memory与主存的通信过程：<br><img src="/img/memory_barrier_comm.jpg" alt=""></p>
-<h1 id="Java中内存栅栏的使用">Java中内存栅栏的使用</h1>
-<p>Java内存模型中volatile变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。一个类的final字段会在初始化后插入一个store屏障，来确保final字段在构造函数初始化完成并可被使用时可见。</p>
-<h1 id="内存栅栏对性能的影响">内存栅栏对性能的影响</h1>
-<p>内存栅栏阻止了 CPU 很多隐式的内存延迟技术的执行，因此是有性能损耗的，不过在上层看来这种损耗并不大。在合适的时候使用内存栅栏，仍然是一种高效的做法。</p>
-<h1 id="refers:">refers:</h1>
-<blockquote>
-<p><a href="http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="external">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="http://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="external">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="external">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/06/22/内存栅栏/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next<span></span></a>
@@ -1285,7 +1302,7 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>9</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		

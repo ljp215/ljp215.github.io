@@ -91,6 +91,90 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/06/22/内存栅栏/" title="内存栅栏" itemprop="url">内存栅栏</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-06-22T06:02:48.000Z" itemprop="datePublished"> Published Jun 22 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="什么是内存栅栏？">什么是内存栅栏？</h1>
+<p>内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
+<p><strong>内存栅栏提供了两个功能</strong></p>
+<ul>
+<li>确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性；</li>
+<li>实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。</li>
+</ul>
+<h1 id="为什么需要内存栅栏？">为什么需要内存栅栏？</h1>
+<p>对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用Cache来达到高效获取数据的目的。然后Cache为了提高性能，会对指令进行重排序。<br>当重排序对最终的结果没有影响的时候，这种优化是有益的。但是当多线程共享数据时，重排序将导致错误的结果。所以为了在共享变量的情况下依然可以使用指令重排序，产生了内存栅栏来保证程序的正确性。</p>
+<h1 id="内存栅栏是怎么实现的？">内存栅栏是怎么实现的？</h1>
+<p>在底层，内存栅栏是一组指令，一般包括Store Barrier、Load Barrier和Full Barrier。</p>
+<p>几乎所有的处理器至少支持一种粗粒度的屏障指令，通常被称为“栅栏（Fence）”，它保证在栅栏前初始化的load和store指令，能够严格有序的在栅栏后的load和store指令之前执行。</p>
+<p>不同的CPU架构有不同的实现方式，以X86为例：</p>
+<ul>
+<li>Store Barrier,强制所有在store屏障指令之前的store指令，都在该store屏障指令执行之前被执行，并把store缓冲区的数据都刷到主存</li>
+<li>Load Barrier,强制所有在load屏障指令之后的load指令，都在该load屏障指令执行之后被执行，并且一直等到load缓冲区被该CPU读完才能执行之后的load指令。</li>
+<li>Full Barrier，复合了load和store屏蔽指令。<br>无论在何种处理器上，这几乎都是最耗时的操作之一（与原子指令差不多，甚至更消耗资源），所以大部分处理器还会支持更细粒度的屏障指令。</li>
+</ul>
+<p>下图是CPU的Local Memory与主存的通信过程：<br><img src="/img/memory_barrier_comm.jpg" alt=""></p>
+<h1 id="Java中内存栅栏的使用">Java中内存栅栏的使用</h1>
+<p>Java内存模型中volatile变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。一个类的final字段会在初始化后插入一个store屏障，来确保final字段在构造函数初始化完成并可被使用时可见。</p>
+<h1 id="内存栅栏对性能的影响">内存栅栏对性能的影响</h1>
+<p>内存栅栏阻止了 CPU 很多隐式的内存延迟技术的执行，因此是有性能损耗的，不过在上层看来这种损耗并不大。在合适的时候使用内存栅栏，仍然是一种高效的做法。</p>
+<h1 id="refers:">refers:</h1>
+<blockquote>
+<p><a href="http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="external">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="http://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="external">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="external">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/06/22/内存栅栏/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2015/06/19/这些年数据挖掘及反思/" title="这些年数据挖掘及反思" itemprop="url">这些年数据挖掘及反思</a>
   </h1>
   <p class="article-author">By
@@ -1212,71 +1296,6 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2014/12/25/Goog-Engineer-Keys/" title="Good Engineer Keys" itemprop="url">Good Engineer Keys</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2014-12-24T16:30:01.000Z" itemprop="datePublished"> Published Dec 25 2014</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>A good engineer has technical mastery.  A great engineer has these additional qualities:</p>
-<ul>
-<li><strong>Clear communication of complex ideas.</strong><br>Can the engineer explain themselves to non-technical stakeholders, as well as other engineers?  Many technically proficient engineers are not considered great because they can’t communicate their ideas.</li>
-<li><strong>They love to code.</strong><br>Being an engineer is a great high paying job, which is why many good developers do it.  Great engineers would code even if that wasn’t the case.  They keep their skills current, and they have the stamina to power through long hours because they are doing what they love.<br>Desire to simplify instead of making things more complex.  Hard, complex challenges are often fun for developers.  Great engineers want to simplify the problem instead of building something complicated.</li>
-<li><strong>A strong business and product sense.</strong><br>In the development of a feature, developers often need to make product decisions that aren’t covered in the spec.  Their ability to make the right call depends on an understanding of why a feature is good for the business, and how products should be built.</li>
-<li><strong>They focus on the highest impact items.</strong><br>Good engineers get distracted.  Great engineers spend their time where it matters. </li>
-<li><strong>Strong social skills.</strong><br>An engineer needs to effectively interact with people across the company to be great a their job. If they can only interact with other developers, then they are only good at their job.</li>
-</ul>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/promote/">promote</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2014/12/25/Goog-Engineer-Keys/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/4/"><span></span>Prev</a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><span class="page-number current">5</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/6/">Next<span></span></a>
@@ -1300,7 +1319,7 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>9</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		

@@ -91,6 +91,101 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/03/26/LeetCode-The-Skyline-Problem/" title="LeetCode - The Skyline Problem" itemprop="url">LeetCode - The Skyline Problem</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-03-26T14:47:52.000Z" itemprop="datePublished"> Published Mar 26 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Problem_Description">Problem Description</h2>
+<p>A city’s skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Now suppose you are given the locations and height of all the buildings as shown on a cityscape photo (Figure A), write a program to output the skyline formed by these buildings collectively (Figure B).</p>
+<p> Buildings  Skyline Contour<br>The geometric information of each building is represented by a triplet of integers [Li, Ri, Hi], where Li and Ri are the x coordinates of the left and right edge of the ith building, respectively, and Hi is its height. It is guaranteed that 0 ≤ Li, Ri ≤ INT_MAX, 0 &lt; Hi ≤ INT_MAX, and Ri - Li &gt; 0. You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.</p>
+<p>For instance, the dimensions of all buildings in Figure A are recorded as: [ [2 9 10], [3 7 15], [5 12 12], [15 20 10], [19 24 8] ] .</p>
+<p>The output is a list of “key points” (red dots in Figure B) in the format of [ [x1,y1], [x2, y2], [x3, y3], … ] that uniquely defines a skyline. A key point is the left endpoint of a horizontal line segment. Note that the last key point, where the rightmost building ends, is merely used to mark the termination of the skyline, and always has zero height. Also, the ground in between any two adjacent buildings should be considered part of the skyline contour.</p>
+<p>For instance, the skyline in Figure B should be represented as:[ [2 10], [3 15], [7 12], [12 0], [15 10], [20 8], [24, 0] ].</p>
+<p>Notes:</p>
+<ul>
+<li>The number of buildings in any input list is guaranteed to be in the range [0, 10000].</li>
+<li>The input list is already sorted in ascending order by the left x position Li.</li>
+<li>The output list must be sorted by the x position.<br>There must be no consecutive horizontal lines of equal height in the output skyline. For instance, […[2 3], [4 5], [7 5], [11 5], [12 7]…] is not acceptable; the three lines of height 5 should be merged into one in the final output as such: […[2 3], [4 5], [12 7], …]</li>
+</ul>
+<p><strong>problem link:</strong><br><a href="https://leetcode.com/problems/the-skyline-problem/" target="_blank" rel="external">https://leetcode.com/problems/the-skyline-problem/</a></p>
+<h2 id="Solution">Solution</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div></pre></td><td class="code"><pre><div class="line">public class <span class="type">TheSkylineProblem_218</span> {</div><div class="line">    public <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; getSkylineSimpleSolution(<span class="type">int</span>[][] buildings) {</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; <span class="literal">result</span> = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line">        <span class="type">List</span>&lt;<span class="type">int</span>[]&gt; height = new <span class="type">ArrayList</span>&lt;&gt;();</div><div class="line"></div><div class="line">        // height &lt; <span class="number">0</span>: the height <span class="keyword">of</span> building started</div><div class="line">        // height &gt; <span class="number">0</span>: the height <span class="keyword">of</span> building ended</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] b : buildings) {</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">0</span>], -b[<span class="number">2</span>]});</div><div class="line">            height.add(new <span class="type">int</span>[]{b[<span class="number">1</span>], b[<span class="number">2</span>]});</div><div class="line">        }</div><div class="line"></div><div class="line">        // sorted by x value, <span class="keyword">if</span> x equals then sorted by y value</div><div class="line">        <span class="type">Collections</span>.sort(height, (a, b) -&gt; {</div><div class="line">            <span class="keyword">if</span> (a[<span class="number">0</span>] != b[<span class="number">0</span>])</div><div class="line">                <span class="keyword">return</span> a[<span class="number">0</span>] - b[<span class="number">0</span>];</div><div class="line">            <span class="keyword">return</span> a[<span class="number">1</span>] - b[<span class="number">1</span>];</div><div class="line">        });</div><div class="line"></div><div class="line">        // record the height <span class="keyword">of</span> visited buildings by reverse order</div><div class="line">        <span class="type">Queue</span>&lt;<span class="type">Integer</span>&gt; pq = new <span class="type">PriorityQueue</span>&lt;&gt;((a, b) -&gt; (b - a));</div><div class="line">        pq.offer(<span class="number">0</span>);</div><div class="line"></div><div class="line">        <span class="type">int</span> prevHeight = <span class="number">0</span>;</div><div class="line">        <span class="keyword">for</span> (<span class="type">int</span>[] h : height) {</div><div class="line">            <span class="keyword">if</span> (h[<span class="number">1</span>] &lt; <span class="number">0</span>) {</div><div class="line">                // save the height <span class="keyword">of</span> building</div><div class="line">                pq.offer(-h[<span class="number">1</span>]);</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                // remove the height <span class="keyword">of</span> building</div><div class="line">                pq.remove(h[<span class="number">1</span>]);</div><div class="line">            }</div><div class="line"></div><div class="line">            <span class="type">int</span> curHeight = pq.peek();</div><div class="line"></div><div class="line">            <span class="keyword">if</span> (prevHeight != curHeight) {</div><div class="line">                // find the turn point</div><div class="line">                <span class="literal">result</span>.add(new <span class="type">int</span>[]{h[<span class="number">0</span>], curHeight});</div><div class="line">                prevHeight = curHeight;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> <span class="literal">result</span>;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="算法解释">算法解释</h2>
+<h3 id="算法思路">算法思路</h3>
+<ol>
+<li>遍历所有的点，height用来存放每个顶点，左顶点的高度转为负数，右顶点的高度仍然是正数</li>
+<li>对height数组排序，首先按x的值排序，当x的值相等时按z排序，这样保证了即使矩形的起点一样，也是最先处理最高的点。对于[{1,2,1},{1,2,2},{1,2,3}]这样的情况会优先处理{1,2,3}这个点。</li>
+<li>使用优先级队列pq来保存当前最近buildings的高度，这个结构很重要！</li>
+<li>遍历height数组，碰到左顶点时，将高度放入pq中，否则，碰到右顶点时则将高度从pq从移除。这样做的好处是，每次走完一个矩形时，高度能回归到之前的buildings的高度。</li>
+<li>获取当前的最高高度，因为如果比当前矮的话，是不需要放入拐点中的，这点很重要！</li>
+<li>如果当前的最高高度和之前的高度不一致，说明出现了拐点。**如果当前的最高高度矮于之前的值，说明之前的很高的建筑遇到了它的右顶点从而被移除了，所以目前的最高高度即使矮于之前的点，但是是新的隔离的building了，所以可以加入。那么如果高呢？当前高度比之前高，那肯定会是拐点了。</li>
+</ol>
+<h2 id="总结">总结</h2>
+<p>几个关键点：</p>
+<ol>
+<li>对顶点进行排序保存，对左右顶点根据正负号来加以区分</li>
+<li>使用一个优先级队列来保存目前最高的建筑</li>
+<li>碰到右顶点时消除目前的建筑高度</li>
+<li>根据之前的高度和处理目前顶点以后(可能是加入了高度也可能是消除了之前的高度)的高度，对两者进行比较来找到拐点</li>
+</ol>
+<h2 id="Reference">Reference</h2>
+<blockquote>
+<p><a href="https://leetcode.com/discuss/54201/short-java-solution" target="_blank" rel="external">https://leetcode.com/discuss/54201/short-java-solution</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/03/26/LeetCode-The-Skyline-Problem/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/03/03/扔鸡蛋测楼层/" title="扔鸡蛋测楼层" itemprop="url">扔鸡蛋测楼层</a>
   </h1>
   <p class="article-author">By
@@ -904,107 +999,6 @@ data=d.decompress(s)
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/11/13/本地连机房Spark的调试过程/" title="本地连机房Spark的调试过程" itemprop="url">本地连机房Spark的调试过程</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-11-13T13:19:27.000Z" itemprop="datePublished"> Published Nov 13 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="调试过程">调试过程</h2>
-<p>本地运行代码，输出如下：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">12</span>:<span class="number">09</span>:<span class="number">51</span> INFO SparkContext: Running Spark <span class="property">version</span> <span class="number">1.5</span><span class="number">.1</span></div><div class="line">Exception <span class="keyword">in</span> thread <span class="string">"main"</span> java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$<span class="type">class</span></div><div class="line">    <span class="keyword">at</span> org.apache.spark.util.TimeStampedWeakValueHashMap.&lt;init&gt;(TimeStampedWeakValueHashMap.scala:<span class="number">42</span>)</div><div class="line">    <span class="keyword">at</span> org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:<span class="number">287</span>)</div><div class="line">Caused <span class="keyword">by</span>: java.lang.ClassNotFoundException: scala.collection.GenTraversableOnce$<span class="type">class</span></div></pre></td></tr></table></figure>
-
-<p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="http://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="external">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
-<p>spark日志：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ReliableDeliverySupervisor: Association <span class="operator">with</span> remote <span class="keyword">system</span> [akka.tcp://sparkDriver@<span class="number">100.64</span><span class="number">.80</span><span class="number">.93</span>:<span class="number">57108</span>] has failed, address is now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. Reason is: [scala.Option; <span class="built_in">local</span> class incompatible: stream classdesc serialVersionUID = -<span class="number">114498752079829388</span>, <span class="built_in">local</span> class serialVersionUID = -<span class="number">2062608324514658839</span>].</div></pre></td></tr></table></figure>
-
-<p>根据 scala.Option; local class incompatible 可以发现是 scala 的版本不对，spark 默认的是 scala-2.10，需要改变依赖的scala版本。</p>
-<p>改完以后又发现，还是连接不上。本地的输出：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">22</span> ERROR SparkUncaughtExceptionHandler: Uncaught exception <span class="operator">in</span> thread Thread[appclient-registration-retry-thread,<span class="number">5</span>,main]</div><div class="line">java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@<span class="number">5430</span>d0ff rejected <span class="built_in">from</span> java.util.concurrent.ThreadPoolExecutor@<span class="number">7819693</span>b[Running, pool size = <span class="number">1</span>, active threads = <span class="number">0</span>, queued tasks = <span class="number">0</span>, completed tasks = <span class="number">1</span>]</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:<span class="number">2047</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:<span class="number">823</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:<span class="number">1369</span>)</div><div class="line">    <span class="keyword">at</span> java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:<span class="number">112</span>)</div></pre></td></tr></table></figure>
-
-<p>spark的日志如下：</p>
-<p>A</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span><span class="regexp">/11/</span><span class="number">12</span> <span class="number">21</span>:<span class="number">46</span>:<span class="number">03</span> ERROR ErrorMonitor: dropping message [<span class="keyword">class</span> akka.actor.ActorSelectionMessage] <span class="keyword">for</span> non-local recipient [Actor[akka.tcp:<span class="comment">//sparkMaster@10.19.27.215:4041/]] arriving at [akka.tcp://sparkMaster@10.19.27.215:4041] inbound addresses are [akka.tcp://sparkMaster@master1:4041]</span></div></pre></td></tr></table></figure>
-
-<p>B</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="number">15</span>/<span class="number">11</span>/<span class="number">12</span> <span class="number">22</span>:<span class="number">00</span>:<span class="number">41</span> <span class="type">WARN</span> <span class="type">ReliableDeliverySupervisor</span>: <span class="type">Association</span> <span class="keyword">with</span> remote system [akka.tcp://sparkDriver@<span class="number">100</span>.<span class="number">64</span>.<span class="number">80</span>.<span class="number">93</span>:<span class="number">61812</span>] has failed, address <span class="keyword">is</span> now gated <span class="keyword">for</span> [<span class="number">5000</span>] ms. <span class="type">Reason</span> <span class="keyword">is</span>: [<span class="type">Disassociated</span>].</div></pre></td></tr></table></figure>
-
-<p>关于B这部分的log，怀疑是测试环境的spark的网络访问权限没有打开！最后打开网络访问权限后解决。spark master和worker之间的通信使用的是akka，tcp协议。</p>
-<p>spark的A部分log和本地的log是一致的。</p>
-<p>第二天接着查，查了很多地方。怀疑是Spark的配置不正确。<br>对于Spark的配置，官网说的是：</p>
-<p>Options for the daemons used in the standalone deploy mode</p>
-<p>SPARK_MASTER_IP, to bind the master to a different IP address or hostname</p>
-<p>而我spark机器上的设置是：</p>
-<ol>
-<li>conf/spark-env.sh: export SPARK_MASTER_IP=master1</li>
-<li>/etc/hosts: 10.x.xxx.215 master1</li>
-</ol>
-<p>一切配置正确但依然不行。Google上到处寻觅，找到 spark 的 group 里面的一个帖子，<a href="https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8" target="_blank" rel="external">https://groups.google.com/forum/#!topic/spark-users/SKE4UOUQ_U8</a>，提到</p>
-<blockquote>
-<p>Yes, this message means that one of the workers tried to contact you using your IP address (10.129.7.154), but Akka is (somewhat stupidly) configured to rely on a DNS name (namely ip-10-129-7-154). If you’ve set up the Spark standalone mode, there was a bug in the scripts where they would use an IP address for the master instead of a hostname.</p>
-</blockquote>
-<p>所以当我将 SMART_IP 改成 ip 而不是 hostname 后，本地终于能连上spark了，设置如下：</p>
-<p>conf/spark-env.sh: export SPARK_MASTER_IP=10.x.xxx.215</p>
-<h2 id="几点备忘">几点备忘</h2>
-<ol>
-<li><p>通过 %% 方法获取正确的 Scala 版本<br>如果你用是 groupID %% artifactID % revision 而不是 groupID % artifactID % revision（区别在于 groupID 后面是 %%），sbt 会在 工件名称中加上项目的 Scala 版本号。 这只是一种快捷方法。你可以这样写不用 %%：</p>
-</li>
-<li><p>enable build.sbt auto import<br>修改了 build.sbt，但是包没有引入生效</p>
-</li>
-<li><p>./spark-shell 加载配置文件<br>在Spark 集群上运行一个应用,只需通过master的 spark://IP:PORT 链接传递到SparkContext构造器<br>在集群上运行交互式的Spark 命令, 运行如下命令：<br>MASTER=spark://IP:PORT ./spark-shell<br>注意，如果你在一个 spark集群上运行了spark-shell脚本，spark-shell 将通过在conf/spark-env.sh下的SPARK_MASTER_IP和SPARK_MASTER_PORT自动设置MASTER</p>
-</li>
-</ol>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Spark/">Spark</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/11/13/本地连机房Spark的调试过程/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -1028,7 +1022,7 @@ data=d.decompress(s)
 		
 			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>9</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
