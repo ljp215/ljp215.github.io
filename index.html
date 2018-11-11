@@ -91,6 +91,96 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2018/11/11/线性回归正则化/" title="线性回归正则化" itemprop="url">线性回归正则化</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-11-11T13:56:11.000Z" itemprop="datePublished"> Published Nov 11 2018</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_前言">1. 前言</h2>
+<p>线性回归出的模型如果出现过拟合怎么办？</p>
+<ol>
+<li>脏数据太多，需要清洗数据</li>
+<li>增加训练数据的数量和多样性</li>
+<li>特征数量过多，使用正则化减少特征数量</li>
+</ol>
+<h2 id="2-_向量的范数">2. 向量的范数</h2>
+<p>向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质：</p>
+<p>L0范数：向量中非零元素的个数。<br>L1范数：向量中各个元素绝对值之和，又叫“稀疏规则算子”（Lasso regularization）<br>L2范数：向量中各个元素平方和再开方<br>p-范数：$||\textbf{x}||_p = (\sum_{i=1}^N|x_i|^p)^{\frac{1}{p}}$，即向量元素绝对值的p次方和的1/p次幂。</p>
+<p>下图展示了 p 取不同值时 unit ball 的形状：</p>
+<p><img src="/img/kinds_of_norm_graph.png" alt=""></p>
+<h2 id="3-_正则化">3. 正则化</h2>
+<p>在统计学的缩减中，引入了惩罚项，减少了不重要的参数，同时还可采用正则化（regularization）减少不重要的参数。<br>既然是减少特征，那么最容易想到的就是使用 L0 范数，求回归函数中的参数向量 w 的非零元素的个数。如果约束 $‖w‖_0≤k$，就是约束非零元素个数不大于 k。不过很明显，L0 范数是不连续的且非凸的，如果在线性回归中加上 L0 范数的约束，就变成了一个组合优化问题：挑出 $≤k$ 个系数然后做回归，找到目标函数的最小值对应的系数组合，这是一个 NP 问题。</p>
+<p>有趣的是，L1 范数也可以达到稀疏的效果，是 L0 范数的最优凸近似。我们把引入 L1 范数的线性回归叫做 Lasso 回归。</p>
+<h3 id="3-1_Lasso_回归">3.1 Lasso 回归</h3>
+<p>Lasso 算法（英语：least absolute shrinkage and selection operator，又译最小绝对值收敛和选择算子、套索算法）是一种同时进行特征选择和正则化（数学）的回归分析方法，旨在增强统计模型的预测准确性和可解释性，最初由斯坦福大学统计学教授 Robert Tibshirani 于 1996 年基于 Leo Breiman 的非负参数推断(Nonnegative Garrote, NNG)提出。</p>
+<p>优化目标：min $ 1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} }$</p>
+<p>Lasso 回归：min  $1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} } + \lambda||\omega||_{1}$</p>
+<h3 id="3-2_Ridge_回归">3.2 Ridge 回归</h3>
+<p>岭回归是加了二阶正则项的最小二乘，主要适用于过拟合严重或各变量之间存在多重共线性的时候，岭回归是有 bias 的，这里的 bias 是为了让 variance 更小。</p>
+<p>Ridge 回归：min  $1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} } + \lambda ||\omega||_{2}^{2} $</p>
+<p>岭回归最先是用来处理特征数多与样本数的情况，现在也用于在估计中加入偏差，从而得到更好的估计。这里引入λ限制了所有w的和，通过引入该惩罚项，能够减少不重要的参数，这个技术在统计学上也叫做缩减。缩减方法可以去掉不重要的参数，因此能更好的理解数据。选取不同的λ进行测试，最后得到一个使得误差最小λ。</p>
+<p>缩减方法可以去掉不重要的参数，因此能更好地理解数据。此外，与简单的线性回归相比，缩减法能取得更好的预测效果。</p>
+<h3 id="3-3_比较两者">3.3 比较两者</h3>
+<p>Lasso 回归与 Ridge 回归有共同点，也有区别。</p>
+<h4 id="共同点">共同点</h4>
+<p>都能解决两个问题：</p>
+<ol>
+<li>线性回归出现的过拟合现象</li>
+<li>使用 Normal equation 求解时，解决 $(X^TX)$ 不可逆的问题。</li>
+</ol>
+<h4 id="区别">区别</h4>
+<p>岭回归加入的正则项是 L2 范数，其结果可以将偏回归系数往 0 的方向进行压缩，但不会把偏回归系数压缩为 0，即岭回归不会剔除变量。Lasso 回归同样也可以将偏回归系数往 0 方向压缩，但是能够将某些变量的偏回归系数压缩为 0，因此可以起到变量筛选的作用。</p>
+<p><img src="/img/ridege_and_lasso_solution.png" alt=""></p>
+<p>红色的椭圆和蓝色的区域的切点就是目标函数的最优解，我们可以看到，如果是圆，则很容易切到圆周的任意一点，但是很难切到坐标轴上，因此没有稀疏；但是如果是菱形或者多边形，则很容易切到坐标轴上，因此很容易产生稀疏的结果。这也说明了为什么 L1 范式会是稀疏的。</p>
+<h2 id="Reference">Reference</h2>
+<p><a href="https://zh.wikipedia.org/wiki/Lasso%E7%AE%97%E6%B3%95" target="_blank" rel="external">Lasso算法 - 维基百科，自由的百科全书</a><br><a href="https://blog.csdn.net/xbinworld/article/details/44276389" target="_blank" rel="external">机器学习方法：回归（二）：稀疏与正则约束ridge regression，Lasso</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2018/11/11/线性回归正则化/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/04/14/Stanford-Machine-Learning-7-SVM/" title="Stanford Machine Learning - 7 SVM" itemprop="url">Stanford Machine Learning - 7 SVM</a>
   </h1>
   <p class="article-author">By
@@ -1019,106 +1109,6 @@ var _hmt = _hmt || [];
 	
 	  	<span></span>
 		<a href="/2017/11/12/解决-Kafka-Consumer-卡顿的问题/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/" title="Stanford Machine Learning - 5 广义线性模型" itemprop="url">Stanford Machine Learning - 5 广义线性模型</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-05T15:20:39.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="1-_指数分布族(Exponential_Family)">1. 指数分布族(Exponential Family)</h2>
-<h4 id="指数分布族的定义">指数分布族的定义</h4>
-<p>若一类概率分布可以写成如下形式，那么它就属于指数分布族：<br>$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$</p>
-<ul>
-<li>$\eta$: 自然参数，通常是一个实数</li>
-<li>T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识）</li>
-<li>a($\eta$) 被称为 log partition function</li>
-</ul>
-<p>对于给定的 a，b，T 三个函数，上式定义了一个以 $\eta$ 为参数的概率分布集合，即改变 $\eta$ 可以得到不同的概率分布，例如高斯分布和伯努利分布。</p>
-<h4 id="指数分布族以及它们的特征">指数分布族以及它们的特征</h4>
-<ul>
-<li>正态分布（高斯分布）——总体噪音（由中心极限定理得）</li>
-<li>伯努利分布——逻辑回归（对01问题建模）</li>
-<li>多项式分布——K种结果的事情进行建模</li>
-<li>泊松分布——对计数过程进行建模（一个样本中放射性衰变的数目，网站的访客数目，商店的顾客数目）</li>
-<li>伽马分布，指数分布——正数的分布，对间隔进行建模（在公交车站等车的时间）</li>
-<li>β分布，Dirichlet分布——对小数进行分布，对概率分布进行建模</li>
-<li>Wishart分布——协方差的分布</li>
-</ul>
-<h2 id="2-_指数分布簇推导">2. 指数分布簇推导</h2>
-<p>高斯分布(Gaussian)和伯努利(Bernoulli)分布都可以推导为指数分布族。</p>
-<h3 id="2-1_伯努利分布的推导">2.1 伯努利分布的推导</h3>
-<p>伯努利分布的概率公式为：$P(y=1;\phi)=\phi; P(y=0;\phi)=1-\phi;$</p>
-<p>公式可经如下变换：<br>$$P(y;\phi)=\phi^y(1-\phi)^y$$<br>$$=exp(log(\phi^y(1-\phi)^y))=exp(ylog(\phi)+ (1-y)log(1-\phi))$$<br>$$=exp(log(\frac\phi{1-\phi})y + log(1-\phi))$$</p>
-<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
-<h3 id="2-2_高斯分布的推导">2.2 高斯分布的推导</h3>
-<p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：<br>$$P(y;\mu)=\frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2)$$<br>$$=\frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}y^2) * exp({\mu}y-\frac{1}{2}\mu^2)$$</p>
-<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{{\mu}^2}2 = \frac{{\eta}^2}2$</p>
-<h2 id="3-_广义线性模型(Generalized_Linear_Model)">3. 广义线性模型(Generalized Linear Model)</h2>
-<p>想用 广义线性模型对一般问题进行建模首先需要明确几个 假设：</p>
-<ol>
-<li>$y | x;θ \sim ExponentialFamily(\eta)$ y的条件概率属于指数分布族;</li>
-<li>给定 x 广义线性模型的目标是求解 T(y) | x， 不过由于 很多情况下 T(y) = y  所以我们的目标变成了 y | x , 也即 我们希望拟合函数为 h(x) = E[y|x] (这个条件在线性回归和逻辑回归中都满足， 例如在逻辑回归中 $hθ(x) = p(y = 1|x;\theta) = 0 \cdot p(y = 0|x; \theta) + 1 \cdot  p(y = 1|x; \theta) = E[y|x;\theta])$</li>
-<li>自然参数 $\eta$ 与 x 是线性关系：$\eta=\theta^Tx$ ($\eta 为向量时 \eta_{i} = \theta_{i}^Tx$)</li>
-</ol>
-<p>有了如上假设，就可以进行建模和求解了。</p>
-<p>对于伯努利分布，可以推导出：<br>…<br>这也就是逻辑回归中 sigmod 函数的由来。</p>
-<h2 id="4-_多分类算法(Softmax_Regression)">4. 多分类算法(Softmax Regression)</h2>
-<p>y有多个可能的分类：{1, 2, …, k}</p>
-<p>=======具体的公式略=======</p>
-<p>最后求借寻找最佳参数时，跟最小二乘和逻辑回归的解法类似，可以用梯度下降法或者牛顿迭代法。</p>
-<h2 id="Referecen">Referecen</h2>
-<p><a href="https://zhuanlan.zhihu.com/p/22876460" target="_blank" rel="external">广义线性模型(Generalized Linear Model)</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/机器学习/">机器学习</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/#disqus_thread" class="comments-count-link">Comments</a>
 	
 </div>
 

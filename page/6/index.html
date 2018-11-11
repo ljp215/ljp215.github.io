@@ -91,6 +91,114 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2015/02/03/HashMap源码分析/" title="HashMap实现原理" itemprop="url">HashMap实现原理</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2015-02-02T16:30:01.000Z" itemprop="datePublished"> Published Feb 3 2015</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="HashMap源码分析">HashMap源码分析</h1>
+<h2 id="1-_概要">1. 概要</h2>
+<ul>
+<li>HashMap是基于Map接口实现的，提供了所有Map支持的操作，并且允许key和value为null。HashMap可以近似地认为是HashTable，其差别仅在于前者允许null的key,value，并且操作不是同步的(unsynchronized)。</li>
+<li>Iteration遍历整个hashMap的时间与hashMap的capacity(buckets的数量)加上hashMap的size的值是成正比的，所以如果想要高效地遍历HashMap，就不要将capacity的初始值设置的太高，也不要将load factor设置的太低。</li>
+<li>衡量HashMap性能的指标只有两个，一个是capacity的初始值，一个是load factor。</li>
+<li>capacity是指hash表中buckets的数量，而capacity的初始值是指当hash表被创建时capacity被设定的值。</li>
+<li>load factor是用来衡量当hash表扩容之前有多满的指标。load_factor = put_size/size</li>
+<li>当hash表的元素超过了阈值(loadFactor*capacity)时会自动将内部数据重建一遍，并将buckets的数量翻倍，这个过程称为rehash。</li>
+<li>根据经验来讲，当load factor为0.75时，较好地权衡了时间和空间上的取舍。load factor高虽然能减少空间的消耗但是增加了查询的代价，主要反映在put和get操作。</li>
+<li>当设定capacity初始值时需要考虑map中期望地元素个数和load factor，这样能最小化rehash的次数。如果capacity初始值大于最大元素个数除以load factor的值，则永远不会发生load factor操作。</li>
+<li>如果有很多mapping都要存放到同一个HashMap，那么在最开始就设置一个充足的capacity比当hash表超过阈值后再rehash要高效地多。</li>
+<li><strong>请注意</strong>：所以的实现都不是synchronized的，如果有多个线程同时操作HashMap，并且有线程会修改HashMap的结构时，则必须要对此操作加synchronized标识。增加或删除HashMap中的元素都算是修改HashMap的结构，如果仅仅只是修改某个key的value则不算。</li>
+<li>如果没有可以对HashMap做synchronized的对象，那么可以使用</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Map m = Collections.synchronizedMap(<span class="keyword">new</span> HashMap(…)</div></pre></td></tr></table></figure>
+
+<p>来生成一个同步操作的Map.</p>
+<h2 id="2-_HashMap的实现">2. HashMap的实现</h2>
+<h3 id="2-1_Fields">2.1 Fields</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">transient</span> Node&lt;K,V&gt;[] table;;<span class="comment">//存储元素的实体数组</span></div><div class="line"><span class="keyword">transient</span> Set&lt;Map.Entry&lt;K,V&gt;&gt; entrySet; <span class="comment">//Holds cached entrySet()</span></div><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> size;<span class="comment">//存放元素的个数</span></div><div class="line"><span class="keyword">int</span> threshold; <span class="comment">//当实际大小超过临界值时，会进行扩容threshold = 加载因子*容量, DEFAULT_INITIAL_CAPACITY</span></div><div class="line"><span class="keyword">final</span> <span class="keyword">float</span> loadFactor; <span class="comment">//加载因子</span></div><div class="line"><span class="keyword">transient</span> <span class="keyword">int</span> modCount;<span class="comment">//This field is used to make iterators on Collection-views of the HashMap fail-fast</span></div></pre></td></tr></table></figure>
+
+<h3 id="2-2_实现">2.2 实现</h3>
+<h4 id="2-2-1_java8的改进点">2.2.1 java8的改进点</h4>
+<pre><code> java.util.HashMap 是JDK里散列的一个实现，JDK6里采用位桶+链表的形式实现，Java8里采用的是位桶+链表/红黑树的方式，this will improve <span class="operator">the</span> worst <span class="keyword">case</span> performance <span class="built_in">from</span> O(n) <span class="built_in">to</span> O(<span class="built_in">log</span> n).。
+</code></pre><h4 id="2-2-2_访问map的过程">2.2.2 访问map的过程</h4>
+<p>仅以put操作为例来说明，put操作的过程：<br>     当未冲突时；put的位置为 (tab.length-1)&amp;key.hashCode()<br>     当冲突时；如果冲突的位置上放的是TreeNode，则加入。否则加入冲突位置的元素链表的最末尾，如果加入后链表长度达到TREEIFY_THRESHOLD，则将链表转为红黑树。<br>     加入操作完成后，如果size大于threshold则resize。</p>
+<h4 id="2-2-3_hashCode和size">2.2.3 hashCode和size</h4>
+<p>hash函数如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> hash(Object key) {</div><div class="line">    <span class="keyword">int</span> h;</div><div class="line">    <span class="keyword">return</span> (key == <span class="keyword">null</span>) ? <span class="number">0</span> : (h = key.hashCode()) ^ (h &gt;&gt;&gt; <span class="number">16</span>);</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>tab.length的大小为2的幂次方，实现：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="javadoc">/**</span></div><div class="line">* Returns a power of two size for the given target capacity.</div><div class="line">*/</div><div class="line"><span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> tableSizeFor(<span class="keyword">int</span> cap) {</div><div class="line">    <span class="keyword">int</span> n = cap - <span class="number">1</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">1</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">2</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">4</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">8</span>;</div><div class="line">    n |= n &gt;&gt;&gt; <span class="number">16</span>;</div><div class="line">    <span class="keyword">return</span> (n &lt; <span class="number">0</span>) ? <span class="number">1</span> : (n &gt;= MAXIMUM_CAPACITY) ? MAXIMUM_CAPACITY : n + <span class="number">1</span>;</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="3-_遍历HashMap">3. 遍历HashMap</h2>
+<p>当需要取出key-value时，推荐</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">Iterator iter = map.entrySet().iterator();</div><div class="line"><span class="keyword">while</span> (iter.hasNext()) {</div><div class="line">    Map.Entry entry = (Map.Entry) iter.next();</div><div class="line">    Object key = entry.getKey();</div><div class="line">    Object val = entry.getValue();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h2 id="4-_遍历时操作">4. 遍历时操作</h2>
+<h3 id="4-1_遍历时remove">4.1 遍历时remove</h3>
+<p>Removes the current element. Throws IllegalStateException if an attempt is made to call remove() that is not preceded by a call to next( ).</p>
+<h3 id="4-2_keySet的使用">4.2 keySet的使用</h3>
+<p>keySet没有实现add(E e)方法，所有当对keySet调用add方法时会抛出UnsupportedOperationException。<br>KeySet继承关系如下：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">class KeySet extends AbstractSet&lt;K&gt;</div><div class="line"><span class="keyword">abstract</span> class AbstractSet&lt;E&gt; extends AbstractCollection&lt;E&gt; implements Set&lt;E&gt;</div><div class="line"><span class="keyword">abstract</span> class AbstractCollection&lt;E&gt; implements Collection&lt;E&gt;{</div><div class="line">     <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">add</span>(E e) {</div><div class="line">         <span class="keyword">throw</span> <span class="keyword">new</span> UnsupportedOperationException();</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<h3 id="4-3_直接使用subclass遍历时不允许修改map">4.3 直接使用subclass遍历时不允许修改map</h3>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">for</span> (Instance key : InsMap.keySet()) {</div><div class="line">    keySet.remove(instance2);</div><div class="line">    System.out.println(InsMap.get(key));</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>remove后第二遍进入for循环时会抛ConcurrentModificationException。<br>原因是KeySet, Values, EntrySet这三个subclass都不允许在遍历过程中map被修改</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">forEach</span>(Consumer&lt;? <span class="keyword">super</span> Map.Entry&lt;K,V&gt;&gt; action) {</div><div class="line">    Node&lt;K,V&gt;[] tab;</div><div class="line">    <span class="keyword">if</span> (action == <span class="keyword">null</span>)</div><div class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> NullPointerException();</div><div class="line">    <span class="keyword">if</span> (size &gt; <span class="number">0</span> && (tab = table) != <span class="keyword">null</span>) {</div><div class="line">        <span class="keyword">int</span> mc = modCount;</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; tab.length; ++i) {</div><div class="line">            <span class="keyword">for</span> (Node&lt;K,V&gt; e = tab[i]; e != <span class="keyword">null</span>; e = e.next)</div><div class="line">                action.accept(e);</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> (modCount != mc)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> ConcurrentModificationException();</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/java/">java</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2015/02/03/HashMap源码分析/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2014/12/25/Goog-Engineer-Keys/" title="Good Engineer Keys" itemprop="url">Good Engineer Keys</a>
   </h1>
   <p class="article-author">By

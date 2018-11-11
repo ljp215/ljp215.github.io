@@ -91,6 +91,106 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/" title="Stanford Machine Learning - 5 广义线性模型" itemprop="url">Stanford Machine Learning - 5 广义线性模型</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-11-05T15:20:39.000Z" itemprop="datePublished"> Published Nov 5 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="1-_指数分布族(Exponential_Family)">1. 指数分布族(Exponential Family)</h2>
+<h4 id="指数分布族的定义">指数分布族的定义</h4>
+<p>若一类概率分布可以写成如下形式，那么它就属于指数分布族：<br>$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$</p>
+<ul>
+<li>$\eta$: 自然参数，通常是一个实数</li>
+<li>T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识）</li>
+<li>a($\eta$) 被称为 log partition function</li>
+</ul>
+<p>对于给定的 a，b，T 三个函数，上式定义了一个以 $\eta$ 为参数的概率分布集合，即改变 $\eta$ 可以得到不同的概率分布，例如高斯分布和伯努利分布。</p>
+<h4 id="指数分布族以及它们的特征">指数分布族以及它们的特征</h4>
+<ul>
+<li>正态分布（高斯分布）——总体噪音（由中心极限定理得）</li>
+<li>伯努利分布——逻辑回归（对01问题建模）</li>
+<li>多项式分布——K种结果的事情进行建模</li>
+<li>泊松分布——对计数过程进行建模（一个样本中放射性衰变的数目，网站的访客数目，商店的顾客数目）</li>
+<li>伽马分布，指数分布——正数的分布，对间隔进行建模（在公交车站等车的时间）</li>
+<li>β分布，Dirichlet分布——对小数进行分布，对概率分布进行建模</li>
+<li>Wishart分布——协方差的分布</li>
+</ul>
+<h2 id="2-_指数分布簇推导">2. 指数分布簇推导</h2>
+<p>高斯分布(Gaussian)和伯努利(Bernoulli)分布都可以推导为指数分布族。</p>
+<h3 id="2-1_伯努利分布的推导">2.1 伯努利分布的推导</h3>
+<p>伯努利分布的概率公式为：$P(y=1;\phi)=\phi; P(y=0;\phi)=1-\phi;$</p>
+<p>公式可经如下变换：<br>$$P(y;\phi)=\phi^y(1-\phi)^y$$<br>$$=exp(log(\phi^y(1-\phi)^y))=exp(ylog(\phi)+ (1-y)log(1-\phi))$$<br>$$=exp(log(\frac\phi{1-\phi})y + log(1-\phi))$$</p>
+<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
+<h3 id="2-2_高斯分布的推导">2.2 高斯分布的推导</h3>
+<p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：<br>$$P(y;\mu)=\frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2)$$<br>$$=\frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}y^2) * exp({\mu}y-\frac{1}{2}\mu^2)$$</p>
+<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{{\mu}^2}2 = \frac{{\eta}^2}2$</p>
+<h2 id="3-_广义线性模型(Generalized_Linear_Model)">3. 广义线性模型(Generalized Linear Model)</h2>
+<p>想用 广义线性模型对一般问题进行建模首先需要明确几个 假设：</p>
+<ol>
+<li>$y | x;θ \sim ExponentialFamily(\eta)$ y的条件概率属于指数分布族;</li>
+<li>给定 x 广义线性模型的目标是求解 T(y) | x， 不过由于 很多情况下 T(y) = y  所以我们的目标变成了 y | x , 也即 我们希望拟合函数为 h(x) = E[y|x] (这个条件在线性回归和逻辑回归中都满足， 例如在逻辑回归中 $hθ(x) = p(y = 1|x;\theta) = 0 \cdot p(y = 0|x; \theta) + 1 \cdot  p(y = 1|x; \theta) = E[y|x;\theta])$</li>
+<li>自然参数 $\eta$ 与 x 是线性关系：$\eta=\theta^Tx$ ($\eta 为向量时 \eta_{i} = \theta_{i}^Tx$)</li>
+</ol>
+<p>有了如上假设，就可以进行建模和求解了。</p>
+<p>对于伯努利分布，可以推导出：<br>…<br>这也就是逻辑回归中 sigmod 函数的由来。</p>
+<h2 id="4-_多分类算法(Softmax_Regression)">4. 多分类算法(Softmax Regression)</h2>
+<p>y有多个可能的分类：{1, 2, …, k}</p>
+<p>=======具体的公式略=======</p>
+<p>最后求借寻找最佳参数时，跟最小二乘和逻辑回归的解法类似，可以用梯度下降法或者牛顿迭代法。</p>
+<h2 id="Referecen">Referecen</h2>
+<p><a href="https://zhuanlan.zhihu.com/p/22876460" target="_blank" rel="external">广义线性模型(Generalized Linear Model)</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/" title="Stanford Machine Learning - 4 逻辑回归" itemprop="url">Stanford Machine Learning - 4 逻辑回归</a>
   </h1>
   <p class="article-author">By
@@ -1293,82 +1393,6 @@ $$ -->
 	
 	  	<span></span>
 		<a href="/2016/04/17/https详解/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/03/27/LeetCode-Perfect-Squares/" title="LeetCode - Perfect Squares" itemprop="url">LeetCode - Perfect Squares</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-03-27T02:41:50.000Z" itemprop="datePublished"> Published Mar 27 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Problem_Description：">Problem Description：</h2>
-<p>Given a positive integer n, find the least number of perfect square numbers (for example, 1, 4, 9, 16, …) which sum to n.<br>For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13, return 2 because 13 = 4 + 9.</p>
-<h2 id="Solution:">Solution:</h2>
-<h3 id="Solution1:">Solution1:</h3>
-<p>Dynamic Programming<br>Time Complexity: O(n*sqrt(n))<br>Space: O(n)</p>
-<h3 id="Solution2:">Solution2:</h3>
-<p>Number Theory</p>
-<ul>
-<li>Legendre’s three-square theorem </li>
-<li>Lagrange’s four-square theorem</li>
-</ul>
-<p>Time Complexity: O(sqrt(n))<br>Space: O(1)</p>
-<h2 id="Code">Code</h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div><div class="line">93</div><div class="line">94</div><div class="line">95</div><div class="line">96</div><div class="line">97</div><div class="line">98</div><div class="line">99</div><div class="line">100</div><div class="line">101</div><div class="line">102</div><div class="line">103</div><div class="line">104</div><div class="line">105</div><div class="line">106</div><div class="line">107</div><div class="line">108</div><div class="line">109</div><div class="line">110</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">package</span> com.zane.algorithm.leetcode;</div><div class="line"></div><div class="line"><span class="javadoc">/**</span></div><div class="line"> * Author: luojinping</div><div class="line"> * Date: 15/9/23</div><div class="line"> * Time: 17:23</div><div class="line"> * &lt;p/&gt;</div><div class="line"> * &lt;p/&gt;</div><div class="line"> * Given a positive integer n, find the least number of perfect square numbers</div><div class="line"> * (for example, 1, 4, 9, 16, ...) which sum to n.</div><div class="line"> * For example, given n = 12, return 3 because 12 = 4 + 4 + 4; given n = 13,</div><div class="line"> * return 2 because 13 = 4 + 9.</div><div class="line"> */</div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">PerfectSquares_279</span> </span>{</div><div class="line">    <span class="javadoc">/**</span></div><div class="line">     * cannot use greedy algorithm, counter example：</div><div class="line">     * 98=81+16+1=49+49</div><div class="line">     * 101=100+1=49+1+49+2</div><div class="line">     * 7=4+1+1+1</div><div class="line">     * 12=4+4+4=9+1+1+1</div><div class="line">     * 思路:</div><div class="line">     * 使用DP, dp[]数组记录历史使用最少平方数的情况.例如dp[5]=2,记录的是使用最少(1+4)平方数的数量,即2.</div><div class="line">     *</div><div class="line">     *<span class="javadoctag"> @param</span> n</div><div class="line">     *<span class="javadoctag"> @return</span></div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numSquares</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">if</span> (n &lt;= <span class="number">2</span>) {</div><div class="line">            <span class="keyword">return</span> n;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// record the least number of perfect numbers when index = i</span></div><div class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[n + <span class="number">1</span>];</div><div class="line">        dp[<span class="number">0</span>] = <span class="number">0</span>;</div><div class="line">        dp[<span class="number">1</span>] = <span class="number">1</span>;</div><div class="line">        dp[<span class="number">2</span>] = <span class="number">2</span>;</div><div class="line"></div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">3</span>; i &lt;= n; i++) {</div><div class="line">            <span class="keyword">int</span> leastNum = i;</div><div class="line"></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j * j &lt;= i; j++) {</div><div class="line">                leastNum = Math.min(leastNum, dp[i - j * j] + <span class="number">1</span>);</div><div class="line"></div><div class="line">            }</div><div class="line">            dp[i] = leastNum;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> dp[n];</div><div class="line">    }</div><div class="line"></div><div class="line"></div><div class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> <span class="title">isSquare</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="keyword">int</span> sqrt_n = (<span class="keyword">int</span>) (Math.sqrt(n));</div><div class="line">        <span class="keyword">return</span> (sqrt_n * sqrt_n == n);</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="javadoc">/**</span></div><div class="line">     * Legendre's three-square theorem:</div><div class="line">     * The three squares theorem tells you that a positive integer n can be represented as the sum</div><div class="line">     * of 3 squares (n = x^2 + y^2 + z^2) if and only if it is not of the form n = 4^a * (8 * b+7)</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * Lagrange's four-square theorem:</div><div class="line">     * Every natural number can be represented as the sum of four integer squares:</div><div class="line">     * n= a^2 + b^2 + c^2 + d^2</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * So the are only 4 possible results: 1, 2, 3, 4.</div><div class="line">     * &lt;p/&gt;</div><div class="line">     * Refer:</div><div class="line">     * https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics</div><div class="line">     */</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">numSquaresByMath</span>(<span class="keyword">int</span> n) {</div><div class="line">        <span class="comment">// If n is a perfect square, return 1.</span></div><div class="line">        <span class="keyword">if</span> (isSquare(n)) {</div><div class="line">            <span class="keyword">return</span> <span class="number">1</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// The result is 4 if and only if n can be written in the</span></div><div class="line">        <span class="comment">// form of 4^k*(8*m + 7). Please refer to</span></div><div class="line">        <span class="comment">// Legendre's three-square theorem.</span></div><div class="line">        <span class="keyword">while</span> ((n & <span class="number">3</span>) == <span class="number">0</span>) <span class="comment">// n%4 == 0</span></div><div class="line">        {</div><div class="line">            n &gt;&gt;= <span class="number">2</span>;</div><div class="line">        }</div><div class="line">        <span class="keyword">if</span> ((n & <span class="number">7</span>) == <span class="number">7</span>) <span class="comment">// n%8 == 7</span></div><div class="line">        {</div><div class="line">            <span class="keyword">return</span> <span class="number">4</span>;</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="comment">// Check whether 2 is the result.</span></div><div class="line">        <span class="keyword">int</span> sqrt_n = (<span class="keyword">int</span>) (Math.sqrt(n));</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= sqrt_n; i++) {</div><div class="line">            <span class="keyword">if</span> (isSquare(n - i * i)) {</div><div class="line">                <span class="keyword">return</span> <span class="number">2</span>;</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="number">3</span>;</div><div class="line">    }</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span>(String[] args) {</div><div class="line">        PerfectSquares_279 perfectSquares279 = <span class="keyword">new</span> PerfectSquares_279();</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">4</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">7</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">12</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">61</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">100</span>));</div><div class="line">        System.out.println(perfectSquares279.numSquares(<span class="number">101</span>));</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="Refer:">Refer:</h2>
-<blockquote>
-<p><a href="https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics" target="_blank" rel="external">https://leetcode.com/discuss/58056/summary-of-different-solutions-bfs-static-and-mathematics</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/03/27/LeetCode-Perfect-Squares/#disqus_thread" class="comments-count-link">Comments</a>
 	
 </div>
 
