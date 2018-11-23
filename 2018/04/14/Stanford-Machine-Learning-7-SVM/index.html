@@ -31,13 +31,13 @@
 上图中哪个分类器最好呢？
 2.1 符号定义
 为了方便介绍 SVM，重新定义以下符号。1.在logstic回归中我们">
-<meta property="og:image" content="img/svm_margin.jpg">
-<meta property="og:image" content="img/svm_lagrange_dual_1.jpg">
-<meta property="og:image" content="img/svm_lagrange_dual_2.jpg">
-<meta property="og:image" content="img/svm_smo_1.jpg">
-<meta property="og:image" content="img/svm_smo_2.jpg">
-<meta property="og:image" content="img/svm_kernel_demo.jpg">
-<meta property="og:image" content="img/svm_distance.jpg">
+<meta property="og:image" content="/img/svm_margin.jpg">
+<meta property="og:image" content="/img/svm_lagrange_dual_1.jpg">
+<meta property="og:image" content="/img/svm_lagrange_dual_2.jpg">
+<meta property="og:image" content="/img/svm_smo_1.jpg">
+<meta property="og:image" content="/img/svm_smo_2.jpg">
+<meta property="og:image" content="/img/svm_kernel_demo.jpg">
+<meta property="og:image" content="/img/svm_distance.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stanford Machine Learning - 7 SVM">
 <meta name="twitter:description" content="1. SVM 定义
@@ -139,7 +139,7 @@ var _hmt = _hmt || [];
 		<h2 id="1-_SVM_定义">1. SVM 定义</h2>
 <p>支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
 <h2 id="2-_函数间隔和几何间隔">2. 函数间隔和几何间隔</h2>
-<p><img src="img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
+<p><img src="/img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
 <h3 id="2-1_符号定义">2.1 符号定义</h3>
 <p>为了方便介绍 SVM，重新定义以下符号。<br>1.在logstic回归中我们用0,1代表两个类, 现在我们改用-1,+1, 即 y∈{-1，-1}<br>2.在logistic回归中, 我们的 g 是sigmoid函数, 现在改为:<br>g(z)=1, z&gt;=0<br>g(z)=-1, z&lt;0<br>3.在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,<br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中<br>w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</p>
 <h3 id="2-2_函数间隔(functional_margin)">2.2 函数间隔(functional margin)</h3>
@@ -170,15 +170,15 @@ var _hmt = _hmt || [];
 <h4 id="4-1-2_优化公式">4.1.2 优化公式</h4>
 <p>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：<br>$$\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0$$<br>$$\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0$$</p>
 <p>将上式代入：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
-<p>推导过程如下：<br><img src="img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
+<p>推导过程如下：<br><img src="/img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
 <p>这样求出 $\alpha$ 后即可得到 w 和 b。</p>
-<p><img src="img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
+<p><img src="/img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
 <p>现在我们的优化问题变成了如上的形式。对于这个问题，我们有更高效的优化算法，即序列最小优化（SMO）算法。我们通过这个优化算法能得到α，再根据α，我们就可以求解出w和b，进而求得我们最初的目的：找到超平面，即”决策平面”。</p>
 <h3 id="4-2_SMO_算法">4.2 SMO 算法</h3>
 <p><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/29212107</a><br><a href="https://cloud.tencent.com/developer/article/1076970" target="_blank" rel="external">https://cloud.tencent.com/developer/article/1076970</a> </p>
-<p><img src="img/svm_smo_1.jpg" alt="SMO_JP_1.jpeg"><br><img src="img/svm_smo_2.jpg" alt="SMO_JP_2.jpeg"></p>
+<p><img src="/img/svm_smo_1.jpg" alt="SMO_JP_1.jpeg"><br><img src="/img/svm_smo_2.jpg" alt="SMO_JP_2.jpeg"></p>
 <h2 id="5-_核函数">5. 核函数</h2>
-<p>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
+<p>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="/img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
 <p>一般使用高斯核，但这样会导致映射后的维度非常巨大，也就是 w 的维度很大，这也是为什么要转化为对偶问题来求解的原因，对偶问题的时间复杂度只和数据集的数量有关，与维度无关。</p>
 <h2 id="总结_SVM">总结 SVM</h2>
 <p>SVM 是神经网络出现之前最好的分类算法。求解 SVM 的过程也就是找到区分正负数据的最优超平面，所以引入了几何间隔的概念。而求解最大的几何间隔的问题即是在不等式约束条件下求解最优解的问题。这就引入了拉格朗日对偶问题，接着针对对偶问题求解，引入快速学习算法 SMO，最终找到超平面。<br>对于原始数据线性不可分的情况，引入核函数映射到高维计算，这其中 SVM 求解过程的时间复杂度与维度无关。</p>
@@ -202,7 +202,7 @@ var _hmt = _hmt || [];
 </ol>
 <h1 id="附录">附录</h1>
 <h2 id="点到平面的距离">点到平面的距离</h2>
-<p><img src="img/svm_distance.jpg" alt="IMAGE"></p>
+<p><img src="/img/svm_distance.jpg" alt="IMAGE"></p>
 <p>$d$ 维空间中的超平面由下面的方程确定: $w^Tx+b=0$，其中，$w$ 与 $x$ 都是 $d$ 维列向量， $x=(x_1,x_2,…,x_d)^T$ 为平面上的点， $w=(w_1,w_2,…,w_d)^T$为平面的法向量。$b$ 是一个实数， 代表平面与原点之间的距离。</p>
 <h1 id="Reference">Reference</h1>
 <blockquote>

@@ -24,13 +24,13 @@
 <meta property="og:description" content="1. 拉格朗日乘子法
 1.1 定义
 在数学中的最优化问题中，拉格朗日乘数法（以数学家约瑟夫·拉格朗日命名）是一种寻找多元函数在其变量受到一个或多个条件的约束时的极值的方法。这种方法可以将一个有n个变量与k个约束条件的最优化问题转换为一个解有n + k个变量的方程组的解的问题。这种方法中引入了一个或一组新的未知数，即拉格朗日乘数，又称拉格朗日乘子，或拉氏乘子，它们是在转换后的方程，即约束方程中作为梯">
-<meta property="og:image" content="img/lagrange_multiplier.jpg">
-<meta property="og:image" content="img/lagrange_multiplier_2.jpg">
-<meta property="og:image" content="img/lagrange_multiplier_3.jpg">
-<meta property="og:image" content="img/lagrange_dual.jpg">
+<meta property="og:image" content="/img/lagrange_multiplier.jpg">
+<meta property="og:image" content="/img/lagrange_multiplier_2.jpg">
+<meta property="og:image" content="/img/lagrange_multiplier_3.jpg">
+<meta property="og:image" content="/img/lagrange_dual.jpg">
 <meta property="og:image" content="img/lagrange_KKT.jpg">
-<meta property="og:image" content="img/lagrange_prove_1.jpg">
-<meta property="og:image" content="img/lagrange_prove_2.jpg">
+<meta property="og:image" content="/img/lagrange_prove_1.jpg">
+<meta property="og:image" content="/img/lagrange_prove_2.jpg">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="拉格朗日乘子法">
 <meta name="twitter:description" content="1. 拉格朗日乘子法
@@ -136,7 +136,7 @@ var _hmt = _hmt || [];
 <h2 id="2-_等式约束条件的优化问题">2. 等式约束条件的优化问题</h2>
 <h3 id="2-1_解法">2.1 解法</h3>
 <p>设 $f(x,y)=x^2+y^2$, 约束条件为： $g(x,y)=xy−1=0$。<br>将三维的 $ f(x,y)$ 图像投影到二维平面上，为下图中红色曲线，也称为 $f(x,y)$ 的等高线。g(x,y) 为图中蓝色曲线。</p>
-<p><img src="img/lagrange_multiplier.jpg" alt="IMAGE"></p>
+<p><img src="/img/lagrange_multiplier.jpg" alt="IMAGE"></p>
 <p>沿着蓝线往内部的圆走，经过橙色点，此时不是最优解，当走到黑色点时，找到了最优解。此时可认为找到了在蓝线这个限制条件下 $f(x,y )$ 的最低点。</p>
 <p>拉格朗日观察到，黑点位置，蓝线与圆是相切的，而橙点位置显然不满足这个性质。且拉格朗日还指出黑点位置蓝线与圆一定是相切的，这正是拉格朗日乘子法的核心。</p>
 <p>在最低点，蓝线的切线方向都指向橙线的等高线方向。换句话说，在切点的位置沿蓝线移动很小的一步，都相当于在橙线的等高线上移动，这个时候，可以认为函数值已经趋于稳定了。所以，我们认为这个点的值“可能”是最低（高）的。<br>相切，意味着在切点的位置，等高线和蓝色曲线的等高线方向是平行的，考虑到梯度与等高线垂直，我们可以用两条曲线的梯度平行来求出切点位置（最低点）。</p>
@@ -145,8 +145,8 @@ var _hmt = _hmt || [];
 <p>可以发现方程组(2)与方程组(1)一样，联立以上三式即可求出 x, y, λ 的值。</p>
 <p>如果是多个约束条件，则拉格朗日函数为：<br>$L(x_1,…,x_n,λ_1,…,λ_k)=f(x1,…,xn)−\sum_{j=1}^{k}λ_jg_j(x_1,…,x_n)$</p>
 <h3 id="2-2_进一步理解">2.2 进一步理解</h3>
-<p>二维情况下的另一个图示，便于理解两个曲线的梯度变化情况：<br><img src="img/lagrange_multiplier_2.jpg" alt="IMAGE"></p>
-<p>根据拉格朗日乘子法的定义，这是一种寻找极值的策略，换句话说，该方法并不能保证找到的一定是最低点或者最高点。事实上，它只是一种寻找极值点的过程，而且，拉格朗日乘子法找到的切点可能不只一个（也就是上面的方程组可能找到多个解），例如下图：<br><img src="img/lagrange_multiplier_3.jpg" alt="IMAGE"></p>
+<p>二维情况下的另一个图示，便于理解两个曲线的梯度变化情况：<br><img src="/img/lagrange_multiplier_2.jpg" alt="IMAGE"></p>
+<p>根据拉格朗日乘子法的定义，这是一种寻找极值的策略，换句话说，该方法并不能保证找到的一定是最低点或者最高点。事实上，它只是一种寻找极值点的过程，而且，拉格朗日乘子法找到的切点可能不只一个（也就是上面的方程组可能找到多个解），例如下图：<br><img src="/img/lagrange_multiplier_3.jpg" alt="IMAGE"></p>
 <p>所以联立方程组得到的解为所有极值点，是最优解的必要条件，具体是否为极值点需根据问题本身的具体情况检验. 这个方程组称为等式约束的极值必要条件。如果是凸函数，可以保证最优解是存在的。</p>
 <hr>
 <p><strong>已经解决的在等式约束条件下的求函数极值的问题，那不等式约束条件下，应该如何解决呢？</strong></p>
@@ -162,7 +162,7 @@ var _hmt = _hmt || [];
 <h3 id="3-2_相关定义">3.2 相关定义</h3>
 <p>凸集：定义目标函数和约束函数的定义域。<br>凸函数：定义优化相关函数的凸性限制。<br>凸优化：中心内容的标准描述。<br>凸优化问题求解：核心内容。相关算法，梯度下降法、牛顿法、内点法等。</p>
 <h3 id="3-3_对偶问题">3.3 对偶问题</h3>
-<p>对偶问题是优化问题中非常重要的方法，将一般优化问题转化为凸优化问题，是求解非凸优化问题的有效方法。<br><img src="img/lagrange_dual.jpg" alt="IMAGE"></p>
+<p>对偶问题是优化问题中非常重要的方法，将一般优化问题转化为凸优化问题，是求解非凸优化问题的有效方法。<br><img src="/img/lagrange_dual.jpg" alt="IMAGE"></p>
 <p>对于一般的优化问题，不管其是不是凸的，其对偶问题一定是凸优化问题。</p>
 <h2 id="4-_不等式约束条件的优化问题">4. 不等式约束条件的优化问题</h2>
 <h3 id="4-1_广义拉格朗日函数">4.1 广义拉格朗日函数</h3>
@@ -205,8 +205,8 @@ var _hmt = _hmt || [];
 </ol>
 <p>第三个式子非常有趣，因为g(x)&lt;=0，如果要满足这个等式，必须$μ_i=0$或者g(x)=0，这是 SVM 的很多重要性质的来源，如支持向量的概念。</p>
 <h4 id="KKT条件的推导">KKT条件的推导</h4>
-<p><img src="img/lagrange_prove_1.jpg" alt="IMAGE"></p>
-<p><img src="img/lagrange_prove_2.jpg" alt="IMAGE"></p>
+<p><img src="/img/lagrange_prove_1.jpg" alt="IMAGE"></p>
+<p><img src="/img/lagrange_prove_2.jpg" alt="IMAGE"></p>
 <h3 id="4-6_总结">4.6 总结</h3>
 <p>关于不等式约束条件的优化问题，原问题分两种情况：</p>
 <ul>

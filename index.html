@@ -197,7 +197,7 @@ var _hmt = _hmt || [];
         <h2 id="1-_SVM_定义">1. SVM 定义</h2>
 <p>支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
 <h2 id="2-_函数间隔和几何间隔">2. 函数间隔和几何间隔</h2>
-<p><img src="img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
+<p><img src="/img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
 <h3 id="2-1_符号定义">2.1 符号定义</h3>
 <p>为了方便介绍 SVM，重新定义以下符号。<br>1.在logstic回归中我们用0,1代表两个类, 现在我们改用-1,+1, 即 y∈{-1，-1}<br>2.在logistic回归中, 我们的 g 是sigmoid函数, 现在改为:<br>g(z)=1, z&gt;=0<br>g(z)=-1, z&lt;0<br>3.在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,<br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中<br>w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</p>
 <h3 id="2-2_函数间隔(functional_margin)">2.2 函数间隔(functional margin)</h3>
@@ -228,15 +228,15 @@ var _hmt = _hmt || [];
 <h4 id="4-1-2_优化公式">4.1.2 优化公式</h4>
 <p>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：<br>$$\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0$$<br>$$\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0$$</p>
 <p>将上式代入：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
-<p>推导过程如下：<br><img src="img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
+<p>推导过程如下：<br><img src="/img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
 <p>这样求出 $\alpha$ 后即可得到 w 和 b。</p>
-<p><img src="img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
+<p><img src="/img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
 <p>现在我们的优化问题变成了如上的形式。对于这个问题，我们有更高效的优化算法，即序列最小优化（SMO）算法。我们通过这个优化算法能得到α，再根据α，我们就可以求解出w和b，进而求得我们最初的目的：找到超平面，即”决策平面”。</p>
 <h3 id="4-2_SMO_算法">4.2 SMO 算法</h3>
 <p><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="external">https://zhuanlan.zhihu.com/p/29212107</a><br><a href="https://cloud.tencent.com/developer/article/1076970" target="_blank" rel="external">https://cloud.tencent.com/developer/article/1076970</a> </p>
-<p><img src="img/svm_smo_1.jpg" alt="SMO_JP_1.jpeg"><br><img src="img/svm_smo_2.jpg" alt="SMO_JP_2.jpeg"></p>
+<p><img src="/img/svm_smo_1.jpg" alt="SMO_JP_1.jpeg"><br><img src="/img/svm_smo_2.jpg" alt="SMO_JP_2.jpeg"></p>
 <h2 id="5-_核函数">5. 核函数</h2>
-<p>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
+<p>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="/img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
 <p>一般使用高斯核，但这样会导致映射后的维度非常巨大，也就是 w 的维度很大，这也是为什么要转化为对偶问题来求解的原因，对偶问题的时间复杂度只和数据集的数量有关，与维度无关。</p>
 <h2 id="总结_SVM">总结 SVM</h2>
 <p>SVM 是神经网络出现之前最好的分类算法。求解 SVM 的过程也就是找到区分正负数据的最优超平面，所以引入了几何间隔的概念。而求解最大的几何间隔的问题即是在不等式约束条件下求解最优解的问题。这就引入了拉格朗日对偶问题，接着针对对偶问题求解，引入快速学习算法 SMO，最终找到超平面。<br>对于原始数据线性不可分的情况，引入核函数映射到高维计算，这其中 SVM 求解过程的时间复杂度与维度无关。</p>
@@ -260,7 +260,7 @@ var _hmt = _hmt || [];
 </ol>
 <h1 id="附录">附录</h1>
 <h2 id="点到平面的距离">点到平面的距离</h2>
-<p><img src="img/svm_distance.jpg" alt="IMAGE"></p>
+<p><img src="/img/svm_distance.jpg" alt="IMAGE"></p>
 <p>$d$ 维空间中的超平面由下面的方程确定: $w^Tx+b=0$，其中，$w$ 与 $x$ 都是 $d$ 维列向量， $x=(x_1,x_2,…,x_d)^T$ 为平面上的点， $w=(w_1,w_2,…,w_d)^T$为平面的法向量。$b$ 是一个实数， 代表平面与原点之间的距离。</p>
 <h1 id="Reference">Reference</h1>
 <blockquote>
@@ -333,7 +333,7 @@ var _hmt = _hmt || [];
 <h2 id="2-_等式约束条件的优化问题">2. 等式约束条件的优化问题</h2>
 <h3 id="2-1_解法">2.1 解法</h3>
 <p>设 $f(x,y)=x^2+y^2$, 约束条件为： $g(x,y)=xy−1=0$。<br>将三维的 $ f(x,y)$ 图像投影到二维平面上，为下图中红色曲线，也称为 $f(x,y)$ 的等高线。g(x,y) 为图中蓝色曲线。</p>
-<p><img src="img/lagrange_multiplier.jpg" alt="IMAGE"></p>
+<p><img src="/img/lagrange_multiplier.jpg" alt="IMAGE"></p>
 <p>沿着蓝线往内部的圆走，经过橙色点，此时不是最优解，当走到黑色点时，找到了最优解。此时可认为找到了在蓝线这个限制条件下 $f(x,y )$ 的最低点。</p>
 <p>拉格朗日观察到，黑点位置，蓝线与圆是相切的，而橙点位置显然不满足这个性质。且拉格朗日还指出黑点位置蓝线与圆一定是相切的，这正是拉格朗日乘子法的核心。</p>
 <p>在最低点，蓝线的切线方向都指向橙线的等高线方向。换句话说，在切点的位置沿蓝线移动很小的一步，都相当于在橙线的等高线上移动，这个时候，可以认为函数值已经趋于稳定了。所以，我们认为这个点的值“可能”是最低（高）的。<br>相切，意味着在切点的位置，等高线和蓝色曲线的等高线方向是平行的，考虑到梯度与等高线垂直，我们可以用两条曲线的梯度平行来求出切点位置（最低点）。</p>
@@ -342,8 +342,8 @@ var _hmt = _hmt || [];
 <p>可以发现方程组(2)与方程组(1)一样，联立以上三式即可求出 x, y, λ 的值。</p>
 <p>如果是多个约束条件，则拉格朗日函数为：<br>$L(x_1,…,x_n,λ_1,…,λ_k)=f(x1,…,xn)−\sum_{j=1}^{k}λ_jg_j(x_1,…,x_n)$</p>
 <h3 id="2-2_进一步理解">2.2 进一步理解</h3>
-<p>二维情况下的另一个图示，便于理解两个曲线的梯度变化情况：<br><img src="img/lagrange_multiplier_2.jpg" alt="IMAGE"></p>
-<p>根据拉格朗日乘子法的定义，这是一种寻找极值的策略，换句话说，该方法并不能保证找到的一定是最低点或者最高点。事实上，它只是一种寻找极值点的过程，而且，拉格朗日乘子法找到的切点可能不只一个（也就是上面的方程组可能找到多个解），例如下图：<br><img src="img/lagrange_multiplier_3.jpg" alt="IMAGE"></p>
+<p>二维情况下的另一个图示，便于理解两个曲线的梯度变化情况：<br><img src="/img/lagrange_multiplier_2.jpg" alt="IMAGE"></p>
+<p>根据拉格朗日乘子法的定义，这是一种寻找极值的策略，换句话说，该方法并不能保证找到的一定是最低点或者最高点。事实上，它只是一种寻找极值点的过程，而且，拉格朗日乘子法找到的切点可能不只一个（也就是上面的方程组可能找到多个解），例如下图：<br><img src="/img/lagrange_multiplier_3.jpg" alt="IMAGE"></p>
 <p>所以联立方程组得到的解为所有极值点，是最优解的必要条件，具体是否为极值点需根据问题本身的具体情况检验. 这个方程组称为等式约束的极值必要条件。如果是凸函数，可以保证最优解是存在的。</p>
 <hr>
 <p><strong>已经解决的在等式约束条件下的求函数极值的问题，那不等式约束条件下，应该如何解决呢？</strong></p>
@@ -359,7 +359,7 @@ var _hmt = _hmt || [];
 <h3 id="3-2_相关定义">3.2 相关定义</h3>
 <p>凸集：定义目标函数和约束函数的定义域。<br>凸函数：定义优化相关函数的凸性限制。<br>凸优化：中心内容的标准描述。<br>凸优化问题求解：核心内容。相关算法，梯度下降法、牛顿法、内点法等。</p>
 <h3 id="3-3_对偶问题">3.3 对偶问题</h3>
-<p>对偶问题是优化问题中非常重要的方法，将一般优化问题转化为凸优化问题，是求解非凸优化问题的有效方法。<br><img src="img/lagrange_dual.jpg" alt="IMAGE"></p>
+<p>对偶问题是优化问题中非常重要的方法，将一般优化问题转化为凸优化问题，是求解非凸优化问题的有效方法。<br><img src="/img/lagrange_dual.jpg" alt="IMAGE"></p>
 <p>对于一般的优化问题，不管其是不是凸的，其对偶问题一定是凸优化问题。</p>
 <h2 id="4-_不等式约束条件的优化问题">4. 不等式约束条件的优化问题</h2>
 <h3 id="4-1_广义拉格朗日函数">4.1 广义拉格朗日函数</h3>
@@ -402,8 +402,8 @@ var _hmt = _hmt || [];
 </ol>
 <p>第三个式子非常有趣，因为g(x)&lt;=0，如果要满足这个等式，必须$μ_i=0$或者g(x)=0，这是 SVM 的很多重要性质的来源，如支持向量的概念。</p>
 <h4 id="KKT条件的推导">KKT条件的推导</h4>
-<p><img src="img/lagrange_prove_1.jpg" alt="IMAGE"></p>
-<p><img src="img/lagrange_prove_2.jpg" alt="IMAGE"></p>
+<p><img src="/img/lagrange_prove_1.jpg" alt="IMAGE"></p>
+<p><img src="/img/lagrange_prove_2.jpg" alt="IMAGE"></p>
 <h3 id="4-6_总结">4.6 总结</h3>
 <p>关于不等式约束条件的优化问题，原问题分两种情况：</p>
 <ul>
