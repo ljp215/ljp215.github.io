@@ -91,6 +91,523 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2017/08/13/服务调优/" title="服务调优" itemprop="url">服务调优</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2017-08-13T13:03:50.000Z" itemprop="datePublished"> Published Aug 13 2017</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="目录">目录</h1>
+<ol>
+<li>服务异常的处理流程</li>
+<li>负载</li>
+<li>内存</li>
+<li>服务指标</li>
+<li>工具</li>
+</ol>
+<h1 id="1-_服务异常的处理流程">1. 服务异常的处理流程</h1>
+<p><img src="/img/server_debug_online.jpg" alt=""></p>
+<h1 id="2-_负载">2. 负载</h1>
+<h2 id="2-1_查看机器_cpu_的负载">2.1 查看机器 cpu 的负载</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">top -b -n <span class="number">1</span> |grep java|awk '{<span class="literal">print</span> <span class="string">"VIRT:"</span><span class="variable">$5</span>,<span class="string">"RES:"</span><span class="variable">$6</span>,<span class="string">"cpu:"</span><span class="variable">$9</span><span class="string">"%"</span>,<span class="string">"mem:"</span><span class="variable">$10</span><span class="string">"%"</span>}'</div></pre></td></tr></table></figure>
+
+<h2 id="2-2_查找_cpu_占用率高的线程">2.2 查找 cpu 占用率高的线程</h2>
+<p>top -p 25603 -H<br>printf 0x%x 25842<br>jstack 25603 | grep 0x64f2</p>
+<p>cat /proc/interrupts</p>
+<p>（1）CPU<br>（2）Memory<br>（3）IO<br>（4）Network</p>
+<p>可以从以下几个方面监控CPU的信息：<br>（1）中断；<br>（2）上下文切换；<br>（3）可运行队列；<br>（4）CPU 利用率。</p>
+<h1 id="3-_内存">3. 内存</h1>
+<h2 id="3-1_系统内存">3.1 系统内存</h2>
+<p>free 命令<br>[root@server ~]# free</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">             total       used       free     shared    buffers     cached</div><div class="line">Mem:       3266180    3250000      10000          0     201000    3002000</div><div class="line">-<span class="ruby">/+ buffers/<span class="symbol">cache:</span>      <span class="number">47000</span>    <span class="number">3213000</span></span></div><div class="line">Swap:      2048276      80160    1968116</div></pre></td></tr></table></figure>
+
+<p>这里的默认显示单位是kb。<br>各项指标解释</p>
+<ul>
+<li>total:总计物理内存的大小。</li>
+<li>used:已使用多大。</li>
+<li>free:可用有多少。</li>
+<li>Shared:多个进程共享的内存总额。</li>
+<li>buffers: 磁盘缓存的大小。</li>
+<li>cache:磁盘缓存的大小。</li>
+<li>-/+ buffers/cached): used:已使用多大，free:可用有多少。</li>
+<li>已用内存 = 系统used memory - buffers - cached<br>（47000 = 3250000-201000-3002000）</li>
+<li>可用内存 = 系统free memory + buffers + cached<br>（3213000 = 10000+201000+3002000）</li>
+</ul>
+<h4 id="什么是buffer/cache？">什么是buffer/cache？</h4>
+<ul>
+<li>buffer 指 Linux 内存的：Buffer cache，缓冲区缓</li>
+<li>cache 指 Linux内存中的：Page cache，页面缓存</li>
+</ul>
+<p><strong>page cache</strong><br>page cache 主要用来作为<strong>文件系统上的文件数据的缓存</strong>来用，尤其是针对当进程对文件有 read／write 操作的时候。如果你仔细想想的话，作为可以映射文件到内存的系统调用：mmap是不是很自然的也应该用到 page cache？在当前的系统实现里，page cache 也被作为其它文件类型的缓存设备来用，所以事实上 page cache 也负责了大部分的块设备文件的缓存工作。</p>
+<p><strong>buffer cache</strong><br>buffer cache 主要用来在<strong>系统对块设备进行读写</strong>的时候，对块进行数据缓存的系统来使用。这意味着某些对块的操作会使用 buffer cache 进行缓存，比如我们在格式化文件系统的时候。一般情况下两个缓存系统是一起配合使用的，比如当我们对一个文件进行写操作的时候，page cache 的内容会被改变，而 buffer cache 则可以用来将 page 标记为不同的缓冲区，并记录是哪一个缓冲区被修改了。这样，内核在后续执行脏数据的回写（writeback）时，就不用将整个 page 写回，而只需要写回修改的部分即可。</p>
+<p>在当前的内核中，page cache 是针对内存页的缓存，说白了就是，如果有内存是以page进行分配管理的，都可以使用page cache作为其缓存来管理使用。<br>当然，不是所有的内存都是以页（page）进行管理的，也有很多是针对块（block）进行管理的，这部分内存使用如果要用到 cache 功能，则都集中到buffer cache中来使用。（从这个角度出发，是不是buffer cache改名叫做block cache更好？）然而，也不是所有块（block）都有固定长度，系统上块的长度主要是根据所使用的块设备决定的，而页长度在X86上无论是32位还是64位都是4k。</p>
+<h4 id="系统如何回收cache？">系统如何回收cache？</h4>
+<p>Linux内核会在内存将要耗尽的时候，触发内存回收的工作，以便释放出内存给急需内存的进程使用。一般情况下，这个操作中主要的内存释放都来自于对buffer／cache的释放。尤其是被使用更多的cache空间。既然它主要用来做缓存，只是在内存够用的时候加快进程对文件的读写速度，那么在内存压力较大的情况下，当然有必要清空释放cache，作为free空间分给相关进程使用。所以一般情况下，我们认为buffer/cache空间可以被释放，这个理解是正确的。</p>
+<p>但是这种清缓存的工作也并不是没有成本。理解cache是干什么的就可以明白清缓存必须保证cache中的数据跟对应文件中的数据一致，才能对cache进行释放。所以伴随着cache清除的行为的，一般都是系统IO飙高。因为内核要对比cache中的数据和对应硬盘文件上的数据是否一致，如果不一致需要写回，之后才能回收。</p>
+<p>在系统中除了内存将被耗尽的时候可以清缓存以外，我们还可以人工触发缓存清除的操作。</p>
+<h2 id="3-2_进程内存">3.2 进程内存</h2>
+<h3 id="3-2-1_进程内存统计">3.2.1 进程内存统计</h3>
+<p>/proc/[pid]/status<br>通过/proc/<pid>/status可以查看进程的内存使用情况，包括虚拟内存大小（VmSize），物理内存大小（VmRSS），数据段大小（VmData），栈的大小（VmStk），代码段的大小（VmExe），共享库的代码段大小（VmLib）等等。</pid></p>
+<p>cat /proc/[pid]/status</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="attribute">Name</span>: <span class="string">gedit /*进程的程序名*/</span></div><div class="line"><span class="attribute">State</span>: <span class="string">S (sleeping) /*进程的状态信息,具体参见http://blog.chinaunix.net/u2/73528/showart_1106510.html*/</span></div><div class="line"><span class="attribute">Tgid</span>: <span class="string">9744 /*线程组号*/</span></div><div class="line"><span class="attribute">Pid</span>: <span class="string">9744 /*进程pid*/</span></div><div class="line"><span class="attribute">PPid</span>: <span class="string">7672 /*父进程的pid*/</span></div><div class="line"><span class="attribute">TracerPid</span>: <span class="string">0 /*跟踪进程的pid*/</span></div><div class="line"><span class="attribute">VmPeak</span>: <span class="string">60184 kB /*进程地址空间的大小*/</span></div><div class="line"><span class="attribute">VmSize</span>: <span class="string">60180 kB /*进程虚拟地址空间的大小reserved_vm：进程在预留或特殊的内存间的物理页*/</span></div><div class="line"><span class="attribute">VmLck</span>: <span class="string">0 kB /*进程已经锁住的物理内存的大小.锁住的物理内存不能交换到硬盘*/</span></div><div class="line"><span class="attribute">VmHWM</span>: <span class="string">18020 kB /*文件内存映射和匿名内存映射的大小*/</span></div><div class="line"><span class="attribute">VmRSS</span>: <span class="string">18020 kB /*应用程序正在使用的物理内存的大小，就是用ps命令的参数rss的值 (rss)*/</span></div><div class="line"><span class="attribute">VmData</span>: <span class="string">12240 kB /*程序数据段的大小（所占虚拟内存的大小），存放初始化了的数据*/</span></div><div class="line"><span class="attribute">VmStk</span>: <span class="string">84 kB /*进程在用户态的栈的大小*/</span></div><div class="line"><span class="attribute">VmExe</span>: <span class="string">576 kB /*程序所拥有的可执行虚拟内存的大小,代码段,不包括任务使用的库 */</span></div><div class="line"><span class="attribute">VmLib</span>: <span class="string">21072 kB /*被映像到任务的虚拟内存空间的库的大小*/</span></div><div class="line"><span class="attribute">VmPTE</span>: <span class="string">56 kB /*该进程的所有页表的大小*/</span></div><div class="line"><span class="attribute">Threads</span>: <span class="string">1 /*共享使用该信号描述符的任务的个数*/</span></div></pre></td></tr></table></figure>
+
+<h3 id="3-2-2_JVM_内存分配">3.2.2 JVM 内存分配</h3>
+<p>java内存组成介绍：堆(Heap)和非堆(Non-heap)内存</p>
+<p>按照官方的说法：“Java 虚拟机具有一个堆，堆是运行时数据区域，所有类实例和数组的内存均从此处分配。堆是在 Java 虚拟机启动时创建的。”“在JVM中堆之外的内存称为非堆内存(Non-heap memory)”。可以看出JVM主要管理两种类型的内存：堆和非堆。简单来说堆就是Java代码可及的内存，是留给开发人员使用的；非堆就是JVM留给 自己用的，所以方法区、JVM内部处理或优化所需的内存(如JIT编译后的代码缓存)、每个类结构(如运行时常数池、字段和方法数据)以及方法和构造方法 的代码都在非堆内存中。</p>
+<p><img src="quiver-image-url/590323FD2C5869E67568351DED266A03.jpg =501x363" alt="IMAGE"></p>
+<ol>
+<li>JVM本身需要的内存，包括其加载的第三方库以及这些库分配的内存</li>
+<li>NIO的DirectBuffer是分配的native memory</li>
+<li>内存映射文件，包括JVM加载的一些JAR和第三方库，以及程序内部用到的。上面 pmap 输出的内容里，有一些静态文件所占用的大小不在Java的heap里，因此作为一个Web服务器，赶紧把静态文件从这个Web服务器中人移开吧，放到nginx或者CDN里去吧。</li>
+<li>JIT， JVM会将Class编译成native代码，这些内存也不会少，如果使用了Spring的AOP，CGLIB会生成更多的类，JIT的内存开销也会随之变大，而且Class本身JVM的GC会将其放到Perm Generation里去，很难被回收掉，面对这种情况，应该让JVM使用ConcurrentMarkSweep GC，并启用这个GC的相关参数允许将不使用的class从Perm Generation中移除， 参数配置： -XX:+UseConcMarkSweepGC -X:+CMSPermGenSweepingEnabled -X:+CMSClassUnloadingEnabled，如果不需要移除而Perm Generation空间不够，可以加大一点： -X:PermSize=256M -X:MaxPermSize=512M</li>
+<li>JNI，一些JNI接口调用的native库也会分配一些内存，如果遇到JNI库的内存泄露，可以使用valgrind等内存泄露工具来检测</li>
+<li>线程栈，每个线程都会有自己的栈空间，如果线程一多，这个的开销就很明显了</li>
+<li>jmap/jstack 采样，频繁的采样也会增加内存占用，如果你有服务器健康监控，记得这个频率别太高，否则健康监控变成致病监控了。</li>
+</ol>
+<h4 id="1-方法区">1.方法区</h4>
+<p>也称”永久代” 、“非堆”，它用于存储虚拟机加载的类信息、常量、静态变量、是各个线程共享的内存区域。默认最小值为16MB，最大值为64MB，可以通过-XX:PermSize 和 -XX:MaxPermSize 参数限制方法区的大小。</p>
+<p>运行时常量池：是方法区的一部分，Class文件中除了有类的版本、字段、方法、接口等描述信息外，还有一项信息是常量池，用于存放编译器生成的各种符号引用，这部分内容将在类加载后放到方法区的运行时常量池中。</p>
+<h4 id="2-虚拟机栈">2.虚拟机栈</h4>
+<p>描述的是java 方法执行的内存模型：每个方法被执行的时候 都会创建一个“栈帧”用于存储局部变量表(包括参数)、操作栈、方法出口等信息。每个方法被调用到执行完的过程，就对应着一个栈帧在虚拟机栈中从入栈到出栈的过程。声明周期与线程相同，是线程私有的。</p>
+<p>局部变量表存放了编译器可知的各种基本数据类型(boolean、byte、char、short、int、float、long、double)、对象引用(引用指针，并非对象本身)，其中64位长度的long和double类型的数据会占用2个局部变量的空间，其余数据类型只占1个。局部变量表所需的内存空间在编译期间完成分配，当进入一个方法时，这个方法需要在栈帧中分配多大的局部变量是完全确定的，在运行期间栈帧不会改变局部变量表的大小空间。</p>
+<h4 id="3-本地方法栈">3.本地方法栈</h4>
+<p>与虚拟机栈基本类似，区别在于虚拟机栈为虚拟机执行的java方法服务，而本地方法栈则是为Native方法服务。</p>
+<h4 id="4-堆">4.堆</h4>
+<p>也叫做java 堆、GC堆是java虚拟机所管理的内存中最大的一块内存区域，也是被各个线程共享的内存区域，在JVM启动时创建。该内存区域存放了对象实例及数组(所有new的对象)。其大小通过-Xms(最小值)和-Xmx(最大值)参数设置，-Xms为JVM启动时申请的最小内存，默认为操作系统物理内存的1/64但小于1G，-Xmx为JVM可申请的最大内存，默认为物理内存的1/4但小于1G，默认当空余堆内存小于40%时，JVM会增大Heap到-Xmx指定的大小，可通过-XX:MinHeapFreeRation=来指定这个比列；当空余堆内存大于70%时，JVM会减小heap的大小到-Xms指定的大小，可通过XX:MaxHeapFreeRation=来指定这个比列，对于运行系统，为避免在运行时频繁调整Heap的大小，通常-Xms与-Xmx的值设成一样。</p>
+<p>由于现在收集器都是采用分代收集算法，堆被划分为新生代和老年代。新生代主要存储新创建的对象和尚未进入老年代的对象。老年代存储经过多次新生代GC(Minor GC)任然存活的对象。</p>
+<h4 id="5-程序计数器">5.程序计数器</h4>
+<p>是最小的一块内存区域，它的作用是当前线程所执行的字节码的行号指示器，在虚拟机的模型里，字节码解释器工作时就是通过改变这个计数器的值来选取下一条需要执行的字节码指令，分支、循环、异常处理、线程恢复等基础功能都需要依赖计数器完成。</p>
+<h4 id="3-2-3_直接内存">3.2.3 直接内存</h4>
+<p>直接内存并不是虚拟机内存的一部分，也不是Java虚拟机规范中定义的内存区域。jdk1.4中新加入的NIO，引入了通道与缓冲区的IO方式，它可以调用Native方法直接分配堆外内存，这个堆外内存就是本机内存，不会影响到堆内存的大小。</p>
+<h3 id="3-2-4_JVM_内存分析">3.2.4 JVM 内存分析</h3>
+<h4 id="查看_JVM_堆内存情况">查看 JVM 堆内存情况</h4>
+<p>jmap -heap [pid]</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line">[root@server ~]$ jmap -heap <span class="number">837</span></div><div class="line">Attaching to process ID <span class="number">837</span>, please wait...</div><div class="line">Debugger attached successfully.</div><div class="line">Server compiler detected.</div><div class="line">JVM version is <span class="number">24.71</span>-b01</div><div class="line"></div><div class="line">using thread-local object allocation.</div><div class="line">Parallel GC <span class="keyword">with</span> <span class="number">4</span> thread(s)//GC 方式</div><div class="line"></div><div class="line">Heap Configuration: //堆内存初始化配置</div><div class="line">   <span class="variable">MinHeapFreeRatio =</span> <span class="number">0</span> //对应jvm启动参数-XX:MinHeapFreeRatio设置JVM堆最小空闲比率(default <span class="number">40</span>)</div><div class="line">   <span class="variable">MaxHeapFreeRatio =</span> <span class="number">100</span> //对应jvm启动参数 -XX:MaxHeapFreeRatio设置JVM堆最大空闲比率(default <span class="number">70</span>)</div><div class="line">   <span class="variable">MaxHeapSize      =</span> <span class="number">2082471936</span> (<span class="number">1986.0</span>MB) //对应jvm启动参数-XX:<span class="variable">MaxHeapSize=</span>设置JVM堆的最大大小</div><div class="line">   <span class="variable">NewSize          =</span> <span class="number">1310720</span> (<span class="number">1.25</span>MB)//对应jvm启动参数-XX:<span class="variable">NewSize=</span>设置JVM堆的‘新生代’的默认大小</div><div class="line">   <span class="variable">MaxNewSize       =</span> <span class="number">17592186044415</span> MB//对应jvm启动参数-XX:<span class="variable">MaxNewSize=</span>设置JVM堆的‘新生代’的最大大小</div><div class="line">   <span class="variable">OldSize          =</span> <span class="number">5439488</span> (<span class="number">5.1875</span>MB)//对应jvm启动参数-XX:<span class="variable">OldSize=</span>&lt;value&gt;:设置JVM堆的‘老生代’的大小</div><div class="line">   <span class="variable">NewRatio         =</span> <span class="number">2</span> //对应jvm启动参数-XX:<span class="variable">NewRatio=</span>:‘新生代’和‘老生代’的大小比率</div><div class="line">   <span class="variable">SurvivorRatio    =</span> <span class="number">8</span> //对应jvm启动参数-XX:<span class="variable">SurvivorRatio=</span>设置年轻代中Eden区与Survivor区的大小比值 </div><div class="line">   <span class="variable">PermSize         =</span> <span class="number">21757952</span> (<span class="number">20.75</span>MB)  //对应jvm启动参数-XX:<span class="variable">PermSize=</span>&lt;value&gt;:设置JVM堆的‘永生代’的初始大小</div><div class="line">   <span class="variable">MaxPermSize      =</span> <span class="number">85983232</span> (<span class="number">82.0</span>MB)//对应jvm启动参数-XX:<span class="variable">MaxPermSize=</span>&lt;value&gt;:设置JVM堆的‘永生代’的最大大小</div><div class="line">   <span class="variable">G1HeapRegionSize =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line"></div><div class="line">Heap Usage://堆内存使用情况</div><div class="line">PS Young Generation</div><div class="line">Eden Space://Eden区内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">33030144</span> (<span class="number">31.5</span>MB)//Eden区总容量</div><div class="line">   <span class="variable">used     =</span> <span class="number">1524040</span> (<span class="number">1.4534378051757812</span>MB)  //Eden区已使用</div><div class="line">   <span class="variable">free     =</span> <span class="number">31506104</span> (<span class="number">30.04656219482422</span>MB)  //Eden区剩余容量</div><div class="line">   <span class="number">4.614088270399305</span>% used //Eden区使用比率</div><div class="line">From Space:  //其中一个Survivor区的内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="number">0.0</span>% used</div><div class="line">To Space:  //另一个Survivor区的内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">5242880</span> (<span class="number">5.0</span>MB)</div><div class="line">   <span class="number">0.0</span>% used</div><div class="line">PS Old Generation //当前的Old区内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">86507520</span> (<span class="number">82.5</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">0</span> (<span class="number">0.0</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">86507520</span> (<span class="number">82.5</span>MB)</div><div class="line">   <span class="number">0.0</span>% used</div><div class="line">PS Perm Generation//当前的 “永生代” 内存分布</div><div class="line">   <span class="variable">capacity =</span> <span class="number">22020096</span> (<span class="number">21.0</span>MB)</div><div class="line">   <span class="variable">used     =</span> <span class="number">2496528</span> (<span class="number">2.3808746337890625</span>MB)</div><div class="line">   <span class="variable">free     =</span> <span class="number">19523568</span> (<span class="number">18.619125366210938</span>MB)</div><div class="line">   <span class="number">11.337498256138392</span>% used</div><div class="line"></div><div class="line"><span class="number">670</span> interned Strings occupying <span class="number">43720</span> bytes.</div></pre></td></tr></table></figure>
+
+<p>关于这里的几个generation网上资料一大把就不细说了，这里算一下求和可以得知前者总共给Java环境分配了644M的内存，而ps输出的VSZ和RSS分别是7.4G和2.9G，这到底是怎么回事呢？<br>前面jmap输出的内容里，MaxHeapSize 是在命令行上配的，-Xmx4096m，这个java程序可以用到的最大堆内存。<br>VSZ是指已分配的线性空间大小，这个大小通常并不等于程序实际用到的内存大小，产生这个的可能性很多，比如内存映射，共享的动态库，或者向系统申请了更多的堆，都会扩展线性空间大小，要查看一个进程有哪些内存映射，可以使用 pmap 命令来查看：<br>pmap -x [pid]</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">[root@server ~]$ pmap -x <span class="number">837</span></div><div class="line"><span class="number">837</span>:   java</div><div class="line">Address           Kbytes     RSS   Dirty Mode   Mapping</div><div class="line"><span class="number">0000000040000000</span>      <span class="number">36</span>       <span class="number">4</span>       <span class="number">0</span> r-x--  java</div><div class="line"><span class="number">0000000040108000</span>       <span class="number">8</span>       <span class="number">8</span>       <span class="number">8</span> rwx--  java</div><div class="line">00000000418c9000   <span class="number">13676</span>   <span class="number">13676</span>   <span class="number">13676</span> rwx--    [ anon ]</div><div class="line">00000006fae00000   <span class="number">83968</span>   <span class="number">83968</span>   <span class="number">83968</span> rwx--    [ anon ]</div><div class="line"><span class="number">0000000700000000</span>  <span class="number">527168</span>  <span class="number">451636</span>  <span class="number">451636</span> rwx--    [ anon ]</div><div class="line">00000007202d0000  <span class="number">127040</span>       <span class="number">0</span>       <span class="number">0</span> -----    [ anon ]</div><div class="line"><span class="keyword">...</span></div><div class="line"><span class="keyword">...</span></div><div class="line">00007f55ee124000       <span class="number">4</span>       <span class="number">4</span>       <span class="number">0</span> r-xs-  az.png</div><div class="line">00007fff017ff000       <span class="number">4</span>       <span class="number">4</span>       <span class="number">0</span> r-x--    [ anon ]</div><div class="line">ffffffffff600000       <span class="number">4</span>       <span class="number">0</span>       <span class="number">0</span> r-x--    [ anon ]</div><div class="line">----------------  ------  ------  ------</div><div class="line">total kB         <span class="number">7796020</span> <span class="number">3037264</span> <span class="number">3023928</span></div></pre></td></tr></table></figure>
+
+<p>这里可以看到很多anon，这些表示这块内存是由mmap分配的。</p>
+<p>RSZ是Resident Set Size，常驻内存大小，即进程实际占用的物理内存大小， 在现在这个例子当中，RSZ和实际堆内存占用差了2.3G，这2.3G的内存组成分别为：</p>
+<h4 id="查看_JVM_堆各个分区的内存情况">查看 JVM 堆各个分区的内存情况</h4>
+<p>jstat -gcutil [pid]</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root<span class="variable">@server</span> ~]<span class="variable">$ </span>jstat -gcutil <span class="number">837</span> <span class="number">1000</span> <span class="number">20</span></div><div class="line">  <span class="constant">S0</span>     <span class="constant">S1</span>     <span class="constant">E</span>      <span class="constant">O</span>      <span class="constant">P</span>     <span class="constant">YGC</span>     <span class="constant">YGCT</span>    <span class="constant">FGC</span>    <span class="constant">FGCT</span>     <span class="constant">GCT</span>   </div><div class="line">  <span class="number">0</span>.<span class="number">00</span>  <span class="number">80.43</span>  <span class="number">24.62</span>  <span class="number">87.44</span>  <span class="number">98.29</span>   <span class="number">7101</span>  <span class="number">119.652</span>    <span class="number">40</span>   <span class="number">19.719</span>  <span class="number">139.371</span></div><div class="line">  <span class="number">0</span>.<span class="number">00</span>  <span class="number">80.43</span>  <span class="number">33.14</span>  <span class="number">87.44</span>  <span class="number">98.29</span>   <span class="number">7101</span>  <span class="number">119.652</span>    <span class="number">40</span>   <span class="number">19.719</span>  <span class="number">139.371</span></div></pre></td></tr></table></figure>
+
+<h4 id="分析_JVM_堆内存中的对象">分析 JVM 堆内存中的对象</h4>
+<p><strong>查看存活的对象统计</strong><br>jmap -histo:live [pid]</p>
+<p><strong>dump 内存</strong><br>jmap -dump:format=b,file=heapDump [pid]</p>
+<p>然后用jhat命令可以参看<br>jhat -port 5000 heapDump<br>在浏览器中访问：<a href="http://localhost:5000/" target="_blank" rel="external">http://localhost:5000/</a> 查看详细信息</p>
+<h1 id="4-_服务指标">4. 服务指标</h1>
+<h2 id="4-1_响应时间(RT)">4.1 响应时间(RT)</h2>
+<p>响应时间是指系统对请求作出响应的时间。直观上看，这个指标与人对软件性能的主观感受是非常一致的，因为它完整地记录了整个计算机系统处理请求的时间。由于一个系统通常会提供许多功能，而不同功能的处理逻辑也千差万别，因而不同功能的响应时间也不尽相同，甚至同一功能在不同输入数据的情况下响应时间也不相同。所以，在讨论一个系统的响应时间时，人们通常是指该系统所有功能的平均时间或者所有功能的最大响应时间。当然，往往也需要对每个或每组功能讨论其平均响应时间和最大响应时间。</p>
+<p>对于单机的没有并发操作的应用系统而言，人们普遍认为响应时间是一个合理且准确的性能指标。需要指出的是，响应时间的绝对值并不能直接反映软件的性能的高低，软件性能的高低实际上取决于用户对该响应时间的接受程度。对于一个游戏软件来说，响应时间小于100毫秒应该是不错的，响应时间在1秒左右可能属于勉强可以接受，如果响应时间达到3秒就完全难以接受了。而对于编译系统来说，完整编译一个较大规模软件的源代码可能需要几十分钟甚至更长时间，但这些响应时间对于用户来说都是可以接受的。</p>
+<h2 id="4-2_吞吐量(Throughput)">4.2 吞吐量(Throughput)</h2>
+<p>吞吐量是指系统在单位时间内处理请求的数量。对于无并发的应用系统而言，吞吐量与响应时间成严格的反比关系，实际上此时吞吐量就是响应时间的倒数。前面已经说过，对于单用户的系统，响应时间（或者系统响应时间和应用延迟时间）可以很好地度量系统的性能，但对于并发系统，通常需要用吞吐量作为性能指标。</p>
+<p>对于一个多用户的系统，如果只有一个用户使用时系统的平均响应时间是t，当有你n个用户使用时，每个用户看到的响应时间通常并不是n×t，而往往比n×t小很多（当然，在某些特殊情况下也可能比n×t大，甚至大很多）。这是因为处理每个请求需要用到很多资源，由于每个请求的处理过程中有许多不走难以并发执行，这导致在具体的一个时间点，所占资源往往并不多。也就是说在处理单个请求时，在每个时间点都可能有许多资源被闲置，当处理多个请求时，如果资源配置合理，每个用户看到的平均响应时间并不随用户数的增加而线性增加。实际上，不同系统的平均响应时间随用户数增加而增长的速度也不大相同，这也是采用吞吐量来度量并发系统的性能的主要原因。一般而言，吞吐量是一个比较通用的指标，两个具有不同用户数和用户使用模式的系统，如果其最大吞吐量基本一致，则可以判断两个系统的处理能力基本一致。</p>
+<h2 id="4-3_并发用户数">4.3 并发用户数</h2>
+<p>并发用户数是指系统可以同时承载的正常使用系统功能的用户的数量。与吞吐量相比，并发用户数是一个更直观但也更笼统的性能指标。实际上，并发用户数是一个非常不准确的指标，因为用户不同的使用模式会导致不同用户在单位时间发出不同数量的请求。一网站系统为例，假设用户只有注册后才能使用，但注册用户并不是每时每刻都在使用该网站，因此具体一个时刻只有部分注册用户同时在线，在线用户就在浏览网站时会花很多时间阅读网站上的信息，因而具体一个时刻只有部分在线用户同时向系统发出请求。这样，对于网站系统我们会有三个关于用户数的统计数字：注册用户数、在线用户数和同时发请求用户数。由于注册用户可能长时间不登陆网站，使用注册用户数作为性能指标会造成很大的误差。而在线用户数和同事发请求用户数都可以作为性能指标。相比而言，以在线用户作为性能指标更直观些，而以同时发请求用户数作为性能指标更准确些。</p>
+<h2 id="4-4_QPS每秒查询率(Query_Per_Second)">4.4 QPS每秒查询率(Query Per Second)</h2>
+<p>每秒查询率QPS是对一个特定的查询服务器在规定时间内所处理流量多少的衡量标准，在因特网上，作为域名系统服务器的机器的性能经常用每秒查询率来衡量。对应fetches/sec，即每秒的响应请求数，也即是最大吞吐能力。</p>
+<p>从以上概念来看吞吐量和响应时间是衡量系统性能的重要指标，QPS虽然和吞吐量的计量单位不同，但应该是成正比的，任何一个指标都可以含量服务器的并行处理能力。当然Throughput更关心数据量，QPS更关心处理笔数。</p>
+<h2 id="4-5_CPU利用率">4.5 CPU利用率</h2>
+<p>CPU Load Average &lt; CPU个数 <em> 核数 </em> 0.7 </p>
+<p><strong>Context Switch Rate</strong><br>就是Process（Thread）的切换，如果切换过多，会让CPU忙于切换，也会导致影响吞吐量。《高性能服务器架构 》这篇文章的第2节就是说的是这个问题的。究竟多少算合适？google了一大圈，没有一个确切的解释。Context Switch大体上由两个部分组成：中断和进程(包括线程)切换，一次中断（Interrupt）会引起一次切换，进程（线程）的创建、激活之类的也会引起一次切换。CS的值也和TPS（Transaction Per Second）相关的，假设每次调用会引起N次CS，那么就可以得出</p>
+<p>Context Switch Rate = Interrupt Rate + TPS* N</p>
+<p>CSR减掉IR，就是进程/线程的切换，假如主进程收到请求交给线程处理，线程处理完毕归还给主进程，这里就是2次切换。也可以用CSR、IR、TPS的值代入公式中，得出每次事物导致的切换数。因此，要降低CSR，就必须在每个TPS引起的切换上下功夫，只有N这个值降下去，CSR就能降低，理想情况下N=0，但是无论如何如果N &gt;= 4，则要好好检查检查。另外网上说的CSR&lt;5000，我认为标准不该如此单一。</p>
+<p>这三个指标在 LoadRunner 中可以监控到；另外，在 linux 中，也可以用 vmstat 查看r（Load Arerage），in（Interrupt）和cs（Context Switch）</p>
+<h1 id="5-_工具">5. 工具</h1>
+<p>uptime</p>
+<p>dmesg</p>
+<p>top<br>查看进程活动状态以及一些系统状况</p>
+<p>vmstat<br>查看系统状态、硬件和系统信息等</p>
+<p>iostat<br>查看CPU 负载，硬盘状况</p>
+<p>sar<br>综合工具，查看系统状况</p>
+<p>mpstat<br>查看多处理器状况</p>
+<p>netstat<br>查看网络状况</p>
+<p>iptraf<br>实时网络状况监测</p>
+<p>tcpdump<br>抓取网络数据包，详细分析</p>
+<p>mpstat<br>查看多处理器状况</p>
+<p>tcptrace<br>数据包分析工具</p>
+<p>netperf<br>网络带宽工具</p>
+<p>dstat<br>综合工具，综合了 vmstat, iostat, ifstat, netstat 等多个信息</p>
+<h1 id="Reference">Reference</h1>
+<p><a href="http://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/" target="_blank" rel="external">http://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/</a><br><a href="https://www.ibm.com/developerworks/java/library/j-nativememory-linux/" target="_blank" rel="external">https://www.ibm.com/developerworks/java/library/j-nativememory-linux/</a><br><a href="http://www.oracle.com/technetwork/java/javase/index-137495.html" target="_blank" rel="external">http://www.oracle.com/technetwork/java/javase/index-137495.html</a><br><a href="http://www.hollischuang.com/archives/303" target="_blank" rel="external">http://www.hollischuang.com/archives/303</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/调试/">调试</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2017/08/13/服务调优/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/05/22/使用-HBase-总结/" title="使用 HBase 总结" itemprop="url">使用 HBase 总结</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-05-22T08:27:28.000Z" itemprop="datePublished"> Published May 22 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="1-_HBase_简介">1. HBase 简介</h1>
+<p>HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。</p>
+<h2 id="1-1_HBase_的优点">1.1 HBase 的优点</h2>
+<ol>
+<li>高可扩展性<br>HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对数据进行水平切分，并分配不同的服务器来管理这些数据。这些数据可以被扩散到上千个普通服务器上。这样一方面可以由大量普通服务器组成大规模集群，来存放海量数据(从几个 TB 到几十 PB 的数据)。另一方面，当数据峰值接近系统设计容量时，可以简单通过增加服务器的方式来扩大容量。这个动态扩容过程无需停机，HBase系统可以照常运行并提供读写服务，完全实现动态无缝无宕机扩容。</li>
+<li>高性能<br>HBase 的设计目的之一是支持高并发用户数的高速读写访问。这是通过两方面来实现的。首先数据行被水平切分并分布到多台服务器上，在大量用户访问时，访问请求也被分散到了不同的服务器上，虽然每个服务器的服务能力有限，但是数千台服务器汇总后可以提供极高性能的访问能力。其次，HBase 设计了高效的缓存机制，有效提高了访问的命中率，提高了访问性能。</li>
+<li>高可用性<br>HBase 建立在 HDFS 之上。HDFS 提供了数据自动复制和容错的功能。HBase 的日志和数据都存放在 HDFS 上，即使在读写过程中当前服务器出现故障(硬盘、内存、网络等故障)，日志也不会丢失，数据都可以从日志中自动恢复。HBase 系统会自动分配其他服务器接管并恢复这些数据。因此一旦成功写入数据，这些数据就保证被持久化并被冗余复制，整个系统的高可用性得到保证。</li>
+</ol>
+<h2 id="1-2_数据模型">1.2 数据模型</h2>
+<ol>
+<li><p>表</p>
+<ul>
+<li>数据量：一张表可以有数十亿行，上百万列。</li>
+<li>最大版本数：通常是3，如果对于更新比较频繁的应用完全可以设置为1，能够快速的淘汰无用数据，对于节省存储空间和提高查询速度有效果。不过这类需求在海量数据领域比较小众。</li>
+<li>压缩算法：可以尝试一下最新出炉的snappy算法，相对lzo来说，压缩率接近，压缩效率稍高，解压效率高很多。</li>
+<li>inmemory：表在内存中存放，一直会被忽略的属性。如果完全将数据存放在内存中，那么hbase和现在流行的内存数据库memorycached和redis性能差距有多少，尚待实测。</li>
+<li>bloomfilter：根据应用来定，看需要精确到rowkey还是column。不过这里需要理解一下原理，bloomfilter的作用是对一个region下查找记录所在的hfile有用。即如果一个region下的hfile数量很多，bloomfilter的作用越明显。适合那种compaction赶不上flush速度的应用。</li>
+</ul>
+</li>
+<li><p>无模式<br>每行都有一个可排序的主键和任意多的列，列可以根据需要动态的增加，同一张表中不同的行可以有截然不同的列；</p>
+</li>
+<li>面向列<br>面向列（族）的存储和权限控制，列（族）独立检索；</li>
+<li>稀疏<br>对于空（null）的列，并不占用存储空间，表可以设计的非常稀疏；</li>
+<li>数据多版本<br>每个单元中的数据可以有多个版本，默认情况下版本号自动分配，是单元格插入时的时间戳；</li>
+<li>数据类型单一<br>HBase中的数据都是字符串，没有类型。</li>
+<li>存储单元 Cell<br>由{rowkey, colomnFamily:colomnQualifier, version} 确定的唯一单元，存储的数据是byte[]类型的。</li>
+</ol>
+<h1 id="2-_HBase_的设计与实现">2. HBase 的设计与实现</h1>
+<h2 id="2-1_HBase_的架构">2.1 HBase 的架构</h2>
+<p><img src="/img/HBase_ architecture.jpg" alt=""><br>由上图可知，hbase包括Clinet、HMaster、HRegionServer、ZooKeeper组件<br>各组件功能介绍：</p>
+<ol>
+<li>Client<br>Client主要通过ZooKeeper与Hbaser和HRegionServer通信，对于管理操作：client向master发起请求，对于数据读写操作：client向regionserver发起请求</li>
+<li>ZooKeeper<br>zk负责存储<em>root</em>表的地址，也负责存储当前服务的master地址,regsion server也会将自身的信息注册到zk中，以便master能够感知region server的状态，zk也会协调active master，也就是可以提供一个选举master leader,也会协调各个region server的容灾流程</li>
+<li>HMaster<br>master可以启动多个master，master主要负责table和region的管理工作，响应用户对表的CRUD操作，管理region server的负载均衡，调整region 的分布和分配，当region server停机后，负责对失效的regionn进行迁移操作</li>
+<li>HRegionServer<br>region server主要负责响应用户的IO请求，并把IO请求转换为读写HDFS的操作</li>
+</ol>
+<h2 id="2-2_HBase_的架构详解">2.2 HBase 的架构详解</h2>
+<p><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="external">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a></p>
+<h1 id="3-_HBase,_Mysql_的比较">3. HBase, Mysql 的比较</h1>
+<p>Mysql 是关系型数据库，对于数据量不大(百万级别)，强依赖事务的业务，使用Mysql。<br>HBase 适用于对大数据进行随机、实时访问的场合，支持海量数据，扩展性好。<br>HBase 不适用的场景：</p>
+<ul>
+<li>对分布式事务支持的不好</li>
+<li>不支持多表的联合查询</li>
+<li>对于复杂查询，需要扫描全表，且不支持索引</li>
+</ul>
+<h1 id="4-_设计_HBase_表">4. 设计 HBase 表</h1>
+<h2 id="4-1_RowKey_的设计">4.1 RowKey 的设计</h2>
+<p>Rowkey唯一原则，必须在设计上保证其唯一性。但是还有几点需要注意的地方：</p>
+<h3 id="4-1-1_RowKey_长度的设计">4.1.1 RowKey 长度的设计</h3>
+<p>Rowkey是一个二进制码流，可以是任意字符串，最大长度64KB，实际应用中一般为10~100bytes，存为byte[]字节数组。</p>
+<ol>
+<li>定长<br>定长的好处是 RowKey 排序时是按字典序且不受不同长度的影响</li>
+<li>短<br>不要超过16个字节。<ul>
+<li>数据的持久化文件 HFile 是按照 KeyValue 存储的，如果 Rowkey 过长比如100个字节，1000万列数据光 Rowkey 就要占用100*1000万=10亿个字节，将近1G数据，这会极大影响 HFile 的存储效率；</li>
+<li>MemStore 将缓存部分数据到内存，如果 Rowkey 字段过长内存的有效利用率会降低，系统将无法缓存更多的数据，这会降低检索效率。</li>
+</ul>
+</li>
+<li>16个字节<br>目前操作系统是都是64位系统，内存8字节对齐。控制在16个字节，8字节的整数倍利用操作系统的最佳特性。</li>
+</ol>
+<h3 id="4-1-2_RowKey_含义的设计">4.1.2 RowKey 含义的设计</h3>
+<p>RowKey 虽然是越短越好，但也需要考虑 RowKey 的含义。由于 HBase 是按字典序存储，所以 RowKey 设计的合理可以提高查询效率(因为这会提高 RegionServer 的缓存命中率)，并且有意义的 RowKey 也便于在 scan 表的时候确定 startRow 和 stopRow。</p>
+<ol>
+<li>RowKey 包含时间<br>不要将时间放在二进制码的前面，建议将 RowKey 的高位作为散列字段（或者本身就已经是散列的其他id，例如userId），低位放时间字段。否则最新的数据都集中放在某个 RegionServer，而访问量又都集中在最新的数据上，将会导致 Hotspotting 现象，降低了访问速度，同时也增加了 RegionServer Crash 的概率。<br>但考虑到是按字典序存储，如果想让最新的数据在最前面，可以使用 Long.MAX_VALUE – timestamp 作为 RowKey 的一部分。</li>
+<li>RowKey 包含多个含义时<br>各个含义用某种分隔符分开，比如包含用户，类型，时间三种含义的 RowKey, 可以设计为 userId#type#timestamp，这样如果需要查找某个用户某段时间的数据，scan 时只需要根据 userId 设置 startRow 和 stopRow 即可。</li>
+</ol>
+<h3 id="4-1-3_RowKey_性能的设计">4.1.3 RowKey 性能的设计</h3>
+<p>RowKey 是按照字典序存储，利用这个排序特点，将经常一起读取或者最近可能被访问到的数据存储到一块可以提高查询效率。</p>
+<ol>
+<li>Hotspotting<br>It is always advisable not to use sequential row keys, even though you get better scan results. More info here.<br>Salting Row Key. To prevent hot spotting on writes, the row key may be “salted” by inserting a leading byte into the row key which is a mod over N buckets of the hash of the entire row key. This ensures even distribution of writes when the row key is a monotonically increasing value (often a timestamp representing the current time).</li>
+<li>Length of row key<br>For each cell, rowkey details, column family, and qualifier details are stored. So it is always advisable to keep them as shot as possible, mainly because the same information is repeated on large scale.</li>
+<li>So whats next<br>salt usage and its prefixing will help to distribute the rows among region servers.This can help you.</li>
+</ol>
+<h2 id="4-2_ColumnFamily_的设计">4.2 ColumnFamily 的设计</h2>
+<h3 id="4-2-1_ColumnFamily_的长度">4.2.1 ColumnFamily 的长度</h3>
+<p>The column family and column qualifier names are repeated for each row. Therefore, keep the names as short as possible to reduce the amount of data that HBase stores and reads. For example, use f:q instead of mycolumnfamily:mycolumnqualifier.</p>
+<h3 id="4-2-2_ColumnFamily_的数量">4.2.2 ColumnFamily 的数量</h3>
+<p>On the number of column families<br>HBase currently does not do well with anything above two or three column families so keep the number of column families in your schema low. Currently, flushing and compactions are done on a per Region basis so if one column family is carrying the bulk of the data bringing on flushes, the adjacent families will also be flushed though the amount of data they carry is small. When many column families the flushing and compaction interaction can make for a bunch of needless i/o loading (To be addressed by changing flushing and compaction to work on a per column family basis). For more information on compactions, see compaction. (具体的细节见第2节)</p>
+<p>Try to make do with one column family if you can in your schemas. Only introduce a second and third column family in the case where data access is usually column scoped; i.e. you query one column family or the other but usually not both at the one time.</p>
+<p>Where multiple ColumnFamilies exist in a single table, be aware of the cardinality (i.e., number of rows). If ColumnFamilyA has 1 million rows and ColumnFamilyB has 1 billion rows, ColumnFamilyA’s data will likely be spread across many, many regions (and RegionServers). This makes mass scans for ColumnFamilyA less efficient.</p>
+<p>建议HBASE列族的数量设置的越少越好。由于HBASE的FLUSHING和压缩是基于REGION的当一个列族所存储的数据达到FLUSHING阀值时，该表的所有列族将同时进行FLASHING操作，这将带来不必要的I/O开销。同时还要考虑到同一个表中不同列族所存储的记录数量的差别，即列族的势。当列族数量差别过大将会使包含记录数量较少的列族的数据分散在多个Region之上，而Region可能是分布是不同的RegionServer上。这样当进行查询等操作系统的效率会受到一定影响。</p>
+<h2 id="4-3_Column_的设计">4.3 Column 的设计</h2>
+<h3 id="4-3-1_Column_的长度">4.3.1 Column 的长度</h3>
+<p>The column family and column qualifier names are repeated for each row. Therefore, keep the names as short as possible to reduce the amount of data that HBase stores and reads. For example, use f:q instead of mycolumnfamily:mycolumnqualifier.</p>
+<h3 id="4-3-2_Column_的数量">4.3.2 Column 的数量</h3>
+<p>Column mapping: one to many<br>You can map a single HBase entity (row key or a column) to multiple SQL columns. This kind of mapping is called one to many. HBase stores a lot of information for each value. If you stored each SQL column individually, the required storage space would be very large. For the best performance, put columns that are queried together into a single dense HBase column to help reduce the data that is fetched from HBase. A dense column is a single HBase column that maps to multiple SQL columns.</p>
+<p>For example, if table T1 has nine columns with 1.5 million rows. and you use a one-to-one mapping, this table requires 522 MB of storage. However, if table T1 uses a one-to-many mapping, the table requires only 276 MB of storage.</p>
+<h1 id="5-_读_HBase_的性能">5. 读 HBase 的性能</h1>
+<h2 id="5-1_HBase_Pool">5.1 HBase Pool</h2>
+<p>Use pool of workers to parallel requests. You may find useful HTablePool class for managing connections in workers.</p>
+<h2 id="5-2_批量读">5.2 批量读</h2>
+<p>通过调用 HTable.get(Get) 方法可以根据一个指定的 RowKey 获取一行记录，同样 HBase 提供了另一个方法：通过调用 HTable.get(List<get>) 方法可以根据一个指定的 RowKey 列表，批量获取多行记录，这样做的好处是批量执行，只需要一次网络I/O开销，这对于对数据实时性要求高而且网络传输RTT高的情景下可能带来明显的性能提升。</get></p>
+<h2 id="5-3_Scan">5.3 Scan</h2>
+<ol>
+<li>Scanner Caching<br>hbase.client.scanner.caching配置项可以设置HBase scanner一次从服务端抓取的数据条数，默认情况下一次一条。通过将其设置成一个合理的值，可以减少scan过程中next()的时间开销，代价是 scanner需要通过客户端的内存来维持这些被cache的行记录。</li>
+<li>Scan AttributeSelection<br>scan时指定需要的Column Family，可以减少网络传输数据量，否则默认scan操作会返回整行所有Column Family的数据。</li>
+<li>Close ResultScanner<br>通过scan取完数据后，记得要关闭ResultScanner，否则RegionServer可能会出现问题（对应的Server资源无法释放）。</li>
+</ol>
+<h2 id="5-4_PrefixFilter">5.4 PrefixFilter</h2>
+<h3 id="5-4-1_PefixFilter_Vs_Scan">5.4.1 PefixFilter Vs Scan</h3>
+<ul>
+<li>HBase filters - even row filters - are really slow, since in most cases these do a complete table scan, and then filter on those results. </li>
+<li>Row key range scans however, are indeed much faster - they do the equivalent of a filtered table scan. This is because the row keys are stored in sorted order (this is one of the basic guarantees of HBase, which is a BigTable-like solution), so the range scans on row keys are very fast.</li>
+</ul>
+<h3 id="5-4-2_Convert_PrefixFilter_to_Scan">5.4.2 Convert PrefixFilter to Scan</h3>
+<p>PrefixFilter: abc<br>Scan ‘mytable’, {STARTROW =&gt; ‘abc’, ENDROW =&gt; ‘abd’}</p>
+<h1 id="6-_如何解决事务">6. 如何解决事务</h1>
+<ol>
+<li>transactions over hbase<br>The way HBase works is that locks are held in the regionserver (not in the client) when the Puts are applied to make sure that rows are written in an atomic block but it does not provide snapshot isolation (you need to use something like omid if you want that).</li>
+</ol>
+<p>Since HBase does not guarantee any consistency between regions (and each region is hosted at exactly one RegionServer) all MVCC data structures only need to be kept in memory on every region server.</p>
+<p>I would probably not use HBase for a use case like this. but if you must you can lock the row, read, update if needed - read more about lock and some of its problems here ngdata.com/hbase-row-locks . Again, I’d try to rethink the scenario for instance, HBase support multiple version so you can update anyway and sort things later (e.g. in a coprocessor that runs after update)<br>RowLock and associated operations are deprecated in 0.94 and removed in 0.96.issues.apache.org/jira/browse/HBASE-7315 – Matt Ball</p>
+<ol>
+<li>hbase checkAndPut<br>hbase checkandput performance<br>When you use checkAndPut() you do one RPC-call per request. So, you can’t achieve performance more then 1 / rtt requests per second (rtt is Round Trip Time). If you have rtt 1ms between your client and region server, your theoretical maximum is 1000 rps. When using batch operations like put(List<put>) you need a lot less RPC-calls causing performance increase.</put></li>
+</ol>
+<h1 id="Reference">Reference</h1>
+<blockquote>
+<p><a href="http://blog.linezing.com/2012/03/hbase-performance-optimization/" target="_blank" rel="external">http://blog.linezing.com/2012/03/hbase-performance-optimization/</a><br><a href="https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html" target="_blank" rel="external">https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html</a><br><a href="http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html" target="_blank" rel="external">http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html</a><br><a href="http://blog.chedushi.com/archives/9720" target="_blank" rel="external">http://blog.chedushi.com/archives/9720</a><br><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="external">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a><br><a href="https://cloud.google.com/bigtable/docs/schema-design" target="_blank" rel="external">https://cloud.google.com/bigtable/docs/schema-design</a><br><a href="http://www.slideshare.net/alexbaranau/transactions-over-hbase" target="_blank" rel="external">http://www.slideshare.net/alexbaranau/transactions-over-hbase</a><br><a href="https://hbase.apache.org/acid-semantics.html" target="_blank" rel="external">https://hbase.apache.org/acid-semantics.html</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/分布式/">分布式</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/05/22/使用-HBase-总结/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/04/17/https详解/" title="https详解" itemprop="url">https详解</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-04-17T13:55:14.000Z" itemprop="datePublished"> Published Apr 17 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="什么是https">什么是https</h1>
+<p>也称作HTTP over TLS</p>
+<h1 id="什么是SSL/TLS">什么是SSL/TLS</h1>
+<p>1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。<br>1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。<br>1996年，SSL 3.0版问世，得到大规模应用。<br>1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TLS 1.0版。<br>2006年和2008年，TLS进行了两次升级，分别为TLS 1.1版和TLS 1.2版。最新的变动是2011年TLS 1.2的修订版。<br>TLS 1.0通常被标示为SSL 3.1，TLS 1.1为SSL 3.2，TLS 1.2为SSL 3.3。</p>
+<h1 id="为什么要有https">为什么要有https</h1>
+<p>在说HTTPS之前先说说什么是HTTP，HTTP就是我们平时浏览网页时候使用的一种协议。HTTP协议传输的数据都是未加密的，也就是明文的，因此使用HTTP协议传输隐私信息非常不安全。为了保证这些隐私数据能加密传输，于是网景公司设计了SSL（Secure Sockets Layer）协议用于对HTTP协议传输的数据进行加密，从而就诞生了HTTPS。</p>
+<h1 id="https保证安全的原理">https保证安全的原理</h1>
+<p>Client端和Server端如果用非对称加密的算法进行通信肯定是绝对安全的，因为私钥和密钥没有第三方知道。但是这样的问题是性能低下。但是如果用对称加密，很容易泄露密钥，安全性得不到保证。那么https是如何做的呢？<br>大概原理就是使用非对称加密来交换一个密钥来进行对称加密。这个过程被称为SSL/TSL的四次握手，具体过程如下：</p>
+<ol>
+<li>Client端向Server端的443端口发出请求，带上随机数client_random和支持的加密方式列表</li>
+<li>Server端返回随机数server_random ，选择的加密方式和服务器证书链</li>
+<li>Client端验证这个证书是否合法，如果非法则提示用户是否“继续接受这个不可信的网站”，如果合法则使用证书中的公钥加密premaster secret发送给服务端</li>
+<li>Server端使用私钥解密premaster secret，然后通过client_random，server_random 和premaster secret 生成master secret，用于对称加密后续通信内容。</li>
+<li>Sever端用master secret加密最终需要返回的网站内容</li>
+<li>Client端也用相同的方式生成这个master secret解密收到的消息</li>
+</ol>
+<p>master_secret = PRF(pre_master_secret, “master secret”, ClientHello.random + ServerHello.random)[0..47];</p>
+<p><strong>随机数为什么要三个？</strong><br>这是由于SSL/TLS设计，就假设服务器不相信所有的客户端都能够提供完全随机数，假如某个客户端提供的随机数不随机的话，就大大增加了“对话密钥”被破解的风险，所以由三组随机数组成最后的随机数，保证了随机数的随机性，以此来保证每次生成的“对话密钥”安全性。</p>
+<p><strong>那么问题来了</strong></p>
+<ol>
+<li>证书的安全性，Client端是如何验证证书合法性的，这个证书第三方无论如何都伪造不了吗？</li>
+<li>对称加密密钥的安全性，生成的master secret密钥第三方为什么拿不到？</li>
+</ol>
+<p>要解答这两个问题，首先得弄清楚什么是证书。</p>
+<h1 id="为什么证书是安全的？">为什么证书是安全的？</h1>
+<h2 id="什么是证书">什么是证书</h2>
+<p>数字证书就是互联网通讯中标志通讯各方身份信息的一串数字，提供了一种在Internet上验证通信实体身份的方式，数字证书不是数字身份证，而是身份认证机构盖在数字身份证上的一个章或印（或者说加在数字身份证上的一个签名）。它是由权威机构——<strong>CA机构，又称为证书授权（Certificate Authority）</strong>中心发行的，人们可以在网上用它来识别对方的身份。<br>数字证书的格式普遍采用的是X.509V3国际标准，一个标准的X.509数字证书包含以下一些内容：</p>
+<ul>
+<li>证书的版本信息；</li>
+<li>证书的序列号，每个证书都有一个唯一的证书序列号；</li>
+<li>证书所使用的签名算法；</li>
+<li>证书的发行机构名称，命名规则一般采用X.500格式；</li>
+<li>证书的有效期，通用的证书一般采用UTC时间格式，它的计时范围为1950-2049；</li>
+<li>证书所有人的名称，命名规则一般采用X.500格式；</li>
+<li>证书所有人的公开密钥；</li>
+<li>证书发行者对证书的签名。</li>
+</ul>
+<p>证书里的公钥的作用？<br>证书里的签名的作用？<br>数字证书的签发机构CA，在接收到申请者的资料后进行核对并确定信息的真实有效，然后就会制作一份符合X.509标准的文件。证书中的证书内容包含的持有者信息和公钥等都是由申请者提供的，而数字签名则是CA机构对证书内容进行hash加密后得到的，而这个数字签名就是我们验证证书是否是有可信CA签发的数据。<br><img src="/img/CA.png" alt=""></p>
+<h2 id="证书的产生">证书的产生</h2>
+<p><img src="/img/certification_production.png" alt=""></p>
+<h2 id="证书的类型">证书的类型</h2>
+<p>实际上，我们使用的证书分很多种类型，SSL证书只是其中的一种。证书的格式是由X.509标准定义。SSL证书负责传输公钥，是一种PKI（Public Key Infrastructure，公钥基础结构）证书。<br>我们常见的证书根据用途不同大致有以下几种：<br>1、SSL证书，用于加密HTTP协议，也就是HTTPS。<br>2、代码签名证书，用于签名二进制文件，比如Windows内核驱动，Firefox插件，Java代码签名等等。<br>3、客户端证书，用于加密邮件。<br>4、双因素证书，网银专业版使用的USB Key里面用的就是这种类型的证书。<br>这些证书都是由受认证的证书颁发机构——我们称之为CA（Certificate Authority）机构来颁发，针对企业与个人的不同，可申请的证书的类型也不同，价格也不同。CA机构颁发的证书都是受信任的证书，对于SSL证书来说，如果访问的网站与证书绑定的网站一致就可以通过浏览器的验证而不会提示错误。</p>
+<h2 id="证书的安全问题">证书的安全问题</h2>
+<p><strong>如果让证书安全，那么就需要让客户端拿到的证书是真正想要的证书，即不能让证书被冒充或者被篡改。</strong><br>那么如何保证这一点呢？</p>
+<ol>
+<li>如果证书自己有一个id</li>
+<li>证书的这个id无法被伪造</li>
+<li>客户端知道自己想要的证书id是多少</li>
+</ol>
+<p>如果做到了这三点就能保证证书的安全性了。上面说提到的id就是证书的数字签名。那么什么是数字签名？</p>
+<h3 id="数字签名（digital_signature）">数字签名（digital signature）</h3>
+<p>数字签名是证书的防伪标签，是将待签名内容通过哈希和私钥加密处理后生成的。目前使用最广泛的 SHA-RSA 数字签名的制作和验证过程如下：</p>
+<ol>
+<li>数字签名的签发。首先是使用哈希函数对待签名内容进行安全哈希，生成数字摘要，然后使用CA自己的私钥对数字摘要进行加密。</li>
+<li>数字签名的校验。使用CA的公钥解密签名，然后使用相同的签名函数对待签名证书内容进行签名并和服务端数字签名里的签名内容进行比较，如果相同就认为校验成功。</li>
+</ol>
+<p>签发：待签名内容 -&gt; 哈希 -&gt; 数字摘要 -&gt; CA私钥加密 -&gt; 数字签名<br>校验：</p>
+<ul>
+<li>数字签名 -&gt; CA公钥解密 -&gt; 数字摘要1</li>
+<li>待签名内容 -&gt; 哈希 -&gt; 数字摘要2</li>
+<li>比较「数字摘要1」和「数字摘要2」是否相等<br><img src="/img/CerValiate.png" alt=""></li>
+</ul>
+<p>这里有几点需要说明：</p>
+<ul>
+<li>数字签名签发和校验使用的密钥对是 CA 自己的公私密钥，跟证书申请者提交的公钥没有关系。</li>
+<li>数字签名的签发过程跟公钥加密的过程刚好相反，即是用私钥加密，公钥解密。</li>
+<li>现在大的 CA 都会有证书链，证书链的好处一是安全，保持根 CA 的私钥离线使用。第二个好处是方便部署和撤销，即如果证书出现问题，只需要撤销相应级别的证书，根证书依然安全。</li>
+<li>根 CA 证书都是自签名，即用自己的公钥和私钥完成了签名的制作和验证。而证书链上的证书签名都是使用上一级证书的密钥对完成签名和验证的。</li>
+</ul>
+<p><strong>那么问题又来了。</strong><br>CA的私钥和公钥是安全的吗？可以被冒充吗？</p>
+<h3 id="CA的安全性">CA的安全性</h3>
+<p>从根CA开始到直接给客户发放证书的各层次CA，都有其自身的密钥对。CA中心的密钥对一般由硬件加密服务器在机器内直接产生，并存储于加密硬件内，或以一定的加密形式存放于密钥数据库内。加密备份于IC卡或其他存储介质中，并以高等级的物理安全措施保护起来。密钥的销毁要以安全的密钥冲写标准，彻底清除原有的密钥痕迹。需要强调的是，根CA密钥的安全性至关重要，它的泄露意味着整个公钥信任体系的崩溃，所以CA的密钥保护必须按照最高安全级 的保护方式来进行设置和管理。</p>
+<p>CA的私钥是自己靠上述方法保管的，不对外公开。<br>CA的公钥是厂商跟浏览器和操作系统合作，把公钥默认装到浏览器或者操作系统环境里。比如firefox 就自己维护了一个可信任的 CA 列表，而chrome 和 IE 使用的是操作系统的 CA 列表。</p>
+<h2 id="证书验证失败的原因">证书验证失败的原因</h2>
+<p>1、SSL证书不是由受信任的CA机构颁发的(注意这种情况并不一定说明有SSL劫持发生)<br>2、证书过期<br>3、访问的网站域名与证书绑定的域名不一致</p>
+<p>至此，可以知道证书在一定程度上是非常安全的，客户端只要收到的证书是合法的，就能很大程度上保证整个会话是安全的。</p>
+<h1 id="客户端具体是如何验证SSL证书的">客户端具体是如何验证SSL证书的</h1>
+<p>为了抵御这种中间人攻击，SSL证书需要由可信的SSL证书颁发机构颁发，形成一个证书链（比如Gmail的证书链为：最底层为网域 mail.google.com，上一层为Thawte SGC CA证书颁发机构，最顶层为很有名的VeriSign证书颁发机构）。那么，浏览器除了需要验证域和有效期外，还要检查证书链中的上级证书公钥是否有效，上级的上级证书公钥是否有效，直至根证书公钥为止。这样就可以有效避免中间人攻击了，因为根证书公钥都是预装在操作系统中的，黑客如果不是暴力破解，无法得到根证书的私钥。如果黑客自己生成一个私钥，浏览器验证根证书公钥的时候发现无法通过操作系统中预装的公钥加密数据后使用这个私钥进行解密，从而判定这个公钥是无效的。这个方案也是现在https通讯通常的方案。</p>
+<p>那么，这个现在所有的浏览器正在使用的https通讯方案就无懈可击了吗？答案仍是否定的。我们可以看到，在后一个方案中，https的安全性需要在证书颁发机构公信力的强有力保障前提下才能发挥作用。如果证书颁发机构在没有验证黑客为mail.google.com的持游者的情况下，给黑客颁发了网域为mail.google.com的证书，那么黑客的中间人攻击又可以顺利实施然而，不验证域名持有者就颁发证书的情况在国外几乎不会发生，但是在国内就不一定了。针对破解目标，国内证书颁发机构WoSign（在此只是举例国内比较有名的证书颁发机构WoSign，并不代表WoSign今后一定会这么做）很有可能为了上级要求颁发了证书给非域名持有者的黑客，从而使得破解目标的Gmail密码被黑客截取。</p>
+<h1 id="涉及到的算法">涉及到的算法</h1>
+<p>非对称加密算法：RSA，DSA/DSS<br>对称加密算法：AES，RC4，3DES<br>HASH算法：MD5，SHA1，SHA256</p>
+<h1 id="总结">总结</h1>
+<p>整个过程是递进的，一步一步了解https安全的原理。</p>
+<ol>
+<li>https如何保证安全又高效？<br>https使用非对称加密算法来交换对称加密的密钥，最后使用对称加密算法来进行通信。</li>
+<li>如何保证非对称加密时的安全性？<br>服务端发送证书来传递非对称加密的公钥。保证了公钥和私钥的保密性。</li>
+<li>客户端怎么知道证书是不是真的？<br>客户端根据CA证书的公钥校验证书的数字签名来保证其合法性。</li>
+<li>客户端的CA证书不会被伪造或泄露吗？<br>CA证书是默认预装到浏览器和操作系统中的，所以CA证书的公钥是安全的。</li>
+</ol>
+<h1 id="Reference">Reference</h1>
+<blockquote>
+<p><a href="http://op.baidu.com/2015/04/https-s01a01/" target="_blank" rel="external">http://op.baidu.com/2015/04/https-s01a01/</a><br><a href="https://cipherstuff.wordpress.com/" target="_blank" rel="external">https://cipherstuff.wordpress.com/</a><br><a href="http://oncenote.com/2014/10/21/Security-1-HTTPS/" target="_blank" rel="external">http://oncenote.com/2014/10/21/Security-1-HTTPS/</a><br><a href="http://www.williamlong.info/archives/2058.html" target="_blank" rel="external">http://www.williamlong.info/archives/2058.html</a><br><a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="external">http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html</a></p>
+</blockquote>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/网络/">网络</a><a href="/tags/安全/">安全</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/04/17/https详解/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/03/27/LeetCode-Perfect-Squares/" title="LeetCode - Perfect Squares" itemprop="url">LeetCode - Perfect Squares</a>
   </h1>
   <p class="article-author">By
@@ -709,266 +1226,6 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/01/22/初学Spark/" title="初学Spark" itemprop="url">初学Spark</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-01-22T03:41:20.000Z" itemprop="datePublished"> Published Jan 22 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="避免使用_GroupByKey">避免使用 GroupByKey</h1>
-<p>当调用 groupByKey 时，所有的键值对(key-value pair) 都会被移动。在网络上传输这些数据非常没有必要。</p>
-<p>以下函数应该优先于 groupByKey :</p>
-<ul>
-<li><p>combineByKey<br>组合数据，但是组合之后的数据类型与输入时值的类型不一样。</p>
-</li>
-<li><p>foldByKey<br>合并每一个 key 的所有值，在级联函数和“零值”中使用。</p>
-</li>
-</ul>
-<h1 id="combineByKey">combineByKey</h1>
-<h2 id="combineByKey的定义">combineByKey的定义</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">combineByKey</span>[<span class="title">C</span>]<span class="params">(</span></span></div><div class="line">  createCombiner: V =&gt; C,</div><div class="line">  mergeValue: <span class="params">(C, V)</span> =&gt; C, </div><div class="line">  mergeCombiners: <span class="params">(C, C)</span> =&gt; C, </div><div class="line">  partitioner: Partitioner, </div><div class="line">  mapSideCombine: Boolean = true, </div><div class="line">  serializer: Serializer = null): RDD[(K, C)] = {</div><div class="line">  // do something</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>combineByKey函数主要接受了三个函数作为参数，分别为createCombiner、mergeValue、mergeCombiners。这三个函数足以说明它究竟做了什么。理解了这三个函数，就可以很好地理解combineByKey。</p>
-<h3 id="createCombiner">createCombiner</h3>
-<p>createCombiner：在遍历RDD的过程中，对于遍历到的(k,v)，如果是第一次遇到，则对这个(k,v)调用createCombiner函数，它的作用是将v转换为c(类型是C，即聚合对象的类型，c作为聚合对象的初始值)</p>
-<h3 id="mergeValue">mergeValue</h3>
-<p>mergeValue：在遍历RDD的过程中，对于遍历到的(k,v)，如果不是第一次(而是第i次, 1 &lt; i &lt;= n)遇到，那么将对这个(k,v)调用mergeValue函数，它的作用是将v累加到聚合对象（类型C）中，mergeValue的类型是(C,V)=&gt;C,参数中的C遍历到此处的聚合对象，然后对v进行聚合得到新的聚合对象值</p>
-<h3 id="mergeCombiners">mergeCombiners</h3>
-<p>mergeCombiners：<strong>因为combineByKey是在分布式环境下执行，RDD的每个分区单独进行combineByKey操作，最后需要对各个分区的结果进行最后的聚合</strong>。它的函数类型是(C,C)=&gt;C，每个参数是分区聚合得到的聚合对象。</p>
-<h3 id="combineByKey的流程">combineByKey的流程</h3>
-<ul>
-<li>假设一组具有相同 K 的 <k, v=""> records 正在一个个流向 combineByKey()，createCombiner 将第一个 record 的value 初始化为 c （比如，c = value），然后从第二个 record 开始，来一个 record 就使用 mergeValue(c,</k,></li>
-<li>record.value) 来更新 c，比如想要对这些 records 的所有 values 做 sum，那么使用 c = c + record.value。等到records 全部被 mergeValue()，得到结果 c。假设还有一组 records（key 与前面那组的 key 均相同）一个个到来，</li>
-<li>combineByKey() 使用前面的方法不断计算得到 c’。现在如果要求这两组 records 总的 combineByKey() 后的结果，那么可以使用 final c = mergeCombiners(c, c’) 来计算。</li>
-</ul>
-<h2 id="Example">Example</h2>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rdd1 = sc.makeRDD(<span class="type">Array</span>((<span class="string">"A"</span>,<span class="number">1</span>),(<span class="string">"A"</span>,<span class="number">2</span>),(<span class="string">"A"</span>,<span class="number">3</span>),(<span class="string">"B"</span>,<span class="number">1</span>),(<span class="string">"B"</span>,<span class="number">2</span>),(<span class="string">"C"</span>,<span class="number">3</span>)))</div><div class="line"></div><div class="line">// <span class="literal">result</span>: ((A,<span class="number">1_</span>$<span class="number">2_</span>@<span class="number">3</span>), (B,<span class="number">1_</span>$<span class="number">2_</span>), (C,<span class="number">3_</span>))</div><div class="line">rdd1.combineByKey(</div><div class="line">  (v : <span class="type">Int</span>) =&gt; v + <span class="string">"_"</span>,</div><div class="line">  (c : <span class="type">String</span>, v : <span class="type">Int</span>) =&gt; c + <span class="string">"@"</span> + v,</div><div class="line">  (c1 : <span class="type">String</span>, c2 : <span class="type">String</span>) =&gt; c1 + <span class="string">"$"</span> + c2 ).collect</div></pre></td></tr></table></figure>
-
-<h2 id="combineByKey应用举例">combineByKey应用举例</h2>
-<h3 id="求均值">求均值</h3>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">val rdd = sc.textFile(<span class="string">"气象数据"</span>)</div><div class="line">val rdd2 = rdd.map(x=&gt;x.split(<span class="string">" "</span>)).map(x<span class="function"> =&gt;</span> (x(<span class="number">0</span>).substring(<span class="string">"从年月日中提取年月"</span>),x(<span class="number">1</span>).toInt))</div><div class="line">val <span class="function"><span class="title">createCombiner</span> = <span class="params">(k: String, v: Int)</span>=&gt;</span> {</div><div class="line">  (v,<span class="number">1</span>)</div><div class="line">}</div><div class="line">val <span class="function"><span class="title">mergeValue</span> = <span class="params">(c:(Int, Int), v:Int)</span> =&gt;</span> {</div><div class="line">  (c._1 + v, c._2 + <span class="number">1</span>)</div><div class="line">}</div><div class="line"></div><div class="line">val <span class="function"><span class="title">mergeCombiners</span> = <span class="params">(c1:(Int,Int),c2:(Int,Int))</span>=&gt;</span>{</div><div class="line">  (c1._1 + c2._1, c1._2 + c2._2)</div><div class="line">}</div><div class="line"></div><div class="line">val vdd3 = vdd2.combineByKey(</div><div class="line">  createCombiner,</div><div class="line">  mergeValue,</div><div class="line">  mergeCombiners</div><div class="line">)</div><div class="line"></div><div class="line">rdd3.foreach(x=&gt;println(x._1 + <span class="string">": average tempreture is "</span> + x._2._1/x._2._2)</div></pre></td></tr></table></figure>
-
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/spark/">spark</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/01/22/初学Spark/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/01/04/Run-Age-of-Empires-II-in-Max-OS-10-11/" title="Run Age of Empires II in Max OS 10.11" itemprop="url">Run Age of Empires II in Max OS 10.11</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-01-04T12:52:39.000Z" itemprop="datePublished"> Published Jan 4 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Step1_Find_the_resource">Step1 Find the resource</h2>
-<p>search in Google， steam 上已经没有了。</p>
-<h2 id="Step2_Fix_the_Max_OS_10-11_bug">Step2 Fix the Max OS 10.11 bug</h2>
-<p>An error occured while starting the X11 server:<br>    Failed to activate core devices”<br>    Click Quit to quit X11. Click Report to see more details or send a report to Apple. </p>
-<p>在 <a href="https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/" target="_blank" rel="external">https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/</a> 找到解决方法。即:<br>open terminal: </p>
-<p><code>mkdir</code>/lib<br><code>cp -r /Applications/aoeHD.app/Contents/Frameworks/</code>* /lib </p>
-<p>此时再打开游戏，成功运行，听到了熟悉的声音。</p>
-<p>Reference<br><a href="https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/" target="_blank" rel="external">https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/skill/">skill</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/01/04/Run-Age-of-Empires-II-in-Max-OS-10-11/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2016/01/03/skills/" title="skills" itemprop="url">skills</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-01-03T04:28:17.000Z" itemprop="datePublished"> Published Jan 3 2016</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h3 id="将数据转成json格式：python_-m_json-tool">将数据转成json格式：python -m json.tool</h3>
-<pre><code>$ echo '{<span class="string">"json"</span>:<span class="string">"obj"</span>}' <span class="string">| python -m json.tool</span>
-{
-<span class="string">"json"</span>: <span class="string">"obj"</span>
-}
-</code></pre><h3 id="查看gzip数据">查看gzip数据</h3>
-<p>使用python的zlib库来解压</p>
-<pre><code>s='<span class="command">\x</span>1F<span class="command">\x</span>8B<span class="command">\x</span>08<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>005N<span class="command">\xCD</span><span class="command">\x</span>0A<span class="command">\xC</span>3 <span class="command">\x</span>18<span class="special">{</span><span class="command">\x</span>97<span class="command">\xEF</span>,<span class="command">\xE</span>5s<span class="command">\xF</span>3gz<span class="command">\xAB</span><span class="command">\xA</span>0/1z<span class="command">\x</span>18<span class="command">\xC</span>31<span class="command">\x</span>87m<span class="command">\xA</span>5<span class="command">\xEA</span><span class="command">\xA</span>1<span class="command">\x</span>94<span class="command">\xBE</span><span class="command">\xFB</span><span class="command">\xBE</span><span class="command">\xC</span>3vJHB<span class="command">\x</span>92<span class="command">\x</span>03z<span class="command">\x</span>8D<span class="command">\xDBXJ</span><span class="command">\x</span>05<span class="special">{</span>?<span class="command">\xA</span>0,`<span class="command">\xE</span>1<span class="command">\xB</span>9<span class="command">\xCEC</span><span class="command">\xEB</span><span class="command">\x</span>9F<span class="command">\xF</span>4<span class="command">\x</span>18<span class="command">\xDEk</span><span class="command">\x</span>8B<span class="command">\x</span>19<span class="command">\x</span>18<span class="command">\xD</span>4<span class="command">\x</span>99d<span class="command">\xC</span>9/<span class="command">\xCE</span><span class="command">\xF</span>9<span class="command">\x</span>10Ft<span class="command">\xE</span>1<span class="command">\xAA</span><span class="command">\x</span>9DFm<span class="command">\x</span>8C<span class="command">\x</span>92B)w<span class="command">\xF</span>3<span class="command">\x</span>02<span class="command">\xBD</span><span class="command">\xA</span>1<span class="command">\x</span>5C<span class="command">\xA</span>3<span class="command">\x</span>16.<span class="command">\x</span>84<span class="command">\xE</span>4<span class="command">\x</span>5CHD<span class="command">\x</span>94<span class="command">\x</span>82Ao`<span class="command">\x</span>97<span class="command">\x</span>9E3<span class="command">\x</span>83Df<span class="command">\xDBzdP</span><span class="command">\xD</span>2_<span class="special">{</span><span class="command">\x</span>11C<span class="command">\x</span>06<span class="command">\xB</span>9<span class="command">\x</span>13<span class="command">\x</span>9C<span class="command">\x</span>13<span class="command">\x</span>0D<span class="command">\xED</span><span class="command">\xF</span>5<span class="command">\xF</span>7e:<span class="command">\xBF</span><span class="command">\xAB</span> <span class="command">\xDB</span><span class="command">\x</span>10<span class="command">\x</span>9B<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00' 
-
-import zlib
-d=zlib.decompressobj(16+zlib.MAX_WBITS) 
-data=d.decompress(s)
-</code></pre><h3 id="统计服务器上的历史登录记录">统计服务器上的历史登录记录</h3>
-<pre><code><span class="keyword">last</span> -ad | awk <span class="string">'{print $1}'</span> | <span class="built_in">sort</span> | uniq -<span class="keyword">c</span> | <span class="built_in">sort</span> -<span class="keyword">t</span>$<span class="string">'\t'</span> -k1,<span class="number">1</span> -nr 
-</code></pre><h3 id="linux文件格式转换">linux文件格式转换</h3>
-<p>在linux下，不可避免的会用VIM打开一些windows下编辑过的文本文件。我们会发现文件的每行结尾都会有一个^M符号，这是因为DOS下的编辑器和Linux编辑器对文件行末的回车符处理不一致，<br>对于回车符的定义： </p>
-<ul>
-<li>windows：0D0A </li>
-<li>unix\linux: 0A </li>
-<li>MAC: 0D<br>去除这些符号的方法有： </li>
-<li>vim下 <code>:set fileformat=unix</code></li>
-<li>终端  <code>dos2unix filename</code></li>
-</ul>
-<h3 id="git图形化提交历史">git图形化提交历史</h3>
-<pre><code>git <span class="keyword">log</span> --pretty=<span class="keyword">format</span>:<span class="string">"<span class="variable">%h</span> <span class="variable">%an</span> <span class="variable">%s</span>"</span> --graph
-</code></pre><h3 id="echo_总结">echo 总结</h3>
-<ol>
-<li>echo默认是带换行符做结尾的</li>
-<li>echo -n 可以去掉换行符</li>
-<li>printf是没有换行符结尾的</li>
-<li>tr可以删掉一个字符，如 tr -d ‘\n’ </li>
-</ol>
-<h3 id="删除空行">删除空行</h3>
-<ol>
-<li>grep: grep -v ‘^$’ file</li>
-<li>sed: sed ‘/^$/d’  file 或 sed -n ‘/./p’ file</li>
-<li>awk: awk ‘/./ {print}’ file</li>
-</ol>
-<h3 id="shell读文件">shell读文件</h3>
-<p>读取 md5s 文件，对每行做处理。</p>
-<pre><code>cat md5s | <span class="keyword">while</span> <span class="built_in">read</span> line 
-<span class="keyword">do</span> 
-     md5=<span class="variable">$line</span> 
-     level2Path=`expr substr <span class="string">"<span class="variable">$md5</span>"</span> <span class="number">30</span> <span class="number">2</span>` <span class="comment">#50 </span>
-     level1Path=`expr substr <span class="string">"<span class="variable">$md5</span>"</span> <span class="number">32</span> <span class="number">1</span>` <span class="comment">#a </span>
-     storagePath=hdfs:///ljp/apk/path/<span class="variable">$level1Path</span>/<span class="variable">$level2Path</span>/<span class="variable">$md5</span> 
-     <span class="built_in">echo</span> <span class="variable">$storagePath</span>
-<span class="keyword">done</span> 
-</code></pre>
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/调试/">调试</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2016/01/03/skills/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/2/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/4/">Next<span></span></a>
@@ -990,43 +1247,43 @@ data=d.decompress(s)
 		
 			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
-			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>13</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		
+			<li><a href="/tags/机器学习实战/" title="机器学习实战">机器学习实战<sup>3</sup></a></li>
+		
 			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
 		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
-		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
 		
 			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
-			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
-		
 			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
 		
 			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
 		
-			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
 		
 			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
 		
 			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
-		
-			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
-		
-			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -1077,7 +1334,7 @@ data=d.decompress(s)
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2018 
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2019 
 		
 		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
 		

@@ -91,6 +91,370 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2019/03/04/机器学习实战-—-支持向量机/" title="机器学习实战 — 支持向量机" itemprop="url">机器学习实战 — 支持向量机</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2019-03-04T15:23:56.000Z" itemprop="datePublished"> Published Mar 4 2019</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="1-_要解决的问题">1. 要解决的问题</h1>
+<p>与「机器学习实战 — 决策树」的问题一样</p>
+<h1 id="2-_前情回顾">2. 前情回顾</h1>
+<p>在上一次中，随机森林的效果最好，最终效果如下：<br><img src="/img/RF_finally_auc.jpg" alt="RF_finally_auc.jpg"></p>
+<h1 id="3-_特征工程">3. 特征工程</h1>
+<p>特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：</p>
+<ol>
+<li>特征选取</li>
+<li>删除无用特征</li>
+<li>空值处理</li>
+<li>处理重要特征</li>
+<li>特征标签化</li>
+<li><strong>特征归一化</strong></li>
+</ol>
+<h2 id="3-1_特征归一化">3.1 特征归一化</h2>
+<p>使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。因为特征基本上都是符合正态分布的，而且 StandardScaler 对数据变动时引入新的极值点更友好。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 使用 z-score 标准化特征</span></div><div class="line">ss = preprocessing.StandardScaler()</div><div class="line">X = ss.fit_transform(X)</div></pre></td></tr></table></figure>
+
+<p>特征归一化的好处有以下两点：</p>
+<ol>
+<li>模型训练速度更快<br>能够使参数优化时能以较快的速度收敛。<br>归一化前后的 SVM(linear 核) 的耗时对比，数据集 (2783, 54)，即 2783 条数据，54 个特征。归一化前后的耗时分别为：1083s，0.44s，可见归一化对计算速度的提升非常大。</li>
+<li>模型的准确率提升<br>将特征缩放到同一尺度的量级，能够使搜索的跳跃更加平滑，避免反复震荡的情况，提高准确率。可以参考下图形象化的解释：<br><img src="/img/features_normalization_gradient_descent.jpg" alt="features_normalization_gradient_descent.jpg"></li>
+</ol>
+<p>对于不同数量的训练集，训练 SVM，LR，DT，RF 四个模型。随着数据集的数量增加，特征归一化后的模型，其准确率提升如下图所示：<br><img src="/img/features_normalization_analysis.jpg" alt="features_normalization_analysis.jpg"></p>
+<p>通过这个图，也会发现特征归一化也不是能够提升所有模型的准确率，对于 DT 和 RF 就没有效果，这是因为决策树的分支只是计算信息熵，而不考虑整体特征的分布情况。</p>
+<h2 id="3-2_最终数据集">3.2 最终数据集</h2>
+<p>经过一系列处理后可用的数据集有 30w，但由于 SVM 运行地太慢了，从中选取 2w 数据来作为本次作业的数据集。</p>
+<h1 id="4-_SVM">4. SVM</h1>
+<h2 id="4-1_核函数介绍">4.1 核函数介绍</h2>
+<p>常见的核函数有：</p>
+<ol>
+<li>linear：主要用于线性可分的情形。参数少，速度快，对于一般数据，分类效果已经很理想了。</li>
+<li>rbf：将样本映射到更高维的空间，目前应用最广的一个，对大小样本都有比较好的性能，而且参数较少。linear 是 rbf 的一个特例。</li>
+<li>poly：多项式核函数，将低维的输入空间映射到高纬的特征空间，参数多，当多项式的阶数比较高时，计算复杂度会非常大。</li>
+<li>sigmod：支持向量机实现的就是一种多层神经网络。</li>
+</ol>
+<p>Andrew Ng 的建议：</p>
+<ol>
+<li>如果Feature的数量很大，跟样本数量差不多，这时候选用LR或者是Linear Kernel的SVM</li>
+<li>如果Feature的数量比较小，样本数量一般，不算大也不算小，选用SVM+Gaussian Kernel</li>
+<li>如果Feature的数量比较小，而样本数量很多，需要手工添加一些feature变成第一种情况</li>
+</ol>
+<p>本次作业的数据集特征少，数据大。结合上述建议，再加上取了少部分(1k~5k)的数据进行了初步对比，决定重点调优 rbf 的参数。</p>
+<h2 id="4-2_SVM_RBF_参数搜索">4.2 SVM RBF 参数搜索</h2>
+<p>训练集数据量： 2w。搜索最优参数，用时 12.3 小时，将 搜索过程的数据记录 绘制成下图所示，纵轴代表搜索得分，横轴代表 {C, gamma} 两个参数的取值。</p>
+<p><img src="/img/SVM_GridSearch_result.jpg" alt="SVM_GridSearch_result.jpg"></p>
+<p>C = 10, gamma = 0.1 时的效果最好。如上图中红圈所示，对于 C = 0.1, 100, 1000 时，都是gamma = 0.1 这个位置时效果最好。</p>
+<h2 id="4-3_常用核函数">4.3 常用核函数</h2>
+<p>在本次作业的数据集中，linear 核函数的运算速度相当慢，所以对于常用核函数，仅对比了 rbf，poly 和 sigmoid 三个核函数。针对 2w 条数据，运行结果如下：</p>
+<p><img src="/img/SVM_normal_model_auc.jpg" alt="SVM_normal_model_auc.jpg"></p>
+<p>其中，rbf 效果最好，AUC 有 0.82，但相比起之前 AUC 0.9 的 RF 来还是不理想。</p>
+<h2 id="4-4_自定义核函数">4.4 自定义核函数</h2>
+<p>由于常用核函数的效果不够理想，所以尝试使用自定义的核函数，参考前人总结出的各种核函数，放入模型中进行尝试。核函数的公式见原代码，任取两个核函数的说明如下：</p>
+<p><strong>Rational quadratic kernel</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Rational quadratic kernel, </div><div class="line">    K(x, y) = 1 - ||x-y||^2/(||x-y||^2+c)</div><div class="line">where:</div><div class="line">    c &gt; 0</div><div class="line">"""</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">rational_quadratic</span><span class="params">(data_1, data_2)</span>:</span></div><div class="line">    _c = <span class="number">1</span></div><div class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</div><div class="line">    <span class="keyword">return</span> <span class="number">1.</span> - (dists_sq / (dists_sq + _c))</div></pre></td></tr></table></figure>
+
+<p><strong>Inverse multiquadratic kernel</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Inverse multiquadratic kernel, </div><div class="line">    K(x, y) = 1 / sqrt(||x-y||^2 + c^2)</div><div class="line">where:</div><div class="line">    c &gt; 0</div><div class="line">as defined in:</div><div class="line">"Interpolation of scattered data: Distance matrices and conditionally positive definite functions"</div><div class="line">Charles Micchelli</div><div class="line">Constructive Approximation</div><div class="line">"""</div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse_multiquadratic</span><span class="params">(data_1, data_2)</span>:</span></div><div class="line">    _c = <span class="number">1</span> ** <span class="number">2</span></div><div class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</div><div class="line">    <span class="keyword">return</span> <span class="number">1.</span> / np.sqrt(dists_sq + _c)</div></pre></td></tr></table></figure>
+
+<p>仍然是对于这 2w 条数据，将所有核函数放入 SVM 中训练，最终每个核函数的准确率和耗时对比表格如下：</p>
+<p><img src="/img/SVM_model_compare.jpg" alt="SVM_model_compare.jpg"></p>
+<p>可以发现 rbf, inverse_multiquadratic 和 cauchy 这三个核函数的效果较好，其中 rbf 训练速度最快，inverse_multiquadratic 准确率最高。</p>
+<h1 id="5-_总结">5. 总结</h1>
+<h2 id="5-1_SVM_准确率的思考">5.1 SVM 准确率的思考</h2>
+<p>最终，使用 inverse_multiquadratic 核函数可以将 SVM 模型的 AUC Score 最高调至 0.822，相比于第二次作业中 Random Forest 模型的 AUC Score 结果 0.902 还有差距。可能是由于核函数选取的仍然不够合适，在映射后的空间中数据不是那么线性可分，降低了模型的泛化能力，导致准确率不如 RF。而对于核函数的选取，需要更多地理解特征，并列举出所有可能的核函数，再进行对比选择，在选取核函数这一点上，没有很好的捷径可走。</p>
+<h2 id="5-2_提升_SVM_训练速度的心得">5.2 提升 SVM 训练速度的心得</h2>
+<ol>
+<li>特征标签化和归一化</li>
+<li>SVC 的 cache_size 设置到 7000 (M) </li>
+<li>核函数是 SVM 的关键，先用少部分数据来选核函数，再用全量数据训练</li>
+<li>SVM 的 C 参数不要设置的太大</li>
+</ol>
+<h1 id="参考文档">参考文档</h1>
+<p><a href="https://scikit-learn.org/stable/modules/svm.html" target="_blank" rel="external">1.4. Support Vector Machines — scikit-learn 0.20.1 documentation</a><br><a href="https://scikit-learn.org/stable/auto_examples/svm/plot_rbf_parameters.html#sphx-glr-auto-examples-svm-plot-rbf-parameters-py" target="_blank" rel="external">RBF SVM parameters — scikit-learn 0.20.1 documentation</a><br><a href="https://www.jianshu.com/p/95e5faa3f709" target="_blank" rel="external">逻辑斯蒂回归VS决策树VS随机森林 - 简书</a><br><a href="https://www.csie.ntu.edu.tw/~r95162/guide.pdf" target="_blank" rel="external">https://www.csie.ntu.edu.tw/~r95162/guide.pdf</a><br><a href="https://github.com/gmum/pykernels" target="_blank" rel="external">https://github.com/gmum/pykernels</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/机器学习实战/">机器学习实战</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2019/03/04/机器学习实战-—-支持向量机/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/03/04/机器学习实战-—-决策树/" title="机器学习实战 — 决策树" itemprop="url">机器学习实战 — 决策树</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2019-03-04T15:03:41.000Z" itemprop="datePublished"> Published Mar 4 2019</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="1-_要解决的问题">1. 要解决的问题</h1>
+<p>一句话概述：<br>预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。</p>
+<p>目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。</p>
+<h1 id="2-_整体思路">2. 整体思路</h1>
+<p>获取某一段时间的相关埋点事件、用户业务数据、用户画像等数据，将数据合并、清洗、整理为可用的数据集，然后跑决策树，随机森林和 Adaboost 三个模型。<br>要获取的数据是：</p>
+<ul>
+<li>用户被展示到该模块的埋点事件</li>
+<li>用户点击该模块的埋点事件</li>
+<li>用户使用过 XLJH 的统计数据</li>
+<li>用户画像</li>
+<li>用户的业务画像</li>
+</ul>
+<h1 id="3-_特征选取">3. 特征选取</h1>
+<h2 id="3-1_特征举例">3.1 特征举例</h2>
+<p>特征的总数非常多，总共有 280 个，抽取一些特征描述如下：</p>
+<ul>
+<li>年龄</li>
+<li>性别</li>
+<li>身高</li>
+<li>体重</li>
+<li>业务特征 1</li>
+<li>业务特征 2</li>
+<li>业务特征 3</li>
+<li>… … </li>
+<li>业务特征 n-1</li>
+<li>业务特征 n</li>
+<li>进入首页时距离上一次使用模块的时间</li>
+<li>设备机型</li>
+</ul>
+<h2 id="3-2_获取数据">3.2 获取数据</h2>
+<p>通过在 hive 里跑 sql(具体的 sql 语句略) 获取到的数据量为：54w。（单位为数据行数，下同）</p>
+<h2 id="3-3_特征工程">3.3 特征工程</h2>
+<h3 id="3-3-1_删除无用特征">3.3.1 删除无用特征</h3>
+<ol>
+<li>无用特征的删除：例如 userId 等。这些特征明显与结果无关。</li>
+<li>删除由预测结果导致的特征：例如使用过该模块的时间。这些特征是在预测值为 True 时才会有值，而且这特征的赋值在要预测的事件发生之后。</li>
+</ol>
+<h3 id="3-3-2_特征的空值处理">3.3.2 特征的空值处理</h3>
+<ol>
+<li>删除特征为空的数据，例如年龄，性别等必须会有的特征。</li>
+<li>int 类型的特征将空值填充为 0，例如某业务的 累计分钟数，某实体数量，粉丝数量，过去7天的XX业务使用统计等</li>
+<li>string 类型的特征将空值填充为 0，例如 citycode，tags 等。</li>
+</ol>
+<h3 id="3-3-3_处理重要特征">3.3.3 处理重要特征</h3>
+<p>跑完 Random Forest 模型，可以输出 Feature importances 列表， Top 10 的图略。</p>
+<p>其中需要特别处理的特征是 c.bmi 和 c.age。<br>分析数据后发现年龄为空值的情况非常少，所以把 c.age 为空的数据删掉。<br>c.bmi 需要用户填入身高和体重，这部分数据缺失一些，所以填为 c.bmi 这一列的平均值，数据集中的 dataset[c.bmi].mean = 23.3174390247965，符合常识。</p>
+<h3 id="3-3-4_特征标签化">3.3.4 特征标签化</h3>
+<p>数据标准化的处理方式如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</div><div class="line">le = preprocessing.LabelEncoder()</div><div class="line">dataset = dataset.apply(le.fit_transform)</div></pre></td></tr></table></figure>
+
+<h3 id="3-3-5_可用数据量">3.3.5 可用数据量</h3>
+<p>按如上方式处理完后，最终可用的数据量为：30w</p>
+<h1 id="4-_模型调优">4. 模型调优</h1>
+<h2 id="4-1_Decision_Tree_调优">4.1 Decision Tree 调优</h2>
+<h3 id="4-1-1_树的深度调优">4.1.1 树的深度调优</h3>
+<p>使用的特征数量为 275 个，使用的训练集数量为 54801。</p>
+<p>不同树深度对应的模型评估如下：</p>
+<p><img src="/img/tree_depth_3_to_5.jpg" alt="tree_depth_3_to_5.jpg"></p>
+<p><img src="/img/tree_depth_10_to_50.jpg" alt="tree_depth_10_to_50.jpg"></p>
+<p>可以发现树的深度越高，召回率越高，准确率却越低。总体评价是树的深度为 5 最好。</p>
+<h3 id="4-1-2_其他参数调优">4.1.2 其他参数调优</h3>
+<p>max_features=’sqrt’ 加了这个反而变差了很多。<br>min_samples_split=5, min_samples_leaf=5，加了这个反而变差了一些。</p>
+<h3 id="4-1-3_DT_输出">4.1.3 DT 输出</h3>
+<p>深度为 5 的 DT 截取部分放大后的图如下：<br><img src="/img/tree_depth_5_img.jpg" alt="tree_depth_5_img.jpg"></p>
+<h2 id="4-2_Random_Forest_调优">4.2 Random Forest 调优</h2>
+<p>n_estimators：100, 300, 500 都试过，差别不大。弱学习器的最大迭代次数太小会不准确，太大模型训练地就很慢。<br>oob_score: True，即采用袋外样本来评估模型的好坏，提高模型拟合后的泛化能力。<br>基本上，RF 不怎么需要调参。</p>
+<p>比较有价值的是能产生特征的重要性，Top 30 Feature importances 的图片略。<br>Feature importances Top 10 的可视化略。</p>
+<p>使用 GridSearchCV 搜索最优参数，参数搜索结果如下：<br><img src="/img/GridSearchCV_result.jpg" alt="GridSearchCV_result.jpg"></p>
+<p>但是使用参数后，RF 的 AUC 降到了 0.82，应该是 max_features 和 min_samples_leaf 这两个参数调的不对。</p>
+<h2 id="4-3_Adaboost_调优">4.3 Adaboost 调优</h2>
+<p>AdaBoostClassifier 的 base_estimator 选择已经之前训练好的 DT，效果更好，如下：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">adb_clf = AdaBoostClassifier(n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</div><div class="line">AUC Score (Train): <span class="number">0.629162</span></div><div class="line">adb_clf_2 = AdaBoostClassifier(clf, n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</div><div class="line">AUC Score (Train): <span class="number">0.659129</span></div></pre></td></tr></table></figure>
+
+<p>learning_rate 设置为 0.02 能兼顾速度和效果。</p>
+<h1 id="5-_踩过的坑">5. 踩过的坑</h1>
+<h2 id="5-1_信息熵">5.1 信息熵</h2>
+<p>基尼指数和信息熵的几乎无差别，不怎么影响结果。</p>
+<h2 id="5-2_PCA_降维">5.2 PCA 降维</h2>
+<p>PCA 降维，使用 mle 和 5 个特征，都不好使，准确度反而更低，AUC 得分降至 0.51。</p>
+<h2 id="5-3_用了未来特征">5.3 用了未来特征</h2>
+<p>决策树 AUC: 0.52 -&gt; 0.77<br>随机森林 AUC: 0.82-&gt;0.93</p>
+<p>随机森林的模型评价如下：<br><img src="/img/RF_auc.jpg" alt="RF_auc.jpg"></p>
+<p>会发现准确度太高了，仔细分析后，发现用了一个「创建体测时间」的特征，而这个特征是在用户点击了 「智能计划推荐模块」后会更新值的，所以相当于用了事件发生后的特征来预测事件发生的概率，这样肯定会导致模型的准确率很高。后来去掉了这个特征。</p>
+<h1 id="6-_模型对比">6. 模型对比</h1>
+<p>数据集：30w，其中正样本的比例为 22%。</p>
+<p><img src="/img/dt_model_compare.jpg" alt="dt_model_compare.jpg"></p>
+<p>对比发现，DT 和 Adaboost 的效果都不好，AUC Score 都在 0.65 左右。RF 的效果最好，AUC Score 能到 0.90。<br>可能是因为数据集符合 low bias, high variance 的规律，所以 RF 要比 Adaboost 好。</p>
+<p>RF 的准确率和召回率都还不错，感觉可以后续上线用于 App 首页了。</p>
+<h1 id="7-_总结">7. 总结</h1>
+<p>整个过程可以抽象为：<br>获取数据 -&gt; 调整模型参数 -&gt; 引入更多特征 -&gt; 调整模型参数 -&gt; PCA -&gt; 减少特征 -&gt; 处理重要特征 -&gt; gridSearchCV -&gt; 调整模型参数</p>
+<p>一些总结：</p>
+<ol>
+<li>特征工程很重要，特征处理好后 AUC 有明显的提升</li>
+<li>调参也有用，但相比起来，好的特征更有用</li>
+<li>基尼系数和熵的区别不大</li>
+<li>树的层数越多，准确率越低，召回越高</li>
+<li>AdaBoostClassifier base_estimators 用训练好的决策树来做，效果更好 </li>
+<li>gridSearchCV 搜索最有用的参数太慢了，而且最终效果还不好</li>
+<li>小心引入未来特征！</li>
+</ol>
+<h1 id="参考文档">参考文档</h1>
+<p><a href="https://blog.csdn.net/qq_29003925/article/details/75222560" target="_blank" rel="external">决策树分类器在Scikit-learn的使用小结 - qq_29003925的博客 - CSDN博客</a><br><a href="https://blog.csdn.net/FontThrone/article/details/78824945" target="_blank" rel="external">sklearn中的回归决策树 - FontTian的专栏 - CSDN博客</a><br><a href="http://sklearn.apachecn.org/cn/latest/modules/tree.html" target="_blank" rel="external">1.10. 决策树 — scikit-learn 0.19.0 中文文档 - ApacheCN</a><br><a href="https://blog.csdn.net/sinat_29957455/article/details/78997244" target="_blank" rel="external">pandas的汇总和计算描述统计 - 修炼之路 - CSDN博客</a><br><a href="https://www.jianshu.com/p/8ba8744b4c48" target="_blank" rel="external">数据分析-pandas数据处理清洗常用总结 - 简书</a><br><a href="https://www.zhihu.com/question/29316149/answer/252391239" target="_blank" rel="external">https://www.zhihu.com/question/29316149/answer/252391239</a><br><a href="https://blog.csdn.net/m0_37324740/article/details/81431430" target="_blank" rel="external">集成学习概述（Bagging，RF，GBDT，Adaboost） - U R MINE - CSDN博客</a><br><a href="https://blog.csdn.net/u010089444/article/details/70053104" target="_blank" rel="external">数据预处理与特征选择 - Joe的博客 - CSDN博客</a><br><a href="http://www.cnblogs.com/robert-dlut/p/5276927.html" target="_blank" rel="external">谈谈评价指标中的宏平均和微平均 - robert_ai - 博客园</a><br><a href="https://blog.csdn.net/sinat_26917383/article/details/75199996" target="_blank" rel="external">https://blog.csdn.net/sinat_26917383/article/details/75199996</a><br><a href="https://blog.csdn.net/akon_wang_hkbu/article/details/77621631" target="_blank" rel="external">DecisionTreeClassifier和DecisionTreeClassifier 重要参数调参注意点 - akon_wang_hkbu的博客 - CSDN博客</a><br><a href="https://www.cnblogs.com/songxingzhu/p/6001373.html" target="_blank" rel="external">机器学习-分类器-Adaboost原理 - 宋兴柱 - 博客园</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/机器学习实战/">机器学习实战</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2019/03/04/机器学习实战-—-决策树/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/03/04/机器学习实践-—-朴素贝叶斯/" title="机器学习实战 — 朴素贝叶斯" itemprop="url">机器学习实战 — 朴素贝叶斯</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2019-03-04T14:26:47.000Z" itemprop="datePublished"> Published Mar 4 2019</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="1-_作业">1. 作业</h1>
+<p>根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。<br>讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。</p>
+<h1 id="2-_步骤">2. 步骤</h1>
+<ol>
+<li>加载数据集</li>
+<li>提取  TF-IDF 特征</li>
+<li>生成文档的 TF-IDF 矩阵</li>
+<li>训练多项式朴素贝叶斯模型</li>
+<li>评价模型</li>
+</ol>
+<h2 id="3-_实现">3. 实现</h2>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div><div class="line">62</div><div class="line">63</div><div class="line">64</div><div class="line">65</div><div class="line">66</div><div class="line">67</div><div class="line">68</div><div class="line">69</div><div class="line">70</div><div class="line">71</div><div class="line">72</div><div class="line">73</div><div class="line">74</div><div class="line">75</div><div class="line">76</div><div class="line">77</div><div class="line">78</div><div class="line">79</div><div class="line">80</div><div class="line">81</div><div class="line">82</div><div class="line">83</div><div class="line">84</div><div class="line">85</div><div class="line">86</div><div class="line">87</div><div class="line">88</div><div class="line">89</div><div class="line">90</div><div class="line">91</div><div class="line">92</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups</div><div class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</div><div class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</div><div class="line"></div><div class="line"><span class="comment"># sklearn twenty_newsgroups document</span></div><div class="line"><span class="comment"># http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html</span></div><div class="line">fetch_20newsgroups(data_home=<span class="string">'/Users/ljp/Codes/ivy_plan/naive_bayes/20_newsgroups'</span>, <span class="comment"># 文件下载的路径</span></div><div class="line">                   subset=<span class="string">'train'</span>, <span class="comment"># 加载那一部分数据集 train/test</span></div><div class="line">                   categories=<span class="keyword">None</span>, <span class="comment"># 选取哪一类数据集[类别列表]，默认20类</span></div><div class="line">                   shuffle=<span class="keyword">True</span>,  <span class="comment"># 将数据集随机排序</span></div><div class="line">                   random_state=<span class="number">42</span>, <span class="comment"># 随机数生成器</span></div><div class="line">                   remove=(), <span class="comment"># ('headers','footers','quotes') 去除部分文本</span></div><div class="line">                   download_if_missing=<span class="keyword">True</span> <span class="comment"># 如果没有下载过，重新下载</span></div><div class="line">                  )</div><div class="line"></div><div class="line"><span class="comment"># 加载数据集</span></div><div class="line">newsgroups_train = fetch_20newsgroups(subset=<span class="string">'train'</span>)</div><div class="line"></div><div class="line"><span class="comment"># Bunch</span></div><div class="line"><span class="comment"># load_*和 fetch_* 函数返回的数据类型是 datasets.base.Bunch，本质上是一个 dict，它的键值对可用通过对象的属性方式访问。</span></div><div class="line"><span class="comment"># 主要包含以下属性：</span></div><div class="line"><span class="comment"># data：特征数据数组，type 是 list，是 n_samples * n_features 的二维 numpy.ndarray 数组</span></div><div class="line"><span class="comment"># filenames：文件数组，是文件路径，是 n_samples 的一维 numpy.ndarray 数组</span></div><div class="line"><span class="comment"># target：标签数组，是类别的整数索引，是 n_samples 的一维 numpy.ndarray 数组，与 filenames 一一对应</span></div><div class="line"><span class="comment"># DESCR：数据描述</span></div><div class="line"><span class="comment"># feature_names：特征名</span></div><div class="line"><span class="comment"># target_names：标签名</span></div><div class="line"><span class="comment"># print(type(newsgroups_train)) # &lt;class 'sklearn.utils.Bunch'&gt;</span></div><div class="line"><span class="comment"># print(list(newsgroups_train)) # ['data', 'filenames', 'target_names', 'target', 'DESCR', 'description']</span></div><div class="line"></div><div class="line"><span class="comment"># 提取tfidf特征</span></div><div class="line">vectorizer = TfidfVectorizer() <span class="comment"># vectorizer type is &lt;class 'sklearn.feature_extraction.text.TfidfVectorizer'&gt;</span></div><div class="line"></div><div class="line"><span class="comment"># vectors type is &lt;class 'scipy.sparse.csr.csr_matrix'&gt;</span></div><div class="line"><span class="comment"># 数据格式为：(文档序号, 单词序号), tf-idf值</span></div><div class="line"><span class="comment"># 文档序号是该文档在 newsgroups_train.filenames 里的索引(位置)</span></div><div class="line"><span class="comment"># 单词序号是该单词在所有单词所构成的一维向量(也称为词袋，Bag of words)里的索引(位置)</span></div><div class="line"><span class="comment"># 例如：</span></div><div class="line"><span class="comment">#  (0, 11071)	0.02879840104494835</span></div><div class="line"><span class="comment">#  (0, 19516)	0.15199951710440102</span></div><div class="line"><span class="comment">#  (0, 24556)	0.36446543134314724</span></div><div class="line">vectors = vectorizer.fit_transform(newsgroups_train.data)</div><div class="line"></div><div class="line"><span class="comment"># MultinomialNB实现文本分类</span></div><div class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score,f1_score</div><div class="line"></div><div class="line"><span class="comment"># 训练</span></div><div class="line">clf=MultinomialNB(alpha=<span class="number">0.1</span>)</div><div class="line">clf.fit(vectors,newsgroups_train.target)</div><div class="line"></div><div class="line"><span class="comment"># 加载测试集</span></div><div class="line">newsgroups_test=fetch_20newsgroups(subset=<span class="string">'test'</span>)</div><div class="line"></div><div class="line"><span class="comment"># 提取测试集tfidf特征</span></div><div class="line">vectors_test=vectorizer.transform(newsgroups_test.data)</div><div class="line"></div><div class="line"><span class="comment"># 模型评价</span></div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</div><div class="line">pred=clf.predict(vectors_test)</div><div class="line">print(<span class="string">'accuracy_score: '</span> + str(accuracy_score(newsgroups_test.target,pred)))</div><div class="line"></div><div class="line">print(<span class="string">"classification report on test set for classifier:"</span>)</div><div class="line">print(clf)</div><div class="line">X_test = vectorizer.transform((d <span class="keyword">for</span> d <span class="keyword">in</span> newsgroups_test.data))</div><div class="line">pred = clf.predict(X_test)</div><div class="line">y_test = newsgroups_test.target</div><div class="line">print(classification_report(y_test, pred, target_names=newsgroups_test.target_names))</div><div class="line"></div><div class="line"><span class="comment">## 生成混淆矩阵，观察每种类别被错误分类的情况</span></div><div class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</div><div class="line"></div><div class="line">cm = confusion_matrix(y_test, pred)</div><div class="line">print(<span class="string">"confusion matrix:"</span>)</div><div class="line">print(cm)</div><div class="line"><span class="comment"># Show confusion matrix</span></div><div class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</div><div class="line"></div><div class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">8</span>), dpi=<span class="number">144</span>)</div><div class="line">plt.title(<span class="string">'Confusion matrix of the classifier'</span>)</div><div class="line">ax = plt.gca()</div><div class="line">ax.spines[<span class="string">'right'</span>].set_color(<span class="string">'none'</span>)</div><div class="line">ax.spines[<span class="string">'top'</span>].set_color(<span class="string">'none'</span>)</div><div class="line">ax.spines[<span class="string">'bottom'</span>].set_color(<span class="string">'none'</span>)</div><div class="line">ax.spines[<span class="string">'left'</span>].set_color(<span class="string">'none'</span>)</div><div class="line">ax.xaxis.set_ticks_position(<span class="string">'none'</span>)</div><div class="line">ax.yaxis.set_ticks_position(<span class="string">'none'</span>)</div><div class="line">ax.set_xticklabels([])</div><div class="line">ax.set_yticklabels([])</div><div class="line">plt.matshow(cm, fignum=<span class="number">1</span>, cmap=<span class="string">'gray'</span>)</div><div class="line">plt.colorbar()</div><div class="line">plt.show()</div></pre></td></tr></table></figure>
+
+<p>输出如下：<br><img src="/img/naive_bayes_auc.jpg" alt="naive_bayes_auc.jpg"></p>
+<p><img src="/img/naive_bayes_cross_matrix.png" alt="naive_bayes_cross_matrix.png"></p>
+<h1 id="参考文档">参考文档</h1>
+<p><a href="http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html" target="_blank" rel="external">5.6.2. 20个新闻组文本数据集 — scikit-learn 0.19.0 中文文档 - ApacheCN</a><br><a href="https://www.jianshu.com/p/364887de2039" target="_blank" rel="external">利用朴素贝叶斯算法进行文档分类 - 简书</a><br><a href="https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf" target="_blank" rel="external">https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/机器学习实战/">机器学习实战</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2019/03/04/机器学习实践-—-朴素贝叶斯/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2018/11/11/线性回归正则化/" title="线性回归正则化" itemprop="url">线性回归正则化</a>
   </h1>
   <p class="article-author">By
@@ -797,331 +1161,6 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2018/01/31/LeetCode-Trapping-Rain-Water/" title="LeetCode-Trapping-Rain-Water" itemprop="url">LeetCode-Trapping-Rain-Water</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2018-01-31T00:10:48.000Z" itemprop="datePublished"> Published Jan 31 2018</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="Problem_Description">Problem Description</h2>
-<p>Given n non-negative integers representing an elevation map where the width of each bar is 1, compute how much water it is able to trap after raining.</p>
-<p>For example,<br>Given [0,1,0,2,1,0,1,3,2,1,2,1], return 6.</p>
-<p><strong> problem link: </strong><br><a href="https://leetcode.com/problems/trapping-rain-water" target="_blank" rel="external">https://leetcode.com/problems/trapping-rain-water</a></p>
-<p><img src="/img/LeetCode_Trapping_Rain_Water.jpg" alt=""></p>
-<h2 id="Solution">Solution</h2>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TrappingRainWater_42</span> </span>{</div><div class="line">    <span class="keyword">public</span> <span class="keyword">int</span> <span class="title">trap</span>(<span class="keyword">int</span>[] height) {</div><div class="line">        <span class="keyword">int</span> a = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> b = height.length - <span class="number">1</span>;</div><div class="line">        <span class="keyword">int</span> max = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> leftMax = <span class="number">0</span>;</div><div class="line">        <span class="keyword">int</span> rightMax = <span class="number">0</span>;</div><div class="line">        <span class="keyword">while</span> (a &lt;= b) {</div><div class="line">            leftMax = Math.max(leftMax, height[a]);</div><div class="line">            rightMax = Math.max(rightMax, height[b]);</div><div class="line">            <span class="keyword">if</span> (leftMax &lt; rightMax) {</div><div class="line">                <span class="comment">// leftMax is smaller than rightMax, so the (leftMax-A[a]) water can be stored</span></div><div class="line">                max += (leftMax - height[a]);</div><div class="line">                a++;</div><div class="line">            } <span class="keyword">else</span> {</div><div class="line">                max += (rightMax - height[b]);</div><div class="line">                b--;</div><div class="line">            }</div><div class="line">        }</div><div class="line">        <span class="keyword">return</span> max;</div><div class="line">    }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h2 id="算法解释">算法解释</h2>
-<p>对任意位置 i，在 i 上的积水，由左右两边最高的 bar 决定。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/算法/">算法</a><a href="/tags/LeetCode/">LeetCode</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2018/01/31/LeetCode-Trapping-Rain-Water/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/12/Kafka-Consumer-的实现/" title="Kafka Consumer 的实现" itemprop="url">Kafka Consumer 的实现</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-12T07:16:54.000Z" itemprop="datePublished"> Published Nov 12 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p><strong><em>说明: kafka 版本号为 0.11.0</em></strong></p>
-<h2 id="Consumer_拉取消息的实现">Consumer 拉取消息的实现</h2>
-<p>在 Kafka Consumer 正常消费时，观察其调用堆栈。</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="string">"pool-16-thread-7"</span> <span class="comment">#154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]</span></div><div class="line">   java.lang.Thread.State: RUNNABLE</div><div class="line">        <span class="keyword">...</span></div><div class="line">        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:<span class="number">433</span>)</div><div class="line">        at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:<span class="number">232</span>)</div><div class="line">        - locked &lt;<span class="number">0x00000000c2e04f90</span>&gt; (a org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient)</div><div class="line">        at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:<span class="number">208</span>)</div><div class="line">        at org.apache.kafka.clients.consumer.KafkaConsumer.pollOnce(KafkaConsumer.java:<span class="number">1096</span>)</div><div class="line">        at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:<span class="number">1043</span>)</div><div class="line">        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:<span class="number">571</span>)</div><div class="line">        <span class="keyword">...</span></div></pre></td></tr></table></figure>
-
-<p>对应的代码实现是 <code>org.apache.kafka.clients.consumer.KafkaConsumer#poll</code>，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Override</span></div><div class="line">    <span class="keyword">public</span> ConsumerRecords&lt;K, V&gt; <span class="title">poll</span>(<span class="keyword">long</span> timeout) {</div><div class="line">        ...</div><div class="line">        <span class="keyword">try</span> {</div><div class="line">            ...</div><div class="line">            <span class="comment">// poll for new data until the timeout expires</span></div><div class="line">            <span class="keyword">long</span> start = time.milliseconds();</div><div class="line">            <span class="keyword">long</span> remaining = timeout;</div><div class="line">            do {</div><div class="line">                Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; records = pollOnce(remaining);</div><div class="line">                </div><div class="line">                <span class="keyword">if</span> (fetcher.sendFetches() &gt; <span class="number">0</span> || client.hasPendingRequests())</div><div class="line">                        client.pollNoWakeup();</div><div class="line">                        </div><div class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.interceptors == <span class="keyword">null</span>)</div><div class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> ConsumerRecords&lt;&gt;(records);</div><div class="line">                <span class="keyword">else</span></div><div class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>.interceptors.onConsume(<span class="keyword">new</span> ConsumerRecords&lt;&gt;(records));</div><div class="line">                        </div><div class="line">                <span class="keyword">long</span> elapsed = time.milliseconds() - start;</div><div class="line">                remaining = timeout - elapsed;</div><div class="line">            } <span class="keyword">while</span> (remaining &gt; <span class="number">0</span>);</div><div class="line">            <span class="keyword">return</span> ConsumerRecords.empty();</div><div class="line">        } <span class="keyword">finally</span> {</div><div class="line">            release();</div><div class="line">        }</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<p>其中 <code>org.apache.kafka.clients.consumer.KafkaConsumer#pollOnce</code>的实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; <span class="title">pollOnce</span>(<span class="keyword">long</span> timeout) {</div><div class="line">        ...</div><div class="line">        <span class="comment">// ConsumerCoordinator coordinator;</span></div><div class="line">        coordinator.poll(time.milliseconds(), timeout);</div><div class="line">        ...</div><div class="line"></div><div class="line">        <span class="comment">// if data is available already, return it immediately</span></div><div class="line">        Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; records = fetcher.fetchedRecords();</div><div class="line">        <span class="keyword">if</span> (!records.isEmpty())</div><div class="line">            <span class="keyword">return</span> records;</div><div class="line"></div><div class="line">        <span class="comment">// send any new fetches (won't resend pending fetches)</span></div><div class="line">        fetcher.sendFetches();</div><div class="line">        ...</div><div class="line">        <span class="keyword">return</span> fetcher.fetchedRecords();</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<p>所以可以看到 consumer 每次 poll 时是先从 fetcher 中 fetchedRecords 的，如果拿不到结果，就新发起一个 sendFetches 请求。</p>
-<h3 id="Consumer_拉取消息的数量">Consumer 拉取消息的数量</h3>
-<p>在 <code>org.apache.kafka.clients.consumer.internals.Fetcher#fetchedRecords</code> 可以看到 <code>maxPollRecords</code>(max.poll.records 配置) 变量限制了每次 poll 的消息条数，不管 consumer 对应多少个 partition，从所有 partition 拉取到的消息条数总和不会超过 <code>maxPollRecords</code>。</p>
-<p>在 <code>org.apache.kafka.clients.consumer.internals.Fetcher#sendFetches</code> 可以看到 <code>fetchSize</code>(max.partition.fetch.bytes 配置) 用于每次创建 FetchRequest 时的 <code>org.apache.kafka.common.requests.FetchRequest.PartitionData</code> 的参数设置。<code>fetchSize</code>限制了 consumer 每次从每个 partition 拉取的数据量。<br>不过，还是看代码中的 <code>ConsumerConfig#MAX_PARTITION_FETCH_BYTES_DOC</code> 说明吧：</p>
-<blockquote>
-<p>The maximum amount of data per-partition the server will return. Records are fetched in batches by the consumer. If the first record batch in the first non-empty partition of the fetch is larger than this limit, the batch will still be returned to ensure that the consumer can make progress. The maximum record batch size accepted by the broker is defined via <code>message.max.bytes</code> (broker config) or <code>max.message.bytes</code> (topic config). See “ + FETCH_MAX_BYTES_CONFIG + “ for limiting the consumer request size.</p>
-</blockquote>
-<h4 id="poll_和_fetch_的关系">poll 和 fetch 的关系</h4>
-<p>在满足max.partition.fetch.bytes限制的情况下，假如fetch到了100个record，放到本地缓存后，由于max.poll.records限制每次只能poll出15个record。那么KafkaConsumer就需要执行7次才能将这一次通过网络发起的fetch请求所fetch到的这100个record消费完毕。其中前6次是每次pool中15个record，最后一次是poll出10个record。</p>
-<h2 id="Consumer_的心跳机制">Consumer 的心跳机制</h2>
-<p>在 <code>org.apache.kafka.clients.consumer.internals.AbstractCoordinat</code> 中启动 <code>HeartbeatThread</code> 线程来定时发送心跳和检查 consumer 的状态。<br>每个 Consumer 都有一个 ConsumerCoordinator(继承 AbstractCoordinator)，每个 ConsumerCoordinator 都启动一个 <code>HeartbeatThread</code> 线程来维护心跳，心跳信息存放在 <code>org.apache.kafka.clients.consumer.internals.Heartbeat</code>。</p>
-<p>实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Override</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>() {</div><div class="line">        <span class="keyword">try</span> {</div><div class="line">                log.debug(<span class="string">"Heartbeat thread for group {} started"</span>, groupId);</div><div class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) {</div><div class="line">                    <span class="keyword">synchronized</span> (AbstractCoordinator.<span class="keyword">this</span>) {</div><div class="line">                        ...</div><div class="line">                        client.pollNoWakeup();</div><div class="line">                        <span class="keyword">long</span> now = time.milliseconds();</div><div class="line">                        </div><div class="line">                        <span class="keyword">if</span> (coordinatorUnknown()) {</div><div class="line">                            ...</div><div class="line">                        } <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.sessionTimeoutExpired(now)) {</div><div class="line">                            <span class="comment">// the session timeout has expired without seeing a successful heartbeat, so we should</span></div><div class="line">                            <span class="comment">// probably make sure the coordinator is still healthy.</span></div><div class="line">                            coordinatorDead();</div><div class="line">                        } <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.pollTimeoutExpired(now)) {</div><div class="line">                            <span class="comment">// the poll timeout has expired, which means that the foreground thread has stalled</span></div><div class="line">                            <span class="comment">// in between calls to poll(), so we explicitly leave the group.</span></div><div class="line">                            maybeLeaveGroup();</div><div class="line">                        } <span class="keyword">else</span> <span class="keyword">if</span> (!heartbeat.shouldHeartbeat(now)) {</div><div class="line">                            <span class="comment">// poll again after waiting for the retry backoff in case the heartbeat failed or the</span></div><div class="line">                            <span class="comment">// coordinator disconnected</span></div><div class="line">                            AbstractCoordinator.<span class="keyword">this</span>.wait(retryBackoffMs);</div><div class="line">                        } <span class="keyword">else</span> {</div><div class="line">                            heartbeat.sentHeartbeat(now);</div><div class="line">                            ...</div><div class="line">                        }</div><div class="line">                  } <span class="comment">// end synchronized</span></div><div class="line">              } <span class="comment">// end while</span></div><div class="line">          } <span class="comment">//end try              </span></div><div class="line">} <span class="comment">// end run</span></div></pre></td></tr></table></figure>
-
-<p>其中最重要的两个 timeout 函数：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">sessionTimeoutExpired</span>(<span class="keyword">long</span> now) {</div><div class="line">    <span class="keyword">return</span> now - Math.max(lastSessionReset, lastHeartbeatReceive) &gt; sessionTimeout;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">pollTimeoutExpired</span>(<span class="keyword">long</span> now) {</div><div class="line">    <span class="keyword">return</span> now - lastPoll &gt; maxPollInterval;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<h3 id="sessionTimeout">sessionTimeout</h3>
-<p>如果是 sessionTimeout 则 Mark the current coordinator as dead，此时  会将 consumer 踢掉，重新分配 partition 和 consumer 的对应关系。</p>
-<p>在 Kafka Server 端，Consumer 的 Group 定义了五个状态：：<br><img src="/img/kafka_consumer_state_in_server.png" alt="Consumer Group State"></p>
-<p>
-
-<h3 id="pollTimeout">pollTimeout</h3>
-</p><p>如果是 pollTimeout 则 Reset the generation and memberId because we have fallen out of the group，此时 consumer 会退出 group，当再次 poll 时又会 rejoin group 触发 rebalance group。</p>
-<h4 id="Rebalance_Generation">Rebalance Generation</h4>
-<p>表示 rebalance 之后的一届成员，主要是用于保护 consumer group，隔离无效 offset 提交。每次 group 进行 rebalance 之后，generation 号都会加 1，表示 group 进入到了一个新的版本，下图所示为 consumer 2 退出后 consumer 4 加入时 Rebalance Generation 的过程：<br><img src="/img/Kafka_Rebalance_Generation.png" alt="Rebalance Generation"></p>
-<h2 id="partition_的数量设置">partition 的数量设置</h2>
-<ul>
-<li><p>一个 partition 只能被 Consumer Group 中的一个 consumer 消费，因此，为了提高并发量，可以提高 partition 的数量，但是这会造成 replica 副本拷贝的网络请求增加，故障恢复时的耗时增加。因为 kafka 使用 batch pull 的方式，所以单个线程的消费速率还是有保障的。并且 partition 数量过多，zk 维护 ISR 列表负载较重。</p>
-</li>
-<li><p>partiton 数量最好是 consumer 数目的整数倍，比如取 24， consumer 数目的设置就会灵活很多。</p>
-</li>
-<li><p>consumer 消费消息时不时严格有序的。当从多个 partition 读数据时，kafka 只保证在一个 partition 上数据是有序的，多个 partition 的消息消费很可能就不是严格有序的了。</p>
-</li>
-</ul>
-<h2 id="参数设置">参数设置</h2>
-<h3 id="heartbeat-interval-ms">heartbeat.interval.ms</h3>
-<p>心跳间隔。心跳是在 consumer 与 coordinator 之间进行的。心跳是确定 consumer 存活，加入或者退出 group 的有效手段。<br>这个值必须设置的小于 session.timeout.ms，因为：<br>当 consumer 由于某种原因不能发 heartbeat 到 coordinator 时，并且时间超过 session.timeout.ms 时，就会认为该 consumer 已退出，它所订阅的 partition 会分配到同一 group 内的其它的 consumer 上。</p>
-<h4 id="参数值">参数值</h4>
-<p>默认值：3000 (3s)，通常设置的值要低于session.timeout.ms的1/3。</p>
-<p></p><p></p>
-<h3 id="session-timeout-ms">session.timeout.ms</h3>
-<p>consumer session 过期时间。如果超时时间范围内，没有收到消费者的心跳，broker 会把这个消费者置为失效，并触发消费者负载均衡。因为只有在调用 poll 方法时才会发送心跳，更大的 session 超时时间允许消费者在 poll 循环周期内处理消息内容，尽管这会有花费更长时间检测失效的代价。如果想控制消费者处理消息的时间，</p>
-<h4 id="参数值-1">参数值</h4>
-<p>默认值：10000 (10s)，这个值必须设置在 broker configuration 中的 group.min.session.timeout.ms 与 group.max.session.timeout.ms 之间。</p>
-<p>
-
-<h3 id="max-poll-interval-ms">max.poll.interval.ms</h3>
-</p><p>This config sets the maximum delay between client calls to poll(). </p>
-<p>When the timeout expires, the consumer will stop sending heartbeats and send an explicit LeaveGroup request. </p>
-<p>As soon as the consumer resumes processing with another call to poll(), the consumer will <strong>rejoin the group</strong>. </p>
-<p>By increasing the interval between expected polls, you can give the consumer more time to handle a batch of records returned frompoll(long). The drawback is that increasing this value may delay a group rebalance since the consumer will only join the rebalance inside the call to poll. You can use this setting to bound the time to finish a rebalance, but you risk slower progress if the consumer cannot actually call poll often enough.</p>
-<p>参数设置大一点可以增加两次 poll 之间处理消息的时间。<br>当 consumer 一切正常(也就是保持着 heartbeat )，且参数的值小于消息处理的时长，会导致 consumer leave group 然后又 rejoin group，触发无谓的 group balance，出现 consumer livelock 现象。</p>
-<p>但如果设置的太大，会延迟 group rebalance，因为消费者只会在调用 poll 时加入rebalance。</p>
-<p>
-
-<h3 id="max-poll-records">max.poll.records</h3>
-</p><p>Use this setting to limit the total records returned from a single call to poll. This can make it easier to predict the maximum that must be handled within each poll interval. By tuning this value, you may be able to reduce the poll interval, which will reduce the impact of group rebalancing.</p>
-<p>0.11.0 Kafka 的默认配置是 </p>
-<ul>
-<li>max.poll.interval.ms=5min</li>
-<li>max.poll.records=500</li>
-</ul>
-<p>即平均 600ms 要处理完一条消息，如果消息的消费时间高于 600ms，则一定要调整 max.poll.records 或 max.poll.interval.ms。</p>
-<h2 id="Kafka_Javadoc_-_Detecting_Consumer_Failures">Kafka Javadoc - Detecting Consumer Failures</h2>
-<p>After subscribing to a set of topics, the consumer will automatically join the group when poll(long) is invoked. The poll API is designed to ensure consumer liveness. As long as you continue to call poll, the consumer will stay in the group and continue to receive messages from the partitions it was assigned. Underneath the covers, the consumer sends periodic heartbeats to the server. If the consumer crashes or is unable to send heartbeats for a duration of session.timeout.ms, then the consumer will be considered dead and its partitions will be reassigned.<br>It is also possible that the consumer could encounter a “livelock” situation where it is continuing to send heartbeats, but no progress is being made. To prevent the consumer from holding onto its partitions indefinitely in this case, we provide a liveness detection mechanism using the max.poll.interval.ms setting. Basically if you don’t call poll at least as frequently as the configured max interval, then the client will proactively leave the group so that another consumer can take over its partitions. When this happens, you may see an offset commit failure (as indicated by a CommitFailedException thrown from a call to commitSync()). This is a safety mechanism which guarantees that only active members of the group are able to commit offsets. So to stay in the group, you must continue to call poll. </p>
-<h2 id="Reference">Reference</h2>
-<p><a href="http://www.cnblogs.com/huxi2b/p/6223228.html" target="_blank" rel="external">Kafka消费组(consumer group)</a><br><a href="https://kafka.apache.org/0101/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank" rel="external">kafka.apache.org javadoc</a><br><a href="http://blog.leanote.com/post/zfb050/Coordinator%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" target="_blank" rel="external">Coordinator实现原理</a><br><a href="http://debugo.com/kafka-params/" target="_blank" rel="external">kafka params</a><br><a href="http://blog.csdn.net/u014393917/article/details/52043185" target="_blank" rel="external">kafka源码分析之kafka的consumer的负载均衡管理</a><br><a href="http://www.cnblogs.com/devos/p/5656232.html" target="_blank" rel="external">Group Management Protocol</a><br><a href="http://matt33.com/2017/01/16/kafka-group/" target="_blank" rel="external">Kafka 之 Group 状态变化分析及 Rebalance 过程</a><br><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread" target="_blank" rel="external">KIP-62: Allow consumer to send heartbeats from a background thread</a><br><a href="https://www.safaribooksonline.com/library/view/kafka-the-definitive/9781491936153/ch04.html" target="_blank" rel="external">Kafka: The Definitive Guide Chapter 4 - Kafka Consumers</a></p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/分布式/">分布式</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/11/12/Kafka-Consumer-的实现/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2017/11/12/解决-Kafka-Consumer-卡顿的问题/" title="解决 Kafka Consumer 卡顿的问题" itemprop="url">解决 Kafka Consumer 卡顿的问题</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2017-11-12T07:15:18.000Z" itemprop="datePublished"> Published Nov 12 2017</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h2 id="运行环境说明">运行环境说明</h2>
-<p><strong><em>kafka 版本号为 0.11.0</em></strong></p>
-<p>Kafka Consumer 的参数配置如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">private</span> Map&lt;String, Object&gt; <span class="title">getDefaultConsumerConfigs</span>() {</div><div class="line">        Map&lt;String, Object&gt; propsMap = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line"></div><div class="line">        <span class="comment">// 手动设置自动提交为false,交由 spring-kafka 启动的invoker执行提交</span></div><div class="line">        propsMap.put(ConsumerConfig.ENABLE_AUTO_COMMIT_CONFIG, <span class="keyword">false</span>);</div><div class="line"></div><div class="line">        propsMap.put(ConsumerConfig.SESSION_TIMEOUT_MS_CONFIG, <span class="string">"30000"</span>);</div><div class="line">        propsMap.put(ConsumerConfig.HEARTBEAT_INTERVAL_MS_CONFIG, <span class="string">"10000"</span>);</div><div class="line">        propsMap.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);</div><div class="line">        propsMap.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);</div><div class="line"></div><div class="line">        <span class="comment">// 从partition中获取消息最大大小</span></div><div class="line">        propsMap.put(ConsumerConfig.MAX_PARTITION_FETCH_BYTES_CONFIG, <span class="string">"102400"</span>);</div><div class="line">        </div><div class="line">        <span class="keyword">return</span> propsMap;</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h2 id="Consumer_卡顿现象">Consumer 卡顿现象</h2>
-<h3 id="Consumer_卡顿时的日志">Consumer 卡顿时的日志</h3>
-<p>每次卡顿不消费时都出现以下日志：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div></pre></td><td class="code"><pre><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">10</span> org.apache.kafka.clients.consumer.internals.Fetcher - Fetch READ_UNCOMMITTED at offset <span class="number">11429299</span> <span class="keyword">for</span> partition my_topic-<span class="number">27</span> returned fetch data (error=NONE, highWaterMark=<span class="number">11429299</span>, lastStableOffset = -<span class="number">1</span>, logStartOffset = <span class="number">10299493</span>, abortedTransactions = <span class="keyword">null</span>, recordsSizeInBytes=<span class="number">0</span>)</div><div class="line"> <span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">10</span> org.apache.kafka.clients.consumer.internals.Fetcher - Added READ_UNCOMMITTED fetch request <span class="keyword">for</span> partition my_topic-<span class="number">27</span> at offset <span class="number">11429299</span> to node p-kafka-host-<span class="number">03</span>.ali.keep:<span class="number">9092</span> (id: <span class="number">6</span> rack: <span class="keyword">null</span>)</div><div class="line"> <span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">10</span> org.apache.kafka.clients.consumer.internals.Fetcher - Sending READ_UNCOMMITTED fetch <span class="keyword">for</span> partitions [my_topic-<span class="number">27</span>] to broker p-kafka-host-<span class="number">03</span>.ali.keep:<span class="number">9092</span> (id: <span class="number">6</span> rack: <span class="keyword">null</span>)</div><div class="line"> <span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG kafka-coordinator-heartbeat-thread | myConsumerGroup org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Sending Heartbeat request <span class="keyword">for</span> <span class="keyword">group</span> myConsumerGroup to coordinator p-kafka-host-<span class="number">02</span>:<span class="number">9092</span> (id: <span class="number">2147483642</span> rack: <span class="keyword">null</span>)</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">13</span> org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Attempt to heartbeat failed <span class="keyword">for</span> <span class="keyword">group</span> myConsumerGroup since it is rebalancing.</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:INFO pool-<span class="number">16</span>-thread-<span class="number">13</span> org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [my_topic-<span class="number">18</span>] <span class="keyword">for</span> <span class="keyword">group</span> myConsumerGroup</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:INFO pool-<span class="number">16</span>-thread-<span class="number">13</span> org.springframework.kafka.listener.ConcurrentMessageListenerContainer - partitions revoked: [my_topic-<span class="number">18</span>]</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:INFO pool-<span class="number">16</span>-thread-<span class="number">13</span> org.springframework.kafka.listener.ConcurrentMessageListenerContainer - partitions revoked: [my_topic-<span class="number">18</span>]</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">4</span> org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Attempt to heartbeat failed <span class="keyword">for</span> <span class="keyword">group</span> myConsumerGroup since it is rebalancing.</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:INFO pool-<span class="number">16</span>-thread-<span class="number">4</span> org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [my_topic-<span class="number">21</span>] <span class="keyword">for</span> <span class="keyword">group</span> myConsumerGroup</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:INFO pool-<span class="number">16</span>-thread-<span class="number">4</span> org.springframework.kafka.listener.ConcurrentMessageListenerContainer - partitions revoked: [my_topic-<span class="number">21</span>]</div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:INFO pool-<span class="number">16</span>-thread-<span class="number">4</span> org.springframework.kafka.listener.ConcurrentMessageListenerContainer - partitions revoked: [my_topic-<span class="number">21</span>]</div><div class="line"></div><div class="line">...</div><div class="line"></div><div class="line"><span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">4</span> org.apache.kafka.clients.consumer.internals.Fetcher - Fetch READ_UNCOMMITTED at offset <span class="number">11426689</span> <span class="keyword">for</span> partition my_topic-<span class="number">21</span> returned fetch data (error=NONE, highWaterMark=<span class="number">11426689</span>, lastStableOffset = -<span class="number">1</span>, logStartOffset = <span class="number">10552294</span>, abortedTransactions = <span class="keyword">null</span>, recordsSizeInBytes=<span class="number">0</span>)</div><div class="line"> <span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">13</span> org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - <span class="keyword">Group</span> myConsumerGroup committed offset <span class="number">11429849</span> <span class="keyword">for</span> partition my_topic-<span class="number">18</span></div><div class="line"> <span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:INFO pool-<span class="number">16</span>-thread-<span class="number">13</span> org.apache.kafka.clients.consumer.internals.AbstractCoordinator - (Re-)joining <span class="keyword">group</span> myConsumerGroup</div><div class="line"> <span class="number">2017</span><span class="regexp">/11/</span><span class="number">09</span> <span class="number">19</span>:<span class="number">35</span>:<span class="number">29</span>:DEBUG pool-<span class="number">16</span>-thread-<span class="number">13</span> org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Sending JoinGroup ((type: JoinGroupRequest, groupId=myConsumerGroup, sessionTimeout=<span class="number">30000</span>, rebalanceTimeout=<span class="number">300000</span>, memberId=p-my-consumer-host-<span class="number">03</span>-<span class="number">12</span>-<span class="number">97</span>c12fb0-<span class="number">9</span>bb7-<span class="number">4762</span>-<span class="number">8478</span>-<span class="number">538</span>f06be9e90, protocolType=consumer, groupProtocols=org.apache.kafka.common.requests.JoinGroupRequest$ProtocolMetadata@<span class="number">54371</span>fac)) to coordinator p-kafka-<span class="number">02</span>.ali.keep:<span class="number">9092</span> (id: <span class="number">2147483642</span> rack: <span class="keyword">null</span>)</div></pre></td></tr></table></figure>
-
-<p>其中最重要的部分是：</p>
-<blockquote>
-<p><strong>2017/11/09 19:35:29:DEBUG pool-16-thread-13 org.apache.kafka.clients.consumer.internals.AbstractCoordinator - Attempt to heartbeat failed for group myConsumerGroup since it is rebalancing.<br>2017/11/09 19:35:29:INFO pool-16-thread-13 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator - Revoking previously assigned partitions [my_topic-18] for group myConsumerGroup<br>2017/11/09 19:35:29:INFO pool-16-thread-13 org.springframework.kafka.listener.ConcurrentMessageListenerContainer - partitions revoked: [my_topic-18]<br>…<br>2017/11/09 19:35:29:INFO pool-16-thread-13 org.apache.kafka.clients.consumer.internals.AbstractCoordinator - (Re-)joining group myConsumerGroup</strong></p>
-</blockquote>
-<p>那为什么每次会这样呢？我们是有单独的线程在发起心跳的！!!</p>
-<h3 id="Consumer_卡顿时的_jstack">Consumer 卡顿时的 jstack</h3>
-<p>观察日志可以发现，卡顿时 ConsumerCoordinator 在不停地 rejoin group，并且做 rebalance，所以需要对比在正常和卡顿这两种情况下 ConsumerCoordinator 的行为。</p>
-<h4 id="正常时的_ConsumerCoordinator">正常时的 ConsumerCoordinator</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cat</span> jstack.<span class="keyword">normal</span>.<span class="built_in">log</span> | <span class="keyword">grep</span> ConsumerCoordinator -B1 | <span class="keyword">grep</span> -<span class="keyword">v</span> ConsumerCoordinator | <span class="built_in">sort</span> | uniq -<span class="keyword">c</span></div><div class="line"><span class="number">32</span> 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatThread.run(AbstractCoordinator.jav<span class="variable">a:931</span>)</div><div class="line"><span class="number">22</span> 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatThread.run(AbstractCoordinator.jav<span class="variable">a:950</span>)</div></pre></td></tr></table></figure>
-
-<h4 id="卡顿时的_ConsumerCoordinator">卡顿时的 ConsumerCoordinator</h4>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">cat</span> jstack.pause.<span class="built_in">log</span> | <span class="keyword">grep</span> ConsumerCoordinator -B1 | <span class="keyword">grep</span> -<span class="keyword">v</span> ConsumerCoordinator | <span class="built_in">sort</span> | uniq -<span class="keyword">c</span></div><div class="line"><span class="number">14</span> 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureActiveGroup(AbstractCoordinator.jav<span class="variable">a:316</span>)</div><div class="line"><span class="number">14</span> 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatThread.run(AbstractCoordinator.jav<span class="variable">a:920</span>)</div><div class="line"><span class="number">8</span> 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatThread.run(AbstractCoordinator.jav<span class="variable">a:931</span>)</div><div class="line"><span class="number">32</span> 	at org.apache.kafka.clients.consumer.internals.AbstractCoordinator$HeartbeatThread.run(AbstractCoordinator.jav<span class="variable">a:950</span>)</div></pre></td></tr></table></figure>
-
-<p>根据以上的现场信息，可以发现关键就在 <code>AbstractCoordinator.ensureActiveGroup</code> 这一步，继续观察 jstack.pause.log 中的相关堆栈信息，如下：</p>
-<figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="string">"pool-16-thread-14"</span> #<span class="number">167</span> prio=<span class="number">5</span> os_prio=<span class="number">0</span> tid=<span class="number">0x00007f5b19dbf000</span> nid=<span class="number">0x7ac2</span> runnable [<span class="number">0x00007f5ae4ccb000</span>]</div><div class="line"><span class="label">   java.lang.Thread.State:</span> RUNNABLE</div><div class="line">        <span class="preprocessor">at</span> sun.nio.<span class="number">ch</span>.EPollArrayWrapper.epollWait(Native Method)</div><div class="line">        <span class="preprocessor">at</span> sun.nio.<span class="number">ch</span>.EPollArrayWrapper.poll(EPollArrayWrapper.java:<span class="number">269</span>)</div><div class="line">        <span class="preprocessor">at</span> sun.nio.<span class="number">ch</span>.EPollSelectorImpl.doSelect(EPollSelectorImpl.java:<span class="number">79</span>)</div><div class="line">        <span class="preprocessor">at</span> sun.nio.<span class="number">ch</span>.SelectorImpl.lockAndDoSelect(SelectorImpl.java:<span class="number">86</span>)</div><div class="line">        - locked &lt;<span class="number">0x00000000c2e816b0</span>&gt; (a sun.nio.<span class="number">ch</span>.Util<span class="number">$2</span>)</div><div class="line">        - locked &lt;<span class="number">0x00000000c2e816a0</span>&gt; (a java.util.Collections$UnmodifiableSet)</div><div class="line">        - locked &lt;<span class="number">0x00000000c2e742a0</span>&gt; (a sun.nio.<span class="number">ch</span>.EPollSelectorImpl)</div><div class="line">        <span class="preprocessor">at</span> sun.nio.<span class="number">ch</span>.SelectorImpl.select(SelectorImpl.java:<span class="number">97</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.common.network.Selector.select(Selector.java:<span class="number">529</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.common.network.Selector.poll(Selector.java:<span class="number">321</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:<span class="number">433</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:<span class="number">232</span>)</div><div class="line">        - locked &lt;<span class="number">0x00000000c2f00da0</span>&gt; (a org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:<span class="number">208</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:<span class="number">168</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.internals.AbstractCoordinator.joinGroupIfNeeded(AbstractCoordinator.java:<span class="number">364</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.internals.AbstractCoordinator.ensureActiveGroup(AbstractCoordinator.java:<span class="number">316</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.internals.ConsumerCoordinator.poll(ConsumerCoordinator.java:<span class="number">297</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.KafkaConsumer.pollOnce(KafkaConsumer.java:<span class="number">1078</span>)</div><div class="line">        <span class="preprocessor">at</span> org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:<span class="number">1043</span>)</div><div class="line">        <span class="preprocessor">at</span> org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:<span class="number">571</span>)</div><div class="line">        <span class="preprocessor">at</span> java.util.concurrent.Executors$RunnableAdapter.call(Executors.java:<span class="number">511</span>)</div><div class="line">        <span class="preprocessor">at</span> java.util.concurrent.FutureTask.run(FutureTask.java:<span class="number">266</span>)</div><div class="line">        <span class="preprocessor">at</span> java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:<span class="number">1142</span>)</div><div class="line">        <span class="preprocessor">at</span> java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:<span class="number">617</span>)</div><div class="line">        <span class="preprocessor">at</span> java.lang.Thread.run(Thread.java:<span class="number">745</span>)</div></pre></td></tr></table></figure>
-
-<h2 id="卡顿原因分析">卡顿原因分析</h2>
-<h3 id="卡顿原因：Consumer_在_Region_Group">卡顿原因：Consumer 在 Region Group</h3>
-<p>根据以上信息，结合 <code>org.apache.kafka.clients.consumer.internals.ConsumerCoordinator</code> 的代码可以发现在<br><code>ConsumerCoordinator#poll</code> 中判断 <code>needRejoin()</code> 为 true 时会调用 <code>ensureActiveGroup()</code> 函数，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">poll</span>(<span class="keyword">long</span> now, <span class="keyword">long</span> remainingMs) {</div><div class="line">        invokeCompletedOffsetCommitCallbacks();</div><div class="line">        <span class="keyword">if</span> (subscriptions.partitionsAutoAssigned()) {</div><div class="line">            ...</div><div class="line">            <span class="keyword">if</span> (needRejoin()) {</div><div class="line">                ...</div><div class="line">                ensureActiveGroup();</div><div class="line">                ...</div><div class="line">            }</div><div class="line">        } <span class="keyword">else</span> {</div><div class="line">             ...</div><div class="line">            }</div><div class="line">        }</div><div class="line"></div><div class="line">        pollHeartbeat(now);</div><div class="line">        maybeAutoCommitOffsetsAsync(now);</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h3 id="Region_Group_原因：Consumer_Leave_Group">Region Group 原因：Consumer Leave Group</h3>
-<p>那么问题就是什么情况下 org.apache.kafka.clients.consumer.internals.ConsumerCoordinator#needRejoin 会返回 true，我们还是看看他的实现：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Override</span></div><div class="line">    <span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">needRejoin</span>() {</div><div class="line">        <span class="keyword">if</span> (!subscriptions.partitionsAutoAssigned())</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line"></div><div class="line">        <span class="comment">// we need to rejoin if we performed the assignment and metadata has changed</span></div><div class="line">        <span class="keyword">if</span> (assignmentSnapshot != <span class="keyword">null</span> && !assignmentSnapshot.equals(metadataSnapshot))</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        <span class="comment">// we need to join if our subscription has changed since the last join</span></div><div class="line">        <span class="keyword">if</span> (joinedSubscription != <span class="keyword">null</span> && !joinedSubscription.equals(subscriptions.subscription()))</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line"></div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.needRejoin();</div><div class="line">    }</div></pre></td></tr></table></figure>
-
-<h1 id="kafka_metadata_什么时候变化？？？？">kafka metadata 什么时候变化？？？？</h1>
-<p>可以看到，不是 metadataSnapshot 有变化，也不是 订阅者 subscriptions 有变化，那就是 super.needRejoin() 返回了 true，问题就转到了 <code>org.apache.kafka.clients.consumer.internals.AbstractCoordinator#needRejoin</code> 这个函数，其实现是：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">protected</span> <span class="keyword">synchronized</span> <span class="keyword">boolean</span> <span class="title">needRejoin</span>() {</div><div class="line">    <span class="keyword">return</span> rejoinNeeded;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>从代码上看 <code>rejoinNeeded</code> 的整个变化过程，初始化为 true，在 <code>initiateJoinGroup</code> 成功后，会赋值为 false，在 <code>maybeLeaveGroup</code> 时会赋值为 true，所以怀疑卡顿时是 consumer leave group 了。</p>
-<h2 id="Consumer_Leave_Group_原因：pollTimeoutExpired">Consumer Leave Group 原因：pollTimeoutExpired</h2>
-<p>在 <code>org.apache.kafka.clients.consumer.internals.AbstractCoordinator.HeartbeatThread#run</code> 中调用了 <code>maybeLeaveGroup()</code> 函数，其实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="annotation">@Override</span></div><div class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span>() {</div><div class="line">        <span class="keyword">try</span> {</div><div class="line">                log.debug(<span class="string">"Heartbeat thread for group {} started"</span>, groupId);</div><div class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) {</div><div class="line">                    <span class="keyword">synchronized</span> (AbstractCoordinator.<span class="keyword">this</span>) {</div><div class="line">                        ...</div><div class="line">                        client.pollNoWakeup();</div><div class="line">                        <span class="keyword">long</span> now = time.milliseconds();</div><div class="line">                        </div><div class="line">                        <span class="keyword">if</span> (coordinatorUnknown()) {</div><div class="line">                            ...</div><div class="line">                        } <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.sessionTimeoutExpired(now)) {</div><div class="line">                            <span class="comment">// the session timeout has expired without seeing a successful heartbeat, so we should</span></div><div class="line">                            <span class="comment">// probably make sure the coordinator is still healthy.</span></div><div class="line">                            coordinatorDead();</div><div class="line">                        } <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.pollTimeoutExpired(now)) {</div><div class="line">                            <span class="comment">// the poll timeout has expired, which means that the foreground thread has stalled</span></div><div class="line">                            <span class="comment">// in between calls to poll(), so we explicitly leave the group.</span></div><div class="line">                            maybeLeaveGroup();</div><div class="line">                        } <span class="keyword">else</span> <span class="keyword">if</span> (!heartbeat.shouldHeartbeat(now)) {</div><div class="line">                            <span class="comment">// poll again after waiting for the retry backoff in case the heartbeat failed or the</span></div><div class="line">                            <span class="comment">// coordinator disconnected</span></div><div class="line">                            AbstractCoordinator.<span class="keyword">this</span>.wait(retryBackoffMs);</div><div class="line">                        } <span class="keyword">else</span> {</div><div class="line">                            heartbeat.sentHeartbeat(now);</div><div class="line">                            ...</div><div class="line">                        }</div><div class="line">                  } <span class="comment">// end synchronized</span></div><div class="line">              } <span class="comment">// end while</span></div><div class="line">          } <span class="comment">//end try              </span></div><div class="line">} <span class="comment">// end run</span></div></pre></td></tr></table></figure>
-
-<p>其中最重要的两个 timeout 函数：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">sessionTimeoutExpired</span>(<span class="keyword">long</span> now) {</div><div class="line">    <span class="keyword">return</span> now - Math.max(lastSessionReset, lastHeartbeatReceive) &gt; sessionTimeout;</div><div class="line">}</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">pollTimeoutExpired</span>(<span class="keyword">long</span> now) {</div><div class="line">    <span class="keyword">return</span> now - lastPoll &gt; maxPollInterval;</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>所以是 pollTimeoutExpired 引起了 leave group.</p>
-<h3 id="根本原因：pollTimeoutExpired">根本原因：pollTimeoutExpired</h3>
-<p>pollTimeoutExpired 的原因是两次 poll 的时间间隔超过了设置的 maxPollInterval 值。</p>
-<h2 id="解决方案">解决方案</h2>
-<p>调整以下参数</p>
-<ul>
-<li>max.poll.records：100 (默认值 500)</li>
-<li>max.poll.interval.ms：600000 (默认值 300000，也就是5分钟)</li>
-</ul>
-<h2 id="后续">后续</h2>
-<p>至此，问题已经解决了，但是有一些疑问。</p>
-<ul>
-<li>对于这两个参数值的设定， 是 <code>max.poll.records</code> 越小越好，<code>max.poll.interval.ms</code> 越大越好吗？</li>
-<li>已经设置过的 <code>session.timeout.ms</code> 和 <code>heartbeat.interval.ms</code>难道没用吗？为什么有这么多超时参数的设置啊？</li>
-<li>已经设置过的 <code>max.partition.fetch.bytes</code> 没用吗？为什么还要设置 <code>max.poll.records</code> 啊？</li>
-<li>整体上还需要调哪些参数才可以让 consumer 运行正常，或者是性能达到最大呢？</li>
-</ul>
-<p>在下一篇博客「Kafka Consumer 的实现」中，将会继续分析 Kafka Consumer 的消费过程和参数配置，试图回答以上问题。</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/分布式/">分布式</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2017/11/12/解决-Kafka-Consumer-卡顿的问题/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/">Next<span></span></a>
@@ -1143,43 +1182,43 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
-			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>13</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		
+			<li><a href="/tags/机器学习实战/" title="机器学习实战">机器学习实战<sup>3</sup></a></li>
+		
 			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
 		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
-		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
 		
 			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
-			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
-		
 			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
 		
 			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
 		
-			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
 		
 			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
 		
 			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
-		
-			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
-		
-			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -1230,7 +1269,7 @@ var _hmt = _hmt || [];
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2018 
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2019 
 		
 		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
 		

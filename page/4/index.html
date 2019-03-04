@@ -91,6 +91,266 @@ var _hmt = _hmt || [];
         <header class="article-info clearfix">
   <h1 itemprop="name">
     
+      <a href="/2016/01/22/初学Spark/" title="初学Spark" itemprop="url">初学Spark</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-22T03:41:20.000Z" itemprop="datePublished"> Published Jan 22 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h1 id="避免使用_GroupByKey">避免使用 GroupByKey</h1>
+<p>当调用 groupByKey 时，所有的键值对(key-value pair) 都会被移动。在网络上传输这些数据非常没有必要。</p>
+<p>以下函数应该优先于 groupByKey :</p>
+<ul>
+<li><p>combineByKey<br>组合数据，但是组合之后的数据类型与输入时值的类型不一样。</p>
+</li>
+<li><p>foldByKey<br>合并每一个 key 的所有值，在级联函数和“零值”中使用。</p>
+</li>
+</ul>
+<h1 id="combineByKey">combineByKey</h1>
+<h2 id="combineByKey的定义">combineByKey的定义</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">combineByKey</span>[<span class="title">C</span>]<span class="params">(</span></span></div><div class="line">  createCombiner: V =&gt; C,</div><div class="line">  mergeValue: <span class="params">(C, V)</span> =&gt; C, </div><div class="line">  mergeCombiners: <span class="params">(C, C)</span> =&gt; C, </div><div class="line">  partitioner: Partitioner, </div><div class="line">  mapSideCombine: Boolean = true, </div><div class="line">  serializer: Serializer = null): RDD[(K, C)] = {</div><div class="line">  // do something</div><div class="line">}</div></pre></td></tr></table></figure>
+
+<p>combineByKey函数主要接受了三个函数作为参数，分别为createCombiner、mergeValue、mergeCombiners。这三个函数足以说明它究竟做了什么。理解了这三个函数，就可以很好地理解combineByKey。</p>
+<h3 id="createCombiner">createCombiner</h3>
+<p>createCombiner：在遍历RDD的过程中，对于遍历到的(k,v)，如果是第一次遇到，则对这个(k,v)调用createCombiner函数，它的作用是将v转换为c(类型是C，即聚合对象的类型，c作为聚合对象的初始值)</p>
+<h3 id="mergeValue">mergeValue</h3>
+<p>mergeValue：在遍历RDD的过程中，对于遍历到的(k,v)，如果不是第一次(而是第i次, 1 &lt; i &lt;= n)遇到，那么将对这个(k,v)调用mergeValue函数，它的作用是将v累加到聚合对象（类型C）中，mergeValue的类型是(C,V)=&gt;C,参数中的C遍历到此处的聚合对象，然后对v进行聚合得到新的聚合对象值</p>
+<h3 id="mergeCombiners">mergeCombiners</h3>
+<p>mergeCombiners：<strong>因为combineByKey是在分布式环境下执行，RDD的每个分区单独进行combineByKey操作，最后需要对各个分区的结果进行最后的聚合</strong>。它的函数类型是(C,C)=&gt;C，每个参数是分区聚合得到的聚合对象。</p>
+<h3 id="combineByKey的流程">combineByKey的流程</h3>
+<ul>
+<li>假设一组具有相同 K 的 <k, v=""> records 正在一个个流向 combineByKey()，createCombiner 将第一个 record 的value 初始化为 c （比如，c = value），然后从第二个 record 开始，来一个 record 就使用 mergeValue(c,</k,></li>
+<li>record.value) 来更新 c，比如想要对这些 records 的所有 values 做 sum，那么使用 c = c + record.value。等到records 全部被 mergeValue()，得到结果 c。假设还有一组 records（key 与前面那组的 key 均相同）一个个到来，</li>
+<li>combineByKey() 使用前面的方法不断计算得到 c’。现在如果要求这两组 records 总的 combineByKey() 后的结果，那么可以使用 final c = mergeCombiners(c, c’) 来计算。</li>
+</ul>
+<h2 id="Example">Example</h2>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> rdd1 = sc.makeRDD(<span class="type">Array</span>((<span class="string">"A"</span>,<span class="number">1</span>),(<span class="string">"A"</span>,<span class="number">2</span>),(<span class="string">"A"</span>,<span class="number">3</span>),(<span class="string">"B"</span>,<span class="number">1</span>),(<span class="string">"B"</span>,<span class="number">2</span>),(<span class="string">"C"</span>,<span class="number">3</span>)))</div><div class="line"></div><div class="line">// <span class="literal">result</span>: ((A,<span class="number">1_</span>$<span class="number">2_</span>@<span class="number">3</span>), (B,<span class="number">1_</span>$<span class="number">2_</span>), (C,<span class="number">3_</span>))</div><div class="line">rdd1.combineByKey(</div><div class="line">  (v : <span class="type">Int</span>) =&gt; v + <span class="string">"_"</span>,</div><div class="line">  (c : <span class="type">String</span>, v : <span class="type">Int</span>) =&gt; c + <span class="string">"@"</span> + v,</div><div class="line">  (c1 : <span class="type">String</span>, c2 : <span class="type">String</span>) =&gt; c1 + <span class="string">"$"</span> + c2 ).collect</div></pre></td></tr></table></figure>
+
+<h2 id="combineByKey应用举例">combineByKey应用举例</h2>
+<h3 id="求均值">求均值</h3>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div></pre></td><td class="code"><pre><div class="line">val rdd = sc.textFile(<span class="string">"气象数据"</span>)</div><div class="line">val rdd2 = rdd.map(x=&gt;x.split(<span class="string">" "</span>)).map(x<span class="function"> =&gt;</span> (x(<span class="number">0</span>).substring(<span class="string">"从年月日中提取年月"</span>),x(<span class="number">1</span>).toInt))</div><div class="line">val <span class="function"><span class="title">createCombiner</span> = <span class="params">(k: String, v: Int)</span>=&gt;</span> {</div><div class="line">  (v,<span class="number">1</span>)</div><div class="line">}</div><div class="line">val <span class="function"><span class="title">mergeValue</span> = <span class="params">(c:(Int, Int), v:Int)</span> =&gt;</span> {</div><div class="line">  (c._1 + v, c._2 + <span class="number">1</span>)</div><div class="line">}</div><div class="line"></div><div class="line">val <span class="function"><span class="title">mergeCombiners</span> = <span class="params">(c1:(Int,Int),c2:(Int,Int))</span>=&gt;</span>{</div><div class="line">  (c1._1 + c2._1, c1._2 + c2._2)</div><div class="line">}</div><div class="line"></div><div class="line">val vdd3 = vdd2.combineByKey(</div><div class="line">  createCombiner,</div><div class="line">  mergeValue,</div><div class="line">  mergeCombiners</div><div class="line">)</div><div class="line"></div><div class="line">rdd3.foreach(x=&gt;println(x._1 + <span class="string">": average tempreture is "</span> + x._2._1/x._2._2)</div></pre></td></tr></table></figure>
+
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/spark/">spark</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/22/初学Spark/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/04/Run-Age-of-Empires-II-in-Max-OS-10-11/" title="Run Age of Empires II in Max OS 10.11" itemprop="url">Run Age of Empires II in Max OS 10.11</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-04T12:52:39.000Z" itemprop="datePublished"> Published Jan 4 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h2 id="Step1_Find_the_resource">Step1 Find the resource</h2>
+<p>search in Google， steam 上已经没有了。</p>
+<h2 id="Step2_Fix_the_Max_OS_10-11_bug">Step2 Fix the Max OS 10.11 bug</h2>
+<p>An error occured while starting the X11 server:<br>    Failed to activate core devices”<br>    Click Quit to quit X11. Click Report to see more details or send a report to Apple. </p>
+<p>在 <a href="https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/" target="_blank" rel="external">https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/</a> 找到解决方法。即:<br>open terminal: </p>
+<p><code>mkdir</code>/lib<br><code>cp -r /Applications/aoeHD.app/Contents/Frameworks/</code>* /lib </p>
+<p>此时再打开游戏，成功运行，听到了熟悉的声音。</p>
+<p>Reference<br><a href="https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/" target="_blank" rel="external">https://www.reddit.com/r/OSXElCapitan/comments/3d64sd/wineskin/</a></p>
+
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/skill/">skill</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/04/Run-Age-of-Empires-II-in-Max-OS-10-11/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2016/01/03/skills/" title="skills" itemprop="url">skills</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2016-01-03T04:28:17.000Z" itemprop="datePublished"> Published Jan 3 2016</time>
+    
+  </p>
+</header>
+    <div class="article-content">
+        
+        <h3 id="将数据转成json格式：python_-m_json-tool">将数据转成json格式：python -m json.tool</h3>
+<pre><code>$ echo '{<span class="string">"json"</span>:<span class="string">"obj"</span>}' <span class="string">| python -m json.tool</span>
+{
+<span class="string">"json"</span>: <span class="string">"obj"</span>
+}
+</code></pre><h3 id="查看gzip数据">查看gzip数据</h3>
+<p>使用python的zlib库来解压</p>
+<pre><code>s='<span class="command">\x</span>1F<span class="command">\x</span>8B<span class="command">\x</span>08<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>005N<span class="command">\xCD</span><span class="command">\x</span>0A<span class="command">\xC</span>3 <span class="command">\x</span>18<span class="special">{</span><span class="command">\x</span>97<span class="command">\xEF</span>,<span class="command">\xE</span>5s<span class="command">\xF</span>3gz<span class="command">\xAB</span><span class="command">\xA</span>0/1z<span class="command">\x</span>18<span class="command">\xC</span>31<span class="command">\x</span>87m<span class="command">\xA</span>5<span class="command">\xEA</span><span class="command">\xA</span>1<span class="command">\x</span>94<span class="command">\xBE</span><span class="command">\xFB</span><span class="command">\xBE</span><span class="command">\xC</span>3vJHB<span class="command">\x</span>92<span class="command">\x</span>03z<span class="command">\x</span>8D<span class="command">\xDBXJ</span><span class="command">\x</span>05<span class="special">{</span>?<span class="command">\xA</span>0,`<span class="command">\xE</span>1<span class="command">\xB</span>9<span class="command">\xCEC</span><span class="command">\xEB</span><span class="command">\x</span>9F<span class="command">\xF</span>4<span class="command">\x</span>18<span class="command">\xDEk</span><span class="command">\x</span>8B<span class="command">\x</span>19<span class="command">\x</span>18<span class="command">\xD</span>4<span class="command">\x</span>99d<span class="command">\xC</span>9/<span class="command">\xCE</span><span class="command">\xF</span>9<span class="command">\x</span>10Ft<span class="command">\xE</span>1<span class="command">\xAA</span><span class="command">\x</span>9DFm<span class="command">\x</span>8C<span class="command">\x</span>92B)w<span class="command">\xF</span>3<span class="command">\x</span>02<span class="command">\xBD</span><span class="command">\xA</span>1<span class="command">\x</span>5C<span class="command">\xA</span>3<span class="command">\x</span>16.<span class="command">\x</span>84<span class="command">\xE</span>4<span class="command">\x</span>5CHD<span class="command">\x</span>94<span class="command">\x</span>82Ao`<span class="command">\x</span>97<span class="command">\x</span>9E3<span class="command">\x</span>83Df<span class="command">\xDBzdP</span><span class="command">\xD</span>2_<span class="special">{</span><span class="command">\x</span>11C<span class="command">\x</span>06<span class="command">\xB</span>9<span class="command">\x</span>13<span class="command">\x</span>9C<span class="command">\x</span>13<span class="command">\x</span>0D<span class="command">\xED</span><span class="command">\xF</span>5<span class="command">\xF</span>7e:<span class="command">\xBF</span><span class="command">\xAB</span> <span class="command">\xDB</span><span class="command">\x</span>10<span class="command">\x</span>9B<span class="command">\x</span>00<span class="command">\x</span>00<span class="command">\x</span>00' 
+
+import zlib
+d=zlib.decompressobj(16+zlib.MAX_WBITS) 
+data=d.decompress(s)
+</code></pre><h3 id="统计服务器上的历史登录记录">统计服务器上的历史登录记录</h3>
+<pre><code><span class="keyword">last</span> -ad | awk <span class="string">'{print $1}'</span> | <span class="built_in">sort</span> | uniq -<span class="keyword">c</span> | <span class="built_in">sort</span> -<span class="keyword">t</span>$<span class="string">'\t'</span> -k1,<span class="number">1</span> -nr 
+</code></pre><h3 id="linux文件格式转换">linux文件格式转换</h3>
+<p>在linux下，不可避免的会用VIM打开一些windows下编辑过的文本文件。我们会发现文件的每行结尾都会有一个^M符号，这是因为DOS下的编辑器和Linux编辑器对文件行末的回车符处理不一致，<br>对于回车符的定义： </p>
+<ul>
+<li>windows：0D0A </li>
+<li>unix\linux: 0A </li>
+<li>MAC: 0D<br>去除这些符号的方法有： </li>
+<li>vim下 <code>:set fileformat=unix</code></li>
+<li>终端  <code>dos2unix filename</code></li>
+</ul>
+<h3 id="git图形化提交历史">git图形化提交历史</h3>
+<pre><code>git <span class="keyword">log</span> --pretty=<span class="keyword">format</span>:<span class="string">"<span class="variable">%h</span> <span class="variable">%an</span> <span class="variable">%s</span>"</span> --graph
+</code></pre><h3 id="echo_总结">echo 总结</h3>
+<ol>
+<li>echo默认是带换行符做结尾的</li>
+<li>echo -n 可以去掉换行符</li>
+<li>printf是没有换行符结尾的</li>
+<li>tr可以删掉一个字符，如 tr -d ‘\n’ </li>
+</ol>
+<h3 id="删除空行">删除空行</h3>
+<ol>
+<li>grep: grep -v ‘^$’ file</li>
+<li>sed: sed ‘/^$/d’  file 或 sed -n ‘/./p’ file</li>
+<li>awk: awk ‘/./ {print}’ file</li>
+</ol>
+<h3 id="shell读文件">shell读文件</h3>
+<p>读取 md5s 文件，对每行做处理。</p>
+<pre><code>cat md5s | <span class="keyword">while</span> <span class="built_in">read</span> line 
+<span class="keyword">do</span> 
+     md5=<span class="variable">$line</span> 
+     level2Path=`expr substr <span class="string">"<span class="variable">$md5</span>"</span> <span class="number">30</span> <span class="number">2</span>` <span class="comment">#50 </span>
+     level1Path=`expr substr <span class="string">"<span class="variable">$md5</span>"</span> <span class="number">32</span> <span class="number">1</span>` <span class="comment">#a </span>
+     storagePath=hdfs:///ljp/apk/path/<span class="variable">$level1Path</span>/<span class="variable">$level2Path</span>/<span class="variable">$md5</span> 
+     <span class="built_in">echo</span> <span class="variable">$storagePath</span>
+<span class="keyword">done</span> 
+</code></pre>
+        
+        
+        <p class="article-more-link">
+          
+       </p>
+    </div>
+    <footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/调试/">调试</a>
+  </div>
+
+</div>
+
+
+
+
+<div class="comments-count">
+	
+	  	<span></span>
+		<a href="/2016/01/03/skills/#disqus_thread" class="comments-count-link">Comments</a>
+	
+</div>
+
+</footer>
+
+
+    </article>
+
+
+
+
+
+
+   
+    
+    <article class="post-expand post" itemprop="articleBody"> 
+        <header class="article-info clearfix">
+  <h1 itemprop="name">
+    
       <a href="/2016/01/03/Java序列化/" title="Java序列化" itemprop="url">Java序列化</a>
   </h1>
   <p class="article-author">By
@@ -922,351 +1182,6 @@ var _hmt = _hmt || [];
 
 
 
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/30/Java的wait和notify/" title="Java的wait和notify" itemprop="url">Java的wait和notify</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-30T14:24:01.000Z" itemprop="datePublished"> Published Jul 30 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="1-java线程同步原理">1.java线程同步原理</h1>
-<p>java会为每个object对象分配一个monitor，当某个对象的同步方法（synchronized methods ）或同步快被多个线程调用时，该对象的monitor将负责处理这些访问的并发独占要求。</p>
-<p>当一个线程调用一个对象的同步方法时，JVM会检查该对象的monitor。如果monitor没有被占用，那么这个线程就得到了monitor的占有权，可以继续执行该对象的同步方法；如果monitor被其他线程所占用，那么该线程将被挂起，直到monitor被释放。</p>
-<p>当线程退出同步方法调用时，该线程会释放monitor，这将允许其他等待的线程获得monitor以使对同步方法的调用执行下去。</p>
-<p>注意：java对象的monitor机制和传统的临界检查代码区技术不一样。java的一个类一个同步方法并不意味着同时只有一个线程独占执行（不同对象的同步方法可以同时执行），但临界检查代码区技术确会保证同步方法在一个时刻只被一个线程独占执行。</p>
-<p><strong>java的monitor机制的准确含义是：任何时刻，对一个指定object对象的某同步方法只能由一个线程来调用。</strong></p>
-<p>java对象的monitor是跟随object实例来使用的，而不是跟随程序代码。两个线程可以同时执行相同的同步方法，比如：一个类的同步方法是xMethod()，有a,b两个对象实例，一个线程执行a.xMethod()，另一个线程执行b.xMethod(). 互不冲突。</p>
-<h1 id="2-_wait(),_notify(),notifyAll()">2. wait(), notify(),notifyAll()</h1>
-<p>首先看一下Java中java.lang.Object类的实现：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Object</span> </span>{</div><div class="line">	<span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">registerNatives</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">static</span> {</div><div class="line">		registerNatives();</div><div class="line">  	}</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> Class&lt;?&gt; <span class="title">getClass</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">native</span> <span class="keyword">int</span> <span class="title">hashCode</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span>(Object obj) {</div><div class="line">		<span class="keyword">return</span> (<span class="keyword">this</span> == obj);</div><div class="line">	}</div><div class="line">    </div><div class="line">	<span class="keyword">protected</span> <span class="keyword">native</span> Object <span class="title">clone</span>() <span class="keyword">throws</span> CloneNotSupportedException;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> String <span class="title">toString</span>() {</div><div class="line">		<span class="keyword">return</span> getClass().getName() + <span class="string">"@"</span> + Integer.toHexString(hashCode());</div><div class="line">	}</div><div class="line">    </div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">notify</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">notifyAll</span>();</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">native</span> <span class="keyword">void</span> <span class="title">wait</span>(<span class="keyword">long</span> timeout) <span class="keyword">throws</span> InterruptedException;</div><div class="line">	</div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">wait</span>(<span class="keyword">long</span> timeout, <span class="keyword">int</span> nanos) <span class="keyword">throws</span> InterruptedException {</div><div class="line">		<span class="keyword">if</span> (timeout &lt; <span class="number">0</span>) {</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"timeout value is negative"</span>);</div><div class="line">		}</div><div class="line">		</div><div class="line">		<span class="keyword">if</span> (nanos &lt; <span class="number">0</span> || nanos &gt; <span class="number">999999</span>) {</div><div class="line">			<span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(<span class="string">"nanosecond timeout value out of range"</span>);</div><div class="line">		}</div><div class="line"></div><div class="line">		<span class="keyword">if</span> (nanos &gt;= <span class="number">500000</span> || (nanos != <span class="number">0</span> && timeout == <span class="number">0</span>)) {</div><div class="line">			timeout++;</div><div class="line">		}</div><div class="line"></div><div class="line">        wait(timeout);</div><div class="line">	}</div><div class="line">    </div><div class="line">	<span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">wait</span>() <span class="keyword">throws</span> InterruptedException {</div><div class="line">        wait(<span class="number">0</span>);</div><div class="line">    }</div><div class="line">    </div><div class="line">    <span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">finalize</span>() <span class="keyword">throws</span> Throwable { }</div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>wait()方法是object类的方法，解决的问题是线程间的同步，该过程包含了同步锁的获取和释放，调用wait方法将会将调用者的线程挂起，直到其他线程调用同一个对象的notify()方法才会重新激活调用者。</p>
-<p><strong>注意:线程调用notify()之后，只有该线程完全从 synchronized代码里面执行完毕后，monitor才会被释放，被唤醒线程才可以真正得到执行权。</strong></p>
-<p>使用：</p>
-<ul>
-<li>obj.wait()方法使本线程挂起，并释放obj对象的monitor，只有其他线程调用obj对象的notify()或notifyAll()时，才可以被唤醒。</li>
-<li>obj.notifyAll()方法唤醒所有阻塞在obj对象上的沉睡线程，然后被唤醒的众多线程竞争obj对象的monitor占有权，最终得到的那个线程会继续执行下去，但其他线程继续等待。</li>
-<li>obj.notify()方法是随机唤醒一个沉睡线程，过程更obj.notifyAll()方法类似。</li>
-</ul>
-<p>wait，notify和notifyAll只能在同步控制方法或者同步控制块里面使用，例如：</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">synchronized</span>(x){</div><div class="line">	x.notify()	</div><div class="line">	<span class="comment">//或者wait()</span></div><div class="line">}</div></pre></td></tr></table></figure>
-
-<p>以上内容说明了为什么调用wait()，notify()，notifyAll()的线程必须要拥有obj实例对象的monitor占有权。</p>
-<p>每个对象实例都有一个等待线程队列。这些线程都是等待对该对象的同步方法的调用许可。对一个线程来说，有两种方法可以进入这个等待线程队列。一个是当其他线程执行同步方法时，自身同时也要执行该同步方法；另一个是调用obj.wait()方法。</p>
-<p>当同步方法执行完毕或者执行wait()时，其他某个线程将获得对象的访问权。当一个线程被放入等待队列时，必须要确保可以通过notify()的调用来解冻该线程，以使其能够继续执行下去。</p>
-<h1 id="3-_native">3. native</h1>
-<p>native is a java keyword. It marks a method, that it will be implemented in other languages, not in Java. The method is declared without a body and cannot be abstract. It works together with JNI (Java Native Interface).<br>Native methods were used in the past to write performance critical sections but with java getting faster this is now less common. Native methods are currently needed when</p>
-<p>You need to call from java a library, written in another language.<br>You need to access system or hardware resources that are only reachable from the other language (typically C). Actually, many system functions that interact with real computer (disk and network IO, for instance) can only do this because they call native code.</p>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/30/Java的wait和notify/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/14/synchronized详解/" title="synchronized详解" itemprop="url">synchronized详解</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-14T01:04:27.000Z" itemprop="datePublished"> Published Jul 14 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <p>synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。<br>synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。</p>
-<h1 id="1-_JVM如何实现synchronized">1. JVM如何实现synchronized</h1>
-<p>在java语言中存在两种内建的synchronized语法：synchronized语句和synchronized方法。<br>synchronized语句被javac编译成bytecode时，会在同步块的入口位置和退出位置分别插入monitorenter和monitorexit字节码指令。<br>synchronized方法被javac编译成bytecode时，会被翻译成普通的方法调用和返回指令如:invokevirtual、areturn指令，在VM字节码层面并没有任何特别的指令来实现被synchronized修饰的方法，而是在Class文件的方法表中将该方法的access_flags字段中的synchronized标志位置1，表示该方法是同步方法并使用调用该方法的对象或该方法所属的Class在JVM的内部对象表示Klass做为锁对象。</p>
-<h1 id="2-_hotspot当前对synchronized的实现">2. hotspot当前对synchronized的实现</h1>
-<p>当前的hotspot共有3种类型的锁，来实现synchronize的语义，之所以有3种，是因为这3种要解决的问题不同，所做的优化也不同。这3种锁分别为biased locking，stack lock，infalted(ObjectMonitor).简单除暴的来讲，从轻量级上来说，biased lock最优，inflated 最差。</p>
-<h1 id="3-_synchronized锁住的是什么">3. synchronized锁住的是什么</h1>
-<p>synchronized锁定的是对象而非函数或代码。<br><strong>当synchronized作用在方法上时，锁住的便是对象实例（this）；当作用在静态方法时锁住的便是对象对应的Class实例，因为Class数据存在于永久带，因此静态方法锁相当于该类的一个全局锁；当synchronized作用于某一个对象实例时，锁住的便是对应的代码块。</strong><br>每个对象只有一把锁(Lock)与之关联，当进行到synchronized语句或函数的时候，这把锁就会被当前的线程（thread）拿走，其他的（thread）再去访问的时候拿不到锁就被暂停了。<br>在HotSpot JVM实现中，锁有个专门的名字：对象监视器。</p>
-<h1 id="4-_synchronized的使用场景">4. synchronized的使用场景</h1>
-<ol>
-<li>public synchronized void method1<br> 锁住的是该对象,类的其中一个实例，当该对象(仅仅是这一个对象)在不同线程中执行这个同步方法时，线程之间会形成互斥。达到同步效果，但如果不同线程同时对该类的不同对象执行这个同步方法时，则线程之间不会形成互斥，因为他们拥有的是不同的锁。</li>
-<li>synchronized(this){ //TODO }<br> 同一</li>
-<li>public synchronized static void method3<br> 锁住的是该类，当所有该类的对象(多个对象)在不同线程中调用这个static同步方法时，线程之间会形成互斥，达到同步效果，但如果多个线程同时调用method1，method3，则不会引互斥，具体讲看最后讲解。</li>
-<li>synchronized(Test.class){ //TODO}<br> 同三</li>
-<li>synchronized(o) {}<br> 这里面的o可以是一个任何Object对象或数组，并不一定是它本身对象或者类，谁拥有o这个锁，谁就能够操作该块程序代码。</li>
-</ol>
-<h1 id="refers">refers</h1>
-<blockquote>
-<p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="external">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="external">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://f.dataguru.cn/thread-472518-1-1.html" target="_blank" rel="external">http://f.dataguru.cn/thread-472518-1-1.html</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/14/synchronized详解/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
-   
-    
-    <article class="post-expand post" itemprop="articleBody"> 
-        <header class="article-info clearfix">
-  <h1 itemprop="name">
-    
-      <a href="/2015/07/09/java锁优化/" title="java锁优化" itemprop="url">java锁优化</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2015-07-09T01:01:43.000Z" itemprop="datePublished"> Published Jul 9 2015</time>
-    
-  </p>
-</header>
-    <div class="article-content">
-        
-        <h1 id="1-_同步的原理">1. 同步的原理</h1>
-<p>JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到方法结束处和异常处， JVM要保证每个monitorenter必须有对应的monitorexit与之配对。任何对象都有一个 monitor 与之关联，当且一个monitor 被持有后，它将处于锁定状态。线程执行到 monitorenter 指令时，将会尝试获取对象所对应的 monitor 的所有权，即尝试获得对象的锁。</p>
-<h1 id="2-_Java对象头">2. Java对象头</h1>
-<p>锁存在Java对象头里。如果对象是数组类型，则虚拟机用3个Word（字宽）存储对象头，如果对象是非数组类型，则用2字宽存储对象头。在32位虚拟机中，一字宽等于四字节，即32bit。</p>
-<table>
-<thead>
-<tr>
-<th>长度</th>
-<th>内容</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>32/64bit</td>
-<td>Mark Word</td>
-<td>存储对象的hashCode或锁信息等</td>
-</tr>
-<tr>
-<td>32/64bit</td>
-<td>Class Metadata Address</td>
-<td>存储到对象类型数据的指针</td>
-</tr>
-<tr>
-<td>32/64bit</td>
-<td>Array length</td>
-<td>数组的长度（如果当前对象是数组）</td>
-</tr>
-</tbody>
-</table>
-<p>Java对象头里的Mark Word里默认存储对象的HashCode，分代年龄和锁标记位。32位JVM的Mark Word的默认存储结构如下：</p>
-<table>
-<thead>
-<tr>
-<th></th>
-<th>25 bit</th>
-<th>4bit</th>
-<th>1bit<br>是否是偏向锁</th>
-<th>2bit<br>锁标志位</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>无锁状态</td>
-<td>对象的hashCode</td>
-<td>对象分代年龄</td>
-<td>0</td>
-<td>01</td>
-</tr>
-</tbody>
-</table>
-<p>在运行期间Mark Word里存储的数据会随着锁标志位的变化而变化。Mark Word可能变化为存储以下4种数据：</p>
-<p><img src="/img/markword_state.jpg" alt=""></p>
-<h1 id="3-_几种锁的类型">3. 几种锁的类型</h1>
-<p><strong>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。</strong></p>
-<p>Java SE1.6为了减少获得锁和释放锁所带来的性能消耗，引入了“偏向锁”和“轻量级锁”，所以在Java SE1.6里锁一共有四种状态，无锁状态，偏向锁状态，轻量级锁状态和重量级锁状态，它会随着竞争情况逐渐升级。</p>
-<p><strong>锁可以升级但不能降级，意味着偏向锁升级成轻量级锁后不能降级成偏向锁。这种锁升级却不能降级的策略，目的是为了提高获得锁和释放锁的效率。</strong></p>
-<h2 id="3-1_偏向锁">3.1 偏向锁</h2>
-<p>Hotspot的作者经过以往的研究发现大多数情况下锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁的目的是在某个线程获得锁之后，消除这个线程锁重入（CAS）的开销，看起来让这个线程得到了偏护。<br><img src="/img/biased_lock_flow.jpg" alt=""></p>
-<h3 id="偏向锁的进一步理解">偏向锁的进一步理解</h3>
-<p>偏向锁的释放不需要做任何事情，这也就意味着加过偏向锁的MarkValue会一直保留偏向锁的状态，因此即便同一个线程持续不断地加锁解锁，也是没有开销的。 </p>
-<p>另一方面，偏向锁比轻量锁更容易被终结，轻量锁是在有锁竞争出现时升级为重量锁，而一般偏向锁是在有不同线程申请锁时升级为轻量锁，这也就意味着假如一个对象先被线程1加锁解锁，再被线程2加锁解锁，这过程中没有锁冲突，也一样会发生偏向锁失效，不同的是这回要先退化为无锁的状态，再加轻量锁，如图：<br><img src="/img/biased_lock_convert_flow.jpg" alt=""></p>
-<p>另外，JVM对那种会有多线程加锁，但不存在锁竞争的情况也做了优化，听起来比较拗口，但在现实应用中确实是可能出现这种情况，因为线程之前除了互斥之外也可能发生同步关系，被同步的两个线程（一前一后）对共享对象锁的竞争很可能是没有冲突的。对这种情况，JVM用一个epoch表示一个偏向锁的时间戳（真实地生成一个时间戳代价还是蛮大的，因此这里应当理解为一种类似时间戳的identifier），对epoch，官方是这么解释的：</p>
-<blockquote>
-<p>A similar mechanism, called bulk rebiasing, optimizes situations in which objects of a class are locked and unlocked by different threads but never concurrently. It invalidates the bias of all instances of a class without disabling biased locking. An epoch value in the class acts as a timestamp that indicates the validity of the bias. This value is copied into the header word upon object allocation. Bulk rebiasing can then efficiently be implemented as an increment of the epoch in the appropriate class. The next time an instance of this class is going to be locked, the code detects a different value in the header word and rebiases the object towards the current thread.</p>
-</blockquote>
-<h3 id="偏向锁的获取">偏向锁的获取</h3>
-<p>当一个线程访问同步块并获取锁时，会在对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程在进入和退出同步块时不需要花费CAS操作来加锁和解锁，而只需简单的测试一下对象头的Mark Word里是否存储着指向当前线程的偏向锁，如果测试成功，表示线程已经获得了锁，如果测试失败，则需要再测试下Mark Word中偏向锁的标识是否设置成1（表示当前是偏向锁），如果没有设置，则使用CAS竞争锁，如果设置了，则尝试使用CAS将对象头的偏向锁指向当前线程。</p>
-<h3 id="偏向锁的撤销">偏向锁的撤销</h3>
-<p>偏向锁使用了一种等到竞争出现才释放锁的机制，所以当其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，然后检查持有偏向锁的线程是否活着，如果线程不处于活动状态，则将对象头设置成无锁状态，如果线程仍然活着，拥有偏向锁的栈会被执行，遍历偏向对象的锁记录，栈中的锁记录和对象头的Mark Word要么重新偏向于其他线程，要么恢复到无锁或者标记对象不适合作为偏向锁，最后唤醒暂停的线程。下图中的线程1演示了偏向锁初始化的流程，线程2演示了偏向锁撤销的流程。</p>
-<h3 id="偏向锁的设置">偏向锁的设置</h3>
-<p>关闭偏向锁：偏向锁在Java 6和Java 7里是默认启用的，但是它在应用程序启动几秒钟之后才激活，如有必要可以使用JVM参数来关闭延迟-XX：BiasedLockingStartupDelay = 0。如果你确定自己应用程序里所有的锁通常情况下处于竞争状态，可以通过JVM参数关闭偏向锁-XX:-UseBiasedLocking=false，那么默认会进入轻量级锁状态。</p>
-<h2 id="3-2_自旋锁">3.2 自旋锁</h2>
-<p>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。同时我们可以发现，很多对象锁的锁定状态只会持续很短的一段时间，例如整数的自加操作，在很短的时间内阻塞并唤醒线程显然不值得，为此引入了自旋锁。</p>
-<p>所谓“自旋”，就是让线程去执行一个无意义的循环，循环结束后再去重新竞争锁，如果竞争不到继续循环，循环过程中线程会一直处于running状态，但是基于JVM的线程调度，会出让时间片，所以其他线程依旧有申请锁和释放锁的机会。</p>
-<p>自旋锁省去了阻塞锁的时间空间（队列的维护等）开销，但是长时间自旋就变成了“忙式等待”，忙式等待显然还不如阻塞锁。所以自旋的次数一般控制在一个范围内，例如10,100等，在超出这个范围后，自旋锁会升级为阻塞锁。</p>
-<p>对自旋锁周期的选择上，HotSpot认为最佳时间应是一个线程上下文切换的时间，但目前并没有做到。经过调查，目前只是通过汇编暂停了几个CPU周期，除了自旋周期选择，HotSpot还进行许多其他的自旋优化策略，具体如下：</p>
-<ul>
-<li>如果平均负载小于CPUs则一直自旋 </li>
-<li>如果有超过(CPUs/2)个线程正在自旋，则后来线程直接阻塞 </li>
-<li>如果正在自旋的线程发现Owner发生了变化则延迟自旋时间（自旋计数）或进入阻塞 如果CPU处于节电模式则停止自旋 </li>
-<li>自旋时间的最坏情况是CPU的存储延迟（CPU A存储了一个数据，到CPU B得知这个数据直接的时间差）</li>
-</ul>
-<h2 id="3-3_轻量级锁">3.3 轻量级锁</h2>
-<h3 id="轻量级锁加锁">轻量级锁加锁</h3>
-<p>线程在执行同步块之前，JVM会先在当前线程的栈桢中创建用于存储锁记录的空间，并将对象头中的Mark Word复制到锁记录中，官方称为Displaced Mark Word。<strong>然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针。如果成功，当前线程获得锁，如果失败，则自旋获取锁，当自旋获取锁仍然失败时，表示存在其他线程竞争锁(两条或两条以上的线程竞争同一个锁)，则轻量级锁会膨胀成重量级锁。</strong></p>
-<h3 id="轻量级锁解锁">轻量级锁解锁</h3>
-<p><strong>轻量级解锁时，会使用原子的CAS操作来将Displaced Mark Word替换回到对象头，如果成功，则表示同步过程已完成。</strong>如果失败，表示有其他线程尝试过获取该锁，则要在释放锁的同时唤醒被挂起的线程。下图是两个线程同时争夺锁，导致锁膨胀的流程图。</p>
-<p><img src="/img/light_lock_flow.jpg" alt=""><br><img src="/img/light_lock_progress.jpg" alt=""></p>
-<h2 id="3-4_重量级锁">3.4 重量级锁</h2>
-<p>重量锁在JVM中又叫对象监视器（Monitor），它很像C中的Mutex，除了具备Mutex互斥的功能，它还负责实现了Semaphore的功能，也就是说它至少包含一个竞争锁的队列，和一个信号阻塞队列（wait队列），前者负责做互斥，后一个用于做线程同步。</p>
-<h1 id="4-_锁的优缺点对比">4. 锁的优缺点对比</h1>
-<table>
-<thead>
-<tr>
-<th>锁</th>
-<th>优点</th>
-<th>缺点</th>
-<th>适用场景</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>偏向锁</td>
-<td>加锁和解锁不需要额外的消耗，和执行非同步方法比仅存在纳秒级的差距</td>
-<td>如果线程间存在锁竞争，会带来额外的锁撤销的消耗</td>
-<td>适用于只有一个线程访问同步块场景</td>
-</tr>
-<tr>
-<td>轻量级锁</td>
-<td>竞争的线程不会阻塞，提高了程序的响应速度</td>
-<td>如果始终得不到锁竞争的线程使用自旋会消耗CPU</td>
-<td>追求响应时间,锁占用时间很短</td>
-</tr>
-<tr>
-<td>重量级锁</td>
-<td>线程竞争不使用自旋，不会消耗CPU</td>
-<td>线程阻塞，响应时间缓慢</td>
-<td>追求吞吐量,锁占用时间较长</td>
-</tr>
-</tbody>
-</table>
-<p><br></p>
-<h1 id="refers:">refers:</h1>
-<blockquote>
-<p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="external">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="external">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="external">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="external">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="http://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="external">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="http://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="external">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="http://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="external">http://blog.csdn.net/coslay/article/details/41526635</a></p>
-</blockquote>
-
-        
-        
-        <p class="article-more-link">
-          
-       </p>
-    </div>
-    <footer class="article-footer clearfix">
-<div class="article-catetags">
-
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/java/">java</a><a href="/tags/多线程/">多线程</a>
-  </div>
-
-</div>
-
-
-
-
-<div class="comments-count">
-	
-	  	<span></span>
-		<a href="/2015/07/09/java锁优化/#disqus_thread" class="comments-count-link">Comments</a>
-	
-</div>
-
-</footer>
-
-
-    </article>
-
-
-
-
-
-
 
   <nav id="page-nav" class="clearfix">
     <a class="extend prev" rel="prev" href="/page/3/"><span></span>Prev</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><span class="page-number current">4</span><a class="page-number" href="/page/5/">5</a><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/5/">Next<span></span></a>
@@ -1288,43 +1203,43 @@ var _hmt = _hmt || [];
 		
 			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
 		
-			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>13</sup></a></li>
 		
-			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>10</sup></a></li>
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
 		
 			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
 		
 			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
 		
+			<li><a href="/tags/机器学习实战/" title="机器学习实战">机器学习实战<sup>3</sup></a></li>
+		
 			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
 		
-			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
-		
 			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
 		
 			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
 		
 			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
 		
-			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
-		
 			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
 		
 			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
 		
-			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
 		
 			<li><a href="/tags/总结/" title="总结">总结<sup>1</sup></a></li>
 		
 			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
-		
-			<li><a href="/tags/数据挖掘/" title="数据挖掘">数据挖掘<sup>1</sup></a></li>
-		
-			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
 		
 		</ul>
 </div>
@@ -1375,7 +1290,7 @@ var _hmt = _hmt || [];
 		
 		
 	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2018 
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2019 
 		
 		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
 		
