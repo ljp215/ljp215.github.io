@@ -1,119 +1,271 @@
+<!DOCTYPE html>
 
- <!DOCTYPE HTML>
-<html>
-<head><meta name="generator" content="Hexo 3.9.0">
+
+
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
   <meta charset="UTF-8">
-  
-    <title>使用 HBase 总结 | Zane Blog</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
-    
-    <meta name="author" content="Jinping Luo">
-    
-    <meta name="description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。
-1.1 HBase">
-    
-    
-    <meta name="description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 1.1 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBas">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=7.3.0">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=7.3.0">
+  <link rel="mask-icon" href="/images/logo.svg?v=7.3.0" color="#222">
+
+<link rel="stylesheet" href="/css/main.css?v=7.3.0">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css?v=4.7.0">
+
+
+<script id="hexo-configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '7.3.0',
+    exturl: false,
+    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
+    save_scroll: false,
+    copycode: {"enable":false,"show_result":false,"style":null},
+    fancybox: false,
+    mediumzoom: false,
+    lazyload: false,
+    pangu: false,
+    algolia: {
+      appID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    },
+    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: '',
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    translation: {
+      copy_button: 'Copy',
+      copy_success: 'Copied',
+      copy_failure: 'Copy failed'
+    }
+  };
+</script>
+
+  <meta name="description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 1.1 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBas">
 <meta name="keywords" content="Data">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 HBase 总结">
 <meta property="og:url" content="http://luojinping.com/2016/05/22/使用-HBase-总结/index.html">
 <meta property="og:site_name" content="Zane Blog">
 <meta property="og:description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 1.1 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBas">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2019-08-18T08:51:23.128Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 HBase 总结">
 <meta name="twitter:description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 1.1 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBas">
+  <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+  <link rel="canonical" href="http://luojinping.com/2016/05/22/使用-HBase-总结/">
 
-    
-    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
-    
-    
-    <link rel="icon" href="/img/favicon.ico">
-    
-    
-    <link rel="apple-touch-icon" href="/img/jacman.jpg">
-    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
-    
-    <link rel="stylesheet" href="/css/style.css">
-    <script>
-var _hmt = _hmt || [];
-(function() {
-  var hm = document.createElement("script");
-  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
-  var s = document.getElementsByTagName("script")[0]; 
-  s.parentNode.insertBefore(hm, s);
-})();
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true,
+    isPage: false,
+    isArchive: false
+  };
 </script>
 
+  <title>使用 HBase 总结 | Zane Blog</title>
+  <meta name="generator" content="Hexo 3.9.0">
+  
+
+
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .motion-element,
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-title { opacity: initial; }
+
+  .use-motion .logo,
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
 </head>
-</html>
-  <body>
-    <header>
-      <div>
-		
-			<div id="imglogo">
-				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
-			</div>
-			
-			<div id="textlogo">
-				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
-				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
-			</div>
-			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
-			</a></div>
-			<nav class="animated">
-				<ul>
-					<ul>
-					 
-						<li><a href="/">Home</a></li>
-					
-						<li><a href="/archives">Archives</a></li>
-					
-						<li><a href="/about">About</a></li>
-					
-					<li>
- 					
-					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
-						<label>Search</label>
-						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
-						<input type="hidden" name="q" value="site:luojinping.com">
-					</form>
-					
-					</li>
-				</ul>
-			</nav>			
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  <div class="container sidebar-position-right">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta">
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Zane Blog</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+        <p class="site-subtitle">业精于勤荒于嬉，形成思毁于随</p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="Toggle navigation bar">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+      
+      
+      
+        
+        <li class="menu-item menu-item-home">
+      
+    
+
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-tags">
+      
+    
+
+    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+
+  </li>
+      
+      
+      
+        
+        <li class="menu-item menu-item-archives">
+      
+    
+
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+
+  </li>
+  </ul>
+
+    
+
+</nav>
 </div>
     </header>
-    <div id="container">
-      <div id="main" class="post" itemscope itemprop="blogPost">
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content page-post-detail">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post" itemscope itemtype="http://schema.org/Article">
   
-	<article itemprop="articleBody"> 
-		<header class="article-info clearfix">
-  <h1 itemprop="name">
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2016/05/22/使用-HBase-总结/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Jinping Luo">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Zane Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">使用 HBase 总结
+
+          
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">Posted on</span>
+
+              
+                
+              
+
+              <time title="Created: May 22 2016 16:27:28" itemprop="dateCreated datePublished" datetime="2016-05-22T16:27:28+08:00">May 22 2016</time>
+            </span>
+          
+            
+
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">Edited on</span>
+                <time title="Modified: Aug 18 2019 16:51:23" itemprop="dateModified" datetime="2019-08-18T16:51:23+08:00">Aug 18 2019</time>
+              </span>
+            
+          
+
+          
+
+        </div>
+      </header>
+
     
-      <a href="/2016/05/22/使用-HBase-总结/" title="使用 HBase 总结" itemprop="url">使用 HBase 总结</a>
-  </h1>
-  <p class="article-author">By
-       
-		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
-		
-  <p class="article-time">
-    <time datetime="2016-05-22T08:27:28.000Z" itemprop="datePublished"> Published May 22 2016</time>
     
-  </p>
-</header>
-	<div class="article-content">
-		
-		<div id="toc" class="toc-article">
-			<strong class="toc-title">Contents</strong>
-		
-			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-HBase-简介"><span class="toc-number">1.</span> <span class="toc-text">1. HBase 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-HBase-的优点"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 HBase 的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-数据模型"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 数据模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HBase-的设计与实现"><span class="toc-number">2.</span> <span class="toc-text">2. HBase 的设计与实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-HBase-的架构"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 HBase 的架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-HBase-的架构详解"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 HBase 的架构详解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HBase-Mysql-的比较"><span class="toc-number">3.</span> <span class="toc-text">3. HBase, Mysql 的比较</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-设计-HBase-表"><span class="toc-number">4.</span> <span class="toc-text">4. 设计 HBase 表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-RowKey-的设计"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 RowKey 的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-1-RowKey-长度的设计"><span class="toc-number">4.1.1.</span> <span class="toc-text">4.1.1 RowKey 长度的设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-2-RowKey-含义的设计"><span class="toc-number">4.1.2.</span> <span class="toc-text">4.1.2 RowKey 含义的设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-3-RowKey-性能的设计"><span class="toc-number">4.1.3.</span> <span class="toc-text">4.1.3 RowKey 性能的设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-ColumnFamily-的设计"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 ColumnFamily 的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-ColumnFamily-的长度"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 ColumnFamily 的长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-2-ColumnFamily-的数量"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 ColumnFamily 的数量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-Column-的设计"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Column 的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-1-Column-的长度"><span class="toc-number">4.3.1.</span> <span class="toc-text">4.3.1 Column 的长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-2-Column-的数量"><span class="toc-number">4.3.2.</span> <span class="toc-text">4.3.2 Column 的数量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-HBase-Pool"><span class="toc-number">4.4.</span> <span class="toc-text">5.1 HBase Pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-批量读"><span class="toc-number">4.5.</span> <span class="toc-text">5.2 批量读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-Scan"><span class="toc-number">4.6.</span> <span class="toc-text">5.3 Scan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-PrefixFilter"><span class="toc-number">4.7.</span> <span class="toc-text">5.4 PrefixFilter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-1-PefixFilter-Vs-Scan"><span class="toc-number">4.7.1.</span> <span class="toc-text">5.4.1 PefixFilter Vs Scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-2-Convert-PrefixFilter-to-Scan"><span class="toc-number">4.7.2.</span> <span class="toc-text">5.4.2 Convert PrefixFilter to Scan</span></a></li></ol></li></ol></li></ol>
-		
-		</div>
-		
-		<h1 id="1-HBase-简介"><a href="#1-HBase-简介" class="headerlink" title="1. HBase 简介"></a>1. HBase 简介</h1><p>HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。</p>
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="1-HBase-简介"><a href="#1-HBase-简介" class="headerlink" title="1. HBase 简介"></a>1. HBase 简介</h1><p>HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。</p>
 <h2 id="1-1-HBase-的优点"><a href="#1-1-HBase-的优点" class="headerlink" title="1.1 HBase 的优点"></a>1.1 HBase 的优点</h2><ol>
 <li>高可扩展性<br>HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对数据进行水平切分，并分配不同的服务器来管理这些数据。这些数据可以被扩散到上千个普通服务器上。这样一方面可以由大量普通服务器组成大规模集群，来存放海量数据(从几个 TB 到几十 PB 的数据)。另一方面，当数据峰值接近系统设计容量时，可以简单通过增加服务器的方式来扩大容量。这个动态扩容过程无需停机，HBase系统可以照常运行并提供读写服务，完全实现动态无缝无宕机扩容。</li>
 <li>高性能<br>HBase 的设计目的之一是支持高并发用户数的高速读写访问。这是通过两方面来实现的。首先数据行被水平切分并分布到多台服务器上，在大量用户访问时，访问请求也被分散到了不同的服务器上，虽然每个服务器的服务能力有限，但是数千台服务器汇总后可以提供极高性能的访问能力。其次，HBase 设计了高效的缓存机制，有效提高了访问的命中率，提高了访问性能。</li>
@@ -212,382 +364,268 @@ var _hmt = _hmt || [];
 <blockquote>
 <p><a href="http://blog.linezing.com/2012/03/hbase-performance-optimization/" target="_blank" rel="noopener">http://blog.linezing.com/2012/03/hbase-performance-optimization/</a><br><a href="https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html" target="_blank" rel="noopener">https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html</a><br><a href="http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html" target="_blank" rel="noopener">http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html</a><br><a href="http://blog.chedushi.com/archives/9720" target="_blank" rel="noopener">http://blog.chedushi.com/archives/9720</a><br><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="noopener">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a><br><a href="https://cloud.google.com/bigtable/docs/schema-design" target="_blank" rel="noopener">https://cloud.google.com/bigtable/docs/schema-design</a><br><a href="http://www.slideshare.net/alexbaranau/transactions-over-hbase" target="_blank" rel="noopener">http://www.slideshare.net/alexbaranau/transactions-over-hbase</a><br><a href="https://hbase.apache.org/acid-semantics.html" target="_blank" rel="noopener">https://hbase.apache.org/acid-semantics.html</a></p>
 </blockquote>
-  
-	</div>
-		<footer class="article-footer clearfix">
-<div class="article-catetags">
 
-
-  <div class="article-tags">
-  
-  <span></span> <a href="/tags/Data/">Data</a>
-  </div>
-
-</div>
-
-
-
-	<div class="article-share" id="share">
-	
-	  <div data-url="http://luojinping.com/2016/05/22/使用-HBase-总结/" data-title="使用 HBase 总结 | Zane Blog" data-tsina="" class="share clearfix">
-	  </div>
-	
-	</div>
-
-
-</footer>
-
-   	       
-	</article>
-	
-<nav class="article-nav clearfix">
- 
- <div class="prev" >
- <a href="/2017/08/13/服务调优/" title="服务调优">
-  <strong>上一篇：</strong><br/>
-  <span>
-  服务调优</span>
-</a>
-</div>
-
-
-<div class="next">
-<a href="/2016/04/17/https详解/"  title="https详解">
- <strong>下一篇：</strong><br/> 
- <span>https详解
-</span>
-</a>
-</div>
-
-</nav>
-
-	
-
-<section id="comments" class="comment">
-  <div id="disqus_thread">
-    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-  </div>
-</section>
-
-</div>  
-      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
-
-  <div id="toc" class="toc-aside">
-  <strong class="toc-title">Contents</strong>
- 
- <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#1-HBase-简介"><span class="toc-number">1.</span> <span class="toc-text">1. HBase 简介</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-HBase-的优点"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 HBase 的优点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-2-数据模型"><span class="toc-number">1.2.</span> <span class="toc-text">1.2 数据模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#2-HBase-的设计与实现"><span class="toc-number">2.</span> <span class="toc-text">2. HBase 的设计与实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1-HBase-的架构"><span class="toc-number">2.1.</span> <span class="toc-text">2.1 HBase 的架构</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-2-HBase-的架构详解"><span class="toc-number">2.2.</span> <span class="toc-text">2.2 HBase 的架构详解</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#3-HBase-Mysql-的比较"><span class="toc-number">3.</span> <span class="toc-text">3. HBase, Mysql 的比较</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#4-设计-HBase-表"><span class="toc-number">4.</span> <span class="toc-text">4. 设计 HBase 表</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#4-1-RowKey-的设计"><span class="toc-number">4.1.</span> <span class="toc-text">4.1 RowKey 的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-1-RowKey-长度的设计"><span class="toc-number">4.1.1.</span> <span class="toc-text">4.1.1 RowKey 长度的设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-2-RowKey-含义的设计"><span class="toc-number">4.1.2.</span> <span class="toc-text">4.1.2 RowKey 含义的设计</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-1-3-RowKey-性能的设计"><span class="toc-number">4.1.3.</span> <span class="toc-text">4.1.3 RowKey 性能的设计</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-2-ColumnFamily-的设计"><span class="toc-number">4.2.</span> <span class="toc-text">4.2 ColumnFamily 的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-1-ColumnFamily-的长度"><span class="toc-number">4.2.1.</span> <span class="toc-text">4.2.1 ColumnFamily 的长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-2-2-ColumnFamily-的数量"><span class="toc-number">4.2.2.</span> <span class="toc-text">4.2.2 ColumnFamily 的数量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-3-Column-的设计"><span class="toc-number">4.3.</span> <span class="toc-text">4.3 Column 的设计</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-1-Column-的长度"><span class="toc-number">4.3.1.</span> <span class="toc-text">4.3.1 Column 的长度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-3-2-Column-的数量"><span class="toc-number">4.3.2.</span> <span class="toc-text">4.3.2 Column 的数量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-1-HBase-Pool"><span class="toc-number">4.4.</span> <span class="toc-text">5.1 HBase Pool</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-2-批量读"><span class="toc-number">4.5.</span> <span class="toc-text">5.2 批量读</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-3-Scan"><span class="toc-number">4.6.</span> <span class="toc-text">5.3 Scan</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5-4-PrefixFilter"><span class="toc-number">4.7.</span> <span class="toc-text">5.4 PrefixFilter</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-1-PefixFilter-Vs-Scan"><span class="toc-number">4.7.1.</span> <span class="toc-text">5.4.1 PefixFilter Vs Scan</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-4-2-Convert-PrefixFilter-to-Scan"><span class="toc-number">4.7.2.</span> <span class="toc-text">5.4.2 Convert PrefixFilter to Scan</span></a></li></ol></li></ol></li></ol>
- 
-  </div>
-
-<div id="asidepart">
-<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
-<aside class="clearfix">
-
-  
-
-  
-<div class="tagslist">
-	<p class="asidetitle">Tags</p>
-		<ul class="clearfix">
-		
-			<li><a href="/tags/Java/" title="Java">Java<sup>15</sup></a></li>
-		
-			<li><a href="/tags/Machine-Learning/" title="Machine Learning">Machine Learning<sup>11</sup></a></li>
-		
-			<li><a href="/tags/Algorithm/" title="Algorithm">Algorithm<sup>10</sup></a></li>
-		
-			<li><a href="/tags/Data/" title="Data">Data<sup>5</sup></a></li>
-		
-			<li><a href="/tags/Distributed-System/" title="Distributed System">Distributed System<sup>3</sup></a></li>
-		
-			<li><a href="/tags/Tools/" title="Tools">Tools<sup>3</sup></a></li>
-		
-			<li><a href="/tags/Math/" title="Math">Math<sup>3</sup></a></li>
-		
-			<li><a href="/tags/Introspect/" title="Introspect">Introspect<sup>2</sup></a></li>
-		
-			<li><a href="/tags/Mix/" title="Mix">Mix<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Hexo/" title="Hexo">Hexo<sup>1</sup></a></li>
-		
-			<li><a href="/tags/Network/" title="Network">Network<sup>1</sup></a></li>
-		
-		</ul>
-</div>
-
-
-  <div class="linkslist">
-  <p class="asidetitle">Links</p>
-    <ul>
-        
-          <li>
-            
-            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
-            
-          </li>
-        
-    </ul>
-</div>
-
-  <div class="rsspart">
-	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
-</div>
-
-</aside>
-</div>
     </div>
-    <footer><div id="footer" >
-	
-	<div class="line">
-		<span></span>
-		<div class="author"></div>
-	</div>
-	
-	
-	<section class="info">
-		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
-			This is my blog,believe it or not.</p>
-	</section>
-	 
-	<div class="social-font" class="clearfix">
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-	</div>
-		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2019 
-		
-		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
-		
-		</p>
-</div>
-</footer>
-    <script src="/js/jquery-2.0.3.min.js"></script>
-<script src="/js/jquery.imagesloaded.min.js"></script>
-<script src="/js/gallery.js"></script>
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.navbar').click(function(){
-    $('header nav').toggleClass('shownav');
-  });
-  var myWidth = 0;
-  function getSize(){
-    if( typeof( window.innerWidth ) == 'number' ) {
-      myWidth = window.innerWidth;
-    } else if( document.documentElement && document.documentElement.clientWidth) {
-      myWidth = document.documentElement.clientWidth;
-    };
-  };
-  var m = $('#main'),
-      a = $('#asidepart'),
-      c = $('.closeaside'),
-      o = $('.openaside');
-  $(window).resize(function(){
-    getSize(); 
-    if (myWidth >= 1024) {
-      $('header nav').removeClass('shownav');
-    }else
-    {
-      m.removeClass('moveMain');
-      a.css('display', 'block').removeClass('fadeOut');
-      o.css('display', 'none');
-      
-      $('#toc.toc-aside').css('display', 'none');
+    
+    
+    
         
-    }
-  });
-  c.click(function(){
-    a.addClass('fadeOut').css('display', 'none');
-    o.css('display', 'block').addClass('fadeIn');
-    m.addClass('moveMain');
-  });
-  o.click(function(){
-    o.css('display', 'none').removeClass('beforeFadeIn');
-    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
-    m.removeClass('moveMain');
-  });
-  $(window).scroll(function(){
-    o.css("top",Math.max(80,260-$(this).scrollTop()));
-  });
-});
-</script>
+      
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var ai = $('.article-content>iframe'),
-      ae = $('.article-content>embed'),
-      t  = $('#toc'),
-      h  = $('article h2')
-      ah = $('article h2'),
-      ta = $('#toc.toc-aside'),
-      o  = $('.openaside'),
-      c  = $('.closeaside');
-  if(ai.length>0){
-    ai.wrap('<div class="video-container" />');
-  };
-  if(ae.length>0){
-   ae.wrap('<div class="video-container" />');
-  };
-  if(ah.length==0){
-    t.css('display','none');
-  }else{
-    c.click(function(){
-      ta.css('display', 'block').addClass('fadeIn');
-    });
-    o.click(function(){
-      ta.css('display', 'none');
-    });
-    $(window).scroll(function(){
-      ta.css("top",Math.max(140,320-$(this).scrollTop()));
-    });
-  };
-});
-</script>
+      <footer class="post-footer">
+          
+            
+          
+          <div class="post-tags">
+            
+              <a href="/tags/Data/" rel="tag"># Data</a>
+            
+          </div>
+        
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-next post-nav-item">
+              
+                <a href="/2016/04/17/https详解/" rel="next" title="https详解">
+                  <i class="fa fa-chevron-left"></i> https详解
+                </a>
+              
+            </div>
+
+            <span class="post-nav-divider"></span>
+
+            <div class="post-nav-prev post-nav-item">
+              
+                <a href="/2017/08/13/服务调优/" rel="prev" title="服务调优">
+                  服务调优 <i class="fa fa-chevron-right"></i>
+                </a>
+              
+            </div>
+          </div>
+        
+      </footer>
+    
+  </div>
+  
+  
+  
+  </article>
+
+  </div>
 
 
-<script type="text/javascript">
-$(document).ready(function(){ 
-  var $this = $('.share'),
-      url = $this.attr('data-url'),
-      encodedUrl = encodeURIComponent(url),
-      title = $this.attr('data-title'),
-      tsina = $this.attr('data-tsina'),
-      description = $this.attr('description');
-  var html = [
-  '<a href="#" class="overlay" id="qrcode"></a>',
-  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
-  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
-  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
-  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
-  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
-  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
-  '<span title="Share to"></span>'
-  ].join('');
-  $this.append(html);
-  $('.article-share-qrcode').click(function(){
-    var imgSrc = $('#qrcode-pic').attr('data-src');
-    $('#qrcode-pic').attr('src', imgSrc);
-    $('#qrcode-pic').load(function(){
-        $('.qrcode strong').text(' ');
-    });
-  });
-});     
-</script>
+          </div>
+          
 
+        </div>
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
 
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
 
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
 
-<script type="text/javascript">
-
-var disqus_shortname = 'zane215';
-
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
-(function(){
-  var dsq = document.createElement('script');
-  dsq.type = 'text/javascript';
-  dsq.async = true;
-  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
-  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
-}());
-</script>
-
-
-
-
-
-
-<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
-<script src="/fancybox/jquery.fancybox.pack.js"></script>
-<script type="text/javascript">
-$(document).ready(function(){ 
-  $('.article-content').each(function(i){
-    $(this).find('img').each(function(){
-      if ($(this).parent().hasClass('fancybox')) return;
-      var alt = this.alt;
-      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
-      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
-    });
-    $(this).find('.fancybox').each(function(){
-      $(this).attr('rel', 'article' + i);
-    });
-  });
-  if($.fancybox){
-    $('.fancybox').fancybox();
-  }
-}); 
-</script>
-
-
-
-<!-- Analytics Begin -->
-
-
-
-<script type="text/javascript">
-var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
-document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F' type='text/javascript'%3E%3C/script%3E"));
-</script>
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Jinping Luo</p>
+  <div class="site-description motion-element" itemprop="description"></div>
+</div>
+  <nav class="site-state motion-element">
+      <div class="site-state-item site-state-posts">
+        
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">56</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+    
+      
+      
+      <div class="site-state-item site-state-tags">
+        
+          
+            <a href="/tags">
+          
+        
+        
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">tags</span>
+        </a>
+      </div>
+    
+  </nav>
+  <div class="feed-link motion-element">
+    <a href="/atom.xml" rel="alternate">
+      <i class="fa fa-rss"></i>RSS
+    </a>
+  </div>
 
 
 
-<!-- Analytics End -->
 
-<!-- Totop Begin -->
+        </div>
+      </div>
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
 
-	<div id="totop">
-	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
-	</div>
-	<script src="/js/totop.js"></script>
+            
+            
+            
+            
 
-<!-- Totop End -->
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-HBase-简介"><span class="nav-number">1.</span> <span class="nav-text">1. HBase 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-HBase-的优点"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 HBase 的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-数据模型"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 数据模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HBase-的设计与实现"><span class="nav-number">2.</span> <span class="nav-text">2. HBase 的设计与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-HBase-的架构"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 HBase 的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-HBase-的架构详解"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 HBase 的架构详解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-HBase-Mysql-的比较"><span class="nav-number">3.</span> <span class="nav-text">3. HBase, Mysql 的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-设计-HBase-表"><span class="nav-number">4.</span> <span class="nav-text">4. 设计 HBase 表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-RowKey-的设计"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 RowKey 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-RowKey-长度的设计"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 RowKey 长度的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-RowKey-含义的设计"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 RowKey 含义的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-RowKey-性能的设计"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 RowKey 性能的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-ColumnFamily-的设计"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 ColumnFamily 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-ColumnFamily-的长度"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 ColumnFamily 的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-ColumnFamily-的数量"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 ColumnFamily 的数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-Column-的设计"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Column 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-Column-的长度"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 Column 的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-2-Column-的数量"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 Column 的数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-HBase-Pool"><span class="nav-number">4.4.</span> <span class="nav-text">5.1 HBase Pool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-批量读"><span class="nav-number">4.5.</span> <span class="nav-text">5.2 批量读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-Scan"><span class="nav-number">4.6.</span> <span class="nav-text">5.3 Scan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-PrefixFilter"><span class="nav-number">4.7.</span> <span class="nav-text">5.4 PrefixFilter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-1-PefixFilter-Vs-Scan"><span class="nav-number">4.7.1.</span> <span class="nav-text">5.4.1 PefixFilter Vs Scan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-2-Convert-PrefixFilter-to-Scan"><span class="nav-number">4.7.2.</span> <span class="nav-text">5.4.2 Convert PrefixFilter to Scan</span></a></li></ol></li></ol></li></ol></div>
+            
 
-<!-- MathJax Begin -->
-<!-- mathjax config similar to math.stackexchange -->
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-    tex2jax: {
-      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
-      processEscapes: true
-    }
-  });
-</script>
+          </div>
+        </div>
+      <!--/noindex-->
+      
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Config({
-      tex2jax: {
-        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-    });
-</script>
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
 
-<script type="text/x-mathjax-config">
-    MathJax.Hub.Queue(function() {
-        var all = MathJax.Hub.getAllJax(), i;
-        for(i=0; i < all.length; i += 1) {
-            all[i].SourceElement().parentNode.className += ' has-jax';
-        }
-    });
-</script>
 
-<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
-</script>
+      </div>
+    </main>
 
-<!-- MathJax End -->
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <span class="post-meta-divider">|</span>
+  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
 
-  </body>
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+
+    
+
+  </div>
+
+  
+  <script src="/lib/jquery/index.js?v=3.4.1"></script>
+  <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+<script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
+
+<script src="/js/schemes/muse.js?v=7.3.0"></script>
+
+
+
+<script src="/js/next-boot.js?v=7.3.0"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+  
+
+
+  
+  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
+
+
+</body>
 </html>
