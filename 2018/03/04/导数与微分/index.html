@@ -1,0 +1,540 @@
+
+ <!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>导数与微分 | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="##连续设 $y=f(x)$ 在 $x_0$ 有定义，若$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$则函数 $f(x)$ 在点 $x_0$ 处连续。
+另外一种定义：在点 $x_0$ 附近，如果自变量的该变量是无穷小时，对应的因变量的该变量也是无穷小，则这个函">
+    
+    
+    <meta name="description" content="##连续设 $y=f(x)$ 在 $x_0$ 有定义，若$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$则函数 $f(x)$ 在点 $x_0$ 处连续。 另外一种定义：在点 $x_0$ 附近，如果自变量的该变量是无穷小时，对应的因变量的该变量也是无穷小，则这个函数在点 $x_0$ 处连续。 通俗地说，所谓“连续”，就是不间断。放到函数上，就是没有“断点”（但是">
+<meta name="keywords" content="机器学习,数学">
+<meta property="og:type" content="article">
+<meta property="og:title" content="导数与微分">
+<meta property="og:url" content="http://luojinping.com/2018/03/04/导数与微分/index.html">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="##连续设 $y=f(x)$ 在 $x_0$ 有定义，若$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$则函数 $f(x)$ 在点 $x_0$ 处连续。 另外一种定义：在点 $x_0$ 附近，如果自变量的该变量是无穷小时，对应的因变量的该变量也是无穷小，则这个函数在点 $x_0$ 处连续。 通俗地说，所谓“连续”，就是不间断。放到函数上，就是没有“断点”（但是">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-08-17T16:44:04.001Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="导数与微分">
+<meta name="twitter:description" content="##连续设 $y=f(x)$ 在 $x_0$ 有定义，若$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$则函数 $f(x)$ 在点 $x_0$ 处连续。 另外一种定义：在点 $x_0$ 附近，如果自变量的该变量是无穷小时，对应的因变量的该变量也是无穷小，则这个函数在点 $x_0$ 处连续。 通俗地说，所谓“连续”，就是不间断。放到函数上，就是没有“断点”（但是">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/03/04/导数与微分/" title="导数与微分" itemprop="url">导数与微分</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-03-04T12:16:31.000Z" itemprop="datePublished"> Published Mar 4 2018</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			
+		
+		</div>
+		
+		<p>##连续<br>设 $y=f(x)$ 在 $x_0$ 有定义，若<br>$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$<br>则函数 $f(x)$ 在点 $x_0$ 处连续。</p>
+<p>另外一种定义：<br>在点 $x_0$ 附近，如果自变量的该变量是无穷小时，对应的因变量的该变量也是无穷小，则这个函数在点 $x_0$ 处连续。</p>
+<p>通俗地说，所谓“连续”，就是不间断。放到函数上，就是没有“断点”（但是可以有“拐点”）。</p>
+<p>二元函数的连续性定义与一元函数类似。</p>
+<p>##导数</p>
+<p>###定义<br>导数（Derivative）是微积分学中重要的基础概念。一个函数在某一点的导数描述了这个函数在这一点附近的变化率。导数的本质是通过极限的概念对函数进行局部的线性逼近。</p>
+<p>导数的几何定义是：曲线上的纵坐标对点的横坐标的导数是曲线在该点的切线的斜率。</p>
+<p>导数的物理意义之一是：位移s对时间t的导数是瞬时速度，即 $v=\frac{ds}{dt}$</p>
+<p>###可导<br>函数可导定义：<br>（1）设 f(x)在 $x_0$ 及其附近有定义,则当  $\displaystyle\lim_{\Delta{x}\to0}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$ 存在, 则称 f(x) 在 $x_0$ 处可导。<br>（2）若对于区间 (a,b) 上任意一点 (x，f(x)) 均可导，则称 f(x) 在 (a，b) 上可导。</p>
+<p>左导数：$\displaystyle\lim_{\Delta{x}\to0^-}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$<br>右导数：$\displaystyle\lim_{\Delta{x}\to0^+}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$</p>
+<p>连续函数可导条件：函数在该点的左右偏导数都存在且相等。<br>即就是一个函数在某一点求极限，如果极限存在，则为可导，若所得导数等于函数在该点的函数值，则函数为连续可导函数，否则为不连续可导函数。</p>
+<p>##微分<br>在数学中，微分是对函数的局部变化率的一种线性描述。微分可以近似地描述当函数自变量的取值作足够小的改变时，函数的值是怎样改变的。</p>
+<p>###定义<br>若 y=f(x) 在处可导，则函数的增量，<br>$\Delta{y}=f(x+\Delta{x})-f(x)=f’(x)\Delta{x}+\alpha(\Delta{x})\Delta{x}$<br>其中 $\alpha(\Delta{x})$ 是$\Delta{x}(\Delta{x} \to 0)$ 的高阶无穷小。<br>称 $f’(x)\Delta{x}$ 为 $f(x)$ 在 $x$ 处的微分。<br>而 $f’(x)$ 是 $f(x)$ 在 $x$ 处的导数。</p>
+<p>###可微<br>设函数$y= f(x)$，若自变量在点x的改变量Δx与函数相应的改变量Δy有关系$Δy=AΔx+ο(Δx)$<br>其中A与Δx无关，则称函数f(x)在点x可微，并称AΔx为函数f(x)在点x的微分，记作dy，即$dy=AΔx$<br>当$x=x_0$时，则记作$dy∣x=x_0$.</p>
+<p>可微条件：<br>必要条件：若函数在某点可微，则该函数在该点对x和y的偏导数必存在。<br>充分条件：若函数对x和y的偏导数在这点的某一邻域内都存在，且均在这点连续，则该函数在这点可微。</p>
+<p>连续但不可微的例子：<br>![](/img/function_ differential_counterexample.jpg)<br>魏尔斯特拉斯函数连续，但在任一点都不可微</p>
+<p>##连续，可导，可微的关系</p>
+<ul>
+<li>一元函数：可导必然连续，连续推不出可导，可导与可微等价。</li>
+<li>多元函数：可偏导与连续之间没有联系，也就是说可偏导推不出连续，连续推不出可偏导。</li>
+<li>多元函数中可微必可偏导，可微必连续，可偏导推不出可微，但若一阶偏导具有连续性则可推出可微。</li>
+</ul>
+<p>##全微分<br>对于多元函数，如果两个自变量都变化的话，这时候函数的微分就称为全微分。如果函数z=f(x,y)在(x,y)处的全增量$\Delta z=f(x+\Delta x,y+\Delta y)-f(x,y)$可以写成$\Delta z=A\Delta x+B\Delta y+o(\rho)$，<br>取其线性主部，称为二元函数的全微分 $\Delta z=A\Delta x+B\Delta y$</p>
+<p>可以证明全微分又可写成$dz=f_x dx+f_ydy =\frac{\partial z}{\partial x}dx+\frac{\partial z}{\partial y}dy$</p>
+<p>上式又称为全微分的叠加原理。可以这么理解：全增量包含两个部分，$\Delta x$引起的函数值增量和$\Delta y$引起的函数值增量。</p>
+<p>一句话感性说全微分其实就在表达曲面在某一点处的切平面。</p>
+<p>##梯度<br>梯度的本意是一个向量（矢量），表示某一函数在该点处的方向导数沿着该方向取得最大值，即函数在该点处沿着该方向（此梯度的方向）变化最快，变化率最大（为该梯度的模）。</p>
+<p>例如：在一元函数 f(x) 中，梯度只能沿 x 轴正方向或负方向，而在二元函数 f(x,y) 中，梯度则是一个二维向量 (∂f/∂x,∂f/∂y)。</p>
+<p>梯度一个重要的性质：梯度跟函数等高线是垂直的。<br>证明：<br>假设 Δx，Δy 是两个极小的变化量，根据全微分的知识，可以得到：<br>f(x+Δx,y+Δy)≈f(x,y)+∂f∂xΔx+∂f∂yΔy<br>如果 (Δx,Δy) 是在等高线方向的增量，那么 f(x+Δx,y+Δy)≈f(x,y)，这意味着 ∂f∂xΔx+∂f∂yΔy=0，换句话说，向量 ∇f 和向量 (Δx,Δy) 的内积为 0。所以，梯度和函数的等高线是垂直的。</p>
+<p>#Referen<br><a href="http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/" target="_blank" rel="noopener">http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/数学/">数学</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2018/03/04/导数与微分/" data-title="导数与微分 | Zane Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/03/04/拉格朗日乘子法/" title="拉格朗日乘子法">
+  <strong>上一篇：</strong><br/>
+  <span>
+  拉格朗日乘子法</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/02/25/概率论知识/"  title="概率论知识">
+ <strong>下一篇：</strong><br/> 
+ <span>概率论知识
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
+		
+			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
+		
+			<li><a href="/tags/机器学习实战/" title="机器学习实战">机器学习实战<sup>3</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2019 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>

@@ -1,0 +1,534 @@
+
+ <!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>机器学习实战 — 朴素贝叶斯 | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="#1. 作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。
+#2. 步骤
+
+加载数据集
+提取  TF-IDF 特征
+生成文档的 TF-IDF 矩阵
+训练多项式朴素贝叶斯模型
+评价模型">
+    
+    
+    <meta name="description" content="#1. 作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 #2. 步骤  加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  ##3. 实现 1234567891011121314151617181920212223242">
+<meta name="keywords" content="机器学习,机器学习实战">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习实战 — 朴素贝叶斯">
+<meta property="og:url" content="http://luojinping.com/2019/03/04/机器学习实践-—-朴素贝叶斯/index.html">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="#1. 作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 #2. 步骤  加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  ##3. 实现 1234567891011121314151617181920212223242">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://luojinping.com/img/naive_bayes_auc.jpg">
+<meta property="og:image" content="http://luojinping.com/img/naive_bayes_cross_matrix.png">
+<meta property="og:updated_time" content="2019-08-17T16:44:03.959Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战 — 朴素贝叶斯">
+<meta name="twitter:description" content="#1. 作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 #2. 步骤  加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  ##3. 实现 1234567891011121314151617181920212223242">
+<meta name="twitter:image" content="http://luojinping.com/img/naive_bayes_auc.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2019/03/04/机器学习实践-—-朴素贝叶斯/" title="机器学习实战 — 朴素贝叶斯" itemprop="url">机器学习实战 — 朴素贝叶斯</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2019-03-04T14:26:47.000Z" itemprop="datePublished"> Published Mar 4 2019</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			<ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文档"><span class="toc-number">1.</span> <span class="toc-text">参考文档</span></a></li></ol>
+		
+		</div>
+		
+		<p>#1. 作业<br>根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。<br>讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。</p>
+<p>#2. 步骤</p>
+<ol>
+<li>加载数据集</li>
+<li>提取  TF-IDF 特征</li>
+<li>生成文档的 TF-IDF 矩阵</li>
+<li>训练多项式朴素贝叶斯模型</li>
+<li>评价模型</li>
+</ol>
+<p>##3. 实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># sklearn twenty_newsgroups document</span></span><br><span class="line"><span class="comment"># http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html</span></span><br><span class="line">fetch_20newsgroups(data_home=<span class="string">'/Users/ljp/Codes/ivy_plan/naive_bayes/20_newsgroups'</span>, <span class="comment"># 文件下载的路径</span></span><br><span class="line">                   subset=<span class="string">'train'</span>, <span class="comment"># 加载那一部分数据集 train/test</span></span><br><span class="line">                   categories=<span class="literal">None</span>, <span class="comment"># 选取哪一类数据集[类别列表]，默认20类</span></span><br><span class="line">                   shuffle=<span class="literal">True</span>,  <span class="comment"># 将数据集随机排序</span></span><br><span class="line">                   random_state=<span class="number">42</span>, <span class="comment"># 随机数生成器</span></span><br><span class="line">                   remove=(), <span class="comment"># ('headers','footers','quotes') 去除部分文本</span></span><br><span class="line">                   download_if_missing=<span class="literal">True</span> <span class="comment"># 如果没有下载过，重新下载</span></span><br><span class="line">                  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据集</span></span><br><span class="line">newsgroups_train = fetch_20newsgroups(subset=<span class="string">'train'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bunch</span></span><br><span class="line"><span class="comment"># load_*和 fetch_* 函数返回的数据类型是 datasets.base.Bunch，本质上是一个 dict，它的键值对可用通过对象的属性方式访问。</span></span><br><span class="line"><span class="comment"># 主要包含以下属性：</span></span><br><span class="line"><span class="comment"># data：特征数据数组，type 是 list，是 n_samples * n_features 的二维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># filenames：文件数组，是文件路径，是 n_samples 的一维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># target：标签数组，是类别的整数索引，是 n_samples 的一维 numpy.ndarray 数组，与 filenames 一一对应</span></span><br><span class="line"><span class="comment"># DESCR：数据描述</span></span><br><span class="line"><span class="comment"># feature_names：特征名</span></span><br><span class="line"><span class="comment"># target_names：标签名</span></span><br><span class="line"><span class="comment"># print(type(newsgroups_train)) # &lt;class 'sklearn.utils.Bunch'&gt;</span></span><br><span class="line"><span class="comment"># print(list(newsgroups_train)) # ['data', 'filenames', 'target_names', 'target', 'DESCR', 'description']</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取tfidf特征</span></span><br><span class="line">vectorizer = TfidfVectorizer() <span class="comment"># vectorizer type is &lt;class 'sklearn.feature_extraction.text.TfidfVectorizer'&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vectors type is &lt;class 'scipy.sparse.csr.csr_matrix'&gt;</span></span><br><span class="line"><span class="comment"># 数据格式为：(文档序号, 单词序号), tf-idf值</span></span><br><span class="line"><span class="comment"># 文档序号是该文档在 newsgroups_train.filenames 里的索引(位置)</span></span><br><span class="line"><span class="comment"># 单词序号是该单词在所有单词所构成的一维向量(也称为词袋，Bag of words)里的索引(位置)</span></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line"><span class="comment">#  (0, 11071)	0.02879840104494835</span></span><br><span class="line"><span class="comment">#  (0, 19516)	0.15199951710440102</span></span><br><span class="line"><span class="comment">#  (0, 24556)	0.36446543134314724</span></span><br><span class="line">vectors = vectorizer.fit_transform(newsgroups_train.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># MultinomialNB实现文本分类</span></span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score,f1_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">clf=MultinomialNB(alpha=<span class="number">0.1</span>)</span><br><span class="line">clf.fit(vectors,newsgroups_train.target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载测试集</span></span><br><span class="line">newsgroups_test=fetch_20newsgroups(subset=<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取测试集tfidf特征</span></span><br><span class="line">vectors_test=vectorizer.transform(newsgroups_test.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型评价</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">pred=clf.predict(vectors_test)</span><br><span class="line">print(<span class="string">'accuracy_score: '</span> + str(accuracy_score(newsgroups_test.target,pred)))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"classification report on test set for classifier:"</span>)</span><br><span class="line">print(clf)</span><br><span class="line">X_test = vectorizer.transform((d <span class="keyword">for</span> d <span class="keyword">in</span> newsgroups_test.data))</span><br><span class="line">pred = clf.predict(X_test)</span><br><span class="line">y_test = newsgroups_test.target</span><br><span class="line">print(classification_report(y_test, pred, target_names=newsgroups_test.target_names))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成混淆矩阵，观察每种类别被错误分类的情况</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">cm = confusion_matrix(y_test, pred)</span><br><span class="line">print(<span class="string">"confusion matrix:"</span>)</span><br><span class="line">print(cm)</span><br><span class="line"><span class="comment"># Show confusion matrix</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">8</span>), dpi=<span class="number">144</span>)</span><br><span class="line">plt.title(<span class="string">'Confusion matrix of the classifier'</span>)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">ax.spines[<span class="string">'right'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'top'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'bottom'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'left'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.xaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.yaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.set_xticklabels([])</span><br><span class="line">ax.set_yticklabels([])</span><br><span class="line">plt.matshow(cm, fignum=<span class="number">1</span>, cmap=<span class="string">'gray'</span>)</span><br><span class="line">plt.colorbar()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
+<p>输出如下：<br><img src="/img/naive_bayes_auc.jpg" alt="naive_bayes_auc.jpg"></p>
+<p><img src="/img/naive_bayes_cross_matrix.png" alt="naive_bayes_cross_matrix.png"></p>
+<h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html" target="_blank" rel="noopener">5.6.2. 20个新闻组文本数据集 — scikit-learn 0.19.0 中文文档 - ApacheCN</a><br><a href="https://www.jianshu.com/p/364887de2039" target="_blank" rel="noopener">利用朴素贝叶斯算法进行文档分类 - 简书</a><br><a href="https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf" target="_blank" rel="noopener">https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf</a></p>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a><a href="/tags/机器学习实战/">机器学习实战</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2019/03/04/机器学习实践-—-朴素贝叶斯/" data-title="机器学习实战 — 朴素贝叶斯 | Zane Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2019/03/04/机器学习实战-—-决策树/" title="机器学习实战 — 决策树">
+  <strong>上一篇：</strong><br/>
+  <span>
+  机器学习实战 — 决策树</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/11/11/线性回归正则化/"  title="线性回归正则化">
+ <strong>下一篇：</strong><br/> 
+ <span>线性回归正则化
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#参考文档"><span class="toc-number">1.</span> <span class="toc-text">参考文档</span></a></li></ol>
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
+		
+			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
+		
+			<li><a href="/tags/机器学习实战/" title="机器学习实战">机器学习实战<sup>3</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2019 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>

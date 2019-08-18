@@ -1,0 +1,576 @@
+
+ <!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="UTF-8">
+  
+    <title>Stanford Machine Learning - 7 SVM | Zane Blog</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1,user-scalable=no">
+    
+    <meta name="author" content="Jinping Luo">
+    
+    <meta name="description" content="##1. SVM 定义支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。
+##2. 函数间隔和几何间隔上图中哪个">
+    
+    
+    <meta name="description" content="##1. SVM 定义支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。 ##2. 函数间隔和几何间隔上图中哪个分类器最好呢？ ###2.1 符号定义为了方便介绍 SVM，重新定义以下符号。1.在logstic回">
+<meta name="keywords" content="机器学习">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Stanford Machine Learning - 7 SVM">
+<meta property="og:url" content="http://luojinping.com/2018/04/14/Stanford-Machine-Learning-7-SVM/index.html">
+<meta property="og:site_name" content="Zane Blog">
+<meta property="og:description" content="##1. SVM 定义支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。 ##2. 函数间隔和几何间隔上图中哪个分类器最好呢？ ###2.1 符号定义为了方便介绍 SVM，重新定义以下符号。1.在logstic回">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://luojinping.com/img/svm_margin.jpg">
+<meta property="og:image" content="http://luojinping.com/img/svm_lagrange_dual_1.jpg">
+<meta property="og:image" content="http://luojinping.com/img/svm_lagrange_dual_2.jpg">
+<meta property="og:image" content="http://luojinping.com/img/svm_smo_1.jpg">
+<meta property="og:image" content="http://luojinping.com/img/svm_smo_2.jpg">
+<meta property="og:image" content="http://luojinping.com/img/svm_kernel_demo.jpg">
+<meta property="og:image" content="http://luojinping.com/img/svm_distance.jpg">
+<meta property="og:updated_time" content="2019-08-17T16:44:03.988Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Stanford Machine Learning - 7 SVM">
+<meta name="twitter:description" content="##1. SVM 定义支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。 ##2. 函数间隔和几何间隔上图中哪个分类器最好呢？ ###2.1 符号定义为了方便介绍 SVM，重新定义以下符号。1.在logstic回">
+<meta name="twitter:image" content="http://luojinping.com/img/svm_margin.jpg">
+
+    
+    <link rel="alternative" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
+    
+    
+    <link rel="icon" href="/img/favicon.ico">
+    
+    
+    <link rel="apple-touch-icon" href="/img/jacman.jpg">
+    <link rel="apple-touch-icon-precomposed" href="/img/jacman.jpg">
+    
+    <link rel="stylesheet" href="/css/style.css">
+    <script>
+var _hmt = _hmt || [];
+(function() {
+  var hm = document.createElement("script");
+  hm.src = "//hm.baidu.com/hm.js?a2d87d3add52ff134d9fac6cc16e4800";
+  var s = document.getElementsByTagName("script")[0]; 
+  s.parentNode.insertBefore(hm, s);
+})();
+</script>
+
+</head>
+</html>
+  <body>
+    <header>
+      <div>
+		
+			<div id="imglogo">
+				<a href="/"><img src="/img/logo.png" alt="Zane Blog" title="Zane Blog"/></a>
+			</div>
+			
+			<div id="textlogo">
+				<h1 class="site-name"><a href="/" title="Zane Blog">Zane Blog</a></h1>
+				<h2 class="blog-motto">业精于勤荒于嬉，形成思毁于随</h2>
+			</div>
+			<div class="navbar"><a class="navbutton navmobile" href="#" title="Menu">
+			</a></div>
+			<nav class="animated">
+				<ul>
+					<ul>
+					 
+						<li><a href="/">Home</a></li>
+					
+						<li><a href="/archives">Archives</a></li>
+					
+						<li><a href="/about">About</a></li>
+					
+					<li>
+ 					
+					<form class="search" action="//google.com/search" method="get" accept-charset="utf-8">
+						<label>Search</label>
+						<input type="search" id="search" name="q" autocomplete="off" maxlength="20" placeholder="Search" />
+						<input type="hidden" name="q" value="site:luojinping.com">
+					</form>
+					
+					</li>
+				</ul>
+			</nav>			
+</div>
+    </header>
+    <div id="container">
+      <div id="main" class="post" itemscope itemprop="blogPost">
+  
+	<article itemprop="articleBody"> 
+		<header class="article-info clearfix">
+  <h1 itemprop="name">
+    
+      <a href="/2018/04/14/Stanford-Machine-Learning-7-SVM/" title="Stanford Machine Learning - 7 SVM" itemprop="url">Stanford Machine Learning - 7 SVM</a>
+  </h1>
+  <p class="article-author">By
+       
+		<a href="http://luojinping.com/about" title="Jinping Luo" target="_blank" itemprop="author">Jinping Luo</a>
+		
+  <p class="article-time">
+    <time datetime="2018-04-14T10:33:50.000Z" itemprop="datePublished"> Published Apr 14 2018</time>
+    
+  </p>
+</header>
+	<div class="article-content">
+		
+		<div id="toc" class="toc-article">
+			<strong class="toc-title">Contents</strong>
+		
+			
+		
+		</div>
+		
+		<p>##1. SVM 定义<br>支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
+<p>##2. 函数间隔和几何间隔<br><img src="/img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
+<p>###2.1 符号定义<br>为了方便介绍 SVM，重新定义以下符号。<br>1.在logstic回归中我们用0,1代表两个类, 现在我们改用-1,+1, 即 y∈{-1，-1}<br>2.在logistic回归中, 我们的 g 是sigmoid函数, 现在改为:<br>g(z)=1, z&gt;=0<br>g(z)=-1, z&lt;0<br>3.在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,<br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中<br>w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</p>
+<p>###2.2 函数间隔(functional margin)<br>对于一个训练样本 $(x^{(i)}, y^{(i)})$，我们定义它到超平面 (w,b) 的函数间隔为:<br>$$\widehat\gamma=y^{(i)}(w^{T}x^{(i)}+b)$$<br>我们希望函数间隔越大越好, 即:<br>if $y^{(i)}=1$, want $(w^{T}x^{(i)}+b) \gg 0 $ (&gt;&gt;代表远大于)<br>if $y^{(i)}=-1$, want $(w^{T}x^{(i)}+b) \ll 0$</p>
+<p>函数间隔越大，代表我们对于分类的结果非常确定。</p>
+<p>但这里有一个漏洞，即可以在不改变这个超平面的情况下可以让函数间隔任意大，只要我们成比增加 w,b 就可以达到这个目的了。例如，我们将 w 变为 2w， b 变为 2b，那么我们的函数间隔将会是原来的两倍。</p>
+<p>所以对于整个训练集, <strong>函数间隔</strong>定义为：<br>$$\widehat\gamma=min{\widehat\gamma^{(i)}}$$</p>
+<p>###2.3 几何间隔(geometric margin)<br>定义对于一个训练样本 $A(x^{(i)}, y^{(i)})$，它到超平面 $w^{T}x^{(i)}+b$ 的几何距离为 $\gamma^{(i)}$。<br>设 B 为 A 在超平面上的投影，易得超平面的法向量为 $\frac{w}{||w||}$，则有 $A=B+\gamma^{(i)}\frac{w}{||w||}$，<br>即 $B = A - \gamma^{(i)}\frac{w}{||w||}$。又因为 B 在超平面上，所以有<br>$w^{T}(x^{(i)} - \gamma^{(i)}\frac{w}{||w||})+b=0$<br>故几何距离为:<br>$$\gamma^{(i)}=(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}$$</p>
+<p>定义其几何间隔：<br>$$\gamma^{(i)}=y^{(i)}[(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}]$$</p>
+<p>所以对于整个训练集, <strong>几何间隔</strong>定义为：<br>$$\gamma=min{\gamma^{(i)}}$$</p>
+<p>可以发现，当 $||w||=1$时，$\widehat\gamma^{(i)}=\gamma^{(i)}$</p>
+<p>##3. 最优间隔分类器<br>几何间隔就是在求 $\frac{\widehat\gamma}{||w||}$ 的最小值，可以发现函数间隔 $\widehat\gamma$ 可放大缩小，且其对结果不产生影响，所以不妨设令${\widehat\gamma}=1$。<br>现在，目标函数转为了：<br>$$max \frac{1}{||w||}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$<br>等价于<br>$$min{\frac12{||w||^2}}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$</p>
+<p>利用拉格朗日乘子法可得：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
+<p>令<br>$$\theta(w)=\displaystyle\max_{\alpha_i\ge0}L(w, b, \alpha)$$</p>
+<p>则目标函数变成了：<br>$$\displaystyle\min_{w,b}\theta(w)=\displaystyle\min_{w,b}\max_{\alpha_i\ge0}L(w, b, \alpha)=p^*$$</p>
+<p>##4. 求解目标函数</p>
+<p>###4.1 使用对偶问题求解<br>SVM 中用到了高维映射，将线性不可分的问题映射为线性可分，且映射函数的具体形式无法提前确定，而往往使用核函数映射后，维度 w 会提升很多，甚至至无穷维。<br>在原问题下，求解算法的复杂度与样本维度（w 的维度）相关；<br>在对偶问题下，求解算法的复杂度与样本数量（等于拉格朗日算子 a 的数量）相关。</p>
+<p>因此，如果是做线性分类，且样本维度低于样本数量的话，可以在原问题下求解。例如 Liblinear 的线性 SVM 默认做法就是这样的；<br>但如果是做非线性分类，那就会涉及到升维（比如使用高斯核做核函数，其实是将样本升到无穷维），升维后的样本维度往往会远大于样本数量，此时显然在对偶问题下求解会更好。</p>
+<p><strong>直接求解原问题有多难？</strong> TBD</p>
+<p>####4.1.1 使用对偶问题的解法<br>对于不等书约束条件的最优化问题，使用拉格朗日对偶问题来求解。具体介绍见之前的 blog:  <a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/">拉格朗日乘子法</a></p>
+<p>用 $p^*$ 表示这个问题的最优值，这个问题和我们最初的问题是等价的。<br>不过，把最小和最大的位置交换一下：<br>$$\displaystyle\max_{\alpha_i\ge0}\min_{w,b}L(w, b, \alpha)=d^*$$</p>
+<p>交换以后的问题不再等价于原问题，新问题的最优值用 $d^*$ 来表示。并且，有 $d^*$ ≤ $p^*$。</p>
+<p>第二个问题的最优值 $d^*$ 提供了一个第一个问题的最优<br>值 $p^*$ 的一个下界。经过论证，原始问题满足强对偶所需要的条件，故这两者相等，所以可以通过求解第二个问题来间接地求解第一个问题。 </p>
+<p>####4.1.2 优化公式<br>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：<br>$$\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0$$<br>$$\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0$$</p>
+<p>将上式代入：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
+<p>推导过程如下：<br><img src="/img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
+<p>这样求出 $\alpha$ 后即可得到 w 和 b。</p>
+<p><img src="/img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
+<p>现在我们的优化问题变成了如上的形式。对于这个问题，我们有更高效的优化算法，即序列最小优化（SMO）算法。我们通过这个优化算法能得到α，再根据α，我们就可以求解出w和b，进而求得我们最初的目的：找到超平面，即”决策平面”。</p>
+<p>###4.2 SMO 算法<br><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29212107</a><br><a href="https://cloud.tencent.com/developer/article/1076970" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1076970</a> </p>
+<p><img src="/img/svm_smo_1.jpg" alt="SMO_JP_1.jpeg"><br><img src="/img/svm_smo_2.jpg" alt="SMO_JP_2.jpeg"></p>
+<p>##5. 核函数<br>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="/img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
+<p>一般使用高斯核，但这样会导致映射后的维度非常巨大，也就是 w 的维度很大，这也是为什么要转化为对偶问题来求解的原因，对偶问题的时间复杂度只和数据集的数量有关，与维度无关。</p>
+<p>##总结 SVM<br>SVM 是神经网络出现之前最好的分类算法。求解 SVM 的过程也就是找到区分正负数据的最优超平面，所以引入了几何间隔的概念。而求解最大的几何间隔的问题即是在不等式约束条件下求解最优解的问题。这就引入了拉格朗日对偶问题，接着针对对偶问题求解，引入快速学习算法 SMO，最终找到超平面。<br>对于原始数据线性不可分的情况，引入核函数映射到高维计算，这其中 SVM 求解过程的时间复杂度与维度无关。</p>
+<p>附一个很精髓的 <a href="http://guoze.me/2014/11/26/svm-knowledge/" target="_blank" rel="noopener">SVM十问十答</a>。</p>
+<p>##7. SVM 优缺点<br>优点：</p>
+<ol>
+<li>可用于线性/非线性分类</li>
+<li>可以解决高维问题，即大型特征空间;</li>
+<li>泛化错误率低</li>
+<li>结果容易解释</li>
+<li>可以避免神经网络结构选择和局部极小点问题</li>
+<li>SVM 尽量保持与样本间距离的性质导致它抗攻击的能力更强</li>
+</ol>
+<p>缺点：</p>
+<ol>
+<li>对参数调节和和函数的选择敏感，原始分类器不加修改仅适用于处理二分类问题</li>
+<li>在大规模训练样本下，效率不高</li>
+<li>对非线性问题有时很难找到一个合适的核函数</li>
+<li>解决多分类问题存在困难 </li>
+</ol>
+<p>#附录</p>
+<p>##点到平面的距离<br><img src="/img/svm_distance.jpg" alt="IMAGE"></p>
+<p>$d$ 维空间中的超平面由下面的方程确定: $w^Tx+b=0$，其中，$w$ 与 $x$ 都是 $d$ 维列向量， $x=(x_1,x_2,…,x_d)^T$ 为平面上的点， $w=(w_1,w_2,…,w_d)^T$为平面的法向量。$b$ 是一个实数， 代表平面与原点之间的距离。</p>
+<p>#Reference</p>
+<blockquote>
+<p><a href="http://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="noopener">http://blog.csdn.net/v_july_v/article/details/7624837</a><br><a href="http://guoze.me/2014/11/26/svm-knowledge/" target="_blank" rel="noopener">http://guoze.me/2014/11/26/svm-knowledge/</a><br><a href="https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf" target="_blank" rel="noopener">https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf</a><br><a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/">http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/</a></p>
+</blockquote>
+  
+	</div>
+		<footer class="article-footer clearfix">
+<div class="article-catetags">
+
+
+  <div class="article-tags">
+  
+  <span></span> <a href="/tags/机器学习/">机器学习</a>
+  </div>
+
+</div>
+
+
+
+	<div class="article-share" id="share">
+	
+	  <div data-url="http://luojinping.com/2018/04/14/Stanford-Machine-Learning-7-SVM/" data-title="Stanford Machine Learning - 7 SVM | Zane Blog" data-tsina="" class="share clearfix">
+	  </div>
+	
+	</div>
+
+
+</footer>
+
+   	       
+	</article>
+	
+<nav class="article-nav clearfix">
+ 
+ <div class="prev" >
+ <a href="/2018/11/11/线性回归正则化/" title="线性回归正则化">
+  <strong>上一篇：</strong><br/>
+  <span>
+  线性回归正则化</span>
+</a>
+</div>
+
+
+<div class="next">
+<a href="/2018/03/04/拉格朗日乘子法/"  title="拉格朗日乘子法">
+ <strong>下一篇：</strong><br/> 
+ <span>拉格朗日乘子法
+</span>
+</a>
+</div>
+
+</nav>
+
+	
+
+<section id="comments" class="comment">
+  <div id="disqus_thread">
+    <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </div>
+</section>
+
+</div>  
+      <div class="openaside"><a class="navbutton" href="#" title="Show Sidebar"></a></div>
+
+  <div id="toc" class="toc-aside">
+  <strong class="toc-title">Contents</strong>
+ 
+ 
+ 
+  </div>
+
+<div id="asidepart">
+<div class="closeaside"><a class="closebutton" href="#" title="Hide Sidebar"></a></div>
+<aside class="clearfix">
+
+  
+
+  
+<div class="tagslist">
+	<p class="asidetitle">Tags</p>
+		<ul class="clearfix">
+		
+			<li><a href="/tags/java/" title="java">java<sup>15</sup></a></li>
+		
+			<li><a href="/tags/机器学习/" title="机器学习">机器学习<sup>13</sup></a></li>
+		
+			<li><a href="/tags/算法/" title="算法">算法<sup>10</sup></a></li>
+		
+			<li><a href="/tags/多线程/" title="多线程">多线程<sup>6</sup></a></li>
+		
+			<li><a href="/tags/LeetCode/" title="LeetCode">LeetCode<sup>4</sup></a></li>
+		
+			<li><a href="/tags/调试/" title="调试">调试<sup>3</sup></a></li>
+		
+			<li><a href="/tags/分布式/" title="分布式">分布式<sup>3</sup></a></li>
+		
+			<li><a href="/tags/数学/" title="数学">数学<sup>3</sup></a></li>
+		
+			<li><a href="/tags/机器学习实战/" title="机器学习实战">机器学习实战<sup>3</sup></a></li>
+		
+			<li><a href="/tags/mysql/" title="mysql">mysql<sup>2</sup></a></li>
+		
+			<li><a href="/tags/网络/" title="网络">网络<sup>2</sup></a></li>
+		
+			<li><a href="/tags/并发/" title="并发">并发<sup>1</sup></a></li>
+		
+			<li><a href="/tags/promote/" title="promote">promote<sup>1</sup></a></li>
+		
+			<li><a href="/tags/skill/" title="skill">skill<sup>1</sup></a></li>
+		
+			<li><a href="/tags/shell/" title="shell">shell<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spring/" title="Spring">Spring<sup>1</sup></a></li>
+		
+			<li><a href="/tags/安全/" title="安全">安全<sup>1</sup></a></li>
+		
+			<li><a href="/tags/test/" title="test">test<sup>1</sup></a></li>
+		
+			<li><a href="/tags/spark/" title="spark">spark<sup>1</sup></a></li>
+		
+			<li><a href="/tags/Spark/" title="Spark">Spark<sup>1</sup></a></li>
+		
+		</ul>
+</div>
+
+
+  <div class="linkslist">
+  <p class="asidetitle">Links</p>
+    <ul>
+        
+          <li>
+            
+            	<a href="https://coderq.com" target="_blank" title="一个面向程序员交流分享的新一代社区">码农圈</a>
+            
+          </li>
+        
+    </ul>
+</div>
+
+  <div class="rsspart">
+	<a href="/atom.xml" target="_blank" title="rss">RSS</a>
+</div>
+
+</aside>
+</div>
+    </div>
+    <footer><div id="footer" >
+	
+	<div class="line">
+		<span></span>
+		<div class="author"></div>
+	</div>
+	
+	
+	<section class="info">
+		<p> Hello ,I&#39;m ljp215 Page in Google. <br/>
+			This is my blog,believe it or not.</p>
+	</section>
+	 
+	<div class="social-font" class="clearfix">
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+	</div>
+		<p class="copyright">Powered by <a href="http://zespia.tw/hexo/" target="_blank" title="hexo">hexo</a> and Theme by <a href="https://github.com/wuchong/jacman" target="_blank" title="Pacman">Jacman</a> © 2019 
+		
+		<a href="http://luojinping.com/about" target="_blank" title="Jinping Luo">Jinping Luo</a>
+		
+		</p>
+</div>
+</footer>
+    <script src="/js/jquery-2.0.3.min.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.navbar').click(function(){
+    $('header nav').toggleClass('shownav');
+  });
+  var myWidth = 0;
+  function getSize(){
+    if( typeof( window.innerWidth ) == 'number' ) {
+      myWidth = window.innerWidth;
+    } else if( document.documentElement && document.documentElement.clientWidth) {
+      myWidth = document.documentElement.clientWidth;
+    };
+  };
+  var m = $('#main'),
+      a = $('#asidepart'),
+      c = $('.closeaside'),
+      o = $('.openaside');
+  $(window).resize(function(){
+    getSize(); 
+    if (myWidth >= 1024) {
+      $('header nav').removeClass('shownav');
+    }else
+    {
+      m.removeClass('moveMain');
+      a.css('display', 'block').removeClass('fadeOut');
+      o.css('display', 'none');
+      
+      $('#toc.toc-aside').css('display', 'none');
+        
+    }
+  });
+  c.click(function(){
+    a.addClass('fadeOut').css('display', 'none');
+    o.css('display', 'block').addClass('fadeIn');
+    m.addClass('moveMain');
+  });
+  o.click(function(){
+    o.css('display', 'none').removeClass('beforeFadeIn');
+    a.css('display', 'block').removeClass('fadeOut').addClass('fadeIn');      
+    m.removeClass('moveMain');
+  });
+  $(window).scroll(function(){
+    o.css("top",Math.max(80,260-$(this).scrollTop()));
+  });
+});
+</script>
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var ai = $('.article-content>iframe'),
+      ae = $('.article-content>embed'),
+      t  = $('#toc'),
+      h  = $('article h2')
+      ah = $('article h2'),
+      ta = $('#toc.toc-aside'),
+      o  = $('.openaside'),
+      c  = $('.closeaside');
+  if(ai.length>0){
+    ai.wrap('<div class="video-container" />');
+  };
+  if(ae.length>0){
+   ae.wrap('<div class="video-container" />');
+  };
+  if(ah.length==0){
+    t.css('display','none');
+  }else{
+    c.click(function(){
+      ta.css('display', 'block').addClass('fadeIn');
+    });
+    o.click(function(){
+      ta.css('display', 'none');
+    });
+    $(window).scroll(function(){
+      ta.css("top",Math.max(140,320-$(this).scrollTop()));
+    });
+  };
+});
+</script>
+
+
+<script type="text/javascript">
+$(document).ready(function(){ 
+  var $this = $('.share'),
+      url = $this.attr('data-url'),
+      encodedUrl = encodeURIComponent(url),
+      title = $this.attr('data-title'),
+      tsina = $this.attr('data-tsina'),
+      description = $this.attr('description');
+  var html = [
+  '<a href="#" class="overlay" id="qrcode"></a>',
+  '<div class="qrcode clearfix"><span>扫描二维码分享到微信朋友圈</span><a class="qrclose" href="#nothing"></a><strong>Loading...Please wait</strong><img id="qrcode-pic" data-src="http://s.jiathis.com/qrcode.php?url=' + encodedUrl + '"/></div>',
+  '<a href="https://www.facebook.com/sharer.php?u=' + encodedUrl + '" class="article-share-facebook" target="_blank" title="Facebook"></a>',
+  '<a href="https://twitter.com/intent/tweet?url=' + encodedUrl + '" class="article-share-twitter" target="_blank" title="Twitter"></a>',
+  '<a href="#qrcode" class="article-share-qrcode" title="微信"></a>',
+  '<a href="http://widget.renren.com/dialog/share?resourceUrl=' + encodedUrl + '&srcUrl=' + encodedUrl + '&title=' + title +'" class="article-share-renren" target="_blank" title="人人"></a>',
+  '<a href="http://service.weibo.com/share/share.php?title='+title+'&url='+encodedUrl +'&ralateUid='+ tsina +'&searchPic=true&style=number' +'" class="article-share-weibo" target="_blank" title="微博"></a>',
+  '<span title="Share to"></span>'
+  ].join('');
+  $this.append(html);
+  $('.article-share-qrcode').click(function(){
+    var imgSrc = $('#qrcode-pic').attr('data-src');
+    $('#qrcode-pic').attr('src', imgSrc);
+    $('#qrcode-pic').load(function(){
+        $('.qrcode strong').text(' ');
+    });
+  });
+});     
+</script>
+
+
+
+
+<script type="text/javascript">
+
+var disqus_shortname = 'zane215';
+
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+(function(){
+  var dsq = document.createElement('script');
+  dsq.type = 'text/javascript';
+  dsq.async = true;
+  dsq.src = '//' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+}());
+</script>
+
+
+
+
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+$(document).ready(function(){ 
+  $('.article-content').each(function(i){
+    $(this).find('img').each(function(){
+      if ($(this).parent().hasClass('fancybox')) return;
+      var alt = this.alt;
+      if (alt) $(this).after('<span class="caption">' + alt + '</span>');
+      $(this).wrap('<a href="' + this.src + '" title="' + alt + '" class="fancybox"></a>');
+    });
+    $(this).find('.fancybox').each(function(){
+      $(this).attr('rel', 'article' + i);
+    });
+  });
+  if($.fancybox){
+    $('.fancybox').fancybox();
+  }
+}); 
+</script>
+
+
+
+<!-- Analytics Begin -->
+
+
+
+<script type="text/javascript">
+var _bdhmProtocol = (("https:" == document.location.protocol) ? " https://" : " http://");
+document.write(unescape("%3Cscript src='" + _bdhmProtocol + "hm.baidu.com/h.js%3F' type='text/javascript'%3E%3C/script%3E"));
+</script>
+
+
+
+<!-- Analytics End -->
+
+<!-- Totop Begin -->
+
+	<div id="totop">
+	<a title="Back to Top"><img src="/img/scrollup.png"/></a>
+	</div>
+	<script src="/js/totop.js"></script>
+
+<!-- Totop End -->
+
+<!-- MathJax Begin -->
+<!-- mathjax config similar to math.stackexchange -->
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$','$'], ["\\(","\\)"] ],
+      processEscapes: true
+    }
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+    });
+</script>
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax(), i;
+        for(i=0; i < all.length; i += 1) {
+            all[i].SourceElement().parentNode.className += ' has-jax';
+        }
+    });
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+<!-- MathJax End -->
+
+  </body>
+</html>
