@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,29 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="##扔瓶子测楼层##一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ ##A. 只用一个瓶子从第一层扔到第n层##找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2   所以时间复杂度是O(n) ##">
+  <meta name="description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2 所以时间复杂度是O(n) B. 用贪心的思维第一个">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="扔鸡蛋测楼层">
 <meta property="og:url" content="http://luojinping.com/2016/03/03/扔鸡蛋测楼层/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="##扔瓶子测楼层##一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ ##A. 只用一个瓶子从第一层扔到第n层##找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2   所以时间复杂度是O(n) ##">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:52:15.104Z">
+<meta property="og:description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2 所以时间复杂度是O(n) B. 用贪心的思维第一个">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T13:31:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="扔鸡蛋测楼层">
-<meta name="twitter:description" content="##扔瓶子测楼层##一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ ##A. 只用一个瓶子从第一层扔到第n层##找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2   所以时间复杂度是O(n) ##">
+<meta name="twitter:description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2 所以时间复杂度是O(n) B. 用贪心的思维第一个">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2016/03/03/扔鸡蛋测楼层/">
 
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2016/03/03/扔鸡蛋测楼层/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 3 2016 20:26:36" itemprop="dateCreated datePublished" datetime="2016-03-03T20:26:36+08:00">Mar 3 2016</time>
+              <time title="创建时间：3月 3 2016 20:26:36" itemprop="dateCreated datePublished" datetime="2016-03-03T20:26:36+08:00">3月 3 2016</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:15" itemprop="dateModified" datetime="2019-08-18T16:52:15+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:31:54" itemprop="dateModified" datetime="2019-08-25T21:31:54+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/03/03/扔鸡蛋测楼层/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2016/03/03/扔鸡蛋测楼层/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -265,21 +315,19 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>##扔瓶子测楼层##<br>一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？</p>
-<p>##A. 只用一个瓶子从第一层扔到第n层##<br>找到临界值的扔瓶子次数的期望为每一层的期望次数之和</p>
+        <h2 id="扔瓶子测楼层"><a href="#扔瓶子测楼层" class="headerlink" title="扔瓶子测楼层"></a>扔瓶子测楼层</h2><p>一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？</p>
+<h2 id="A-只用一个瓶子从第一层扔到第n层"><a href="#A-只用一个瓶子从第一层扔到第n层" class="headerlink" title="A. 只用一个瓶子从第一层扔到第n层"></a>A. 只用一个瓶子从第一层扔到第n层</h2><p>找到临界值的扔瓶子次数的期望为每一层的期望次数之和</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2</span><br></pre></td></tr></table></figure>
-
-
 <p>所以时间复杂度是O(n)</p>
-<p>##B. 用贪心的思维##<br>第一个瓶子从第1层开始扔，每次层数翻倍，依次为，1，2，4，8，16，直至在第 2^k 层碎掉。<br>第二个瓶子从第 2^(k-1) 层开始扔，直至第 2^k 层为止，中间肯定能找到临界值。<br>所以时间复杂度是O(lgn)</p>
-<p>##C. 用二分法##<br>第一个瓶子每次以(i, j)为区间，扔的位置为(i+j)/2, 初始情况, i=0,j=n, 如果瓶子没碎，则i=j，直至碎掉。<br>第二个瓶子从第 i 层开始扔，直至第 j 层为止，中间肯定能找到临界值。</p>
+<h2 id="B-用贪心的思维"><a href="#B-用贪心的思维" class="headerlink" title="B. 用贪心的思维"></a>B. 用贪心的思维</h2><p>第一个瓶子从第1层开始扔，每次层数翻倍，依次为，1，2，4，8，16，直至在第 2^k 层碎掉。<br>第二个瓶子从第 2^(k-1) 层开始扔，直至第 2^k 层为止，中间肯定能找到临界值。<br>所以时间复杂度是O(lgn)</p>
+<h2 id="C-用二分法"><a href="#C-用二分法" class="headerlink" title="C. 用二分法"></a>C. 用二分法</h2><p>第一个瓶子每次以(i, j)为区间，扔的位置为(i+j)/2, 初始情况, i=0,j=n, 如果瓶子没碎，则i=j，直至碎掉。<br>第二个瓶子从第 i 层开始扔，直至第 j 层为止，中间肯定能找到临界值。</p>
 <p>对于第 i 层，扔的情况为：</p>
 <ul>
 <li>第一个瓶子：n/2, $/2+n/4 i, n/2+n/4+n/8</li>
 <li>第二个瓶子：n/2+n/4, (n/2+n/k+1), …, i</li>
 </ul>
 <p>显而易见，时间复杂度是O(n)</p>
-<p>##D. 数学推算##<br>这个题目是需要最快的找出临界值，可以转换为，即使在最坏的情况下，也能最快地找出临界值。</p>
+<h2 id="D-数学推算"><a href="#D-数学推算" class="headerlink" title="D. 数学推算"></a>D. 数学推算</h2><p>这个题目是需要最快的找出临界值，可以转换为，即使在最坏的情况下，也能最快地找出临界值。</p>
 <p>我们先假设最坏情况下，瓶子下落次数为x，即我们为了找出N，一共用瓶子做了x次的实验。 </p>
 <p>那么，我们第一次应该在哪层楼往下扔瓶子呢？</p>
 <p>先让我们假设第一次是在第y层楼扔的瓶子，如果第一个瓶子在第一次扔就碎了，我们就只剩下一个瓶子，要用它准确地找出N，只能从第一层向上，一层一层的往上测试，直到它摔坏为止，答案就出来了。</p>
@@ -287,30 +335,25 @@
 <p>OK，那如果第一次测试鸡蛋没摔破呢，那N肯定要比x大，要继续往上找，需要在哪一层扔呢？我们可以模仿前面的操作，如果第一个瓶子在第二次测试中摔破了，那么第二个瓶子的测试次数就只剩下x-2次了(第一个瓶子已经用了2次)。这样一来，第二次扔瓶子的楼层和第一次扔瓶子的楼层之间就隔着x-2层。 </p>
 <p>我们再回过头来看一看，第一次扔瓶子的楼层在第x层，第1层到第x层间共x层；第1次扔鸡蛋的楼层到第2次扔瓶子的楼层间共有x-1层(包含第2次扔瓶子的那一层)，同理继续往下，我们可以得出，第2次扔瓶子的楼层到第3次扔瓶子的楼层间共有x-2层，最后把这些互不包含的区间数加起来，应该大于等于总共的楼层数量100，即</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x + (x-1) + (x-2) + ... + 1 &gt;= 100</span><br><span class="line">(x+1)*x/2 &gt;= 100</span><br><span class="line">得出答案是14</span><br></pre></td></tr></table></figure>
-
 <p>即我先用第1个瓶子在以下序列表示的楼层数不断地向上测试，直到它摔破。 再用第2个瓶子从上一个没摔破的序列数的下一层开始，向上测试，即可保证在最坏情况下也只需要测试14次，就能用2个瓶子找出从哪一层开始，往下扔鸡蛋，瓶子就会摔破。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100</span><br></pre></td></tr></table></figure>
-
-<p>##E. DP的解法##<br>假设f(n)表示从第n层楼扔下鸡蛋，没有摔碎的最少尝试次数。第一个鸡蛋，可能的落下位置[1,n],第一个鸡蛋从第i层扔下，有两种情况：</p>
+<h2 id="E-DP的解法"><a href="#E-DP的解法" class="headerlink" title="E. DP的解法"></a>E. DP的解法</h2><p>假设f(n)表示从第n层楼扔下鸡蛋，没有摔碎的最少尝试次数。第一个鸡蛋，可能的落下位置[1,n],第一个鸡蛋从第i层扔下，有两种情况：</p>
 <ul>
 <li>碎了，第二个鸡蛋，需要从第一层开始试验，有i-1次机会</li>
 <li>没碎，两个鸡蛋，还有n-i层。这个就是子问题了f(n-i)</li>
 </ul>
 <p>所以，当第一个鸡蛋，由第i个位置落下的时候，要尝试的次数为 1 + max{i - 1, f(n - i)}，那么对于每一个i，尝试次数最少的，就是f(n)的值。<br>状态转移方程如下： </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(n) = min&#123;1 + max&#123;i - 1, f(n - 1)&#125;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>其中: i的范围为[1, n], f(1) = 1.</p>
-<p>##F. 推广到一般化的问题<br>为n层楼，m个鸡蛋。<br>如下分析： 假设f(n,m)表示n层楼、m个鸡蛋时找到最高楼层的最少尝试次数。当第一个鸡蛋从第i层扔下，有两种情况：</p>
+<h2 id="F-推广到一般化的问题"><a href="#F-推广到一般化的问题" class="headerlink" title="F. 推广到一般化的问题"></a>F. 推广到一般化的问题</h2><p>为n层楼，m个鸡蛋。<br>如下分析： 假设f(n,m)表示n层楼、m个鸡蛋时找到最高楼层的最少尝试次数。当第一个鸡蛋从第i层扔下，有两种情况：</p>
 <ul>
 <li>碎了，还剩m-1个鸡蛋，为确定下面楼层中的安全楼层，还需要f(i-1,m-1)次，找到子问题</li>
 <li>不碎，上面还有n-i层，还需要f(n-i,m)次，又一个子问题。</li>
 </ul>
 <p>状态转移方程如下： </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(n, m) = min&#123;1 + max&#123;f(n - 1, m - 1), f(n - i, m)&#125;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>其中： i为[1, n], f(i, 1) = 1</p>
-<p>##Reference##</p>
-<blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
 <p><a href="http://www.cricode.com/3558.html" target="_blank" rel="noopener">http://www.cricode.com/3558.html</a><br><a href="https://gist.github.com/sing1ee/5971946" target="_blank" rel="noopener">https://gist.github.com/sing1ee/5971946</a></p>
 </blockquote>
 
@@ -320,6 +363,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -368,6 +428,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -380,15 +443,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#扔瓶子测楼层"><span class="nav-number">1.</span> <span class="nav-text">扔瓶子测楼层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#A-只用一个瓶子从第一层扔到第n层"><span class="nav-number">2.</span> <span class="nav-text">A. 只用一个瓶子从第一层扔到第n层</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#B-用贪心的思维"><span class="nav-number">3.</span> <span class="nav-text">B. 用贪心的思维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#C-用二分法"><span class="nav-number">4.</span> <span class="nav-text">C. 用二分法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#D-数学推算"><span class="nav-number">5.</span> <span class="nav-text">D. 数学推算</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#E-DP的解法"><span class="nav-number">6.</span> <span class="nav-text">E. DP的解法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#F-推广到一般化的问题"><span class="nav-number">7.</span> <span class="nav-text">F. 推广到一般化的问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -396,7 +478,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -405,7 +487,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -435,7 +517,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -448,8 +530,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -468,11 +548,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -484,32 +568,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -519,12 +589,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -545,10 +610,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,34 +43,34 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="#1. 同步的原理#JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexi">
+  <meta name="description" content="同步的原理JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java锁优化">
 <meta property="og:url" content="http://luojinping.com/2015/07/09/java锁优化/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="#1. 同步的原理#JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexi">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="同步的原理JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/markword_state.jpg">
 <meta property="og:image" content="http://luojinping.com/img/biased_lock_flow.jpg">
 <meta property="og:image" content="http://luojinping.com/img/biased_lock_convert_flow.jpg">
 <meta property="og:image" content="http://luojinping.com/img/light_lock_flow.jpg">
 <meta property="og:image" content="http://luojinping.com/img/light_lock_progress.jpg">
-<meta property="og:updated_time" content="2019-08-18T08:48:40.902Z">
+<meta property="og:updated_time" content="2019-08-25T13:32:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="java锁优化">
-<meta name="twitter:description" content="#1. 同步的原理#JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexi">
+<meta name="twitter:description" content="同步的原理JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到">
 <meta name="twitter:image" content="http://luojinping.com/img/markword_state.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/07/09/java锁优化/">
@@ -92,6 +92,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -100,7 +109,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -109,7 +117,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -125,16 +133,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -146,7 +153,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -166,7 +173,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -177,7 +184,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -188,34 +195,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/07/09/java锁优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -238,13 +274,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Jul 9 2015 9:01:43" itemprop="dateCreated datePublished" datetime="2015-07-09T09:01:43+08:00">Jul 9 2015</time>
+              <time title="创建时间：7月 9 2015 9:01:43" itemprop="dateCreated datePublished" datetime="2015-07-09T09:01:43+08:00">7月 9 2015</time>
             </span>
           
             
@@ -254,13 +290,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:48:40" itemprop="dateModified" datetime="2019-08-18T16:48:40+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:32:56" itemprop="dateModified" datetime="2019-08-25T21:32:56+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/07/09/java锁优化/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2015/07/09/java锁优化/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -271,8 +321,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#1. 同步的原理#<br>JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到方法结束处和异常处， JVM要保证每个monitorenter必须有对应的monitorexit与之配对。任何对象都有一个 monitor 与之关联，当且一个monitor 被持有后，它将处于锁定状态。线程执行到 monitorenter 指令时，将会尝试获取对象所对应的 monitor 的所有权，即尝试获得对象的锁。</p>
-<p>#2. Java对象头#<br>锁存在Java对象头里。如果对象是数组类型，则虚拟机用3个Word（字宽）存储对象头，如果对象是非数组类型，则用2字宽存储对象头。在32位虚拟机中，一字宽等于四字节，即32bit。</p>
+        <h1 id="同步的原理"><a href="#同步的原理" class="headerlink" title="同步的原理"></a>同步的原理</h1><p>JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到方法结束处和异常处， JVM要保证每个monitorenter必须有对应的monitorexit与之配对。任何对象都有一个 monitor 与之关联，当且一个monitor 被持有后，它将处于锁定状态。线程执行到 monitorenter 指令时，将会尝试获取对象所对应的 monitor 的所有权，即尝试获得对象的锁。</p>
+<h1 id="Java对象头"><a href="#Java对象头" class="headerlink" title="Java对象头"></a>Java对象头</h1><p>锁存在Java对象头里。如果对象是数组类型，则虚拟机用3个Word（字宽）存储对象头，如果对象是非数组类型，则用2字宽存储对象头。在32位虚拟机中，一字宽等于四字节，即32bit。</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -281,7 +332,8 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>32/64bit</td>
 <td>Mark Word</td>
 <td>存储对象的hashCode或锁信息等</td>
@@ -296,8 +348,11 @@
 <td>Array length</td>
 <td>数组的长度（如果当前对象是数组）</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>Java对象头里的Mark Word里默认存储对象的HashCode，分代年龄和锁标记位。32位JVM的Mark Word的默认存储结构如下：</p>
+<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -308,30 +363,33 @@
 <th>2bit<br>锁标志位</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>无锁状态</td>
 <td>对象的hashCode</td>
 <td>对象分代年龄</td>
 <td>0</td>
 <td>01</td>
 </tr>
-</tbody></table>
+</tbody>
+</table>
+</div>
 <p>在运行期间Mark Word里存储的数据会随着锁标志位的变化而变化。Mark Word可能变化为存储以下4种数据：</p>
 <p><img src="/img/markword_state.jpg" alt></p>
-<p>#3. 几种锁的类型#<br><strong>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。</strong></p>
+<h1 id="几种锁的类型"><a href="#几种锁的类型" class="headerlink" title="几种锁的类型"></a>几种锁的类型</h1><p><strong>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。</strong></p>
 <p>Java SE1.6为了减少获得锁和释放锁所带来的性能消耗，引入了“偏向锁”和“轻量级锁”，所以在Java SE1.6里锁一共有四种状态，无锁状态，偏向锁状态，轻量级锁状态和重量级锁状态，它会随着竞争情况逐渐升级。</p>
 <p><strong>锁可以升级但不能降级，意味着偏向锁升级成轻量级锁后不能降级成偏向锁。这种锁升级却不能降级的策略，目的是为了提高获得锁和释放锁的效率。</strong></p>
-<p>##3.1 偏向锁##<br>Hotspot的作者经过以往的研究发现大多数情况下锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁的目的是在某个线程获得锁之后，消除这个线程锁重入（CAS）的开销，看起来让这个线程得到了偏护。<br><img src="/img/biased_lock_flow.jpg" alt></p>
-<p>###偏向锁的进一步理解###<br>偏向锁的释放不需要做任何事情，这也就意味着加过偏向锁的MarkValue会一直保留偏向锁的状态，因此即便同一个线程持续不断地加锁解锁，也是没有开销的。 </p>
+<h2 id="偏向锁"><a href="#偏向锁" class="headerlink" title="偏向锁"></a>偏向锁</h2><p>Hotspot的作者经过以往的研究发现大多数情况下锁不仅不存在多线程竞争，而且总是由同一线程多次获得。偏向锁的目的是在某个线程获得锁之后，消除这个线程锁重入（CAS）的开销，看起来让这个线程得到了偏护。<br><img src="/img/biased_lock_flow.jpg" alt></p>
+<h3 id="偏向锁的进一步理解"><a href="#偏向锁的进一步理解" class="headerlink" title="偏向锁的进一步理解"></a>偏向锁的进一步理解</h3><p>偏向锁的释放不需要做任何事情，这也就意味着加过偏向锁的MarkValue会一直保留偏向锁的状态，因此即便同一个线程持续不断地加锁解锁，也是没有开销的。 </p>
 <p>另一方面，偏向锁比轻量锁更容易被终结，轻量锁是在有锁竞争出现时升级为重量锁，而一般偏向锁是在有不同线程申请锁时升级为轻量锁，这也就意味着假如一个对象先被线程1加锁解锁，再被线程2加锁解锁，这过程中没有锁冲突，也一样会发生偏向锁失效，不同的是这回要先退化为无锁的状态，再加轻量锁，如图：<br><img src="/img/biased_lock_convert_flow.jpg" alt></p>
 <p>另外，JVM对那种会有多线程加锁，但不存在锁竞争的情况也做了优化，听起来比较拗口，但在现实应用中确实是可能出现这种情况，因为线程之前除了互斥之外也可能发生同步关系，被同步的两个线程（一前一后）对共享对象锁的竞争很可能是没有冲突的。对这种情况，JVM用一个epoch表示一个偏向锁的时间戳（真实地生成一个时间戳代价还是蛮大的，因此这里应当理解为一种类似时间戳的identifier），对epoch，官方是这么解释的：</p>
 <blockquote>
 <p>A similar mechanism, called bulk rebiasing, optimizes situations in which objects of a class are locked and unlocked by different threads but never concurrently. It invalidates the bias of all instances of a class without disabling biased locking. An epoch value in the class acts as a timestamp that indicates the validity of the bias. This value is copied into the header word upon object allocation. Bulk rebiasing can then efficiently be implemented as an increment of the epoch in the appropriate class. The next time an instance of this class is going to be locked, the code detects a different value in the header word and rebiases the object towards the current thread.</p>
 </blockquote>
-<p>###偏向锁的获取###<br>当一个线程访问同步块并获取锁时，会在对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程在进入和退出同步块时不需要花费CAS操作来加锁和解锁，而只需简单的测试一下对象头的Mark Word里是否存储着指向当前线程的偏向锁，如果测试成功，表示线程已经获得了锁，如果测试失败，则需要再测试下Mark Word中偏向锁的标识是否设置成1（表示当前是偏向锁），如果没有设置，则使用CAS竞争锁，如果设置了，则尝试使用CAS将对象头的偏向锁指向当前线程。</p>
-<p>###偏向锁的撤销###<br>偏向锁使用了一种等到竞争出现才释放锁的机制，所以当其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，然后检查持有偏向锁的线程是否活着，如果线程不处于活动状态，则将对象头设置成无锁状态，如果线程仍然活着，拥有偏向锁的栈会被执行，遍历偏向对象的锁记录，栈中的锁记录和对象头的Mark Word要么重新偏向于其他线程，要么恢复到无锁或者标记对象不适合作为偏向锁，最后唤醒暂停的线程。下图中的线程1演示了偏向锁初始化的流程，线程2演示了偏向锁撤销的流程。</p>
-<p>###偏向锁的设置###<br>关闭偏向锁：偏向锁在Java 6和Java 7里是默认启用的，但是它在应用程序启动几秒钟之后才激活，如有必要可以使用JVM参数来关闭延迟-XX：BiasedLockingStartupDelay = 0。如果你确定自己应用程序里所有的锁通常情况下处于竞争状态，可以通过JVM参数关闭偏向锁-XX:-UseBiasedLocking=false，那么默认会进入轻量级锁状态。</p>
-<p>##3.2 自旋锁##<br>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。同时我们可以发现，很多对象锁的锁定状态只会持续很短的一段时间，例如整数的自加操作，在很短的时间内阻塞并唤醒线程显然不值得，为此引入了自旋锁。</p>
+<h3 id="偏向锁的获取"><a href="#偏向锁的获取" class="headerlink" title="偏向锁的获取"></a>偏向锁的获取</h3><p>当一个线程访问同步块并获取锁时，会在对象头和栈帧中的锁记录里存储锁偏向的线程ID，以后该线程在进入和退出同步块时不需要花费CAS操作来加锁和解锁，而只需简单的测试一下对象头的Mark Word里是否存储着指向当前线程的偏向锁，如果测试成功，表示线程已经获得了锁，如果测试失败，则需要再测试下Mark Word中偏向锁的标识是否设置成1（表示当前是偏向锁），如果没有设置，则使用CAS竞争锁，如果设置了，则尝试使用CAS将对象头的偏向锁指向当前线程。</p>
+<h3 id="偏向锁的撤销"><a href="#偏向锁的撤销" class="headerlink" title="偏向锁的撤销"></a>偏向锁的撤销</h3><p>偏向锁使用了一种等到竞争出现才释放锁的机制，所以当其他线程尝试竞争偏向锁时，持有偏向锁的线程才会释放锁。偏向锁的撤销，需要等待全局安全点（在这个时间点上没有字节码正在执行），它会首先暂停拥有偏向锁的线程，然后检查持有偏向锁的线程是否活着，如果线程不处于活动状态，则将对象头设置成无锁状态，如果线程仍然活着，拥有偏向锁的栈会被执行，遍历偏向对象的锁记录，栈中的锁记录和对象头的Mark Word要么重新偏向于其他线程，要么恢复到无锁或者标记对象不适合作为偏向锁，最后唤醒暂停的线程。下图中的线程1演示了偏向锁初始化的流程，线程2演示了偏向锁撤销的流程。</p>
+<h3 id="偏向锁的设置"><a href="#偏向锁的设置" class="headerlink" title="偏向锁的设置"></a>偏向锁的设置</h3><p>关闭偏向锁：偏向锁在Java 6和Java 7里是默认启用的，但是它在应用程序启动几秒钟之后才激活，如有必要可以使用JVM参数来关闭延迟-XX：BiasedLockingStartupDelay = 0。如果你确定自己应用程序里所有的锁通常情况下处于竞争状态，可以通过JVM参数关闭偏向锁-XX:-UseBiasedLocking=false，那么默认会进入轻量级锁状态。</p>
+<h2 id="自旋锁"><a href="#自旋锁" class="headerlink" title="自旋锁"></a>自旋锁</h2><p>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。同时我们可以发现，很多对象锁的锁定状态只会持续很短的一段时间，例如整数的自加操作，在很短的时间内阻塞并唤醒线程显然不值得，为此引入了自旋锁。</p>
 <p>所谓“自旋”，就是让线程去执行一个无意义的循环，循环结束后再去重新竞争锁，如果竞争不到继续循环，循环过程中线程会一直处于running状态，但是基于JVM的线程调度，会出让时间片，所以其他线程依旧有申请锁和释放锁的机会。</p>
 <p>自旋锁省去了阻塞锁的时间空间（队列的维护等）开销，但是长时间自旋就变成了“忙式等待”，忙式等待显然还不如阻塞锁。所以自旋的次数一般控制在一个范围内，例如10,100等，在超出这个范围后，自旋锁会升级为阻塞锁。</p>
 <p>对自旋锁周期的选择上，HotSpot认为最佳时间应是一个线程上下文切换的时间，但目前并没有做到。经过调查，目前只是通过汇编暂停了几个CPU周期，除了自旋周期选择，HotSpot还进行许多其他的自旋优化策略，具体如下：</p>
@@ -341,12 +399,11 @@
 <li>如果正在自旋的线程发现Owner发生了变化则延迟自旋时间（自旋计数）或进入阻塞 如果CPU处于节电模式则停止自旋 </li>
 <li>自旋时间的最坏情况是CPU的存储延迟（CPU A存储了一个数据，到CPU B得知这个数据直接的时间差）</li>
 </ul>
-<p>##3.3 轻量级锁##</p>
-<p>###轻量级锁加锁###<br>线程在执行同步块之前，JVM会先在当前线程的栈桢中创建用于存储锁记录的空间，并将对象头中的Mark Word复制到锁记录中，官方称为Displaced Mark Word。<strong>然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针。如果成功，当前线程获得锁，如果失败，则自旋获取锁，当自旋获取锁仍然失败时，表示存在其他线程竞争锁(两条或两条以上的线程竞争同一个锁)，则轻量级锁会膨胀成重量级锁。</strong></p>
-<p>###轻量级锁解锁###<br><strong>轻量级解锁时，会使用原子的CAS操作来将Displaced Mark Word替换回到对象头，如果成功，则表示同步过程已完成。</strong>如果失败，表示有其他线程尝试过获取该锁，则要在释放锁的同时唤醒被挂起的线程。下图是两个线程同时争夺锁，导致锁膨胀的流程图。</p>
+<h2 id="轻量级锁"><a href="#轻量级锁" class="headerlink" title="轻量级锁"></a>轻量级锁</h2><h3 id="轻量级锁加锁"><a href="#轻量级锁加锁" class="headerlink" title="轻量级锁加锁"></a>轻量级锁加锁</h3><p>线程在执行同步块之前，JVM会先在当前线程的栈桢中创建用于存储锁记录的空间，并将对象头中的Mark Word复制到锁记录中，官方称为Displaced Mark Word。<strong>然后线程尝试使用CAS将对象头中的Mark Word替换为指向锁记录的指针。如果成功，当前线程获得锁，如果失败，则自旋获取锁，当自旋获取锁仍然失败时，表示存在其他线程竞争锁(两条或两条以上的线程竞争同一个锁)，则轻量级锁会膨胀成重量级锁。</strong></p>
+<h3 id="轻量级锁解锁"><a href="#轻量级锁解锁" class="headerlink" title="轻量级锁解锁"></a>轻量级锁解锁</h3><p><strong>轻量级解锁时，会使用原子的CAS操作来将Displaced Mark Word替换回到对象头，如果成功，则表示同步过程已完成。</strong>如果失败，表示有其他线程尝试过获取该锁，则要在释放锁的同时唤醒被挂起的线程。下图是两个线程同时争夺锁，导致锁膨胀的流程图。</p>
 <p><img src="/img/light_lock_flow.jpg" alt><br><img src="/img/light_lock_progress.jpg" alt></p>
-<p>##3.4 重量级锁##<br>重量锁在JVM中又叫对象监视器（Monitor），它很像C中的Mutex，除了具备Mutex互斥的功能，它还负责实现了Semaphore的功能，也就是说它至少包含一个竞争锁的队列，和一个信号阻塞队列（wait队列），前者负责做互斥，后一个用于做线程同步。</p>
-<p>#4. 锁的优缺点对比#</p>
+<h2 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h2><p>重量锁在JVM中又叫对象监视器（Monitor），它很像C中的Mutex，除了具备Mutex互斥的功能，它还负责实现了Semaphore的功能，也就是说它至少包含一个竞争锁的队列，和一个信号阻塞队列（wait队列），前者负责做互斥，后一个用于做线程同步。</p>
+<h1 id="锁的优缺点对比"><a href="#锁的优缺点对比" class="headerlink" title="锁的优缺点对比"></a>锁的优缺点对比</h1><div class="table-container">
 <table>
 <thead>
 <tr>
@@ -356,7 +413,8 @@
 <th>适用场景</th>
 </tr>
 </thead>
-<tbody><tr>
+<tbody>
+<tr>
 <td>偏向锁</td>
 <td>加锁和解锁不需要额外的消耗，和执行非同步方法比仅存在纳秒级的差距</td>
 <td>如果线程间存在锁竞争，会带来额外的锁撤销的消耗</td>
@@ -374,13 +432,11 @@
 <td>线程阻塞，响应时间缓慢</td>
 <td>追求吞吐量,锁占用时间较长</td>
 </tr>
-</tbody></table>
-<br>
-
-<p>#refers:#</p>
-<blockquote>
-<p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="noopener">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="http://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="noopener">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="http://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="noopener">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="http://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="noopener">http://blog.csdn.net/coslay/article/details/41526635</a></p>
-</blockquote>
+</tbody>
+</table>
+</div>
+<p><br></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="noopener">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="http://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="noopener">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="http://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="noopener">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="http://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="noopener">http://blog.csdn.net/coslay/article/details/41526635</a></p>
 
     </div>
 
@@ -388,6 +444,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -436,6 +509,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -448,15 +524,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#同步的原理"><span class="nav-number">1.</span> <span class="nav-text">同步的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java对象头"><span class="nav-number">2.</span> <span class="nav-text">Java对象头</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#几种锁的类型"><span class="nav-number">3.</span> <span class="nav-text">几种锁的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#偏向锁"><span class="nav-number">3.1.</span> <span class="nav-text">偏向锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#偏向锁的进一步理解"><span class="nav-number">3.1.1.</span> <span class="nav-text">偏向锁的进一步理解</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏向锁的获取"><span class="nav-number">3.1.2.</span> <span class="nav-text">偏向锁的获取</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏向锁的撤销"><span class="nav-number">3.1.3.</span> <span class="nav-text">偏向锁的撤销</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#偏向锁的设置"><span class="nav-number">3.1.4.</span> <span class="nav-text">偏向锁的设置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自旋锁"><span class="nav-number">3.2.</span> <span class="nav-text">自旋锁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#轻量级锁"><span class="nav-number">3.3.</span> <span class="nav-text">轻量级锁</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#轻量级锁加锁"><span class="nav-number">3.3.1.</span> <span class="nav-text">轻量级锁加锁</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#轻量级锁解锁"><span class="nav-number">3.3.2.</span> <span class="nav-text">轻量级锁解锁</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#重量级锁"><span class="nav-number">3.4.</span> <span class="nav-text">重量级锁</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#锁的优缺点对比"><span class="nav-number">4.</span> <span class="nav-text">锁的优缺点对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -464,7 +559,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -473,7 +568,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -503,7 +598,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -516,8 +611,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -536,11 +629,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -552,32 +649,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -587,12 +670,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -613,10 +691,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,29 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="######现象：服务中出现大量乱码数据，并且全部入库。 ######原因：虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。 ######分析：这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jv">
+  <meta name="description" content="现象服务中出现大量乱码数据，并且全部入库。 原因虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。 分析这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JVM编码方式未设置引发的乱码">
 <meta property="og:url" content="http://luojinping.com/2015/02/04/JVM编码方式未设置引发的乱码/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="######现象：服务中出现大量乱码数据，并且全部入库。 ######原因：虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。 ######分析：这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jv">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:48:44.350Z">
+<meta property="og:description" content="现象服务中出现大量乱码数据，并且全部入库。 原因虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。 分析这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T02:50:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JVM编码方式未设置引发的乱码">
-<meta name="twitter:description" content="######现象：服务中出现大量乱码数据，并且全部入库。 ######原因：虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。 ######分析：这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jv">
+<meta name="twitter:description" content="现象服务中出现大量乱码数据，并且全部入库。 原因虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。 分析这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/02/04/JVM编码方式未设置引发的乱码/">
 
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/02/04/JVM编码方式未设置引发的乱码/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Feb 4 2015 22:37:58" itemprop="dateCreated datePublished" datetime="2015-02-04T22:37:58+08:00">Feb 4 2015</time>
+              <time title="创建时间：2月 4 2015 22:37:58" itemprop="dateCreated datePublished" datetime="2015-02-04T22:37:58+08:00">2月 4 2015</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:48:44" itemprop="dateModified" datetime="2019-08-18T16:48:44+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 10:50:35" itemprop="dateModified" datetime="2019-08-25T10:50:35+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/02/04/JVM编码方式未设置引发的乱码/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2015/02/04/JVM编码方式未设置引发的乱码/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -265,23 +315,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>######现象：<br>服务中出现大量乱码数据，并且全部入库。</p>
-<p>######原因：<br>虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。<br>发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。</p>
-<p>######分析：<br>这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dfile.encoding=UTF-<span class="number">8</span> XXX 后彻底解决。</span><br></pre></td></tr></table></figure>
-
-<p>但是这样发布服务时就太依赖发布脚本了，那能否在程序中就设置好编码呢？比如这样：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">"file.encoding"</span>, <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
-
+        <h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>服务中出现大量乱码数据，并且全部入库。</p>
+<h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。<br>发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。</p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dfile.encoding=UTF-<span class="number">8</span> XXX 后彻底解决。</span><br></pre></td></tr></table></figure></p>
+<p>但是这样发布服务时就太依赖发布脚本了，那能否在程序中就设置好编码呢？比如这样：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">"file.encoding"</span>, <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure></p>
 <p>其实，这样设置是不生效的，因为JVM在启动时就开始cache编码方式了，程序中再设置已然无效。不过可以在程序每个读写数据的地方都设置编码方式，但是这样未免太工程浩大，而且无法保证每个写代码的人都能做到。所以最后改为依赖在发布脚本中设置编码方式，并且在服务启动时对编码进行检查。</p>
-<p>######refer:</p>
-<blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
 <p>As Edward Grech points out, in a special case like this, the environment variable JAVA_TOOL_OPTIONS can be used to specify this property, but it’s normally done like this: java -Dfile.encoding=UTF-8 XXX</p>
-</blockquote>
-<blockquote>
 <p>Charset.defaultCharset() will reflect changes to the file.encoding property, but most of the code in the core Java libraries that need to determine the default character encoding do not use this mechanism.</p>
-</blockquote>
-<blockquote>
 <p><strong>Important points to note:</strong></p>
 <ul>
 <li>JVM caches value of default character encoding once JVM starts and so is the case for default constructors of InputStreamReader and other core Java classes. So calling System.setProperty(“file.encoding” , “UTF-16”) may not have desire effect.</li>
@@ -295,6 +336,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -343,6 +401,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -355,15 +416,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#现象"><span class="nav-number">1.</span> <span class="nav-text">现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#原因"><span class="nav-number">2.</span> <span class="nav-text">原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#分析"><span class="nav-number">3.</span> <span class="nav-text">分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -371,7 +451,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -380,7 +460,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -410,7 +490,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -423,8 +503,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -443,11 +521,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -459,32 +541,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -494,12 +562,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -520,10 +583,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

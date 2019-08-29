@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,29 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。 #1. JVM如何实现synchronized#在java语言中存在两种内建的synchronized语法：synchronized语句和synchroniz">
+  <meta name="description" content="synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。 JVM如何实现synchronized在java语言中存在两种内建的synchronized语法：synchronized语句和synchronized方法。">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="synchronized详解">
 <meta property="og:url" content="http://luojinping.com/2015/07/14/synchronized详解/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。 #1. JVM如何实现synchronized#在java语言中存在两种内建的synchronized语法：synchronized语句和synchroniz">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:51:15.429Z">
+<meta property="og:description" content="synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。 JVM如何实现synchronized在java语言中存在两种内建的synchronized语法：synchronized语句和synchronized方法。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T03:27:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="synchronized详解">
-<meta name="twitter:description" content="synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。 #1. JVM如何实现synchronized#在java语言中存在两种内建的synchronized语法：synchronized语句和synchroniz">
+<meta name="twitter:description" content="synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。 JVM如何实现synchronized在java语言中存在两种内建的synchronized语法：synchronized语句和synchronized方法。">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/07/14/synchronized详解/">
 
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/07/14/synchronized详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Jul 14 2015 9:04:27" itemprop="dateCreated datePublished" datetime="2015-07-14T09:04:27+08:00">Jul 14 2015</time>
+              <time title="创建时间：7月 14 2015 9:04:27" itemprop="dateCreated datePublished" datetime="2015-07-14T09:04:27+08:00">7月 14 2015</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:51:15" itemprop="dateModified" datetime="2019-08-18T16:51:15+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 11:27:12" itemprop="dateModified" datetime="2019-08-25T11:27:12+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/07/14/synchronized详解/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2015/07/14/synchronized详解/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -266,19 +316,17 @@
 
       
         <p>synchronized关键字简洁、清晰、语义明确，因此即使有了Lock接口，使用的还是非常广泛。其应用层的语义是可以把任何一个非null对象作为”锁”。<br>synchronized在软件层面依赖JVM，Lock在硬件层面依赖特殊的CPU指令。</p>
-<p>#1. JVM如何实现synchronized#<br>在java语言中存在两种内建的synchronized语法：synchronized语句和synchronized方法。<br>synchronized语句被javac编译成bytecode时，会在同步块的入口位置和退出位置分别插入monitorenter和monitorexit字节码指令。<br>synchronized方法被javac编译成bytecode时，会被翻译成普通的方法调用和返回指令如:invokevirtual、areturn指令，在VM字节码层面并没有任何特别的指令来实现被synchronized修饰的方法，而是在Class文件的方法表中将该方法的access_flags字段中的synchronized标志位置1，表示该方法是同步方法并使用调用该方法的对象或该方法所属的Class在JVM的内部对象表示Klass做为锁对象。</p>
-<p>#2. hotspot当前对synchronized的实现#<br>当前的hotspot共有3种类型的锁，来实现synchronize的语义，之所以有3种，是因为这3种要解决的问题不同，所做的优化也不同。这3种锁分别为biased locking，stack lock，infalted(ObjectMonitor).简单除暴的来讲，从轻量级上来说，biased lock最优，inflated 最差。</p>
-<p>#3. synchronized锁住的是什么#<br>synchronized锁定的是对象而非函数或代码。<br><strong>当synchronized作用在方法上时，锁住的便是对象实例（this）；当作用在静态方法时锁住的便是对象对应的Class实例，因为Class数据存在于永久带，因此静态方法锁相当于该类的一个全局锁；当synchronized作用于某一个对象实例时，锁住的便是对应的代码块。</strong><br>每个对象只有一把锁(Lock)与之关联，当进行到synchronized语句或函数的时候，这把锁就会被当前的线程（thread）拿走，其他的（thread）再去访问的时候拿不到锁就被暂停了。<br>在HotSpot JVM实现中，锁有个专门的名字：对象监视器。</p>
-<p>#4. synchronized的使用场景#</p>
-<ol>
+<h1 id="JVM如何实现synchronized"><a href="#JVM如何实现synchronized" class="headerlink" title="JVM如何实现synchronized"></a>JVM如何实现synchronized</h1><p>在java语言中存在两种内建的synchronized语法：synchronized语句和synchronized方法。<br>synchronized语句被javac编译成bytecode时，会在同步块的入口位置和退出位置分别插入monitorenter和monitorexit字节码指令。<br>synchronized方法被javac编译成bytecode时，会被翻译成普通的方法调用和返回指令如:invokevirtual、areturn指令，在VM字节码层面并没有任何特别的指令来实现被synchronized修饰的方法，而是在Class文件的方法表中将该方法的access_flags字段中的synchronized标志位置1，表示该方法是同步方法并使用调用该方法的对象或该方法所属的Class在JVM的内部对象表示Klass做为锁对象。</p>
+<h1 id="hotspot当前对synchronized的实现"><a href="#hotspot当前对synchronized的实现" class="headerlink" title="hotspot当前对synchronized的实现"></a>hotspot当前对synchronized的实现</h1><p>当前的hotspot共有3种类型的锁，来实现synchronize的语义，之所以有3种，是因为这3种要解决的问题不同，所做的优化也不同。这3种锁分别为biased locking，stack lock，infalted(ObjectMonitor).简单除暴的来讲，从轻量级上来说，biased lock最优，inflated 最差。</p>
+<h1 id="synchronized锁住的是什么"><a href="#synchronized锁住的是什么" class="headerlink" title="synchronized锁住的是什么"></a>synchronized锁住的是什么</h1><p>synchronized锁定的是对象而非函数或代码。<br><strong>当synchronized作用在方法上时，锁住的便是对象实例（this）；当作用在静态方法时锁住的便是对象对应的Class实例，因为Class数据存在于永久带，因此静态方法锁相当于该类的一个全局锁；当synchronized作用于某一个对象实例时，锁住的便是对应的代码块。</strong><br>每个对象只有一把锁(Lock)与之关联，当进行到synchronized语句或函数的时候，这把锁就会被当前的线程（thread）拿走，其他的（thread）再去访问的时候拿不到锁就被暂停了。<br>在HotSpot JVM实现中，锁有个专门的名字：对象监视器。</p>
+<h1 id="synchronized的使用场景"><a href="#synchronized的使用场景" class="headerlink" title="synchronized的使用场景"></a>synchronized的使用场景</h1><ol>
 <li>public synchronized void method1<br> 锁住的是该对象,类的其中一个实例，当该对象(仅仅是这一个对象)在不同线程中执行这个同步方法时，线程之间会形成互斥。达到同步效果，但如果不同线程同时对该类的不同对象执行这个同步方法时，则线程之间不会形成互斥，因为他们拥有的是不同的锁。</li>
 <li>synchronized(this){ //TODO }<br> 同一</li>
 <li>public synchronized static void method3<br> 锁住的是该类，当所有该类的对象(多个对象)在不同线程中调用这个static同步方法时，线程之间会形成互斥，达到同步效果，但如果多个线程同时调用method1，method3，则不会引互斥，具体讲看最后讲解。</li>
 <li>synchronized(Test.class){ //TODO}<br> 同三</li>
 <li>synchronized(o) {}<br> 这里面的o可以是一个任何Object对象或数组，并不一定是它本身对象或者类，谁拥有o这个锁，谁就能够操作该块程序代码。</li>
 </ol>
-<p>#refers#</p>
-<blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://f.dataguru.cn/thread-472518-1-1.html" target="_blank" rel="noopener">http://f.dataguru.cn/thread-472518-1-1.html</a></p>
 </blockquote>
 
@@ -288,6 +336,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -336,6 +401,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -348,15 +416,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JVM如何实现synchronized"><span class="nav-number">1.</span> <span class="nav-text">JVM如何实现synchronized</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#hotspot当前对synchronized的实现"><span class="nav-number">2.</span> <span class="nav-text">hotspot当前对synchronized的实现</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronized锁住的是什么"><span class="nav-number">3.</span> <span class="nav-text">synchronized锁住的是什么</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#synchronized的使用场景"><span class="nav-number">4.</span> <span class="nav-text">synchronized的使用场景</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">5.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -364,7 +451,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -373,7 +460,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -403,7 +490,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -416,8 +503,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -436,11 +521,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -452,32 +541,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -487,12 +562,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -513,10 +583,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

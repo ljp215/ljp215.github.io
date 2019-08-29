@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,31 +43,31 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="1. 前言线性回归出的模型如果出现过拟合怎么办？  脏数据太多，需要清洗数据 增加训练数据的数量和多样性 特征数量过多，使用正则化减少特征数量  2. 向量的范数向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三">
+  <meta name="description" content="前言线性回归出的模型如果出现过拟合怎么办？  脏数据太多，需要清洗数据 增加训练数据的数量和多样性 特征数量过多，使用正则化减少特征数量  向量的范数向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质： L">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线性回归正则化">
 <meta property="og:url" content="http://luojinping.com/2018/11/11/线性回归正则化/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="1. 前言线性回归出的模型如果出现过拟合怎么办？  脏数据太多，需要清洗数据 增加训练数据的数量和多样性 特征数量过多，使用正则化减少特征数量  2. 向量的范数向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="前言线性回归出的模型如果出现过拟合怎么办？  脏数据太多，需要清洗数据 增加训练数据的数量和多样性 特征数量过多，使用正则化减少特征数量  向量的范数向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质： L">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/kinds_of_norm_graph.png">
 <meta property="og:image" content="http://luojinping.com/img/ridege_and_lasso_solution.png">
-<meta property="og:updated_time" content="2019-08-18T08:52:59.340Z">
+<meta property="og:updated_time" content="2019-08-25T13:10:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="线性回归正则化">
-<meta name="twitter:description" content="1. 前言线性回归出的模型如果出现过拟合怎么办？  脏数据太多，需要清洗数据 增加训练数据的数量和多样性 特征数量过多，使用正则化减少特征数量  2. 向量的范数向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三">
+<meta name="twitter:description" content="前言线性回归出的模型如果出现过拟合怎么办？  脏数据太多，需要清洗数据 增加训练数据的数量和多样性 特征数量过多，使用正则化减少特征数量  向量的范数向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质： L">
 <meta name="twitter:image" content="http://luojinping.com/img/kinds_of_norm_graph.png">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2018/11/11/线性回归正则化/">
@@ -89,6 +89,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -97,7 +106,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -106,7 +114,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -122,16 +130,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -143,7 +150,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -163,7 +170,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -174,7 +181,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -185,34 +192,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/11/11/线性回归正则化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -235,13 +271,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Nov 11 2018 21:56:11" itemprop="dateCreated datePublished" datetime="2018-11-11T21:56:11+08:00">Nov 11 2018</time>
+              <time title="创建时间：11月 11 2018 21:56:11" itemprop="dateCreated datePublished" datetime="2018-11-11T21:56:11+08:00">11月 11 2018</time>
             </span>
           
             
@@ -251,13 +287,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:59" itemprop="dateModified" datetime="2019-08-18T16:52:59+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:11" itemprop="dateModified" datetime="2019-08-25T21:10:11+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/11/11/线性回归正则化/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/11/11/线性回归正则化/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -268,35 +318,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>线性回归出的模型如果出现过拟合怎么办？</p>
+        <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>线性回归出的模型如果出现过拟合怎么办？</p>
 <ol>
 <li>脏数据太多，需要清洗数据</li>
 <li>增加训练数据的数量和多样性</li>
 <li>特征数量过多，使用正则化减少特征数量</li>
 </ol>
-<h2 id="2-向量的范数"><a href="#2-向量的范数" class="headerlink" title="2. 向量的范数"></a>2. 向量的范数</h2><p>向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质：</p>
+<h1 id="向量的范数"><a href="#向量的范数" class="headerlink" title="向量的范数"></a>向量的范数</h1><p>向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质：</p>
 <p>L0范数：向量中非零元素的个数。<br>L1范数：向量中各个元素绝对值之和，又叫“稀疏规则算子”（Lasso regularization）<br>L2范数：向量中各个元素平方和再开方<br>p-范数：$||\textbf{x}||_p = (\sum_{i=1}^N|x_i|^p)^{\frac{1}{p}}$，即向量元素绝对值的p次方和的1/p次幂。</p>
 <p>下图展示了 p 取不同值时 unit ball 的形状：</p>
 <p><img src="/img/kinds_of_norm_graph.png" alt></p>
-<h2 id="3-正则化"><a href="#3-正则化" class="headerlink" title="3. 正则化"></a>3. 正则化</h2><p>在统计学的缩减中，引入了惩罚项，减少了不重要的参数，同时还可采用正则化（regularization）减少不重要的参数。<br>既然是减少特征，那么最容易想到的就是使用 L0 范数，求回归函数中的参数向量 w 的非零元素的个数。如果约束 $‖w‖_0≤k$，就是约束非零元素个数不大于 k。不过很明显，L0 范数是不连续的且非凸的，如果在线性回归中加上 L0 范数的约束，就变成了一个组合优化问题：挑出 $≤k$ 个系数然后做回归，找到目标函数的最小值对应的系数组合，这是一个 NP 问题。</p>
+<h1 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h1><p>在统计学的缩减中，引入了惩罚项，减少了不重要的参数，同时还可采用正则化（regularization）减少不重要的参数。<br>既然是减少特征，那么最容易想到的就是使用 L0 范数，求回归函数中的参数向量 w 的非零元素的个数。如果约束 $‖w‖_0≤k$，就是约束非零元素个数不大于 k。不过很明显，L0 范数是不连续的且非凸的，如果在线性回归中加上 L0 范数的约束，就变成了一个组合优化问题：挑出 $≤k$ 个系数然后做回归，找到目标函数的最小值对应的系数组合，这是一个 NP 问题。</p>
 <p>有趣的是，L1 范数也可以达到稀疏的效果，是 L0 范数的最优凸近似。我们把引入 L1 范数的线性回归叫做 Lasso 回归。</p>
-<h3 id="3-1-Lasso-回归"><a href="#3-1-Lasso-回归" class="headerlink" title="3.1 Lasso 回归"></a>3.1 Lasso 回归</h3><p>Lasso 算法（英语：least absolute shrinkage and selection operator，又译最小绝对值收敛和选择算子、套索算法）是一种同时进行特征选择和正则化（数学）的回归分析方法，旨在增强统计模型的预测准确性和可解释性，最初由斯坦福大学统计学教授 Robert Tibshirani 于 1996 年基于 Leo Breiman 的非负参数推断(Nonnegative Garrote, NNG)提出。</p>
+<h2 id="Lasso-回归"><a href="#Lasso-回归" class="headerlink" title="Lasso 回归"></a>Lasso 回归</h2><p>Lasso 算法（英语：least absolute shrinkage and selection operator，又译最小绝对值收敛和选择算子、套索算法）是一种同时进行特征选择和正则化（数学）的回归分析方法，旨在增强统计模型的预测准确性和可解释性，最初由斯坦福大学统计学教授 Robert Tibshirani 于 1996 年基于 Leo Breiman 的非负参数推断(Nonnegative Garrote, NNG)提出。</p>
 <p>优化目标：min $ 1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} }$</p>
 <p>Lasso 回归：min  $1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} } + \lambda||\omega||_{1}$</p>
-<h3 id="3-2-Ridge-回归"><a href="#3-2-Ridge-回归" class="headerlink" title="3.2 Ridge 回归"></a>3.2 Ridge 回归</h3><p>岭回归是加了二阶正则项的最小二乘，主要适用于过拟合严重或各变量之间存在多重共线性的时候，岭回归是有 bias 的，这里的 bias 是为了让 variance 更小。</p>
+<h2 id="Ridge-回归"><a href="#Ridge-回归" class="headerlink" title="Ridge 回归"></a>Ridge 回归</h2><p>岭回归是加了二阶正则项的最小二乘，主要适用于过拟合严重或各变量之间存在多重共线性的时候，岭回归是有 bias 的，这里的 bias 是为了让 variance 更小。</p>
 <p>Ridge 回归：min  $1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} } + \lambda ||\omega||_{2}^{2} $</p>
 <p>岭回归最先是用来处理特征数多与样本数的情况，现在也用于在估计中加入偏差，从而得到更好的估计。这里引入λ限制了所有w的和，通过引入该惩罚项，能够减少不重要的参数，这个技术在统计学上也叫做缩减。缩减方法可以去掉不重要的参数，因此能更好的理解数据。选取不同的λ进行测试，最后得到一个使得误差最小λ。</p>
 <p>缩减方法可以去掉不重要的参数，因此能更好地理解数据。此外，与简单的线性回归相比，缩减法能取得更好的预测效果。</p>
-<h3 id="3-3-比较两者"><a href="#3-3-比较两者" class="headerlink" title="3.3 比较两者"></a>3.3 比较两者</h3><p>Lasso 回归与 Ridge 回归有共同点，也有区别。</p>
-<h4 id="共同点"><a href="#共同点" class="headerlink" title="共同点"></a>共同点</h4><p>都能解决两个问题：</p>
+<h2 id="比较两者"><a href="#比较两者" class="headerlink" title="比较两者"></a>比较两者</h2><p>Lasso 回归与 Ridge 回归有共同点，也有区别。</p>
+<h3 id="共同点"><a href="#共同点" class="headerlink" title="共同点"></a>共同点</h3><p>都能解决两个问题：</p>
 <ol>
 <li>线性回归出现的过拟合现象</li>
 <li>使用 Normal equation 求解时，解决 $(X^TX)$ 不可逆的问题。</li>
 </ol>
-<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>岭回归加入的正则项是 L2 范数，其结果可以将偏回归系数往 0 的方向进行压缩，但不会把偏回归系数压缩为 0，即岭回归不会剔除变量。Lasso 回归同样也可以将偏回归系数往 0 方向压缩，但是能够将某些变量的偏回归系数压缩为 0，因此可以起到变量筛选的作用。</p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>岭回归加入的正则项是 L2 范数，其结果可以将偏回归系数往 0 的方向进行压缩，但不会把偏回归系数压缩为 0，即岭回归不会剔除变量。Lasso 回归同样也可以将偏回归系数往 0 方向压缩，但是能够将某些变量的偏回归系数压缩为 0，因此可以起到变量筛选的作用。</p>
 <p><img src="/img/ridege_and_lasso_solution.png" alt></p>
 <p>红色的椭圆和蓝色的区域的切点就是目标函数的最优解，我们可以看到，如果是圆，则很容易切到圆周的任意一点，但是很难切到坐标轴上，因此没有稀疏；但是如果是菱形或者多边形，则很容易切到坐标轴上，因此很容易产生稀疏的结果。这也说明了为什么 L1 范式会是稀疏的。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://zh.wikipedia.org/wiki/Lasso%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Lasso算法 - 维基百科，自由的百科全书</a><br><a href="https://blog.csdn.net/xbinworld/article/details/44276389" target="_blank" rel="noopener">机器学习方法：回归（二）：稀疏与正则约束ridge regression，Lasso</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://zh.wikipedia.org/wiki/Lasso%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Lasso算法 - 维基百科，自由的百科全书</a><br><a href="https://blog.csdn.net/xbinworld/article/details/44276389" target="_blank" rel="noopener">机器学习方法：回归（二）：稀疏与正则约束ridge regression，Lasso</a></p>
 
     </div>
 
@@ -304,6 +354,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -352,6 +419,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -364,24 +434,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#向量的范数"><span class="nav-number">2.</span> <span class="nav-text">向量的范数</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#正则化"><span class="nav-number">3.</span> <span class="nav-text">正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Lasso-回归"><span class="nav-number">3.1.</span> <span class="nav-text">Lasso 回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Ridge-回归"><span class="nav-number">3.2.</span> <span class="nav-text">Ridge 回归</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#比较两者"><span class="nav-number">3.3.</span> <span class="nav-text">比较两者</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#共同点"><span class="nav-number">3.3.1.</span> <span class="nav-text">共同点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#区别"><span class="nav-number">3.3.2.</span> <span class="nav-text">区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -389,7 +469,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -398,7 +478,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -428,7 +508,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -441,26 +521,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-前言"><span class="nav-number">1.</span> <span class="nav-text">1. 前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-向量的范数"><span class="nav-number">2.</span> <span class="nav-text">2. 向量的范数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-正则化"><span class="nav-number">3.</span> <span class="nav-text">3. 正则化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-1-Lasso-回归"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 Lasso 回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-2-Ridge-回归"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 Ridge 回归</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-比较两者"><span class="nav-number">3.3.</span> <span class="nav-text">3.3 比较两者</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#共同点"><span class="nav-number">3.3.1.</span> <span class="nav-text">共同点</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#区别"><span class="nav-number">3.3.2.</span> <span class="nav-text">区别</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -478,11 +539,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -494,32 +559,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -529,12 +580,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -552,13 +598,85 @@
   
 
   
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
 
   
 
 
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
-
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

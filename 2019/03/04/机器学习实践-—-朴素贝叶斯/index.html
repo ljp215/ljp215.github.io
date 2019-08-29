@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,31 +43,31 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="#1. 作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 #2. 步骤  加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  ##3. 实现 1234567891011121314151617181920212223242">
+  <meta name="description" content="作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 步骤 加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  实现1234567891011121314151617181920212223242526272829303132">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习实战 — 朴素贝叶斯">
 <meta property="og:url" content="http://luojinping.com/2019/03/04/机器学习实践-—-朴素贝叶斯/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="#1. 作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 #2. 步骤  加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  ##3. 实现 1234567891011121314151617181920212223242">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 步骤 加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  实现1234567891011121314151617181920212223242526272829303132">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/naive_bayes_auc.jpg">
 <meta property="og:image" content="http://luojinping.com/img/naive_bayes_cross_matrix.png">
-<meta property="og:updated_time" content="2019-08-18T08:43:24.919Z">
+<meta property="og:updated_time" content="2019-08-25T13:10:10.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习实战 — 朴素贝叶斯">
-<meta name="twitter:description" content="#1. 作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 #2. 步骤  加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  ##3. 实现 1234567891011121314151617181920212223242">
+<meta name="twitter:description" content="作业根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。 步骤 加载数据集 提取  TF-IDF 特征 生成文档的 TF-IDF 矩阵 训练多项式朴素贝叶斯模型 评价模型  实现1234567891011121314151617181920212223242526272829303132">
 <meta name="twitter:image" content="http://luojinping.com/img/naive_bayes_auc.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2019/03/04/机器学习实践-—-朴素贝叶斯/">
@@ -89,6 +89,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -97,7 +106,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -106,7 +114,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -122,16 +130,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -143,7 +150,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -163,7 +170,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -174,7 +181,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -185,34 +192,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2019/03/04/机器学习实践-—-朴素贝叶斯/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -235,13 +271,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2019 22:26:47" itemprop="dateCreated datePublished" datetime="2019-03-04T22:26:47+08:00">Mar 4 2019</time>
+              <time title="创建时间：3月 4 2019 22:26:47" itemprop="dateCreated datePublished" datetime="2019-03-04T22:26:47+08:00">3月 4 2019</time>
             </span>
           
             
@@ -251,13 +287,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:43:24" itemprop="dateModified" datetime="2019-08-18T16:43:24+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:10" itemprop="dateModified" datetime="2019-08-25T21:10:10+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/04/机器学习实践-—-朴素贝叶斯/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/机器学习实践-—-朴素贝叶斯/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -268,18 +318,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#1. 作业<br>根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。<br>讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。</p>
-<p>#2. 步骤</p>
-<ol>
+        <h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><p>根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。<br>讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。</p>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
 <li>加载数据集</li>
 <li>提取  TF-IDF 特征</li>
 <li>生成文档的 TF-IDF 矩阵</li>
 <li>训练多项式朴素贝叶斯模型</li>
 <li>评价模型</li>
 </ol>
-<p>##3. 实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># sklearn twenty_newsgroups document</span></span><br><span class="line"><span class="comment"># http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html</span></span><br><span class="line">fetch_20newsgroups(data_home=<span class="string">'/Users/ljp/Codes/ivy_plan/naive_bayes/20_newsgroups'</span>, <span class="comment"># 文件下载的路径</span></span><br><span class="line">                   subset=<span class="string">'train'</span>, <span class="comment"># 加载那一部分数据集 train/test</span></span><br><span class="line">                   categories=<span class="literal">None</span>, <span class="comment"># 选取哪一类数据集[类别列表]，默认20类</span></span><br><span class="line">                   shuffle=<span class="literal">True</span>,  <span class="comment"># 将数据集随机排序</span></span><br><span class="line">                   random_state=<span class="number">42</span>, <span class="comment"># 随机数生成器</span></span><br><span class="line">                   remove=(), <span class="comment"># ('headers','footers','quotes') 去除部分文本</span></span><br><span class="line">                   download_if_missing=<span class="literal">True</span> <span class="comment"># 如果没有下载过，重新下载</span></span><br><span class="line">                  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据集</span></span><br><span class="line">newsgroups_train = fetch_20newsgroups(subset=<span class="string">'train'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bunch</span></span><br><span class="line"><span class="comment"># load_*和 fetch_* 函数返回的数据类型是 datasets.base.Bunch，本质上是一个 dict，它的键值对可用通过对象的属性方式访问。</span></span><br><span class="line"><span class="comment"># 主要包含以下属性：</span></span><br><span class="line"><span class="comment"># data：特征数据数组，type 是 list，是 n_samples * n_features 的二维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># filenames：文件数组，是文件路径，是 n_samples 的一维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># target：标签数组，是类别的整数索引，是 n_samples 的一维 numpy.ndarray 数组，与 filenames 一一对应</span></span><br><span class="line"><span class="comment"># DESCR：数据描述</span></span><br><span class="line"><span class="comment"># feature_names：特征名</span></span><br><span class="line"><span class="comment"># target_names：标签名</span></span><br><span class="line"><span class="comment"># print(type(newsgroups_train)) # &lt;class 'sklearn.utils.Bunch'&gt;</span></span><br><span class="line"><span class="comment"># print(list(newsgroups_train)) # ['data', 'filenames', 'target_names', 'target', 'DESCR', 'description']</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取tfidf特征</span></span><br><span class="line">vectorizer = TfidfVectorizer() <span class="comment"># vectorizer type is &lt;class 'sklearn.feature_extraction.text.TfidfVectorizer'&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vectors type is &lt;class 'scipy.sparse.csr.csr_matrix'&gt;</span></span><br><span class="line"><span class="comment"># 数据格式为：(文档序号, 单词序号), tf-idf值</span></span><br><span class="line"><span class="comment"># 文档序号是该文档在 newsgroups_train.filenames 里的索引(位置)</span></span><br><span class="line"><span class="comment"># 单词序号是该单词在所有单词所构成的一维向量(也称为词袋，Bag of words)里的索引(位置)</span></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line"><span class="comment">#  (0, 11071)	0.02879840104494835</span></span><br><span class="line"><span class="comment">#  (0, 19516)	0.15199951710440102</span></span><br><span class="line"><span class="comment">#  (0, 24556)	0.36446543134314724</span></span><br><span class="line">vectors = vectorizer.fit_transform(newsgroups_train.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># MultinomialNB实现文本分类</span></span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score,f1_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">clf=MultinomialNB(alpha=<span class="number">0.1</span>)</span><br><span class="line">clf.fit(vectors,newsgroups_train.target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载测试集</span></span><br><span class="line">newsgroups_test=fetch_20newsgroups(subset=<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取测试集tfidf特征</span></span><br><span class="line">vectors_test=vectorizer.transform(newsgroups_test.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型评价</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">pred=clf.predict(vectors_test)</span><br><span class="line">print(<span class="string">'accuracy_score: '</span> + str(accuracy_score(newsgroups_test.target,pred)))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"classification report on test set for classifier:"</span>)</span><br><span class="line">print(clf)</span><br><span class="line">X_test = vectorizer.transform((d <span class="keyword">for</span> d <span class="keyword">in</span> newsgroups_test.data))</span><br><span class="line">pred = clf.predict(X_test)</span><br><span class="line">y_test = newsgroups_test.target</span><br><span class="line">print(classification_report(y_test, pred, target_names=newsgroups_test.target_names))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成混淆矩阵，观察每种类别被错误分类的情况</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">cm = confusion_matrix(y_test, pred)</span><br><span class="line">print(<span class="string">"confusion matrix:"</span>)</span><br><span class="line">print(cm)</span><br><span class="line"><span class="comment"># Show confusion matrix</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">8</span>), dpi=<span class="number">144</span>)</span><br><span class="line">plt.title(<span class="string">'Confusion matrix of the classifier'</span>)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">ax.spines[<span class="string">'right'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'top'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'bottom'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'left'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.xaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.yaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.set_xticklabels([])</span><br><span class="line">ax.set_yticklabels([])</span><br><span class="line">plt.matshow(cm, fignum=<span class="number">1</span>, cmap=<span class="string">'gray'</span>)</span><br><span class="line">plt.colorbar()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># sklearn twenty_newsgroups document</span></span><br><span class="line"><span class="comment"># http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html</span></span><br><span class="line">fetch_20newsgroups(data_home=<span class="string">'/Users/ljp/Codes/ivy_plan/naive_bayes/20_newsgroups'</span>, <span class="comment"># 文件下载的路径</span></span><br><span class="line">                   subset=<span class="string">'train'</span>, <span class="comment"># 加载那一部分数据集 train/test</span></span><br><span class="line">                   categories=<span class="literal">None</span>, <span class="comment"># 选取哪一类数据集[类别列表]，默认20类</span></span><br><span class="line">                   shuffle=<span class="literal">True</span>,  <span class="comment"># 将数据集随机排序</span></span><br><span class="line">                   random_state=<span class="number">42</span>, <span class="comment"># 随机数生成器</span></span><br><span class="line">                   remove=(), <span class="comment"># ('headers','footers','quotes') 去除部分文本</span></span><br><span class="line">                   download_if_missing=<span class="literal">True</span> <span class="comment"># 如果没有下载过，重新下载</span></span><br><span class="line">                  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据集</span></span><br><span class="line">newsgroups_train = fetch_20newsgroups(subset=<span class="string">'train'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bunch</span></span><br><span class="line"><span class="comment"># load_*和 fetch_* 函数返回的数据类型是 datasets.base.Bunch，本质上是一个 dict，它的键值对可用通过对象的属性方式访问。</span></span><br><span class="line"><span class="comment"># 主要包含以下属性：</span></span><br><span class="line"><span class="comment"># data：特征数据数组，type 是 list，是 n_samples * n_features 的二维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># filenames：文件数组，是文件路径，是 n_samples 的一维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># target：标签数组，是类别的整数索引，是 n_samples 的一维 numpy.ndarray 数组，与 filenames 一一对应</span></span><br><span class="line"><span class="comment"># DESCR：数据描述</span></span><br><span class="line"><span class="comment"># feature_names：特征名</span></span><br><span class="line"><span class="comment"># target_names：标签名</span></span><br><span class="line"><span class="comment"># print(type(newsgroups_train)) # &lt;class 'sklearn.utils.Bunch'&gt;</span></span><br><span class="line"><span class="comment"># print(list(newsgroups_train)) # ['data', 'filenames', 'target_names', 'target', 'DESCR', 'description']</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取tfidf特征</span></span><br><span class="line">vectorizer = TfidfVectorizer() <span class="comment"># vectorizer type is &lt;class 'sklearn.feature_extraction.text.TfidfVectorizer'&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vectors type is &lt;class 'scipy.sparse.csr.csr_matrix'&gt;</span></span><br><span class="line"><span class="comment"># 数据格式为：(文档序号, 单词序号), tf-idf值</span></span><br><span class="line"><span class="comment"># 文档序号是该文档在 newsgroups_train.filenames 里的索引(位置)</span></span><br><span class="line"><span class="comment"># 单词序号是该单词在所有单词所构成的一维向量(也称为词袋，Bag of words)里的索引(位置)</span></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line"><span class="comment">#  (0, 11071)	0.02879840104494835</span></span><br><span class="line"><span class="comment">#  (0, 19516)	0.15199951710440102</span></span><br><span class="line"><span class="comment">#  (0, 24556)	0.36446543134314724</span></span><br><span class="line">vectors = vectorizer.fit_transform(newsgroups_train.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># MultinomialNB实现文本分类</span></span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score,f1_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">clf=MultinomialNB(alpha=<span class="number">0.1</span>)</span><br><span class="line">clf.fit(vectors,newsgroups_train.target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载测试集</span></span><br><span class="line">newsgroups_test=fetch_20newsgroups(subset=<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取测试集tfidf特征</span></span><br><span class="line">vectors_test=vectorizer.transform(newsgroups_test.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型评价</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">pred=clf.predict(vectors_test)</span><br><span class="line">print(<span class="string">'accuracy_score: '</span> + str(accuracy_score(newsgroups_test.target,pred)))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"classification report on test set for classifier:"</span>)</span><br><span class="line">print(clf)</span><br><span class="line">X_test = vectorizer.transform((d <span class="keyword">for</span> d <span class="keyword">in</span> newsgroups_test.data))</span><br><span class="line">pred = clf.predict(X_test)</span><br><span class="line">y_test = newsgroups_test.target</span><br><span class="line">print(classification_report(y_test, pred, target_names=newsgroups_test.target_names))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成混淆矩阵，观察每种类别被错误分类的情况</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">cm = confusion_matrix(y_test, pred)</span><br><span class="line">print(<span class="string">"confusion matrix:"</span>)</span><br><span class="line">print(cm)</span><br><span class="line"><span class="comment"># Show confusion matrix</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">8</span>), dpi=<span class="number">144</span>)</span><br><span class="line">plt.title(<span class="string">'Confusion matrix of the classifier'</span>)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">ax.spines[<span class="string">'right'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'top'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'bottom'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'left'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.xaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.yaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.set_xticklabels([])</span><br><span class="line">ax.set_yticklabels([])</span><br><span class="line">plt.matshow(cm, fignum=<span class="number">1</span>, cmap=<span class="string">'gray'</span>)</span><br><span class="line">plt.colorbar()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p>输出如下：<br><img src="/img/naive_bayes_auc.jpg" alt="naive_bayes_auc.jpg"></p>
 <p><img src="/img/naive_bayes_cross_matrix.png" alt="naive_bayes_cross_matrix.png"></p>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html" target="_blank" rel="noopener">5.6.2. 20个新闻组文本数据集 — scikit-learn 0.19.0 中文文档 - ApacheCN</a><br><a href="https://www.jianshu.com/p/364887de2039" target="_blank" rel="noopener">利用朴素贝叶斯算法进行文档分类 - 简书</a><br><a href="https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf" target="_blank" rel="noopener">https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf</a></p>
@@ -290,6 +337,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -338,6 +402,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -350,24 +417,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#作业"><span class="nav-number">1.</span> <span class="nav-text">作业</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#步骤"><span class="nav-number">2.</span> <span class="nav-text">步骤</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#实现"><span class="nav-number">2.1.</span> <span class="nav-text">实现</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">3.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -375,7 +452,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -384,7 +461,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -414,7 +491,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -427,26 +504,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">1.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -464,11 +522,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -480,32 +542,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -515,12 +563,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -541,10 +584,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

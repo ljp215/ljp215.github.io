@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,31 +43,31 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="说明: kafka 版本号为 0.11.0 ##Consumer 拉取消息的实现在 Kafka Consumer 正常消费时，观察其调用堆栈。 1234567891011&quot;pool-16-thread-7&quot; #154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]   java.lan">
+  <meta name="description" content="_说明: kafka 版本号为 0.11.0_ Consumer 拉取消息的实现在 Kafka Consumer 正常消费时，观察其调用堆栈。 1234567891011&quot;pool-16-thread-7&quot; #154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]   java.lan">
 <meta name="keywords" content="Distributed System">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Kafka Consumer 的实现">
 <meta property="og:url" content="http://luojinping.com/2017/11/12/Kafka-Consumer-的实现/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="说明: kafka 版本号为 0.11.0 ##Consumer 拉取消息的实现在 Kafka Consumer 正常消费时，观察其调用堆栈。 1234567891011&quot;pool-16-thread-7&quot; #154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]   java.lan">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="_说明: kafka 版本号为 0.11.0_ Consumer 拉取消息的实现在 Kafka Consumer 正常消费时，观察其调用堆栈。 1234567891011&quot;pool-16-thread-7&quot; #154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]   java.lan">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/kafka_consumer_state_in_server.png">
 <meta property="og:image" content="http://luojinping.com/img/Kafka_Rebalance_Generation.png">
-<meta property="og:updated_time" content="2019-08-18T08:49:35.198Z">
+<meta property="og:updated_time" content="2019-08-25T03:49:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Kafka Consumer 的实现">
-<meta name="twitter:description" content="说明: kafka 版本号为 0.11.0 ##Consumer 拉取消息的实现在 Kafka Consumer 正常消费时，观察其调用堆栈。 1234567891011&quot;pool-16-thread-7&quot; #154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]   java.lan">
+<meta name="twitter:description" content="_说明: kafka 版本号为 0.11.0_ Consumer 拉取消息的实现在 Kafka Consumer 正常消费时，观察其调用堆栈。 1234567891011&quot;pool-16-thread-7&quot; #154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]   java.lan">
 <meta name="twitter:image" content="http://luojinping.com/img/kafka_consumer_state_in_server.png">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2017/11/12/Kafka-Consumer-的实现/">
@@ -89,6 +89,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -97,7 +106,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -106,7 +114,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -122,16 +130,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -143,7 +150,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -163,7 +170,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -174,7 +181,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -185,34 +192,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2017/11/12/Kafka-Consumer-的实现/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -235,13 +271,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Nov 12 2017 15:16:54" itemprop="dateCreated datePublished" datetime="2017-11-12T15:16:54+08:00">Nov 12 2017</time>
+              <time title="创建时间：11月 12 2017 15:16:54" itemprop="dateCreated datePublished" datetime="2017-11-12T15:16:54+08:00">11月 12 2017</time>
             </span>
           
             
@@ -251,13 +287,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:49:35" itemprop="dateModified" datetime="2019-08-18T16:49:35+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 11:49:24" itemprop="dateModified" datetime="2019-08-25T11:49:24+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/11/12/Kafka-Consumer-的实现/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/11/12/Kafka-Consumer-的实现/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -268,38 +318,28 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p><strong><em>说明: kafka 版本号为 0.11.0</em></strong></p>
-<p>##Consumer 拉取消息的实现<br>在 Kafka Consumer 正常消费时，观察其调用堆栈。</p>
+        <p><strong>_说明: kafka 版本号为 0.11.0_</strong></p>
+<h1 id="Consumer-拉取消息的实现"><a href="#Consumer-拉取消息的实现" class="headerlink" title="Consumer 拉取消息的实现"></a>Consumer 拉取消息的实现</h1><p>在 Kafka Consumer 正常消费时，观察其调用堆栈。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">"pool-16-thread-7" #154 prio=5 os_prio=0 tid=0x00007ff581c8c000 nid=0x326d runnable [0x00007ff5468e7000]</span><br><span class="line">   java.lang.Thread.State: RUNNABLE</span><br><span class="line">        ...</span><br><span class="line">        at org.apache.kafka.clients.NetworkClient.poll(NetworkClient.java:433)</span><br><span class="line">        at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:232)</span><br><span class="line">        - locked &lt;0x00000000c2e04f90&gt; (a org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient)</span><br><span class="line">        at org.apache.kafka.clients.consumer.internals.ConsumerNetworkClient.poll(ConsumerNetworkClient.java:208)</span><br><span class="line">        at org.apache.kafka.clients.consumer.KafkaConsumer.pollOnce(KafkaConsumer.java:1096)</span><br><span class="line">        at org.apache.kafka.clients.consumer.KafkaConsumer.poll(KafkaConsumer.java:1043)</span><br><span class="line">        at org.springframework.kafka.listener.KafkaMessageListenerContainer$ListenerConsumer.run(KafkaMessageListenerContainer.java:571)</span><br><span class="line">        ...</span><br></pre></td></tr></table></figure>
-
-<p>对应的代码实现是 <code>org.apache.kafka.clients.consumer.KafkaConsumer#poll</code>，如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ConsumerRecords&lt;K, V&gt; <span class="title">poll</span><span class="params">(<span class="keyword">long</span> timeout)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="comment">// poll for new data until the timeout expires</span></span><br><span class="line">            <span class="keyword">long</span> start = time.milliseconds();</span><br><span class="line">            <span class="keyword">long</span> remaining = timeout;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; records = pollOnce(remaining);</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span> (fetcher.sendFetches() &gt; <span class="number">0</span> || client.hasPendingRequests())</span><br><span class="line">                        client.pollNoWakeup();</span><br><span class="line">                        </span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.interceptors == <span class="keyword">null</span>)</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> ConsumerRecords&lt;&gt;(records);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>.interceptors.onConsume(<span class="keyword">new</span> ConsumerRecords&lt;&gt;(records));</span><br><span class="line">                        </span><br><span class="line">                <span class="keyword">long</span> elapsed = time.milliseconds() - start;</span><br><span class="line">                remaining = timeout - elapsed;</span><br><span class="line">            &#125; <span class="keyword">while</span> (remaining &gt; <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> ConsumerRecords.empty();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
-<p>其中 <code>org.apache.kafka.clients.consumer.KafkaConsumer#pollOnce</code>的实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; pollOnce(<span class="keyword">long</span> timeout) &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">// ConsumerCoordinator coordinator;</span></span><br><span class="line">        coordinator.poll(time.milliseconds(), timeout);</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if data is available already, return it immediately</span></span><br><span class="line">        Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; records = fetcher.fetchedRecords();</span><br><span class="line">        <span class="keyword">if</span> (!records.isEmpty())</span><br><span class="line">            <span class="keyword">return</span> records;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// send any new fetches (won't resend pending fetches)</span></span><br><span class="line">        fetcher.sendFetches();</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> fetcher.fetchedRecords();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
-
+<p>对应的代码实现是 <code>org.apache.kafka.clients.consumer.KafkaConsumer#poll</code>，如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> ConsumerRecords&lt;K, V&gt; <span class="title">poll</span><span class="params">(<span class="keyword">long</span> timeout)</span> </span>&#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            ...</span><br><span class="line">            <span class="comment">// poll for new data until the timeout expires</span></span><br><span class="line">            <span class="keyword">long</span> start = time.milliseconds();</span><br><span class="line">            <span class="keyword">long</span> remaining = timeout;</span><br><span class="line">            <span class="keyword">do</span> &#123;</span><br><span class="line">                Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; records = pollOnce(remaining);</span><br><span class="line">                </span><br><span class="line">                <span class="keyword">if</span> (fetcher.sendFetches() &gt; <span class="number">0</span> || client.hasPendingRequests())</span><br><span class="line">                        client.pollNoWakeup();</span><br><span class="line">                        </span><br><span class="line">                <span class="keyword">if</span> (<span class="keyword">this</span>.interceptors == <span class="keyword">null</span>)</span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">new</span> ConsumerRecords&lt;&gt;(records);</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                    <span class="keyword">return</span> <span class="keyword">this</span>.interceptors.onConsume(<span class="keyword">new</span> ConsumerRecords&lt;&gt;(records));</span><br><span class="line">                        </span><br><span class="line">                <span class="keyword">long</span> elapsed = time.milliseconds() - start;</span><br><span class="line">                remaining = timeout - elapsed;</span><br><span class="line">            &#125; <span class="keyword">while</span> (remaining &gt; <span class="number">0</span>);</span><br><span class="line">            <span class="keyword">return</span> ConsumerRecords.empty();</span><br><span class="line">        &#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">            release();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
+<p>其中 <code>org.apache.kafka.clients.consumer.KafkaConsumer#pollOnce</code>的实现如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; pollOnce(<span class="keyword">long</span> timeout) &#123;</span><br><span class="line">        ...</span><br><span class="line">        <span class="comment">// ConsumerCoordinator coordinator;</span></span><br><span class="line">        coordinator.poll(time.milliseconds(), timeout);</span><br><span class="line">        ...</span><br><span class="line"></span><br><span class="line">        <span class="comment">// if data is available already, return it immediately</span></span><br><span class="line">        Map&lt;TopicPartition, List&lt;ConsumerRecord&lt;K, V&gt;&gt;&gt; records = fetcher.fetchedRecords();</span><br><span class="line">        <span class="keyword">if</span> (!records.isEmpty())</span><br><span class="line">            <span class="keyword">return</span> records;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// send any new fetches (won't resend pending fetches)</span></span><br><span class="line">        fetcher.sendFetches();</span><br><span class="line">        ...</span><br><span class="line">        <span class="keyword">return</span> fetcher.fetchedRecords();</span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure></p>
 <p>所以可以看到 consumer 每次 poll 时是先从 fetcher 中 fetchedRecords 的，如果拿不到结果，就新发起一个 sendFetches 请求。</p>
-<p>###Consumer 拉取消息的数量<br>在 <code>org.apache.kafka.clients.consumer.internals.Fetcher#fetchedRecords</code> 可以看到 <code>maxPollRecords</code>(max.poll.records 配置) 变量限制了每次 poll 的消息条数，不管 consumer 对应多少个 partition，从所有 partition 拉取到的消息条数总和不会超过 <code>maxPollRecords</code>。</p>
+<h2 id="Consumer-拉取消息的数量"><a href="#Consumer-拉取消息的数量" class="headerlink" title="Consumer 拉取消息的数量"></a>Consumer 拉取消息的数量</h2><p>在 <code>org.apache.kafka.clients.consumer.internals.Fetcher#fetchedRecords</code> 可以看到 <code>maxPollRecords</code>(max.poll.records 配置) 变量限制了每次 poll 的消息条数，不管 consumer 对应多少个 partition，从所有 partition 拉取到的消息条数总和不会超过 <code>maxPollRecords</code>。</p>
 <p>在 <code>org.apache.kafka.clients.consumer.internals.Fetcher#sendFetches</code> 可以看到 <code>fetchSize</code>(max.partition.fetch.bytes 配置) 用于每次创建 FetchRequest 时的 <code>org.apache.kafka.common.requests.FetchRequest.PartitionData</code> 的参数设置。<code>fetchSize</code>限制了 consumer 每次从每个 partition 拉取的数据量。<br>不过，还是看代码中的 <code>ConsumerConfig#MAX_PARTITION_FETCH_BYTES_DOC</code> 说明吧：</p>
 <blockquote>
 <p>The maximum amount of data per-partition the server will return. Records are fetched in batches by the consumer. If the first record batch in the first non-empty partition of the fetch is larger than this limit, the batch will still be returned to ensure that the consumer can make progress. The maximum record batch size accepted by the broker is defined via <code>message.max.bytes</code> (broker config) or <code>max.message.bytes</code> (topic config). See “ + FETCH_MAX_BYTES_CONFIG + “ for limiting the consumer request size.</p>
 </blockquote>
-<p>####poll 和 fetch 的关系<br>在满足max.partition.fetch.bytes限制的情况下，假如fetch到了100个record，放到本地缓存后，由于max.poll.records限制每次只能poll出15个record。那么KafkaConsumer就需要执行7次才能将这一次通过网络发起的fetch请求所fetch到的这100个record消费完毕。其中前6次是每次pool中15个record，最后一次是poll出10个record。</p>
-<p>##Consumer 的心跳机制<br>在 <code>org.apache.kafka.clients.consumer.internals.AbstractCoordinat</code> 中启动 <code>HeartbeatThread</code> 线程来定时发送心跳和检查 consumer 的状态。<br>每个 Consumer 都有一个 ConsumerCoordinator(继承 AbstractCoordinator)，每个 ConsumerCoordinator 都启动一个 <code>HeartbeatThread</code> 线程来维护心跳，心跳信息存放在 <code>org.apache.kafka.clients.consumer.internals.Heartbeat</code>。</p>
-<p>实现如下：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">"Heartbeat thread for group &#123;&#125; started"</span>, groupId);</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                    <span class="keyword">synchronized</span> (AbstractCoordinator.<span class="keyword">this</span>) &#123;</span><br><span class="line">                        ...</span><br><span class="line">                        client.pollNoWakeup();</span><br><span class="line">                        <span class="keyword">long</span> now = time.milliseconds();</span><br><span class="line">                        </span><br><span class="line">                        <span class="keyword">if</span> (coordinatorUnknown()) &#123;</span><br><span class="line">                            ...</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.sessionTimeoutExpired(now)) &#123;</span><br><span class="line">                            <span class="comment">// the session timeout has expired without seeing a successful heartbeat, so we should</span></span><br><span class="line">                            <span class="comment">// probably make sure the coordinator is still healthy.</span></span><br><span class="line">                            coordinatorDead();</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.pollTimeoutExpired(now)) &#123;</span><br><span class="line">                            <span class="comment">// the poll timeout has expired, which means that the foreground thread has stalled</span></span><br><span class="line">                            <span class="comment">// in between calls to poll(), so we explicitly leave the group.</span></span><br><span class="line">                            maybeLeaveGroup();</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!heartbeat.shouldHeartbeat(now)) &#123;</span><br><span class="line">                            <span class="comment">// poll again after waiting for the retry backoff in case the heartbeat failed or the</span></span><br><span class="line">                            <span class="comment">// coordinator disconnected</span></span><br><span class="line">                            AbstractCoordinator.<span class="keyword">this</span>.wait(retryBackoffMs);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            heartbeat.sentHeartbeat(now);</span><br><span class="line">                            ...</span><br><span class="line">                        &#125;</span><br><span class="line">                  &#125; <span class="comment">// end synchronized</span></span><br><span class="line">              &#125; <span class="comment">// end while</span></span><br><span class="line">          &#125; <span class="comment">//end try              </span></span><br><span class="line">&#125; <span class="comment">// end run</span></span><br></pre></td></tr></table></figure>
-
-<p>其中最重要的两个 timeout 函数：</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">sessionTimeoutExpired</span><span class="params">(<span class="keyword">long</span> now)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> now - Math.max(lastSessionReset, lastHeartbeatReceive) &gt; sessionTimeout;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">pollTimeoutExpired</span><span class="params">(<span class="keyword">long</span> now)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> now - lastPoll &gt; maxPollInterval;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>###sessionTimeout<br>如果是 sessionTimeout 则 Mark the current coordinator as dead，此时  会将 consumer 踢掉，重新分配 partition 和 consumer 的对应关系。</p>
+<h3 id="poll-和-fetch-的关系"><a href="#poll-和-fetch-的关系" class="headerlink" title="poll 和 fetch 的关系"></a>poll 和 fetch 的关系</h3><p>在满足max.partition.fetch.bytes限制的情况下，假如fetch到了100个record，放到本地缓存后，由于max.poll.records限制每次只能poll出15个record。那么KafkaConsumer就需要执行7次才能将这一次通过网络发起的fetch请求所fetch到的这100个record消费完毕。其中前6次是每次pool中15个record，最后一次是poll出10个record。</p>
+<h1 id="Consumer-的心跳机制"><a href="#Consumer-的心跳机制" class="headerlink" title="Consumer 的心跳机制"></a>Consumer 的心跳机制</h1><p>在 <code>org.apache.kafka.clients.consumer.internals.AbstractCoordinat</code> 中启动 <code>HeartbeatThread</code> 线程来定时发送心跳和检查 consumer 的状态。<br>每个 Consumer 都有一个 ConsumerCoordinator(继承 AbstractCoordinator)，每个 ConsumerCoordinator 都启动一个 <code>HeartbeatThread</code> 线程来维护心跳，心跳信息存放在 <code>org.apache.kafka.clients.consumer.internals.Heartbeat</code>。</p>
+<p>实现如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Override</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">                log.debug(<span class="string">"Heartbeat thread for group &#123;&#125; started"</span>, groupId);</span><br><span class="line">                <span class="keyword">while</span> (<span class="keyword">true</span>) &#123;</span><br><span class="line">                    <span class="keyword">synchronized</span> (AbstractCoordinator.<span class="keyword">this</span>) &#123;</span><br><span class="line">                        ...</span><br><span class="line">                        client.pollNoWakeup();</span><br><span class="line">                        <span class="keyword">long</span> now = time.milliseconds();</span><br><span class="line">                        </span><br><span class="line">                        <span class="keyword">if</span> (coordinatorUnknown()) &#123;</span><br><span class="line">                            ...</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.sessionTimeoutExpired(now)) &#123;</span><br><span class="line">                            <span class="comment">// the session timeout has expired without seeing a successful heartbeat, so we should</span></span><br><span class="line">                            <span class="comment">// probably make sure the coordinator is still healthy.</span></span><br><span class="line">                            coordinatorDead();</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (heartbeat.pollTimeoutExpired(now)) &#123;</span><br><span class="line">                            <span class="comment">// the poll timeout has expired, which means that the foreground thread has stalled</span></span><br><span class="line">                            <span class="comment">// in between calls to poll(), so we explicitly leave the group.</span></span><br><span class="line">                            maybeLeaveGroup();</span><br><span class="line">                        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (!heartbeat.shouldHeartbeat(now)) &#123;</span><br><span class="line">                            <span class="comment">// poll again after waiting for the retry backoff in case the heartbeat failed or the</span></span><br><span class="line">                            <span class="comment">// coordinator disconnected</span></span><br><span class="line">                            AbstractCoordinator.<span class="keyword">this</span>.wait(retryBackoffMs);</span><br><span class="line">                        &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                            heartbeat.sentHeartbeat(now);</span><br><span class="line">                            ...</span><br><span class="line">                        &#125;</span><br><span class="line">                  &#125; <span class="comment">// end synchronized</span></span><br><span class="line">              &#125; <span class="comment">// end while</span></span><br><span class="line">          &#125; <span class="comment">//end try              </span></span><br><span class="line">&#125; <span class="comment">// end run</span></span><br></pre></td></tr></table></figure></p>
+<p>其中最重要的两个 timeout 函数：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">sessionTimeoutExpired</span><span class="params">(<span class="keyword">long</span> now)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> now - Math.max(lastSessionReset, lastHeartbeatReceive) &gt; sessionTimeout;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">pollTimeoutExpired</span><span class="params">(<span class="keyword">long</span> now)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> now - lastPoll &gt; maxPollInterval;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="sessionTimeout"><a href="#sessionTimeout" class="headerlink" title="sessionTimeout"></a>sessionTimeout</h2><p>如果是 sessionTimeout 则 Mark the current coordinator as dead，此时  会将 consumer 踢掉，重新分配 partition 和 consumer 的对应关系。</p>
 <p>在 Kafka Server 端，Consumer 的 Group 定义了五个状态：：<br><img src="/img/kafka_consumer_state_in_server.png" alt="Consumer Group State"></p>
 <p>
 
-</p><p>###pollTimeout<br>如果是 pollTimeout 则 Reset the generation and memberId because we have fallen out of the group，此时 consumer 会退出 group，当再次 poll 时又会 rejoin group 触发 rebalance group。</p>
-<p>####Rebalance Generation<br>表示 rebalance 之后的一届成员，主要是用于保护 consumer group，隔离无效 offset 提交。每次 group 进行 rebalance 之后，generation 号都会加 1，表示 group 进入到了一个新的版本，下图所示为 consumer 2 退出后 consumer 4 加入时 Rebalance Generation 的过程：<br><img src="/img/Kafka_Rebalance_Generation.png" alt="Rebalance Generation"></p>
-<p>##partition 的数量设置</p>
-<ul>
+</p><h2 id="pollTimeout"><a href="#pollTimeout" class="headerlink" title="pollTimeout"></a>pollTimeout</h2><p>如果是 pollTimeout 则 Reset the generation and memberId because we have fallen out of the group，此时 consumer 会退出 group，当再次 poll 时又会 rejoin group 触发 rebalance group。</p>
+<h3 id="Rebalance-Generation"><a href="#Rebalance-Generation" class="headerlink" title="Rebalance Generation"></a>Rebalance Generation</h3><p>表示 rebalance 之后的一届成员，主要是用于保护 consumer group，隔离无效 offset 提交。每次 group 进行 rebalance 之后，generation 号都会加 1，表示 group 进入到了一个新的版本，下图所示为 consumer 2 退出后 consumer 4 加入时 Rebalance Generation 的过程：<br><img src="/img/Kafka_Rebalance_Generation.png" alt="Rebalance Generation"></p>
+<h1 id="partition-的数量设置"><a href="#partition-的数量设置" class="headerlink" title="partition 的数量设置"></a>partition 的数量设置</h1><ul>
 <li><p>一个 partition 只能被 Consumer Group 中的一个 consumer 消费，因此，为了提高并发量，可以提高 partition 的数量，但是这会造成 replica 副本拷贝的网络请求增加，故障恢复时的耗时增加。因为 kafka 使用 batch pull 的方式，所以单个线程的消费速率还是有保障的。并且 partition 数量过多，zk 维护 ISR 列表负载较重。</p>
 </li>
 <li><p>partiton 数量最好是 consumer 数目的整数倍，比如取 24， consumer 数目的设置就会灵活很多。</p>
@@ -307,17 +347,14 @@
 <li><p>consumer 消费消息时不时严格有序的。当从多个 partition 读数据时，kafka 只保证在一个 partition 上数据是有序的，多个 partition 的消息消费很可能就不是严格有序的了。</p>
 </li>
 </ul>
-<p>##参数设置</p>
-<p>###heartbeat.interval.ms<br>心跳间隔。心跳是在 consumer 与 coordinator 之间进行的。心跳是确定 consumer 存活，加入或者退出 group 的有效手段。<br>这个值必须设置的小于 session.timeout.ms，因为：<br>当 consumer 由于某种原因不能发 heartbeat 到 coordinator 时，并且时间超过 session.timeout.ms 时，就会认为该 consumer 已退出，它所订阅的 partition 会分配到同一 group 内的其它的 consumer 上。</p>
-<p>####参数值<br>默认值：3000 (3s)，通常设置的值要低于session.timeout.ms的1/3。</p>
-<p>
-###session.timeout.ms
-consumer session 过期时间。如果超时时间范围内，没有收到消费者的心跳，broker 会把这个消费者置为失效，并触发消费者负载均衡。因为只有在调用 poll 方法时才会发送心跳，更大的 session 超时时间允许消费者在 poll 循环周期内处理消息内容，尽管这会有花费更长时间检测失效的代价。如果想控制消费者处理消息的时间，
-
-</p><p>####参数值<br>默认值：10000 (10s)，这个值必须设置在 broker configuration 中的 group.min.session.timeout.ms 与 group.max.session.timeout.ms 之间。</p>
+<h1 id="参数设置"><a href="#参数设置" class="headerlink" title="参数设置"></a>参数设置</h1><h2 id="heartbeat-interval-ms"><a href="#heartbeat-interval-ms" class="headerlink" title="heartbeat.interval.ms"></a>heartbeat.interval.ms</h2><p>心跳间隔。心跳是在 consumer 与 coordinator 之间进行的。心跳是确定 consumer 存活，加入或者退出 group 的有效手段。<br>这个值必须设置的小于 session.timeout.ms，因为：<br>当 consumer 由于某种原因不能发 heartbeat 到 coordinator 时，并且时间超过 session.timeout.ms 时，就会认为该 consumer 已退出，它所订阅的 partition 会分配到同一 group 内的其它的 consumer 上。</p>
+<h3 id="参数值"><a href="#参数值" class="headerlink" title="参数值"></a>参数值</h3><p>默认值：3000 (3s)，通常设置的值要低于session.timeout.ms的1/3。</p>
+<p></p><p></p>
+<h3 id="session-timeout-ms"><a href="#session-timeout-ms" class="headerlink" title="session.timeout.ms"></a>session.timeout.ms</h3><p>consumer session 过期时间。如果超时时间范围内，没有收到消费者的心跳，broker 会把这个消费者置为失效，并触发消费者负载均衡。因为只有在调用 poll 方法时才会发送心跳，更大的 session 超时时间允许消费者在 poll 循环周期内处理消息内容，尽管这会有花费更长时间检测失效的代价。如果想控制消费者处理消息的时间，</p>
+<h3 id="参数值-1"><a href="#参数值-1" class="headerlink" title="参数值"></a>参数值</h3><p>默认值：10000 (10s)，这个值必须设置在 broker configuration 中的 group.min.session.timeout.ms 与 group.max.session.timeout.ms 之间。</p>
 <p>
 
-</p><p>###max.poll.interval.ms<br>This config sets the maximum delay between client calls to poll(). </p>
+</p><h2 id="max-poll-interval-ms"><a href="#max-poll-interval-ms" class="headerlink" title="max.poll.interval.ms"></a>max.poll.interval.ms</h2><p>This config sets the maximum delay between client calls to poll(). </p>
 <p>When the timeout expires, the consumer will stop sending heartbeats and send an explicit LeaveGroup request. </p>
 <p>As soon as the consumer resumes processing with another call to poll(), the consumer will <strong>rejoin the group</strong>. </p>
 <p>By increasing the interval between expected polls, you can give the consumer more time to handle a batch of records returned frompoll(long). The drawback is that increasing this value may delay a group rebalance since the consumer will only join the rebalance inside the call to poll. You can use this setting to bound the time to finish a rebalance, but you risk slower progress if the consumer cannot actually call poll often enough.</p>
@@ -325,15 +362,15 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
 <p>但如果设置的太大，会延迟 group rebalance，因为消费者只会在调用 poll 时加入rebalance。</p>
 <p>
 
-</p><p>###max.poll.records<br>Use this setting to limit the total records returned from a single call to poll. This can make it easier to predict the maximum that must be handled within each poll interval. By tuning this value, you may be able to reduce the poll interval, which will reduce the impact of group rebalancing.</p>
+</p><h2 id="max-poll-records"><a href="#max-poll-records" class="headerlink" title="max.poll.records"></a>max.poll.records</h2><p>Use this setting to limit the total records returned from a single call to poll. This can make it easier to predict the maximum that must be handled within each poll interval. By tuning this value, you may be able to reduce the poll interval, which will reduce the impact of group rebalancing.</p>
 <p>0.11.0 Kafka 的默认配置是 </p>
 <ul>
 <li>max.poll.interval.ms=5min</li>
 <li>max.poll.records=500</li>
 </ul>
 <p>即平均 600ms 要处理完一条消息，如果消息的消费时间高于 600ms，则一定要调整 max.poll.records 或 max.poll.interval.ms。</p>
-<p>##Kafka Javadoc - Detecting Consumer Failures<br>After subscribing to a set of topics, the consumer will automatically join the group when poll(long) is invoked. The poll API is designed to ensure consumer liveness. As long as you continue to call poll, the consumer will stay in the group and continue to receive messages from the partitions it was assigned. Underneath the covers, the consumer sends periodic heartbeats to the server. If the consumer crashes or is unable to send heartbeats for a duration of session.timeout.ms, then the consumer will be considered dead and its partitions will be reassigned.<br>It is also possible that the consumer could encounter a “livelock” situation where it is continuing to send heartbeats, but no progress is being made. To prevent the consumer from holding onto its partitions indefinitely in this case, we provide a liveness detection mechanism using the max.poll.interval.ms setting. Basically if you don’t call poll at least as frequently as the configured max interval, then the client will proactively leave the group so that another consumer can take over its partitions. When this happens, you may see an offset commit failure (as indicated by a CommitFailedException thrown from a call to commitSync()). This is a safety mechanism which guarantees that only active members of the group are able to commit offsets. So to stay in the group, you must continue to call poll. </p>
-<p>##Reference<br><a href="http://www.cnblogs.com/huxi2b/p/6223228.html" target="_blank" rel="noopener">Kafka消费组(consumer group)</a><br><a href="https://kafka.apache.org/0101/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank" rel="noopener">kafka.apache.org javadoc</a><br><a href="http://blog.leanote.com/post/zfb050/Coordinator%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" target="_blank" rel="noopener">Coordinator实现原理</a><br><a href="http://debugo.com/kafka-params/" target="_blank" rel="noopener">kafka params</a><br><a href="http://blog.csdn.net/u014393917/article/details/52043185" target="_blank" rel="noopener">kafka源码分析之kafka的consumer的负载均衡管理</a><br><a href="http://www.cnblogs.com/devos/p/5656232.html" target="_blank" rel="noopener">Group Management Protocol</a><br><a href="http://matt33.com/2017/01/16/kafka-group/" target="_blank" rel="noopener">Kafka 之 Group 状态变化分析及 Rebalance 过程</a><br><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread" target="_blank" rel="noopener">KIP-62: Allow consumer to send heartbeats from a background thread</a><br><a href="https://www.safaribooksonline.com/library/view/kafka-the-definitive/9781491936153/ch04.html" target="_blank" rel="noopener">Kafka: The Definitive Guide Chapter 4 - Kafka Consumers</a></p>
+<h1 id="Kafka-Javadoc-Detecting-Consumer-Failures"><a href="#Kafka-Javadoc-Detecting-Consumer-Failures" class="headerlink" title="Kafka Javadoc - Detecting Consumer Failures"></a>Kafka Javadoc - Detecting Consumer Failures</h1><p>After subscribing to a set of topics, the consumer will automatically join the group when poll(long) is invoked. The poll API is designed to ensure consumer liveness. As long as you continue to call poll, the consumer will stay in the group and continue to receive messages from the partitions it was assigned. Underneath the covers, the consumer sends periodic heartbeats to the server. If the consumer crashes or is unable to send heartbeats for a duration of session.timeout.ms, then the consumer will be considered dead and its partitions will be reassigned.<br>It is also possible that the consumer could encounter a “livelock” situation where it is continuing to send heartbeats, but no progress is being made. To prevent the consumer from holding onto its partitions indefinitely in this case, we provide a liveness detection mechanism using the max.poll.interval.ms setting. Basically if you don’t call poll at least as frequently as the configured max interval, then the client will proactively leave the group so that another consumer can take over its partitions. When this happens, you may see an offset commit failure (as indicated by a CommitFailedException thrown from a call to commitSync()). This is a safety mechanism which guarantees that only active members of the group are able to commit offsets. So to stay in the group, you must continue to call poll. </p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://www.cnblogs.com/huxi2b/p/6223228.html" target="_blank" rel="noopener">Kafka消费组(consumer group)</a><br><a href="https://kafka.apache.org/0101/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank" rel="noopener">kafka.apache.org javadoc</a><br><a href="http://blog.leanote.com/post/zfb050/Coordinator%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" target="_blank" rel="noopener">Coordinator实现原理</a><br><a href="http://debugo.com/kafka-params/" target="_blank" rel="noopener">kafka params</a><br><a href="http://blog.csdn.net/u014393917/article/details/52043185" target="_blank" rel="noopener">kafka源码分析之kafka的consumer的负载均衡管理</a><br><a href="http://www.cnblogs.com/devos/p/5656232.html" target="_blank" rel="noopener">Group Management Protocol</a><br><a href="http://matt33.com/2017/01/16/kafka-group/" target="_blank" rel="noopener">Kafka 之 Group 状态变化分析及 Rebalance 过程</a><br><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread" target="_blank" rel="noopener">KIP-62: Allow consumer to send heartbeats from a background thread</a><br><a href="https://www.safaribooksonline.com/library/view/kafka-the-definitive/9781491936153/ch04.html" target="_blank" rel="noopener">Kafka: The Definitive Guide Chapter 4 - Kafka Consumers</a></p>
 
     </div>
 
@@ -341,6 +378,23 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -389,6 +443,9 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -401,15 +458,34 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Consumer-拉取消息的实现"><span class="nav-number">1.</span> <span class="nav-text">Consumer 拉取消息的实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Consumer-拉取消息的数量"><span class="nav-number">1.1.</span> <span class="nav-text">Consumer 拉取消息的数量</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#poll-和-fetch-的关系"><span class="nav-number">1.1.1.</span> <span class="nav-text">poll 和 fetch 的关系</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Consumer-的心跳机制"><span class="nav-number">2.</span> <span class="nav-text">Consumer 的心跳机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#sessionTimeout"><span class="nav-number">2.1.</span> <span class="nav-text">sessionTimeout</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#pollTimeout"><span class="nav-number">2.2.</span> <span class="nav-text">pollTimeout</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Rebalance-Generation"><span class="nav-number">2.2.1.</span> <span class="nav-text">Rebalance Generation</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#partition-的数量设置"><span class="nav-number">3.</span> <span class="nav-text">partition 的数量设置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参数设置"><span class="nav-number">4.</span> <span class="nav-text">参数设置</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#heartbeat-interval-ms"><span class="nav-number">4.1.</span> <span class="nav-text">heartbeat.interval.ms</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参数值"><span class="nav-number">4.1.1.</span> <span class="nav-text">参数值</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#session-timeout-ms"><span class="nav-number">4.1.2.</span> <span class="nav-text">session.timeout.ms</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参数值-1"><span class="nav-number">4.1.3.</span> <span class="nav-text">参数值</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#max-poll-interval-ms"><span class="nav-number">4.2.</span> <span class="nav-text">max.poll.interval.ms</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#max-poll-records"><span class="nav-number">4.3.</span> <span class="nav-text">max.poll.records</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Kafka-Javadoc-Detecting-Consumer-Failures"><span class="nav-number">5.</span> <span class="nav-text">Kafka Javadoc - Detecting Consumer Failures</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -417,7 +493,7 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -426,7 +502,7 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -456,7 +532,7 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -469,8 +545,6 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -489,11 +563,15 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -505,32 +583,18 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -540,12 +604,7 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -566,10 +625,32 @@ consumer session 过期时间。如果超时时间范围内，没有收到消费
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

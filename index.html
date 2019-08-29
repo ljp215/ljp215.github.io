@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,13 +43,13 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
@@ -58,7 +58,7 @@
 <meta property="og:title" content="Zane Blog">
 <meta property="og:url" content="http://luojinping.com/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zane Blog">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
@@ -81,6 +81,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -89,7 +98,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -98,7 +106,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -114,16 +122,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -135,7 +142,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -155,7 +162,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -166,7 +173,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -177,33 +184,62 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-home">
+          <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+  <div id="posts" class="posts-expand">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2019/03/04/机器学习实战-—-支持向量机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -227,13 +263,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2019 23:23:56" itemprop="dateCreated datePublished" datetime="2019-03-04T23:23:56+08:00">Mar 4 2019</time>
+              <time title="创建时间：3月 4 2019 23:23:56" itemprop="dateCreated datePublished" datetime="2019-03-04T23:23:56+08:00">3月 4 2019</time>
             </span>
           
             
@@ -243,13 +279,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:45" itemprop="dateModified" datetime="2019-08-18T16:52:45+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:11" itemprop="dateModified" datetime="2019-08-25T21:10:11+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/04/机器学习实战-—-支持向量机/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/机器学习实战-—-支持向量机/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -260,9 +310,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="1-要解决的问题"><a href="#1-要解决的问题" class="headerlink" title="1. 要解决的问题"></a>1. 要解决的问题</h1><p>与「机器学习实战 — 决策树」的问题一样</p>
-<h1 id="2-前情回顾"><a href="#2-前情回顾" class="headerlink" title="2. 前情回顾"></a>2. 前情回顾</h1><p>在上一次中，随机森林的效果最好，最终效果如下：<br><img src="/img/RF_finally_auc.jpg" alt="RF_finally_auc.jpg"></p>
-<h1 id="3-特征工程"><a href="#3-特征工程" class="headerlink" title="3. 特征工程"></a>3. 特征工程</h1><p>特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：</p>
+          <h1 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h1><p>与「机器学习实战 — 决策树」的问题一样</p>
+<h1 id="前情回顾"><a href="#前情回顾" class="headerlink" title="前情回顾"></a>前情回顾</h1><p>在上一次中，随机森林的效果最好，最终效果如下：<br><img src="/img/RF_finally_auc.jpg" alt="RF_finally_auc.jpg"></p>
+<h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><p>特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：</p>
 <ol>
 <li>特征选取</li>
 <li>删除无用特征</li>
@@ -271,9 +321,8 @@
 <li>特征标签化</li>
 <li><strong>特征归一化</strong></li>
 </ol>
-<h2 id="3-1-特征归一化"><a href="#3-1-特征归一化" class="headerlink" title="3.1 特征归一化"></a>3.1 特征归一化</h2><p>使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。因为特征基本上都是符合正态分布的，而且 StandardScaler 对数据变动时引入新的极值点更友好。</p>
+<h2 id="特征归一化"><a href="#特征归一化" class="headerlink" title="特征归一化"></a>特征归一化</h2><p>使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。因为特征基本上都是符合正态分布的，而且 StandardScaler 对数据变动时引入新的极值点更友好。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 z-score 标准化特征</span></span><br><span class="line">ss = preprocessing.StandardScaler()</span><br><span class="line">X = ss.fit_transform(X)</span><br></pre></td></tr></table></figure>
-
 <p>特征归一化的好处有以下两点：</p>
 <ol>
 <li>模型训练速度更快<br>能够使参数优化时能以较快的速度收敛。<br>归一化前后的 SVM(linear 核) 的耗时对比，数据集 (2783, 54)，即 2783 条数据，54 个特征。归一化前后的耗时分别为：1083s，0.44s，可见归一化对计算速度的提升非常大。</li>
@@ -281,8 +330,8 @@
 </ol>
 <p>对于不同数量的训练集，训练 SVM，LR，DT，RF 四个模型。随着数据集的数量增加，特征归一化后的模型，其准确率提升如下图所示：<br><img src="/img/features_normalization_analysis.jpg" alt="features_normalization_analysis.jpg"></p>
 <p>通过这个图，也会发现特征归一化也不是能够提升所有模型的准确率，对于 DT 和 RF 就没有效果，这是因为决策树的分支只是计算信息熵，而不考虑整体特征的分布情况。</p>
-<h2 id="3-2-最终数据集"><a href="#3-2-最终数据集" class="headerlink" title="3.2 最终数据集"></a>3.2 最终数据集</h2><p>经过一系列处理后可用的数据集有 30w，但由于 SVM 运行地太慢了，从中选取 2w 数据来作为本次作业的数据集。</p>
-<h1 id="4-SVM"><a href="#4-SVM" class="headerlink" title="4. SVM"></a>4. SVM</h1><h2 id="4-1-核函数介绍"><a href="#4-1-核函数介绍" class="headerlink" title="4.1 核函数介绍"></a>4.1 核函数介绍</h2><p>常见的核函数有：</p>
+<h2 id="最终数据集"><a href="#最终数据集" class="headerlink" title="最终数据集"></a>最终数据集</h2><p>经过一系列处理后可用的数据集有 30w，但由于 SVM 运行地太慢了，从中选取 2w 数据来作为本次作业的数据集。</p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><h2 id="核函数介绍"><a href="#核函数介绍" class="headerlink" title="核函数介绍"></a>核函数介绍</h2><p>常见的核函数有：</p>
 <ol>
 <li>linear：主要用于线性可分的情形。参数少，速度快，对于一般数据，分类效果已经很理想了。</li>
 <li>rbf：将样本映射到更高维的空间，目前应用最广的一个，对大小样本都有比较好的性能，而且参数较少。linear 是 rbf 的一个特例。</li>
@@ -296,24 +345,20 @@
 <li>如果Feature的数量比较小，而样本数量很多，需要手工添加一些feature变成第一种情况</li>
 </ol>
 <p>本次作业的数据集特征少，数据大。结合上述建议，再加上取了少部分(1k~5k)的数据进行了初步对比，决定重点调优 rbf 的参数。</p>
-<h2 id="4-2-SVM-RBF-参数搜索"><a href="#4-2-SVM-RBF-参数搜索" class="headerlink" title="4.2 SVM RBF 参数搜索"></a>4.2 SVM RBF 参数搜索</h2><p>训练集数据量： 2w。搜索最优参数，用时 12.3 小时，将 搜索过程的数据记录 绘制成下图所示，纵轴代表搜索得分，横轴代表 {C, gamma} 两个参数的取值。</p>
+<h2 id="SVM-RBF-参数搜索"><a href="#SVM-RBF-参数搜索" class="headerlink" title="SVM RBF 参数搜索"></a>SVM RBF 参数搜索</h2><p>训练集数据量： 2w。搜索最优参数，用时 12.3 小时，将 搜索过程的数据记录 绘制成下图所示，纵轴代表搜索得分，横轴代表 {C, gamma} 两个参数的取值。</p>
 <p><img src="/img/SVM_GridSearch_result.jpg" alt="SVM_GridSearch_result.jpg"></p>
 <p>C = 10, gamma = 0.1 时的效果最好。如上图中红圈所示，对于 C = 0.1, 100, 1000 时，都是gamma = 0.1 这个位置时效果最好。</p>
-<h2 id="4-3-常用核函数"><a href="#4-3-常用核函数" class="headerlink" title="4.3 常用核函数"></a>4.3 常用核函数</h2><p>在本次作业的数据集中，linear 核函数的运算速度相当慢，所以对于常用核函数，仅对比了 rbf，poly 和 sigmoid 三个核函数。针对 2w 条数据，运行结果如下：</p>
+<h2 id="常用核函数"><a href="#常用核函数" class="headerlink" title="常用核函数"></a>常用核函数</h2><p>在本次作业的数据集中，linear 核函数的运算速度相当慢，所以对于常用核函数，仅对比了 rbf，poly 和 sigmoid 三个核函数。针对 2w 条数据，运行结果如下：</p>
 <p><img src="/img/SVM_normal_model_auc.jpg" alt="SVM_normal_model_auc.jpg"></p>
 <p>其中，rbf 效果最好，AUC 有 0.82，但相比起之前 AUC 0.9 的 RF 来还是不理想。</p>
-<h2 id="4-4-自定义核函数"><a href="#4-4-自定义核函数" class="headerlink" title="4.4 自定义核函数"></a>4.4 自定义核函数</h2><p>由于常用核函数的效果不够理想，所以尝试使用自定义的核函数，参考前人总结出的各种核函数，放入模型中进行尝试。核函数的公式见原代码，任取两个核函数的说明如下：</p>
-<p><strong>Rational quadratic kernel</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Rational quadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 - ||x-y||^2/(||x-y||^2+c)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rational_quadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> - (dists_sq / (dists_sq + _c))</span><br></pre></td></tr></table></figure>
-
-<p><strong>Inverse multiquadratic kernel</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Inverse multiquadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 / sqrt(||x-y||^2 + c^2)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">as defined in:</span></span><br><span class="line"><span class="string">"Interpolation of scattered data: Distance matrices and conditionally positive definite functions"</span></span><br><span class="line"><span class="string">Charles Micchelli</span></span><br><span class="line"><span class="string">Constructive Approximation</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse_multiquadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span> ** <span class="number">2</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> / np.sqrt(dists_sq + _c)</span><br></pre></td></tr></table></figure>
-
+<h2 id="自定义核函数"><a href="#自定义核函数" class="headerlink" title="自定义核函数"></a>自定义核函数</h2><p>由于常用核函数的效果不够理想，所以尝试使用自定义的核函数，参考前人总结出的各种核函数，放入模型中进行尝试。核函数的公式见原代码，任取两个核函数的说明如下：</p>
+<p><strong>Rational quadratic kernel</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Rational quadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 - ||x-y||^2/(||x-y||^2+c)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rational_quadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> - (dists_sq / (dists_sq + _c))</span><br></pre></td></tr></table></figure></p>
+<p><strong>Inverse multiquadratic kernel</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Inverse multiquadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 / sqrt(||x-y||^2 + c^2)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">as defined in:</span></span><br><span class="line"><span class="string">"Interpolation of scattered data: Distance matrices and conditionally positive definite functions"</span></span><br><span class="line"><span class="string">Charles Micchelli</span></span><br><span class="line"><span class="string">Constructive Approximation</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse_multiquadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span> ** <span class="number">2</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> / np.sqrt(dists_sq + _c)</span><br></pre></td></tr></table></figure></p>
 <p>仍然是对于这 2w 条数据，将所有核函数放入 SVM 中训练，最终每个核函数的准确率和耗时对比表格如下：</p>
 <p><img src="/img/SVM_model_compare.jpg" alt="SVM_model_compare.jpg"></p>
 <p>可以发现 rbf, inverse_multiquadratic 和 cauchy 这三个核函数的效果较好，其中 rbf 训练速度最快，inverse_multiquadratic 准确率最高。</p>
-<h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h1><h2 id="5-1-SVM-准确率的思考"><a href="#5-1-SVM-准确率的思考" class="headerlink" title="5.1 SVM 准确率的思考"></a>5.1 SVM 准确率的思考</h2><p>最终，使用 inverse_multiquadratic 核函数可以将 SVM 模型的 AUC Score 最高调至 0.822，相比于第二次作业中 Random Forest 模型的 AUC Score 结果 0.902 还有差距。可能是由于核函数选取的仍然不够合适，在映射后的空间中数据不是那么线性可分，降低了模型的泛化能力，导致准确率不如 RF。而对于核函数的选取，需要更多地理解特征，并列举出所有可能的核函数，再进行对比选择，在选取核函数这一点上，没有很好的捷径可走。</p>
-<h2 id="5-2-提升-SVM-训练速度的心得"><a href="#5-2-提升-SVM-训练速度的心得" class="headerlink" title="5.2 提升 SVM 训练速度的心得"></a>5.2 提升 SVM 训练速度的心得</h2><ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="SVM-准确率的思考"><a href="#SVM-准确率的思考" class="headerlink" title="SVM 准确率的思考"></a>SVM 准确率的思考</h2><p>最终，使用 inverse_multiquadratic 核函数可以将 SVM 模型的 AUC Score 最高调至 0.822，相比于第二次作业中 Random Forest 模型的 AUC Score 结果 0.902 还有差距。可能是由于核函数选取的仍然不够合适，在映射后的空间中数据不是那么线性可分，降低了模型的泛化能力，导致准确率不如 RF。而对于核函数的选取，需要更多地理解特征，并列举出所有可能的核函数，再进行对比选择，在选取核函数这一点上，没有很好的捷径可走。</p>
+<h2 id="提升-SVM-训练速度的心得"><a href="#提升-SVM-训练速度的心得" class="headerlink" title="提升 SVM 训练速度的心得"></a>提升 SVM 训练速度的心得</h2><ol>
 <li>特征标签化和归一化</li>
 <li>SVC 的 cache_size 设置到 7000 (M) </li>
 <li>核函数是 SVM 的关键，先用少部分数据来选核函数，再用全量数据训练</li>
@@ -339,13 +384,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2019/03/04/机器学习实战-—-决策树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -369,13 +412,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2019 23:03:41" itemprop="dateCreated datePublished" datetime="2019-03-04T23:03:41+08:00">Mar 4 2019</time>
+              <time title="创建时间：3月 4 2019 23:03:41" itemprop="dateCreated datePublished" datetime="2019-03-04T23:03:41+08:00">3月 4 2019</time>
             </span>
           
             
@@ -385,13 +428,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:43:28" itemprop="dateModified" datetime="2019-08-18T16:43:28+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:09" itemprop="dateModified" datetime="2019-08-25T21:10:09+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/04/机器学习实战-—-决策树/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/机器学习实战-—-决策树/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -402,9 +459,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>#1. 要解决的问题<br>一句话概述：<br>预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。</p>
+          <h1 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h1><p>一句话概述：<br>预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。</p>
 <p>目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。</p>
-<h1 id="2-整体思路"><a href="#2-整体思路" class="headerlink" title="2. 整体思路"></a>2. 整体思路</h1><p>获取某一段时间的相关埋点事件、用户业务数据、用户画像等数据，将数据合并、清洗、整理为可用的数据集，然后跑决策树，随机森林和 Adaboost 三个模型。<br>要获取的数据是：</p>
+<h1 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h1><p>获取某一段时间的相关埋点事件、用户业务数据、用户画像等数据，将数据合并、清洗、整理为可用的数据集，然后跑决策树，随机森林和 Adaboost 三个模型。<br>要获取的数据是：</p>
 <ul>
 <li>用户被展示到该模块的埋点事件</li>
 <li>用户点击该模块的埋点事件</li>
@@ -412,7 +469,7 @@
 <li>用户画像</li>
 <li>用户的业务画像</li>
 </ul>
-<h1 id="3-特征选取"><a href="#3-特征选取" class="headerlink" title="3. 特征选取"></a>3. 特征选取</h1><h2 id="3-1-特征举例"><a href="#3-1-特征举例" class="headerlink" title="3.1 特征举例"></a>3.1 特征举例</h2><p>特征的总数非常多，总共有 280 个，抽取一些特征描述如下：</p>
+<h1 id="特征选取"><a href="#特征选取" class="headerlink" title="特征选取"></a>特征选取</h1><h2 id="特征举例"><a href="#特征举例" class="headerlink" title="特征举例"></a>特征举例</h2><p>特征的总数非常多，总共有 280 个，抽取一些特征描述如下：</p>
 <ul>
 <li>年龄</li>
 <li>性别</li>
@@ -427,47 +484,45 @@
 <li>进入首页时距离上一次使用模块的时间</li>
 <li>设备机型</li>
 </ul>
-<h2 id="3-2-获取数据"><a href="#3-2-获取数据" class="headerlink" title="3.2 获取数据"></a>3.2 获取数据</h2><p>通过在 hive 里跑 sql(具体的 sql 语句略) 获取到的数据量为：54w。（单位为数据行数，下同）</p>
-<h2 id="3-3-特征工程"><a href="#3-3-特征工程" class="headerlink" title="3.3 特征工程"></a>3.3 特征工程</h2><h3 id="3-3-1-删除无用特征"><a href="#3-3-1-删除无用特征" class="headerlink" title="3.3.1 删除无用特征"></a>3.3.1 删除无用特征</h3><ol>
+<h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h2><p>通过在 hive 里跑 sql(具体的 sql 语句略) 获取到的数据量为：54w。（单位为数据行数，下同）</p>
+<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><h3 id="删除无用特征"><a href="#删除无用特征" class="headerlink" title="删除无用特征"></a>删除无用特征</h3><ol>
 <li>无用特征的删除：例如 userId 等。这些特征明显与结果无关。</li>
 <li>删除由预测结果导致的特征：例如使用过该模块的时间。这些特征是在预测值为 True 时才会有值，而且这特征的赋值在要预测的事件发生之后。</li>
 </ol>
-<h3 id="3-3-2-特征的空值处理"><a href="#3-3-2-特征的空值处理" class="headerlink" title="3.3.2 特征的空值处理"></a>3.3.2 特征的空值处理</h3><ol>
+<h3 id="特征的空值处理"><a href="#特征的空值处理" class="headerlink" title="特征的空值处理"></a>特征的空值处理</h3><ol>
 <li>删除特征为空的数据，例如年龄，性别等必须会有的特征。</li>
 <li>int 类型的特征将空值填充为 0，例如某业务的 累计分钟数，某实体数量，粉丝数量，过去7天的XX业务使用统计等</li>
 <li>string 类型的特征将空值填充为 0，例如 citycode，tags 等。</li>
 </ol>
-<h3 id="3-3-3-处理重要特征"><a href="#3-3-3-处理重要特征" class="headerlink" title="3.3.3 处理重要特征"></a>3.3.3 处理重要特征</h3><p>跑完 Random Forest 模型，可以输出 Feature importances 列表， Top 10 的图略。</p>
+<h3 id="处理重要特征"><a href="#处理重要特征" class="headerlink" title="处理重要特征"></a>处理重要特征</h3><p>跑完 Random Forest 模型，可以输出 Feature importances 列表， Top 10 的图略。</p>
 <p>其中需要特别处理的特征是 c.bmi 和 c.age。<br>分析数据后发现年龄为空值的情况非常少，所以把 c.age 为空的数据删掉。<br>c.bmi 需要用户填入身高和体重，这部分数据缺失一些，所以填为 c.bmi 这一列的平均值，数据集中的 dataset[c.bmi].mean = 23.3174390247965，符合常识。</p>
-<h3 id="3-3-4-特征标签化"><a href="#3-3-4-特征标签化" class="headerlink" title="3.3.4 特征标签化"></a>3.3.4 特征标签化</h3><p>数据标准化的处理方式如下：</p>
+<h3 id="特征标签化"><a href="#特征标签化" class="headerlink" title="特征标签化"></a>特征标签化</h3><p>数据标准化的处理方式如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line">le = preprocessing.LabelEncoder()</span><br><span class="line">dataset = dataset.apply(le.fit_transform)</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-3-5-可用数据量"><a href="#3-3-5-可用数据量" class="headerlink" title="3.3.5 可用数据量"></a>3.3.5 可用数据量</h3><p>按如上方式处理完后，最终可用的数据量为：30w</p>
-<h1 id="4-模型调优"><a href="#4-模型调优" class="headerlink" title="4. 模型调优"></a>4. 模型调优</h1><h2 id="4-1-Decision-Tree-调优"><a href="#4-1-Decision-Tree-调优" class="headerlink" title="4.1 Decision Tree 调优"></a>4.1 Decision Tree 调优</h2><p>###4.1.1 树的深度调优<br>使用的特征数量为 275 个，使用的训练集数量为 54801。</p>
+<h3 id="可用数据量"><a href="#可用数据量" class="headerlink" title="可用数据量"></a>可用数据量</h3><p>按如上方式处理完后，最终可用的数据量为：30w</p>
+<h1 id="模型调优"><a href="#模型调优" class="headerlink" title="模型调优"></a>模型调优</h1><h2 id="Decision-Tree-调优"><a href="#Decision-Tree-调优" class="headerlink" title="Decision Tree 调优"></a>Decision Tree 调优</h2><h3 id="树的深度调优"><a href="#树的深度调优" class="headerlink" title="树的深度调优"></a>树的深度调优</h3><p>使用的特征数量为 275 个，使用的训练集数量为 54801。</p>
 <p>不同树深度对应的模型评估如下：</p>
 <p><img src="/img/tree_depth_3_to_5.jpg" alt="tree_depth_3_to_5.jpg"></p>
 <p><img src="/img/tree_depth_10_to_50.jpg" alt="tree_depth_10_to_50.jpg"></p>
 <p>可以发现树的深度越高，召回率越高，准确率却越低。总体评价是树的深度为 5 最好。</p>
-<h3 id="4-1-2-其他参数调优"><a href="#4-1-2-其他参数调优" class="headerlink" title="4.1.2 其他参数调优"></a>4.1.2 其他参数调优</h3><p>max_features=’sqrt’ 加了这个反而变差了很多。<br>min_samples_split=5, min_samples_leaf=5，加了这个反而变差了一些。</p>
-<h3 id="4-1-3-DT-输出"><a href="#4-1-3-DT-输出" class="headerlink" title="4.1.3 DT 输出"></a>4.1.3 DT 输出</h3><p>深度为 5 的 DT 截取部分放大后的图如下：<br><img src="/img/tree_depth_5_img.jpg" alt="tree_depth_5_img.jpg"></p>
-<h2 id="4-2-Random-Forest-调优"><a href="#4-2-Random-Forest-调优" class="headerlink" title="4.2 Random Forest 调优"></a>4.2 Random Forest 调优</h2><p>n_estimators：100, 300, 500 都试过，差别不大。弱学习器的最大迭代次数太小会不准确，太大模型训练地就很慢。<br>oob_score: True，即采用袋外样本来评估模型的好坏，提高模型拟合后的泛化能力。<br>基本上，RF 不怎么需要调参。</p>
+<h3 id="其他参数调优"><a href="#其他参数调优" class="headerlink" title="其他参数调优"></a>其他参数调优</h3><p>max_features=’sqrt’ 加了这个反而变差了很多。<br>min_samples_split=5, min_samples_leaf=5，加了这个反而变差了一些。</p>
+<h3 id="DT-输出"><a href="#DT-输出" class="headerlink" title="DT 输出"></a>DT 输出</h3><p>深度为 5 的 DT 截取部分放大后的图如下：<br><img src="/img/tree_depth_5_img.jpg" alt="tree_depth_5_img.jpg"></p>
+<h2 id="Random-Forest-调优"><a href="#Random-Forest-调优" class="headerlink" title="Random Forest 调优"></a>Random Forest 调优</h2><p>n_estimators：100, 300, 500 都试过，差别不大。弱学习器的最大迭代次数太小会不准确，太大模型训练地就很慢。<br>oob_score: True，即采用袋外样本来评估模型的好坏，提高模型拟合后的泛化能力。<br>基本上，RF 不怎么需要调参。</p>
 <p>比较有价值的是能产生特征的重要性，Top 30 Feature importances 的图片略。<br>Feature importances Top 10 的可视化略。</p>
 <p>使用 GridSearchCV 搜索最优参数，参数搜索结果如下：<br><img src="/img/GridSearchCV_result.jpg" alt="GridSearchCV_result.jpg"></p>
 <p>但是使用参数后，RF 的 AUC 降到了 0.82，应该是 max_features 和 min_samples_leaf 这两个参数调的不对。</p>
-<h2 id="4-3-Adaboost-调优"><a href="#4-3-Adaboost-调优" class="headerlink" title="4.3 Adaboost 调优"></a>4.3 Adaboost 调优</h2><p>AdaBoostClassifier 的 base_estimator 选择已经之前训练好的 DT，效果更好，如下：</p>
+<h2 id="Adaboost-调优"><a href="#Adaboost-调优" class="headerlink" title="Adaboost 调优"></a>Adaboost 调优</h2><p>AdaBoostClassifier 的 base_estimator 选择已经之前训练好的 DT，效果更好，如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adb_clf = AdaBoostClassifier(n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</span><br><span class="line">AUC Score (Train): <span class="number">0.629162</span></span><br><span class="line">adb_clf_2 = AdaBoostClassifier(clf, n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</span><br><span class="line">AUC Score (Train): <span class="number">0.659129</span></span><br></pre></td></tr></table></figure>
-
 <p>learning_rate 设置为 0.02 能兼顾速度和效果。</p>
-<h1 id="5-踩过的坑"><a href="#5-踩过的坑" class="headerlink" title="5. 踩过的坑"></a>5. 踩过的坑</h1><h2 id="5-1-信息熵"><a href="#5-1-信息熵" class="headerlink" title="5.1 信息熵"></a>5.1 信息熵</h2><p>基尼指数和信息熵的几乎无差别，不怎么影响结果。</p>
-<h2 id="5-2-PCA-降维"><a href="#5-2-PCA-降维" class="headerlink" title="5.2 PCA 降维"></a>5.2 PCA 降维</h2><p>PCA 降维，使用 mle 和 5 个特征，都不好使，准确度反而更低，AUC 得分降至 0.51。</p>
-<h2 id="5-3-用了未来特征"><a href="#5-3-用了未来特征" class="headerlink" title="5.3 用了未来特征"></a>5.3 用了未来特征</h2><p>决策树 AUC: 0.52 -&gt; 0.77<br>随机森林 AUC: 0.82-&gt;0.93</p>
+<h1 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h1><h2 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h2><p>基尼指数和信息熵的几乎无差别，不怎么影响结果。</p>
+<h2 id="PCA-降维"><a href="#PCA-降维" class="headerlink" title="PCA 降维"></a>PCA 降维</h2><p>PCA 降维，使用 mle 和 5 个特征，都不好使，准确度反而更低，AUC 得分降至 0.51。</p>
+<h2 id="用了未来特征"><a href="#用了未来特征" class="headerlink" title="用了未来特征"></a>用了未来特征</h2><p>决策树 AUC: 0.52 -&gt; 0.77<br>随机森林 AUC: 0.82-&gt;0.93</p>
 <p>随机森林的模型评价如下：<br><img src="/img/RF_auc.jpg" alt="RF_auc.jpg"></p>
 <p>会发现准确度太高了，仔细分析后，发现用了一个「创建体测时间」的特征，而这个特征是在用户点击了 「智能计划推荐模块」后会更新值的，所以相当于用了事件发生后的特征来预测事件发生的概率，这样肯定会导致模型的准确率很高。后来去掉了这个特征。</p>
-<h1 id="6-模型对比"><a href="#6-模型对比" class="headerlink" title="6. 模型对比"></a>6. 模型对比</h1><p>数据集：30w，其中正样本的比例为 22%。</p>
+<h1 id="模型对比"><a href="#模型对比" class="headerlink" title="模型对比"></a>模型对比</h1><p>数据集：30w，其中正样本的比例为 22%。</p>
 <p><img src="/img/dt_model_compare.jpg" alt="dt_model_compare.jpg"></p>
 <p>对比发现，DT 和 Adaboost 的效果都不好，AUC Score 都在 0.65 左右。RF 的效果最好，AUC Score 能到 0.90。<br>可能是因为数据集符合 low bias, high variance 的规律，所以 RF 要比 Adaboost 好。</p>
 <p>RF 的准确率和召回率都还不错，感觉可以后续上线用于 App 首页了。</p>
-<h1 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h1><p>整个过程可以抽象为：<br>获取数据 -&gt; 调整模型参数 -&gt; 引入更多特征 -&gt; 调整模型参数 -&gt; PCA -&gt; 减少特征 -&gt; 处理重要特征 -&gt; gridSearchCV -&gt; 调整模型参数</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整个过程可以抽象为：<br>获取数据 -&gt; 调整模型参数 -&gt; 引入更多特征 -&gt; 调整模型参数 -&gt; PCA -&gt; 减少特征 -&gt; 处理重要特征 -&gt; gridSearchCV -&gt; 调整模型参数</p>
 <p>一些总结：</p>
 <ol>
 <li>特征工程很重要，特征处理好后 AUC 有明显的提升</li>
@@ -498,13 +553,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2019/03/04/机器学习实践-—-朴素贝叶斯/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -528,13 +581,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2019 22:26:47" itemprop="dateCreated datePublished" datetime="2019-03-04T22:26:47+08:00">Mar 4 2019</time>
+              <time title="创建时间：3月 4 2019 22:26:47" itemprop="dateCreated datePublished" datetime="2019-03-04T22:26:47+08:00">3月 4 2019</time>
             </span>
           
             
@@ -544,13 +597,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:43:24" itemprop="dateModified" datetime="2019-08-18T16:43:24+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:10" itemprop="dateModified" datetime="2019-08-25T21:10:10+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/04/机器学习实践-—-朴素贝叶斯/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/机器学习实践-—-朴素贝叶斯/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -561,18 +628,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>#1. 作业<br>根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。<br>讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。</p>
-<p>#2. 步骤</p>
-<ol>
+          <h1 id="作业"><a href="#作业" class="headerlink" title="作业"></a>作业</h1><p>根据给定的 20-News Group 数据集，设计Naïve Bayes 算法进行文本分类的研究。<br>讨论和使用不同的预处理方法，并讨论各种预处理对于算法性能的影响。</p>
+<h1 id="步骤"><a href="#步骤" class="headerlink" title="步骤"></a>步骤</h1><ol>
 <li>加载数据集</li>
 <li>提取  TF-IDF 特征</li>
 <li>生成文档的 TF-IDF 矩阵</li>
 <li>训练多项式朴素贝叶斯模型</li>
 <li>评价模型</li>
 </ol>
-<p>##3. 实现</p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># sklearn twenty_newsgroups document</span></span><br><span class="line"><span class="comment"># http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html</span></span><br><span class="line">fetch_20newsgroups(data_home=<span class="string">'/Users/ljp/Codes/ivy_plan/naive_bayes/20_newsgroups'</span>, <span class="comment"># 文件下载的路径</span></span><br><span class="line">                   subset=<span class="string">'train'</span>, <span class="comment"># 加载那一部分数据集 train/test</span></span><br><span class="line">                   categories=<span class="literal">None</span>, <span class="comment"># 选取哪一类数据集[类别列表]，默认20类</span></span><br><span class="line">                   shuffle=<span class="literal">True</span>,  <span class="comment"># 将数据集随机排序</span></span><br><span class="line">                   random_state=<span class="number">42</span>, <span class="comment"># 随机数生成器</span></span><br><span class="line">                   remove=(), <span class="comment"># ('headers','footers','quotes') 去除部分文本</span></span><br><span class="line">                   download_if_missing=<span class="literal">True</span> <span class="comment"># 如果没有下载过，重新下载</span></span><br><span class="line">                  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据集</span></span><br><span class="line">newsgroups_train = fetch_20newsgroups(subset=<span class="string">'train'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bunch</span></span><br><span class="line"><span class="comment"># load_*和 fetch_* 函数返回的数据类型是 datasets.base.Bunch，本质上是一个 dict，它的键值对可用通过对象的属性方式访问。</span></span><br><span class="line"><span class="comment"># 主要包含以下属性：</span></span><br><span class="line"><span class="comment"># data：特征数据数组，type 是 list，是 n_samples * n_features 的二维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># filenames：文件数组，是文件路径，是 n_samples 的一维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># target：标签数组，是类别的整数索引，是 n_samples 的一维 numpy.ndarray 数组，与 filenames 一一对应</span></span><br><span class="line"><span class="comment"># DESCR：数据描述</span></span><br><span class="line"><span class="comment"># feature_names：特征名</span></span><br><span class="line"><span class="comment"># target_names：标签名</span></span><br><span class="line"><span class="comment"># print(type(newsgroups_train)) # &lt;class 'sklearn.utils.Bunch'&gt;</span></span><br><span class="line"><span class="comment"># print(list(newsgroups_train)) # ['data', 'filenames', 'target_names', 'target', 'DESCR', 'description']</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取tfidf特征</span></span><br><span class="line">vectorizer = TfidfVectorizer() <span class="comment"># vectorizer type is &lt;class 'sklearn.feature_extraction.text.TfidfVectorizer'&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vectors type is &lt;class 'scipy.sparse.csr.csr_matrix'&gt;</span></span><br><span class="line"><span class="comment"># 数据格式为：(文档序号, 单词序号), tf-idf值</span></span><br><span class="line"><span class="comment"># 文档序号是该文档在 newsgroups_train.filenames 里的索引(位置)</span></span><br><span class="line"><span class="comment"># 单词序号是该单词在所有单词所构成的一维向量(也称为词袋，Bag of words)里的索引(位置)</span></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line"><span class="comment">#  (0, 11071)	0.02879840104494835</span></span><br><span class="line"><span class="comment">#  (0, 19516)	0.15199951710440102</span></span><br><span class="line"><span class="comment">#  (0, 24556)	0.36446543134314724</span></span><br><span class="line">vectors = vectorizer.fit_transform(newsgroups_train.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># MultinomialNB实现文本分类</span></span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score,f1_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">clf=MultinomialNB(alpha=<span class="number">0.1</span>)</span><br><span class="line">clf.fit(vectors,newsgroups_train.target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载测试集</span></span><br><span class="line">newsgroups_test=fetch_20newsgroups(subset=<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取测试集tfidf特征</span></span><br><span class="line">vectors_test=vectorizer.transform(newsgroups_test.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型评价</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">pred=clf.predict(vectors_test)</span><br><span class="line">print(<span class="string">'accuracy_score: '</span> + str(accuracy_score(newsgroups_test.target,pred)))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"classification report on test set for classifier:"</span>)</span><br><span class="line">print(clf)</span><br><span class="line">X_test = vectorizer.transform((d <span class="keyword">for</span> d <span class="keyword">in</span> newsgroups_test.data))</span><br><span class="line">pred = clf.predict(X_test)</span><br><span class="line">y_test = newsgroups_test.target</span><br><span class="line">print(classification_report(y_test, pred, target_names=newsgroups_test.target_names))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成混淆矩阵，观察每种类别被错误分类的情况</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">cm = confusion_matrix(y_test, pred)</span><br><span class="line">print(<span class="string">"confusion matrix:"</span>)</span><br><span class="line">print(cm)</span><br><span class="line"><span class="comment"># Show confusion matrix</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">8</span>), dpi=<span class="number">144</span>)</span><br><span class="line">plt.title(<span class="string">'Confusion matrix of the classifier'</span>)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">ax.spines[<span class="string">'right'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'top'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'bottom'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'left'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.xaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.yaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.set_xticklabels([])</span><br><span class="line">ax.set_yticklabels([])</span><br><span class="line">plt.matshow(cm, fignum=<span class="number">1</span>, cmap=<span class="string">'gray'</span>)</span><br><span class="line">plt.colorbar()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
-
+<h2 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn.datasets <span class="keyword">import</span> fetch_20newsgroups</span><br><span class="line"><span class="keyword">from</span> pprint <span class="keyword">import</span> pprint</span><br><span class="line"><span class="keyword">from</span> sklearn.feature_extraction.text <span class="keyword">import</span> TfidfVectorizer</span><br><span class="line"></span><br><span class="line"><span class="comment"># sklearn twenty_newsgroups document</span></span><br><span class="line"><span class="comment"># http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html</span></span><br><span class="line">fetch_20newsgroups(data_home=<span class="string">'/Users/ljp/Codes/ivy_plan/naive_bayes/20_newsgroups'</span>, <span class="comment"># 文件下载的路径</span></span><br><span class="line">                   subset=<span class="string">'train'</span>, <span class="comment"># 加载那一部分数据集 train/test</span></span><br><span class="line">                   categories=<span class="literal">None</span>, <span class="comment"># 选取哪一类数据集[类别列表]，默认20类</span></span><br><span class="line">                   shuffle=<span class="literal">True</span>,  <span class="comment"># 将数据集随机排序</span></span><br><span class="line">                   random_state=<span class="number">42</span>, <span class="comment"># 随机数生成器</span></span><br><span class="line">                   remove=(), <span class="comment"># ('headers','footers','quotes') 去除部分文本</span></span><br><span class="line">                   download_if_missing=<span class="literal">True</span> <span class="comment"># 如果没有下载过，重新下载</span></span><br><span class="line">                  )</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载数据集</span></span><br><span class="line">newsgroups_train = fetch_20newsgroups(subset=<span class="string">'train'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># Bunch</span></span><br><span class="line"><span class="comment"># load_*和 fetch_* 函数返回的数据类型是 datasets.base.Bunch，本质上是一个 dict，它的键值对可用通过对象的属性方式访问。</span></span><br><span class="line"><span class="comment"># 主要包含以下属性：</span></span><br><span class="line"><span class="comment"># data：特征数据数组，type 是 list，是 n_samples * n_features 的二维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># filenames：文件数组，是文件路径，是 n_samples 的一维 numpy.ndarray 数组</span></span><br><span class="line"><span class="comment"># target：标签数组，是类别的整数索引，是 n_samples 的一维 numpy.ndarray 数组，与 filenames 一一对应</span></span><br><span class="line"><span class="comment"># DESCR：数据描述</span></span><br><span class="line"><span class="comment"># feature_names：特征名</span></span><br><span class="line"><span class="comment"># target_names：标签名</span></span><br><span class="line"><span class="comment"># print(type(newsgroups_train)) # &lt;class 'sklearn.utils.Bunch'&gt;</span></span><br><span class="line"><span class="comment"># print(list(newsgroups_train)) # ['data', 'filenames', 'target_names', 'target', 'DESCR', 'description']</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取tfidf特征</span></span><br><span class="line">vectorizer = TfidfVectorizer() <span class="comment"># vectorizer type is &lt;class 'sklearn.feature_extraction.text.TfidfVectorizer'&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># vectors type is &lt;class 'scipy.sparse.csr.csr_matrix'&gt;</span></span><br><span class="line"><span class="comment"># 数据格式为：(文档序号, 单词序号), tf-idf值</span></span><br><span class="line"><span class="comment"># 文档序号是该文档在 newsgroups_train.filenames 里的索引(位置)</span></span><br><span class="line"><span class="comment"># 单词序号是该单词在所有单词所构成的一维向量(也称为词袋，Bag of words)里的索引(位置)</span></span><br><span class="line"><span class="comment"># 例如：</span></span><br><span class="line"><span class="comment">#  (0, 11071)	0.02879840104494835</span></span><br><span class="line"><span class="comment">#  (0, 19516)	0.15199951710440102</span></span><br><span class="line"><span class="comment">#  (0, 24556)	0.36446543134314724</span></span><br><span class="line">vectors = vectorizer.fit_transform(newsgroups_train.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># MultinomialNB实现文本分类</span></span><br><span class="line"><span class="keyword">from</span> sklearn.naive_bayes <span class="keyword">import</span> MultinomialNB</span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> accuracy_score,f1_score</span><br><span class="line"></span><br><span class="line"><span class="comment"># 训练</span></span><br><span class="line">clf=MultinomialNB(alpha=<span class="number">0.1</span>)</span><br><span class="line">clf.fit(vectors,newsgroups_train.target)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 加载测试集</span></span><br><span class="line">newsgroups_test=fetch_20newsgroups(subset=<span class="string">'test'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 提取测试集tfidf特征</span></span><br><span class="line">vectors_test=vectorizer.transform(newsgroups_test.data)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模型评价</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> classification_report</span><br><span class="line">pred=clf.predict(vectors_test)</span><br><span class="line">print(<span class="string">'accuracy_score: '</span> + str(accuracy_score(newsgroups_test.target,pred)))</span><br><span class="line"></span><br><span class="line">print(<span class="string">"classification report on test set for classifier:"</span>)</span><br><span class="line">print(clf)</span><br><span class="line">X_test = vectorizer.transform((d <span class="keyword">for</span> d <span class="keyword">in</span> newsgroups_test.data))</span><br><span class="line">pred = clf.predict(X_test)</span><br><span class="line">y_test = newsgroups_test.target</span><br><span class="line">print(classification_report(y_test, pred, target_names=newsgroups_test.target_names))</span><br><span class="line"></span><br><span class="line"><span class="comment">## 生成混淆矩阵，观察每种类别被错误分类的情况</span></span><br><span class="line"><span class="keyword">from</span> sklearn.metrics <span class="keyword">import</span> confusion_matrix</span><br><span class="line"></span><br><span class="line">cm = confusion_matrix(y_test, pred)</span><br><span class="line">print(<span class="string">"confusion matrix:"</span>)</span><br><span class="line">print(cm)</span><br><span class="line"><span class="comment"># Show confusion matrix</span></span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">plt.figure(figsize=(<span class="number">8</span>, <span class="number">8</span>), dpi=<span class="number">144</span>)</span><br><span class="line">plt.title(<span class="string">'Confusion matrix of the classifier'</span>)</span><br><span class="line">ax = plt.gca()</span><br><span class="line">ax.spines[<span class="string">'right'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'top'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'bottom'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.spines[<span class="string">'left'</span>].set_color(<span class="string">'none'</span>)</span><br><span class="line">ax.xaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.yaxis.set_ticks_position(<span class="string">'none'</span>)</span><br><span class="line">ax.set_xticklabels([])</span><br><span class="line">ax.set_yticklabels([])</span><br><span class="line">plt.matshow(cm, fignum=<span class="number">1</span>, cmap=<span class="string">'gray'</span>)</span><br><span class="line">plt.colorbar()</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
 <p>输出如下：<br><img src="/img/naive_bayes_auc.jpg" alt="naive_bayes_auc.jpg"></p>
 <p><img src="/img/naive_bayes_cross_matrix.png" alt="naive_bayes_cross_matrix.png"></p>
 <h1 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h1><p><a href="http://sklearn.apachecn.org/cn/0.19.0/datasets/twenty_newsgroups.html" target="_blank" rel="noopener">5.6.2. 20个新闻组文本数据集 — scikit-learn 0.19.0 中文文档 - ApacheCN</a><br><a href="https://www.jianshu.com/p/364887de2039" target="_blank" rel="noopener">利用朴素贝叶斯算法进行文档分类 - 简书</a><br><a href="https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf" target="_blank" rel="noopener">https://www.cs.waikato.ac.nz/ml/publications/2004/kibriya_et_al_cr.pdf</a></p>
@@ -595,13 +659,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/11/11/线性回归正则化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -625,13 +687,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Nov 11 2018 21:56:11" itemprop="dateCreated datePublished" datetime="2018-11-11T21:56:11+08:00">Nov 11 2018</time>
+              <time title="创建时间：11月 11 2018 21:56:11" itemprop="dateCreated datePublished" datetime="2018-11-11T21:56:11+08:00">11月 11 2018</time>
             </span>
           
             
@@ -641,13 +703,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:59" itemprop="dateModified" datetime="2019-08-18T16:52:59+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:11" itemprop="dateModified" datetime="2019-08-25T21:10:11+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/11/11/线性回归正则化/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/11/11/线性回归正则化/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -658,35 +734,35 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="1-前言"><a href="#1-前言" class="headerlink" title="1. 前言"></a>1. 前言</h2><p>线性回归出的模型如果出现过拟合怎么办？</p>
+          <h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>线性回归出的模型如果出现过拟合怎么办？</p>
 <ol>
 <li>脏数据太多，需要清洗数据</li>
 <li>增加训练数据的数量和多样性</li>
 <li>特征数量过多，使用正则化减少特征数量</li>
 </ol>
-<h2 id="2-向量的范数"><a href="#2-向量的范数" class="headerlink" title="2. 向量的范数"></a>2. 向量的范数</h2><p>向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质：</p>
+<h1 id="向量的范数"><a href="#向量的范数" class="headerlink" title="向量的范数"></a>向量的范数</h1><p>向量的范数是一种用来刻画向量大小的一种度量。实数的绝对值，复数的模，三维空间向量的长度，都是抽象范数概念的原型。上述三个对象统一记为 x ，衡量它们大小的量记为  ||x|| （我们用单竖线表示绝对值，双竖线表示范数），显然它们满足以下三条性质：</p>
 <p>L0范数：向量中非零元素的个数。<br>L1范数：向量中各个元素绝对值之和，又叫“稀疏规则算子”（Lasso regularization）<br>L2范数：向量中各个元素平方和再开方<br>p-范数：$||\textbf{x}||_p = (\sum_{i=1}^N|x_i|^p)^{\frac{1}{p}}$，即向量元素绝对值的p次方和的1/p次幂。</p>
 <p>下图展示了 p 取不同值时 unit ball 的形状：</p>
 <p><img src="/img/kinds_of_norm_graph.png" alt></p>
-<h2 id="3-正则化"><a href="#3-正则化" class="headerlink" title="3. 正则化"></a>3. 正则化</h2><p>在统计学的缩减中，引入了惩罚项，减少了不重要的参数，同时还可采用正则化（regularization）减少不重要的参数。<br>既然是减少特征，那么最容易想到的就是使用 L0 范数，求回归函数中的参数向量 w 的非零元素的个数。如果约束 $‖w‖_0≤k$，就是约束非零元素个数不大于 k。不过很明显，L0 范数是不连续的且非凸的，如果在线性回归中加上 L0 范数的约束，就变成了一个组合优化问题：挑出 $≤k$ 个系数然后做回归，找到目标函数的最小值对应的系数组合，这是一个 NP 问题。</p>
+<h1 id="正则化"><a href="#正则化" class="headerlink" title="正则化"></a>正则化</h1><p>在统计学的缩减中，引入了惩罚项，减少了不重要的参数，同时还可采用正则化（regularization）减少不重要的参数。<br>既然是减少特征，那么最容易想到的就是使用 L0 范数，求回归函数中的参数向量 w 的非零元素的个数。如果约束 $‖w‖_0≤k$，就是约束非零元素个数不大于 k。不过很明显，L0 范数是不连续的且非凸的，如果在线性回归中加上 L0 范数的约束，就变成了一个组合优化问题：挑出 $≤k$ 个系数然后做回归，找到目标函数的最小值对应的系数组合，这是一个 NP 问题。</p>
 <p>有趣的是，L1 范数也可以达到稀疏的效果，是 L0 范数的最优凸近似。我们把引入 L1 范数的线性回归叫做 Lasso 回归。</p>
-<h3 id="3-1-Lasso-回归"><a href="#3-1-Lasso-回归" class="headerlink" title="3.1 Lasso 回归"></a>3.1 Lasso 回归</h3><p>Lasso 算法（英语：least absolute shrinkage and selection operator，又译最小绝对值收敛和选择算子、套索算法）是一种同时进行特征选择和正则化（数学）的回归分析方法，旨在增强统计模型的预测准确性和可解释性，最初由斯坦福大学统计学教授 Robert Tibshirani 于 1996 年基于 Leo Breiman 的非负参数推断(Nonnegative Garrote, NNG)提出。</p>
+<h2 id="Lasso-回归"><a href="#Lasso-回归" class="headerlink" title="Lasso 回归"></a>Lasso 回归</h2><p>Lasso 算法（英语：least absolute shrinkage and selection operator，又译最小绝对值收敛和选择算子、套索算法）是一种同时进行特征选择和正则化（数学）的回归分析方法，旨在增强统计模型的预测准确性和可解释性，最初由斯坦福大学统计学教授 Robert Tibshirani 于 1996 年基于 Leo Breiman 的非负参数推断(Nonnegative Garrote, NNG)提出。</p>
 <p>优化目标：min $ 1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} }$</p>
 <p>Lasso 回归：min  $1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} } + \lambda||\omega||_{1}$</p>
-<h3 id="3-2-Ridge-回归"><a href="#3-2-Ridge-回归" class="headerlink" title="3.2 Ridge 回归"></a>3.2 Ridge 回归</h3><p>岭回归是加了二阶正则项的最小二乘，主要适用于过拟合严重或各变量之间存在多重共线性的时候，岭回归是有 bias 的，这里的 bias 是为了让 variance 更小。</p>
+<h2 id="Ridge-回归"><a href="#Ridge-回归" class="headerlink" title="Ridge 回归"></a>Ridge 回归</h2><p>岭回归是加了二阶正则项的最小二乘，主要适用于过拟合严重或各变量之间存在多重共线性的时候，岭回归是有 bias 的，这里的 bias 是为了让 variance 更小。</p>
 <p>Ridge 回归：min  $1/N\ast\sum_{i = 1}^{N}{(y_{i} -\omega^{T} x_{i})^{2} } + \lambda ||\omega||_{2}^{2} $</p>
 <p>岭回归最先是用来处理特征数多与样本数的情况，现在也用于在估计中加入偏差，从而得到更好的估计。这里引入λ限制了所有w的和，通过引入该惩罚项，能够减少不重要的参数，这个技术在统计学上也叫做缩减。缩减方法可以去掉不重要的参数，因此能更好的理解数据。选取不同的λ进行测试，最后得到一个使得误差最小λ。</p>
 <p>缩减方法可以去掉不重要的参数，因此能更好地理解数据。此外，与简单的线性回归相比，缩减法能取得更好的预测效果。</p>
-<h3 id="3-3-比较两者"><a href="#3-3-比较两者" class="headerlink" title="3.3 比较两者"></a>3.3 比较两者</h3><p>Lasso 回归与 Ridge 回归有共同点，也有区别。</p>
-<h4 id="共同点"><a href="#共同点" class="headerlink" title="共同点"></a>共同点</h4><p>都能解决两个问题：</p>
+<h2 id="比较两者"><a href="#比较两者" class="headerlink" title="比较两者"></a>比较两者</h2><p>Lasso 回归与 Ridge 回归有共同点，也有区别。</p>
+<h3 id="共同点"><a href="#共同点" class="headerlink" title="共同点"></a>共同点</h3><p>都能解决两个问题：</p>
 <ol>
 <li>线性回归出现的过拟合现象</li>
 <li>使用 Normal equation 求解时，解决 $(X^TX)$ 不可逆的问题。</li>
 </ol>
-<h4 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h4><p>岭回归加入的正则项是 L2 范数，其结果可以将偏回归系数往 0 的方向进行压缩，但不会把偏回归系数压缩为 0，即岭回归不会剔除变量。Lasso 回归同样也可以将偏回归系数往 0 方向压缩，但是能够将某些变量的偏回归系数压缩为 0，因此可以起到变量筛选的作用。</p>
+<h3 id="区别"><a href="#区别" class="headerlink" title="区别"></a>区别</h3><p>岭回归加入的正则项是 L2 范数，其结果可以将偏回归系数往 0 的方向进行压缩，但不会把偏回归系数压缩为 0，即岭回归不会剔除变量。Lasso 回归同样也可以将偏回归系数往 0 方向压缩，但是能够将某些变量的偏回归系数压缩为 0，因此可以起到变量筛选的作用。</p>
 <p><img src="/img/ridege_and_lasso_solution.png" alt></p>
 <p>红色的椭圆和蓝色的区域的切点就是目标函数的最优解，我们可以看到，如果是圆，则很容易切到圆周的任意一点，但是很难切到坐标轴上，因此没有稀疏；但是如果是菱形或者多边形，则很容易切到坐标轴上，因此很容易产生稀疏的结果。这也说明了为什么 L1 范式会是稀疏的。</p>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p><a href="https://zh.wikipedia.org/wiki/Lasso%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Lasso算法 - 维基百科，自由的百科全书</a><br><a href="https://blog.csdn.net/xbinworld/article/details/44276389" target="_blank" rel="noopener">机器学习方法：回归（二）：稀疏与正则约束ridge regression，Lasso</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://zh.wikipedia.org/wiki/Lasso%E7%AE%97%E6%B3%95" target="_blank" rel="noopener">Lasso算法 - 维基百科，自由的百科全书</a><br><a href="https://blog.csdn.net/xbinworld/article/details/44276389" target="_blank" rel="noopener">机器学习方法：回归（二）：稀疏与正则约束ridge regression，Lasso</a></p>
 
         
       
@@ -706,13 +782,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/04/14/Stanford-Machine-Learning-7-SVM/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -736,13 +810,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Apr 14 2018 18:33:50" itemprop="dateCreated datePublished" datetime="2018-04-14T18:33:50+08:00">Apr 14 2018</time>
+              <time title="创建时间：4月 14 2018 18:33:50" itemprop="dateCreated datePublished" datetime="2018-04-14T18:33:50+08:00">4月 14 2018</time>
             </span>
           
             
@@ -752,13 +826,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:42:43" itemprop="dateModified" datetime="2019-08-18T16:42:43+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:13:10" itemprop="dateModified" datetime="2019-08-25T21:13:10+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/04/14/Stanford-Machine-Learning-7-SVM/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/04/14/Stanford-Machine-Learning-7-SVM/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -769,42 +857,50 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>##1. SVM 定义<br>支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
-<p>##2. 函数间隔和几何间隔<br><img src="/img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
-<p>###2.1 符号定义<br>为了方便介绍 SVM，重新定义以下符号。<br>1.在logstic回归中我们用0,1代表两个类, 现在我们改用-1,+1, 即 y∈{-1，-1}<br>2.在logistic回归中, 我们的 g 是sigmoid函数, 现在改为:<br>g(z)=1, z&gt;=0<br>g(z)=-1, z&lt;0<br>3.在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,<br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中<br>w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</p>
-<p>###2.2 函数间隔(functional margin)<br>对于一个训练样本 $(x^{(i)}, y^{(i)})$，我们定义它到超平面 (w,b) 的函数间隔为:<br>$$\widehat\gamma=y^{(i)}(w^{T}x^{(i)}+b)$$<br>我们希望函数间隔越大越好, 即:<br>if $y^{(i)}=1$, want $(w^{T}x^{(i)}+b) \gg 0 $ (&gt;&gt;代表远大于)<br>if $y^{(i)}=-1$, want $(w^{T}x^{(i)}+b) \ll 0$</p>
+          <h1 id="SVM-定义"><a href="#SVM-定义" class="headerlink" title="SVM 定义"></a>SVM 定义</h1><p>支持向量机，因其英文名为 support vector machine，故一般简称 SVM，通俗来讲，它是一种二类分类模型，其基本模型定义为特征空间上的间隔最大的线性分类器，其学习策略便是间隔最大化，最终可转化为一个凸二次规划问题的求解。</p>
+<h1 id="函数间隔和几何间隔"><a href="#函数间隔和几何间隔" class="headerlink" title="函数间隔和几何间隔"></a>函数间隔和几何间隔</h1><p><img src="/img/svm_margin.jpg" alt="svm_margin"><br>上图中哪个分类器最好呢？</p>
+<h2 id="符号定义"><a href="#符号定义" class="headerlink" title="符号定义"></a>符号定义</h2><p>为了方便介绍 SVM，重新定义以下符号。</p>
+<ol>
+<li>在logstic回归中我们用0,1代表两个类, 现在我们改用-1,+1, 即 y∈{-1，-1}</li>
+<li>在logistic回归中, 我们的 g 是sigmoid函数, 现在改为:<br>g(z)=1, z&gt;=0<br>g(z)=-1, z&lt;0</li>
+<li>在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,  <script type="math/tex">h_\theta(x)</script><br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</li>
+</ol>
+<p>h_{x,b}</p>
+<script type="math/tex; mode=display">
+x=a+b</script><h2 id="函数间隔-functional-margin"><a href="#函数间隔-functional-margin" class="headerlink" title="函数间隔(functional margin)"></a>函数间隔(functional margin)</h2><p>对于一个训练样本 $(x^{(i)}, y^{(i)})$，我们定义它到超平面 (w,b) 的函数间隔为:</p>
+<script type="math/tex; mode=display">\widehat\gamma=y^{(i)}(w^{T}x^{(i)}+b)</script><p>我们希望函数间隔越大越好, 即:<br>if $y^{(i)}=1$, want $(w^{T}x^{(i)}+b) \gg 0 $ (&gt;&gt;代表远大于)<br>if $y^{(i)}=-1$, want $(w^{T}x^{(i)}+b) \ll 0$</p>
 <p>函数间隔越大，代表我们对于分类的结果非常确定。</p>
 <p>但这里有一个漏洞，即可以在不改变这个超平面的情况下可以让函数间隔任意大，只要我们成比增加 w,b 就可以达到这个目的了。例如，我们将 w 变为 2w， b 变为 2b，那么我们的函数间隔将会是原来的两倍。</p>
-<p>所以对于整个训练集, <strong>函数间隔</strong>定义为：<br>$$\widehat\gamma=min{\widehat\gamma^{(i)}}$$</p>
-<p>###2.3 几何间隔(geometric margin)<br>定义对于一个训练样本 $A(x^{(i)}, y^{(i)})$，它到超平面 $w^{T}x^{(i)}+b$ 的几何距离为 $\gamma^{(i)}$。<br>设 B 为 A 在超平面上的投影，易得超平面的法向量为 $\frac{w}{||w||}$，则有 $A=B+\gamma^{(i)}\frac{w}{||w||}$，<br>即 $B = A - \gamma^{(i)}\frac{w}{||w||}$。又因为 B 在超平面上，所以有<br>$w^{T}(x^{(i)} - \gamma^{(i)}\frac{w}{||w||})+b=0$<br>故几何距离为:<br>$$\gamma^{(i)}=(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}$$</p>
-<p>定义其几何间隔：<br>$$\gamma^{(i)}=y^{(i)}[(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}]$$</p>
-<p>所以对于整个训练集, <strong>几何间隔</strong>定义为：<br>$$\gamma=min{\gamma^{(i)}}$$</p>
-<p>可以发现，当 $||w||=1$时，$\widehat\gamma^{(i)}=\gamma^{(i)}$</p>
-<p>##3. 最优间隔分类器<br>几何间隔就是在求 $\frac{\widehat\gamma}{||w||}$ 的最小值，可以发现函数间隔 $\widehat\gamma$ 可放大缩小，且其对结果不产生影响，所以不妨设令${\widehat\gamma}=1$。<br>现在，目标函数转为了：<br>$$max \frac{1}{||w||}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$<br>等价于<br>$$min{\frac12{||w||^2}}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$</p>
-<p>利用拉格朗日乘子法可得：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
-<p>令<br>$$\theta(w)=\displaystyle\max_{\alpha_i\ge0}L(w, b, \alpha)$$</p>
-<p>则目标函数变成了：<br>$$\displaystyle\min_{w,b}\theta(w)=\displaystyle\min_{w,b}\max_{\alpha_i\ge0}L(w, b, \alpha)=p^*$$</p>
-<p>##4. 求解目标函数</p>
-<p>###4.1 使用对偶问题求解<br>SVM 中用到了高维映射，将线性不可分的问题映射为线性可分，且映射函数的具体形式无法提前确定，而往往使用核函数映射后，维度 w 会提升很多，甚至至无穷维。<br>在原问题下，求解算法的复杂度与样本维度（w 的维度）相关；<br>在对偶问题下，求解算法的复杂度与样本数量（等于拉格朗日算子 a 的数量）相关。</p>
+<p>所以对于整个训练集, <strong>函数间隔</strong>定义为：</p>
+<script type="math/tex; mode=display">\widehat\gamma=min{\widehat\gamma^{(i)}}</script><h2 id="几何间隔-geometric-margin"><a href="#几何间隔-geometric-margin" class="headerlink" title="几何间隔(geometric margin)"></a>几何间隔(geometric margin)</h2><p>定义对于一个训练样本 $A(x^{(i)}, y^{(i)})$，它到超平面 $w^{T}x^{(i)}+b$ 的几何距离为 $\gamma^{(i)}$。<br>设 B 为 A 在超平面上的投影，易得超平面的法向量为 $\frac{w}{||w||}$，则有 $A=B+\gamma^{(i)}\frac{w}{||w||}$，<br>即 $B = A - \gamma^{(i)}\frac{w}{||w||}$。又因为 B 在超平面上，所以有<br>$w^{T}(x^{(i)} - \gamma^{(i)}\frac{w}{||w||})+b=0$<br>故几何距离为:</p>
+<script type="math/tex; mode=display">\gamma^{(i)}=(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}</script><p>定义其几何间隔：</p>
+<script type="math/tex; mode=display">\gamma^{(i)}=y^{(i)}[(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}]</script><p>所以对于整个训练集, <strong>几何间隔</strong>定义为：</p>
+<script type="math/tex; mode=display">\gamma=min{\gamma^{(i)}}</script><p>可以发现，当 $||w||=1$时，$\widehat\gamma^{(i)}=\gamma^{(i)}$</p>
+<h1 id="最优间隔分类器"><a href="#最优间隔分类器" class="headerlink" title="最优间隔分类器"></a>最优间隔分类器</h1><p>几何间隔就是在求 $\frac{\widehat\gamma}{||w||}$ 的最小值，可以发现函数间隔 $\widehat\gamma$ 可放大缩小，且其对结果不产生影响，所以不妨设令${\widehat\gamma}=1$。<br>现在，目标函数转为了：</p>
+<script type="math/tex; mode=display">max \frac{1}{||w||}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3...,n</script><p>等价于</p>
+<script type="math/tex; mode=display">min{\frac12{||w||^2}}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3...,n</script><p>利用拉格朗日乘子法可得：</p>
+<script type="math/tex; mode=display">L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]</script><p>令</p>
+<script type="math/tex; mode=display">\theta(w)=\displaystyle\max_{\alpha_i\ge0}L(w, b, \alpha)</script><p>则目标函数变成了：</p>
+<script type="math/tex; mode=display">\displaystyle\min_{w,b}\theta(w)=\displaystyle\min_{w,b}\max_{\alpha_i\ge0}L(w, b, \alpha)=p^\*</script><h1 id="求解目标函数"><a href="#求解目标函数" class="headerlink" title="求解目标函数"></a>求解目标函数</h1><h2 id="使用对偶问题求解"><a href="#使用对偶问题求解" class="headerlink" title="使用对偶问题求解"></a>使用对偶问题求解</h2><p>SVM 中用到了高维映射，将线性不可分的问题映射为线性可分，且映射函数的具体形式无法提前确定，而往往使用核函数映射后，维度 w 会提升很多，甚至至无穷维。<br>在原问题下，求解算法的复杂度与样本维度（w 的维度）相关；<br>在对偶问题下，求解算法的复杂度与样本数量（等于拉格朗日算子 a 的数量）相关。</p>
 <p>因此，如果是做线性分类，且样本维度低于样本数量的话，可以在原问题下求解。例如 Liblinear 的线性 SVM 默认做法就是这样的；<br>但如果是做非线性分类，那就会涉及到升维（比如使用高斯核做核函数，其实是将样本升到无穷维），升维后的样本维度往往会远大于样本数量，此时显然在对偶问题下求解会更好。</p>
 <p><strong>直接求解原问题有多难？</strong> TBD</p>
-<p>####4.1.1 使用对偶问题的解法<br>对于不等书约束条件的最优化问题，使用拉格朗日对偶问题来求解。具体介绍见之前的 blog:  <a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/">拉格朗日乘子法</a></p>
-<p>用 $p^*$ 表示这个问题的最优值，这个问题和我们最初的问题是等价的。<br>不过，把最小和最大的位置交换一下：<br>$$\displaystyle\max_{\alpha_i\ge0}\min_{w,b}L(w, b, \alpha)=d^*$$</p>
-<p>交换以后的问题不再等价于原问题，新问题的最优值用 $d^*$ 来表示。并且，有 $d^*$ ≤ $p^*$。</p>
-<p>第二个问题的最优值 $d^*$ 提供了一个第一个问题的最优<br>值 $p^*$ 的一个下界。经过论证，原始问题满足强对偶所需要的条件，故这两者相等，所以可以通过求解第二个问题来间接地求解第一个问题。 </p>
-<p>####4.1.2 优化公式<br>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：<br>$$\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0$$<br>$$\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0$$</p>
-<p>将上式代入：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
-<p>推导过程如下：<br><img src="/img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
+<h3 id="使用对偶问题的解法"><a href="#使用对偶问题的解法" class="headerlink" title="使用对偶问题的解法"></a>使用对偶问题的解法</h3><p>对于不等书约束条件的最优化问题，使用拉格朗日对偶问题来求解。具体介绍见之前的 blog:  <a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/">拉格朗日乘子法</a></p>
+<p>用 $p^*$ 表示这个问题的最优值，这个问题和我们最初的问题是等价的。<br>不过，把最小和最大的位置交换一下：</p>
+<script type="math/tex; mode=display">\displaystyle\max_{\alpha_i\ge0}\min_{w,b}L(w, b, \alpha)=d^*</script><p>交换以后的问题不再等价于原问题，新问题的最优值用 $d^<em>$ 来表示。并且，有 $d^</em>$ ≤ $p^*$。</p>
+<p>第二个问题的最优值 $d^<em>$ 提供了一个第一个问题的最优<br>值 $p^</em>$ 的一个下界。经过论证，原始问题满足强对偶所需要的条件，故这两者相等，所以可以通过求解第二个问题来间接地求解第一个问题。 </p>
+<h3 id="优化公式"><a href="#优化公式" class="headerlink" title="优化公式"></a>优化公式</h3><p>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：</p>
+<script type="math/tex; mode=display">\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0</script><script type="math/tex; mode=display">\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0</script><p>将上式代入：</p>
+<script type="math/tex; mode=display">L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]</script><p>推导过程如下：<br><img src="/img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
 <p>这样求出 $\alpha$ 后即可得到 w 和 b。</p>
 <p><img src="/img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
 <p>现在我们的优化问题变成了如上的形式。对于这个问题，我们有更高效的优化算法，即序列最小优化（SMO）算法。我们通过这个优化算法能得到α，再根据α，我们就可以求解出w和b，进而求得我们最初的目的：找到超平面，即”决策平面”。</p>
-<p>###4.2 SMO 算法<br><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29212107</a><br><a href="https://cloud.tencent.com/developer/article/1076970" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1076970</a> </p>
+<h2 id="SMO-算法"><a href="#SMO-算法" class="headerlink" title="SMO 算法"></a>SMO 算法</h2><p><a href="https://zhuanlan.zhihu.com/p/29212107" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/29212107</a><br><a href="https://cloud.tencent.com/developer/article/1076970" target="_blank" rel="noopener">https://cloud.tencent.com/developer/article/1076970</a> </p>
 <p><img src="/img/svm_smo_1.jpg" alt="SMO_JP_1.jpeg"><br><img src="/img/svm_smo_2.jpg" alt="SMO_JP_2.jpeg"></p>
-<p>##5. 核函数<br>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="/img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
+<h1 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h1><p>如果数据集就是线性不可分的应该怎么处理呢？处理方法是将数据集映射到更高维的空间，变成线性可分的。如下图所示：<br><img src="/img/svm_kernel_demo.jpg" alt="svm_kernel_demo"></p>
 <p>一般使用高斯核，但这样会导致映射后的维度非常巨大，也就是 w 的维度很大，这也是为什么要转化为对偶问题来求解的原因，对偶问题的时间复杂度只和数据集的数量有关，与维度无关。</p>
-<p>##总结 SVM<br>SVM 是神经网络出现之前最好的分类算法。求解 SVM 的过程也就是找到区分正负数据的最优超平面，所以引入了几何间隔的概念。而求解最大的几何间隔的问题即是在不等式约束条件下求解最优解的问题。这就引入了拉格朗日对偶问题，接着针对对偶问题求解，引入快速学习算法 SMO，最终找到超平面。<br>对于原始数据线性不可分的情况，引入核函数映射到高维计算，这其中 SVM 求解过程的时间复杂度与维度无关。</p>
+<h1 id="总结-SVM"><a href="#总结-SVM" class="headerlink" title="总结 SVM"></a>总结 SVM</h1><p>SVM 是神经网络出现之前最好的分类算法。求解 SVM 的过程也就是找到区分正负数据的最优超平面，所以引入了几何间隔的概念。而求解最大的几何间隔的问题即是在不等式约束条件下求解最优解的问题。这就引入了拉格朗日对偶问题，接着针对对偶问题求解，引入快速学习算法 SMO，最终找到超平面。<br>对于原始数据线性不可分的情况，引入核函数映射到高维计算，这其中 SVM 求解过程的时间复杂度与维度无关。</p>
 <p>附一个很精髓的 <a href="http://guoze.me/2014/11/26/svm-knowledge/" target="_blank" rel="noopener">SVM十问十答</a>。</p>
-<p>##7. SVM 优缺点<br>优点：</p>
+<h1 id="SVM-优缺点"><a href="#SVM-优缺点" class="headerlink" title="SVM 优缺点"></a>SVM 优缺点</h1><p>优点：</p>
 <ol>
 <li>可用于线性/非线性分类</li>
 <li>可以解决高维问题，即大型特征空间;</li>
@@ -820,11 +916,9 @@
 <li>对非线性问题有时很难找到一个合适的核函数</li>
 <li>解决多分类问题存在困难 </li>
 </ol>
-<p>#附录</p>
-<p>##点到平面的距离<br><img src="/img/svm_distance.jpg" alt="IMAGE"></p>
+<h1 id="附录"><a href="#附录" class="headerlink" title="附录"></a>附录</h1><h2 id="点到平面的距离"><a href="#点到平面的距离" class="headerlink" title="点到平面的距离"></a>点到平面的距离</h2><p><img src="/img/svm_distance.jpg" alt="IMAGE"></p>
 <p>$d$ 维空间中的超平面由下面的方程确定: $w^Tx+b=0$，其中，$w$ 与 $x$ 都是 $d$ 维列向量， $x=(x_1,x_2,…,x_d)^T$ 为平面上的点， $w=(w_1,w_2,…,w_d)^T$为平面的法向量。$b$ 是一个实数， 代表平面与原点之间的距离。</p>
-<p>#Reference</p>
-<blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <p><a href="http://blog.csdn.net/v_july_v/article/details/7624837" target="_blank" rel="noopener">http://blog.csdn.net/v_july_v/article/details/7624837</a><br><a href="http://guoze.me/2014/11/26/svm-knowledge/" target="_blank" rel="noopener">http://guoze.me/2014/11/26/svm-knowledge/</a><br><a href="https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf" target="_blank" rel="noopener">https://pdfs.semanticscholar.org/59ee/e096b49d66f39891eb88a6c84cc89acba12d.pdf</a><br><a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/">http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/</a></p>
 </blockquote>
 
@@ -846,13 +940,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/03/04/拉格朗日乘子法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -876,13 +968,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2018 20:23:40" itemprop="dateCreated datePublished" datetime="2018-03-04T20:23:40+08:00">Mar 4 2018</time>
+              <time title="创建时间：3月 4 2018 20:23:40" itemprop="dateCreated datePublished" datetime="2018-03-04T20:23:40+08:00">3月 4 2018</time>
             </span>
           
             
@@ -892,13 +984,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:27" itemprop="dateModified" datetime="2019-08-18T16:52:27+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:35:20" itemprop="dateModified" datetime="2019-08-25T21:35:20+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/03/04/拉格朗日乘子法/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/03/04/拉格朗日乘子法/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -909,13 +1015,11 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>##1. 拉格朗日乘子法</p>
-<p>###1.1 定义<br>在数学中的最优化问题中，拉格朗日乘数法（以数学家约瑟夫·拉格朗日命名）是一种寻找多元函数在其变量受到一个或多个条件的约束时的极值的方法。这种方法可以将一个有n个变量与k个约束条件的最优化问题转换为一个解有n + k个变量的方程组的解的问题。这种方法中引入了一个或一组新的未知数，即拉格朗日乘数，又称拉格朗日乘子，或拉氏乘子，它们是在转换后的方程，即约束方程中作为梯度（gradient）的线性组合中各个向量的系数。</p>
-<p>比如，要求 $f(x,y) 在 g(x,y)=c$ 时的最大值时，我们可以引入新变量拉格朗日乘数 $L(x,y,λ)=f(x,y) + λ(g(x,y)-c)$，更一般地，对含n个变量和k个约束的情况，有：<br>$$L(x_1,x_2, …, x_n, λ_1,λ_2,…,λ_n)=f(x_1,x_2, …, x_n) - \sum_{i=1}^{k}λ_ig_i(x_1,x_2, …, x_n)$$</p>
-<p>拉格朗日乘数法所得的极点会包含原问题的所有极值点，但并不保证每个极值点都是原问题的极值点。拉格朗日乘数法的正确性的证明牵涉到偏微分，全微分或链法。</p>
-<p>###1.2 用处<br>现要解决以下问题，在满足 g(x,y)=c 这个等式的前提下，求 f(x,y) 函数的最小值（最大值道理相同）。这样的问题我们在高中的时候就遇到过了，只不过高中时遇到的限制条件 g(x,y)=c 都比较简单，一般而言都可以将 y 用 x 的式子表示出来，然后用变量替换的方法代回 f(x,y) 求解。但是，如果 g(x,y) 的形式过于复杂，或者变量太多时，这种方法就失效了。而拉格朗日乘子法就是解决这类问题的通用策略。</p>
-<p>##2. 等式约束条件的优化问题</p>
-<p>###2.1 解法<br>设 $f(x,y)=x^2+y^2$, 约束条件为： $g(x,y)=xy−1=0$。<br>将三维的 $ f(x,y)$ 图像投影到二维平面上，为下图中红色曲线，也称为 $f(x,y)$ 的等高线。g(x,y) 为图中蓝色曲线。</p>
+          <h1 id="拉格朗日乘子法"><a href="#拉格朗日乘子法" class="headerlink" title="拉格朗日乘子法"></a>拉格朗日乘子法</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>在数学中的最优化问题中，拉格朗日乘数法（以数学家约瑟夫·拉格朗日命名）是一种寻找多元函数在其变量受到一个或多个条件的约束时的极值的方法。这种方法可以将一个有n个变量与k个约束条件的最优化问题转换为一个解有n + k个变量的方程组的解的问题。这种方法中引入了一个或一组新的未知数，即拉格朗日乘数，又称拉格朗日乘子，或拉氏乘子，它们是在转换后的方程，即约束方程中作为梯度（gradient）的线性组合中各个向量的系数。</p>
+<p>比如，要求 $f(x,y) 在 g(x,y)=c$ 时的最大值时，我们可以引入新变量拉格朗日乘数 $L(x,y,λ)=f(x,y) + λ(g(x,y)-c)$，更一般地，对含n个变量和k个约束的情况，有：</p>
+<script type="math/tex; mode=display">L(x_1,x_2, ..., x_n, λ_1,λ_2,...,λ_n)=f(x_1,x_2, ..., x_n) - \sum_{i=1}^{k}λ_ig_i(x_1,x_2, ..., x_n)</script><p>拉格朗日乘数法所得的极点会包含原问题的所有极值点，但并不保证每个极值点都是原问题的极值点。拉格朗日乘数法的正确性的证明牵涉到偏微分，全微分或链法。</p>
+<h2 id="用处"><a href="#用处" class="headerlink" title="用处"></a>用处</h2><p>现要解决以下问题，在满足 g(x,y)=c 这个等式的前提下，求 f(x,y) 函数的最小值（最大值道理相同）。这样的问题我们在高中的时候就遇到过了，只不过高中时遇到的限制条件 g(x,y)=c 都比较简单，一般而言都可以将 y 用 x 的式子表示出来，然后用变量替换的方法代回 f(x,y) 求解。但是，如果 g(x,y) 的形式过于复杂，或者变量太多时，这种方法就失效了。而拉格朗日乘子法就是解决这类问题的通用策略。</p>
+<h1 id="等式约束条件的优化问题"><a href="#等式约束条件的优化问题" class="headerlink" title="等式约束条件的优化问题"></a>等式约束条件的优化问题</h1><h2 id="解法"><a href="#解法" class="headerlink" title="解法"></a>解法</h2><p>设 $f(x,y)=x^2+y^2$, 约束条件为： $g(x,y)=xy−1=0$。<br>将三维的 $ f(x,y)$ 图像投影到二维平面上，为下图中红色曲线，也称为 $f(x,y)$ 的等高线。g(x,y) 为图中蓝色曲线。</p>
 <p><img src="/img/lagrange_multiplier.jpg" alt="IMAGE"></p>
 <p>沿着蓝线往内部的圆走，经过橙色点，此时不是最优解，当走到黑色点时，找到了最优解。此时可认为找到了在蓝线这个限制条件下 $f(x,y )$ 的最低点。</p>
 <p>拉格朗日观察到，黑点位置，蓝线与圆是相切的，而橙点位置显然不满足这个性质。且拉格朗日还指出黑点位置蓝线与圆一定是相切的，这正是拉格朗日乘子法的核心。</p>
@@ -924,35 +1028,35 @@
 <p>求解时，使用一个统一的拉格朗日函数：$L(x,y,λ)=f(x,y)+λg(x,y)$，令这个函数偏导为 0，可以得到方程组(2)：<br>$\frac{∂L}{∂x}=\frac{∂f}{∂x}−λ\frac{∂g}{∂x}=0$<br>$\frac{∂L}{∂y}=\frac{∂f}{∂y}−λ\frac{∂g}{∂y}=0$<br>$\frac{∂L}{∂λ}=g(x,y)=0$</p>
 <p>可以发现方程组(2)与方程组(1)一样，联立以上三式即可求出 x, y, λ 的值。</p>
 <p>如果是多个约束条件，则拉格朗日函数为：<br>$L(x_1,…,x_n,λ_1,…,λ_k)=f(x1,…,xn)−\sum_{j=1}^{k}λ_jg_j(x_1,…,x_n)$</p>
-<p>###2.2 进一步理解<br>二维情况下的另一个图示，便于理解两个曲线的梯度变化情况：<br><img src="/img/lagrange_multiplier_2.jpg" alt="IMAGE"></p>
+<h2 id="进一步理解"><a href="#进一步理解" class="headerlink" title="进一步理解"></a>进一步理解</h2><p>二维情况下的另一个图示，便于理解两个曲线的梯度变化情况：<br><img src="/img/lagrange_multiplier_2.jpg" alt="IMAGE"></p>
 <p>根据拉格朗日乘子法的定义，这是一种寻找极值的策略，换句话说，该方法并不能保证找到的一定是最低点或者最高点。事实上，它只是一种寻找极值点的过程，而且，拉格朗日乘子法找到的切点可能不只一个（也就是上面的方程组可能找到多个解），例如下图：<br><img src="/img/lagrange_multiplier_3.jpg" alt="IMAGE"></p>
 <p>所以联立方程组得到的解为所有极值点，是最优解的必要条件，具体是否为极值点需根据问题本身的具体情况检验. 这个方程组称为等式约束的极值必要条件。如果是凸函数，可以保证最优解是存在的。</p>
 <hr>
 <p><strong>已经解决的在等式约束条件下的求函数极值的问题，那不等式约束条件下，应该如何解决呢？</strong></p>
-<p>##3. 凸优化<br>在开始不等式约束条件下求解函数极值之前，先了解凸优化和对偶问题。</p>
-<p>###3.1 凸优化的意义</p>
-<ol>
+<h1 id="凸优化"><a href="#凸优化" class="headerlink" title="凸优化"></a>凸优化</h1><p>在开始不等式约束条件下求解函数极值之前，先了解凸优化和对偶问题。</p>
+<h2 id="凸优化的意义"><a href="#凸优化的意义" class="headerlink" title="凸优化的意义"></a>凸优化的意义</h2><ol>
 <li>其应用非常广泛，机器学习中很多优化问题都要通过凸优化来求解；</li>
 <li>在非凸优化中，凸优化同样起到重要的作用，很多非凸优化问题，可以转化为凸优化问题来解决；</li>
 <li>如上引用所述，凸优化问题可以看作是具有成熟求解方法的问题，而其他优化问题则未必。</li>
 </ol>
 <p>而在最优化中，凸优化是最为常见而又最为重要的，因为凸优化有一个良好的性质：局部最优是全局最优，这个性质使得我们不需要去证明解是否会收敛到全局最优，或者如何避免局部最优。因此凸优化有广泛应用，在优化问题不是凸的时候，往往也会尝试将其变为凸问题便于求解。</p>
-<p>###3.2 相关定义<br>凸集：定义目标函数和约束函数的定义域。<br>凸函数：定义优化相关函数的凸性限制。<br>凸优化：中心内容的标准描述。<br>凸优化问题求解：核心内容。相关算法，梯度下降法、牛顿法、内点法等。</p>
-<p>###3.3 对偶问题<br>对偶问题是优化问题中非常重要的方法，将一般优化问题转化为凸优化问题，是求解非凸优化问题的有效方法。<br><img src="/img/lagrange_dual.jpg" alt="IMAGE"></p>
+<h2 id="相关定义"><a href="#相关定义" class="headerlink" title="相关定义"></a>相关定义</h2><p>凸集：定义目标函数和约束函数的定义域。<br>凸函数：定义优化相关函数的凸性限制。<br>凸优化：中心内容的标准描述。<br>凸优化问题求解：核心内容。相关算法，梯度下降法、牛顿法、内点法等。</p>
+<h2 id="对偶问题"><a href="#对偶问题" class="headerlink" title="对偶问题"></a>对偶问题</h2><p>对偶问题是优化问题中非常重要的方法，将一般优化问题转化为凸优化问题，是求解非凸优化问题的有效方法。<br><img src="/img/lagrange_dual.jpg" alt="IMAGE"></p>
 <p>对于一般的优化问题，不管其是不是凸的，其对偶问题一定是凸优化问题。</p>
-<p>##4. 不等式约束条件的优化问题</p>
-<p>###4.1 广义拉格朗日函数<br>有不等式约束条件的最优化问题描述如下:<br>$min.:f(x)$<br>$s.t.:$<br>    $g_i(x) ≤ 0, i=1,2,…,p,$<br>    $h_j(x) = 0, j=1,2,…,q,$<br>    $x∈Ω⊂Rn$<br>其中. $f(x)$为目标函数, $g_i(x)≤0,i=1,2,…,p$ 为不等式约束条件, $h_j(x)=0,k=1,2,…,q$为等式约束条件。</p>
-<p>引入广义拉格朗日函数：<br>$$L(x,λ,μ)=f(x)+\sum_{i=1}^{p}μ_ig_i(x)+\sum_{j=1}^{q}λ_jh_j(x)$$<br>其中，$μ_i\ge0$。</p>
-<p>###4.2 定义原始问题最优解<br>现在，如果把 $L(x,λ,μ)$ 看作是关于 $λ,μ$ 的函数，经过优化(不管用什么方法)，就是确定的值使得 $L(x,λ,μ)$ 取得最大值(此过程中把 $x$ 看做常量)，确定了 $λ,μ$ 的值，就可以得到 $L(x,λ,μ)$ 的最大值，因为 $λ,μ$ 已经确定，显然 $L(x,λ,μ)$ 的最大值就是只和 $x$ 有关的函数，定义这个函数为：<br>$$\theta_p(x)={max}_{λ,μ:μ_i\ge0}L(x,λ,μ)=L(x,λ,μ)$$</p>
-<p>那么定义 $\theta_p(x)$ 的意义在哪里呢？在于其值就是 f(x)，也就是说 $\theta_p(x)=f(x)$。下面证明这个等式。</p>
+<h1 id="不等式约束条件的优化问题"><a href="#不等式约束条件的优化问题" class="headerlink" title="不等式约束条件的优化问题"></a>不等式约束条件的优化问题</h1><h2 id="广义拉格朗日函数"><a href="#广义拉格朗日函数" class="headerlink" title="广义拉格朗日函数"></a>广义拉格朗日函数</h2><p>有不等式约束条件的最优化问题描述如下:<br>$min.:f(x)$<br>$s.t.:$<br>    $g_i(x) ≤ 0, i=1,2,…,p,$<br>    $h_j(x) = 0, j=1,2,…,q,$<br>    $x∈Ω⊂Rn$<br>其中. $f(x)$为目标函数, $g_i(x)≤0,i=1,2,…,p$ 为不等式约束条件, $h_j(x)=0,k=1,2,…,q$为等式约束条件。</p>
+<p>引入广义拉格朗日函数：</p>
+<script type="math/tex; mode=display">L(x,λ,μ)=f(x)+\sum_{i=1}^{p}μ_ig_i(x)+\sum_{j=1}^{q}λ_jh_j(x)</script><p>其中，$μ_i\ge0$。</p>
+<h2 id="定义原始问题最优解"><a href="#定义原始问题最优解" class="headerlink" title="定义原始问题最优解"></a>定义原始问题最优解</h2><p>现在，如果把 $L(x,λ,μ)$ 看作是关于 $λ,μ$ 的函数，经过优化(不管用什么方法)，就是确定的值使得 $L(x,λ,μ)$ 取得最大值(此过程中把 $x$ 看做常量)，确定了 $λ,μ$ 的值，就可以得到 $L(x,λ,μ)$ 的最大值，因为 $λ,μ$ 已经确定，显然 $L(x,λ,μ)$ 的最大值就是只和 $x$ 有关的函数，定义这个函数为：</p>
+<script type="math/tex; mode=display">\theta_p(x)={max}_{λ,μ:μ_i\ge0}L(x,λ,μ)=L(x,λ,μ)</script><p>那么定义 $\theta_p(x)$ 的意义在哪里呢？在于其值就是 f(x)，也就是说 $\theta_p(x)=f(x)$。下面证明这个等式。</p>
 <ol>
 <li>如果 $x$ 违反了约束条件，即 $g_i(x) &gt; 0$ 或者 $h_j(x) \neq 0$，则容易存在 $μ_i -&gt; +∞$，也容易存在 $λ_j$ 使得 $λ_jh_j(x) -&gt; +∞$，这样显然 $\theta_p(x)$ 是没有最大值的。</li>
 <li>如果 $x$ 满足了约束条件，则 $\theta_p(x)={max}_{λ,μ:μ_i\ge0}L(x,λ,μ)={max}_{λ,μ:μ_i\ge0}f(x)=f(x)$，因为 ${max}_{λ,μ:μ_i\ge0}f(x)$ 与 $λ,μ$ 没有关系，所以其等于 $f(x)$。</li>
 </ol>
 <p>所以当 $x$ 满足约束条件时，$min_x\theta_p(x)=min_xf(x)$，我们定义 $p^*=min_x\theta_p(x)$ 代表原始问题的最优解。</p>
-<p>###4.3 定义对偶问题<br>定义关于 $λ,μ$ 的函数：<br>$$\theta_D(λ,μ)={min}_xL(x,λ,μ)$$<br>其中 ${min}_xL(x,λ,μ)$ 是关于 $x$ 的函数的最小化，确定 $x$ 以后，最小值就只与 $λ,μ$ 有关，所以是一个关于 $λ,μ$ 的函数。</p>
-<p>考虑极大化 $\theta_D(λ,μ)$ 即 $${max}_{λ,μ:μ_i\ge0}\theta_D(λ,μ)={max}_{λ,μ:μ_i\ge0}{min}_xL(x,λ,μ)$$，与原始问题最优解的定义很相似，形式上是对称的。定义对偶问题的最优解 $d^*={max}_{λ,μ:μ_i\ge0}\theta_D(λ,μ)$</p>
-<p>###4.4 对偶问题与原始问题的关系<br>很显然有 $d^* \le p^*$，当两个问题的最优解相等时，即 $x^*, λ^*, μ^*$ $d^* = p^*$，称原问题和对偶问题是强对偶的，否则是弱对偶的。</p>
+<h2 id="定义对偶问题"><a href="#定义对偶问题" class="headerlink" title="定义对偶问题"></a>定义对偶问题</h2><p>定义关于 $λ,μ$ 的函数：</p>
+<script type="math/tex; mode=display">\theta_D(λ,μ)={min}_xL(x,λ,μ)</script><p>其中 ${min}_xL(x,λ,μ)$ 是关于 $x$ 的函数的最小化，确定 $x$ 以后，最小值就只与 $λ,μ$ 有关，所以是一个关于 $λ,μ$ 的函数。</p>
+<p>考虑极大化 $\theta_D(λ,μ)$ 即 <script type="math/tex">{max}_{λ,μ:μ_i\ge0}\theta_D(λ,μ)={max}_{λ,μ:μ_i\ge0}{min}_xL(x,λ,μ)</script>，与原始问题最优解的定义很相似，形式上是对称的。定义对偶问题的最优解 $d^*={max}_{λ,μ:μ_i\ge0}\theta_D(λ,μ)$</p>
+<h2 id="对偶问题与原始问题的关系"><a href="#对偶问题与原始问题的关系" class="headerlink" title="对偶问题与原始问题的关系"></a>对偶问题与原始问题的关系</h2><p>很显然有 $d^<em> \le p^</em>$，当两个问题的最优解相等时，即 $x^<em>, λ^</em>, μ^<em>$ $d^</em> = p^*$，称原问题和对偶问题是强对偶的，否则是弱对偶的。</p>
 <p>所以为了通过求对偶问题来求原问题，我们希望他们是强对偶的。</p>
 <p>当满足以下条件时他们是强对偶的：</p>
 <ol>
@@ -960,29 +1064,29 @@
 <li>原始问题满足 Slater 条件（这一条还可以换成其他条件）</li>
 <li>最优解满足 KKT 条件 </li>
 </ol>
-<p>####Slater 条件</p>
-<blockquote>
+<h3 id="Slater-条件"><a href="#Slater-条件" class="headerlink" title="Slater 条件"></a>Slater 条件</h3><blockquote>
 <p>若原始问题为凸优化问题，且存在严格满足约束条件的点 x，这里的“严格”是指 $g_i(x)≤0$ 中的“≤”严格取到“&lt;”，即存在 x 满足 $g_i(x)&lt;0 ,i=1,2,…,n$，则存在 $x^∗,α^∗,β^∗$ 使得 $x^∗$ 是原始问题的解， $α^∗,β^∗$ 是对偶问题的解，且满足：<br>$p^∗=d^∗=L(x^∗,α^∗,β^∗)$</p>
 </blockquote>
 <p>也就是说如果原始问题是凸优化问题并且满足 Slater 条件的话，那么强对偶性成立。需要注意的是，这里只是指出了强对偶成立的一种情况，并不是唯一的情况。例如，对于某些非凸优化的问题，强对偶也成立。SVM 中的原始问题 是一个凸优化问题（二次规划也属于凸优化问题），Slater 条件在 SVM 中指的是存在一个超平面可将数据分隔开，即数据是线性可分的。当数据不可分时，强对偶是不成立的，这个时候寻找分隔平面这个问题本身也就是没有意义了，所以对于不可分的情况预先加个 kernel 就可以了。</p>
-<p>###4.5 KKT条件<br>KKT 条件(Karush-Kuhn-Tucker Conditions)，是指在满足一些有规则的条件下, 一个非线性规划(Nonlinear Programming)问题能有最优化解法的一个必要和充分条件，这是一个广义化拉格朗日乘数的成果。</p>
-<p>可以发现最优解要么在 $g_i(x) = 0$ 上，要么在 $g_i(x) &lt; 0$ 范围内，如下图：<br><img src="img/lagrange_KKT.jpg" alt="IMAGE"></p>
-<p>定义不等式约束下的拉格朗日函数L：<br>$$L(x,λ,μ)=f(x)+\sum_{i=1}^{p}μ_ig_i(x)+\sum_{j=1}^{q}λ_jh_j(x)$$</p>
-<p>所谓 KKT 最优化条件，就是指上式的最优解$x^*$必须满足下面的条件:</p>
+<h2 id="KKT条件"><a href="#KKT条件" class="headerlink" title="KKT条件"></a>KKT条件</h2><p>KKT 条件(Karush-Kuhn-Tucker Conditions)，是指在满足一些有规则的条件下, 一个非线性规划(Nonlinear Programming)问题能有最优化解法的一个必要和充分条件，这是一个广义化拉格朗日乘数的成果。</p>
+<p>可以发现最优解要么在 $g_i(x) = 0$ 上，要么在 $g_i(x) &lt; 0$ 范围内，如下图：</p>
+<p><img src="/img/lagrange_KKT.jpg" alt="IMAGE"></p>
+<p>定义不等式约束下的拉格朗日函数L：</p>
+<script type="math/tex; mode=display">L(x,λ,μ)=f(x)+\sum_{i=1}^{p}μ_ig_i(x)+\sum_{j=1}^{q}λ_jh_j(x)</script><p>所谓 KKT 最优化条件，就是指上式的最优解$x^*$必须满足下面的条件:</p>
 <ol>
-<li>约束条件满足 $g_i(x^*)≤0,i=1,2,…,p$, 以及 $h_j(x^*)=0,j=1,2,…,q$</li>
-<li>$∇f(x^*)+\sum_{i=1}^{p}μ_i∇g_i(x^*)+\sum_{j=1}^{q}λ_j∇h_j(x^*)=0$, 其中$∇$为梯度算子，也就是 L(x,u,λ) 对 x 求导为 0</li>
+<li>约束条件满足 $g_i(x^<em>)≤0,i=1,2,…,p$, 以及 $h_j(x^</em>)=0,j=1,2,…,q$</li>
+<li>$∇f(x^<em>)+\sum_{i=1}^{p}μ_i∇g_i(x^</em>)+\sum_{j=1}^{q}λ_j∇h_j(x^*)=0$, 其中$∇$为梯度算子，也就是 L(x,u,λ) 对 x 求导为 0</li>
 <li>$λ_j≠0$ 且不等式约束条件满足 $μ_i≥0$, $μ_ig_i(x^*)=0,i=1,2,…,p$，因为 $g(x)&lt;=0$，如果要满足这个等式，必须 $μ_i=0$ 或者 $g(x)=0$</li>
 </ol>
 <p>第三个式子非常有趣，因为g(x)&lt;=0，如果要满足这个等式，必须$μ_i=0$或者g(x)=0，这是 SVM 的很多重要性质的来源，如支持向量的概念。</p>
-<p>####KKT条件的推导<br><img src="/img/lagrange_prove_1.jpg" alt="IMAGE"></p>
+<h3 id="KKT条件的推导"><a href="#KKT条件的推导" class="headerlink" title="KKT条件的推导"></a>KKT条件的推导</h3><p><img src="/img/lagrange_prove_1.jpg" alt="IMAGE"></p>
 <p><img src="/img/lagrange_prove_2.jpg" alt="IMAGE"></p>
-<p>###4.6 总结<br>关于不等式约束条件的优化问题，原问题分两种情况：</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>关于不等式约束条件的优化问题，原问题分两种情况：</p>
 <ul>
 <li>原问题是一个凸优化问题，则可以直接应用 KKT 条件来求解</li>
 <li>原问题不是一个凸优化问题，则通过对偶问题转化为凸优化问题，在满足强对偶的条件下应用 KKT 条件求解</li>
 </ul>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <p><a href="http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/" target="_blank" rel="noopener">http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/</a><br><a href="https://www.zhihu.com/question/38586401/answer/134473412" target="_blank" rel="noopener">https://www.zhihu.com/question/38586401/answer/134473412</a><br><a href="https://zhuanlan.zhihu.com/p/27731819" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/27731819</a><br><a href="http://blog.csdn.net/Mr_KkTian/article/details/53750424" target="_blank" rel="noopener">http://blog.csdn.net/Mr_KkTian/article/details/53750424</a><br><a href="http://www.cnblogs.com/mo-wang/p/4775548.html" target="_blank" rel="noopener">http://www.cnblogs.com/mo-wang/p/4775548.html</a><br><a href="http://www.hanlongfei.com/convex/2015/11/05/duality/" target="_blank" rel="noopener">http://www.hanlongfei.com/convex/2015/11/05/duality/</a><br><a href="https://www.cnblogs.com/90zeng/p/Lagrange_duality.html" target="_blank" rel="noopener">https://www.cnblogs.com/90zeng/p/Lagrange_duality.html</a><br><a href="http://bioinfo.ict.ac.cn/~dbu/AlgorithmCourses/Lectures/KKT-examples.pdf" target="_blank" rel="noopener">http://bioinfo.ict.ac.cn/~dbu/AlgorithmCourses/Lectures/KKT-examples.pdf</a></p>
 </blockquote>
 
@@ -1004,13 +1108,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/03/04/导数与微分/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1034,13 +1136,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2018 20:16:31" itemprop="dateCreated datePublished" datetime="2018-03-04T20:16:31+08:00">Mar 4 2018</time>
+              <time title="创建时间：3月 4 2018 20:16:31" itemprop="dateCreated datePublished" datetime="2018-03-04T20:16:31+08:00">3月 4 2018</time>
             </span>
           
             
@@ -1050,13 +1152,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:29" itemprop="dateModified" datetime="2019-08-18T16:52:29+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:07" itemprop="dateModified" datetime="2019-08-25T21:10:07+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/03/04/导数与微分/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/03/04/导数与微分/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -1067,36 +1183,34 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>##连续<br>设 $y=f(x)$ 在 $x_0$ 有定义，若<br>$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$<br>则函数 $f(x)$ 在点 $x_0$ 处连续。</p>
+          <h1 id="连续"><a href="#连续" class="headerlink" title="连续"></a>连续</h1><p>设 $y=f(x)$ 在 $x_0$ 有定义，若<br>$\displaystyle\lim_{x\to x_0}{f(x)}=f(x_0)$<br>则函数 $f(x)$ 在点 $x_0$ 处连续。</p>
 <p>另外一种定义：<br>在点 $x_0$ 附近，如果自变量的该变量是无穷小时，对应的因变量的该变量也是无穷小，则这个函数在点 $x_0$ 处连续。</p>
 <p>通俗地说，所谓“连续”，就是不间断。放到函数上，就是没有“断点”（但是可以有“拐点”）。</p>
 <p>二元函数的连续性定义与一元函数类似。</p>
-<p>##导数</p>
-<p>###定义<br>导数（Derivative）是微积分学中重要的基础概念。一个函数在某一点的导数描述了这个函数在这一点附近的变化率。导数的本质是通过极限的概念对函数进行局部的线性逼近。</p>
+<h1 id="导数"><a href="#导数" class="headerlink" title="导数"></a>导数</h1><h2 id="定义"><a href="#定义" class="headerlink" title="定义"></a>定义</h2><p>导数（Derivative）是微积分学中重要的基础概念。一个函数在某一点的导数描述了这个函数在这一点附近的变化率。导数的本质是通过极限的概念对函数进行局部的线性逼近。</p>
 <p>导数的几何定义是：曲线上的纵坐标对点的横坐标的导数是曲线在该点的切线的斜率。</p>
 <p>导数的物理意义之一是：位移s对时间t的导数是瞬时速度，即 $v=\frac{ds}{dt}$</p>
-<p>###可导<br>函数可导定义：<br>（1）设 f(x)在 $x_0$ 及其附近有定义,则当  $\displaystyle\lim_{\Delta{x}\to0}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$ 存在, 则称 f(x) 在 $x_0$ 处可导。<br>（2）若对于区间 (a,b) 上任意一点 (x，f(x)) 均可导，则称 f(x) 在 (a，b) 上可导。</p>
+<h2 id="可导"><a href="#可导" class="headerlink" title="可导"></a>可导</h2><p>函数可导定义：<br>（1）设 f(x)在 $x_0$ 及其附近有定义,则当  $\displaystyle\lim_{\Delta{x}\to0}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$ 存在, 则称 f(x) 在 $x_0$ 处可导。<br>（2）若对于区间 (a,b) 上任意一点 (x，f(x)) 均可导，则称 f(x) 在 (a，b) 上可导。</p>
 <p>左导数：$\displaystyle\lim_{\Delta{x}\to0^-}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$<br>右导数：$\displaystyle\lim_{\Delta{x}\to0^+}{\frac{f(x_0+\Delta{x})-f(x_0)}{a}}$</p>
 <p>连续函数可导条件：函数在该点的左右偏导数都存在且相等。<br>即就是一个函数在某一点求极限，如果极限存在，则为可导，若所得导数等于函数在该点的函数值，则函数为连续可导函数，否则为不连续可导函数。</p>
-<p>##微分<br>在数学中，微分是对函数的局部变化率的一种线性描述。微分可以近似地描述当函数自变量的取值作足够小的改变时，函数的值是怎样改变的。</p>
-<p>###定义<br>若 y=f(x) 在处可导，则函数的增量，<br>$\Delta{y}=f(x+\Delta{x})-f(x)=f’(x)\Delta{x}+\alpha(\Delta{x})\Delta{x}$<br>其中 $\alpha(\Delta{x})$ 是$\Delta{x}(\Delta{x} \to 0)$ 的高阶无穷小。<br>称 $f’(x)\Delta{x}$ 为 $f(x)$ 在 $x$ 处的微分。<br>而 $f’(x)$ 是 $f(x)$ 在 $x$ 处的导数。</p>
-<p>###可微<br>设函数$y= f(x)$，若自变量在点x的改变量Δx与函数相应的改变量Δy有关系$Δy=AΔx+ο(Δx)$<br>其中A与Δx无关，则称函数f(x)在点x可微，并称AΔx为函数f(x)在点x的微分，记作dy，即$dy=AΔx$<br>当$x=x_0$时，则记作$dy∣x=x_0$.</p>
+<h1 id="微分"><a href="#微分" class="headerlink" title="微分"></a>微分</h1><p>在数学中，微分是对函数的局部变化率的一种线性描述。微分可以近似地描述当函数自变量的取值作足够小的改变时，函数的值是怎样改变的。</p>
+<h2 id="定义-1"><a href="#定义-1" class="headerlink" title="定义"></a>定义</h2><p>若 y=f(x) 在处可导，则函数的增量，<br>$\Delta{y}=f(x+\Delta{x})-f(x)=f’(x)\Delta{x}+\alpha(\Delta{x})\Delta{x}$<br>其中 $\alpha(\Delta{x})$ 是$\Delta{x}(\Delta{x} \to 0)$ 的高阶无穷小。<br>称 $f’(x)\Delta{x}$ 为 $f(x)$ 在 $x$ 处的微分。<br>而 $f’(x)$ 是 $f(x)$ 在 $x$ 处的导数。</p>
+<h2 id="可微"><a href="#可微" class="headerlink" title="可微"></a>可微</h2><p>设函数$y= f(x)$，若自变量在点x的改变量Δx与函数相应的改变量Δy有关系$Δy=AΔx+ο(Δx)$<br>其中A与Δx无关，则称函数f(x)在点x可微，并称AΔx为函数f(x)在点x的微分，记作dy，即$dy=AΔx$<br>当$x=x_0$时，则记作$dy∣x=x_0$.</p>
 <p>可微条件：<br>必要条件：若函数在某点可微，则该函数在该点对x和y的偏导数必存在。<br>充分条件：若函数对x和y的偏导数在这点的某一邻域内都存在，且均在这点连续，则该函数在这点可微。</p>
-<p>连续但不可微的例子：<br>![](/img/function_ differential_counterexample.jpg)<br>魏尔斯特拉斯函数连续，但在任一点都不可微</p>
-<p>##连续，可导，可微的关系</p>
-<ul>
+<p>连续但不可微的例子：<br><img src="/img/function_ differential_counterexample.jpg" alt><br>魏尔斯特拉斯函数连续，但在任一点都不可微</p>
+<h1 id="连续，可导，可微的关系"><a href="#连续，可导，可微的关系" class="headerlink" title="连续，可导，可微的关系"></a>连续，可导，可微的关系</h1><ul>
 <li>一元函数：可导必然连续，连续推不出可导，可导与可微等价。</li>
 <li>多元函数：可偏导与连续之间没有联系，也就是说可偏导推不出连续，连续推不出可偏导。</li>
 <li>多元函数中可微必可偏导，可微必连续，可偏导推不出可微，但若一阶偏导具有连续性则可推出可微。</li>
 </ul>
-<p>##全微分<br>对于多元函数，如果两个自变量都变化的话，这时候函数的微分就称为全微分。如果函数z=f(x,y)在(x,y)处的全增量$\Delta z=f(x+\Delta x,y+\Delta y)-f(x,y)$可以写成$\Delta z=A\Delta x+B\Delta y+o(\rho)$，<br>取其线性主部，称为二元函数的全微分 $\Delta z=A\Delta x+B\Delta y$</p>
+<h1 id="全微分"><a href="#全微分" class="headerlink" title="全微分"></a>全微分</h1><p>对于多元函数，如果两个自变量都变化的话，这时候函数的微分就称为全微分。如果函数z=f(x,y)在(x,y)处的全增量$\Delta z=f(x+\Delta x,y+\Delta y)-f(x,y)$可以写成$\Delta z=A\Delta x+B\Delta y+o(\rho)$，<br>取其线性主部，称为二元函数的全微分 $\Delta z=A\Delta x+B\Delta y$</p>
 <p>可以证明全微分又可写成$dz=f_x dx+f_ydy =\frac{\partial z}{\partial x}dx+\frac{\partial z}{\partial y}dy$</p>
 <p>上式又称为全微分的叠加原理。可以这么理解：全增量包含两个部分，$\Delta x$引起的函数值增量和$\Delta y$引起的函数值增量。</p>
 <p>一句话感性说全微分其实就在表达曲面在某一点处的切平面。</p>
-<p>##梯度<br>梯度的本意是一个向量（矢量），表示某一函数在该点处的方向导数沿着该方向取得最大值，即函数在该点处沿着该方向（此梯度的方向）变化最快，变化率最大（为该梯度的模）。</p>
+<h1 id="梯度"><a href="#梯度" class="headerlink" title="梯度"></a>梯度</h1><p>梯度的本意是一个向量（矢量），表示某一函数在该点处的方向导数沿着该方向取得最大值，即函数在该点处沿着该方向（此梯度的方向）变化最快，变化率最大（为该梯度的模）。</p>
 <p>例如：在一元函数 f(x) 中，梯度只能沿 x 轴正方向或负方向，而在二元函数 f(x,y) 中，梯度则是一个二维向量 (∂f/∂x,∂f/∂y)。</p>
 <p>梯度一个重要的性质：梯度跟函数等高线是垂直的。<br>证明：<br>假设 Δx，Δy 是两个极小的变化量，根据全微分的知识，可以得到：<br>f(x+Δx,y+Δy)≈f(x,y)+∂f∂xΔx+∂f∂yΔy<br>如果 (Δx,Δy) 是在等高线方向的增量，那么 f(x+Δx,y+Δy)≈f(x,y)，这意味着 ∂f∂xΔx+∂f∂yΔy=0，换句话说，向量 ∇f 和向量 (Δx,Δy) 的内积为 0。所以，梯度和函数的等高线是垂直的。</p>
-<p>#Referen<br><a href="http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/" target="_blank" rel="noopener">http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/" target="_blank" rel="noopener">http://jermmy.xyz/2017/07/27/2017-7-27-understand-lagrange-multiplier/</a></p>
 
         
       
@@ -1116,13 +1230,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/02/25/概率论知识/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1146,13 +1258,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Feb 25 2018 10:34:09" itemprop="dateCreated datePublished" datetime="2018-02-25T10:34:09+08:00">Feb 25 2018</time>
+              <time title="创建时间：2月 25 2018 10:34:09" itemprop="dateCreated datePublished" datetime="2018-02-25T10:34:09+08:00">2月 25 2018</time>
             </span>
           
             
@@ -1162,13 +1274,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:51" itemprop="dateModified" datetime="2019-08-18T16:52:51+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:09" itemprop="dateModified" datetime="2019-08-25T21:10:09+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/02/25/概率论知识/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/02/25/概率论知识/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -1181,25 +1307,23 @@
       
           <p>概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。</p>
 <p>随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。 </p>
-<p>##条件分布<br>条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某一随机变量的分布。 </p>
-<p>正式地，给定$Y=b$时，$X=a$的条件概率定义为：<br>$$P(X=a|Y=b)= \frac{P(X=a,Y=b)}{P(Y=b)}$$</p>
-<p>其中，$P(Y=b)&gt;0$</p>
-<p>##独立性<br>在概率论中，独立性是指随机变量的分布不因知道其它随机变量的值而改变。在机器学习中，我们通常都会对数据做这样的假设。例如，我们会假设训练样本是从某一底层空间独立提取；并且假设样例i的标签独立于样例j(i≠j)的特性。<br>从数学角度来说，随机变量X独立于Y，当： </p>
+<h1 id="条件分布"><a href="#条件分布" class="headerlink" title="条件分布"></a>条件分布</h1><p>条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某一随机变量的分布。 </p>
+<p>正式地，给定$Y=b$时，$X=a$的条件概率定义为： </p>
+<script type="math/tex; mode=display">P(X=a|Y=b)= \frac{P(X=a,Y=b)}{P(Y=b)}</script><p>其中，$P(Y=b)&gt;0$</p>
+<h1 id="独立性"><a href="#独立性" class="headerlink" title="独立性"></a>独立性</h1><p>在概率论中，独立性是指随机变量的分布不因知道其它随机变量的值而改变。在机器学习中，我们通常都会对数据做这样的假设。例如，我们会假设训练样本是从某一底层空间独立提取；并且假设样例i的标签独立于样例j(i≠j)的特性。<br>从数学角度来说，随机变量X独立于Y，当： </p>
 <p>P(X)=P(X|Y)</p>
 <p>注意，上式没有标明X,Y的取值，也就是说该公式对任意X,Y可能的取值均成立。）<br>利用等式(2)，很容易可以证明如果X对Y独立，那么Y也独立于X。当X和Y相互独立时，记为X⊥Y。<br>对于随机变量X和Y的独立性，有一个等价的数学公式：<br>P(X,Y)=P(X)P(Y)</p>
 <p>我们有时也会讨论条件独立，就是当我们当我们知道一个随机变量（或者更一般地，一组随机变量）的值时，那么其它随机变量之间相互独立。正式地，我们说“给定Z，X和Y条件独立”，如果：<br>P(X|Z)=P(X|Y,Z)</p>
 <p>或者等价的：<br>P(X,Y|Z)=P(X|Z)P(Y|Z)</p>
-<p>##链式法则<br>我们现在给出两个与联合分布和条件分布相关的，基础但是重要的可操作定理。第一个叫做链式法则，它可以看做等式(2)对于多变量的一般形式。<br>定理1（链式法则）： </p>
+<h1 id="链式法则"><a href="#链式法则" class="headerlink" title="链式法则"></a>链式法则</h1><p>我们现在给出两个与联合分布和条件分布相关的，基础但是重要的可操作定理。第一个叫做链式法则，它可以看做等式(2)对于多变量的一般形式。<br>定理1（链式法则）： </p>
 <p>P(X1,X2,…,Xn)=P(X1)P(X2|X1)…P(Xn|X1,X2,…,Xn−1)…………(3)</p>
 <p>链式法则通常用于计算多个随机变量的联合概率，特别是在变量之间相互为（条件）独立时会非常有用。注意，在使用链式法则时，我们可以选择展开随机变量的顺序；选择正确的顺序通常可以让概率的计算变得更加简单。<br>第二个要介绍的是贝叶斯定理。利用贝叶斯定理，我们可以通过条件概率P(Y|X)计算出P(X|Y)，从某种意义上说，就是“交换”条件。它也可以通过等式(2)推导出。</p>
-<p>##条件概率</p>
-<p>####条件概率<br>如果 A，B 是条件组 S 下的随机事件，事件 A 发生的概率随事件 B 是否发生而变化，同样，事件 B 发生的概率也随事件 A 是否发生而变化。<br>事件 A 在另外一个事件 B 已经发生条件下的发生概率称为条件概率，表示为P(A|B)，读作「在 B 条件下 A 的概率」。<br>当 P(B) &gt; 0 时，有：<br>$$P(A|B)= \frac{P(AB)}{P(B)}$$</p>
-<p>P.S. 如果 A，B 是独立事件，则 A 发生的概率与 B 无关，那么 $P(A|B) = P(A)$，并且 $P(AB)=P(A)P(B)$。</p>
-<p>####联合概率<br>联合概率表示两个事件共同发生的概率。A 与 B 的联合概率表示为<br>$P(A\cap B)$ 或者 ${\displaystyle P(A,B)}$ 或者 $P(A,B)$。</p>
-<p>####边缘概率<br>边缘概率是某个事件发生的概率。边缘概率是这样得到的：在联合概率中，把最终结果中不需要的那些事件合并成其事件的全概率而消失（对离散随机变量用求和得全概率，对连续随机变量用积分得全概率）。这称为边缘化（marginalization）。A的边缘概率表示为$P(A)$，B的边缘概率表示为$P(B)$。</p>
-<p>##全概率公式<br><img src="/img/law_of_total_probability.jpg" alt="law of total probability"> </p>
-<p>##贝叶斯定理<br>$$P(X|Y)=\frac{P(Y|X)P(X)}{P(Y)}$$</p>
-<p><a href="https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87</a><br><a href="http://blog.csdn.net/u012566895/article/details/51220127" target="_blank" rel="noopener">http://blog.csdn.net/u012566895/article/details/51220127</a><br><a href="http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html" target="_blank" rel="noopener">http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html</a></p>
+<h1 id="条件概率"><a href="#条件概率" class="headerlink" title="条件概率"></a>条件概率</h1><h2 id="条件概率-1"><a href="#条件概率-1" class="headerlink" title="条件概率"></a>条件概率</h2><p>如果 A，B 是条件组 S 下的随机事件，事件 A 发生的概率随事件 B 是否发生而变化，同样，事件 B 发生的概率也随事件 A 是否发生而变化。<br>事件 A 在另外一个事件 B 已经发生条件下的发生概率称为条件概率，表示为P(A|B)，读作「在 B 条件下 A 的概率」。<br>当 P(B) &gt; 0 时，有：</p>
+<script type="math/tex; mode=display">P(A|B)= \frac{P(AB)}{P(B)}</script><p>P.S. 如果 A，B 是独立事件，则 A 发生的概率与 B 无关，那么 $P(A|B) = P(A)$，并且 $P(AB)=P(A)P(B)$。</p>
+<h2 id="联合概率"><a href="#联合概率" class="headerlink" title="联合概率"></a>联合概率</h2><p>联合概率表示两个事件共同发生的概率。A 与 B 的联合概率表示为<br>$P(A\cap B)$ 或者 ${\displaystyle P(A,B)}$ 或者 $P(A,B)$。</p>
+<h2 id="边缘概率"><a href="#边缘概率" class="headerlink" title="边缘概率"></a>边缘概率</h2><p>边缘概率是某个事件发生的概率。边缘概率是这样得到的：在联合概率中，把最终结果中不需要的那些事件合并成其事件的全概率而消失（对离散随机变量用求和得全概率，对连续随机变量用积分得全概率）。这称为边缘化（marginalization）。A的边缘概率表示为$P(A)$，B的边缘概率表示为$P(B)$。</p>
+<h1 id="全概率公式"><a href="#全概率公式" class="headerlink" title="全概率公式"></a>全概率公式</h1><p><img src="/img/law_of_total_probability.jpg" alt="law of total probability"> </p>
+<h1 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h1><script type="math/tex; mode=display">P(X|Y)=\frac{P(Y|X)P(X)}{P(Y)}</script><p><a href="https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87</a><br><a href="http://blog.csdn.net/u012566895/article/details/51220127" target="_blank" rel="noopener">http://blog.csdn.net/u012566895/article/details/51220127</a><br><a href="http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html" target="_blank" rel="noopener">http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html</a></p>
 
         
       
@@ -1219,13 +1343,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1249,13 +1371,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Feb 25 2018 10:24:02" itemprop="dateCreated datePublished" datetime="2018-02-25T10:24:02+08:00">Feb 25 2018</time>
+              <time title="创建时间：2月 25 2018 10:24:02" itemprop="dateCreated datePublished" datetime="2018-02-25T10:24:02+08:00">2月 25 2018</time>
             </span>
           
             
@@ -1265,13 +1387,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:42:45" itemprop="dateModified" datetime="2019-08-18T16:42:45+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:04" itemprop="dateModified" datetime="2019-08-25T21:10:04+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -1282,7 +1418,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="生成学习算法介绍"><a href="#生成学习算法介绍" class="headerlink" title="生成学习算法介绍"></a>生成学习算法介绍</h2><p>有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。</p>
+          <h1 id="生成学习算法介绍"><a href="#生成学习算法介绍" class="headerlink" title="生成学习算法介绍"></a>生成学习算法介绍</h1><p>有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。</p>
 <ul>
 <li>判别学习算法常见的有：逻辑回顾，支持向量机等。</li>
 <li>生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。</li>
@@ -1290,24 +1426,24 @@
 <p>判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。</p>
 <p>生成学习算法是计算变量x在变量y上的条件分布p(x|y)和变量y的分布p(y) ，然后使用贝叶斯公式:  $p(y|x)=\frac{p(x,y)}{p(x)}=\frac{p(y)*p(x|y)}{p(x)}$ 计算出p(y|x)。</p>
 <p>针对课程中提到的两种生成学习算法中，高斯判别分析(Gaussian Discriminant Analysis)和朴素贝叶斯(Navie Bayes)分别解决了两种场景下的问题。<br>GDA 是针对的是特征向量 X 为连续值时的问题，而 Navie Bayes 则针对的是特征向量为离散值时的问题。</p>
-<p>##高斯判别分析</p>
-<p>###多维正态分布(The multivariate normal distribution)</p>
-<p>假设随机变量 $X$ 满足 $n$ 维的多项正态分布，参数为均值向量 $μ ∈ R^{n} $，协方差矩阵$Σ ∈ R^{n×n}$，记为 $N(μ,Σ)$ 其概率密度表示为：</p>
-<p>$$p(x;μ,Σ)=\frac{1}{(2π)^{\frac{n}2}(detΣ)^{\frac12}}exp(−\frac12(x−μ)^TΣ^{−1}(x−μ))$$</p>
-<p>$detΣ$ 表示矩阵 $Σ$ 的行列式(determinant)。<br>均值向量: $μ$<br>协方差矩阵: $Σ=E[(X−E[X])(X−E[X])T]=E[(x−μ)(x−μ)T]$</p>
-<p>###高斯判别分析<br>GDA 模型针对的是输入特征为连续值时的分类问题，这个模型的基本假设是目标值 y 服从伯努利分布(0-1分布)，条件概率 P(x|y) 服从多元正态分布((multivariate normal distribution))，即:<br>$y∼Bernoulli(\phi)$<br>$P(x|y=0)∼N(μ_0,\Sigma)$<br>$P(x|y=1)∼N(μ_1,\Sigma)$</p>
-<p>它们的概率密度为：<br>$$p(y)=\phi^y(1−\phi)^{1−y}$$<br>$$p(x|y=0)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_0)^T\Sigma^{−1}(x−μ_0))$$<br>$$p(x|y=1)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_1)^T\Sigma^{−1}(x−μ_1))$$</p>
-<p>我们模型的参数包括，$\phi,\Sigma,μ_0,μ_1$ 注意到，我们使用了两种不同的均值向量$μ_0$和$μ_1$，但是使用了同一种协方差矩阵 $\Sigma$, 则我们的极大似然函数的对数如下所示：<br>$$L(\phi,μ_0,μ_1,\Sigma)=log\Pi_{i=1}^mp(x^{(i)},y^{(i)};\phi,μ_0,μ_1,\Sigma)$$<br>$$=log\Pi_{i=1}^mp(x^{(i)}|y^{(i)};\phi,μ_0,μ_1,\Sigma)p(y^{(i)};\phi)$$</p>
-<p>对极大似然函数对数最大化，我们就得到了GDA模型各参数的极大虽然估计(略)。</p>
-<p>##GDA 与 LR<br>前面我们提到：<br>$${argmax}_yp(y|x)={argmax}_y\frac{p(x|y)p(y)}{p(x)}={argmax}_yp(x|y)p(y)$$<br>我们有：<br>$$p(y=1|x)=\frac{p(x|y=1)p(y=1)}{p(x|y=1)p(y=1)+p(x|y=0)p(y=0)}$$<br>上式实际上可以表示成logistic函数的形式：<br>$$p(y=1|x;ϕ,μ0,μ1,Σ)=\frac1{1+exp(−θ^TX)}$$<br>其中，θ是参数ϕ,μ0,μ1,Σθ是参数ϕ,μ0,μ1,Σ某种形式的函数。GDA的后验分布可以表示logistic函数的形式。<br>　<br>下图为用 GDA 对两类样本分别拟合高斯概率密度函数p(x|y=0)和p(x|y=1)，得到两个钟形曲线。沿x轴遍历样本，在x轴上方画出相应的p(y=1|x)。如选x轴靠左的点，那么它属于1的概率几乎为0，p(y=1|x)=0，两条钟形曲线交点处，属于0或1的概率相同，p(y=1|x)=0.5，x轴靠右的点，输出1的概率几乎为1，p(y=1|x)=1。最终发现，得到的曲线和sigmoid函数曲线很相似。<br><img src="/img/gaussian_discriminant_analysis_probability_distribution.jpg" alt="gaussian discriminant analysis probability distribution"><br>　<br>　<br>实际上，可以证明，不仅仅当先验概率分布服从多变量正态分布时可以推导出逻辑回归的模型，当先验分布属于指数分布簇中的任何一个分布，如泊松分布时，都可以推导出逻辑回归模型。而反之不成立，逻辑回归的先验概率分布不一定必须得是指数分布簇中的成员。基于这些原因，在实践中使用逻辑回归比使用GDA更普遍。</p>
+<h1 id="高斯判别分析"><a href="#高斯判别分析" class="headerlink" title="高斯判别分析"></a>高斯判别分析</h1><h2 id="多维正态分布-The-multivariate-normal-distribution"><a href="#多维正态分布-The-multivariate-normal-distribution" class="headerlink" title="多维正态分布(The multivariate normal distribution)"></a>多维正态分布(The multivariate normal distribution)</h2><p>假设随机变量 $X$ 满足 $n$ 维的多项正态分布，参数为均值向量 $μ ∈ R^{n} $，协方差矩阵$Σ ∈ R^{n×n}$，记为 $N(μ,Σ)$ 其概率密度表示为：</p>
+<script type="math/tex; mode=display">p(x;μ,Σ)=\frac{1}{(2π)^{\frac{n}2}(detΣ)^{\frac12}}exp(−\frac12(x−μ)^TΣ^{−1}(x−μ))</script><p>$detΣ$ 表示矩阵 $Σ$ 的行列式(determinant)。<br>均值向量: $μ$<br>协方差矩阵: $Σ=E[(X−E[X])(X−E[X])T]=E[(x−μ)(x−μ)T]$</p>
+<h2 id="高斯判别分析-1"><a href="#高斯判别分析-1" class="headerlink" title="高斯判别分析"></a>高斯判别分析</h2><p>GDA 模型针对的是输入特征为连续值时的分类问题，这个模型的基本假设是目标值 y 服从伯努利分布(0-1分布)，条件概率 P(x|y) 服从多元正态分布((multivariate normal distribution))，即:<br>$y∼Bernoulli(\phi)$<br>$P(x|y=0)∼N(μ_0,\Sigma)$<br>$P(x|y=1)∼N(μ_1,\Sigma)$</p>
+<p>它们的概率密度为：</p>
+<script type="math/tex; mode=display">p(y)=\phi^y(1−\phi)^{1−y}</script><script type="math/tex; mode=display">p(x|y=0)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_0)^T\Sigma^{−1}(x−μ_0))</script><script type="math/tex; mode=display">p(x|y=1)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_1)^T\Sigma^{−1}(x−μ_1))</script><p>我们模型的参数包括，$\phi,\Sigma,μ_0,μ_1$ 注意到，我们使用了两种不同的均值向量$μ_0$和$μ_1$，但是使用了同一种协方差矩阵 $\Sigma$, 则我们的极大似然函数的对数如下所示：</p>
+<script type="math/tex; mode=display">L(\phi,μ_0,μ_1,\Sigma)=log\Pi_{i=1}^mp(x^{(i)},y^{(i)};\phi,μ_0,μ_1,\Sigma)</script><script type="math/tex; mode=display">=log\Pi_{i=1}^mp(x^{(i)}|y^{(i)};\phi,μ_0,μ_1,\Sigma)p(y^{(i)};\phi)</script><p>对极大似然函数对数最大化，我们就得到了GDA模型各参数的极大虽然估计(略)。</p>
+<h1 id="GDA-与-LR"><a href="#GDA-与-LR" class="headerlink" title="GDA 与 LR"></a>GDA 与 LR</h1><p>前面我们提到：</p>
+<script type="math/tex; mode=display">{argmax}_yp(y|x)={argmax}_y\frac{p(x|y)p(y)}{p(x)}={argmax}_yp(x|y)p(y)</script><p>我们有：</p>
+<script type="math/tex; mode=display">p(y=1|x)=\frac{p(x|y=1)p(y=1)}{p(x|y=1)p(y=1)+p(x|y=0)p(y=0)}</script><p>上式实际上可以表示成logistic函数的形式：</p>
+<script type="math/tex; mode=display">p(y=1|x;ϕ,μ0,μ1,Σ)=\frac1{1+exp(−θ^TX)}</script><p>其中，θ是参数ϕ,μ0,μ1,Σθ是参数ϕ,μ0,μ1,Σ某种形式的函数。GDA的后验分布可以表示logistic函数的形式。<br>　<br>下图为用 GDA 对两类样本分别拟合高斯概率密度函数p(x|y=0)和p(x|y=1)，得到两个钟形曲线。沿x轴遍历样本，在x轴上方画出相应的p(y=1|x)。如选x轴靠左的点，那么它属于1的概率几乎为0，p(y=1|x)=0，两条钟形曲线交点处，属于0或1的概率相同，p(y=1|x)=0.5，x轴靠右的点，输出1的概率几乎为1，p(y=1|x)=1。最终发现，得到的曲线和sigmoid函数曲线很相似。<br><img src="/img/gaussian_discriminant_analysis_probability_distribution.jpg" alt="gaussian discriminant analysis probability distribution"><br>　<br>　<br>实际上，可以证明，不仅仅当先验概率分布服从多变量正态分布时可以推导出逻辑回归的模型，当先验分布属于指数分布簇中的任何一个分布，如泊松分布时，都可以推导出逻辑回归模型。而反之不成立，逻辑回归的先验概率分布不一定必须得是指数分布簇中的成员。基于这些原因，在实践中使用逻辑回归比使用GDA更普遍。</p>
 <p>生成学习算法比判决学习算法需要更少的数据。如GDA的假设较强，所以用较少的数据能拟合出不错的模型。而逻辑回归的假设较弱，对模型的假设更为健壮，拟合数据需要更多的样本。</p>
-<p>##朴素贝叶斯<br>考虑自变量比较多的情况，比如垃圾邮件的识别需要检测成百上千甚至上万的字符是否出现，如有<em>免费</em>、<em>购买</em>等类似的词出现的邮件很大可能是垃圾邮件。这种情况下若有k个自变量，考虑各变量之间的交互作用就需要计算$2^k$次，为了简化计算量对模型作一个更强的假设：<br><strong>给定因变量 y 的值，各自变量之间相互独立.</strong></p>
-<p>所以有<br>$$p(x_1,…,x_n|y)=p(x_1|y)p(x_2|y,x_1)p(x_3|y,x_1,x_2)…p(x_n|y,x_1,x_2,…,x_{n-1})$$<br>$$=p(x_1|y)p(x_2|y)p(x_3|y)…p(x_n|y)=\Pi_{i=1}^np(x_i|y)$$</p>
-<p>第一个等式是根据通常的概率论得到的，第二个等式是根据贝叶斯假设得到的。虽然贝叶斯假设是个很强的假设，但是实践证明在许多问题上都表现得很好。</p>
+<h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><p>考虑自变量比较多的情况，比如垃圾邮件的识别需要检测成百上千甚至上万的字符是否出现，如有<em>免费</em>、<em>购买</em>等类似的词出现的邮件很大可能是垃圾邮件。这种情况下若有k个自变量，考虑各变量之间的交互作用就需要计算$2^k$次，为了简化计算量对模型作一个更强的假设：<br><strong>给定因变量 y 的值，各自变量之间相互独立.</strong></p>
+<p>所以有</p>
+<script type="math/tex; mode=display">p(x_1,...,x_n|y)=p(x_1|y)p(x_2|y,x_1)p(x_3|y,x_1,x_2)...p(x_n|y,x_1,x_2,...,x_{n-1})</script><script type="math/tex; mode=display">=p(x_1|y)p(x_2|y)p(x_3|y)…p(x_n|y)=\Pi_{i=1}^np(x_i|y)</script><p>第一个等式是根据通常的概率论得到的，第二个等式是根据贝叶斯假设得到的。虽然贝叶斯假设是个很强的假设，但是实践证明在许多问题上都表现得很好。</p>
 <p>参数的极大似然估计及p(y|x)的推导过程略。</p>
-<p>##拉普拉斯平滑<br>拉普拉斯平滑(Laplace Smoothing)又称为加1平滑。平滑方法的存在是为了解决零概率问题。</p>
+<h1 id="拉普拉斯平滑"><a href="#拉普拉斯平滑" class="headerlink" title="拉普拉斯平滑"></a>拉普拉斯平滑</h1><p>拉普拉斯平滑(Laplace Smoothing)又称为加1平滑。平滑方法的存在是为了解决零概率问题。</p>
 <p>所谓的零概率问题，就是在计算新实例的概率时，如果某个分量在训练集中从没出现过，会导致整个实例的概率计算结果为０，针对文本分类问题就是当一个词语在训练集中没有出现过，那么该词语的概率为０，使用连乘计算文本出现的概率时，整个文本出现的概率也为０，这显然不合理，因为不能因为一个事件没有观测到就判断该事件的概率为０.</p>
-<p>##Reference<br><a href="http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/</a><br><a href="http://blog.csdn.net/v1_vivian/article/details/52190572" target="_blank" rel="noopener">http://blog.csdn.net/v1_vivian/article/details/52190572</a><br><a href="http://www.cnblogs.com/mikewolf2002/p/7763475.html" target="_blank" rel="noopener">http://www.cnblogs.com/mikewolf2002/p/7763475.html</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/</a><br><a href="http://blog.csdn.net/v1_vivian/article/details/52190572" target="_blank" rel="noopener">http://blog.csdn.net/v1_vivian/article/details/52190572</a><br><a href="http://www.cnblogs.com/mikewolf2002/p/7763475.html" target="_blank" rel="noopener">http://www.cnblogs.com/mikewolf2002/p/7763475.html</a></p>
 
         
       
@@ -1327,13 +1463,11 @@
   </article>
 
     
-      
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+        <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block home">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/01/31/LeetCode-Binary-Tree-Maximum-Path-Sum/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1357,13 +1491,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Jan 31 2018 8:13:03" itemprop="dateCreated datePublished" datetime="2018-01-31T08:13:03+08:00">Jan 31 2018</time>
+              <time title="创建时间：1月 31 2018 8:13:03" itemprop="dateCreated datePublished" datetime="2018-01-31T08:13:03+08:00">1月 31 2018</time>
             </span>
           
             
@@ -1373,13 +1507,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:44:17" itemprop="dateModified" datetime="2019-08-18T16:44:17+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 10:50:35" itemprop="dateModified" datetime="2019-08-25T10:50:35+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/01/31/LeetCode-Binary-Tree-Maximum-Path-Sum/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/01/31/LeetCode-Binary-Tree-Maximum-Path-Sum/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -1390,21 +1538,15 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>##Problem Description</p>
-<p>Given a binary tree, find the maximum path sum.</p>
+          <h2 id="Problem-Description"><a href="#Problem-Description" class="headerlink" title="Problem Description"></a>Problem Description</h2><p>Given a binary tree, find the maximum path sum.</p>
 <p>For this problem, a path is defined as any sequence of nodes from some starting node to any node in the tree along the parent-child connections. The path must contain at least one node and does not need to go through the root.</p>
-<p>For example:<br>Given the below binary tree,   </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  1</span><br><span class="line"> / \</span><br><span class="line">2   3</span><br></pre></td></tr></table></figure>
-
+<p>For example:<br>Given the below binary tree,<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">  1</span><br><span class="line"> / \</span><br><span class="line">2   3</span><br></pre></td></tr></table></figure></p>
 <p>Return 6.</p>
-<p>** problem link: **<br><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/description/" target="_blank" rel="noopener">https://leetcode.com/problems/binary-tree-maximum-path-sum/description/</a></p>
-<p>##Solution</p>
-<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> maxValue;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        maxValue = Integer.MIN_VALUE;</span><br><span class="line">        maxPathDown(root);</span><br><span class="line">        <span class="keyword">return</span> maxValue;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">maxPathDown</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = Math.max(<span class="number">0</span>, maxPathDown(node.left));</span><br><span class="line">        <span class="keyword">int</span> right = Math.max(<span class="number">0</span>, maxPathDown(node.right));</span><br><span class="line">        maxValue = Math.max(maxValue, left + right + node.val);</span><br><span class="line">        <span class="keyword">return</span> Math.max(left, right) + node.val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>##解题思路<br>每一个结点可以选和不选，处理方法就是：<code>int left = Math.max(0, maxPathDown(node.left));</code>，其中的 Math.max(0, x)，当取值为 0 时就是不取这个结点。</p>
+<p><strong> problem link: </strong><br><a href="https://leetcode.com/problems/binary-tree-maximum-path-sum/description/" target="_blank" rel="noopener">https://leetcode.com/problems/binary-tree-maximum-path-sum/description/</a></p>
+<h2 id="Solution"><a href="#Solution" class="headerlink" title="Solution"></a>Solution</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> maxValue;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">maxPathSum</span><span class="params">(TreeNode root)</span> </span>&#123;</span><br><span class="line">        maxValue = Integer.MIN_VALUE;</span><br><span class="line">        maxPathDown(root);</span><br><span class="line">        <span class="keyword">return</span> maxValue;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">maxPathDown</span><span class="params">(TreeNode node)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (node == <span class="keyword">null</span>) <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">int</span> left = Math.max(<span class="number">0</span>, maxPathDown(node.left));</span><br><span class="line">        <span class="keyword">int</span> right = Math.max(<span class="number">0</span>, maxPathDown(node.right));</span><br><span class="line">        maxValue = Math.max(maxValue, left + right + node.val);</span><br><span class="line">        <span class="keyword">return</span> Math.max(left, right) + node.val;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h2><p>每一个结点可以选和不选，处理方法就是：<code>int left = Math.max(0, maxPathDown(node.left));</code>，其中的 Math.max(0, x)，当取值为 0 时就是不取这个结点。</p>
 <p>全局变量 maxValue 就覆盖了子树中的 ^ 这种类型，例如子树如下：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">       x</span><br><span class="line">   a     y</span><br><span class="line">b    c</span><br></pre></td></tr></table></figure>
-
 <p>则 b-&gt;a-&gt;c 这种路径的最大值被 maxValue 保存了。而 b-&gt;a-&gt;x-&gt;y 这种经过根节点的路径被 <code>Math.max(left, right) + node.val;</code> 覆盖了。</p>
 
         
@@ -1425,11 +1567,11 @@
   </article>
 
     
-  </section>
+  </div>
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/6/">6</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
@@ -1447,15 +1589,27 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -1463,7 +1617,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -1472,7 +1626,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -1502,7 +1656,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -1515,8 +1669,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -1535,11 +1687,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -1551,32 +1707,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -1586,12 +1728,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -1609,10 +1746,109 @@
   
 
   
+    
+      
+    
+      
+    
+      
+    
+      
+        
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+      
+    
+  
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
 
   
 
 
-  
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
+
 </body>
 </html>

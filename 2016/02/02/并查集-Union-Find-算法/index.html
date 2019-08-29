@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,13 +43,13 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
@@ -61,8 +61,8 @@
 <meta property="og:url" content="http://luojinping.com/2016/02/02/并查集-Union-Find-算法/index.html">
 <meta property="og:site_name" content="Zane Blog">
 <meta property="og:description" content="介绍在计算机科学中，并查集是一种树型的数据结构，其保持着用于处理一些不相交集合（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个操作用于此数据结构： Find：确定元素属于哪一个子集。它可以被用来确定两个元素是否属于同一子集。 Union：将两个子集合并成同一个集合。 适用场景适合于判断，给出一组结点，判断他们是否联通。 实现">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:52:09.968Z">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T13:32:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="并查集(Union-Find)算法">
 <meta name="twitter:description" content="介绍在计算机科学中，并查集是一种树型的数据结构，其保持着用于处理一些不相交集合（Disjoint Sets）的合并及查询问题。有一个联合-查找算法（union-find algorithm）定义了两个操作用于此数据结构： Find：确定元素属于哪一个子集。它可以被用来确定两个元素是否属于同一子集。 Union：将两个子集合并成同一个集合。 适用场景适合于判断，给出一组结点，判断他们是否联通。 实现">
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2016/02/02/并查集-Union-Find-算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Feb 2 2016 17:52:22" itemprop="dateCreated datePublished" datetime="2016-02-02T17:52:22+08:00">Feb 2 2016</time>
+              <time title="创建时间：2月 2 2016 17:52:22" itemprop="dateCreated datePublished" datetime="2016-02-02T17:52:22+08:00">2月 2 2016</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:09" itemprop="dateModified" datetime="2019-08-18T16:52:09+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:32:45" itemprop="dateModified" datetime="2019-08-25T21:32:45+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/02/02/并查集-Union-Find-算法/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2016/02/02/并查集-Union-Find-算法/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -276,10 +326,8 @@
 <li>如果A == B，则跳过</li>
 </ol>
 <h3 id="Simple-Find-操作"><a href="#Simple-Find-操作" class="headerlink" title="Simple Find 操作"></a>Simple Find 操作</h3><p>用 group[] 数组来判断某个id属于的组。初始状态时，每个id都属于不同的组。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">for(int i = 0; i &lt; size; i++)  </span><br><span class="line">    group[i] = i;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Simple-Union-操作"><a href="#Simple-Union-操作" class="headerlink" title="Simple Union 操作"></a>Simple Union 操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void union(int p, int q) &#123;   </span><br><span class="line">  // get the groupId of every node</span><br><span class="line">  int pId = find(p);  </span><br><span class="line">  int qId = find(q);  </span><br><span class="line">  </span><br><span class="line">  // the two nodes are connected, return</span><br><span class="line">  if (pId == qId) &#123;</span><br><span class="line">    return;  </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  // union the two nodes, change groupId</span><br><span class="line">  for (int i = 0; i &lt; id.length; i++) &#123;</span><br><span class="line">      if (group[i] == pId) &#123;</span><br><span class="line">        group[i] = qId;  </span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span>(<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; size; i++)  </span><br><span class="line">    group[i] = i;</span><br></pre></td></tr></table></figure>
+<h3 id="Simple-Union-操作"><a href="#Simple-Union-操作" class="headerlink" title="Simple Union 操作"></a>Simple Union 操作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> q)</span> </span>&#123;   </span><br><span class="line">  <span class="comment">// get the groupId of every node</span></span><br><span class="line">  <span class="keyword">int</span> pId = find(p);  </span><br><span class="line">  <span class="keyword">int</span> qId = find(q);  </span><br><span class="line">  </span><br><span class="line">  <span class="comment">// the two nodes are connected, return</span></span><br><span class="line">  <span class="keyword">if</span> (pId == qId) &#123;</span><br><span class="line">    <span class="keyword">return</span>;  </span><br><span class="line">  &#125;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// union the two nodes, change groupId</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; id.length; i++) &#123;</span><br><span class="line">      <span class="keyword">if</span> (group[i] == pId) &#123;</span><br><span class="line">        group[i] = qId;  </span><br><span class="line">      &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="优化"><a href="#优化" class="headerlink" title="优化"></a>优化</h3><p>上面最后一步的union操作存在性能问题，即每次都需要改变其中一个分组中的所有结点的分组id。优化的做法是，用一颗树来表示每个分组，树的根节点表示当前组的id。</p>
 <p>但如果用树来表示会引入一个问题，即可能存在树退化为链表的情况，这样一来，每一次加入一个结点再找根结点也会很耗时，没有达到优化的目的。<br>针对树可能退化为链表的解决方案是，每次合并树时，总是将矮的树挂到高的树下。这种方式也称为「按秩合并」</p>
 <p>除了使用树来优化union性能以外，还有一种方式，称为「路径压缩」，即 Find 递归地经过树，改变每一个节点的引用到根节点。得到的树将更加扁平，为以后直接或者间接引用节点的操作加速。</p>
@@ -288,14 +336,11 @@
 <li>使用树来存储分组，Union时「按秩合并」</li>
 <li>「路径压缩」，Find时改变每一个节点的引用到根节点</li>
 </ol>
-<h3 id="Find-操作"><a href="#Find-操作" class="headerlink" title="Find 操作"></a>Find 操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">// store every tree&apos;s size</span><br><span class="line">for (int i = 0; i &lt; N; i++)  </span><br><span class="line">    size[i] = 1;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">private int find(int p)  </span><br><span class="line">&#123;    </span><br><span class="line">  if(p != group[p])&#123;</span><br><span class="line">    group[p] = find(group[p])</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  return group[p]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="Union-操作"><a href="#Union-操作" class="headerlink" title="Union 操作"></a>Union 操作</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">public void union(int p, int q)</span><br><span class="line">&#123;</span><br><span class="line">	int i = find(p);</span><br><span class="line">	int j = find(q);</span><br><span class="line">	</span><br><span class="line">	if (i == j) &#123;</span><br><span class="line">	  return;</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	if (size[i] &lt; size[j]) &#123; </span><br><span class="line">	  group[i] = j; </span><br><span class="line">	  size[j] += size[i]; </span><br><span class="line">	&#125;	else &#123; </span><br><span class="line">	  group[j] = i; </span><br><span class="line">	  size[i] += size[j]; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>Statement: If m operations, either Union or Find, are applied to n elements, the total run time is O(m log<em>n), where log</em> is the iterated logarithm.<br>Proof of O(log<em>n) time complexity of union-find: <a href="https://en.wikipedia.org/wiki/Proof_of_O\" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Proof_of_O\</a>(log</em>n)_time_complexity_of_union%E2%80%93find</p>
-<h2 id="Refer"><a href="#Refer" class="headerlink" title="Refer"></a>Refer</h2><blockquote>
+<h3 id="Find-操作"><a href="#Find-操作" class="headerlink" title="Find 操作"></a>Find 操作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// store every tree's size</span></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; N; i++)  </span><br><span class="line">    size[i] = <span class="number">1</span>;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">find</span><span class="params">(<span class="keyword">int</span> p)</span>  </span></span><br><span class="line"><span class="function"></span>&#123;    </span><br><span class="line">  <span class="keyword">if</span>(p != group[p])&#123;</span><br><span class="line">    group[p] = find(group[p])</span><br><span class="line">  &#125;</span><br><span class="line">    </span><br><span class="line">  <span class="keyword">return</span> group[p]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Union-操作"><a href="#Union-操作" class="headerlink" title="Union 操作"></a>Union 操作</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">union</span><span class="params">(<span class="keyword">int</span> p, <span class="keyword">int</span> q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">int</span> i = find(p);</span><br><span class="line">	<span class="keyword">int</span> j = find(q);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (i == j) &#123;</span><br><span class="line">	  <span class="keyword">return</span>;</span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span> (size[i] &lt; size[j]) &#123; </span><br><span class="line">	  group[i] = j; </span><br><span class="line">	  size[j] += size[i]; </span><br><span class="line">	&#125;	<span class="keyword">else</span> &#123; </span><br><span class="line">	  group[j] = i; </span><br><span class="line">	  size[i] += size[j]; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="时间复杂度"><a href="#时间复杂度" class="headerlink" title="时间复杂度"></a>时间复杂度</h3><p>Statement: If m operations, either Union or Find, are applied to n elements, the total run time is O(m log<em>n), where log</em> is the iterated logarithm.<br>Proof of O(log<em>n) time complexity of union-find: <a href="https://en.wikipedia.org/wiki/Proof_of_O\(log" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Proof_of_O\(log</a></em>n)_time_complexity_of_union%E2%80%93find</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
 <p><a href="https://zh.wikipedia.org/wiki/%E5%B9%B6%E6%9F%A5%E9%9B%86" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E5%B9%B6%E6%9F%A5%E9%9B%86</a><br><a href="http://blog.csdn.net/dm_vincent/article/details/7655764" target="_blank" rel="noopener">http://blog.csdn.net/dm_vincent/article/details/7655764</a><br><a href="https://en.wikipedia.org/wiki/Proof_of_O(log*n)_time_complexity_of_union%E2%80%93find" target="_blank" rel="noopener">https://en.wikipedia.org/wiki/Proof_of_O(log*n)_time_complexity_of_union%E2%80%93find</a></p>
 </blockquote>
 
@@ -305,6 +350,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -353,6 +415,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -365,24 +430,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适用场景"><span class="nav-number">2.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路"><span class="nav-number">3.</span> <span class="nav-text">实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple-Find-操作"><span class="nav-number">3.1.</span> <span class="nav-text">Simple Find 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple-Union-操作"><span class="nav-number">3.2.</span> <span class="nav-text">Simple Union 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">3.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-操作"><span class="nav-number">3.4.</span> <span class="nav-text">Find 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Union-操作"><span class="nav-number">3.5.</span> <span class="nav-text">Union 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-number">3.6.</span> <span class="nav-text">时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">4.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -390,7 +465,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -399,7 +474,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -429,7 +504,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -442,26 +517,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#适用场景"><span class="nav-number">2.</span> <span class="nav-text">适用场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#实现思路"><span class="nav-number">3.</span> <span class="nav-text">实现思路</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple-Find-操作"><span class="nav-number">3.1.</span> <span class="nav-text">Simple Find 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Simple-Union-操作"><span class="nav-number">3.2.</span> <span class="nav-text">Simple Union 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#优化"><span class="nav-number">3.3.</span> <span class="nav-text">优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Find-操作"><span class="nav-number">3.4.</span> <span class="nav-text">Find 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Union-操作"><span class="nav-number">3.5.</span> <span class="nav-text">Union 操作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#时间复杂度"><span class="nav-number">3.6.</span> <span class="nav-text">时间复杂度</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Refer"><span class="nav-number">4.</span> <span class="nav-text">Refer</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -479,11 +535,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -495,32 +555,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -530,12 +576,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -556,10 +597,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,31 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 1.1 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBas">
+  <meta name="description" content="HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对">
 <meta name="keywords" content="Data">
 <meta property="og:type" content="article">
 <meta property="og:title" content="使用 HBase 总结">
 <meta property="og:url" content="http://luojinping.com/2016/05/22/使用-HBase-总结/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 1.1 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBas">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:51:23.128Z">
+<meta property="og:description" content="HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://luojinping.com/img/HBase_%20architecture.jpg">
+<meta property="og:updated_time" content="2019-08-25T03:28:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 HBase 总结">
-<meta name="twitter:description" content="1. HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 1.1 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBas">
+<meta name="twitter:description" content="HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对">
+<meta name="twitter:image" content="http://luojinping.com/img/HBase_%20architecture.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2016/05/22/使用-HBase-总结/">
 
@@ -86,6 +88,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +105,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +113,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +129,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +149,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +169,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +180,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +191,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2016/05/22/使用-HBase-总结/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +270,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: May 22 2016 16:27:28" itemprop="dateCreated datePublished" datetime="2016-05-22T16:27:28+08:00">May 22 2016</time>
+              <time title="创建时间：5月 22 2016 16:27:28" itemprop="dateCreated datePublished" datetime="2016-05-22T16:27:28+08:00">5月 22 2016</time>
             </span>
           
             
@@ -248,13 +286,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:51:23" itemprop="dateModified" datetime="2019-08-18T16:51:23+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 11:28:51" itemprop="dateModified" datetime="2019-08-25T11:28:51+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/05/22/使用-HBase-总结/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2016/05/22/使用-HBase-总结/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -265,13 +317,13 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-HBase-简介"><a href="#1-HBase-简介" class="headerlink" title="1. HBase 简介"></a>1. HBase 简介</h1><p>HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。</p>
-<h2 id="1-1-HBase-的优点"><a href="#1-1-HBase-的优点" class="headerlink" title="1.1 HBase 的优点"></a>1.1 HBase 的优点</h2><ol>
+        <h1 id="HBase-简介"><a href="#HBase-简介" class="headerlink" title="HBase 简介"></a>HBase 简介</h1><p>HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。</p>
+<h2 id="HBase-的优点"><a href="#HBase-的优点" class="headerlink" title="HBase 的优点"></a>HBase 的优点</h2><ol>
 <li>高可扩展性<br>HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对数据进行水平切分，并分配不同的服务器来管理这些数据。这些数据可以被扩散到上千个普通服务器上。这样一方面可以由大量普通服务器组成大规模集群，来存放海量数据(从几个 TB 到几十 PB 的数据)。另一方面，当数据峰值接近系统设计容量时，可以简单通过增加服务器的方式来扩大容量。这个动态扩容过程无需停机，HBase系统可以照常运行并提供读写服务，完全实现动态无缝无宕机扩容。</li>
 <li>高性能<br>HBase 的设计目的之一是支持高并发用户数的高速读写访问。这是通过两方面来实现的。首先数据行被水平切分并分布到多台服务器上，在大量用户访问时，访问请求也被分散到了不同的服务器上，虽然每个服务器的服务能力有限，但是数千台服务器汇总后可以提供极高性能的访问能力。其次，HBase 设计了高效的缓存机制，有效提高了访问的命中率，提高了访问性能。</li>
 <li>高可用性<br>HBase 建立在 HDFS 之上。HDFS 提供了数据自动复制和容错的功能。HBase 的日志和数据都存放在 HDFS 上，即使在读写过程中当前服务器出现故障(硬盘、内存、网络等故障)，日志也不会丢失，数据都可以从日志中自动恢复。HBase 系统会自动分配其他服务器接管并恢复这些数据。因此一旦成功写入数据，这些数据就保证被持久化并被冗余复制，整个系统的高可用性得到保证。</li>
 </ol>
-<h2 id="1-2-数据模型"><a href="#1-2-数据模型" class="headerlink" title="1.2 数据模型"></a>1.2 数据模型</h2><ol>
+<h2 id="数据模型"><a href="#数据模型" class="headerlink" title="数据模型"></a>数据模型</h2><ol>
 <li><p>表</p>
 <ul>
 <li>数据量：一张表可以有数十亿行，上百万列。</li>
@@ -283,33 +335,28 @@
 </li>
 <li><p>无模式<br>每行都有一个可排序的主键和任意多的列，列可以根据需要动态的增加，同一张表中不同的行可以有截然不同的列；</p>
 </li>
-<li><p>面向列<br>面向列（族）的存储和权限控制，列（族）独立检索；</p>
-</li>
-<li><p>稀疏<br>对于空（null）的列，并不占用存储空间，表可以设计的非常稀疏；</p>
-</li>
-<li><p>数据多版本<br>每个单元中的数据可以有多个版本，默认情况下版本号自动分配，是单元格插入时的时间戳；</p>
-</li>
-<li><p>数据类型单一<br>HBase中的数据都是字符串，没有类型。</p>
-</li>
-<li><p>存储单元 Cell<br>由{rowkey, colomnFamily:colomnQualifier, version} 确定的唯一单元，存储的数据是byte[]类型的。</p>
-</li>
+<li>面向列<br>面向列（族）的存储和权限控制，列（族）独立检索；</li>
+<li>稀疏<br>对于空（null）的列，并不占用存储空间，表可以设计的非常稀疏；</li>
+<li>数据多版本<br>每个单元中的数据可以有多个版本，默认情况下版本号自动分配，是单元格插入时的时间戳；</li>
+<li>数据类型单一<br>HBase中的数据都是字符串，没有类型。</li>
+<li>存储单元 Cell<br>由{rowkey, colomnFamily:colomnQualifier, version} 确定的唯一单元，存储的数据是byte[]类型的。</li>
 </ol>
-<h1 id="2-HBase-的设计与实现"><a href="#2-HBase-的设计与实现" class="headerlink" title="2. HBase 的设计与实现"></a>2. HBase 的设计与实现</h1><h2 id="2-1-HBase-的架构"><a href="#2-1-HBase-的架构" class="headerlink" title="2.1 HBase 的架构"></a>2.1 HBase 的架构</h2><p>![](/img/HBase_ architecture.jpg)<br>由上图可知，hbase包括Clinet、HMaster、HRegionServer、ZooKeeper组件<br>各组件功能介绍：</p>
+<h1 id="HBase-的设计与实现"><a href="#HBase-的设计与实现" class="headerlink" title="HBase 的设计与实现"></a>HBase 的设计与实现</h1><h2 id="HBase-的架构"><a href="#HBase-的架构" class="headerlink" title="HBase 的架构"></a>HBase 的架构</h2><p><img src="/img/HBase_ architecture.jpg" alt><br>由上图可知，hbase包括Clinet、HMaster、HRegionServer、ZooKeeper组件<br>各组件功能介绍：</p>
 <ol>
 <li>Client<br>Client主要通过ZooKeeper与Hbaser和HRegionServer通信，对于管理操作：client向master发起请求，对于数据读写操作：client向regionserver发起请求</li>
 <li>ZooKeeper<br>zk负责存储_root_表的地址，也负责存储当前服务的master地址,regsion server也会将自身的信息注册到zk中，以便master能够感知region server的状态，zk也会协调active master，也就是可以提供一个选举master leader,也会协调各个region server的容灾流程</li>
 <li>HMaster<br>master可以启动多个master，master主要负责table和region的管理工作，响应用户对表的CRUD操作，管理region server的负载均衡，调整region 的分布和分配，当region server停机后，负责对失效的regionn进行迁移操作</li>
 <li>HRegionServer<br>region server主要负责响应用户的IO请求，并把IO请求转换为读写HDFS的操作</li>
 </ol>
-<h2 id="2-2-HBase-的架构详解"><a href="#2-2-HBase-的架构详解" class="headerlink" title="2.2 HBase 的架构详解"></a>2.2 HBase 的架构详解</h2><p><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="noopener">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a></p>
-<h1 id="3-HBase-Mysql-的比较"><a href="#3-HBase-Mysql-的比较" class="headerlink" title="3. HBase, Mysql 的比较"></a>3. HBase, Mysql 的比较</h1><p>Mysql 是关系型数据库，对于数据量不大(百万级别)，强依赖事务的业务，使用Mysql。<br>HBase 适用于对大数据进行随机、实时访问的场合，支持海量数据，扩展性好。<br>HBase 不适用的场景：</p>
+<h2 id="HBase-的架构详解"><a href="#HBase-的架构详解" class="headerlink" title="HBase 的架构详解"></a>HBase 的架构详解</h2><p><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="noopener">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a></p>
+<h1 id="HBase-Mysql-的比较"><a href="#HBase-Mysql-的比较" class="headerlink" title="HBase, Mysql 的比较"></a>HBase, Mysql 的比较</h1><p>Mysql 是关系型数据库，对于数据量不大(百万级别)，强依赖事务的业务，使用Mysql。<br>HBase 适用于对大数据进行随机、实时访问的场合，支持海量数据，扩展性好。<br>HBase 不适用的场景：</p>
 <ul>
 <li>对分布式事务支持的不好</li>
 <li>不支持多表的联合查询</li>
 <li>对于复杂查询，需要扫描全表，且不支持索引</li>
 </ul>
-<h1 id="4-设计-HBase-表"><a href="#4-设计-HBase-表" class="headerlink" title="4. 设计 HBase 表"></a>4. 设计 HBase 表</h1><h2 id="4-1-RowKey-的设计"><a href="#4-1-RowKey-的设计" class="headerlink" title="4.1 RowKey 的设计"></a>4.1 RowKey 的设计</h2><p>Rowkey唯一原则，必须在设计上保证其唯一性。但是还有几点需要注意的地方：</p>
-<h3 id="4-1-1-RowKey-长度的设计"><a href="#4-1-1-RowKey-长度的设计" class="headerlink" title="4.1.1 RowKey 长度的设计"></a>4.1.1 RowKey 长度的设计</h3><p>Rowkey是一个二进制码流，可以是任意字符串，最大长度64KB，实际应用中一般为10~100bytes，存为byte[]字节数组。</p>
+<h1 id="设计-HBase-表"><a href="#设计-HBase-表" class="headerlink" title="设计 HBase 表"></a>设计 HBase 表</h1><h2 id="RowKey-的设计"><a href="#RowKey-的设计" class="headerlink" title="RowKey 的设计"></a>RowKey 的设计</h2><p>Rowkey唯一原则，必须在设计上保证其唯一性。但是还有几点需要注意的地方：</p>
+<h3 id="RowKey-长度的设计"><a href="#RowKey-长度的设计" class="headerlink" title="RowKey 长度的设计"></a>RowKey 长度的设计</h3><p>Rowkey是一个二进制码流，可以是任意字符串，最大长度64KB，实际应用中一般为10~100bytes，存为byte[]字节数组。</p>
 <ol>
 <li>定长<br>定长的好处是 RowKey 排序时是按字典序且不受不同长度的影响</li>
 <li>短<br>不要超过16个字节。<ul>
@@ -319,49 +366,46 @@
 </li>
 <li>16个字节<br>目前操作系统是都是64位系统，内存8字节对齐。控制在16个字节，8字节的整数倍利用操作系统的最佳特性。</li>
 </ol>
-<h3 id="4-1-2-RowKey-含义的设计"><a href="#4-1-2-RowKey-含义的设计" class="headerlink" title="4.1.2 RowKey 含义的设计"></a>4.1.2 RowKey 含义的设计</h3><p>RowKey 虽然是越短越好，但也需要考虑 RowKey 的含义。由于 HBase 是按字典序存储，所以 RowKey 设计的合理可以提高查询效率(因为这会提高 RegionServer 的缓存命中率)，并且有意义的 RowKey 也便于在 scan 表的时候确定 startRow 和 stopRow。</p>
+<h3 id="RowKey-含义的设计"><a href="#RowKey-含义的设计" class="headerlink" title="RowKey 含义的设计"></a>RowKey 含义的设计</h3><p>RowKey 虽然是越短越好，但也需要考虑 RowKey 的含义。由于 HBase 是按字典序存储，所以 RowKey 设计的合理可以提高查询效率(因为这会提高 RegionServer 的缓存命中率)，并且有意义的 RowKey 也便于在 scan 表的时候确定 startRow 和 stopRow。</p>
 <ol>
 <li>RowKey 包含时间<br>不要将时间放在二进制码的前面，建议将 RowKey 的高位作为散列字段（或者本身就已经是散列的其他id，例如userId），低位放时间字段。否则最新的数据都集中放在某个 RegionServer，而访问量又都集中在最新的数据上，将会导致 Hotspotting 现象，降低了访问速度，同时也增加了 RegionServer Crash 的概率。<br>但考虑到是按字典序存储，如果想让最新的数据在最前面，可以使用 Long.MAX_VALUE – timestamp 作为 RowKey 的一部分。</li>
 <li>RowKey 包含多个含义时<br>各个含义用某种分隔符分开，比如包含用户，类型，时间三种含义的 RowKey, 可以设计为 userId#type#timestamp，这样如果需要查找某个用户某段时间的数据，scan 时只需要根据 userId 设置 startRow 和 stopRow 即可。</li>
 </ol>
-<h3 id="4-1-3-RowKey-性能的设计"><a href="#4-1-3-RowKey-性能的设计" class="headerlink" title="4.1.3 RowKey 性能的设计"></a>4.1.3 RowKey 性能的设计</h3><p>RowKey 是按照字典序存储，利用这个排序特点，将经常一起读取或者最近可能被访问到的数据存储到一块可以提高查询效率。</p>
+<h3 id="RowKey-性能的设计"><a href="#RowKey-性能的设计" class="headerlink" title="RowKey 性能的设计"></a>RowKey 性能的设计</h3><p>RowKey 是按照字典序存储，利用这个排序特点，将经常一起读取或者最近可能被访问到的数据存储到一块可以提高查询效率。</p>
 <ol>
 <li>Hotspotting<br>It is always advisable not to use sequential row keys, even though you get better scan results. More info here.<br>Salting Row Key. To prevent hot spotting on writes, the row key may be “salted” by inserting a leading byte into the row key which is a mod over N buckets of the hash of the entire row key. This ensures even distribution of writes when the row key is a monotonically increasing value (often a timestamp representing the current time).</li>
 <li>Length of row key<br>For each cell, rowkey details, column family, and qualifier details are stored. So it is always advisable to keep them as shot as possible, mainly because the same information is repeated on large scale.</li>
 <li>So whats next<br>salt usage and its prefixing will help to distribute the rows among region servers.This can help you.</li>
 </ol>
-<h2 id="4-2-ColumnFamily-的设计"><a href="#4-2-ColumnFamily-的设计" class="headerlink" title="4.2 ColumnFamily 的设计"></a>4.2 ColumnFamily 的设计</h2><h3 id="4-2-1-ColumnFamily-的长度"><a href="#4-2-1-ColumnFamily-的长度" class="headerlink" title="4.2.1 ColumnFamily 的长度"></a>4.2.1 ColumnFamily 的长度</h3><p>The column family and column qualifier names are repeated for each row. Therefore, keep the names as short as possible to reduce the amount of data that HBase stores and reads. For example, use f:q instead of mycolumnfamily:mycolumnqualifier.</p>
-<h3 id="4-2-2-ColumnFamily-的数量"><a href="#4-2-2-ColumnFamily-的数量" class="headerlink" title="4.2.2 ColumnFamily 的数量"></a>4.2.2 ColumnFamily 的数量</h3><p>On the number of column families<br>HBase currently does not do well with anything above two or three column families so keep the number of column families in your schema low. Currently, flushing and compactions are done on a per Region basis so if one column family is carrying the bulk of the data bringing on flushes, the adjacent families will also be flushed though the amount of data they carry is small. When many column families the flushing and compaction interaction can make for a bunch of needless i/o loading (To be addressed by changing flushing and compaction to work on a per column family basis). For more information on compactions, see compaction. (具体的细节见第2节)</p>
+<h2 id="ColumnFamily-的设计"><a href="#ColumnFamily-的设计" class="headerlink" title="ColumnFamily 的设计"></a>ColumnFamily 的设计</h2><h3 id="ColumnFamily-的长度"><a href="#ColumnFamily-的长度" class="headerlink" title="ColumnFamily 的长度"></a>ColumnFamily 的长度</h3><p>The column family and column qualifier names are repeated for each row. Therefore, keep the names as short as possible to reduce the amount of data that HBase stores and reads. For example, use f:q instead of mycolumnfamily:mycolumnqualifier.</p>
+<h3 id="ColumnFamily-的数量"><a href="#ColumnFamily-的数量" class="headerlink" title="ColumnFamily 的数量"></a>ColumnFamily 的数量</h3><p>On the number of column families<br>HBase currently does not do well with anything above two or three column families so keep the number of column families in your schema low. Currently, flushing and compactions are done on a per Region basis so if one column family is carrying the bulk of the data bringing on flushes, the adjacent families will also be flushed though the amount of data they carry is small. When many column families the flushing and compaction interaction can make for a bunch of needless i/o loading (To be addressed by changing flushing and compaction to work on a per column family basis). For more information on compactions, see compaction. (具体的细节见第2节)</p>
 <p>Try to make do with one column family if you can in your schemas. Only introduce a second and third column family in the case where data access is usually column scoped; i.e. you query one column family or the other but usually not both at the one time.</p>
 <p>Where multiple ColumnFamilies exist in a single table, be aware of the cardinality (i.e., number of rows). If ColumnFamilyA has 1 million rows and ColumnFamilyB has 1 billion rows, ColumnFamilyA’s data will likely be spread across many, many regions (and RegionServers). This makes mass scans for ColumnFamilyA less efficient.</p>
 <p>建议HBASE列族的数量设置的越少越好。由于HBASE的FLUSHING和压缩是基于REGION的当一个列族所存储的数据达到FLUSHING阀值时，该表的所有列族将同时进行FLASHING操作，这将带来不必要的I/O开销。同时还要考虑到同一个表中不同列族所存储的记录数量的差别，即列族的势。当列族数量差别过大将会使包含记录数量较少的列族的数据分散在多个Region之上，而Region可能是分布是不同的RegionServer上。这样当进行查询等操作系统的效率会受到一定影响。</p>
-<h2 id="4-3-Column-的设计"><a href="#4-3-Column-的设计" class="headerlink" title="4.3 Column 的设计"></a>4.3 Column 的设计</h2><h3 id="4-3-1-Column-的长度"><a href="#4-3-1-Column-的长度" class="headerlink" title="4.3.1 Column 的长度"></a>4.3.1 Column 的长度</h3><p>The column family and column qualifier names are repeated for each row. Therefore, keep the names as short as possible to reduce the amount of data that HBase stores and reads. For example, use f:q instead of mycolumnfamily:mycolumnqualifier.</p>
-<h3 id="4-3-2-Column-的数量"><a href="#4-3-2-Column-的数量" class="headerlink" title="4.3.2 Column 的数量"></a>4.3.2 Column 的数量</h3><p>Column mapping: one to many<br>You can map a single HBase entity (row key or a column) to multiple SQL columns. This kind of mapping is called one to many. HBase stores a lot of information for each value. If you stored each SQL column individually, the required storage space would be very large. For the best performance, put columns that are queried together into a single dense HBase column to help reduce the data that is fetched from HBase. A dense column is a single HBase column that maps to multiple SQL columns.</p>
+<h2 id="Column-的设计"><a href="#Column-的设计" class="headerlink" title="Column 的设计"></a>Column 的设计</h2><h3 id="Column-的长度"><a href="#Column-的长度" class="headerlink" title="Column 的长度"></a>Column 的长度</h3><p>The column family and column qualifier names are repeated for each row. Therefore, keep the names as short as possible to reduce the amount of data that HBase stores and reads. For example, use f:q instead of mycolumnfamily:mycolumnqualifier.</p>
+<h3 id="Column-的数量"><a href="#Column-的数量" class="headerlink" title="Column 的数量"></a>Column 的数量</h3><p>Column mapping: one to many<br>You can map a single HBase entity (row key or a column) to multiple SQL columns. This kind of mapping is called one to many. HBase stores a lot of information for each value. If you stored each SQL column individually, the required storage space would be very large. For the best performance, put columns that are queried together into a single dense HBase column to help reduce the data that is fetched from HBase. A dense column is a single HBase column that maps to multiple SQL columns.</p>
 <p>For example, if table T1 has nine columns with 1.5 million rows. and you use a one-to-one mapping, this table requires 522 MB of storage. However, if table T1 uses a one-to-many mapping, the table requires only 276 MB of storage.</p>
-<p>#5. 读 HBase 的性能</p>
-<h2 id="5-1-HBase-Pool"><a href="#5-1-HBase-Pool" class="headerlink" title="5.1 HBase Pool"></a>5.1 HBase Pool</h2><p>Use pool of workers to parallel requests. You may find useful HTablePool class for managing connections in workers.</p>
-<h2 id="5-2-批量读"><a href="#5-2-批量读" class="headerlink" title="5.2 批量读"></a>5.2 批量读</h2><p>通过调用 HTable.get(Get) 方法可以根据一个指定的 RowKey 获取一行记录，同样 HBase 提供了另一个方法：通过调用 HTable.get(List<get>) 方法可以根据一个指定的 RowKey 列表，批量获取多行记录，这样做的好处是批量执行，只需要一次网络I/O开销，这对于对数据实时性要求高而且网络传输RTT高的情景下可能带来明显的性能提升。</get></p>
-<h2 id="5-3-Scan"><a href="#5-3-Scan" class="headerlink" title="5.3 Scan"></a>5.3 Scan</h2><ol>
+<h1 id="读-HBase-的性能"><a href="#读-HBase-的性能" class="headerlink" title="读 HBase 的性能"></a>读 HBase 的性能</h1><h2 id="HBase-Pool"><a href="#HBase-Pool" class="headerlink" title="HBase Pool"></a>HBase Pool</h2><p>Use pool of workers to parallel requests. You may find useful HTablePool class for managing connections in workers.</p>
+<h2 id="批量读"><a href="#批量读" class="headerlink" title="批量读"></a>批量读</h2><p>通过调用 HTable.get(Get) 方法可以根据一个指定的 RowKey 获取一行记录，同样 HBase 提供了另一个方法：通过调用 HTable.get(List<get>) 方法可以根据一个指定的 RowKey 列表，批量获取多行记录，这样做的好处是批量执行，只需要一次网络I/O开销，这对于对数据实时性要求高而且网络传输RTT高的情景下可能带来明显的性能提升。</get></p>
+<h2 id="Scan"><a href="#Scan" class="headerlink" title="Scan"></a>Scan</h2><ol>
 <li>Scanner Caching<br>hbase.client.scanner.caching配置项可以设置HBase scanner一次从服务端抓取的数据条数，默认情况下一次一条。通过将其设置成一个合理的值，可以减少scan过程中next()的时间开销，代价是 scanner需要通过客户端的内存来维持这些被cache的行记录。</li>
 <li>Scan AttributeSelection<br>scan时指定需要的Column Family，可以减少网络传输数据量，否则默认scan操作会返回整行所有Column Family的数据。</li>
 <li>Close ResultScanner<br>通过scan取完数据后，记得要关闭ResultScanner，否则RegionServer可能会出现问题（对应的Server资源无法释放）。</li>
 </ol>
-<h2 id="5-4-PrefixFilter"><a href="#5-4-PrefixFilter" class="headerlink" title="5.4 PrefixFilter"></a>5.4 PrefixFilter</h2><h3 id="5-4-1-PefixFilter-Vs-Scan"><a href="#5-4-1-PefixFilter-Vs-Scan" class="headerlink" title="5.4.1 PefixFilter Vs Scan"></a>5.4.1 PefixFilter Vs Scan</h3><ul>
+<h2 id="PrefixFilter"><a href="#PrefixFilter" class="headerlink" title="PrefixFilter"></a>PrefixFilter</h2><h3 id="PefixFilter-Vs-Scan"><a href="#PefixFilter-Vs-Scan" class="headerlink" title="PefixFilter Vs Scan"></a>PefixFilter Vs Scan</h3><ul>
 <li>HBase filters - even row filters - are really slow, since in most cases these do a complete table scan, and then filter on those results. </li>
 <li>Row key range scans however, are indeed much faster - they do the equivalent of a filtered table scan. This is because the row keys are stored in sorted order (this is one of the basic guarantees of HBase, which is a BigTable-like solution), so the range scans on row keys are very fast.</li>
 </ul>
-<h3 id="5-4-2-Convert-PrefixFilter-to-Scan"><a href="#5-4-2-Convert-PrefixFilter-to-Scan" class="headerlink" title="5.4.2 Convert PrefixFilter to Scan"></a>5.4.2 Convert PrefixFilter to Scan</h3><p>PrefixFilter: abc<br>Scan ‘mytable’, {STARTROW =&gt; ‘abc’, ENDROW =&gt; ‘abd’}</p>
-<p>#6. 如何解决事务</p>
-<ol>
+<h3 id="Convert-PrefixFilter-to-Scan"><a href="#Convert-PrefixFilter-to-Scan" class="headerlink" title="Convert PrefixFilter to Scan"></a>Convert PrefixFilter to Scan</h3><p>PrefixFilter: abc<br>Scan ‘mytable’, {STARTROW =&gt; ‘abc’, ENDROW =&gt; ‘abd’}</p>
+<h1 id="如何解决事务"><a href="#如何解决事务" class="headerlink" title="如何解决事务"></a>如何解决事务</h1><ol>
 <li>transactions over hbase<br>The way HBase works is that locks are held in the regionserver (not in the client) when the Puts are applied to make sure that rows are written in an atomic block but it does not provide snapshot isolation (you need to use something like omid if you want that).</li>
 </ol>
 <p>Since HBase does not guarantee any consistency between regions (and each region is hosted at exactly one RegionServer) all MVCC data structures only need to be kept in memory on every region server.</p>
 <p>I would probably not use HBase for a use case like this. but if you must you can lock the row, read, update if needed - read more about lock and some of its problems here ngdata.com/hbase-row-locks . Again, I’d try to rethink the scenario for instance, HBase support multiple version so you can update anyway and sort things later (e.g. in a coprocessor that runs after update)<br>RowLock and associated operations are deprecated in 0.94 and removed in 0.96.issues.apache.org/jira/browse/HBASE-7315 – Matt Ball</p>
-<ol start="2">
+<ol>
 <li>hbase checkAndPut<br>hbase checkandput performance<br>When you use checkAndPut() you do one RPC-call per request. So, you can’t achieve performance more then 1 / rtt requests per second (rtt is Round Trip Time). If you have rtt 1ms between your client and region server, your theoretical maximum is 1000 rps. When using batch operations like put(List<put>) you need a lot less RPC-calls causing performance increase.</put></li>
 </ol>
-<p>#Reference</p>
-<blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <p><a href="http://blog.linezing.com/2012/03/hbase-performance-optimization/" target="_blank" rel="noopener">http://blog.linezing.com/2012/03/hbase-performance-optimization/</a><br><a href="https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html" target="_blank" rel="noopener">https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html</a><br><a href="http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html" target="_blank" rel="noopener">http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html</a><br><a href="http://blog.chedushi.com/archives/9720" target="_blank" rel="noopener">http://blog.chedushi.com/archives/9720</a><br><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="noopener">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a><br><a href="https://cloud.google.com/bigtable/docs/schema-design" target="_blank" rel="noopener">https://cloud.google.com/bigtable/docs/schema-design</a><br><a href="http://www.slideshare.net/alexbaranau/transactions-over-hbase" target="_blank" rel="noopener">http://www.slideshare.net/alexbaranau/transactions-over-hbase</a><br><a href="https://hbase.apache.org/acid-semantics.html" target="_blank" rel="noopener">https://hbase.apache.org/acid-semantics.html</a></p>
 </blockquote>
 
@@ -371,6 +415,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -419,6 +480,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -431,24 +495,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#HBase-简介"><span class="nav-number">1.</span> <span class="nav-text">HBase 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HBase-的优点"><span class="nav-number">1.1.</span> <span class="nav-text">HBase 的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#数据模型"><span class="nav-number">1.2.</span> <span class="nav-text">数据模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HBase-的设计与实现"><span class="nav-number">2.</span> <span class="nav-text">HBase 的设计与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HBase-的架构"><span class="nav-number">2.1.</span> <span class="nav-text">HBase 的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#HBase-的架构详解"><span class="nav-number">2.2.</span> <span class="nav-text">HBase 的架构详解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#HBase-Mysql-的比较"><span class="nav-number">3.</span> <span class="nav-text">HBase, Mysql 的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#设计-HBase-表"><span class="nav-number">4.</span> <span class="nav-text">设计 HBase 表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#RowKey-的设计"><span class="nav-number">4.1.</span> <span class="nav-text">RowKey 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#RowKey-长度的设计"><span class="nav-number">4.1.1.</span> <span class="nav-text">RowKey 长度的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RowKey-含义的设计"><span class="nav-number">4.1.2.</span> <span class="nav-text">RowKey 含义的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#RowKey-性能的设计"><span class="nav-number">4.1.3.</span> <span class="nav-text">RowKey 性能的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ColumnFamily-的设计"><span class="nav-number">4.2.</span> <span class="nav-text">ColumnFamily 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ColumnFamily-的长度"><span class="nav-number">4.2.1.</span> <span class="nav-text">ColumnFamily 的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ColumnFamily-的数量"><span class="nav-number">4.2.2.</span> <span class="nav-text">ColumnFamily 的数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Column-的设计"><span class="nav-number">4.3.</span> <span class="nav-text">Column 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Column-的长度"><span class="nav-number">4.3.1.</span> <span class="nav-text">Column 的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Column-的数量"><span class="nav-number">4.3.2.</span> <span class="nav-text">Column 的数量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#读-HBase-的性能"><span class="nav-number">5.</span> <span class="nav-text">读 HBase 的性能</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#HBase-Pool"><span class="nav-number">5.1.</span> <span class="nav-text">HBase Pool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#批量读"><span class="nav-number">5.2.</span> <span class="nav-text">批量读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Scan"><span class="nav-number">5.3.</span> <span class="nav-text">Scan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PrefixFilter"><span class="nav-number">5.4.</span> <span class="nav-text">PrefixFilter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#PefixFilter-Vs-Scan"><span class="nav-number">5.4.1.</span> <span class="nav-text">PefixFilter Vs Scan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Convert-PrefixFilter-to-Scan"><span class="nav-number">5.4.2.</span> <span class="nav-text">Convert PrefixFilter to Scan</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#如何解决事务"><span class="nav-number">6.</span> <span class="nav-text">如何解决事务</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">7.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -456,7 +530,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -465,7 +539,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -495,7 +569,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -508,26 +582,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-HBase-简介"><span class="nav-number">1.</span> <span class="nav-text">1. HBase 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1-HBase-的优点"><span class="nav-number">1.1.</span> <span class="nav-text">1.1 HBase 的优点</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2-数据模型"><span class="nav-number">1.2.</span> <span class="nav-text">1.2 数据模型</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-HBase-的设计与实现"><span class="nav-number">2.</span> <span class="nav-text">2. HBase 的设计与实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1-HBase-的架构"><span class="nav-number">2.1.</span> <span class="nav-text">2.1 HBase 的架构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2-HBase-的架构详解"><span class="nav-number">2.2.</span> <span class="nav-text">2.2 HBase 的架构详解</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-HBase-Mysql-的比较"><span class="nav-number">3.</span> <span class="nav-text">3. HBase, Mysql 的比较</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-设计-HBase-表"><span class="nav-number">4.</span> <span class="nav-text">4. 设计 HBase 表</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-RowKey-的设计"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 RowKey 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-1-RowKey-长度的设计"><span class="nav-number">4.1.1.</span> <span class="nav-text">4.1.1 RowKey 长度的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-RowKey-含义的设计"><span class="nav-number">4.1.2.</span> <span class="nav-text">4.1.2 RowKey 含义的设计</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-RowKey-性能的设计"><span class="nav-number">4.1.3.</span> <span class="nav-text">4.1.3 RowKey 性能的设计</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-ColumnFamily-的设计"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 ColumnFamily 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-1-ColumnFamily-的长度"><span class="nav-number">4.2.1.</span> <span class="nav-text">4.2.1 ColumnFamily 的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-2-ColumnFamily-的数量"><span class="nav-number">4.2.2.</span> <span class="nav-text">4.2.2 ColumnFamily 的数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-Column-的设计"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 Column 的设计</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-1-Column-的长度"><span class="nav-number">4.3.1.</span> <span class="nav-text">4.3.1 Column 的长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-3-2-Column-的数量"><span class="nav-number">4.3.2.</span> <span class="nav-text">4.3.2 Column 的数量</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-HBase-Pool"><span class="nav-number">4.4.</span> <span class="nav-text">5.1 HBase Pool</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-批量读"><span class="nav-number">4.5.</span> <span class="nav-text">5.2 批量读</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-Scan"><span class="nav-number">4.6.</span> <span class="nav-text">5.3 Scan</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4-PrefixFilter"><span class="nav-number">4.7.</span> <span class="nav-text">5.4 PrefixFilter</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-1-PefixFilter-Vs-Scan"><span class="nav-number">4.7.1.</span> <span class="nav-text">5.4.1 PefixFilter Vs Scan</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-4-2-Convert-PrefixFilter-to-Scan"><span class="nav-number">4.7.2.</span> <span class="nav-text">5.4.2 Convert PrefixFilter to Scan</span></a></li></ol></li></ol></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -545,11 +600,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -561,32 +620,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -596,12 +641,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -622,10 +662,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

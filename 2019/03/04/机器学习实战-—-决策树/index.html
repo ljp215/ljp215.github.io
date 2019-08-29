@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,35 +43,35 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="#1. 要解决的问题一句话概述：预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。 目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。 2. 整体思路获取某一段时间的相关埋">
+  <meta name="description" content="要解决的问题一句话概述：预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。 目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。 整体思路获取某一段时间的相关埋点事件、用户业">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习实战 — 决策树">
 <meta property="og:url" content="http://luojinping.com/2019/03/04/机器学习实战-—-决策树/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="#1. 要解决的问题一句话概述：预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。 目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。 2. 整体思路获取某一段时间的相关埋">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="要解决的问题一句话概述：预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。 目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。 整体思路获取某一段时间的相关埋点事件、用户业">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/tree_depth_3_to_5.jpg">
 <meta property="og:image" content="http://luojinping.com/img/tree_depth_10_to_50.jpg">
 <meta property="og:image" content="http://luojinping.com/img/tree_depth_5_img.jpg">
 <meta property="og:image" content="http://luojinping.com/img/GridSearchCV_result.jpg">
 <meta property="og:image" content="http://luojinping.com/img/RF_auc.jpg">
 <meta property="og:image" content="http://luojinping.com/img/dt_model_compare.jpg">
-<meta property="og:updated_time" content="2019-08-18T08:43:28.742Z">
+<meta property="og:updated_time" content="2019-08-25T13:10:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习实战 — 决策树">
-<meta name="twitter:description" content="#1. 要解决的问题一句话概述：预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。 目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。 2. 整体思路获取某一段时间的相关埋">
+<meta name="twitter:description" content="要解决的问题一句话概述：预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。 目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。 整体思路获取某一段时间的相关埋点事件、用户业">
 <meta name="twitter:image" content="http://luojinping.com/img/tree_depth_3_to_5.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2019/03/04/机器学习实战-—-决策树/">
@@ -93,6 +93,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -101,7 +110,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -110,7 +118,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -126,16 +134,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -147,7 +154,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -167,7 +174,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -178,7 +185,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -189,34 +196,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2019/03/04/机器学习实战-—-决策树/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -239,13 +275,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2019 23:03:41" itemprop="dateCreated datePublished" datetime="2019-03-04T23:03:41+08:00">Mar 4 2019</time>
+              <time title="创建时间：3月 4 2019 23:03:41" itemprop="dateCreated datePublished" datetime="2019-03-04T23:03:41+08:00">3月 4 2019</time>
             </span>
           
             
@@ -255,13 +291,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:43:28" itemprop="dateModified" datetime="2019-08-18T16:43:28+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:09" itemprop="dateModified" datetime="2019-08-25T21:10:09+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/04/机器学习实战-—-决策树/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/机器学习实战-—-决策树/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -272,9 +322,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#1. 要解决的问题<br>一句话概述：<br>预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。</p>
+        <h1 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h1><p>一句话概述：<br>预测进入 App 首页的用户是否会点击「XLJH推荐模块」，该模块是 App 的一个功能，用户点击按钮则会进入一个XLJH的页面。</p>
 <p>目前每天进入 App 首页的用户中，有 2.1234% 的用户会点击「XLJH推荐模块」，转化率非常低，而首页每日的曝光量是最大的，所以优化这个模块的转化率就变得尤为重要，也是本次作业要解决的问题。</p>
-<h1 id="2-整体思路"><a href="#2-整体思路" class="headerlink" title="2. 整体思路"></a>2. 整体思路</h1><p>获取某一段时间的相关埋点事件、用户业务数据、用户画像等数据，将数据合并、清洗、整理为可用的数据集，然后跑决策树，随机森林和 Adaboost 三个模型。<br>要获取的数据是：</p>
+<h1 id="整体思路"><a href="#整体思路" class="headerlink" title="整体思路"></a>整体思路</h1><p>获取某一段时间的相关埋点事件、用户业务数据、用户画像等数据，将数据合并、清洗、整理为可用的数据集，然后跑决策树，随机森林和 Adaboost 三个模型。<br>要获取的数据是：</p>
 <ul>
 <li>用户被展示到该模块的埋点事件</li>
 <li>用户点击该模块的埋点事件</li>
@@ -282,7 +332,7 @@
 <li>用户画像</li>
 <li>用户的业务画像</li>
 </ul>
-<h1 id="3-特征选取"><a href="#3-特征选取" class="headerlink" title="3. 特征选取"></a>3. 特征选取</h1><h2 id="3-1-特征举例"><a href="#3-1-特征举例" class="headerlink" title="3.1 特征举例"></a>3.1 特征举例</h2><p>特征的总数非常多，总共有 280 个，抽取一些特征描述如下：</p>
+<h1 id="特征选取"><a href="#特征选取" class="headerlink" title="特征选取"></a>特征选取</h1><h2 id="特征举例"><a href="#特征举例" class="headerlink" title="特征举例"></a>特征举例</h2><p>特征的总数非常多，总共有 280 个，抽取一些特征描述如下：</p>
 <ul>
 <li>年龄</li>
 <li>性别</li>
@@ -297,47 +347,45 @@
 <li>进入首页时距离上一次使用模块的时间</li>
 <li>设备机型</li>
 </ul>
-<h2 id="3-2-获取数据"><a href="#3-2-获取数据" class="headerlink" title="3.2 获取数据"></a>3.2 获取数据</h2><p>通过在 hive 里跑 sql(具体的 sql 语句略) 获取到的数据量为：54w。（单位为数据行数，下同）</p>
-<h2 id="3-3-特征工程"><a href="#3-3-特征工程" class="headerlink" title="3.3 特征工程"></a>3.3 特征工程</h2><h3 id="3-3-1-删除无用特征"><a href="#3-3-1-删除无用特征" class="headerlink" title="3.3.1 删除无用特征"></a>3.3.1 删除无用特征</h3><ol>
+<h2 id="获取数据"><a href="#获取数据" class="headerlink" title="获取数据"></a>获取数据</h2><p>通过在 hive 里跑 sql(具体的 sql 语句略) 获取到的数据量为：54w。（单位为数据行数，下同）</p>
+<h2 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h2><h3 id="删除无用特征"><a href="#删除无用特征" class="headerlink" title="删除无用特征"></a>删除无用特征</h3><ol>
 <li>无用特征的删除：例如 userId 等。这些特征明显与结果无关。</li>
 <li>删除由预测结果导致的特征：例如使用过该模块的时间。这些特征是在预测值为 True 时才会有值，而且这特征的赋值在要预测的事件发生之后。</li>
 </ol>
-<h3 id="3-3-2-特征的空值处理"><a href="#3-3-2-特征的空值处理" class="headerlink" title="3.3.2 特征的空值处理"></a>3.3.2 特征的空值处理</h3><ol>
+<h3 id="特征的空值处理"><a href="#特征的空值处理" class="headerlink" title="特征的空值处理"></a>特征的空值处理</h3><ol>
 <li>删除特征为空的数据，例如年龄，性别等必须会有的特征。</li>
 <li>int 类型的特征将空值填充为 0，例如某业务的 累计分钟数，某实体数量，粉丝数量，过去7天的XX业务使用统计等</li>
 <li>string 类型的特征将空值填充为 0，例如 citycode，tags 等。</li>
 </ol>
-<h3 id="3-3-3-处理重要特征"><a href="#3-3-3-处理重要特征" class="headerlink" title="3.3.3 处理重要特征"></a>3.3.3 处理重要特征</h3><p>跑完 Random Forest 模型，可以输出 Feature importances 列表， Top 10 的图略。</p>
+<h3 id="处理重要特征"><a href="#处理重要特征" class="headerlink" title="处理重要特征"></a>处理重要特征</h3><p>跑完 Random Forest 模型，可以输出 Feature importances 列表， Top 10 的图略。</p>
 <p>其中需要特别处理的特征是 c.bmi 和 c.age。<br>分析数据后发现年龄为空值的情况非常少，所以把 c.age 为空的数据删掉。<br>c.bmi 需要用户填入身高和体重，这部分数据缺失一些，所以填为 c.bmi 这一列的平均值，数据集中的 dataset[c.bmi].mean = 23.3174390247965，符合常识。</p>
-<h3 id="3-3-4-特征标签化"><a href="#3-3-4-特征标签化" class="headerlink" title="3.3.4 特征标签化"></a>3.3.4 特征标签化</h3><p>数据标准化的处理方式如下：</p>
+<h3 id="特征标签化"><a href="#特征标签化" class="headerlink" title="特征标签化"></a>特征标签化</h3><p>数据标准化的处理方式如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line">le = preprocessing.LabelEncoder()</span><br><span class="line">dataset = dataset.apply(le.fit_transform)</span><br></pre></td></tr></table></figure>
-
-<h3 id="3-3-5-可用数据量"><a href="#3-3-5-可用数据量" class="headerlink" title="3.3.5 可用数据量"></a>3.3.5 可用数据量</h3><p>按如上方式处理完后，最终可用的数据量为：30w</p>
-<h1 id="4-模型调优"><a href="#4-模型调优" class="headerlink" title="4. 模型调优"></a>4. 模型调优</h1><h2 id="4-1-Decision-Tree-调优"><a href="#4-1-Decision-Tree-调优" class="headerlink" title="4.1 Decision Tree 调优"></a>4.1 Decision Tree 调优</h2><p>###4.1.1 树的深度调优<br>使用的特征数量为 275 个，使用的训练集数量为 54801。</p>
+<h3 id="可用数据量"><a href="#可用数据量" class="headerlink" title="可用数据量"></a>可用数据量</h3><p>按如上方式处理完后，最终可用的数据量为：30w</p>
+<h1 id="模型调优"><a href="#模型调优" class="headerlink" title="模型调优"></a>模型调优</h1><h2 id="Decision-Tree-调优"><a href="#Decision-Tree-调优" class="headerlink" title="Decision Tree 调优"></a>Decision Tree 调优</h2><h3 id="树的深度调优"><a href="#树的深度调优" class="headerlink" title="树的深度调优"></a>树的深度调优</h3><p>使用的特征数量为 275 个，使用的训练集数量为 54801。</p>
 <p>不同树深度对应的模型评估如下：</p>
 <p><img src="/img/tree_depth_3_to_5.jpg" alt="tree_depth_3_to_5.jpg"></p>
 <p><img src="/img/tree_depth_10_to_50.jpg" alt="tree_depth_10_to_50.jpg"></p>
 <p>可以发现树的深度越高，召回率越高，准确率却越低。总体评价是树的深度为 5 最好。</p>
-<h3 id="4-1-2-其他参数调优"><a href="#4-1-2-其他参数调优" class="headerlink" title="4.1.2 其他参数调优"></a>4.1.2 其他参数调优</h3><p>max_features=’sqrt’ 加了这个反而变差了很多。<br>min_samples_split=5, min_samples_leaf=5，加了这个反而变差了一些。</p>
-<h3 id="4-1-3-DT-输出"><a href="#4-1-3-DT-输出" class="headerlink" title="4.1.3 DT 输出"></a>4.1.3 DT 输出</h3><p>深度为 5 的 DT 截取部分放大后的图如下：<br><img src="/img/tree_depth_5_img.jpg" alt="tree_depth_5_img.jpg"></p>
-<h2 id="4-2-Random-Forest-调优"><a href="#4-2-Random-Forest-调优" class="headerlink" title="4.2 Random Forest 调优"></a>4.2 Random Forest 调优</h2><p>n_estimators：100, 300, 500 都试过，差别不大。弱学习器的最大迭代次数太小会不准确，太大模型训练地就很慢。<br>oob_score: True，即采用袋外样本来评估模型的好坏，提高模型拟合后的泛化能力。<br>基本上，RF 不怎么需要调参。</p>
+<h3 id="其他参数调优"><a href="#其他参数调优" class="headerlink" title="其他参数调优"></a>其他参数调优</h3><p>max_features=’sqrt’ 加了这个反而变差了很多。<br>min_samples_split=5, min_samples_leaf=5，加了这个反而变差了一些。</p>
+<h3 id="DT-输出"><a href="#DT-输出" class="headerlink" title="DT 输出"></a>DT 输出</h3><p>深度为 5 的 DT 截取部分放大后的图如下：<br><img src="/img/tree_depth_5_img.jpg" alt="tree_depth_5_img.jpg"></p>
+<h2 id="Random-Forest-调优"><a href="#Random-Forest-调优" class="headerlink" title="Random Forest 调优"></a>Random Forest 调优</h2><p>n_estimators：100, 300, 500 都试过，差别不大。弱学习器的最大迭代次数太小会不准确，太大模型训练地就很慢。<br>oob_score: True，即采用袋外样本来评估模型的好坏，提高模型拟合后的泛化能力。<br>基本上，RF 不怎么需要调参。</p>
 <p>比较有价值的是能产生特征的重要性，Top 30 Feature importances 的图片略。<br>Feature importances Top 10 的可视化略。</p>
 <p>使用 GridSearchCV 搜索最优参数，参数搜索结果如下：<br><img src="/img/GridSearchCV_result.jpg" alt="GridSearchCV_result.jpg"></p>
 <p>但是使用参数后，RF 的 AUC 降到了 0.82，应该是 max_features 和 min_samples_leaf 这两个参数调的不对。</p>
-<h2 id="4-3-Adaboost-调优"><a href="#4-3-Adaboost-调优" class="headerlink" title="4.3 Adaboost 调优"></a>4.3 Adaboost 调优</h2><p>AdaBoostClassifier 的 base_estimator 选择已经之前训练好的 DT，效果更好，如下：</p>
+<h2 id="Adaboost-调优"><a href="#Adaboost-调优" class="headerlink" title="Adaboost 调优"></a>Adaboost 调优</h2><p>AdaBoostClassifier 的 base_estimator 选择已经之前训练好的 DT，效果更好，如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adb_clf = AdaBoostClassifier(n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</span><br><span class="line">AUC Score (Train): <span class="number">0.629162</span></span><br><span class="line">adb_clf_2 = AdaBoostClassifier(clf, n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</span><br><span class="line">AUC Score (Train): <span class="number">0.659129</span></span><br></pre></td></tr></table></figure>
-
 <p>learning_rate 设置为 0.02 能兼顾速度和效果。</p>
-<h1 id="5-踩过的坑"><a href="#5-踩过的坑" class="headerlink" title="5. 踩过的坑"></a>5. 踩过的坑</h1><h2 id="5-1-信息熵"><a href="#5-1-信息熵" class="headerlink" title="5.1 信息熵"></a>5.1 信息熵</h2><p>基尼指数和信息熵的几乎无差别，不怎么影响结果。</p>
-<h2 id="5-2-PCA-降维"><a href="#5-2-PCA-降维" class="headerlink" title="5.2 PCA 降维"></a>5.2 PCA 降维</h2><p>PCA 降维，使用 mle 和 5 个特征，都不好使，准确度反而更低，AUC 得分降至 0.51。</p>
-<h2 id="5-3-用了未来特征"><a href="#5-3-用了未来特征" class="headerlink" title="5.3 用了未来特征"></a>5.3 用了未来特征</h2><p>决策树 AUC: 0.52 -&gt; 0.77<br>随机森林 AUC: 0.82-&gt;0.93</p>
+<h1 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h1><h2 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h2><p>基尼指数和信息熵的几乎无差别，不怎么影响结果。</p>
+<h2 id="PCA-降维"><a href="#PCA-降维" class="headerlink" title="PCA 降维"></a>PCA 降维</h2><p>PCA 降维，使用 mle 和 5 个特征，都不好使，准确度反而更低，AUC 得分降至 0.51。</p>
+<h2 id="用了未来特征"><a href="#用了未来特征" class="headerlink" title="用了未来特征"></a>用了未来特征</h2><p>决策树 AUC: 0.52 -&gt; 0.77<br>随机森林 AUC: 0.82-&gt;0.93</p>
 <p>随机森林的模型评价如下：<br><img src="/img/RF_auc.jpg" alt="RF_auc.jpg"></p>
 <p>会发现准确度太高了，仔细分析后，发现用了一个「创建体测时间」的特征，而这个特征是在用户点击了 「智能计划推荐模块」后会更新值的，所以相当于用了事件发生后的特征来预测事件发生的概率，这样肯定会导致模型的准确率很高。后来去掉了这个特征。</p>
-<h1 id="6-模型对比"><a href="#6-模型对比" class="headerlink" title="6. 模型对比"></a>6. 模型对比</h1><p>数据集：30w，其中正样本的比例为 22%。</p>
+<h1 id="模型对比"><a href="#模型对比" class="headerlink" title="模型对比"></a>模型对比</h1><p>数据集：30w，其中正样本的比例为 22%。</p>
 <p><img src="/img/dt_model_compare.jpg" alt="dt_model_compare.jpg"></p>
 <p>对比发现，DT 和 Adaboost 的效果都不好，AUC Score 都在 0.65 左右。RF 的效果最好，AUC Score 能到 0.90。<br>可能是因为数据集符合 low bias, high variance 的规律，所以 RF 要比 Adaboost 好。</p>
 <p>RF 的准确率和召回率都还不错，感觉可以后续上线用于 App 首页了。</p>
-<h1 id="7-总结"><a href="#7-总结" class="headerlink" title="7. 总结"></a>7. 总结</h1><p>整个过程可以抽象为：<br>获取数据 -&gt; 调整模型参数 -&gt; 引入更多特征 -&gt; 调整模型参数 -&gt; PCA -&gt; 减少特征 -&gt; 处理重要特征 -&gt; gridSearchCV -&gt; 调整模型参数</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整个过程可以抽象为：<br>获取数据 -&gt; 调整模型参数 -&gt; 引入更多特征 -&gt; 调整模型参数 -&gt; PCA -&gt; 减少特征 -&gt; 处理重要特征 -&gt; gridSearchCV -&gt; 调整模型参数</p>
 <p>一些总结：</p>
 <ol>
 <li>特征工程很重要，特征处理好后 AUC 有明显的提升</li>
@@ -356,6 +404,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -404,6 +469,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -416,24 +484,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#要解决的问题"><span class="nav-number">1.</span> <span class="nav-text">要解决的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#整体思路"><span class="nav-number">2.</span> <span class="nav-text">整体思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征选取"><span class="nav-number">3.</span> <span class="nav-text">特征选取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征举例"><span class="nav-number">3.1.</span> <span class="nav-text">特征举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#获取数据"><span class="nav-number">3.2.</span> <span class="nav-text">获取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#特征工程"><span class="nav-number">3.3.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#删除无用特征"><span class="nav-number">3.3.1.</span> <span class="nav-text">删除无用特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征的空值处理"><span class="nav-number">3.3.2.</span> <span class="nav-text">特征的空值处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#处理重要特征"><span class="nav-number">3.3.3.</span> <span class="nav-text">处理重要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#特征标签化"><span class="nav-number">3.3.4.</span> <span class="nav-text">特征标签化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#可用数据量"><span class="nav-number">3.3.5.</span> <span class="nav-text">可用数据量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型调优"><span class="nav-number">4.</span> <span class="nav-text">模型调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Decision-Tree-调优"><span class="nav-number">4.1.</span> <span class="nav-text">Decision Tree 调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#树的深度调优"><span class="nav-number">4.1.1.</span> <span class="nav-text">树的深度调优</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#其他参数调优"><span class="nav-number">4.1.2.</span> <span class="nav-text">其他参数调优</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DT-输出"><span class="nav-number">4.1.3.</span> <span class="nav-text">DT 输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Random-Forest-调优"><span class="nav-number">4.2.</span> <span class="nav-text">Random Forest 调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Adaboost-调优"><span class="nav-number">4.3.</span> <span class="nav-text">Adaboost 调优</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#踩过的坑"><span class="nav-number">5.</span> <span class="nav-text">踩过的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#信息熵"><span class="nav-number">5.1.</span> <span class="nav-text">信息熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PCA-降维"><span class="nav-number">5.2.</span> <span class="nav-text">PCA 降维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#用了未来特征"><span class="nav-number">5.3.</span> <span class="nav-text">用了未来特征</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#模型对比"><span class="nav-number">6.</span> <span class="nav-text">模型对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">7.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">8.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -441,7 +519,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -450,7 +528,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -480,7 +558,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -493,26 +571,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#2-整体思路"><span class="nav-number">1.</span> <span class="nav-text">2. 整体思路</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-特征选取"><span class="nav-number">2.</span> <span class="nav-text">3. 特征选取</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-特征举例"><span class="nav-number">2.1.</span> <span class="nav-text">3.1 特征举例</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-获取数据"><span class="nav-number">2.2.</span> <span class="nav-text">3.2 获取数据</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3-特征工程"><span class="nav-number">2.3.</span> <span class="nav-text">3.3 特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-1-删除无用特征"><span class="nav-number">2.3.1.</span> <span class="nav-text">3.3.1 删除无用特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-2-特征的空值处理"><span class="nav-number">2.3.2.</span> <span class="nav-text">3.3.2 特征的空值处理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-3-处理重要特征"><span class="nav-number">2.3.3.</span> <span class="nav-text">3.3.3 处理重要特征</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-4-特征标签化"><span class="nav-number">2.3.4.</span> <span class="nav-text">3.3.4 特征标签化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-3-5-可用数据量"><span class="nav-number">2.3.5.</span> <span class="nav-text">3.3.5 可用数据量</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-模型调优"><span class="nav-number">3.</span> <span class="nav-text">4. 模型调优</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-Decision-Tree-调优"><span class="nav-number">3.1.</span> <span class="nav-text">4.1 Decision Tree 调优</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-2-其他参数调优"><span class="nav-number">3.1.1.</span> <span class="nav-text">4.1.2 其他参数调优</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-3-DT-输出"><span class="nav-number">3.1.2.</span> <span class="nav-text">4.1.3 DT 输出</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-Random-Forest-调优"><span class="nav-number">3.2.</span> <span class="nav-text">4.2 Random Forest 调优</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-Adaboost-调优"><span class="nav-number">3.3.</span> <span class="nav-text">4.3 Adaboost 调优</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-踩过的坑"><span class="nav-number">4.</span> <span class="nav-text">5. 踩过的坑</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-信息熵"><span class="nav-number">4.1.</span> <span class="nav-text">5.1 信息熵</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-PCA-降维"><span class="nav-number">4.2.</span> <span class="nav-text">5.2 PCA 降维</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3-用了未来特征"><span class="nav-number">4.3.</span> <span class="nav-text">5.3 用了未来特征</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6-模型对比"><span class="nav-number">5.</span> <span class="nav-text">6. 模型对比</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7-总结"><span class="nav-number">6.</span> <span class="nav-text">7. 总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">7.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -530,11 +589,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -546,32 +609,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -581,12 +630,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -607,10 +651,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

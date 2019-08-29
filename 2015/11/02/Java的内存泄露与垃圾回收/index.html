@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,29 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="##什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)  ** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**   第一种情况，在Java中已经由于垃圾回收机制的引入，得到">
+  <meta name="description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)   一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java的内存泄露与垃圾回收">
 <meta property="og:url" content="http://luojinping.com/2015/11/02/Java的内存泄露与垃圾回收/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="##什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)  ** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**   第一种情况，在Java中已经由于垃圾回收机制的引入，得到">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:48:31.862Z">
+<meta property="og:description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)   一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T13:32:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java的内存泄露与垃圾回收">
-<meta name="twitter:description" content="##什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)  ** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**   第一种情况，在Java中已经由于垃圾回收机制的引入，得到">
+<meta name="twitter:description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)   一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/11/02/Java的内存泄露与垃圾回收/">
 
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/11/02/Java的内存泄露与垃圾回收/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Nov 2 2015 11:39:53" itemprop="dateCreated datePublished" datetime="2015-11-02T11:39:53+08:00">Nov 2 2015</time>
+              <time title="创建时间：11月 2 2015 11:39:53" itemprop="dateCreated datePublished" datetime="2015-11-02T11:39:53+08:00">11月 2 2015</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:48:31" itemprop="dateModified" datetime="2019-08-18T16:48:31+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:32:56" itemprop="dateModified" datetime="2019-08-25T21:32:56+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/11/02/Java的内存泄露与垃圾回收/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2015/11/02/Java的内存泄露与垃圾回收/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -265,26 +315,24 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>##什么是内存泄露<br>内存泄露 memory leak，是指已申请的无用内存无法被回收。</p>
+        <h2 id="什么是内存泄露"><a href="#什么是内存泄露" class="headerlink" title="什么是内存泄露"></a>什么是内存泄露</h2><p>内存泄露 memory leak，是指已申请的无用内存无法被回收。</p>
 <p>内存泄漏有两种情况：</p>
 <ul>
 <li><p>一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)</p>
 </li>
-<li><p>** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**</p>
+<li><p><strong> 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）</strong></p>
 </li>
 </ul>
 <p>第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决。所以，Java中的内存泄漏，主要指的是第二种情况。</p>
 <p>内存泄露的一个例子：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">for (int i = 0; i &lt; 1000; i++) &#123;</span><br><span class="line">      Object obj = new Object(</span><br><span class="line">      list.add(obj);</span><br><span class="line">      obj = null;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">      Object obj = <span class="keyword">new</span> Object(</span><br><span class="line">      list.add(obj);</span><br><span class="line">      obj = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>这段代码是：for循环中，new一个Object对象obj，然后将其添加到list中，最后将obj置空。</p>
 <p>这个时候就发生了内存泄露，因为obj是可达的无用对象。发生GC时，尽管obj已经被置空成为了无用对象，但是obj能够从list可达，从而GC无法将其释放掉。次数obj占用的内存就是泄露了。</p>
-<p>##内存泄露与内存溢出<br>内存溢出 out of memory，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory。当发生内存溢出时，程序将无法进行，强制终止。在java中常见的java.lang.OutOfMemoryError就是内存溢出的log。</p>
+<h2 id="内存泄露与内存溢出"><a href="#内存泄露与内存溢出" class="headerlink" title="内存泄露与内存溢出"></a>内存泄露与内存溢出</h2><p>内存溢出 out of memory，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory。当发生内存溢出时，程序将无法进行，强制终止。在java中常见的java.lang.OutOfMemoryError就是内存溢出的log。</p>
 <p><strong>内存长期泄露终将导致内存溢出。</strong></p>
-<p>##内存泄露的危害<br>一次内存泄露危害可以忽略，但内存长期泄露，可用内存会逐渐减少，导致降低性能，最终内存溢出。</p>
+<h2 id="内存泄露的危害"><a href="#内存泄露的危害" class="headerlink" title="内存泄露的危害"></a>内存泄露的危害</h2><p>一次内存泄露危害可以忽略，但内存长期泄露，可用内存会逐渐减少，导致降低性能，最终内存溢出。</p>
 <p>在移动设备对于内存和CPU都有较严格的限制的情况下，Java的内存泄露还会导致程序性能降低甚至崩溃。</p>
-<p>##怎么产生内存泄露</p>
-<p>容易引起内存泄漏的几大原因</p>
+<h2 id="怎么产生内存泄露"><a href="#怎么产生内存泄露" class="headerlink" title="怎么产生内存泄露"></a>怎么产生内存泄露</h2><p>容易引起内存泄漏的几大原因</p>
 <ol>
 <li><p>静态集合类</p>
 <p> 像HashMap、Vector 等静态集合类的使用最容易引起内存泄漏，因为这些静态变量的生命周期与应用程序一致，如示例1，如果该Vector 是静态的，那么它将一直存在，而其中所有的Object对象也不能被释放，因为它们也将一直被该Vector 引用着。</p>
@@ -299,13 +347,12 @@
 <p> 内部类的引用是比较容易遗忘的一种，而且一旦没释放可能导致一系列的后继类对象没有释放。</p>
 </li>
 </ol>
-<p>##垃圾回收</p>
-<p><strong>可以手动执行垃圾回收吗？</strong></p>
+<h2 id="垃圾回收"><a href="#垃圾回收" class="headerlink" title="垃圾回收"></a>垃圾回收</h2><p><strong>可以手动执行垃圾回收吗？</strong></p>
 <p>只能建议jvm进行GC，但什么时候做GC由JVM决定</p>
-<p>###System.gc()<br>可以通过调用System.gc()建议JVM执行垃圾回收，但JVM不保证一定会执行GC操作。通常不推荐使用System.gc()。</p>
-<p>###finalize()<br>finalize()方法存在于java.lang.Object类中，可以被所有对象所使用。默认情况下其不执行任何动作。当垃圾回收器确定了一个对象没有任何引用时，其会调用finalize()方法。但是，finalize方法并不一定会被执行，因此也不建议覆写finalize()该方法。</p>
-<p>##内存泄露，会被垃圾回收吗<br>内存泄露 memory leak，是指已申请的无用内存无法被回收。GC只能回收第一种情况的内存泄露，见前面的释义。</p>
-<p>##设置null能防止内存泄露吗<br>最基本的建议就是尽早释放无用对象的引用，大多数程序员在使用临时变量的时候，都是让引用变量在退出活动域后，自动设置为null。</p>
+<h3 id="System-gc"><a href="#System-gc" class="headerlink" title="System.gc()"></a>System.gc()</h3><p>可以通过调用System.gc()建议JVM执行垃圾回收，但JVM不保证一定会执行GC操作。通常不推荐使用System.gc()。</p>
+<h3 id="finalize"><a href="#finalize" class="headerlink" title="finalize()"></a>finalize()</h3><p>finalize()方法存在于java.lang.Object类中，可以被所有对象所使用。默认情况下其不执行任何动作。当垃圾回收器确定了一个对象没有任何引用时，其会调用finalize()方法。但是，finalize方法并不一定会被执行，因此也不建议覆写finalize()该方法。</p>
+<h2 id="内存泄露，会被垃圾回收吗"><a href="#内存泄露，会被垃圾回收吗" class="headerlink" title="内存泄露，会被垃圾回收吗"></a>内存泄露，会被垃圾回收吗</h2><p>内存泄露 memory leak，是指已申请的无用内存无法被回收。GC只能回收第一种情况的内存泄露，见前面的释义。</p>
+<h2 id="设置null能防止内存泄露吗"><a href="#设置null能防止内存泄露吗" class="headerlink" title="设置null能防止内存泄露吗"></a>设置null能防止内存泄露吗</h2><p>最基本的建议就是尽早释放无用对象的引用，大多数程序员在使用临时变量的时候，都是让引用变量在退出活动域后，自动设置为null。</p>
 <p><strong>不过这个真的有用吗？</strong></p>
 <p>查阅了网上的一些讨论以后有以下结论：</p>
 <p>首先，jdk远比我们想象中的聪明，完全能判断出对象是否已经可以回收。但是在极少数情况下，这么做依然是有效的。</p>
@@ -314,46 +361,33 @@
 <p>JVM即时编译器：即时编译器（Just In Time Compiler) 简称JIT<br>     JAVA程序最初是通过解释器（Interpreter）进行解释执行的，当JVM发现某个方法或代码块运行特别频繁的时候，就会认为这是“热点代码”（Hot Spot Code)。<br>     为了提高热点代码的执行效率，就会将这些“热点代码”编译成与本地机器相关的机器码，进行各个层次的优化。 完成这个任务的编译器就是即时编译器（JIT）。</p>
 </blockquote>
 <p>例如：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">private void processObj() &#123;</span><br><span class="line">     BigObject obj = … // 声明大对象obj</span><br><span class="line">     doSomethingWith(obj); // 使用obj</span><br><span class="line">     obj = null;    // explicitly set to null</span><br><span class="line">     doSomethingElse(); //非常耗时的操作</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processObj</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     BigObject obj = … <span class="comment">// 声明大对象obj</span></span><br><span class="line">     doSomethingWith(obj); <span class="comment">// 使用obj</span></span><br><span class="line">     obj = <span class="keyword">null</span>;    <span class="comment">// explicitly set to null</span></span><br><span class="line">     doSomethingElse(); <span class="comment">//非常耗时的操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>此时显示的设置无用的对象obj为null才有效。</p>
-<p>##How to avoid Memory Leak in Java</p>
-<p>贴出 <a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
+<h2 id="How-to-avoid-Memory-Leak-in-Java"><a href="#How-to-avoid-Memory-Leak-in-Java" class="headerlink" title="How to avoid Memory Leak in Java"></a>How to avoid Memory Leak in Java</h2><p>贴出 <a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
 <p>How  to avoid Memory Leak in Java?</p>
 <p>While coding if we take care of a few points we can avoid memory leak issue.</p>
 <ol>
-<li><p>Use time out time for the session as low as possible.</p>
-</li>
-<li><p>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</p>
-</li>
-<li><p>Try to store as less data as possible in the HttpSession.</p>
-</li>
+<li>Use time out time for the session as low as possible.</li>
+<li>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</li>
+<li>Try to store as less data as possible in the HttpSession.</li>
 <li><p>Avoid creating HttpSession in jsp page by default by using the page directive</p>
 <p>  &lt;%@page session=”false”%&gt;</p>
 </li>
 <li><p>Try to use StringBuffer’s append() method instead of string concatenation. String is an immutable object and if we use string concatenation, it will unnecessarily create many temporary objects on heap which results in poor performance.</p>
 <p> For ex. if we write String query =  “SELECT id, name FROM   t_customer whereMsoNormal” style=”margin-bottom: 0.0001pt;”&gt;     it will create 4 String Objects. But if we write the same query using StringBuffer’s append() it will create only one object as StringBuffer is mutable i.e. can be modified over and  over again.</p>
 </li>
-<li><p>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</p>
-</li>
-<li><p>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</p>
-</li>
-<li><p>Try to close the ResultSet and Statement before reusing those.</p>
-</li>
-<li><p>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</p>
-</li>
-<li><p>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</p>
-</li>
+<li>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</li>
+<li>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</li>
+<li>Try to close the ResultSet and Statement before reusing those.</li>
+<li>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</li>
+<li>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</li>
 </ol>
-<p>##在测试内存泄露时，对GC有一些收获</p>
-<ol>
+<h2 id="在测试内存泄露时，对GC有一些收获"><a href="#在测试内存泄露时，对GC有一些收获" class="headerlink" title="在测试内存泄露时，对GC有一些收获"></a>在测试内存泄露时，对GC有一些收获</h2><ol>
 <li>cannot disable java gc</li>
 <li>我们不能决定什么时候发生GC。</li>
 <li>System.gc() vs GC button in JVisualVM/JConsole<br>As far as I know, Jconsole or any other tool, uses System.gc() only. There is no other option. As everyone know, java tells everyone not to rely on System.gc(), but that doesn’t mean it doesn’t work at all.</li>
 </ol>
-<p>##References</p>
-<blockquote>
-</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>&gt;</p>
 <ul>
 <li><a href="http://wwsun.me/posts/jvm-gc.html" target="_blank" rel="noopener">http://wwsun.me/posts/jvm-gc.html</a></li>
 <li><a href="http://java.dzone.com/articles/jvm-and-garbage-collection" target="_blank" rel="noopener">http://java.dzone.com/articles/jvm-and-garbage-collection</a></li>
@@ -369,6 +403,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -417,6 +468,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -429,15 +483,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是内存泄露"><span class="nav-number">1.</span> <span class="nav-text">什么是内存泄露</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存泄露与内存溢出"><span class="nav-number">2.</span> <span class="nav-text">内存泄露与内存溢出</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存泄露的危害"><span class="nav-number">3.</span> <span class="nav-text">内存泄露的危害</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#怎么产生内存泄露"><span class="nav-number">4.</span> <span class="nav-text">怎么产生内存泄露</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#垃圾回收"><span class="nav-number">5.</span> <span class="nav-text">垃圾回收</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#System-gc"><span class="nav-number">5.1.</span> <span class="nav-text">System.gc()</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#finalize"><span class="nav-number">5.2.</span> <span class="nav-text">finalize()</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存泄露，会被垃圾回收吗"><span class="nav-number">6.</span> <span class="nav-text">内存泄露，会被垃圾回收吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#设置null能防止内存泄露吗"><span class="nav-number">7.</span> <span class="nav-text">设置null能防止内存泄露吗</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#How-to-avoid-Memory-Leak-in-Java"><span class="nav-number">8.</span> <span class="nav-text">How to avoid Memory Leak in Java</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#在测试内存泄露时，对GC有一些收获"><span class="nav-number">9.</span> <span class="nav-text">在测试内存泄露时，对GC有一些收获</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Reference"><span class="nav-number">10.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -445,7 +518,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -454,7 +527,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -484,7 +557,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -497,8 +570,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -517,11 +588,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -533,32 +608,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -568,12 +629,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -594,10 +650,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

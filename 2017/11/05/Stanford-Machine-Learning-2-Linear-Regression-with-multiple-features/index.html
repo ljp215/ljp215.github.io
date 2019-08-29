@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,31 +43,31 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="##1. 多变量的线性回归n: 特征(features) 数量m: 训练集数量$x^{(i)}$:   表示一条训练数据的向量 i is an index into the training set So  x is an n-dimensional feature vector $x^{(3)}$ is, for example, the 3rd training data    $x^{(j)">
+  <meta name="description" content="多变量的线性回归n: 特征(features) 数量m: 训练集数量$x^{(i)}$:   表示一条训练数据的向量 i is an index into the training set So  x is an n-dimensional feature vector $x^{(3)}$ is, for example, the 3rd training data    $x^{(j)}_i$:">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Stanford Machine Learning - 2 线性回归进阶">
 <meta property="og:url" content="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-2-Linear-Regression-with-multiple-features/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="##1. 多变量的线性回归n: 特征(features) 数量m: 训练集数量$x^{(i)}$:   表示一条训练数据的向量 i is an index into the training set So  x is an n-dimensional feature vector $x^{(3)}$ is, for example, the 3rd training data    $x^{(j)">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="多变量的线性回归n: 特征(features) 数量m: 训练集数量$x^{(i)}$:   表示一条训练数据的向量 i is an index into the training set So  x is an n-dimensional feature vector $x^{(3)}$ is, for example, the 3rd training data    $x^{(j)}_i$:">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/gradient_descent_plot.jpg">
 <meta property="og:image" content="http://luojinping.com/img/polynomial_regression_choose.jpg">
-<meta property="og:updated_time" content="2019-08-18T08:42:47.702Z">
+<meta property="og:updated_time" content="2019-08-25T13:08:25.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stanford Machine Learning - 2 线性回归进阶">
-<meta name="twitter:description" content="##1. 多变量的线性回归n: 特征(features) 数量m: 训练集数量$x^{(i)}$:   表示一条训练数据的向量 i is an index into the training set So  x is an n-dimensional feature vector $x^{(3)}$ is, for example, the 3rd training data    $x^{(j)">
+<meta name="twitter:description" content="多变量的线性回归n: 特征(features) 数量m: 训练集数量$x^{(i)}$:   表示一条训练数据的向量 i is an index into the training set So  x is an n-dimensional feature vector $x^{(3)}$ is, for example, the 3rd training data    $x^{(j)}_i$:">
 <meta name="twitter:image" content="http://luojinping.com/img/gradient_descent_plot.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-2-Linear-Regression-with-multiple-features/">
@@ -89,6 +89,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -97,7 +106,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -106,7 +114,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -122,16 +130,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -143,7 +150,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -163,7 +170,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -174,7 +181,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -185,34 +192,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-2-Linear-Regression-with-multiple-features/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -235,13 +271,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Nov 5 2017 22:00:04" itemprop="dateCreated datePublished" datetime="2017-11-05T22:00:04+08:00">Nov 5 2017</time>
+              <time title="创建时间：11月 5 2017 22:00:04" itemprop="dateCreated datePublished" datetime="2017-11-05T22:00:04+08:00">11月 5 2017</time>
             </span>
           
             
@@ -251,13 +287,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:42:47" itemprop="dateModified" datetime="2019-08-18T16:42:47+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:08:25" itemprop="dateModified" datetime="2019-08-25T21:08:25+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/11/05/Stanford-Machine-Learning-2-Linear-Regression-with-multiple-features/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/11/05/Stanford-Machine-Learning-2-Linear-Regression-with-multiple-features/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -268,7 +318,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>##1. 多变量的线性回归<br>n: 特征(features) 数量<br>m: 训练集数量<br>$x^{(i)}$: </p>
+        <h1 id="多变量的线性回归"><a href="#多变量的线性回归" class="headerlink" title="多变量的线性回归"></a>多变量的线性回归</h1><p>n: 特征(features) 数量<br>m: 训练集数量<br>$x^{(i)}$: </p>
 <ul>
 <li>表示一条训练数据的向量</li>
 <li>i is an index into the training set</li>
@@ -279,20 +329,18 @@
 </li>
 </ul>
 <p>$x^{(j)}_i$: The value of feature j in the ith training example</p>
-<p>例如，当 n=4 时:<br>$$h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4$$</p>
-<p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：<br>$$h_θ(x)=θ^TX$$<br>$θ^T$: [1 * (n+1)] matrix</p>
-<p>###1.1 多变量的梯度下降</p>
-<h3 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h3><p>$$J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}$$</p>
-<h3 id="Gradient-descent"><a href="#Gradient-descent" class="headerlink" title="Gradient descent"></a>Gradient descent</h3><p>Repeat {<br>  $$ θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>}</p>
+<p>例如，当 n=4 时:</p>
+<script type="math/tex; mode=display">h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4</script><p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：</p>
+<script type="math/tex; mode=display">h_θ(x)=θ^TX</script><p>$θ^T$: [1 * (n+1)] matrix</p>
+<h1 id="多变量的梯度下降"><a href="#多变量的梯度下降" class="headerlink" title="多变量的梯度下降"></a>多变量的梯度下降</h1><h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><script type="math/tex; mode=display">J(θ_0, θ_1, ...,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}</script><h2 id="Gradient-descent"><a href="#Gradient-descent" class="headerlink" title="Gradient descent"></a>Gradient descent</h2><p>Repeat {</p>
+<script type="math/tex; mode=display">θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, ...,θ_n)}</script><p>}</p>
 <p>every iterator</p>
 <ul>
 <li>θj = θj - learning rate (α) times the partial derivative of J(θ) with respect to θJ(…)</li>
 <li>We do this through a simultaneous update of every θj value</li>
 </ul>
-<p>$$ \frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>$$ = \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)} $$</p>
-<p>##2. Gradient Decent in practice</p>
-<p>###2.1 Feature Scaling<br>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
-<h3 id="Learning-Rate-α"><a href="#Learning-Rate-α" class="headerlink" title="Learning Rate α"></a>Learning Rate α</h3><ul>
+<script type="math/tex; mode=display">\frac\partial{\partial J(θ_0, θ_1, ...,θ_n)}</script><script type="math/tex; mode=display">= \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)}</script><h1 id="Gradient-Decent-in-practice"><a href="#Gradient-Decent-in-practice" class="headerlink" title="Gradient Decent in practice"></a>Gradient Decent in practice</h1><h2 id="Feature-Scaling"><a href="#Feature-Scaling" class="headerlink" title="Feature Scaling"></a>Feature Scaling</h2><p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
+<h2 id="Learning-Rate-α"><a href="#Learning-Rate-α" class="headerlink" title="Learning Rate α"></a>Learning Rate α</h2><ul>
 <li>working correctly: If gradient descent is working then J(θ) should decrease after every iteration</li>
 <li>convergence: 收敛是指每经过一次迭代，J(θ)的值都变化甚小。</li>
 <li>choose α<ol>
@@ -311,16 +359,16 @@
 </li>
 </ul>
 <p><img src="/img/gradient_descent_plot.jpg" alt></p>
-<p>##2.2 Features and polynomial regression</p>
-<h3 id="Can-create-new-features"><a href="#Can-create-new-features" class="headerlink" title="Can create new features"></a>Can create new features</h3><p>如何选择 features 和表达式尤为关键，例如房价与房子的长，房子的宽组成的表达式就会麻烦很多，若将房子的长乘以房子的宽得出面积，则有房价与房子面积的表达式，将会更容易拟合出房价的走势。</p>
-<h3 id="Polynomial-regression"><a href="#Polynomial-regression" class="headerlink" title="Polynomial regression"></a>Polynomial regression</h3><p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
+<h1 id="Features-and-polynomial-regression"><a href="#Features-and-polynomial-regression" class="headerlink" title="Features and polynomial regression"></a>Features and polynomial regression</h1><h2 id="Can-create-new-features"><a href="#Can-create-new-features" class="headerlink" title="Can create new features"></a>Can create new features</h2><p>如何选择 features 和表达式尤为关键，例如房价与房子的长，房子的宽组成的表达式就会麻烦很多，若将房子的长乘以房子的宽得出面积，则有房价与房子面积的表达式，将会更容易拟合出房价的走势。</p>
+<h2 id="Polynomial-regression"><a href="#Polynomial-regression" class="headerlink" title="Polynomial regression"></a>Polynomial regression</h2><p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
 <p><strong>所以选择合适的 Features 和 Polynomial regression 都非常重要。</strong></p>
 <p><img src="/img/polynomial_regression_choose.jpg" alt></p>
-<p>##3. Normal equation 求解多变量线性回归</p>
-<p>###3.1 Normal equation<br>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 $$ \frac{d}{dθ}J(θ)=2aθ+b=0$$ 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
-<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：<br>$$ J(θ_0, θ_1, …,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2} $$<br>只需要令：<br>$$ \frac\partial{\partial θ_j}J(θ_0, θ_1, …,θ_n) = … = 0 $$，其中 j = 0,1,2,…,n<br>设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m*n) 的矩阵，y 为 (m*1) 的矩阵，可以推导出求 θ 向量的公式如下：<br>$$θ = (X^TX)^{-1}X^Ty$$</p>
-<p>##4. Gradient descent Vs Normal equation</p>
-<h3 id="Gradient-descent-1"><a href="#Gradient-descent-1" class="headerlink" title="Gradient descent"></a>Gradient descent</h3><ul>
+<h1 id="Normal-equation-求解多变量线性回归"><a href="#Normal-equation-求解多变量线性回归" class="headerlink" title="Normal equation 求解多变量线性回归"></a>Normal equation 求解多变量线性回归</h1><h2 id="Normal-equation"><a href="#Normal-equation" class="headerlink" title="Normal equation"></a>Normal equation</h2><p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 <script type="math/tex">\frac{d}{dθ}J(θ)=2aθ+b=0</script> 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
+<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：</p>
+<script type="math/tex; mode=display">J(θ_0, θ_1, ...,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}</script><p>只需要令：</p>
+<script type="math/tex; mode=display">\frac\partial{\partial θ_j}J(θ_0, θ_1, ...,θ_n) = ... = 0 $$，其中 j = 0,1,2,...,n
+设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m\*n) 的矩阵，y 为 (m\*1) 的矩阵，可以推导出求 θ 向量的公式如下：
+$$θ = (X^TX)^{-1}X^Ty</script><h1 id="Gradient-descent-Vs-Normal-equation"><a href="#Gradient-descent-Vs-Normal-equation" class="headerlink" title="Gradient descent Vs Normal equation"></a>Gradient descent Vs Normal equation</h1><h2 id="Gradient-descent-1"><a href="#Gradient-descent-1" class="headerlink" title="Gradient descent"></a>Gradient descent</h2><ul>
 <li>Need to chose learning rate</li>
 <li>Needs many iterations - could make it slower</li>
 <li>Works well even when n is massive (millions)</li>
@@ -328,7 +376,7 @@
 <li>What is a big n though: 100 or even a 1000 is still (relativity) small, If n is 10000 then look at using gradient descent</li>
 <li>适用于线性回归会逻辑回归</li>
 </ul>
-<h3 id="Normal-equation"><a href="#Normal-equation" class="headerlink" title="Normal equation"></a>Normal equation</h3><ul>
+<h2 id="Normal-equation-1"><a href="#Normal-equation-1" class="headerlink" title="Normal equation"></a>Normal equation</h2><ul>
 <li>No need to chose a learning rate</li>
 <li>No need to iterate, check for convergence etc.</li>
 <li>Normal equation needs to compute $(X^TX)^{-1}$<ul>
@@ -339,9 +387,9 @@
 <li>Slow of n is large, Can be much slower</li>
 <li>仅适用于线性回归</li>
 </ul>
-<p>##5. 局部加权线性回归<br>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：<br>$$J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2$$</p>
-<p>其中<br>$$ w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})$$</p>
-<p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
+<h1 id="局部加权线性回归"><a href="#局部加权线性回归" class="headerlink" title="局部加权线性回归"></a>局部加权线性回归</h1><p>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：</p>
+<script type="math/tex; mode=display">J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2</script><p>其中</p>
+<script type="math/tex; mode=display">w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})</script><p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
 <p>$\tau^2$ 是波长函数(bandwidth)， 控制权重随距离下降的速度，τ 越小则 x 离 $x^{(i)}$ 越远时 $w^{(i)}$ 的值下降的越快。</p>
 <p>所以，如果沿着 x 轴的每个点都进行局部直线拟合，那么你会发现对于这个数据集合来说，局部加权的预测结果，能够最终跟踪这条非线性的曲线。</p>
 <p>但局部加权回归也有其缺点：</p>
@@ -351,10 +399,9 @@
 </ul>
 <p>对于线性回归算法，一旦拟合出适合训练数据的参数θ，保存这些参数θ，对于之后的预测，不需要再使用原始训练数据集，所以是参数学习算法。</p>
 <p>对于局部加权线性回归算法，每次进行预测都需要全部的训练数据（每次进行的预测得到不同的参数θ），没有固定的参数θ，所以是非参数算法(non-parametric algorithm)。</p>
-<p>##Reference</p>
-<blockquote>
-</blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="noopener">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
+</blockquote>
 
     </div>
 
@@ -362,6 +409,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -410,6 +474,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -422,24 +489,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#多变量的线性回归"><span class="nav-number">1.</span> <span class="nav-text">多变量的线性回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多变量的梯度下降"><span class="nav-number">2.</span> <span class="nav-text">多变量的梯度下降</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Cost-Function"><span class="nav-number">2.1.</span> <span class="nav-text">Cost Function</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-descent"><span class="nav-number">2.2.</span> <span class="nav-text">Gradient descent</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gradient-Decent-in-practice"><span class="nav-number">3.</span> <span class="nav-text">Gradient Decent in practice</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Feature-Scaling"><span class="nav-number">3.1.</span> <span class="nav-text">Feature Scaling</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Learning-Rate-α"><span class="nav-number">3.2.</span> <span class="nav-text">Learning Rate α</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Features-and-polynomial-regression"><span class="nav-number">4.</span> <span class="nav-text">Features and polynomial regression</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Can-create-new-features"><span class="nav-number">4.1.</span> <span class="nav-text">Can create new features</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Polynomial-regression"><span class="nav-number">4.2.</span> <span class="nav-text">Polynomial regression</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Normal-equation-求解多变量线性回归"><span class="nav-number">5.</span> <span class="nav-text">Normal equation 求解多变量线性回归</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Normal-equation"><span class="nav-number">5.1.</span> <span class="nav-text">Normal equation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Gradient-descent-Vs-Normal-equation"><span class="nav-number">6.</span> <span class="nav-text">Gradient descent Vs Normal equation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Gradient-descent-1"><span class="nav-number">6.1.</span> <span class="nav-text">Gradient descent</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Normal-equation-1"><span class="nav-number">6.2.</span> <span class="nav-text">Normal equation</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#局部加权线性回归"><span class="nav-number">7.</span> <span class="nav-text">局部加权线性回归</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -447,7 +524,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -456,7 +533,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -486,7 +563,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -499,26 +576,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cost-Function"><span class="nav-number">1.</span> <span class="nav-text">Cost Function</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient-descent"><span class="nav-number">2.</span> <span class="nav-text">Gradient descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Learning-Rate-α"><span class="nav-number">3.</span> <span class="nav-text">Learning Rate α</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Can-create-new-features"><span class="nav-number">4.</span> <span class="nav-text">Can create new features</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Polynomial-regression"><span class="nav-number">5.</span> <span class="nav-text">Polynomial regression</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Gradient-descent-1"><span class="nav-number">6.</span> <span class="nav-text">Gradient descent</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Normal-equation"><span class="nav-number">7.</span> <span class="nav-text">Normal equation</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -536,11 +594,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -552,32 +614,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -587,12 +635,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -610,13 +653,85 @@
   
 
   
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
 
   
 
 
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
-
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

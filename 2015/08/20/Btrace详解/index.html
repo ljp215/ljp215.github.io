@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,29 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="#1. Btrace的简介#Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。 #2. 官方参考手册#https://kenai.com/projects/btrace/pages/UserGuide #3. 实例# 1234567891011121314151617181920212223242526">
+  <meta name="description" content="Btrace的简介Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。 官方参考手册https://kenai.com/projects/btrace/pages/UserGuide 实例12345678910111213141516171819202122232425262728293031323334">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Btrace详解">
 <meta property="og:url" content="http://luojinping.com/2015/08/20/Btrace详解/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="#1. Btrace的简介#Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。 #2. 官方参考手册#https://kenai.com/projects/btrace/pages/UserGuide #3. 实例# 1234567891011121314151617181920212223242526">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:45:26.495Z">
+<meta property="og:description" content="Btrace的简介Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。 官方参考手册https://kenai.com/projects/btrace/pages/UserGuide 实例12345678910111213141516171819202122232425262728293031323334">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T13:32:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Btrace详解">
-<meta name="twitter:description" content="#1. Btrace的简介#Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。 #2. 官方参考手册#https://kenai.com/projects/btrace/pages/UserGuide #3. 实例# 1234567891011121314151617181920212223242526">
+<meta name="twitter:description" content="Btrace的简介Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。 官方参考手册https://kenai.com/projects/btrace/pages/UserGuide 实例12345678910111213141516171819202122232425262728293031323334">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/08/20/Btrace详解/">
 
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/08/20/Btrace详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Aug 20 2015 16:01:19" itemprop="dateCreated datePublished" datetime="2015-08-20T16:01:19+08:00">Aug 20 2015</time>
+              <time title="创建时间：8月 20 2015 16:01:19" itemprop="dateCreated datePublished" datetime="2015-08-20T16:01:19+08:00">8月 20 2015</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:45:26" itemprop="dateModified" datetime="2019-08-18T16:45:26+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:32:53" itemprop="dateModified" datetime="2019-08-25T21:32:53+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/08/20/Btrace详解/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2015/08/20/Btrace详解/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -265,43 +315,32 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#1. Btrace的简介#<br>Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。</p>
-<p>#2. 官方参考手册#<br><a href="https://kenai.com/projects/btrace/pages/UserGuide" target="_blank" rel="noopener">https://kenai.com/projects/btrace/pages/UserGuide</a></p>
-<p>#3. 实例#</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">import com.sun.btrace.annotations.*;</span><br><span class="line">import com.sun.btrace.AnyType;</span><br><span class="line">import static com.sun.btrace.BTraceUtils.*;</span><br><span class="line"></span><br><span class="line">@BTrace</span><br><span class="line">public class TestServiceImplTrace &#123;</span><br><span class="line">    @TLS</span><br><span class="line">    private static long service_get_data_startTime = 0;</span><br><span class="line"></span><br><span class="line">    @OnMethod(</span><br><span class="line">            clazz = &quot;com.xxx.mms.test.impl.TestServiceImpl&quot;,</span><br><span class="line">            method = &quot;getTestData&quot;</span><br><span class="line">    )</span><br><span class="line">    public static void startTestServiceImplExecute() &#123;</span><br><span class="line">        section_facade_impl_startTime = timeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @OnMethod(</span><br><span class="line">            clazz = &quot;com.xxx.mms.test.impl.TestServiceImpl&quot;,</span><br><span class="line">            method = &quot;getTestData&quot;</span><br><span class="line">            location = @Location(Kind.RETURN)</span><br><span class="line">    )</span><br><span class="line">    public static void endTestServiceImplExecute(AnyType[] args) &#123; // 传入所有参数</span><br><span class="line">        long time = timeMillis() - section_facade_impl_startTime;</span><br><span class="line"></span><br><span class="line">        Object obj = args[4];</span><br><span class="line">        Integer end = (Integer)obj; // 将第5个参数转成Integer</span><br><span class="line"></span><br><span class="line">        printFields(args[0]); // 打印第1个参数的所有成员变量的值</span><br><span class="line"></span><br><span class="line">        if(end == 6)&#123;</span><br><span class="line">                print(strcat(“service getTestData execute time(millis): &quot;, str(time)));</span><br><span class="line">                print(strcat(“\t string param: &quot;, str(args[3]))); // 将第4个参数转成string并打印</span><br><span class="line">                println(strcat(“\t end: &quot;, str(end)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>#4. 心得#</p>
-<ol>
+        <h1 id="Btrace的简介"><a href="#Btrace的简介" class="headerlink" title="Btrace的简介"></a>Btrace的简介</h1><p>Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。</p>
+<h1 id="官方参考手册"><a href="#官方参考手册" class="headerlink" title="官方参考手册"></a>官方参考手册</h1><p><a href="https://kenai.com/projects/btrace/pages/UserGuide" target="_blank" rel="noopener">https://kenai.com/projects/btrace/pages/UserGuide</a></p>
+<h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> com.sun.btrace.AnyType;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@BTrace</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServiceImplTrace</span> </span>&#123;</span><br><span class="line">    <span class="meta">@TLS</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span> service_get_data_startTime = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnMethod</span>(</span><br><span class="line">            clazz = <span class="string">"com.xxx.mms.test.impl.TestServiceImpl"</span>,</span><br><span class="line">            method = <span class="string">"getTestData"</span></span><br><span class="line">    )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">startTestServiceImplExecute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        section_facade_impl_startTime = timeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnMethod</span>(</span><br><span class="line">            clazz = <span class="string">"com.xxx.mms.test.impl.TestServiceImpl"</span>,</span><br><span class="line">            method = <span class="string">"getTestData"</span></span><br><span class="line">            location = <span class="meta">@Location</span>(Kind.RETURN)</span><br><span class="line">    )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">endTestServiceImplExecute</span><span class="params">(AnyType[] args)</span> </span>&#123; <span class="comment">// 传入所有参数</span></span><br><span class="line">        <span class="keyword">long</span> time = timeMillis() - section_facade_impl_startTime;</span><br><span class="line"></span><br><span class="line">        Object obj = args[<span class="number">4</span>];</span><br><span class="line">        Integer end = (Integer)obj; <span class="comment">// 将第5个参数转成Integer</span></span><br><span class="line"></span><br><span class="line">        printFields(args[<span class="number">0</span>]); <span class="comment">// 打印第1个参数的所有成员变量的值</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(end == <span class="number">6</span>)&#123;</span><br><span class="line">                print(strcat(“<span class="function">service getTestData execute <span class="title">time</span><span class="params">(millis)</span>: ", <span class="title">str</span><span class="params">(time)</span>))</span>;</span><br><span class="line">                print(strcat(“\t string param: <span class="string">", str(args[3]))); // 将第4个参数转成string并打印</span></span><br><span class="line"><span class="string">                println(strcat(“\t end: "</span>, str(end)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><ol>
 <li>btrace脚本的函数都没有走进去时，btrace pid tracing.java 是得不到结果的。</li>
 <li>Kind.LINE指向的行必须是代码能运行到的行。比如，以括号结束的行和空行都是无效的。</li>
 <li>在刚启动btrace脚本监控时，会存在较大的耗时</li>
 <li>print有很多功能：<br>  printNumberMap<br>  printFields： print 每个域<br>  printArray：print 数组</li>
 <li>如果服务的qps较低(0.2),直接去机器上app222通过ip请求，btrace的event不好用也达不到触发某个请求的目的，这个时候可以直接在本机请求此server的api，虽然与实际情况不符，但是能知道耗时的比例关系。</li>
 </ol>
-<p>#5. Btrace的原理#<br>Btrace是由：Attach API + BTrace脚本解析引擎 + ASM + JDK6 Instumentation组成。简单来说就是：用Attach API附加*.jar然后使用BTrace脚本解析引擎 + ASM来实现对类的修改，在使用Instumentation实现类的内存替换。可详细的说明可以看refers的几篇文章。</p>
-<p>#6. 使用Btrace对java进程的影响#</p>
-<ul>
+<h1 id="Btrace的原理"><a href="#Btrace的原理" class="headerlink" title="Btrace的原理"></a>Btrace的原理</h1><p>Btrace是由：Attach API + BTrace脚本解析引擎 + ASM + JDK6 Instumentation组成。简单来说就是：用Attach API附加*.jar然后使用BTrace脚本解析引擎 + ASM来实现对类的修改，在使用Instumentation实现类的内存替换。可详细的说明可以看refers的几篇文章。</p>
+<h1 id="使用Btrace对java进程的影响"><a href="#使用Btrace对java进程的影响" class="headerlink" title="使用Btrace对java进程的影响"></a>使用Btrace对java进程的影响</h1><ul>
 <li>装载时的影响：<br>btrace每次使用，都会重新load所有的class。当然如果OnMethod不匹配，是不会被重新装载。所以跟你的OnMethod的匹配规则很有关系，如果使用+java.lang.Object。那就死定了。</li>
 <li>退出后的影响：<br>btrace监控每次退出后，原先所有的class都不会被恢复，你的所有的监控代码依然一直在运行</li>
 </ul>
 <p>抓取了下btrace改写过后的类：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">public InstrumentServer(String ip, String port)</span><br><span class="line">&#123;</span><br><span class="line">     $btrace$com$agapple$btrace$Instrumentor$InstrumentTracer$bufferMonitor(this);</span><br><span class="line">     this.ip = ip;</span><br><span class="line">     this.port = port;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">private static void $btrace$com$agapple$btrace$Instrumentor$InstrumentTracer$bufferMonitor(@Self Object arg0)</span><br><span class="line">&#123;</span><br><span class="line">     if (!BTraceRuntime.enter(InstrumentTracer.runtime)) return;</span><br><span class="line">     try &#123;</span><br><span class="line">          Field ipField = BTraceUtils.field(&quot;com.agapple.btrace.Instrumentor.InstrumentServer&quot;, &quot;ip&quot;);</span><br><span class="line">          Field portField = BTraceUtils.field(&quot;com.agapple.btrace.Instrumentor.InstrumentServer&quot;, &quot;port&quot;);</span><br><span class="line"> </span><br><span class="line">          String ip = (String)BTraceUtils.get(ipField, self);</span><br><span class="line">          String port = (String)BTraceUtils.get(portField, self);</span><br><span class="line"></span><br><span class="line">          BTraceUtils.println(BTraceUtils.strcat(BTraceUtils.strcat(BTraceUtils.strcat(&quot;ip : &quot;, BTraceUtils.str(ip)), &quot; port : &quot;), BTraceUtils.str(port)));</span><br><span class="line">          BTraceRuntime.leave(); return; &#125; catch (Throwable localThrowable) &#123; BTraceRuntime.handleException(localThrowable);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">InstrumentServer</span><span class="params">(String ip, String port)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     $btrace$com$agapple$btrace$Instrumentor$InstrumentTracer$bufferMonitor(<span class="keyword">this</span>);</span><br><span class="line">     <span class="keyword">this</span>.ip = ip;</span><br><span class="line">     <span class="keyword">this</span>.port = port;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> $btrace$com$agapple$btrace$Instrumentor$InstrumentTracer$bufferMonitor(<span class="meta">@Self</span> Object arg0)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">if</span> (!BTraceRuntime.enter(InstrumentTracer.runtime)) <span class="keyword">return</span>;</span><br><span class="line">     <span class="keyword">try</span> &#123;</span><br><span class="line">          Field ipField = BTraceUtils.field(<span class="string">"com.agapple.btrace.Instrumentor.InstrumentServer"</span>, <span class="string">"ip"</span>);</span><br><span class="line">          Field portField = BTraceUtils.field(<span class="string">"com.agapple.btrace.Instrumentor.InstrumentServer"</span>, <span class="string">"port"</span>);</span><br><span class="line"> </span><br><span class="line">          String ip = (String)BTraceUtils.get(ipField, self);</span><br><span class="line">          String port = (String)BTraceUtils.get(portField, self);</span><br><span class="line"></span><br><span class="line">          BTraceUtils.println(BTraceUtils.strcat(BTraceUtils.strcat(BTraceUtils.strcat(<span class="string">"ip : "</span>, BTraceUtils.str(ip)), <span class="string">" port : "</span>), BTraceUtils.str(port)));</span><br><span class="line">          BTraceRuntime.leave(); <span class="keyword">return</span>; &#125; <span class="keyword">catch</span> (Throwable localThrowable) &#123; BTraceRuntime.handleException(localThrowable);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>注意其中的</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">if (!BTraceRuntime.enter(InstrumentTracer.runtime)) return;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!BTraceRuntime.enter(InstrumentTracer.runtime)) <span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
 <p>再看一下BTraceRuntime中对应方法的实现：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">private volatile boolean disabled;</span><br><span class="line">public static boolean enter(BTraceRuntime current) &#123;</span><br><span class="line">     if (current.disabled) return false;</span><br><span class="line">     return map.enter(current);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> disabled;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">enter</span><span class="params">(BTraceRuntime current)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (current.disabled) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">return</span> map.enter(current);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>每次执行你的监控代码之前会先进行一个判断，判断当前是否处于监控中。你的客户端发起了exit指令后，该方法判断false，直接return。</p>
 <p><strong>所以btrace使用退出后会让你的代码多走了一个方法调用+一个对象属性判断，所以说影响还是非常少的。</strong></p>
-<p>#7. 推荐阅读#<br>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
-<p>#refers#</p>
-<blockquote>
-</blockquote>
-<p>Java SE 6 新特性: Instrumentation 新功能 <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>Java SE 6 新特性: Instrumentation 新功能 <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
 
     </div>
 
@@ -309,6 +348,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -357,6 +413,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -369,15 +428,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Btrace的简介"><span class="nav-number">1.</span> <span class="nav-text">Btrace的简介</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#官方参考手册"><span class="nav-number">2.</span> <span class="nav-text">官方参考手册</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#实例"><span class="nav-number">3.</span> <span class="nav-text">实例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#心得"><span class="nav-number">4.</span> <span class="nav-text">心得</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Btrace的原理"><span class="nav-number">5.</span> <span class="nav-text">Btrace的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#使用Btrace对java进程的影响"><span class="nav-number">6.</span> <span class="nav-text">使用Btrace对java进程的影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#推荐阅读"><span class="nav-number">7.</span> <span class="nav-text">推荐阅读</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">8.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -385,7 +463,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -394,7 +472,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -424,7 +502,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -437,8 +515,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -457,11 +533,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -473,32 +553,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -508,12 +574,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -534,10 +595,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

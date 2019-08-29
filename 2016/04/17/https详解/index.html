@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,32 +43,32 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="#什么是https也称作HTTP over TLS #什么是SSL/TLS1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。1996年，SSL 3.0版问世，得到大规模应用。1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TL">
+  <meta name="description" content="什么是https也称作HTTP over TLS 什么是SSL/TLS1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。1996年，SSL 3.0版问世，得到大规模应用。1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TLS">
 <meta name="keywords" content="Network">
 <meta property="og:type" content="article">
 <meta property="og:title" content="https详解">
 <meta property="og:url" content="http://luojinping.com/2016/04/17/https详解/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="#什么是https也称作HTTP over TLS #什么是SSL/TLS1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。1996年，SSL 3.0版问世，得到大规模应用。1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TL">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="什么是https也称作HTTP over TLS 什么是SSL/TLS1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。1996年，SSL 3.0版问世，得到大规模应用。1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TLS">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/CA.png">
 <meta property="og:image" content="http://luojinping.com/img/certification_production.png">
 <meta property="og:image" content="http://luojinping.com/img/CerValiate.png">
-<meta property="og:updated_time" content="2019-08-18T08:41:20.875Z">
+<meta property="og:updated_time" content="2019-08-25T02:50:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="https详解">
-<meta name="twitter:description" content="#什么是https也称作HTTP over TLS #什么是SSL/TLS1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。1996年，SSL 3.0版问世，得到大规模应用。1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TL">
+<meta name="twitter:description" content="什么是https也称作HTTP over TLS 什么是SSL/TLS1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。1996年，SSL 3.0版问世，得到大规模应用。1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TLS">
 <meta name="twitter:image" content="http://luojinping.com/img/CA.png">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2016/04/17/https详解/">
@@ -90,6 +90,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -98,7 +107,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -107,7 +115,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -123,16 +131,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -144,7 +151,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -164,7 +171,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -175,7 +182,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -186,34 +193,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2016/04/17/https详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -236,13 +272,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Apr 17 2016 21:55:14" itemprop="dateCreated datePublished" datetime="2016-04-17T21:55:14+08:00">Apr 17 2016</time>
+              <time title="创建时间：4月 17 2016 21:55:14" itemprop="dateCreated datePublished" datetime="2016-04-17T21:55:14+08:00">4月 17 2016</time>
             </span>
           
             
@@ -252,13 +288,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:41:20" itemprop="dateModified" datetime="2019-08-18T16:41:20+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 10:50:35" itemprop="dateModified" datetime="2019-08-25T10:50:35+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2016/04/17/https详解/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2016/04/17/https详解/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -269,10 +319,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#什么是https<br>也称作HTTP over TLS</p>
-<p>#什么是SSL/TLS<br>1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。<br>1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。<br>1996年，SSL 3.0版问世，得到大规模应用。<br>1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TLS 1.0版。<br>2006年和2008年，TLS进行了两次升级，分别为TLS 1.1版和TLS 1.2版。最新的变动是2011年TLS 1.2的修订版。<br>TLS 1.0通常被标示为SSL 3.1，TLS 1.1为SSL 3.2，TLS 1.2为SSL 3.3。</p>
-<p>#为什么要有https<br>在说HTTPS之前先说说什么是HTTP，HTTP就是我们平时浏览网页时候使用的一种协议。HTTP协议传输的数据都是未加密的，也就是明文的，因此使用HTTP协议传输隐私信息非常不安全。为了保证这些隐私数据能加密传输，于是网景公司设计了SSL（Secure Sockets Layer）协议用于对HTTP协议传输的数据进行加密，从而就诞生了HTTPS。</p>
-<p>#https保证安全的原理<br>Client端和Server端如果用非对称加密的算法进行通信肯定是绝对安全的，因为私钥和密钥没有第三方知道。但是这样的问题是性能低下。但是如果用对称加密，很容易泄露密钥，安全性得不到保证。那么https是如何做的呢？<br>大概原理就是使用非对称加密来交换一个密钥来进行对称加密。这个过程被称为SSL/TSL的四次握手，具体过程如下：</p>
+        <h1 id="什么是https"><a href="#什么是https" class="headerlink" title="什么是https"></a>什么是https</h1><p>也称作HTTP over TLS</p>
+<h1 id="什么是SSL-TLS"><a href="#什么是SSL-TLS" class="headerlink" title="什么是SSL/TLS"></a>什么是SSL/TLS</h1><p>1994年，NetScape公司设计了SSL协议（Secure Sockets Layer）的1.0版，但是未发布。<br>1995年，NetScape公司发布SSL 2.0版，很快发现有严重漏洞。<br>1996年，SSL 3.0版问世，得到大规模应用。<br>1999年，互联网标准化组织ISOC接替NetScape公司，发布了SSL的升级版TLS 1.0版。<br>2006年和2008年，TLS进行了两次升级，分别为TLS 1.1版和TLS 1.2版。最新的变动是2011年TLS 1.2的修订版。<br>TLS 1.0通常被标示为SSL 3.1，TLS 1.1为SSL 3.2，TLS 1.2为SSL 3.3。</p>
+<h1 id="为什么要有https"><a href="#为什么要有https" class="headerlink" title="为什么要有https"></a>为什么要有https</h1><p>在说HTTPS之前先说说什么是HTTP，HTTP就是我们平时浏览网页时候使用的一种协议。HTTP协议传输的数据都是未加密的，也就是明文的，因此使用HTTP协议传输隐私信息非常不安全。为了保证这些隐私数据能加密传输，于是网景公司设计了SSL（Secure Sockets Layer）协议用于对HTTP协议传输的数据进行加密，从而就诞生了HTTPS。</p>
+<h1 id="https保证安全的原理"><a href="#https保证安全的原理" class="headerlink" title="https保证安全的原理"></a>https保证安全的原理</h1><p>Client端和Server端如果用非对称加密的算法进行通信肯定是绝对安全的，因为私钥和密钥没有第三方知道。但是这样的问题是性能低下。但是如果用对称加密，很容易泄露密钥，安全性得不到保证。那么https是如何做的呢？<br>大概原理就是使用非对称加密来交换一个密钥来进行对称加密。这个过程被称为SSL/TSL的四次握手，具体过程如下：</p>
 <ol>
 <li>Client端向Server端的443端口发出请求，带上随机数client_random和支持的加密方式列表</li>
 <li>Server端返回随机数server_random ，选择的加密方式和服务器证书链</li>
@@ -289,8 +339,7 @@
 <li>对称加密密钥的安全性，生成的master secret密钥第三方为什么拿不到？</li>
 </ol>
 <p>要解答这两个问题，首先得弄清楚什么是证书。</p>
-<p>#为什么证书是安全的？</p>
-<p>##什么是证书<br>数字证书就是互联网通讯中标志通讯各方身份信息的一串数字，提供了一种在Internet上验证通信实体身份的方式，数字证书不是数字身份证，而是身份认证机构盖在数字身份证上的一个章或印（或者说加在数字身份证上的一个签名）。它是由权威机构——<strong>CA机构，又称为证书授权（Certificate Authority）</strong>中心发行的，人们可以在网上用它来识别对方的身份。<br>数字证书的格式普遍采用的是X.509V3国际标准，一个标准的X.509数字证书包含以下一些内容：</p>
+<h1 id="为什么证书是安全的？"><a href="#为什么证书是安全的？" class="headerlink" title="为什么证书是安全的？"></a>为什么证书是安全的？</h1><h2 id="什么是证书"><a href="#什么是证书" class="headerlink" title="什么是证书"></a>什么是证书</h2><p>数字证书就是互联网通讯中标志通讯各方身份信息的一串数字，提供了一种在Internet上验证通信实体身份的方式，数字证书不是数字身份证，而是身份认证机构盖在数字身份证上的一个章或印（或者说加在数字身份证上的一个签名）。它是由权威机构——<strong>CA机构，又称为证书授权（Certificate Authority）</strong>中心发行的，人们可以在网上用它来识别对方的身份。<br>数字证书的格式普遍采用的是X.509V3国际标准，一个标准的X.509数字证书包含以下一些内容：</p>
 <ul>
 <li>证书的版本信息；</li>
 <li>证书的序列号，每个证书都有一个唯一的证书序列号；</li>
@@ -302,16 +351,16 @@
 <li>证书发行者对证书的签名。</li>
 </ul>
 <p>证书里的公钥的作用？<br>证书里的签名的作用？<br>数字证书的签发机构CA，在接收到申请者的资料后进行核对并确定信息的真实有效，然后就会制作一份符合X.509标准的文件。证书中的证书内容包含的持有者信息和公钥等都是由申请者提供的，而数字签名则是CA机构对证书内容进行hash加密后得到的，而这个数字签名就是我们验证证书是否是有可信CA签发的数据。<br><img src="/img/CA.png" alt></p>
-<p>##证书的产生<br><img src="/img/certification_production.png" alt></p>
-<p>##证书的类型<br>实际上，我们使用的证书分很多种类型，SSL证书只是其中的一种。证书的格式是由X.509标准定义。SSL证书负责传输公钥，是一种PKI（Public Key Infrastructure，公钥基础结构）证书。<br>我们常见的证书根据用途不同大致有以下几种：<br>1、SSL证书，用于加密HTTP协议，也就是HTTPS。<br>2、代码签名证书，用于签名二进制文件，比如Windows内核驱动，Firefox插件，Java代码签名等等。<br>3、客户端证书，用于加密邮件。<br>4、双因素证书，网银专业版使用的USB Key里面用的就是这种类型的证书。<br>这些证书都是由受认证的证书颁发机构——我们称之为CA（Certificate Authority）机构来颁发，针对企业与个人的不同，可申请的证书的类型也不同，价格也不同。CA机构颁发的证书都是受信任的证书，对于SSL证书来说，如果访问的网站与证书绑定的网站一致就可以通过浏览器的验证而不会提示错误。</p>
-<p>##证书的安全问题<br><strong>如果让证书安全，那么就需要让客户端拿到的证书是真正想要的证书，即不能让证书被冒充或者被篡改。</strong><br>那么如何保证这一点呢？</p>
+<h2 id="证书的产生"><a href="#证书的产生" class="headerlink" title="证书的产生"></a>证书的产生</h2><p><img src="/img/certification_production.png" alt></p>
+<h2 id="证书的类型"><a href="#证书的类型" class="headerlink" title="证书的类型"></a>证书的类型</h2><p>实际上，我们使用的证书分很多种类型，SSL证书只是其中的一种。证书的格式是由X.509标准定义。SSL证书负责传输公钥，是一种PKI（Public Key Infrastructure，公钥基础结构）证书。<br>我们常见的证书根据用途不同大致有以下几种：<br>1、SSL证书，用于加密HTTP协议，也就是HTTPS。<br>2、代码签名证书，用于签名二进制文件，比如Windows内核驱动，Firefox插件，Java代码签名等等。<br>3、客户端证书，用于加密邮件。<br>4、双因素证书，网银专业版使用的USB Key里面用的就是这种类型的证书。<br>这些证书都是由受认证的证书颁发机构——我们称之为CA（Certificate Authority）机构来颁发，针对企业与个人的不同，可申请的证书的类型也不同，价格也不同。CA机构颁发的证书都是受信任的证书，对于SSL证书来说，如果访问的网站与证书绑定的网站一致就可以通过浏览器的验证而不会提示错误。</p>
+<h2 id="证书的安全问题"><a href="#证书的安全问题" class="headerlink" title="证书的安全问题"></a>证书的安全问题</h2><p><strong>如果让证书安全，那么就需要让客户端拿到的证书是真正想要的证书，即不能让证书被冒充或者被篡改。</strong><br>那么如何保证这一点呢？</p>
 <ol>
 <li>如果证书自己有一个id</li>
 <li>证书的这个id无法被伪造</li>
 <li>客户端知道自己想要的证书id是多少</li>
 </ol>
 <p>如果做到了这三点就能保证证书的安全性了。上面说提到的id就是证书的数字签名。那么什么是数字签名？</p>
-<p>###数字签名（digital signature）<br>数字签名是证书的防伪标签，是将待签名内容通过哈希和私钥加密处理后生成的。目前使用最广泛的 SHA-RSA 数字签名的制作和验证过程如下：</p>
+<h3 id="数字签名（digital-signature）"><a href="#数字签名（digital-signature）" class="headerlink" title="数字签名（digital signature）"></a>数字签名（digital signature）</h3><p>数字签名是证书的防伪标签，是将待签名内容通过哈希和私钥加密处理后生成的。目前使用最广泛的 SHA-RSA 数字签名的制作和验证过程如下：</p>
 <ol>
 <li>数字签名的签发。首先是使用哈希函数对待签名内容进行安全哈希，生成数字摘要，然后使用CA自己的私钥对数字摘要进行加密。</li>
 <li>数字签名的校验。使用CA的公钥解密签名，然后使用相同的签名函数对待签名证书内容进行签名并和服务端数字签名里的签名内容进行比较，如果相同就认为校验成功。</li>
@@ -330,22 +379,21 @@
 <li>根 CA 证书都是自签名，即用自己的公钥和私钥完成了签名的制作和验证。而证书链上的证书签名都是使用上一级证书的密钥对完成签名和验证的。</li>
 </ul>
 <p><strong>那么问题又来了。</strong><br>CA的私钥和公钥是安全的吗？可以被冒充吗？</p>
-<p>###CA的安全性<br>从根CA开始到直接给客户发放证书的各层次CA，都有其自身的密钥对。CA中心的密钥对一般由硬件加密服务器在机器内直接产生，并存储于加密硬件内，或以一定的加密形式存放于密钥数据库内。加密备份于IC卡或其他存储介质中，并以高等级的物理安全措施保护起来。密钥的销毁要以安全的密钥冲写标准，彻底清除原有的密钥痕迹。需要强调的是，根CA密钥的安全性至关重要，它的泄露意味着整个公钥信任体系的崩溃，所以CA的密钥保护必须按照最高安全级 的保护方式来进行设置和管理。</p>
+<h3 id="CA的安全性"><a href="#CA的安全性" class="headerlink" title="CA的安全性"></a>CA的安全性</h3><p>从根CA开始到直接给客户发放证书的各层次CA，都有其自身的密钥对。CA中心的密钥对一般由硬件加密服务器在机器内直接产生，并存储于加密硬件内，或以一定的加密形式存放于密钥数据库内。加密备份于IC卡或其他存储介质中，并以高等级的物理安全措施保护起来。密钥的销毁要以安全的密钥冲写标准，彻底清除原有的密钥痕迹。需要强调的是，根CA密钥的安全性至关重要，它的泄露意味着整个公钥信任体系的崩溃，所以CA的密钥保护必须按照最高安全级 的保护方式来进行设置和管理。</p>
 <p>CA的私钥是自己靠上述方法保管的，不对外公开。<br>CA的公钥是厂商跟浏览器和操作系统合作，把公钥默认装到浏览器或者操作系统环境里。比如firefox 就自己维护了一个可信任的 CA 列表，而chrome 和 IE 使用的是操作系统的 CA 列表。</p>
-<p>##证书验证失败的原因<br>1、SSL证书不是由受信任的CA机构颁发的(注意这种情况并不一定说明有SSL劫持发生)<br>2、证书过期<br>3、访问的网站域名与证书绑定的域名不一致</p>
+<h2 id="证书验证失败的原因"><a href="#证书验证失败的原因" class="headerlink" title="证书验证失败的原因"></a>证书验证失败的原因</h2><p>1、SSL证书不是由受信任的CA机构颁发的(注意这种情况并不一定说明有SSL劫持发生)<br>2、证书过期<br>3、访问的网站域名与证书绑定的域名不一致</p>
 <p>至此，可以知道证书在一定程度上是非常安全的，客户端只要收到的证书是合法的，就能很大程度上保证整个会话是安全的。</p>
-<p>#客户端具体是如何验证SSL证书的<br>为了抵御这种中间人攻击，SSL证书需要由可信的SSL证书颁发机构颁发，形成一个证书链（比如Gmail的证书链为：最底层为网域 mail.google.com，上一层为Thawte SGC CA证书颁发机构，最顶层为很有名的VeriSign证书颁发机构）。那么，浏览器除了需要验证域和有效期外，还要检查证书链中的上级证书公钥是否有效，上级的上级证书公钥是否有效，直至根证书公钥为止。这样就可以有效避免中间人攻击了，因为根证书公钥都是预装在操作系统中的，黑客如果不是暴力破解，无法得到根证书的私钥。如果黑客自己生成一个私钥，浏览器验证根证书公钥的时候发现无法通过操作系统中预装的公钥加密数据后使用这个私钥进行解密，从而判定这个公钥是无效的。这个方案也是现在https通讯通常的方案。</p>
+<h1 id="客户端具体是如何验证SSL证书的"><a href="#客户端具体是如何验证SSL证书的" class="headerlink" title="客户端具体是如何验证SSL证书的"></a>客户端具体是如何验证SSL证书的</h1><p>为了抵御这种中间人攻击，SSL证书需要由可信的SSL证书颁发机构颁发，形成一个证书链（比如Gmail的证书链为：最底层为网域 mail.google.com，上一层为Thawte SGC CA证书颁发机构，最顶层为很有名的VeriSign证书颁发机构）。那么，浏览器除了需要验证域和有效期外，还要检查证书链中的上级证书公钥是否有效，上级的上级证书公钥是否有效，直至根证书公钥为止。这样就可以有效避免中间人攻击了，因为根证书公钥都是预装在操作系统中的，黑客如果不是暴力破解，无法得到根证书的私钥。如果黑客自己生成一个私钥，浏览器验证根证书公钥的时候发现无法通过操作系统中预装的公钥加密数据后使用这个私钥进行解密，从而判定这个公钥是无效的。这个方案也是现在https通讯通常的方案。</p>
 <p>那么，这个现在所有的浏览器正在使用的https通讯方案就无懈可击了吗？答案仍是否定的。我们可以看到，在后一个方案中，https的安全性需要在证书颁发机构公信力的强有力保障前提下才能发挥作用。如果证书颁发机构在没有验证黑客为mail.google.com的持游者的情况下，给黑客颁发了网域为mail.google.com的证书，那么黑客的中间人攻击又可以顺利实施然而，不验证域名持有者就颁发证书的情况在国外几乎不会发生，但是在国内就不一定了。针对破解目标，国内证书颁发机构WoSign（在此只是举例国内比较有名的证书颁发机构WoSign，并不代表WoSign今后一定会这么做）很有可能为了上级要求颁发了证书给非域名持有者的黑客，从而使得破解目标的Gmail密码被黑客截取。</p>
-<p>#涉及到的算法<br>非对称加密算法：RSA，DSA/DSS<br>对称加密算法：AES，RC4，3DES<br>HASH算法：MD5，SHA1，SHA256</p>
-<p>#总结<br>整个过程是递进的，一步一步了解https安全的原理。</p>
+<h1 id="涉及到的算法"><a href="#涉及到的算法" class="headerlink" title="涉及到的算法"></a>涉及到的算法</h1><p>非对称加密算法：RSA，DSA/DSS<br>对称加密算法：AES，RC4，3DES<br>HASH算法：MD5，SHA1，SHA256</p>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>整个过程是递进的，一步一步了解https安全的原理。</p>
 <ol>
 <li>https如何保证安全又高效？<br>https使用非对称加密算法来交换对称加密的密钥，最后使用对称加密算法来进行通信。</li>
 <li>如何保证非对称加密时的安全性？<br>服务端发送证书来传递非对称加密的公钥。保证了公钥和私钥的保密性。</li>
 <li>客户端怎么知道证书是不是真的？<br>客户端根据CA证书的公钥校验证书的数字签名来保证其合法性。</li>
 <li>客户端的CA证书不会被伪造或泄露吗？<br>CA证书是默认预装到浏览器和操作系统中的，所以CA证书的公钥是安全的。</li>
 </ol>
-<p>#Reference</p>
-<blockquote>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <p><a href="http://op.baidu.com/2015/04/https-s01a01/" target="_blank" rel="noopener">http://op.baidu.com/2015/04/https-s01a01/</a><br><a href="https://cipherstuff.wordpress.com/" target="_blank" rel="noopener">https://cipherstuff.wordpress.com/</a><br><a href="http://oncenote.com/2014/10/21/Security-1-HTTPS/" target="_blank" rel="noopener">http://oncenote.com/2014/10/21/Security-1-HTTPS/</a><br><a href="http://www.williamlong.info/archives/2058.html" target="_blank" rel="noopener">http://www.williamlong.info/archives/2058.html</a><br><a href="http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html" target="_blank" rel="noopener">http://www.ruanyifeng.com/blog/2014/02/ssl_tls.html</a></p>
 </blockquote>
 
@@ -355,6 +403,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -403,6 +468,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -415,15 +483,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是https"><span class="nav-number">1.</span> <span class="nav-text">什么是https</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是SSL-TLS"><span class="nav-number">2.</span> <span class="nav-text">什么是SSL/TLS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么要有https"><span class="nav-number">3.</span> <span class="nav-text">为什么要有https</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#https保证安全的原理"><span class="nav-number">4.</span> <span class="nav-text">https保证安全的原理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么证书是安全的？"><span class="nav-number">5.</span> <span class="nav-text">为什么证书是安全的？</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#什么是证书"><span class="nav-number">5.1.</span> <span class="nav-text">什么是证书</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证书的产生"><span class="nav-number">5.2.</span> <span class="nav-text">证书的产生</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证书的类型"><span class="nav-number">5.3.</span> <span class="nav-text">证书的类型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证书的安全问题"><span class="nav-number">5.4.</span> <span class="nav-text">证书的安全问题</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#数字签名（digital-signature）"><span class="nav-number">5.4.1.</span> <span class="nav-text">数字签名（digital signature）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#CA的安全性"><span class="nav-number">5.4.2.</span> <span class="nav-text">CA的安全性</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#证书验证失败的原因"><span class="nav-number">5.5.</span> <span class="nav-text">证书验证失败的原因</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#客户端具体是如何验证SSL证书的"><span class="nav-number">6.</span> <span class="nav-text">客户端具体是如何验证SSL证书的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#涉及到的算法"><span class="nav-number">7.</span> <span class="nav-text">涉及到的算法</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">8.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">9.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -431,7 +518,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -440,7 +527,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -470,7 +557,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -483,8 +570,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -503,11 +588,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -519,32 +608,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -554,12 +629,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -580,10 +650,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

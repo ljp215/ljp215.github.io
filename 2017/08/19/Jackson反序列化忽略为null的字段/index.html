@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,29 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="#要解决的问题json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。 Person 类我们改造下： 12345public class Person &amp;#123;  private String name;  // Address is a enum: &amp;#123;CH, US, GZ&amp;#125;  private Region region">
+  <meta name="description" content="要解决的问题json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。 Person 类我们改造下：12345public class Person &amp;#123;  private String name;  // Address is a enum: &amp;#123;CH, US, GZ&amp;#125;  private Region region =">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Jackson反序列化忽略为null的字段">
 <meta property="og:url" content="http://luojinping.com/2017/08/19/Jackson反序列化忽略为null的字段/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="#要解决的问题json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。 Person 类我们改造下： 12345public class Person &amp;#123;  private String name;  // Address is a enum: &amp;#123;CH, US, GZ&amp;#125;  private Region region">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:48:15.268Z">
+<meta property="og:description" content="要解决的问题json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。 Person 类我们改造下：12345public class Person &amp;#123;  private String name;  // Address is a enum: &amp;#123;CH, US, GZ&amp;#125;  private Region region =">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T13:32:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Jackson反序列化忽略为null的字段">
-<meta name="twitter:description" content="#要解决的问题json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。 Person 类我们改造下： 12345public class Person &amp;#123;  private String name;  // Address is a enum: &amp;#123;CH, US, GZ&amp;#125;  private Region region">
+<meta name="twitter:description" content="要解决的问题json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。 Person 类我们改造下：12345public class Person &amp;#123;  private String name;  // Address is a enum: &amp;#123;CH, US, GZ&amp;#125;  private Region region =">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2017/08/19/Jackson反序列化忽略为null的字段/">
 
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2017/08/19/Jackson反序列化忽略为null的字段/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Aug 19 2017 23:02:30" itemprop="dateCreated datePublished" datetime="2017-08-19T23:02:30+08:00">Aug 19 2017</time>
+              <time title="创建时间：8月 19 2017 23:02:30" itemprop="dateCreated datePublished" datetime="2017-08-19T23:02:30+08:00">8月 19 2017</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:48:15" itemprop="dateModified" datetime="2019-08-18T16:48:15+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:32:54" itemprop="dateModified" datetime="2019-08-25T21:32:54+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/08/19/Jackson反序列化忽略为null的字段/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/08/19/Jackson反序列化忽略为null的字段/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -265,34 +315,18 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#要解决的问题<br>json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。</p>
-<p>Person 类我们改造下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">public class Person &#123;</span><br><span class="line">  private String name;</span><br><span class="line">  // Address is a enum: &#123;CH, US, GZ&#125;</span><br><span class="line">  private Region region = Region.GZ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>仍然以 Person 类举例，如果 json 串是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;name&quot;:&quot;robert&quot;, &quot;region&quot;:null&#125;</span><br></pre></td></tr></table></figure>
-
-<p>希望反序列化后的 bean 为 </p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person(name=&quot;robert&quot;, region=Region.GZ)</span><br></pre></td></tr></table></figure>
-
-<p>#解决过程<br>在上一篇文章 <code>lombok 的 AllArgs 导致 Jackson 反序列化丢失字段默认值</code> 中可以看到 json 反序列化为 bean 的过程，一般情况下，是先调用默认构造函数生成 bean，然后根据 json 中出现的字段挨个赋值。<br>所以反序列化生成的 bean 的 region 肯定为 null。</p>
-<p>#解决方案</p>
-<p>##1. @JsonInclude(Include.NON_NULL) 可行吗？<br>不可行，这个注解是序列化时忽略 null 值，反序列化时不生效，基本上反序列化时我们不能做什么事情。</p>
-<p>##2. JsonCreator 可行吗？<br>在 Region 枚举里写 JsonCreator:</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">@JsonCreator</span><br><span class="line">public static Region getRegion(String value) &#123;</span><br><span class="line">    for (Region region : Region.values()) &#123;</span><br><span class="line">        if (region.name().equals(value)) &#123;</span><br><span class="line">            return region;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    return Region.GZ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+        <h1 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h1><p>json 反序列化 bean 时，当某个字段在 json 中为 null 时，使用 bean 中声明的默认值。</p>
+<p>Person 类我们改造下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line">  <span class="comment">// Address is a enum: &#123;CH, US, GZ&#125;</span></span><br><span class="line">  <span class="keyword">private</span> Region region = Region.GZ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>仍然以 Person 类举例，如果 json 串是：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&#123;<span class="string">"name"</span>:<span class="string">"robert"</span>, <span class="string">"region"</span>:<span class="keyword">null</span>&#125;</span><br></pre></td></tr></table></figure></p>
+<p>希望反序列化后的 bean 为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Person(name=<span class="string">"robert"</span>, region=Region.GZ)</span><br></pre></td></tr></table></figure></p>
+<h1 id="解决过程"><a href="#解决过程" class="headerlink" title="解决过程"></a>解决过程</h1><p>在上一篇文章 <code>lombok 的 AllArgs 导致 Jackson 反序列化丢失字段默认值</code> 中可以看到 json 反序列化为 bean 的过程，一般情况下，是先调用默认构造函数生成 bean，然后根据 json 中出现的字段挨个赋值。<br>所以反序列化生成的 bean 的 region 肯定为 null。</p>
+<h1 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h1><h2 id="JsonInclude-Include-NON-NULL-可行吗？"><a href="#JsonInclude-Include-NON-NULL-可行吗？" class="headerlink" title="@JsonInclude(Include.NON_NULL) 可行吗？"></a>@JsonInclude(Include.NON_NULL) 可行吗？</h2><p>不可行，这个注解是序列化时忽略 null 值，反序列化时不生效，基本上反序列化时我们不能做什么事情。</p>
+<h2 id="JsonCreator-可行吗？"><a href="#JsonCreator-可行吗？" class="headerlink" title="JsonCreator 可行吗？"></a>JsonCreator 可行吗？</h2><p>在 Region 枚举里写 JsonCreator:<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@JsonCreator</span></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> Region <span class="title">getRegion</span><span class="params">(String value)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">for</span> (Region region : Region.values()) &#123;</span><br><span class="line">        <span class="keyword">if</span> (region.name().equals(value)) &#123;</span><br><span class="line">            <span class="keyword">return</span> region;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> Region.GZ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>直接将 <code>{&quot;region&quot;: null}</code> 反序列化为 Region 是可行的，会调用 JsonCreator，但是如果是反序列化 Person 则不会调用到 JsonCreator，为什么呢？</p>
-<p>debug 过程：<br>如前文所述，会调用到 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer#deserialize</code> 这个函数中，然后会调用到<br><code>com.fasterxml.jackson.databind.deser.SettableBeanProperty#deserialize</code>，这个函数的实现是：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">public final Object deserialize(JsonParser p, DeserializationContext ctxt) throws IOException &#123;</span><br><span class="line">    JsonToken t = p.getCurrentToken();</span><br><span class="line"></span><br><span class="line">    if (t == JsonToken.VALUE_NULL) &#123;</span><br><span class="line">        return _valueDeserializer.getNullValue(ctxt);</span><br><span class="line">    &#125;</span><br><span class="line">    if (_valueTypeDeserializer != null) &#123;</span><br><span class="line">        return _valueDeserializer.deserializeWithType(p, ctxt, _valueTypeDeserializer);</span><br><span class="line">    &#125;</span><br><span class="line">    return _valueDeserializer.deserialize(p, ctxt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<p>debug 过程：<br>如前文所述，会调用到 <code>com.fasterxml.jackson.databind.deser.BeanDeserializer#deserialize</code> 这个函数中，然后会调用到<br><code>com.fasterxml.jackson.databind.deser.SettableBeanProperty#deserialize</code>，这个函数的实现是：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">deserialize</span><span class="params">(JsonParser p, DeserializationContext ctxt)</span> <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">    JsonToken t = p.getCurrentToken();</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (t == JsonToken.VALUE_NULL) &#123;</span><br><span class="line">        <span class="keyword">return</span> _valueDeserializer.getNullValue(ctxt);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (_valueTypeDeserializer != <span class="keyword">null</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> _valueDeserializer.deserializeWithType(p, ctxt, _valueTypeDeserializer);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> _valueDeserializer.deserialize(p, ctxt);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>所以在这里会把 null 值拦住，直接返回 getNullValue 的结果。</p>
-<p>##3.自定义 deserializer</p>
-<p>实现如下：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">public class RegionDeserializer extends JsonDeserializer&lt;Region&gt; &#123;</span><br><span class="line">    @Override</span><br><span class="line">    public Region deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)</span><br><span class="line">            throws IOException &#123;</span><br><span class="line">        JsonNode node = jsonParser.getCodec().readTree(jsonParser);</span><br><span class="line">        Region region = Region.GZ;</span><br><span class="line"></span><br><span class="line">        try &#123;</span><br><span class="line">            if (StringUtils.isNotEmpty(node.textValue())) &#123;</span><br><span class="line">                return Region.getRegion(node.textValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; catch (Exception e) &#123;</span><br><span class="line">            type = Region.GZ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return region;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    @Override</span><br><span class="line">    public Region getNullValue(DeserializationContext ctxt) &#123;</span><br><span class="line">        return Region.GZ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<p>Person 类改为：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">public class Person &#123;</span><br><span class="line">  private String name;</span><br><span class="line">  </span><br><span class="line">  // Address is a enum: &#123;CH, US, GZ&#125;</span><br><span class="line">  @JsonDeserialize(using = RegionDeserializer.class)</span><br><span class="line">  private Region region = Region.GZ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
+<h2 id="自定义-deserializer"><a href="#自定义-deserializer" class="headerlink" title="自定义 deserializer"></a>自定义 deserializer</h2><p>实现如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">RegionDeserializer</span> <span class="keyword">extends</span> <span class="title">JsonDeserializer</span>&lt;<span class="title">Region</span>&gt; </span>&#123;</span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Region <span class="title">deserialize</span><span class="params">(JsonParser jsonParser, DeserializationContext deserializationContext)</span></span></span><br><span class="line"><span class="function">            <span class="keyword">throws</span> IOException </span>&#123;</span><br><span class="line">        JsonNode node = jsonParser.getCodec().readTree(jsonParser);</span><br><span class="line">        Region region = Region.GZ;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">try</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> (StringUtils.isNotEmpty(node.textValue())) &#123;</span><br><span class="line">                <span class="keyword">return</span> Region.getRegion(node.textValue());</span><br><span class="line">            &#125;</span><br><span class="line">        &#125; <span class="keyword">catch</span> (Exception e) &#123;</span><br><span class="line">            type = Region.GZ;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> region;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Override</span></span><br><span class="line">    <span class="function"><span class="keyword">public</span> Region <span class="title">getNullValue</span><span class="params">(DeserializationContext ctxt)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> Region.GZ;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Person 类改为：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  <span class="keyword">private</span> String name;</span><br><span class="line">  </span><br><span class="line">  <span class="comment">// Address is a enum: &#123;CH, US, GZ&#125;</span></span><br><span class="line">  <span class="meta">@JsonDeserialize</span>(using = RegionDeserializer.class)</span><br><span class="line">  <span class="keyword">private</span> Region region = Region.GZ;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
 <p>这样，在<code>com.fasterxml.jackson.databind.deser.SettableBeanProperty#deserialize</code>这个方法里，碰到 null 值，就会返回 getNullValue 的结果，即 Region.GZ，如果不是 null 会进入 getRegion 函数处理，也能处理其他情况。</p>
 
     </div>
@@ -301,6 +335,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -349,6 +400,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -361,15 +415,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#要解决的问题"><span class="nav-number">1.</span> <span class="nav-text">要解决的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决过程"><span class="nav-number">2.</span> <span class="nav-text">解决过程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#解决方案"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#JsonInclude-Include-NON-NULL-可行吗？"><span class="nav-number">3.1.</span> <span class="nav-text">@JsonInclude(Include.NON_NULL) 可行吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JsonCreator-可行吗？"><span class="nav-number">3.2.</span> <span class="nav-text">JsonCreator 可行吗？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义-deserializer"><span class="nav-number">3.3.</span> <span class="nav-text">自定义 deserializer</span></a></li></ol></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -377,7 +450,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -386,7 +459,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -416,7 +489,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -429,8 +502,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -449,11 +520,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -465,32 +540,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -500,12 +561,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -526,10 +582,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

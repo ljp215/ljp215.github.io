@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,29 +43,29 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="##1. 指数分布族(Exponential Family) ####指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族：$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$  $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log">
+  <meta name="description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族： P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta)) $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition fun">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Stanford Machine Learning - 5 广义线性模型">
 <meta property="og:url" content="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="##1. 指数分布族(Exponential Family) ####指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族：$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$  $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log">
-<meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2019-08-18T08:41:42.261Z">
+<meta property="og:description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族： P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta)) $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition fun">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-08-25T13:10:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stanford Machine Learning - 5 广义线性模型">
-<meta name="twitter:description" content="##1. 指数分布族(Exponential Family) ####指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族：$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$  $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log">
+<meta name="twitter:description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族： P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta)) $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition fun">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/">
 
@@ -86,6 +86,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -94,7 +103,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -103,7 +111,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -119,16 +127,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -140,7 +147,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -160,7 +167,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -171,7 +178,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -182,34 +189,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -232,13 +268,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Nov 5 2017 23:20:39" itemprop="dateCreated datePublished" datetime="2017-11-05T23:20:39+08:00">Nov 5 2017</time>
+              <time title="创建时间：11月 5 2017 23:20:39" itemprop="dateCreated datePublished" datetime="2017-11-05T23:20:39+08:00">11月 5 2017</time>
             </span>
           
             
@@ -248,13 +284,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:41:42" itemprop="dateModified" datetime="2019-08-18T16:41:42+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:05" itemprop="dateModified" datetime="2019-08-25T21:10:05+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -265,15 +315,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>##1. 指数分布族(Exponential Family)</p>
-<p>####指数分布族的定义<br>若一类概率分布可以写成如下形式，那么它就属于指数分布族：<br>$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$</p>
-<ul>
+        <h1 id="指数分布族-Exponential-Family"><a href="#指数分布族-Exponential-Family" class="headerlink" title="指数分布族(Exponential Family)"></a>指数分布族(Exponential Family)</h1><h2 id="指数分布族的定义"><a href="#指数分布族的定义" class="headerlink" title="指数分布族的定义"></a>指数分布族的定义</h2><p>若一类概率分布可以写成如下形式，那么它就属于指数分布族：</p>
+<script type="math/tex; mode=display">P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))</script><ul>
 <li>$\eta$: 自然参数，通常是一个实数</li>
 <li>T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识）</li>
 <li>a($\eta$) 被称为 log partition function</li>
 </ul>
 <p>对于给定的 a，b，T 三个函数，上式定义了一个以 $\eta$ 为参数的概率分布集合，即改变 $\eta$ 可以得到不同的概率分布，例如高斯分布和伯努利分布。</p>
-<h4 id="指数分布族以及它们的特征"><a href="#指数分布族以及它们的特征" class="headerlink" title="指数分布族以及它们的特征"></a>指数分布族以及它们的特征</h4><ul>
+<h2 id="指数分布族以及它们的特征"><a href="#指数分布族以及它们的特征" class="headerlink" title="指数分布族以及它们的特征"></a>指数分布族以及它们的特征</h2><ul>
 <li>正态分布（高斯分布）——总体噪音（由中心极限定理得）</li>
 <li>伯努利分布——逻辑回归（对01问题建模）</li>
 <li>多项式分布——K种结果的事情进行建模</li>
@@ -282,13 +331,13 @@
 <li>β分布，Dirichlet分布——对小数进行分布，对概率分布进行建模</li>
 <li>Wishart分布——协方差的分布</li>
 </ul>
-<p>##2. 指数分布簇推导<br>高斯分布(Gaussian)和伯努利(Bernoulli)分布都可以推导为指数分布族。</p>
-<p>###2.1 伯努利分布的推导<br>伯努利分布的概率公式为：$P(y=1;\phi)=\phi; P(y=0;\phi)=1-\phi;$</p>
-<p>公式可经如下变换：<br>$$P(y;\phi)=\phi^y(1-\phi)^y$$<br>$$=exp(log(\phi^y(1-\phi)^y))=exp(ylog(\phi)+ (1-y)log(1-\phi))$$<br>$$=exp(log(\frac\phi{1-\phi})y + log(1-\phi))$$</p>
-<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
-<p>###2.2 高斯分布的推导<br>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：<br>$$P(y;\mu)=\frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2)$$<br>$$=\frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}y^2) * exp({\mu}y-\frac{1}{2}\mu^2)$$</p>
-<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{ {\mu}^2}2 = \frac{ {\eta}^2}2$</p>
-<p>##3. 广义线性模型(Generalized Linear Model)<br>想用 广义线性模型对一般问题进行建模首先需要明确几个 假设：</p>
+<h1 id="指数分布簇推导"><a href="#指数分布簇推导" class="headerlink" title="指数分布簇推导"></a>指数分布簇推导</h1><p>高斯分布(Gaussian)和伯努利(Bernoulli)分布都可以推导为指数分布族。</p>
+<h2 id="伯努利分布的推导"><a href="#伯努利分布的推导" class="headerlink" title="伯努利分布的推导"></a>伯努利分布的推导</h2><p>伯努利分布的概率公式为：$P(y=1;\phi)=\phi; P(y=0;\phi)=1-\phi;$</p>
+<p>公式可经如下变换：</p>
+<script type="math/tex; mode=display">P(y;\phi)=\phi^y(1-\phi)^y</script><script type="math/tex; mode=display">=exp(log(\phi^y(1-\phi)^y))=exp(ylog(\phi)+ (1-y)log(1-\phi))</script><script type="math/tex; mode=display">=exp(log(\frac\phi{1-\phi})y + log(1-\phi))</script><p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
+<h2 id="高斯分布的推导"><a href="#高斯分布的推导" class="headerlink" title="高斯分布的推导"></a>高斯分布的推导</h2><p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：</p>
+<script type="math/tex; mode=display">P(y;\mu)=\frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2)</script><script type="math/tex; mode=display">=\frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}y^2) * exp({\mu}y-\frac{1}{2}\mu^2)</script><p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{ {\mu}^2}2 = \frac{ {\eta}^2}2$</p>
+<h1 id="广义线性模型-Generalized-Linear-Model"><a href="#广义线性模型-Generalized-Linear-Model" class="headerlink" title="广义线性模型(Generalized Linear Model)"></a>广义线性模型(Generalized Linear Model)</h1><p>想用 广义线性模型对一般问题进行建模首先需要明确几个 假设：</p>
 <ol>
 <li>$y | x;θ \sim ExponentialFamily(\eta)$ y的条件概率属于指数分布族;</li>
 <li>给定 x 广义线性模型的目标是求解 T(y) | x， 不过由于 很多情况下 T(y) = y  所以我们的目标变成了 y | x , 也即 我们希望拟合函数为 h(x) = E[y|x] (这个条件在线性回归和逻辑回归中都满足， 例如在逻辑回归中 $hθ(x) = p(y = 1|x;\theta) = 0 \cdot p(y = 0|x; \theta) + 1 \cdot  p(y = 1|x; \theta) = E[y|x;\theta])$</li>
@@ -296,10 +345,10 @@
 </ol>
 <p>有了如上假设，就可以进行建模和求解了。</p>
 <p>对于伯努利分布，可以推导出：<br>…<br>这也就是逻辑回归中 sigmod 函数的由来。</p>
-<p>##4. 多分类算法(Softmax Regression)<br>y有多个可能的分类：{1, 2, …, k}</p>
+<h1 id="多分类算法-Softmax-Regression"><a href="#多分类算法-Softmax-Regression" class="headerlink" title="多分类算法(Softmax Regression)"></a>多分类算法(Softmax Regression)</h1><p>y有多个可能的分类：{1, 2, …, k}</p>
 <p>=======具体的公式略=======</p>
 <p>最后求借寻找最佳参数时，跟最小二乘和逻辑回归的解法类似，可以用梯度下降法或者牛顿迭代法。</p>
-<p>##Referecen<br><a href="https://zhuanlan.zhihu.com/p/22876460" target="_blank" rel="noopener">广义线性模型(Generalized Linear Model)</a></p>
+<h1 id="Referecen"><a href="#Referecen" class="headerlink" title="Referecen"></a>Referecen</h1><p><a href="https://zhuanlan.zhihu.com/p/22876460" target="_blank" rel="noopener">广义线性模型(Generalized Linear Model)</a></p>
 
     </div>
 
@@ -307,6 +356,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -355,6 +421,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -367,24 +436,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#指数分布族-Exponential-Family"><span class="nav-number">1.</span> <span class="nav-text">指数分布族(Exponential Family)</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#指数分布族的定义"><span class="nav-number">1.1.</span> <span class="nav-text">指数分布族的定义</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#指数分布族以及它们的特征"><span class="nav-number">1.2.</span> <span class="nav-text">指数分布族以及它们的特征</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#指数分布簇推导"><span class="nav-number">2.</span> <span class="nav-text">指数分布簇推导</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#伯努利分布的推导"><span class="nav-number">2.1.</span> <span class="nav-text">伯努利分布的推导</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯分布的推导"><span class="nav-number">2.2.</span> <span class="nav-text">高斯分布的推导</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#广义线性模型-Generalized-Linear-Model"><span class="nav-number">3.</span> <span class="nav-text">广义线性模型(Generalized Linear Model)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#多分类算法-Softmax-Regression"><span class="nav-number">4.</span> <span class="nav-text">多分类算法(Softmax Regression)</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Referecen"><span class="nav-number">5.</span> <span class="nav-text">Referecen</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -392,7 +471,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -401,7 +480,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -431,7 +510,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -444,26 +523,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#指数分布族以及它们的特征"><span class="nav-number">1.</span> <span class="nav-text">指数分布族以及它们的特征</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -481,11 +541,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -497,32 +561,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -532,12 +582,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -555,13 +600,85 @@
   
 
   
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
 
   
 
 
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
-
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

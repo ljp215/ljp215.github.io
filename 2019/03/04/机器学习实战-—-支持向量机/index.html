@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,35 +43,35 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="1. 要解决的问题与「机器学习实战 — 决策树」的问题一样 2. 前情回顾在上一次中，随机森林的效果最好，最终效果如下： 3. 特征工程特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：  特征选取 删除无用特征 空值处理 处理重要特征 特征标签化 特征归一化  3.1 特征归一化使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 St">
+  <meta name="description" content="要解决的问题与「机器学习实战 — 决策树」的问题一样 前情回顾在上一次中，随机森林的效果最好，最终效果如下： 特征工程特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：  特征选取 删除无用特征 空值处理 处理重要特征 特征标签化 特征归一化  特征归一化使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="机器学习实战 — 支持向量机">
 <meta property="og:url" content="http://luojinping.com/2019/03/04/机器学习实战-—-支持向量机/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="1. 要解决的问题与「机器学习实战 — 决策树」的问题一样 2. 前情回顾在上一次中，随机森林的效果最好，最终效果如下： 3. 特征工程特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：  特征选取 删除无用特征 空值处理 处理重要特征 特征标签化 特征归一化  3.1 特征归一化使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 St">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="要解决的问题与「机器学习实战 — 决策树」的问题一样 前情回顾在上一次中，随机森林的效果最好，最终效果如下： 特征工程特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：  特征选取 删除无用特征 空值处理 处理重要特征 特征标签化 特征归一化  特征归一化使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/RF_finally_auc.jpg">
 <meta property="og:image" content="http://luojinping.com/img/features_normalization_gradient_descent.jpg">
 <meta property="og:image" content="http://luojinping.com/img/features_normalization_analysis.jpg">
 <meta property="og:image" content="http://luojinping.com/img/SVM_GridSearch_result.jpg">
 <meta property="og:image" content="http://luojinping.com/img/SVM_normal_model_auc.jpg">
 <meta property="og:image" content="http://luojinping.com/img/SVM_model_compare.jpg">
-<meta property="og:updated_time" content="2019-08-18T08:52:45.002Z">
+<meta property="og:updated_time" content="2019-08-25T13:10:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="机器学习实战 — 支持向量机">
-<meta name="twitter:description" content="1. 要解决的问题与「机器学习实战 — 决策树」的问题一样 2. 前情回顾在上一次中，随机森林的效果最好，最终效果如下： 3. 特征工程特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：  特征选取 删除无用特征 空值处理 处理重要特征 特征标签化 特征归一化  3.1 特征归一化使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 St">
+<meta name="twitter:description" content="要解决的问题与「机器学习实战 — 决策树」的问题一样 前情回顾在上一次中，随机森林的效果最好，最终效果如下： 特征工程特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：  特征选取 删除无用特征 空值处理 处理重要特征 特征标签化 特征归一化  特征归一化使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。">
 <meta name="twitter:image" content="http://luojinping.com/img/RF_finally_auc.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2019/03/04/机器学习实战-—-支持向量机/">
@@ -93,6 +93,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -101,7 +110,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -110,7 +118,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -126,16 +134,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -147,7 +154,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -167,7 +174,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -178,7 +185,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -189,34 +196,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2019/03/04/机器学习实战-—-支持向量机/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -239,13 +275,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Mar 4 2019 23:23:56" itemprop="dateCreated datePublished" datetime="2019-03-04T23:23:56+08:00">Mar 4 2019</time>
+              <time title="创建时间：3月 4 2019 23:23:56" itemprop="dateCreated datePublished" datetime="2019-03-04T23:23:56+08:00">3月 4 2019</time>
             </span>
           
             
@@ -255,13 +291,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:45" itemprop="dateModified" datetime="2019-08-18T16:52:45+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:11" itemprop="dateModified" datetime="2019-08-25T21:10:11+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2019/03/04/机器学习实战-—-支持向量机/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2019/03/04/机器学习实战-—-支持向量机/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -272,9 +322,9 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="1-要解决的问题"><a href="#1-要解决的问题" class="headerlink" title="1. 要解决的问题"></a>1. 要解决的问题</h1><p>与「机器学习实战 — 决策树」的问题一样</p>
-<h1 id="2-前情回顾"><a href="#2-前情回顾" class="headerlink" title="2. 前情回顾"></a>2. 前情回顾</h1><p>在上一次中，随机森林的效果最好，最终效果如下：<br><img src="/img/RF_finally_auc.jpg" alt="RF_finally_auc.jpg"></p>
-<h1 id="3-特征工程"><a href="#3-特征工程" class="headerlink" title="3. 特征工程"></a>3. 特征工程</h1><p>特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：</p>
+        <h1 id="要解决的问题"><a href="#要解决的问题" class="headerlink" title="要解决的问题"></a>要解决的问题</h1><p>与「机器学习实战 — 决策树」的问题一样</p>
+<h1 id="前情回顾"><a href="#前情回顾" class="headerlink" title="前情回顾"></a>前情回顾</h1><p>在上一次中，随机森林的效果最好，最终效果如下：<br><img src="/img/RF_finally_auc.jpg" alt="RF_finally_auc.jpg"></p>
+<h1 id="特征工程"><a href="#特征工程" class="headerlink" title="特征工程"></a>特征工程</h1><p>特征工程与第二次作业一样，但增加了最后一步「特征归一化」，步骤概述如下：</p>
 <ol>
 <li>特征选取</li>
 <li>删除无用特征</li>
@@ -283,9 +333,8 @@
 <li>特征标签化</li>
 <li><strong>特征归一化</strong></li>
 </ol>
-<h2 id="3-1-特征归一化"><a href="#3-1-特征归一化" class="headerlink" title="3.1 特征归一化"></a>3.1 特征归一化</h2><p>使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。因为特征基本上都是符合正态分布的，而且 StandardScaler 对数据变动时引入新的极值点更友好。</p>
+<h2 id="特征归一化"><a href="#特征归一化" class="headerlink" title="特征归一化"></a>特征归一化</h2><p>使用 StandardScaler 和 MinMaxScaler 的差别不大，最终使用的是 StandardScaler。因为特征基本上都是符合正态分布的，而且 StandardScaler 对数据变动时引入新的极值点更友好。</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 使用 z-score 标准化特征</span></span><br><span class="line">ss = preprocessing.StandardScaler()</span><br><span class="line">X = ss.fit_transform(X)</span><br></pre></td></tr></table></figure>
-
 <p>特征归一化的好处有以下两点：</p>
 <ol>
 <li>模型训练速度更快<br>能够使参数优化时能以较快的速度收敛。<br>归一化前后的 SVM(linear 核) 的耗时对比，数据集 (2783, 54)，即 2783 条数据，54 个特征。归一化前后的耗时分别为：1083s，0.44s，可见归一化对计算速度的提升非常大。</li>
@@ -293,8 +342,8 @@
 </ol>
 <p>对于不同数量的训练集，训练 SVM，LR，DT，RF 四个模型。随着数据集的数量增加，特征归一化后的模型，其准确率提升如下图所示：<br><img src="/img/features_normalization_analysis.jpg" alt="features_normalization_analysis.jpg"></p>
 <p>通过这个图，也会发现特征归一化也不是能够提升所有模型的准确率，对于 DT 和 RF 就没有效果，这是因为决策树的分支只是计算信息熵，而不考虑整体特征的分布情况。</p>
-<h2 id="3-2-最终数据集"><a href="#3-2-最终数据集" class="headerlink" title="3.2 最终数据集"></a>3.2 最终数据集</h2><p>经过一系列处理后可用的数据集有 30w，但由于 SVM 运行地太慢了，从中选取 2w 数据来作为本次作业的数据集。</p>
-<h1 id="4-SVM"><a href="#4-SVM" class="headerlink" title="4. SVM"></a>4. SVM</h1><h2 id="4-1-核函数介绍"><a href="#4-1-核函数介绍" class="headerlink" title="4.1 核函数介绍"></a>4.1 核函数介绍</h2><p>常见的核函数有：</p>
+<h2 id="最终数据集"><a href="#最终数据集" class="headerlink" title="最终数据集"></a>最终数据集</h2><p>经过一系列处理后可用的数据集有 30w，但由于 SVM 运行地太慢了，从中选取 2w 数据来作为本次作业的数据集。</p>
+<h1 id="SVM"><a href="#SVM" class="headerlink" title="SVM"></a>SVM</h1><h2 id="核函数介绍"><a href="#核函数介绍" class="headerlink" title="核函数介绍"></a>核函数介绍</h2><p>常见的核函数有：</p>
 <ol>
 <li>linear：主要用于线性可分的情形。参数少，速度快，对于一般数据，分类效果已经很理想了。</li>
 <li>rbf：将样本映射到更高维的空间，目前应用最广的一个，对大小样本都有比较好的性能，而且参数较少。linear 是 rbf 的一个特例。</li>
@@ -308,24 +357,20 @@
 <li>如果Feature的数量比较小，而样本数量很多，需要手工添加一些feature变成第一种情况</li>
 </ol>
 <p>本次作业的数据集特征少，数据大。结合上述建议，再加上取了少部分(1k~5k)的数据进行了初步对比，决定重点调优 rbf 的参数。</p>
-<h2 id="4-2-SVM-RBF-参数搜索"><a href="#4-2-SVM-RBF-参数搜索" class="headerlink" title="4.2 SVM RBF 参数搜索"></a>4.2 SVM RBF 参数搜索</h2><p>训练集数据量： 2w。搜索最优参数，用时 12.3 小时，将 搜索过程的数据记录 绘制成下图所示，纵轴代表搜索得分，横轴代表 {C, gamma} 两个参数的取值。</p>
+<h2 id="SVM-RBF-参数搜索"><a href="#SVM-RBF-参数搜索" class="headerlink" title="SVM RBF 参数搜索"></a>SVM RBF 参数搜索</h2><p>训练集数据量： 2w。搜索最优参数，用时 12.3 小时，将 搜索过程的数据记录 绘制成下图所示，纵轴代表搜索得分，横轴代表 {C, gamma} 两个参数的取值。</p>
 <p><img src="/img/SVM_GridSearch_result.jpg" alt="SVM_GridSearch_result.jpg"></p>
 <p>C = 10, gamma = 0.1 时的效果最好。如上图中红圈所示，对于 C = 0.1, 100, 1000 时，都是gamma = 0.1 这个位置时效果最好。</p>
-<h2 id="4-3-常用核函数"><a href="#4-3-常用核函数" class="headerlink" title="4.3 常用核函数"></a>4.3 常用核函数</h2><p>在本次作业的数据集中，linear 核函数的运算速度相当慢，所以对于常用核函数，仅对比了 rbf，poly 和 sigmoid 三个核函数。针对 2w 条数据，运行结果如下：</p>
+<h2 id="常用核函数"><a href="#常用核函数" class="headerlink" title="常用核函数"></a>常用核函数</h2><p>在本次作业的数据集中，linear 核函数的运算速度相当慢，所以对于常用核函数，仅对比了 rbf，poly 和 sigmoid 三个核函数。针对 2w 条数据，运行结果如下：</p>
 <p><img src="/img/SVM_normal_model_auc.jpg" alt="SVM_normal_model_auc.jpg"></p>
 <p>其中，rbf 效果最好，AUC 有 0.82，但相比起之前 AUC 0.9 的 RF 来还是不理想。</p>
-<h2 id="4-4-自定义核函数"><a href="#4-4-自定义核函数" class="headerlink" title="4.4 自定义核函数"></a>4.4 自定义核函数</h2><p>由于常用核函数的效果不够理想，所以尝试使用自定义的核函数，参考前人总结出的各种核函数，放入模型中进行尝试。核函数的公式见原代码，任取两个核函数的说明如下：</p>
-<p><strong>Rational quadratic kernel</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Rational quadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 - ||x-y||^2/(||x-y||^2+c)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rational_quadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> - (dists_sq / (dists_sq + _c))</span><br></pre></td></tr></table></figure>
-
-<p><strong>Inverse multiquadratic kernel</strong></p>
-<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Inverse multiquadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 / sqrt(||x-y||^2 + c^2)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">as defined in:</span></span><br><span class="line"><span class="string">"Interpolation of scattered data: Distance matrices and conditionally positive definite functions"</span></span><br><span class="line"><span class="string">Charles Micchelli</span></span><br><span class="line"><span class="string">Constructive Approximation</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse_multiquadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span> ** <span class="number">2</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> / np.sqrt(dists_sq + _c)</span><br></pre></td></tr></table></figure>
-
+<h2 id="自定义核函数"><a href="#自定义核函数" class="headerlink" title="自定义核函数"></a>自定义核函数</h2><p>由于常用核函数的效果不够理想，所以尝试使用自定义的核函数，参考前人总结出的各种核函数，放入模型中进行尝试。核函数的公式见原代码，任取两个核函数的说明如下：</p>
+<p><strong>Rational quadratic kernel</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Rational quadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 - ||x-y||^2/(||x-y||^2+c)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">rational_quadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> - (dists_sq / (dists_sq + _c))</span><br></pre></td></tr></table></figure></p>
+<p><strong>Inverse multiquadratic kernel</strong><br><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="string">Inverse multiquadratic kernel, </span></span><br><span class="line"><span class="string">    K(x, y) = 1 / sqrt(||x-y||^2 + c^2)</span></span><br><span class="line"><span class="string">where:</span></span><br><span class="line"><span class="string">    c &gt; 0</span></span><br><span class="line"><span class="string">as defined in:</span></span><br><span class="line"><span class="string">"Interpolation of scattered data: Distance matrices and conditionally positive definite functions"</span></span><br><span class="line"><span class="string">Charles Micchelli</span></span><br><span class="line"><span class="string">Constructive Approximation</span></span><br><span class="line"><span class="string">"""</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">inverse_multiquadratic</span><span class="params">(data_1, data_2)</span>:</span></span><br><span class="line">    _c = <span class="number">1</span> ** <span class="number">2</span></span><br><span class="line">    dists_sq = euclidean_dist_matrix(data_1, data_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">1.</span> / np.sqrt(dists_sq + _c)</span><br></pre></td></tr></table></figure></p>
 <p>仍然是对于这 2w 条数据，将所有核函数放入 SVM 中训练，最终每个核函数的准确率和耗时对比表格如下：</p>
 <p><img src="/img/SVM_model_compare.jpg" alt="SVM_model_compare.jpg"></p>
 <p>可以发现 rbf, inverse_multiquadratic 和 cauchy 这三个核函数的效果较好，其中 rbf 训练速度最快，inverse_multiquadratic 准确率最高。</p>
-<h1 id="5-总结"><a href="#5-总结" class="headerlink" title="5. 总结"></a>5. 总结</h1><h2 id="5-1-SVM-准确率的思考"><a href="#5-1-SVM-准确率的思考" class="headerlink" title="5.1 SVM 准确率的思考"></a>5.1 SVM 准确率的思考</h2><p>最终，使用 inverse_multiquadratic 核函数可以将 SVM 模型的 AUC Score 最高调至 0.822，相比于第二次作业中 Random Forest 模型的 AUC Score 结果 0.902 还有差距。可能是由于核函数选取的仍然不够合适，在映射后的空间中数据不是那么线性可分，降低了模型的泛化能力，导致准确率不如 RF。而对于核函数的选取，需要更多地理解特征，并列举出所有可能的核函数，再进行对比选择，在选取核函数这一点上，没有很好的捷径可走。</p>
-<h2 id="5-2-提升-SVM-训练速度的心得"><a href="#5-2-提升-SVM-训练速度的心得" class="headerlink" title="5.2 提升 SVM 训练速度的心得"></a>5.2 提升 SVM 训练速度的心得</h2><ol>
+<h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><h2 id="SVM-准确率的思考"><a href="#SVM-准确率的思考" class="headerlink" title="SVM 准确率的思考"></a>SVM 准确率的思考</h2><p>最终，使用 inverse_multiquadratic 核函数可以将 SVM 模型的 AUC Score 最高调至 0.822，相比于第二次作业中 Random Forest 模型的 AUC Score 结果 0.902 还有差距。可能是由于核函数选取的仍然不够合适，在映射后的空间中数据不是那么线性可分，降低了模型的泛化能力，导致准确率不如 RF。而对于核函数的选取，需要更多地理解特征，并列举出所有可能的核函数，再进行对比选择，在选取核函数这一点上，没有很好的捷径可走。</p>
+<h2 id="提升-SVM-训练速度的心得"><a href="#提升-SVM-训练速度的心得" class="headerlink" title="提升 SVM 训练速度的心得"></a>提升 SVM 训练速度的心得</h2><ol>
 <li>特征标签化和归一化</li>
 <li>SVC 的 cache_size 设置到 7000 (M) </li>
 <li>核函数是 SVM 的关键，先用少部分数据来选核函数，再用全量数据训练</li>
@@ -339,6 +384,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -383,6 +445,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -395,24 +460,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#要解决的问题"><span class="nav-number">1.</span> <span class="nav-text">要解决的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#前情回顾"><span class="nav-number">2.</span> <span class="nav-text">前情回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#特征工程"><span class="nav-number">3.</span> <span class="nav-text">特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#特征归一化"><span class="nav-number">3.1.</span> <span class="nav-text">特征归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#最终数据集"><span class="nav-number">3.2.</span> <span class="nav-text">最终数据集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SVM"><span class="nav-number">4.</span> <span class="nav-text">SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#核函数介绍"><span class="nav-number">4.1.</span> <span class="nav-text">核函数介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#SVM-RBF-参数搜索"><span class="nav-number">4.2.</span> <span class="nav-text">SVM RBF 参数搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用核函数"><span class="nav-number">4.3.</span> <span class="nav-text">常用核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#自定义核函数"><span class="nav-number">4.4.</span> <span class="nav-text">自定义核函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#总结"><span class="nav-number">5.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#SVM-准确率的思考"><span class="nav-number">5.1.</span> <span class="nav-text">SVM 准确率的思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#提升-SVM-训练速度的心得"><span class="nav-number">5.2.</span> <span class="nav-text">提升 SVM 训练速度的心得</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -420,7 +495,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -429,7 +504,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -459,7 +534,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -472,26 +547,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1-要解决的问题"><span class="nav-number">1.</span> <span class="nav-text">1. 要解决的问题</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2-前情回顾"><span class="nav-number">2.</span> <span class="nav-text">2. 前情回顾</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3-特征工程"><span class="nav-number">3.</span> <span class="nav-text">3. 特征工程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1-特征归一化"><span class="nav-number">3.1.</span> <span class="nav-text">3.1 特征归一化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2-最终数据集"><span class="nav-number">3.2.</span> <span class="nav-text">3.2 最终数据集</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4-SVM"><span class="nav-number">4.</span> <span class="nav-text">4. SVM</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1-核函数介绍"><span class="nav-number">4.1.</span> <span class="nav-text">4.1 核函数介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2-SVM-RBF-参数搜索"><span class="nav-number">4.2.</span> <span class="nav-text">4.2 SVM RBF 参数搜索</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3-常用核函数"><span class="nav-number">4.3.</span> <span class="nav-text">4.3 常用核函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-4-自定义核函数"><span class="nav-number">4.4.</span> <span class="nav-text">4.4 自定义核函数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5-总结"><span class="nav-number">5.</span> <span class="nav-text">5. 总结</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1-SVM-准确率的思考"><span class="nav-number">5.1.</span> <span class="nav-text">5.1 SVM 准确率的思考</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2-提升-SVM-训练速度的心得"><span class="nav-number">5.2.</span> <span class="nav-text">5.2 提升 SVM 训练速度的心得</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文档"><span class="nav-number">6.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -509,11 +565,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -525,32 +585,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -560,12 +606,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -586,10 +627,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

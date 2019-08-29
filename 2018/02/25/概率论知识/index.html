@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,30 +43,30 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。 随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。  ##条件分布条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某">
+  <meta name="description" content="概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。 随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。  条件分布条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某一随">
 <meta name="keywords" content="Math">
 <meta property="og:type" content="article">
 <meta property="og:title" content="概率论知识">
 <meta property="og:url" content="http://luojinping.com/2018/02/25/概率论知识/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。 随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。  ##条件分布条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。 随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。  条件分布条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某一随">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/law_of_total_probability.jpg">
-<meta property="og:updated_time" content="2019-08-18T08:52:51.362Z">
+<meta property="og:updated_time" content="2019-08-25T13:10:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="概率论知识">
-<meta name="twitter:description" content="概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。 随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。  ##条件分布条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某">
+<meta name="twitter:description" content="概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。 随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。  条件分布条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某一随">
 <meta name="twitter:image" content="http://luojinping.com/img/law_of_total_probability.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2018/02/25/概率论知识/">
@@ -88,6 +88,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -96,7 +105,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -105,7 +113,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -121,16 +129,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -142,7 +149,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -162,7 +169,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -173,7 +180,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -184,34 +191,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/02/25/概率论知识/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -234,13 +270,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Feb 25 2018 10:34:09" itemprop="dateCreated datePublished" datetime="2018-02-25T10:34:09+08:00">Feb 25 2018</time>
+              <time title="创建时间：2月 25 2018 10:34:09" itemprop="dateCreated datePublished" datetime="2018-02-25T10:34:09+08:00">2月 25 2018</time>
             </span>
           
             
@@ -250,13 +286,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:52:51" itemprop="dateModified" datetime="2019-08-18T16:52:51+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:09" itemprop="dateModified" datetime="2019-08-25T21:10:09+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/02/25/概率论知识/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/02/25/概率论知识/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -269,25 +319,23 @@
       
         <p>概率论在机器学习中扮演着一个核心角色，因为机器学习算法的设计通常依赖于对数据的概率假设。</p>
 <p>随机变量在概率论中扮演着一个重要角色。最重要的一个事实是，随机变量并不是变量，它们实际上是将（样本空间中的）结果映射到真值的函数。我们通常用一个大写字母来表示随机变量。 </p>
-<p>##条件分布<br>条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某一随机变量的分布。 </p>
-<p>正式地，给定$Y=b$时，$X=a$的条件概率定义为：<br>$$P(X=a|Y=b)= \frac{P(X=a,Y=b)}{P(Y=b)}$$</p>
-<p>其中，$P(Y=b)&gt;0$</p>
-<p>##独立性<br>在概率论中，独立性是指随机变量的分布不因知道其它随机变量的值而改变。在机器学习中，我们通常都会对数据做这样的假设。例如，我们会假设训练样本是从某一底层空间独立提取；并且假设样例i的标签独立于样例j(i≠j)的特性。<br>从数学角度来说，随机变量X独立于Y，当： </p>
+<h1 id="条件分布"><a href="#条件分布" class="headerlink" title="条件分布"></a>条件分布</h1><p>条件分布为概率论中用于探讨不确定性的关键工具之一。它明确了在另一随机变量已知的情况下（或者更通俗来说，当已知某事件为真时）的某一随机变量的分布。 </p>
+<p>正式地，给定$Y=b$时，$X=a$的条件概率定义为： </p>
+<script type="math/tex; mode=display">P(X=a|Y=b)= \frac{P(X=a,Y=b)}{P(Y=b)}</script><p>其中，$P(Y=b)&gt;0$</p>
+<h1 id="独立性"><a href="#独立性" class="headerlink" title="独立性"></a>独立性</h1><p>在概率论中，独立性是指随机变量的分布不因知道其它随机变量的值而改变。在机器学习中，我们通常都会对数据做这样的假设。例如，我们会假设训练样本是从某一底层空间独立提取；并且假设样例i的标签独立于样例j(i≠j)的特性。<br>从数学角度来说，随机变量X独立于Y，当： </p>
 <p>P(X)=P(X|Y)</p>
 <p>注意，上式没有标明X,Y的取值，也就是说该公式对任意X,Y可能的取值均成立。）<br>利用等式(2)，很容易可以证明如果X对Y独立，那么Y也独立于X。当X和Y相互独立时，记为X⊥Y。<br>对于随机变量X和Y的独立性，有一个等价的数学公式：<br>P(X,Y)=P(X)P(Y)</p>
 <p>我们有时也会讨论条件独立，就是当我们当我们知道一个随机变量（或者更一般地，一组随机变量）的值时，那么其它随机变量之间相互独立。正式地，我们说“给定Z，X和Y条件独立”，如果：<br>P(X|Z)=P(X|Y,Z)</p>
 <p>或者等价的：<br>P(X,Y|Z)=P(X|Z)P(Y|Z)</p>
-<p>##链式法则<br>我们现在给出两个与联合分布和条件分布相关的，基础但是重要的可操作定理。第一个叫做链式法则，它可以看做等式(2)对于多变量的一般形式。<br>定理1（链式法则）： </p>
+<h1 id="链式法则"><a href="#链式法则" class="headerlink" title="链式法则"></a>链式法则</h1><p>我们现在给出两个与联合分布和条件分布相关的，基础但是重要的可操作定理。第一个叫做链式法则，它可以看做等式(2)对于多变量的一般形式。<br>定理1（链式法则）： </p>
 <p>P(X1,X2,…,Xn)=P(X1)P(X2|X1)…P(Xn|X1,X2,…,Xn−1)…………(3)</p>
 <p>链式法则通常用于计算多个随机变量的联合概率，特别是在变量之间相互为（条件）独立时会非常有用。注意，在使用链式法则时，我们可以选择展开随机变量的顺序；选择正确的顺序通常可以让概率的计算变得更加简单。<br>第二个要介绍的是贝叶斯定理。利用贝叶斯定理，我们可以通过条件概率P(Y|X)计算出P(X|Y)，从某种意义上说，就是“交换”条件。它也可以通过等式(2)推导出。</p>
-<p>##条件概率</p>
-<p>####条件概率<br>如果 A，B 是条件组 S 下的随机事件，事件 A 发生的概率随事件 B 是否发生而变化，同样，事件 B 发生的概率也随事件 A 是否发生而变化。<br>事件 A 在另外一个事件 B 已经发生条件下的发生概率称为条件概率，表示为P(A|B)，读作「在 B 条件下 A 的概率」。<br>当 P(B) &gt; 0 时，有：<br>$$P(A|B)= \frac{P(AB)}{P(B)}$$</p>
-<p>P.S. 如果 A，B 是独立事件，则 A 发生的概率与 B 无关，那么 $P(A|B) = P(A)$，并且 $P(AB)=P(A)P(B)$。</p>
-<p>####联合概率<br>联合概率表示两个事件共同发生的概率。A 与 B 的联合概率表示为<br>$P(A\cap B)$ 或者 ${\displaystyle P(A,B)}$ 或者 $P(A,B)$。</p>
-<p>####边缘概率<br>边缘概率是某个事件发生的概率。边缘概率是这样得到的：在联合概率中，把最终结果中不需要的那些事件合并成其事件的全概率而消失（对离散随机变量用求和得全概率，对连续随机变量用积分得全概率）。这称为边缘化（marginalization）。A的边缘概率表示为$P(A)$，B的边缘概率表示为$P(B)$。</p>
-<p>##全概率公式<br><img src="/img/law_of_total_probability.jpg" alt="law of total probability"> </p>
-<p>##贝叶斯定理<br>$$P(X|Y)=\frac{P(Y|X)P(X)}{P(Y)}$$</p>
-<p><a href="https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87</a><br><a href="http://blog.csdn.net/u012566895/article/details/51220127" target="_blank" rel="noopener">http://blog.csdn.net/u012566895/article/details/51220127</a><br><a href="http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html" target="_blank" rel="noopener">http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html</a></p>
+<h1 id="条件概率"><a href="#条件概率" class="headerlink" title="条件概率"></a>条件概率</h1><h2 id="条件概率-1"><a href="#条件概率-1" class="headerlink" title="条件概率"></a>条件概率</h2><p>如果 A，B 是条件组 S 下的随机事件，事件 A 发生的概率随事件 B 是否发生而变化，同样，事件 B 发生的概率也随事件 A 是否发生而变化。<br>事件 A 在另外一个事件 B 已经发生条件下的发生概率称为条件概率，表示为P(A|B)，读作「在 B 条件下 A 的概率」。<br>当 P(B) &gt; 0 时，有：</p>
+<script type="math/tex; mode=display">P(A|B)= \frac{P(AB)}{P(B)}</script><p>P.S. 如果 A，B 是独立事件，则 A 发生的概率与 B 无关，那么 $P(A|B) = P(A)$，并且 $P(AB)=P(A)P(B)$。</p>
+<h2 id="联合概率"><a href="#联合概率" class="headerlink" title="联合概率"></a>联合概率</h2><p>联合概率表示两个事件共同发生的概率。A 与 B 的联合概率表示为<br>$P(A\cap B)$ 或者 ${\displaystyle P(A,B)}$ 或者 $P(A,B)$。</p>
+<h2 id="边缘概率"><a href="#边缘概率" class="headerlink" title="边缘概率"></a>边缘概率</h2><p>边缘概率是某个事件发生的概率。边缘概率是这样得到的：在联合概率中，把最终结果中不需要的那些事件合并成其事件的全概率而消失（对离散随机变量用求和得全概率，对连续随机变量用积分得全概率）。这称为边缘化（marginalization）。A的边缘概率表示为$P(A)$，B的边缘概率表示为$P(B)$。</p>
+<h1 id="全概率公式"><a href="#全概率公式" class="headerlink" title="全概率公式"></a>全概率公式</h1><p><img src="/img/law_of_total_probability.jpg" alt="law of total probability"> </p>
+<h1 id="贝叶斯定理"><a href="#贝叶斯定理" class="headerlink" title="贝叶斯定理"></a>贝叶斯定理</h1><script type="math/tex; mode=display">P(X|Y)=\frac{P(Y|X)P(X)}{P(Y)}</script><p><a href="https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87" target="_blank" rel="noopener">https://zh.wikipedia.org/wiki/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87</a><br><a href="http://blog.csdn.net/u012566895/article/details/51220127" target="_blank" rel="noopener">http://blog.csdn.net/u012566895/article/details/51220127</a><br><a href="http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html" target="_blank" rel="noopener">http://www.cnblogs.com/leoo2sk/archive/2010/09/17/naive-bayesian-classifier.html</a></p>
 
     </div>
 
@@ -295,6 +343,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -343,6 +408,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -355,15 +423,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#条件分布"><span class="nav-number">1.</span> <span class="nav-text">条件分布</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#独立性"><span class="nav-number">2.</span> <span class="nav-text">独立性</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#链式法则"><span class="nav-number">3.</span> <span class="nav-text">链式法则</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#条件概率"><span class="nav-number">4.</span> <span class="nav-text">条件概率</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#条件概率-1"><span class="nav-number">4.1.</span> <span class="nav-text">条件概率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#联合概率"><span class="nav-number">4.2.</span> <span class="nav-text">联合概率</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#边缘概率"><span class="nav-number">4.3.</span> <span class="nav-text">边缘概率</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#全概率公式"><span class="nav-number">5.</span> <span class="nav-text">全概率公式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#贝叶斯定理"><span class="nav-number">6.</span> <span class="nav-text">贝叶斯定理</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -371,7 +458,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -380,7 +467,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -410,7 +497,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -423,8 +510,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -443,11 +528,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -459,32 +548,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -494,12 +569,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -517,13 +587,85 @@
   
 
   
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
 
   
 
 
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
-
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

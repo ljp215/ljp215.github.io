@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,13 +43,13 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
@@ -61,9 +61,9 @@
 <meta property="og:url" content="http://luojinping.com/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/index.html">
 <meta property="og:site_name" content="Zane Blog">
 <meta property="og:description" content="生成学习算法介绍有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。  判别学习算法常见的有：逻辑回顾，支持向量机等。 生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。  判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。 生">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/gaussian_discriminant_analysis_probability_distribution.jpg">
-<meta property="og:updated_time" content="2019-08-18T08:42:45.499Z">
+<meta property="og:updated_time" content="2019-08-25T13:10:04.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stanford Machine Learning - 6 生成学习算法">
 <meta name="twitter:description" content="生成学习算法介绍有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。  判别学习算法常见的有：逻辑回顾，支持向量机等。 生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。  判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。 生">
@@ -88,6 +88,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -96,7 +105,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -105,7 +113,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -121,16 +129,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -142,7 +149,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -162,7 +169,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -173,7 +180,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -184,34 +191,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -234,13 +270,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Feb 25 2018 10:24:02" itemprop="dateCreated datePublished" datetime="2018-02-25T10:24:02+08:00">Feb 25 2018</time>
+              <time title="创建时间：2月 25 2018 10:24:02" itemprop="dateCreated datePublished" datetime="2018-02-25T10:24:02+08:00">2月 25 2018</time>
             </span>
           
             
@@ -250,13 +286,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:42:45" itemprop="dateModified" datetime="2019-08-18T16:42:45+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 21:10:04" itemprop="dateModified" datetime="2019-08-25T21:10:04+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2018/02/25/Stanford-Machine-Learning-6-生成学习算法/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -267,7 +317,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="生成学习算法介绍"><a href="#生成学习算法介绍" class="headerlink" title="生成学习算法介绍"></a>生成学习算法介绍</h2><p>有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。</p>
+        <h1 id="生成学习算法介绍"><a href="#生成学习算法介绍" class="headerlink" title="生成学习算法介绍"></a>生成学习算法介绍</h1><p>有监督机器学习可以分为判别学习算法(generative learning algorithm)和生成学习算法(discriminative learning algorithm)。</p>
 <ul>
 <li>判别学习算法常见的有：逻辑回顾，支持向量机等。</li>
 <li>生成学习算法常见的有：混合高斯模型、朴素贝叶斯法和隐形马尔科夫模型等。</li>
@@ -275,24 +325,24 @@
 <p>判别学习算法是直接学习 p(y|x) 或者是从输入直接映射到输出的算法。</p>
 <p>生成学习算法是计算变量x在变量y上的条件分布p(x|y)和变量y的分布p(y) ，然后使用贝叶斯公式:  $p(y|x)=\frac{p(x,y)}{p(x)}=\frac{p(y)*p(x|y)}{p(x)}$ 计算出p(y|x)。</p>
 <p>针对课程中提到的两种生成学习算法中，高斯判别分析(Gaussian Discriminant Analysis)和朴素贝叶斯(Navie Bayes)分别解决了两种场景下的问题。<br>GDA 是针对的是特征向量 X 为连续值时的问题，而 Navie Bayes 则针对的是特征向量为离散值时的问题。</p>
-<p>##高斯判别分析</p>
-<p>###多维正态分布(The multivariate normal distribution)</p>
-<p>假设随机变量 $X$ 满足 $n$ 维的多项正态分布，参数为均值向量 $μ ∈ R^{n} $，协方差矩阵$Σ ∈ R^{n×n}$，记为 $N(μ,Σ)$ 其概率密度表示为：</p>
-<p>$$p(x;μ,Σ)=\frac{1}{(2π)^{\frac{n}2}(detΣ)^{\frac12}}exp(−\frac12(x−μ)^TΣ^{−1}(x−μ))$$</p>
-<p>$detΣ$ 表示矩阵 $Σ$ 的行列式(determinant)。<br>均值向量: $μ$<br>协方差矩阵: $Σ=E[(X−E[X])(X−E[X])T]=E[(x−μ)(x−μ)T]$</p>
-<p>###高斯判别分析<br>GDA 模型针对的是输入特征为连续值时的分类问题，这个模型的基本假设是目标值 y 服从伯努利分布(0-1分布)，条件概率 P(x|y) 服从多元正态分布((multivariate normal distribution))，即:<br>$y∼Bernoulli(\phi)$<br>$P(x|y=0)∼N(μ_0,\Sigma)$<br>$P(x|y=1)∼N(μ_1,\Sigma)$</p>
-<p>它们的概率密度为：<br>$$p(y)=\phi^y(1−\phi)^{1−y}$$<br>$$p(x|y=0)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_0)^T\Sigma^{−1}(x−μ_0))$$<br>$$p(x|y=1)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_1)^T\Sigma^{−1}(x−μ_1))$$</p>
-<p>我们模型的参数包括，$\phi,\Sigma,μ_0,μ_1$ 注意到，我们使用了两种不同的均值向量$μ_0$和$μ_1$，但是使用了同一种协方差矩阵 $\Sigma$, 则我们的极大似然函数的对数如下所示：<br>$$L(\phi,μ_0,μ_1,\Sigma)=log\Pi_{i=1}^mp(x^{(i)},y^{(i)};\phi,μ_0,μ_1,\Sigma)$$<br>$$=log\Pi_{i=1}^mp(x^{(i)}|y^{(i)};\phi,μ_0,μ_1,\Sigma)p(y^{(i)};\phi)$$</p>
-<p>对极大似然函数对数最大化，我们就得到了GDA模型各参数的极大虽然估计(略)。</p>
-<p>##GDA 与 LR<br>前面我们提到：<br>$${argmax}_yp(y|x)={argmax}_y\frac{p(x|y)p(y)}{p(x)}={argmax}_yp(x|y)p(y)$$<br>我们有：<br>$$p(y=1|x)=\frac{p(x|y=1)p(y=1)}{p(x|y=1)p(y=1)+p(x|y=0)p(y=0)}$$<br>上式实际上可以表示成logistic函数的形式：<br>$$p(y=1|x;ϕ,μ0,μ1,Σ)=\frac1{1+exp(−θ^TX)}$$<br>其中，θ是参数ϕ,μ0,μ1,Σθ是参数ϕ,μ0,μ1,Σ某种形式的函数。GDA的后验分布可以表示logistic函数的形式。<br>　<br>下图为用 GDA 对两类样本分别拟合高斯概率密度函数p(x|y=0)和p(x|y=1)，得到两个钟形曲线。沿x轴遍历样本，在x轴上方画出相应的p(y=1|x)。如选x轴靠左的点，那么它属于1的概率几乎为0，p(y=1|x)=0，两条钟形曲线交点处，属于0或1的概率相同，p(y=1|x)=0.5，x轴靠右的点，输出1的概率几乎为1，p(y=1|x)=1。最终发现，得到的曲线和sigmoid函数曲线很相似。<br><img src="/img/gaussian_discriminant_analysis_probability_distribution.jpg" alt="gaussian discriminant analysis probability distribution"><br>　<br>　<br>实际上，可以证明，不仅仅当先验概率分布服从多变量正态分布时可以推导出逻辑回归的模型，当先验分布属于指数分布簇中的任何一个分布，如泊松分布时，都可以推导出逻辑回归模型。而反之不成立，逻辑回归的先验概率分布不一定必须得是指数分布簇中的成员。基于这些原因，在实践中使用逻辑回归比使用GDA更普遍。</p>
+<h1 id="高斯判别分析"><a href="#高斯判别分析" class="headerlink" title="高斯判别分析"></a>高斯判别分析</h1><h2 id="多维正态分布-The-multivariate-normal-distribution"><a href="#多维正态分布-The-multivariate-normal-distribution" class="headerlink" title="多维正态分布(The multivariate normal distribution)"></a>多维正态分布(The multivariate normal distribution)</h2><p>假设随机变量 $X$ 满足 $n$ 维的多项正态分布，参数为均值向量 $μ ∈ R^{n} $，协方差矩阵$Σ ∈ R^{n×n}$，记为 $N(μ,Σ)$ 其概率密度表示为：</p>
+<script type="math/tex; mode=display">p(x;μ,Σ)=\frac{1}{(2π)^{\frac{n}2}(detΣ)^{\frac12}}exp(−\frac12(x−μ)^TΣ^{−1}(x−μ))</script><p>$detΣ$ 表示矩阵 $Σ$ 的行列式(determinant)。<br>均值向量: $μ$<br>协方差矩阵: $Σ=E[(X−E[X])(X−E[X])T]=E[(x−μ)(x−μ)T]$</p>
+<h2 id="高斯判别分析-1"><a href="#高斯判别分析-1" class="headerlink" title="高斯判别分析"></a>高斯判别分析</h2><p>GDA 模型针对的是输入特征为连续值时的分类问题，这个模型的基本假设是目标值 y 服从伯努利分布(0-1分布)，条件概率 P(x|y) 服从多元正态分布((multivariate normal distribution))，即:<br>$y∼Bernoulli(\phi)$<br>$P(x|y=0)∼N(μ_0,\Sigma)$<br>$P(x|y=1)∼N(μ_1,\Sigma)$</p>
+<p>它们的概率密度为：</p>
+<script type="math/tex; mode=display">p(y)=\phi^y(1−\phi)^{1−y}</script><script type="math/tex; mode=display">p(x|y=0)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_0)^T\Sigma^{−1}(x−μ_0))</script><script type="math/tex; mode=display">p(x|y=1)=\frac1{(2π)^{n/2}|\Sigma|^{1/2}}exp(−\frac12(x−μ_1)^T\Sigma^{−1}(x−μ_1))</script><p>我们模型的参数包括，$\phi,\Sigma,μ_0,μ_1$ 注意到，我们使用了两种不同的均值向量$μ_0$和$μ_1$，但是使用了同一种协方差矩阵 $\Sigma$, 则我们的极大似然函数的对数如下所示：</p>
+<script type="math/tex; mode=display">L(\phi,μ_0,μ_1,\Sigma)=log\Pi_{i=1}^mp(x^{(i)},y^{(i)};\phi,μ_0,μ_1,\Sigma)</script><script type="math/tex; mode=display">=log\Pi_{i=1}^mp(x^{(i)}|y^{(i)};\phi,μ_0,μ_1,\Sigma)p(y^{(i)};\phi)</script><p>对极大似然函数对数最大化，我们就得到了GDA模型各参数的极大虽然估计(略)。</p>
+<h1 id="GDA-与-LR"><a href="#GDA-与-LR" class="headerlink" title="GDA 与 LR"></a>GDA 与 LR</h1><p>前面我们提到：</p>
+<script type="math/tex; mode=display">{argmax}_yp(y|x)={argmax}_y\frac{p(x|y)p(y)}{p(x)}={argmax}_yp(x|y)p(y)</script><p>我们有：</p>
+<script type="math/tex; mode=display">p(y=1|x)=\frac{p(x|y=1)p(y=1)}{p(x|y=1)p(y=1)+p(x|y=0)p(y=0)}</script><p>上式实际上可以表示成logistic函数的形式：</p>
+<script type="math/tex; mode=display">p(y=1|x;ϕ,μ0,μ1,Σ)=\frac1{1+exp(−θ^TX)}</script><p>其中，θ是参数ϕ,μ0,μ1,Σθ是参数ϕ,μ0,μ1,Σ某种形式的函数。GDA的后验分布可以表示logistic函数的形式。<br>　<br>下图为用 GDA 对两类样本分别拟合高斯概率密度函数p(x|y=0)和p(x|y=1)，得到两个钟形曲线。沿x轴遍历样本，在x轴上方画出相应的p(y=1|x)。如选x轴靠左的点，那么它属于1的概率几乎为0，p(y=1|x)=0，两条钟形曲线交点处，属于0或1的概率相同，p(y=1|x)=0.5，x轴靠右的点，输出1的概率几乎为1，p(y=1|x)=1。最终发现，得到的曲线和sigmoid函数曲线很相似。<br><img src="/img/gaussian_discriminant_analysis_probability_distribution.jpg" alt="gaussian discriminant analysis probability distribution"><br>　<br>　<br>实际上，可以证明，不仅仅当先验概率分布服从多变量正态分布时可以推导出逻辑回归的模型，当先验分布属于指数分布簇中的任何一个分布，如泊松分布时，都可以推导出逻辑回归模型。而反之不成立，逻辑回归的先验概率分布不一定必须得是指数分布簇中的成员。基于这些原因，在实践中使用逻辑回归比使用GDA更普遍。</p>
 <p>生成学习算法比判决学习算法需要更少的数据。如GDA的假设较强，所以用较少的数据能拟合出不错的模型。而逻辑回归的假设较弱，对模型的假设更为健壮，拟合数据需要更多的样本。</p>
-<p>##朴素贝叶斯<br>考虑自变量比较多的情况，比如垃圾邮件的识别需要检测成百上千甚至上万的字符是否出现，如有<em>免费</em>、<em>购买</em>等类似的词出现的邮件很大可能是垃圾邮件。这种情况下若有k个自变量，考虑各变量之间的交互作用就需要计算$2^k$次，为了简化计算量对模型作一个更强的假设：<br><strong>给定因变量 y 的值，各自变量之间相互独立.</strong></p>
-<p>所以有<br>$$p(x_1,…,x_n|y)=p(x_1|y)p(x_2|y,x_1)p(x_3|y,x_1,x_2)…p(x_n|y,x_1,x_2,…,x_{n-1})$$<br>$$=p(x_1|y)p(x_2|y)p(x_3|y)…p(x_n|y)=\Pi_{i=1}^np(x_i|y)$$</p>
-<p>第一个等式是根据通常的概率论得到的，第二个等式是根据贝叶斯假设得到的。虽然贝叶斯假设是个很强的假设，但是实践证明在许多问题上都表现得很好。</p>
+<h1 id="朴素贝叶斯"><a href="#朴素贝叶斯" class="headerlink" title="朴素贝叶斯"></a>朴素贝叶斯</h1><p>考虑自变量比较多的情况，比如垃圾邮件的识别需要检测成百上千甚至上万的字符是否出现，如有<em>免费</em>、<em>购买</em>等类似的词出现的邮件很大可能是垃圾邮件。这种情况下若有k个自变量，考虑各变量之间的交互作用就需要计算$2^k$次，为了简化计算量对模型作一个更强的假设：<br><strong>给定因变量 y 的值，各自变量之间相互独立.</strong></p>
+<p>所以有</p>
+<script type="math/tex; mode=display">p(x_1,...,x_n|y)=p(x_1|y)p(x_2|y,x_1)p(x_3|y,x_1,x_2)...p(x_n|y,x_1,x_2,...,x_{n-1})</script><script type="math/tex; mode=display">=p(x_1|y)p(x_2|y)p(x_3|y)…p(x_n|y)=\Pi_{i=1}^np(x_i|y)</script><p>第一个等式是根据通常的概率论得到的，第二个等式是根据贝叶斯假设得到的。虽然贝叶斯假设是个很强的假设，但是实践证明在许多问题上都表现得很好。</p>
 <p>参数的极大似然估计及p(y|x)的推导过程略。</p>
-<p>##拉普拉斯平滑<br>拉普拉斯平滑(Laplace Smoothing)又称为加1平滑。平滑方法的存在是为了解决零概率问题。</p>
+<h1 id="拉普拉斯平滑"><a href="#拉普拉斯平滑" class="headerlink" title="拉普拉斯平滑"></a>拉普拉斯平滑</h1><p>拉普拉斯平滑(Laplace Smoothing)又称为加1平滑。平滑方法的存在是为了解决零概率问题。</p>
 <p>所谓的零概率问题，就是在计算新实例的概率时，如果某个分量在训练集中从没出现过，会导致整个实例的概率计算结果为０，针对文本分类问题就是当一个词语在训练集中没有出现过，那么该词语的概率为０，使用连乘计算文本出现的概率时，整个文本出现的概率也为０，这显然不合理，因为不能因为一个事件没有观测到就判断该事件的概率为０.</p>
-<p>##Reference<br><a href="http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/</a><br><a href="http://blog.csdn.net/v1_vivian/article/details/52190572" target="_blank" rel="noopener">http://blog.csdn.net/v1_vivian/article/details/52190572</a><br><a href="http://www.cnblogs.com/mikewolf2002/p/7763475.html" target="_blank" rel="noopener">http://www.cnblogs.com/mikewolf2002/p/7763475.html</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/" target="_blank" rel="noopener">http://xtf615.com/2017/03/25/%E7%94%9F%E6%88%90%E7%AE%97%E6%B3%95/</a><br><a href="http://blog.csdn.net/v1_vivian/article/details/52190572" target="_blank" rel="noopener">http://blog.csdn.net/v1_vivian/article/details/52190572</a><br><a href="http://www.cnblogs.com/mikewolf2002/p/7763475.html" target="_blank" rel="noopener">http://www.cnblogs.com/mikewolf2002/p/7763475.html</a></p>
 
     </div>
 
@@ -300,6 +350,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -348,6 +415,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -360,24 +430,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
+        
+        
+        
+        
       
 
-      <div class="site-overview-wrap sidebar-panel">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#生成学习算法介绍"><span class="nav-number">1.</span> <span class="nav-text">生成学习算法介绍</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#高斯判别分析"><span class="nav-number">2.</span> <span class="nav-text">高斯判别分析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#多维正态分布-The-multivariate-normal-distribution"><span class="nav-number">2.1.</span> <span class="nav-text">多维正态分布(The multivariate normal distribution)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#高斯判别分析-1"><span class="nav-number">2.2.</span> <span class="nav-text">高斯判别分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GDA-与-LR"><span class="nav-number">3.</span> <span class="nav-text">GDA 与 LR</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#朴素贝叶斯"><span class="nav-number">4.</span> <span class="nav-text">朴素贝叶斯</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#拉普拉斯平滑"><span class="nav-number">5.</span> <span class="nav-text">拉普拉斯平滑</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -385,7 +465,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -394,7 +474,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -424,7 +504,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -437,26 +517,7 @@
 
 
 
-
-        </div>
       </div>
-      <!--noindex-->
-        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-            
-            
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#生成学习算法介绍"><span class="nav-number">1.</span> <span class="nav-text">生成学习算法介绍</span></a></li></ol></div>
-            
-
-          </div>
-        </div>
-      <!--/noindex-->
-      
 
     </div>
   </aside>
@@ -474,11 +535,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -490,32 +555,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -525,12 +576,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -548,13 +594,85 @@
   
 
   
+    
+      
+<script type="text/x-mathjax-config">
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') {
+          next = next.nextSibling;
+        }
+        if (next && next.nodeName.toLowerCase() === 'br') {
+          next.parentNode.removeChild(next);
+        }
+      }
+    });
+  });
+
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      element = document.getElementById(all[i].inputID + '-Frame').parentNode;
+      if (element.nodeName.toLowerCase() == 'li') {
+        element = element.parentNode;
+      }
+      element.classList.add('has-jax');
+    }
+  });
+</script>
+<script>
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML', () => {
+    MathJax.Hub.Typeset();
+  }, window.MathJax);
+</script>
+
+    
+  
+
+  
 
   
 
 
-  
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
-
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>

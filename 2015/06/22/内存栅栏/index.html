@@ -4,7 +4,7 @@
 
 
 
-<html class="theme-next mist use-motion" lang="zh-Hans">
+<html lang="zh-CN">
 <head>
   <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -25,13 +25,13 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Mist',
+    scheme: 'Muse',
     version: '7.3.0',
     exturl: false,
-    sidebar: {"position":"right","display":"post","offset":12,"onmobile":false},
-    back2top: {"enable":true,"sidebar":false,"scrollpercent":true},
-    save_scroll: false,
+    sidebar: {"position":"left","display":"post","offset":12,"onmobile":false},
     copycode: {"enable":false,"show_result":false,"style":null},
+    back2top: {"enable":true,"sidebar":false,"scrollpercent":false},
+    bookmark: {"enable":false,"color":"#222","save":"auto"},
     fancybox: false,
     mediumzoom: false,
     lazyload: false,
@@ -43,30 +43,30 @@
       hits: {"per_page":10},
       labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
     },
-    localsearch: {"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
-    path: '',
+    localsearch: {"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},
+    path: 'search.xml',
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     translation: {
-      copy_button: 'Copy',
-      copy_success: 'Copied',
-      copy_failure: 'Copy failed'
+      copy_button: '复制',
+      copy_success: '复制成功',
+      copy_failure: '复制失败'
     }
   };
 </script>
 
-  <meta name="description" content="#什么是内存栅栏？#内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。 内存栅栏提供了两个功能  确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性； 实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。  #为什么需要内存栅栏？#对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，C">
+  <meta name="description" content="什么是内存栅栏内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。 内存栅栏提供了两个功能  确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性； 实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。  为什么需要内存栅栏对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内存栅栏">
 <meta property="og:url" content="http://luojinping.com/2015/06/22/内存栅栏/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="#什么是内存栅栏？#内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。 内存栅栏提供了两个功能  确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性； 实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。  #为什么需要内存栅栏？#对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，C">
-<meta property="og:locale" content="zh-Hans">
+<meta property="og:description" content="什么是内存栅栏内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。 内存栅栏提供了两个功能  确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性； 实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。  为什么需要内存栅栏对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用">
+<meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="http://luojinping.com/img/memory_barrier_comm.jpg">
-<meta property="og:updated_time" content="2019-08-18T08:44:54.800Z">
+<meta property="og:updated_time" content="2019-08-25T03:29:09.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内存栅栏">
-<meta name="twitter:description" content="#什么是内存栅栏？#内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。 内存栅栏提供了两个功能  确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性； 实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。  #为什么需要内存栅栏？#对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，C">
+<meta name="twitter:description" content="什么是内存栅栏内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。 内存栅栏提供了两个功能  确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性； 实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。  为什么需要内存栅栏对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用">
 <meta name="twitter:image" content="http://luojinping.com/img/memory_barrier_comm.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/06/22/内存栅栏/">
@@ -88,6 +88,15 @@
   
 
 
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a131554f93a9296cf819d0ecb926fc05";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
 
 
 
@@ -96,7 +105,6 @@
 
   <noscript>
   <style>
-  .use-motion .motion-element,
   .use-motion .brand,
   .use-motion .menu-item,
   .sidebar-inner,
@@ -105,7 +113,7 @@
   .use-motion .comments,
   .use-motion .post-header,
   .use-motion .post-body,
-  .use-motion .collection-title { opacity: initial; }
+  .use-motion .collection-header { opacity: initial; }
 
   .use-motion .logo,
   .use-motion .site-title,
@@ -121,16 +129,15 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
-
-  <div class="container sidebar-position-right">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
+  <div class="container use-motion">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta">
 
-    <div class="custom-logo-site-title">
+    <div>
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
         <span class="site-title">Zane Blog</span>
@@ -142,7 +149,7 @@
   </div>
 
   <div class="site-nav-toggle">
-    <button aria-label="Toggle navigation bar">
+    <button aria-label="切换导航栏">
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
       <span class="btn-bar"></span>
@@ -162,7 +169,7 @@
       
     
 
-    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>Home</a>
+    <a href="/" rel="section"><i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
 
   </li>
       
@@ -173,7 +180,7 @@
       
     
 
-    <a href="/tags" rel="section"><i class="menu-item-icon fa fa-fw fa-question-circle"></i> <br>Tags</a>
+    <a href="/tags/" rel="section"><i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
 
   </li>
       
@@ -184,34 +191,63 @@
       
     
 
-    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>Archives</a>
+    <a href="/archives/" rel="section"><i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
 
   </li>
+      <li class="menu-item menu-item-search">
+        <a href="javascript:;" class="popup-trigger">
+        
+          <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+      </li>
+    
   </ul>
 
     
 
 </nav>
+  <div class="site-search">
+    <div class="popup search-popup">
+    <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-wrapper">
+    <input autocomplete="off" autocorrect="off" autocapitalize="none"
+           placeholder="搜索..." spellcheck="false"
+           type="text" id="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result"></div>
+
+</div>
+<div class="search-pop-overlay"></div>
+
+  </div>
 </div>
     </header>
 
     
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
 
 
     <main id="main" class="main">
       <div class="main-inner">
         <div class="content-wrap">
-          <div id="content" class="content page-post-detail">
+          <div id="content" class="content">
             
 
   <div id="posts" class="posts-expand">
-    
-
-  <article class="post" itemscope itemtype="http://schema.org/Article">
+      <article itemscope itemtype="http://schema.org/Article">
   
   
   
-  <div class="post-block">
+  <div class="post-block post">
     <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/06/22/内存栅栏/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -234,13 +270,13 @@
               <span class="post-meta-item-icon">
                 <i class="fa fa-calendar-o"></i>
               </span>
-              <span class="post-meta-item-text">Posted on</span>
+              <span class="post-meta-item-text">发表于</span>
 
               
                 
               
 
-              <time title="Created: Jun 22 2015 14:02:48" itemprop="dateCreated datePublished" datetime="2015-06-22T14:02:48+08:00">Jun 22 2015</time>
+              <time title="创建时间：6月 22 2015 14:02:48" itemprop="dateCreated datePublished" datetime="2015-06-22T14:02:48+08:00">6月 22 2015</time>
             </span>
           
             
@@ -250,13 +286,27 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-calendar-check-o"></i>
                 </span>
-                <span class="post-meta-item-text">Edited on</span>
-                <time title="Modified: Aug 18 2019 16:44:54" itemprop="dateModified" datetime="2019-08-18T16:44:54+08:00">Aug 18 2019</time>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：8月 25 2019 11:29:09" itemprop="dateModified" datetime="2019-08-25T11:29:09+08:00">8月 25 2019</time>
               </span>
             
           
 
           
+  
+  <span class="post-meta-item">
+    
+      <span class="post-meta-item-icon">
+        <i class="fa fa-comment-o"></i>
+      </span>
+        
+      
+      <span class="post-meta-item-text">Valine：</span>
+    
+    <a title="valine" href="/2015/06/22/内存栅栏/#comments" itemprop="discussionUrl"><span class="post-comments-count valine-comment-count" data-xid="/2015/06/22/内存栅栏/" itemprop="commentCount"></span></a>
+  </span>
+  
+  
 
         </div>
       </header>
@@ -267,14 +317,14 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <p>#什么是内存栅栏？#<br>内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
+        <h1 id="什么是内存栅栏"><a href="#什么是内存栅栏" class="headerlink" title="什么是内存栅栏"></a>什么是内存栅栏</h1><p>内存栅栏(Memory Barriers)，是让一个CPU处理单元中的内存状态对其它处理单元可见的一项技术。</p>
 <p><strong>内存栅栏提供了两个功能</strong></p>
 <ul>
 <li>确保从另一个CPU来看栅栏的两边的所有指令都是正确的程序顺序，而保持程序顺序的外部可见性；</li>
 <li>实现内存数据可见性，确保内存数据会同步到CPU缓存子系统。</li>
 </ul>
-<p>#为什么需要内存栅栏？#<br>对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用Cache来达到高效获取数据的目的。然后Cache为了提高性能，会对指令进行重排序。<br>当重排序对最终的结果没有影响的时候，这种优化是有益的。但是当多线程共享数据时，重排序将导致错误的结果。所以为了在共享变量的情况下依然可以使用指令重排序，产生了内存栅栏来保证程序的正确性。</p>
-<p>#内存栅栏是怎么实现的？#<br>在底层，内存栅栏是一组指令，一般包括Store Barrier、Load Barrier和Full Barrier。</p>
+<h1 id="为什么需要内存栅栏"><a href="#为什么需要内存栅栏" class="headerlink" title="为什么需要内存栅栏"></a>为什么需要内存栅栏</h1><p>对主存的一次访问一般花费硬件的数百次时钟周期。为了减少这种操作，CPU通过使用Cache来达到高效获取数据的目的。然后Cache为了提高性能，会对指令进行重排序。<br>当重排序对最终的结果没有影响的时候，这种优化是有益的。但是当多线程共享数据时，重排序将导致错误的结果。所以为了在共享变量的情况下依然可以使用指令重排序，产生了内存栅栏来保证程序的正确性。</p>
+<h1 id="内存栅栏是怎么实现的"><a href="#内存栅栏是怎么实现的" class="headerlink" title="内存栅栏是怎么实现的"></a>内存栅栏是怎么实现的</h1><p>在底层，内存栅栏是一组指令，一般包括Store Barrier、Load Barrier和Full Barrier。</p>
 <p>几乎所有的处理器至少支持一种粗粒度的屏障指令，通常被称为“栅栏（Fence）”，它保证在栅栏前初始化的load和store指令，能够严格有序的在栅栏后的load和store指令之前执行。</p>
 <p>不同的CPU架构有不同的实现方式，以X86为例：</p>
 <ul>
@@ -283,10 +333,9 @@
 <li>Full Barrier，复合了load和store屏蔽指令。<br>无论在何种处理器上，这几乎都是最耗时的操作之一（与原子指令差不多，甚至更消耗资源），所以大部分处理器还会支持更细粒度的屏障指令。</li>
 </ul>
 <p>下图是CPU的Local Memory与主存的通信过程：<br><img src="/img/memory_barrier_comm.jpg" alt></p>
-<p>#Java中内存栅栏的使用#<br>Java内存模型中volatile变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。一个类的final字段会在初始化后插入一个store屏障，来确保final字段在构造函数初始化完成并可被使用时可见。</p>
-<p>#内存栅栏对性能的影响#<br>内存栅栏阻止了 CPU 很多隐式的内存延迟技术的执行，因此是有性能损耗的，不过在上层看来这种损耗并不大。在合适的时候使用内存栅栏，仍然是一种高效的做法。</p>
-<p>#refers:#</p>
-<blockquote>
+<h1 id="Java中内存栅栏的使用"><a href="#Java中内存栅栏的使用" class="headerlink" title="Java中内存栅栏的使用"></a>Java中内存栅栏的使用</h1><p>Java内存模型中volatile变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。一个类的final字段会在初始化后插入一个store屏障，来确保final字段在构造函数初始化完成并可被使用时可见。</p>
+<h1 id="内存栅栏对性能的影响"><a href="#内存栅栏对性能的影响" class="headerlink" title="内存栅栏对性能的影响"></a>内存栅栏对性能的影响</h1><p>内存栅栏阻止了 CPU 很多隐式的内存延迟技术的执行，因此是有性能损耗的，不过在上层看来这种损耗并不大。在合适的时候使用内存栅栏，仍然是一种高效的做法。</p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
 <p><a href="http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="noopener">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="http://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="noopener">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
 </blockquote>
 
@@ -296,6 +345,23 @@
     
     
         
+      
+        <div id="reward-container">
+  <div>觉得不错，就打赏一下吧</div>
+  <button id="reward-button" disable="enable" onclick="var qr = document.getElementById(&quot;qr&quot;); qr.style.display = (qr.style.display === 'none') ? 'block' : 'none';">
+    打赏
+  </button>
+  <div id="qr" style="display: none;">
+        
+      
+      <div style="display: inline-block">
+        <img src="/images/JP_reward.jpeg" alt="Jinping Luo 微信支付">
+        <p>微信支付</p>
+      </div>
+
+  </div>
+</div>
+
       
 
       <footer class="post-footer">
@@ -344,6 +410,9 @@
 
           </div>
           
+    
+    <div class="comments" id="comments"></div>
+  
 
         </div>
           
@@ -356,15 +425,34 @@
     </div>
   </div>
 
-  <aside id="sidebar" class="sidebar">
+  <aside class="sidebar">
     <div class="sidebar-inner">
+        
+        
+        
+        
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
-        <div class="site-overview">
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc" data-target="post-toc-wrap">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+          站点概览
+        </li>
+      </ul>
 
-          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是内存栅栏"><span class="nav-number">1.</span> <span class="nav-text">什么是内存栅栏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#为什么需要内存栅栏"><span class="nav-number">2.</span> <span class="nav-text">为什么需要内存栅栏</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存栅栏是怎么实现的"><span class="nav-number">3.</span> <span class="nav-text">内存栅栏是怎么实现的</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Java中内存栅栏的使用"><span class="nav-number">4.</span> <span class="nav-text">Java中内存栅栏的使用</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#内存栅栏对性能的影响"><span class="nav-number">5.</span> <span class="nav-text">内存栅栏对性能的影响</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Reference"><span class="nav-number">6.</span> <span class="nav-text">Reference</span></a></li></ol></div>
+        
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
   <p class="site-author-name" itemprop="name">Jinping Luo</p>
-  <div class="site-description motion-element" itemprop="description"></div>
+  <div class="site-description" itemprop="description"></div>
 </div>
   <nav class="site-state motion-element">
       <div class="site-state-item site-state-posts">
@@ -372,7 +460,7 @@
           <a href="/archives/">
         
           <span class="site-state-item-count">56</span>
-          <span class="site-state-item-name">posts</span>
+          <span class="site-state-item-name">日志</span>
         </a>
       </div>
     
@@ -381,7 +469,7 @@
       <div class="site-state-item site-state-tags">
         
           
-            <a href="/tags">
+            <a href="/tags/">
           
         
         
@@ -411,7 +499,7 @@
           
         
         <span class="site-state-item-count">12</span>
-        <span class="site-state-item-name">tags</span>
+        <span class="site-state-item-name">标签</span>
         </a>
       </div>
     
@@ -424,8 +512,6 @@
 
 
 
-
-        </div>
       </div>
 
     </div>
@@ -444,11 +530,15 @@
   </span>
   <span class="author" itemprop="copyrightHolder">Jinping Luo</span>
 </div>
-  <div class="powered-by">Powered by <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> v3.9.0</div>
+  <div class="powered-by">由 <a href="https://hexo.io" class="theme-link" rel="noopener" target="_blank">Hexo</a> 强力驱动 v3.9.0</div>
   <span class="post-meta-divider">|</span>
-  <div class="theme-info">Theme – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> v7.3.0</div>
+  <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Muse</a> v7.3.0</div>
 
         
+
+
+
+
 
 
 
@@ -460,32 +550,18 @@
         
       </div>
     </footer>
-      <div class="back-to-top">
-        <i class="fa fa-arrow-up"></i>
-          <span id="scrollpercent"><span>0</span>%</span>
-        
-      </div>
-
-    
-
   </div>
 
   
   <script src="/lib/jquery/index.js?v=3.4.1"></script>
   <script src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
   <script src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
-
 <script src="/js/utils.js?v=7.3.0"></script><script src="/js/motion.js?v=7.3.0"></script>
-
 <script src="/js/schemes/muse.js?v=7.3.0"></script>
-
-
-
 <script src="/js/next-boot.js?v=7.3.0"></script>
 
 
 
-
   
 
 
@@ -495,12 +571,7 @@
 
 
 
-
-
-
-
-
-
+  <script src="/js/local-search.js?v=7.3.0"></script>
 
 
 
@@ -521,10 +592,32 @@
 
   
 
-
   
-  <script src="/js/scrollspy.js?v=7.3.0"></script><script src="/js/post-details.js?v=7.3.0"></script>
 
+
+<script>
+NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+  var GUEST = ['nick', 'mail', 'link'];
+  var guest = 'nick,mail,link';
+  guest = guest.split(',').filter(item => {
+    return GUEST.indexOf(item) > -1;
+  });
+  new Valine({
+    el: '#comments',
+    verify: false,
+    notify: true,
+    appId: 'ryOfOXrbxUPrI2b60Dpm5aNc-gzGzoHsz',
+    appKey: '1A5biSRB2pUQSDONfYJhK2l6',
+    placeholder: '说点什么吧~',
+    avatar: 'monsterid',
+    meta: guest,
+    pageSize: '10' || 10,
+    visitor: false,
+    lang: '' || 'zh-cn',
+    path: location.pathname
+  });
+}, window.Valine);
+</script>
 
 </body>
 </html>
