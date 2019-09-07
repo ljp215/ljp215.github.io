@@ -323,7 +323,6 @@
       
         <h1 id="同步的原理"><a href="#同步的原理" class="headerlink" title="同步的原理"></a>同步的原理</h1><p>JVM规范规定JVM基于进入和退出Monitor对象来实现方法同步和代码块同步，但两者的实现细节不一样。代码块同步是使用monitorenter和monitorexit指令实现，而方法同步是使用另外一种方式实现的，细节在JVM规范里并没有详细说明，但是方法的同步同样可以使用这两个指令来实现。monitorenter指令是在编译后插入到同步代码块的开始位置，而monitorexit是插入到方法结束处和异常处， JVM要保证每个monitorenter必须有对应的monitorexit与之配对。任何对象都有一个 monitor 与之关联，当且一个monitor 被持有后，它将处于锁定状态。线程执行到 monitorenter 指令时，将会尝试获取对象所对应的 monitor 的所有权，即尝试获得对象的锁。</p>
 <h1 id="Java对象头"><a href="#Java对象头" class="headerlink" title="Java对象头"></a>Java对象头</h1><p>锁存在Java对象头里。如果对象是数组类型，则虚拟机用3个Word（字宽）存储对象头，如果对象是非数组类型，则用2字宽存储对象头。在32位虚拟机中，一字宽等于四字节，即32bit。</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -332,8 +331,7 @@
 <th>说明</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>32/64bit</td>
 <td>Mark Word</td>
 <td>存储对象的hashCode或锁信息等</td>
@@ -348,11 +346,8 @@
 <td>Array length</td>
 <td>数组的长度（如果当前对象是数组）</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>Java对象头里的Mark Word里默认存储对象的HashCode，分代年龄和锁标记位。32位JVM的Mark Word的默认存储结构如下：</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
@@ -363,17 +358,14 @@
 <th>2bit<br>锁标志位</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>无锁状态</td>
 <td>对象的hashCode</td>
 <td>对象分代年龄</td>
 <td>0</td>
 <td>01</td>
 </tr>
-</tbody>
-</table>
-</div>
+</tbody></table>
 <p>在运行期间Mark Word里存储的数据会随着锁标志位的变化而变化。Mark Word可能变化为存储以下4种数据：</p>
 <p><img src="/img/markword_state.jpg" alt></p>
 <h1 id="几种锁的类型"><a href="#几种锁的类型" class="headerlink" title="几种锁的类型"></a>几种锁的类型</h1><p><strong>线程的阻塞和唤醒需要CPU从用户态转为核心态，频繁的阻塞和唤醒对CPU来说是一件负担很重的工作。</strong></p>
@@ -403,8 +395,7 @@
 <h3 id="轻量级锁解锁"><a href="#轻量级锁解锁" class="headerlink" title="轻量级锁解锁"></a>轻量级锁解锁</h3><p><strong>轻量级解锁时，会使用原子的CAS操作来将Displaced Mark Word替换回到对象头，如果成功，则表示同步过程已完成。</strong>如果失败，表示有其他线程尝试过获取该锁，则要在释放锁的同时唤醒被挂起的线程。下图是两个线程同时争夺锁，导致锁膨胀的流程图。</p>
 <p><img src="/img/light_lock_flow.jpg" alt><br><img src="/img/light_lock_progress.jpg" alt></p>
 <h2 id="重量级锁"><a href="#重量级锁" class="headerlink" title="重量级锁"></a>重量级锁</h2><p>重量锁在JVM中又叫对象监视器（Monitor），它很像C中的Mutex，除了具备Mutex互斥的功能，它还负责实现了Semaphore的功能，也就是说它至少包含一个竞争锁的队列，和一个信号阻塞队列（wait队列），前者负责做互斥，后一个用于做线程同步。</p>
-<h1 id="锁的优缺点对比"><a href="#锁的优缺点对比" class="headerlink" title="锁的优缺点对比"></a>锁的优缺点对比</h1><div class="table-container">
-<table>
+<h1 id="锁的优缺点对比"><a href="#锁的优缺点对比" class="headerlink" title="锁的优缺点对比"></a>锁的优缺点对比</h1><table>
 <thead>
 <tr>
 <th>锁</th>
@@ -413,8 +404,7 @@
 <th>适用场景</th>
 </tr>
 </thead>
-<tbody>
-<tr>
+<tbody><tr>
 <td>偏向锁</td>
 <td>加锁和解锁不需要额外的消耗，和执行非同步方法比仅存在纳秒级的差距</td>
 <td>如果线程间存在锁竞争，会带来额外的锁撤销的消耗</td>
@@ -432,11 +422,12 @@
 <td>线程阻塞，响应时间缓慢</td>
 <td>追求吞吐量,锁占用时间较长</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br></p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="noopener">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="http://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="noopener">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="http://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="noopener">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="http://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="noopener">http://blog.csdn.net/coslay/article/details/41526635</a></p>
+</tbody></table>
+<br>
+
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
+</blockquote>
+<p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="noopener">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="http://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="noopener">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="http://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="noopener">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="http://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="noopener">http://blog.csdn.net/coslay/article/details/41526635</a></p>
 
     </div>
 

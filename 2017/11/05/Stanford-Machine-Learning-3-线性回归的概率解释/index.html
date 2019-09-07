@@ -324,20 +324,16 @@
 <p>最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。<br>最小二乘是从函数形式上来看的，极大似然是从概率意义上来看的。事实上，最小二乘可以由高斯噪声假设+极大似然估计推导出来。当然极大似然估计还可以推导出其他的loss function， 比如logistic回归中，loss function是交叉熵。<br><a href="http://www.cnblogs.com/little-YTMM/p/5700226.html" target="_blank" rel="noopener">最大似然估计与最小二乘估计的区别</a></p>
 </blockquote>
 <p>一般的最小二乘法实际上是在假设误差项满足高斯分布且独立同分布的情况下，使似然性最大化。</p>
-<h2 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h2><p>回到预测房价的例子，假设最终的预测函数，每一次预测都有误差，用$ε^{(i)}$表示误差，则预测函数可以写为：</p>
-<script type="math/tex; mode=display">y^{(i)}=\theta^Tx^{(i)} + ε^{(i)}</script><p>其中，误差是随机分布的，均值为 0，服从高斯分布 $N(0,σ^2)$。</p>
+<h2 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h2><p>回到预测房价的例子，假设最终的预测函数，每一次预测都有误差，用$ε^{(i)}$表示误差，则预测函数可以写为：<br>$$y^{(i)}=\theta^Tx^{(i)} + ε^{(i)} $$</p>
+<p>其中，误差是随机分布的，均值为 0，服从高斯分布 $N(0,σ^2)$。</p>
 <blockquote>
 <p>Andrew Ng 讲到在大多数情况下，线性回归的误差值如果综合来看，就是符合高斯分布的。并且根据中心极限定律，正态分布确实是对误差项分布的合理猜想。</p>
 </blockquote>
-<p>所以</p>
-<script type="math/tex; mode=display">P(y^{(i)}|x^{(i)}; θ) = \frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})</script><p>$P(y^{(i)}|x^{(i)}; θ)$ 表示：在 θ 为给定的参数的情况下，概率 $y^{(i)}$ 以 $x^{(i)}$ 为随机变量的概率分布，注意 θ 不是随机变量。</p>
-<p>由于 ε(i) 是独立的同分布（IID：independentlyidentically distribution），所以以 θ 为变量的似然函数为：</p>
-<script type="math/tex; mode=display">
-L(θ)=L(θ;X,Y)=p(Y|X;θ) = \prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})</script><p>对 L(θ) 取对数有：</p>
-<script type="math/tex; mode=display">
-l(\theta)=logL(\theta)
-= log\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})</script><script type="math/tex; mode=display">
-= m\sum_{i=1}^{m}log\frac{1}{\sqrt{2\pi}\sigma} - \frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2</script><p>最大化 $l(\theta)$ 即是最小化 $\frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2$，这样就是 cost function.</p>
+<p>所以<br>$$P(y^{(i)}|x^{(i)}; θ) = \frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})$$</p>
+<p>$P(y^{(i)}|x^{(i)}; θ)$ 表示：在 θ 为给定的参数的情况下，概率 $y^{(i)}$ 以 $x^{(i)}$ 为随机变量的概率分布，注意 θ 不是随机变量。</p>
+<p>由于 ε(i) 是独立的同分布（IID：independentlyidentically distribution），所以以 θ 为变量的似然函数为：<br>$$<br>L(θ)=L(θ;X,Y)=p(Y|X;θ) = \prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$</p>
+<p>对 L(θ) 取对数有：<br>$$<br>l(\theta)=logL(\theta)<br>= log\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})<br>$$<br>$$<br>= m\sum_{i=1}^{m}log\frac{1}{\sqrt{2\pi}\sigma} - \frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2<br>$$</p>
+<p>最大化 $l(\theta)$ 即是最小化 $\frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2$，这样就是 cost function.</p>
 <p>由于目标变量服从正态分布，但分布的均值和方差都未知，对均值和方差两个参数的合理估计是选取两个参数使得在正态分布的前提下，抽到各样本中的 y 值的概率最大，这就是最大似然估计的思想。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://www.holehouse.org/mlclass/07_Regularization.html" target="_blank" rel="noopener">http://www.holehouse.org/mlclass/07_Regularization.html</a><br><a href="http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html" target="_blank" rel="noopener">http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html</a><br><a href="https://rpubs.com/badbye/ml03" target="_blank" rel="noopener">https://rpubs.com/badbye/ml03</a><br><a href="http://www.qiujiawei.com/linear-algebra-15/" target="_blank" rel="noopener">http://www.qiujiawei.com/linear-algebra-15/</a><br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="noopener">最大似然估计</a></p>
 

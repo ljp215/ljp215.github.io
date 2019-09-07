@@ -54,20 +54,21 @@
   };
 </script>
 
-  <meta name="description" content="逻辑回归对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为 h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}其中 g(z)=\frac1{1+e^{-z}}$$；  g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为: ![sigmoid function](/img/sig">
+  <meta name="description" content="逻辑回归对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$ 其中$$g(z)=\frac1{1+e^{-z}}$$； g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为: 我们先取 g(z) 为 sigmoid func">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Stanford Machine Learning - 4 逻辑回归">
 <meta property="og:url" content="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="逻辑回归对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为 h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}其中 g(z)=\frac1{1+e^{-z}}$$；  g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为: ![sigmoid function](/img/sig">
+<meta property="og:description" content="逻辑回归对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$ 其中$$g(z)=\frac1{1+e^{-z}}$$； g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为: 我们先取 g(z) 为 sigmoid func">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://luojinping.com/img/sigmoid_function.png">
 <meta property="og:image" content="http://luojinping.com/img/logistic_regression_delta_ljp_derived.png">
 <meta property="og:updated_time" content="2019-08-25T13:10:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stanford Machine Learning - 4 逻辑回归">
-<meta name="twitter:description" content="逻辑回归对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为 h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}其中 g(z)=\frac1{1+e^{-z}}$$；  g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为: ![sigmoid function](/img/sig">
-<meta name="twitter:image" content="http://luojinping.com/img/logistic_regression_delta_ljp_derived.png">
+<meta name="twitter:description" content="逻辑回归对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$ 其中$$g(z)=\frac1{1+e^{-z}}$$； g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为: 我们先取 g(z) 为 sigmoid func">
+<meta name="twitter:image" content="http://luojinping.com/img/sigmoid_function.png">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-4-逻辑回归/">
 
@@ -317,38 +318,36 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为</p>
-<script type="math/tex; mode=display">h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}</script><p>其中</p>
-<script type="math/tex; mode=display">g(z)=\frac1{1+e^{-z}}$$；
+        <h1 id="逻辑回归"><a href="#逻辑回归" class="headerlink" title="逻辑回归"></a>逻辑回归</h1><p>对于逻辑回归而言，y 的取值不是 0 就是 1，所以 $h_θ(x)$ 可以写为<br>$$h_θ(x) = g(θ^{T}x)=\frac1{1+e^{-θ^{T}x}}$$</p>
+<p>其中<br>$$g(z)=\frac1{1+e^{-z}}$$；</p>
+<p>g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:<br><img src="/img/sigmoid_function.png" alt="sigmoid function"></p>
+<p>我们先取 g(z) 为 sigmoid function，如果有其他使得 y 值从 0 到 1 平滑递增的函数也可以使用。但由于一些列原因(在后续的一般化回归模型 GLM 中会谈到为什么选用这个函数)，g(z) is a fairly natural one.</p>
+<p>g(z) 的导数我们可以先进行推导:<br>$$g’(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})$$<br>$$= \frac{1}{1+e^{-z}}*(1 - \frac{1}{1+e^{-z}})= g(z)(1-g(z))$$</p>
+<h1 id="梯度上升法求解逻辑回归"><a href="#梯度上升法求解逻辑回归" class="headerlink" title="梯度上升法求解逻辑回归"></a>梯度上升法求解逻辑回归</h1><p>对于给定的逻辑回归函数，我们使用最小二乘法来推导出最大似然估计，假设:<br>$P(y=1|x;θ)=h_θ(x)$，代表对于给定的 θ，y 取值为 1 的概率。<br>$P(y=0|x;θ)=1-h_θ(x)$，代表对于给定的 θ，y 取值为 0 的概率。</p>
+<p>以上两者可以合并为：<br>$$P(y|x;θ)=(h_θ(x))^y(1 − h_θ(x))^{(1−y)}$$</p>
+<p>假设 m 个训练集是相互独立的，则似然估计为：<br>$$L(θ)=P(\overrightarrow{y}|X;θ)$$<br>$$= \prod^m_{i=1}P(y^i|x^i;θ)$$<br>$$= \prod^m_{i=1}{(h_θ(x^{(i)}))^{y^{(i)}}(1 − h_θ(x^{(i)}))^{(1−y^{(i)})}}$$</p>
+<p>和之前一样，上式可以简化为：</p>
+<p>
+$l(θ) = logL(θ)
+= \sum_{m}^{i=1}{y^{(i)}}log{h(x^{(i)}) + {(1−y^{(i)})}log(1 − h(x^{(i)}))}$
 
-g(z) 被称为 logistic function 或 sigmoid function，其二维坐标下的曲线为:
-![sigmoid function](/img/sigmoid_function.png)
-
-
-我们先取 g(z) 为 sigmoid function，如果有其他使得 y 值从 0 到 1 平滑递增的函数也可以使用。但由于一些列原因(在后续的一般化回归模型 GLM 中会谈到为什么选用这个函数)，g(z) is a fairly natural one.
-
-g(z) 的导数我们可以先进行推导:
-$$g'(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})</script><script type="math/tex; mode=display">= \frac{1}{1+e^{-z}}*(1 - \frac{1}{1+e^{-z}})= g(z)(1-g(z))</script><h1 id="梯度上升法求解逻辑回归"><a href="#梯度上升法求解逻辑回归" class="headerlink" title="梯度上升法求解逻辑回归"></a>梯度上升法求解逻辑回归</h1><p>对于给定的逻辑回归函数，我们使用最小二乘法来推导出最大似然估计，假设:<br>$P(y=1|x;θ)=h_θ(x)$，代表对于给定的 θ，y 取值为 1 的概率。<br>$P(y=0|x;θ)=1-h_θ(x)$，代表对于给定的 θ，y 取值为 0 的概率。</p>
-<p>以上两者可以合并为：</p>
-<script type="math/tex; mode=display">P(y|x;θ)=(h_θ(x))^y(1 − h_θ(x))^{(1−y)}</script><p>假设 m 个训练集是相互独立的，则似然估计为：</p>
-<script type="math/tex; mode=display">L(θ)=P(\overrightarrow{y}|X;θ)</script><script type="math/tex; mode=display">= \prod^m_{i=1}P(y^i|x^i;θ)</script><script type="math/tex; mode=display">= \prod^m_{i=1}{(h_θ(x^{(i)}))^{y^{(i)}}(1 − h_θ(x^{(i)}))^{(1−y^{(i)})}}</script><p>和之前一样，上式可以简化为：</p>
-<p></p><p><br>$l(θ) = logL(θ)<br>= \sum_{m}^{i=1}{y^{(i)}}log{h(x^{(i)}) + {(1−y^{(i)})}log(1 − h(x^{(i)}))}$</p>
-<p>那么，<br>如何去最大化似然函数呢，可以应用梯度上升法，因为我们要使 P 的取值足够大，也是就预测准确的概率最够大。</p>
-<p>随机梯度上升的公式为：</p>
-<script type="math/tex; mode=display">θ:= θ + \alpha\Deltaθl(θ)</script><p>下面来求$\Deltaθl(θ)$的取值：</p>
-<script type="math/tex; mode=display">\frac\partial{\partial\theta_j}l(\theta)</script><script type="math/tex; mode=display">= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)})\frac\partial{\partial\theta_j}g(\theta^Tx)</script><script type="math/tex; mode=display">= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)}) g(\theta^Tx)(1-g(\theta^Tx))\frac\partial{\partial\theta_j}\theta^Tx</script><script type="math/tex; mode=display">= ({y(1-g(\theta^Tx))-(1-y)g(\theta^Tx)})x_j</script><script type="math/tex; mode=display">= (y - h_{\theta}(x))x_j</script><p>附上手写的推导过程：<br><img src="/img/logistic_regression_delta_ljp_derived.png" alt="手写推导过程"></p>
-<p>所以，最终随机梯度上升的公式为：</p>
-<script type="math/tex; mode=display">θ_j:=θ_j + \alpha\sum_{i=1}^{m}(y^{(i)} - h_{\theta}(x^{(i))})x_j^{(i)}</script><p>如何和线性回归的公式放在一起比较，</p>
-<script type="math/tex; mode=display">θ_j = θ_j - α \frac1m \* \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}\*x_j^{(i)}</script><p>会发现，这两者非常相似，实际上却不然，因为这里的 $(h_θ(x^{(i)})$ 定义的不是线性函数。后续我们谈到 GLM 时会发现这并不是巧合，而是有更深层次的原因。</p>
+</p><p>那么，<br>如何去最大化似然函数呢，可以应用梯度上升法，因为我们要使 P 的取值足够大，也是就预测准确的概率最够大。</p>
+<p>随机梯度上升的公式为：<br>$$θ:= θ + \alpha\Deltaθl(θ)$$</p>
+<p>下面来求$\Deltaθl(θ)$的取值：</p>
+<p>$$\frac\partial{\partial\theta_j}l(\theta)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)})\frac\partial{\partial\theta_j}g(\theta^Tx)$$<br>$$= (y\frac1{g(\theta^Tx)} - (1-y)\frac1{1-g(\theta^Tx)}) g(\theta^Tx)(1-g(\theta^Tx))\frac\partial{\partial\theta_j}\theta^Tx$$<br>$$= ({y(1-g(\theta^Tx))-(1-y)g(\theta^Tx)})x_j$$<br>$$= (y - h_{\theta}(x))x_j$$</p>
+<p>附上手写的推导过程：<br><img src="/img/logistic_regression_delta_ljp_derived.png" alt="手写推导过程"></p>
+<p>所以，最终随机梯度上升的公式为：<br>$$θ<em>j:=θ_j + \alpha\sum</em>{i=1}^{m}(y^{(i)} - h_{\theta}(x^{(i))})x_j^{(i)}$$</p>
+<p>如何和线性回归的公式放在一起比较，</p>
+<p>$$θ<em>j = θ_j - α \frac1m * \sum</em>{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)}$$</p>
+<p>会发现，这两者非常相似，实际上却不然，因为这里的 $(h_θ(x^{(i)})$ 定义的不是线性函数。后续我们谈到 GLM 时会发现这并不是巧合，而是有更深层次的原因。</p>
 <h1 id="牛顿迭代法求解逻辑回归"><a href="#牛顿迭代法求解逻辑回归" class="headerlink" title="牛顿迭代法求解逻辑回归"></a>牛顿迭代法求解逻辑回归</h1><p>牛顿迭代法可以利用到曲线本身的信息，比梯度下降法更容易收敛，即迭代更少次数。</p>
 <h2 id="牛顿迭代法简述"><a href="#牛顿迭代法简述" class="headerlink" title="牛顿迭代法简述"></a>牛顿迭代法简述</h2><p>假设我们要求解方程 f(x)=0 的根，首先随便找一个初始值 x0，如果 x0 不是解，做一个经过 (x0,f(x0))  这个点的切线，与 x 轴的交点为 x1。同样的道理，如果 x1 不是解，做一个经过 (x1,f(x1)) 这个点的切线，与 x 轴的交点为 x2。 以此类推。以这样的方式得到的 xi 会无限趋近于 f(x)=0 的解。</p>
-<p>对于任意一点 $(x_n,y_n)$ 做切线，切线的斜率为 $f’(x_n)$，则有方程：</p>
-<script type="math/tex; mode=display">y-f(x_n) = f'(x_n)(x-x_n)</script><h2 id="迭代过程"><a href="#迭代过程" class="headerlink" title="迭代过程"></a>迭代过程</h2><p>求解 $f(\theta)$ = 0 时 $\theta$ 的取值。<br>设下一次迭代时 $\theta^{(t+1)}$ 的取值与前一次迭代 $\theta^{(t)}$ 的取值(在 x 轴)距离为 $\Delta$。</p>
-<p>则 $\theta^{(t+1)} = \theta^{(t)} - \Delta$，且 $\Delta = \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$，<br>所以有：</p>
-<script type="math/tex; mode=display">\theta^{(t+1)} = \theta^{(t)} - \frac{f(\theta^{(t)})}{f'(\theta^{(t)})}</script><h3 id="从泰勒展开到牛顿迭代"><a href="#从泰勒展开到牛顿迭代" class="headerlink" title="从泰勒展开到牛顿迭代"></a>从泰勒展开到牛顿迭代</h3><p>也可以由泰勒展开中推导牛顿迭代的公式。这次为了求解方程 f′=0 的根，把原函数 f(x) 的做泰勒展开，展开到二阶形式： </p>
-<script type="math/tex; mode=display">f(x+\Delta x) = f(x)+f'(x)\Delta x+ \frac1{2}f''(x)\Delta x^2</script><p>当且仅当 $\Delta x$ 逼近 0 时，上式成立，此时忽略 1/2 系数的作用，所以有：</p>
-<script type="math/tex; mode=display">f'(x)+ \frac1{2}f''(x)\Delta x = 0</script><p>故：</p>
-<script type="math/tex; mode=display">\Delta x = -\frac{f'(x)}{f''(x)}</script><p><strong>对函数求极大值的方法</strong><br>&gt;</p>
+<p>对于任意一点 $(x_n,y_n)$ 做切线，切线的斜率为 $f’(x_n)$，则有方程：<br>$$ y-f(x_n) = f’(x_n)(x-x_n) $$</p>
+<h2 id="迭代过程"><a href="#迭代过程" class="headerlink" title="迭代过程"></a>迭代过程</h2><p>求解 $f(\theta)$ = 0 时 $\theta$ 的取值。<br>设下一次迭代时 $\theta^{(t+1)}$ 的取值与前一次迭代 $\theta^{(t)}$ 的取值(在 x 轴)距离为 $\Delta$。</p>
+<p>则 $\theta^{(t+1)} = \theta^{(t)} - \Delta$，且 $\Delta = \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$，<br>所以有：<br>$$\theta^{(t+1)} = \theta^{(t)} - \frac{f(\theta^{(t)})}{f’(\theta^{(t)})}$$</p>
+<h3 id="从泰勒展开到牛顿迭代"><a href="#从泰勒展开到牛顿迭代" class="headerlink" title="从泰勒展开到牛顿迭代"></a>从泰勒展开到牛顿迭代</h3><p>也可以由泰勒展开中推导牛顿迭代的公式。这次为了求解方程 f′=0 的根，把原函数 f(x) 的做泰勒展开，展开到二阶形式：<br>$$ f(x+\Delta x) = f(x)+f’(x)\Delta x+ \frac1{2}f’’(x)\Delta x^2 $$</p>
+<p>当且仅当 $\Delta x$ 逼近 0 时，上式成立，此时忽略 1/2 系数的作用，所以有：<br>$$ f’(x)+ \frac1{2}f’’(x)\Delta x = 0 $$<br>故：<br>$$\Delta x = -\frac{f’(x)}{f’’(x)} $$</p>
+<p><strong>对函数求极大值的方法</strong></p>
 <blockquote>
 <ol>
 <li>将原函数y=f(x)，对x求一次导数，得到dy/dx；</li>
@@ -358,10 +357,10 @@ $$g'(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})</script><
 </ol>
 </blockquote>
 <p>所以求 $l(\theta)$ 在极大值处 $\theta$ 的取值，则是求 $l’(\theta) = 0$ 时 $\theta$ 的值，应用牛顿迭代法则有：</p>
-<script type="math/tex; mode=display">\theta^{(t+1)} = \theta^{(t)} - \frac{l'(\theta^{(t)})}{l''(\theta^{(t)})}</script><h2 id="多维向量的牛顿迭代"><a href="#多维向量的牛顿迭代" class="headerlink" title="多维向量的牛顿迭代"></a>多维向量的牛顿迭代</h2><p>对于多维向量 $\overrightarrow{X}$ 求解。</p>
-<script type="math/tex; mode=display">\theta := \theta - H^{-1} \nabla l(\theta)</script><p>其中<br>$\nabla l(\theta)$ 是对 $l(\theta)$ 求导的值。</p>
-<p>H 是一个 n*n 的矩阵，n 是特征数量，元素的计算公式为：</p>
-<script type="math/tex; mode=display">H_ij= \frac{\partial^2{l({\theta)}}}{\partial{\theta_i}\partial{\theta_j}}</script><h2 id="牛顿迭代法的特点"><a href="#牛顿迭代法的特点" class="headerlink" title="牛顿迭代法的特点"></a>牛顿迭代法的特点</h2><h3 id="是否收敛"><a href="#是否收敛" class="headerlink" title="是否收敛"></a>是否收敛</h3><p>通常情况下是收敛的，但是需要满足一些条件，对于逻辑回归来讲，是收敛的。</p>
+<p>$$\theta^{(t+1)} = \theta^{(t)} - \frac{l’(\theta^{(t)})}{l’’(\theta^{(t)})}$$</p>
+<h2 id="多维向量的牛顿迭代"><a href="#多维向量的牛顿迭代" class="headerlink" title="多维向量的牛顿迭代"></a>多维向量的牛顿迭代</h2><p>对于多维向量 $\overrightarrow{X}$ 求解。<br>$$\theta := \theta - H^{-1} \nabla l(\theta)$$<br>其中<br>$\nabla l(\theta)$ 是对 $l(\theta)$ 求导的值。</p>
+<p>H 是一个 n*n 的矩阵，n 是特征数量，元素的计算公式为：<br>$$H_ij= \frac{\partial^2{l({\theta)}}}{\partial{\theta_i}\partial{\theta_j}}$$</p>
+<h2 id="牛顿迭代法的特点"><a href="#牛顿迭代法的特点" class="headerlink" title="牛顿迭代法的特点"></a>牛顿迭代法的特点</h2><h3 id="是否收敛"><a href="#是否收敛" class="headerlink" title="是否收敛"></a>是否收敛</h3><p>通常情况下是收敛的，但是需要满足一些条件，对于逻辑回归来讲，是收敛的。</p>
 <h3 id="迭代速度"><a href="#迭代速度" class="headerlink" title="迭代速度"></a>迭代速度</h3><p>每次迭代后，有解数字的误差是成平方倍减小的，是二次收敛函数。</p>
 <h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：收敛快<br>缺点：特征多(上千个)时，每次迭代成本大</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://blog.csdn.net/baimafujinji/article/details/51179381" target="_blank" rel="noopener">http://blog.csdn.net/baimafujinji/article/details/51179381</a><br><a href="http://blog.csdn.net/baimafujinji/article/details/51167852" target="_blank" rel="noopener">http://blog.csdn.net/baimafujinji/article/details/51167852</a><br><a href="https://www.jiqizhixin.com/articles/2017-08-09-3" target="_blank" rel="noopener">如何通过牛顿方法解决Logistic回归问题</a></p>

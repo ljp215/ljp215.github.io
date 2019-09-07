@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="1. contactMySQL CONCAT function is used to concatenate two strings to form a single string. MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group. 数据库Person表的内容如">
+  <meta name="description" content="##1. contact MySQL CONCAT function is used to concatenate two strings to form a single string. MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group. 数据库Person表的">
 <meta name="keywords" content="Data">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mysql Memo">
 <meta property="og:url" content="http://luojinping.com/2015/11/10/Mysql-Memo/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="1. contactMySQL CONCAT function is used to concatenate two strings to form a single string. MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group. 数据库Person表的内容如">
+<meta property="og:description" content="##1. contact MySQL CONCAT function is used to concatenate two strings to form a single string. MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group. 数据库Person表的">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-25T02:50:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mysql Memo">
-<meta name="twitter:description" content="1. contactMySQL CONCAT function is used to concatenate two strings to form a single string. MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group. 数据库Person表的内容如">
+<meta name="twitter:description" content="##1. contact MySQL CONCAT function is used to concatenate two strings to form a single string. MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group. 数据库Person表的">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/11/10/Mysql-Memo/">
 
@@ -315,178 +315,172 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="1-contact"><a href="#1-contact" class="headerlink" title="1. contact"></a>1. contact</h2><p>MySQL CONCAT function is used to concatenate two strings to form a single string.</p>
+        <p>##1. contact</p>
+<p>MySQL CONCAT function is used to concatenate two strings to form a single string.</p>
 <p>MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group.</p>
 <p>数据库Person表的内容如下：</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">id</th>
-<th style="text-align:center">name</th>
-<th style="text-align:center">source</th>
-<th style="text-align:center">age</th>
+<th align="center">id</th>
+<th align="center">name</th>
+<th align="center">source</th>
+<th align="center">age</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">GP</td>
-<td style="text-align:center">6</td>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">A</td>
+<td align="center">GP</td>
+<td align="center">6</td>
 </tr>
 <tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center">B</td>
-<td style="text-align:center">GP</td>
-<td style="text-align:center">2</td>
+<td align="center">2</td>
+<td align="center">B</td>
+<td align="center">GP</td>
+<td align="center">2</td>
 </tr>
 <tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">1</td>
+<td align="center">3</td>
+<td align="center">A</td>
+<td align="center">FB</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">C</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">4</td>
+<td align="center">4</td>
+<td align="center">C</td>
+<td align="center">FB</td>
+<td align="center">4</td>
 </tr>
 <tr>
-<td style="text-align:center">5</td>
-<td style="text-align:center">D</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">5</td>
+<td align="center">5</td>
+<td align="center">D</td>
+<td align="center">FB</td>
+<td align="center">5</td>
 </tr>
 <tr>
-<td style="text-align:center">6</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">3</td>
+<td align="center">6</td>
+<td align="center">A</td>
+<td align="center">FB</td>
+<td align="center">3</td>
 </tr>
 <tr>
-<td style="text-align:center">7</td>
-<td style="text-align:center">C</td>
-<td style="text-align:center">TW</td>
-<td style="text-align:center">7</td>
+<td align="center">7</td>
+<td align="center">C</td>
+<td align="center">TW</td>
+<td align="center">7</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br></p>
+</tbody></table>
+<br>
+
 <p>1.SQL:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select name, count(distinct source) as sourceCount,</span><br><span class="line">group_concat(distinct source separator &quot;/&quot;) as sources</span><br><span class="line">from Person</span><br><span class="line">group by name;</span><br></pre></td></tr></table></figure>
+
 <p>Query Result:</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">sourceCount</th>
-<th style="text-align:center">sources</th>
+<th align="center">name</th>
+<th align="center">sourceCount</th>
+<th align="center">sources</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">GP/FB</td>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">2</td>
+<td align="center">GP/FB</td>
 </tr>
 <tr>
-<td style="text-align:center">B</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">GP</td>
+<td align="center">B</td>
+<td align="center">1</td>
+<td align="center">GP</td>
 </tr>
 <tr>
-<td style="text-align:center">C</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">GP/TW</td>
+<td align="center">C</td>
+<td align="center">2</td>
+<td align="center">GP/TW</td>
 </tr>
 <tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">FB</td>
+<td align="center">D</td>
+<td align="center">1</td>
+<td align="center">FB</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br></p>
+</tbody></table>
+<br>
+
 <p>2.SQL:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select name, count(distinct source) as sourceCount,</span><br><span class="line">group_concat(distinct source separator &quot;/&quot;) as sources</span><br><span class="line">from Person</span><br><span class="line">group by name</span><br><span class="line">having sourceCount = 1 and sources = &apos;FB&apos;;</span><br></pre></td></tr></table></figure>
+
 <p>Query Result:</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">sourceCount</th>
-<th style="text-align:center">sources</th>
+<th align="center">name</th>
+<th align="center">sourceCount</th>
+<th align="center">sources</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">FB</td>
+<tbody><tr>
+<td align="center">D</td>
+<td align="center">1</td>
+<td align="center">FB</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br></p>
+</tbody></table>
+<br>
+
 <p>3.SQL:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select name, count(distinct age) as ageCount,</span><br><span class="line">group_concat(age order by age separator &quot;#&quot;) as ages</span><br><span class="line">from Person;</span><br></pre></td></tr></table></figure>
+
 <p>Query Result:</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">ageCount</th>
-<th style="text-align:center">ages</th>
+<th align="center">name</th>
+<th align="center">ageCount</th>
+<th align="center">ages</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">1#3#6</td>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">3</td>
+<td align="center">1#3#6</td>
 </tr>
 <tr>
-<td style="text-align:center">B</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">2</td>
+<td align="center">B</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr>
-<td style="text-align:center">C</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4#7</td>
+<td align="center">C</td>
+<td align="center">2</td>
+<td align="center">4#7</td>
 </tr>
 <tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">5</td>
+<td align="center">D</td>
+<td align="center">1</td>
+<td align="center">5</td>
 </tr>
-</tbody>
-</table>
-</div>
-<h2 id="2-mysql-N-不显示字段名"><a href="#2-mysql-N-不显示字段名" class="headerlink" title="2. mysql -N 不显示字段名"></a>2. mysql -N 不显示字段名</h2><p>普通的查询语句，查询结果中带字段名</p>
+</tbody></table>
+<p>##2. mysql -N 不显示字段名<br>普通的查询语句，查询结果中带字段名</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> mysql -h xxxx -P 8000 -u&apos;xxx&apos; -p&apos;xxx&apos; -D xxdb</span><br><span class="line">-e &quot;select name from Person where name = &apos;A&apos;&quot;;</span><br></pre></td></tr></table></figure>
-<p>+—————-+</p>
+
+<p>+———–+</p>
 <p>| name      |</p>
-<p>+—————-+</p>
+<p>+———–+</p>
 <p>| not found |</p>
-<p>+—————-+</p>
+<p>+———–+</p>
 <p>带-N的查询语句，查询结果中不带字段名</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> mysql -N -h xxxx -P 8000 -u&apos;xxx&apos; -p&apos;xxx&apos; -D xxdb</span><br><span class="line">-e &quot;select name from Person where name = &apos;A&apos;&quot;;</span><br></pre></td></tr></table></figure>
-<p>+—————-+</p>
+
+<p>+———–+</p>
 <p>| not found |</p>
-<p>+—————-+</p>
-<h2 id="3-IFNULL"><a href="#3-IFNULL" class="headerlink" title="3. IFNULL"></a>3. IFNULL</h2><p>使用IFNULL能判断是否有查到结果。<br>在shell中跑mysql的指令容易出现空行，此时用IFNULL是最合适的了。</p>
+<p>+———–+</p>
+<p>##3. IFNULL<br>使用IFNULL能判断是否有查到结果。<br>在shell中跑mysql的指令容易出现空行，此时用IFNULL是最合适的了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> mysql -N -h xxxx -P 8000 -u&apos;xxx&apos; -p&apos;xxx&apos; -D xxdb</span><br><span class="line">-e &quot;select IFNULL(</span><br><span class="line">(select name from Person where name = &apos;A&apos; and age = 100),</span><br><span class="line">&apos;not found&apos;)&quot;</span><br></pre></td></tr></table></figure>
-<p>+—————-+</p>
+
+<p>+———–+</p>
 <p>| not found |</p>
-<p>+—————-+</p>
+<p>+———–+</p>
 
     </div>
 
@@ -593,8 +587,6 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-contact"><span class="nav-number">1.</span> <span class="nav-text">1. contact</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-mysql-N-不显示字段名"><span class="nav-number">2.</span> <span class="nav-text">2. mysql -N 不显示字段名</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-IFNULL"><span class="nav-number">3.</span> <span class="nav-text">3. IFNULL</span></a></li></ol></div>
-        
       </div>
       <!--/noindex-->
 

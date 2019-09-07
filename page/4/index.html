@@ -319,16 +319,18 @@
 </li>
 </ul>
 <h1 id="combineByKey"><a href="#combineByKey" class="headerlink" title="combineByKey"></a>combineByKey</h1><h2 id="combineByKey的定义"><a href="#combineByKey的定义" class="headerlink" title="combineByKey的定义"></a>combineByKey的定义</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">def combineByKey[C](</span><br><span class="line">  createCombiner: V =&gt; C,</span><br><span class="line">  mergeValue: (C, V) =&gt; C, </span><br><span class="line">  mergeCombiners: (C, C) =&gt; C, </span><br><span class="line">  partitioner: Partitioner, </span><br><span class="line">  mapSideCombine: Boolean = <span class="keyword">true</span>, </span><br><span class="line">  serializer: Serializer = <span class="keyword">null</span>): RDD[(K, C)] = &#123;</span><br><span class="line">  <span class="comment">// do something</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>combineByKey函数主要接受了三个函数作为参数，分别为createCombiner、mergeValue、mergeCombiners。这三个函数足以说明它究竟做了什么。理解了这三个函数，就可以很好地理解combineByKey。</p>
 <h3 id="createCombiner"><a href="#createCombiner" class="headerlink" title="createCombiner"></a>createCombiner</h3><p>createCombiner：在遍历RDD的过程中，对于遍历到的(k,v)，如果是第一次遇到，则对这个(k,v)调用createCombiner函数，它的作用是将v转换为c(类型是C，即聚合对象的类型，c作为聚合对象的初始值)</p>
 <h3 id="mergeValue"><a href="#mergeValue" class="headerlink" title="mergeValue"></a>mergeValue</h3><p>mergeValue：在遍历RDD的过程中，对于遍历到的(k,v)，如果不是第一次(而是第i次, 1 &lt; i &lt;= n)遇到，那么将对这个(k,v)调用mergeValue函数，它的作用是将v累加到聚合对象（类型C）中，mergeValue的类型是(C,V)=&gt;C,参数中的C遍历到此处的聚合对象，然后对v进行聚合得到新的聚合对象值</p>
 <h3 id="mergeCombiners"><a href="#mergeCombiners" class="headerlink" title="mergeCombiners"></a>mergeCombiners</h3><p>mergeCombiners：<strong>因为combineByKey是在分布式环境下执行，RDD的每个分区单独进行combineByKey操作，最后需要对各个分区的结果进行最后的聚合</strong>。它的函数类型是(C,C)=&gt;C，每个参数是分区聚合得到的聚合对象。</p>
 <h3 id="combineByKey的流程"><a href="#combineByKey的流程" class="headerlink" title="combineByKey的流程"></a>combineByKey的流程</h3><ul>
-<li>假设一组具有相同 K 的 <k, v> records 正在一个个流向 combineByKey()，createCombiner 将第一个 record 的value 初始化为 c （比如，c = value），然后从第二个 record 开始，来一个 record 就使用 mergeValue(c,</k,></li>
+<li>假设一组具有相同 K 的 &lt;K, V&gt; records 正在一个个流向 combineByKey()，createCombiner 将第一个 record 的value 初始化为 c （比如，c = value），然后从第二个 record 开始，来一个 record 就使用 mergeValue(c,</li>
 <li>record.value) 来更新 c，比如想要对这些 records 的所有 values 做 sum，那么使用 c = c + record.value。等到records 全部被 mergeValue()，得到结果 c。假设还有一组 records（key 与前面那组的 key 均相同）一个个到来，</li>
 <li>combineByKey() 使用前面的方法不断计算得到 c’。现在如果要求这两组 records 总的 combineByKey() 后的结果，那么可以使用 final c = mergeCombiners(c, c’) 来计算。</li>
 </ul>
 <h2 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> rdd1 = sc.makeRDD(Array((<span class="string">"A"</span>,<span class="number">1</span>),(<span class="string">"A"</span>,<span class="number">2</span>),(<span class="string">"A"</span>,<span class="number">3</span>),(<span class="string">"B"</span>,<span class="number">1</span>),(<span class="string">"B"</span>,<span class="number">2</span>),(<span class="string">"C"</span>,<span class="number">3</span>)))</span><br><span class="line"></span><br><span class="line"><span class="comment">// result: ((A,1_$2_@3), (B,1_$2_), (C,3_))</span></span><br><span class="line">rdd1.combineByKey(</span><br><span class="line">  (v : Int) =&gt; v + <span class="string">"_"</span>,</span><br><span class="line">  (c : String, v : Int) =&gt; c + <span class="string">"@"</span> + v,</span><br><span class="line">  (c1 : String, c2 : String) =&gt; c1 + <span class="string">"$"</span> + c2 ).collect</span><br></pre></td></tr></table></figure>
+
 <h2 id="combineByKey应用举例"><a href="#combineByKey应用举例" class="headerlink" title="combineByKey应用举例"></a>combineByKey应用举例</h2><h3 id="求均值"><a href="#求均值" class="headerlink" title="求均值"></a>求均值</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">val rdd = sc.textFile(<span class="string">"气象数据"</span>)</span><br><span class="line">val rdd2 = rdd.map(x=&gt;x.split(<span class="string">" "</span>)).map(x =&gt; (x(<span class="number">0</span>).substring(<span class="string">"从年月日中提取年月"</span>),x(<span class="number">1</span>).toInt))</span><br><span class="line">val createCombiner = (k: String, v: Int)=&gt; &#123;</span><br><span class="line">  (v,<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line">val mergeValue = (c:(Int, Int), v:Int) =&gt; &#123;</span><br><span class="line">  (c._1 + v, c._2 + <span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">val mergeCombiners = (c1:(Int,Int),c2:(Int,Int))=&gt;&#123;</span><br><span class="line">  (c1._1 + c2._1, c1._2 + c2._2)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">val vdd3 = vdd2.combineByKey(</span><br><span class="line">  createCombiner,</span><br><span class="line">  mergeValue,</span><br><span class="line">  mergeCombiners</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">rdd3.foreach(x=&gt;println(x._1 + <span class="string">": average tempreture is "</span> + x._2._1/x._2._2)</span><br></pre></td></tr></table></figure>
         
       
@@ -524,9 +526,12 @@
 
       
           <h3 id="将数据转成json格式：python-m-json-tool"><a href="#将数据转成json格式：python-m-json-tool" class="headerlink" title="将数据转成json格式：python -m json.tool"></a>将数据转成json格式：python -m json.tool</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">$</span><span class="bash"> <span class="built_in">echo</span> <span class="string">'&#123;"json":"obj"&#125;'</span> | python -m json.tool</span></span><br><span class="line">&#123;</span><br><span class="line">"json": "obj"</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h3 id="查看gzip数据"><a href="#查看gzip数据" class="headerlink" title="查看gzip数据"></a>查看gzip数据</h3><p>使用python的zlib库来解压</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">s=&apos;\x1F\x8B\x08\x00\x00\x00\x00\x00\x00\x005N\xCD\x0A\xC3 \x18&#123;\x97\xEF,\xE5s\xF3gz\xAB\xA0/1z\x18\xC31\x87m\xA5\xEA\xA1\x94\xBE\xFB\xBE\xC3vJHB\x92\x03z\x8D\xDBXJ\x05&#123;?\xA0,`\xE1\xB9\xCEC\xEB\x9F\xF4\x18\xDEk\x8B\x19\x18\xD4\x99d\xC9/\xCE\xF9\x10Ft\xE1\xAA\x9DFm\x8C\x92B)w\xF3\x02\xBD\xA1\x5C\xA3\x16.\x84\xE4\x5CHD\x94\x82Ao`\x97\x9E3\x83Df\xDBzdP\xD2_&#123;\x11C\x06\xB9\x13\x9C\x13\x0D\xED\xF5\xF7e:\xBF\xAB \xDB\x10\x9B\x00\x00\x00&apos; </span><br><span class="line"></span><br><span class="line">import zlib</span><br><span class="line">d=zlib.decompressobj(16+zlib.MAX_WBITS) </span><br><span class="line">data=d.decompress(s)</span><br></pre></td></tr></table></figure>
+
 <h3 id="统计服务器上的历史登录记录"><a href="#统计服务器上的历史登录记录" class="headerlink" title="统计服务器上的历史登录记录"></a>统计服务器上的历史登录记录</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">last -ad | awk '&#123;print $1&#125;' | sort | uniq -c | sort -t$'\t' -k1,1 -nr</span><br></pre></td></tr></table></figure>
+
 <h3 id="linux文件格式转换"><a href="#linux文件格式转换" class="headerlink" title="linux文件格式转换"></a>linux文件格式转换</h3><p>在linux下，不可避免的会用VIM打开一些windows下编辑过的文本文件。我们会发现文件的每行结尾都会有一个^M符号，这是因为DOS下的编辑器和Linux编辑器对文件行末的回车符处理不一致，<br>对于回车符的定义： </p>
 <ul>
 <li>windows：0D0A </li>
@@ -536,6 +541,7 @@
 <li>终端  <code>dos2unix filename</code></li>
 </ul>
 <h3 id="git图形化提交历史"><a href="#git图形化提交历史" class="headerlink" title="git图形化提交历史"></a>git图形化提交历史</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git log --pretty=format:"%h %an %s" --graph</span><br></pre></td></tr></table></figure>
+
 <h3 id="echo-总结"><a href="#echo-总结" class="headerlink" title="echo 总结"></a>echo 总结</h3><ol>
 <li>echo默认是带换行符做结尾的</li>
 <li>echo -n 可以去掉换行符</li>
@@ -549,6 +555,7 @@
 </ol>
 <h3 id="shell读文件"><a href="#shell读文件" class="headerlink" title="shell读文件"></a>shell读文件</h3><p>读取 md5s 文件，对每行做处理。</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">cat md5s | while read line </span><br><span class="line">do </span><br><span class="line">     md5=$line </span><br><span class="line">     level2Path=`expr substr "$md5" 30 2` #50 </span><br><span class="line">     level1Path=`expr substr "$md5" 32 1` #a </span><br><span class="line">     storagePath=hdfs:///ljp/apk/path/$level1Path/$level2Path/$md5 </span><br><span class="line">     echo $storagePath</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
 
         
       
@@ -649,7 +656,10 @@
 <h3 id="serialVersionUID"><a href="#serialVersionUID" class="headerlink" title="serialVersionUID"></a>serialVersionUID</h3><p>serialVersionUID的作用<br>不仅取决于类路径和功能代码是否一致，一个非常重要的一点是两个类的序列化 ID 是否一致（就是 <code>private static final long serialVersionUID = 1L</code>）</p>
 <h3 id="Java-序列化实现"><a href="#Java-序列化实现" class="headerlink" title="Java 序列化实现"></a>Java 序列化实现</h3><h4 id="ObjectInputStream-amp-amp-ObjectOutputStream"><a href="#ObjectInputStream-amp-amp-ObjectOutputStream" class="headerlink" title="ObjectInputStream &amp;&amp; ObjectOutputStream"></a>ObjectInputStream &amp;&amp; ObjectOutputStream</h4><p>类ObjectInputStream 和ObjectOutputStream是高层次的数据流，它们包含序列化和反序列化对象的方法。<br>ObjectOutputStream 类包含很多写方法来写各种数据类型，但是一个特别的方法例外：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">writeObject</span><span class="params">(Object x)</span> <span class="keyword">throws</span> IOException</span></span><br></pre></td></tr></table></figure>
-<p>上面的方法序列化一个对象，并将它发送到输出流。相似的ObjectInputStream 类包含如下反序列化一个对象的方法：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">readObject</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ClassNotFoundException</span></span><br></pre></td></tr></table></figure></p>
+
+<p>上面的方法序列化一个对象，并将它发送到输出流。相似的ObjectInputStream 类包含如下反序列化一个对象的方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> Object <span class="title">readObject</span><span class="params">()</span> <span class="keyword">throws</span> IOException, ClassNotFoundException</span></span><br></pre></td></tr></table></figure>
+
 <p>该方法从流中取出下一个对象，并将对象反序列化。它的返回值为Object，因此，你需要将它转换成合适的数据类型。</p>
 <h4 id="Serializable-接口"><a href="#Serializable-接口" class="headerlink" title="Serializable 接口"></a>Serializable 接口</h4><p>情境：一个子类实现了 Serializable 接口，它的父类都没有实现 Serializable 接口，序列化该子类对象，然后反序列化后输出父类定义的某变量的数值，该变量数值与序列化时的数值不同。<br>解决：要想将父类对象也序列化，就需要让父类也实现Serializable 接口。如果父类不实现的话的，就 需要有默认的无参的构造函数。在父类没有实现 Serializable 接口时，虚拟机是不会序列化父对象的，而一个 Java 对象的构造必须先有父对象，才有子对象，反序列化也不例外。所以反序列化时，为了构造父对象，只能调用父类的无参构造函数作为默认的父对象。因此当我们取父对象的变量值时，它的值是调用父类无参构造函数后的值。如果你考虑到这种序列化的情况，在父类无参构造函数中对变量进行初始化，否则的话，父类变量值都是默认声明的值，如 int 型的默认是 0，string 型的默认是 null。</p>
 <h4 id="Externalizable-接口"><a href="#Externalizable-接口" class="headerlink" title="Externalizable 接口"></a>Externalizable 接口</h4><p>无论是使用transient关键字，还是使用writeObject()和readObject()方法，其实都是基于Serializable接口的序列化。JDK中提供了另一个序列化接口—Externalizable，使用该接口之后，之前基于Serializable接口的序列化机制就将失效。<br>writeExternal：把一个Java对象写入到流中<br>readExternal：从流中读取一个Java对象</p>
@@ -773,17 +783,22 @@
       
           <h1 id="调试过程"><a href="#调试过程" class="headerlink" title="调试过程"></a>调试过程</h1><p>本地运行代码，输出如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">15/11/12 12:09:51 INFO SparkContext: Running Spark version 1.5.1</span><br><span class="line">Exception in thread "main" java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</span><br><span class="line">    at org.apache.spark.util.TimeStampedWeakValueHashMap.&lt;init&gt;(TimeStampedWeakValueHashMap.scala:42)</span><br><span class="line">    at org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:287)</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: scala.collection.GenTraversableOnce$class</span><br></pre></td></tr></table></figure>
+
 <p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="http://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="noopener">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
 <p>spark日志：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReliableDeliverySupervisor: Association with remote system [akka.tcp://sparkDriver@100.64.80.93:57108] has failed, address is now gated for [5000] ms. Reason is: [scala.Option; local class incompatible: stream classdesc serialVersionUID = -114498752079829388, local class serialVersionUID = -2062608324514658839].</span><br></pre></td></tr></table></figure>
+
 <p>根据 scala.Option; local class incompatible 可以发现是 scala 的版本不对，spark 默认的是 scala-2.10，需要改变依赖的scala版本。</p>
 <p>改完以后又发现，还是连接不上。本地的输出：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">15/11/12 21:46:22 ERROR SparkUncaughtExceptionHandler: Uncaught exception in thread Thread[appclient-registration-retry-thread,5,main]</span><br><span class="line">java.util.concurrent.RejectedExecutionException: Task java.util.concurrent.FutureTask@5430d0ff rejected from java.util.concurrent.ThreadPoolExecutor@7819693b[Running, pool size = 1, active threads = 0, queued tasks = 0, completed tasks = 1]</span><br><span class="line">    at java.util.concurrent.ThreadPoolExecutor$AbortPolicy.rejectedExecution(ThreadPoolExecutor.java:2047)</span><br><span class="line">    at java.util.concurrent.ThreadPoolExecutor.reject(ThreadPoolExecutor.java:823)</span><br><span class="line">    at java.util.concurrent.ThreadPoolExecutor.execute(ThreadPoolExecutor.java:1369)</span><br><span class="line">    at java.util.concurrent.AbstractExecutorService.submit(AbstractExecutorService.java:112)</span><br></pre></td></tr></table></figure>
+
 <p>spark的日志如下：</p>
 <p>A</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">15/11/12 21:46:03 ERROR ErrorMonitor: dropping message [class akka.actor.ActorSelectionMessage] for non-local recipient [Actor[akka.tcp://sparkMaster@10.19.27.215:4041/]] arriving at [akka.tcp://sparkMaster@10.19.27.215:4041] inbound addresses are [akka.tcp://sparkMaster@master1:4041]</span><br></pre></td></tr></table></figure>
+
 <p>B</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">15/11/12 22:00:41 WARN ReliableDeliverySupervisor: Association with remote system [akka.tcp://sparkDriver@100.64.80.93:61812] has failed, address is now gated for [5000] ms. Reason is: [Disassociated].</span><br></pre></td></tr></table></figure>
+
 <p>关于B这部分的log，怀疑是测试环境的spark的网络访问权限没有打开！最后打开网络访问权限后解决。spark master和worker之间的通信使用的是akka，tcp协议。</p>
 <p>spark的A部分log和本地的log是一致的。</p>
 <p>第二天接着查，查了很多地方。怀疑是Spark的配置不正确。<br>对于Spark的配置，官网说的是：</p>
@@ -902,178 +917,172 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <h2 id="1-contact"><a href="#1-contact" class="headerlink" title="1. contact"></a>1. contact</h2><p>MySQL CONCAT function is used to concatenate two strings to form a single string.</p>
+          <p>##1. contact</p>
+<p>MySQL CONCAT function is used to concatenate two strings to form a single string.</p>
 <p>MySQL GROUP_CONCAT() function returns a string with concatenated non-NULL value from a group.</p>
 <p>数据库Person表的内容如下：</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">id</th>
-<th style="text-align:center">name</th>
-<th style="text-align:center">source</th>
-<th style="text-align:center">age</th>
+<th align="center">id</th>
+<th align="center">name</th>
+<th align="center">source</th>
+<th align="center">age</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">1</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">GP</td>
-<td style="text-align:center">6</td>
+<tbody><tr>
+<td align="center">1</td>
+<td align="center">A</td>
+<td align="center">GP</td>
+<td align="center">6</td>
 </tr>
 <tr>
-<td style="text-align:center">2</td>
-<td style="text-align:center">B</td>
-<td style="text-align:center">GP</td>
-<td style="text-align:center">2</td>
+<td align="center">2</td>
+<td align="center">B</td>
+<td align="center">GP</td>
+<td align="center">2</td>
 </tr>
 <tr>
-<td style="text-align:center">3</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">1</td>
+<td align="center">3</td>
+<td align="center">A</td>
+<td align="center">FB</td>
+<td align="center">1</td>
 </tr>
 <tr>
-<td style="text-align:center">4</td>
-<td style="text-align:center">C</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">4</td>
+<td align="center">4</td>
+<td align="center">C</td>
+<td align="center">FB</td>
+<td align="center">4</td>
 </tr>
 <tr>
-<td style="text-align:center">5</td>
-<td style="text-align:center">D</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">5</td>
+<td align="center">5</td>
+<td align="center">D</td>
+<td align="center">FB</td>
+<td align="center">5</td>
 </tr>
 <tr>
-<td style="text-align:center">6</td>
-<td style="text-align:center">A</td>
-<td style="text-align:center">FB</td>
-<td style="text-align:center">3</td>
+<td align="center">6</td>
+<td align="center">A</td>
+<td align="center">FB</td>
+<td align="center">3</td>
 </tr>
 <tr>
-<td style="text-align:center">7</td>
-<td style="text-align:center">C</td>
-<td style="text-align:center">TW</td>
-<td style="text-align:center">7</td>
+<td align="center">7</td>
+<td align="center">C</td>
+<td align="center">TW</td>
+<td align="center">7</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br></p>
+</tbody></table>
+<br>
+
 <p>1.SQL:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">select name, count(distinct source) as sourceCount,</span><br><span class="line">group_concat(distinct source separator &quot;/&quot;) as sources</span><br><span class="line">from Person</span><br><span class="line">group by name;</span><br></pre></td></tr></table></figure>
+
 <p>Query Result:</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">sourceCount</th>
-<th style="text-align:center">sources</th>
+<th align="center">name</th>
+<th align="center">sourceCount</th>
+<th align="center">sources</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">GP/FB</td>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">2</td>
+<td align="center">GP/FB</td>
 </tr>
 <tr>
-<td style="text-align:center">B</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">GP</td>
+<td align="center">B</td>
+<td align="center">1</td>
+<td align="center">GP</td>
 </tr>
 <tr>
-<td style="text-align:center">C</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">GP/TW</td>
+<td align="center">C</td>
+<td align="center">2</td>
+<td align="center">GP/TW</td>
 </tr>
 <tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">FB</td>
+<td align="center">D</td>
+<td align="center">1</td>
+<td align="center">FB</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br></p>
+</tbody></table>
+<br>
+
 <p>2.SQL:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">select name, count(distinct source) as sourceCount,</span><br><span class="line">group_concat(distinct source separator &quot;/&quot;) as sources</span><br><span class="line">from Person</span><br><span class="line">group by name</span><br><span class="line">having sourceCount = 1 and sources = &apos;FB&apos;;</span><br></pre></td></tr></table></figure>
+
 <p>Query Result:</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">sourceCount</th>
-<th style="text-align:center">sources</th>
+<th align="center">name</th>
+<th align="center">sourceCount</th>
+<th align="center">sources</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">FB</td>
+<tbody><tr>
+<td align="center">D</td>
+<td align="center">1</td>
+<td align="center">FB</td>
 </tr>
-</tbody>
-</table>
-</div>
-<p><br></p>
+</tbody></table>
+<br>
+
 <p>3.SQL:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">select name, count(distinct age) as ageCount,</span><br><span class="line">group_concat(age order by age separator &quot;#&quot;) as ages</span><br><span class="line">from Person;</span><br></pre></td></tr></table></figure>
+
 <p>Query Result:</p>
-<div class="table-container">
 <table>
 <thead>
 <tr>
-<th style="text-align:center">name</th>
-<th style="text-align:center">ageCount</th>
-<th style="text-align:center">ages</th>
+<th align="center">name</th>
+<th align="center">ageCount</th>
+<th align="center">ages</th>
 </tr>
 </thead>
-<tbody>
-<tr>
-<td style="text-align:center">A</td>
-<td style="text-align:center">3</td>
-<td style="text-align:center">1#3#6</td>
+<tbody><tr>
+<td align="center">A</td>
+<td align="center">3</td>
+<td align="center">1#3#6</td>
 </tr>
 <tr>
-<td style="text-align:center">B</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">2</td>
+<td align="center">B</td>
+<td align="center">1</td>
+<td align="center">2</td>
 </tr>
 <tr>
-<td style="text-align:center">C</td>
-<td style="text-align:center">2</td>
-<td style="text-align:center">4#7</td>
+<td align="center">C</td>
+<td align="center">2</td>
+<td align="center">4#7</td>
 </tr>
 <tr>
-<td style="text-align:center">D</td>
-<td style="text-align:center">1</td>
-<td style="text-align:center">5</td>
+<td align="center">D</td>
+<td align="center">1</td>
+<td align="center">5</td>
 </tr>
-</tbody>
-</table>
-</div>
-<h2 id="2-mysql-N-不显示字段名"><a href="#2-mysql-N-不显示字段名" class="headerlink" title="2. mysql -N 不显示字段名"></a>2. mysql -N 不显示字段名</h2><p>普通的查询语句，查询结果中带字段名</p>
+</tbody></table>
+<p>##2. mysql -N 不显示字段名<br>普通的查询语句，查询结果中带字段名</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> mysql -h xxxx -P 8000 -u&apos;xxx&apos; -p&apos;xxx&apos; -D xxdb</span><br><span class="line">-e &quot;select name from Person where name = &apos;A&apos;&quot;;</span><br></pre></td></tr></table></figure>
-<p>+—————-+</p>
+
+<p>+———–+</p>
 <p>| name      |</p>
-<p>+—————-+</p>
+<p>+———–+</p>
 <p>| not found |</p>
-<p>+—————-+</p>
+<p>+———–+</p>
 <p>带-N的查询语句，查询结果中不带字段名</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"> mysql -N -h xxxx -P 8000 -u&apos;xxx&apos; -p&apos;xxx&apos; -D xxdb</span><br><span class="line">-e &quot;select name from Person where name = &apos;A&apos;&quot;;</span><br></pre></td></tr></table></figure>
-<p>+—————-+</p>
+
+<p>+———–+</p>
 <p>| not found |</p>
-<p>+—————-+</p>
-<h2 id="3-IFNULL"><a href="#3-IFNULL" class="headerlink" title="3. IFNULL"></a>3. IFNULL</h2><p>使用IFNULL能判断是否有查到结果。<br>在shell中跑mysql的指令容易出现空行，此时用IFNULL是最合适的了。</p>
+<p>+———–+</p>
+<p>##3. IFNULL<br>使用IFNULL能判断是否有查到结果。<br>在shell中跑mysql的指令容易出现空行，此时用IFNULL是最合适的了。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"> mysql -N -h xxxx -P 8000 -u&apos;xxx&apos; -p&apos;xxx&apos; -D xxdb</span><br><span class="line">-e &quot;select IFNULL(</span><br><span class="line">(select name from Person where name = &apos;A&apos; and age = 100),</span><br><span class="line">&apos;not found&apos;)&quot;</span><br></pre></td></tr></table></figure>
-<p>+—————-+</p>
+
+<p>+———–+</p>
 <p>| not found |</p>
-<p>+—————-+</p>
+<p>+———–+</p>
 
         
       
@@ -1173,12 +1182,13 @@
 <ul>
 <li><p>一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)</p>
 </li>
-<li><p><strong> 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）</strong></p>
+<li><p>** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**</p>
 </li>
 </ul>
 <p>第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决。所以，Java中的内存泄漏，主要指的是第二种情况。</p>
 <p>内存泄露的一个例子：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">      Object obj = <span class="keyword">new</span> Object(</span><br><span class="line">      list.add(obj);</span><br><span class="line">      obj = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>这段代码是：for循环中，new一个Object对象obj，然后将其添加到list中，最后将obj置空。</p>
 <p>这个时候就发生了内存泄露，因为obj是可达的无用对象。发生GC时，尽管obj已经被置空成为了无用对象，但是obj能够从list可达，从而GC无法将其释放掉。次数obj占用的内存就是泄露了。</p>
 <h2 id="内存泄露与内存溢出"><a href="#内存泄露与内存溢出" class="headerlink" title="内存泄露与内存溢出"></a>内存泄露与内存溢出</h2><p>内存溢出 out of memory，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory。当发生内存溢出时，程序将无法进行，强制终止。在java中常见的java.lang.OutOfMemoryError就是内存溢出的log。</p>
@@ -1215,32 +1225,42 @@
 </blockquote>
 <p>例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processObj</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     BigObject obj = … <span class="comment">// 声明大对象obj</span></span><br><span class="line">     doSomethingWith(obj); <span class="comment">// 使用obj</span></span><br><span class="line">     obj = <span class="keyword">null</span>;    <span class="comment">// explicitly set to null</span></span><br><span class="line">     doSomethingElse(); <span class="comment">//非常耗时的操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>此时显示的设置无用的对象obj为null才有效。</p>
 <h2 id="How-to-avoid-Memory-Leak-in-Java"><a href="#How-to-avoid-Memory-Leak-in-Java" class="headerlink" title="How to avoid Memory Leak in Java"></a>How to avoid Memory Leak in Java</h2><p>贴出 <a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
 <p>How  to avoid Memory Leak in Java?</p>
 <p>While coding if we take care of a few points we can avoid memory leak issue.</p>
 <ol>
-<li>Use time out time for the session as low as possible.</li>
-<li>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</li>
-<li>Try to store as less data as possible in the HttpSession.</li>
+<li><p>Use time out time for the session as low as possible.</p>
+</li>
+<li><p>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</p>
+</li>
+<li><p>Try to store as less data as possible in the HttpSession.</p>
+</li>
 <li><p>Avoid creating HttpSession in jsp page by default by using the page directive</p>
 <p>  &lt;%@page session=”false”%&gt;</p>
 </li>
 <li><p>Try to use StringBuffer’s append() method instead of string concatenation. String is an immutable object and if we use string concatenation, it will unnecessarily create many temporary objects on heap which results in poor performance.</p>
 <p> For ex. if we write String query =  “SELECT id, name FROM   t_customer whereMsoNormal” style=”margin-bottom: 0.0001pt;”&gt;     it will create 4 String Objects. But if we write the same query using StringBuffer’s append() it will create only one object as StringBuffer is mutable i.e. can be modified over and  over again.</p>
 </li>
-<li>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</li>
-<li>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</li>
-<li>Try to close the ResultSet and Statement before reusing those.</li>
-<li>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</li>
-<li>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</li>
+<li><p>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</p>
+</li>
+<li><p>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</p>
+</li>
+<li><p>Try to close the ResultSet and Statement before reusing those.</p>
+</li>
+<li><p>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</p>
+</li>
+<li><p>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</p>
+</li>
 </ol>
 <h2 id="在测试内存泄露时，对GC有一些收获"><a href="#在测试内存泄露时，对GC有一些收获" class="headerlink" title="在测试内存泄露时，对GC有一些收获"></a>在测试内存泄露时，对GC有一些收获</h2><ol>
 <li>cannot disable java gc</li>
 <li>我们不能决定什么时候发生GC。</li>
 <li>System.gc() vs GC button in JVisualVM/JConsole<br>As far as I know, Jconsole or any other tool, uses System.gc() only. There is no other option. As everyone know, java tells everyone not to rely on System.gc(), but that doesn’t mean it doesn’t work at all.</li>
 </ol>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>&gt;</p>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
+</blockquote>
 <ul>
 <li><a href="http://wwsun.me/posts/jvm-gc.html" target="_blank" rel="noopener">http://wwsun.me/posts/jvm-gc.html</a></li>
 <li><a href="http://java.dzone.com/articles/jvm-and-garbage-collection" target="_blank" rel="noopener">http://java.dzone.com/articles/jvm-and-garbage-collection</a></li>
@@ -1349,7 +1369,9 @@
 <p><strong><em>请求转发</em></strong><br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="noopener">http://admin-test.company.com/api/abc/feature</a><br>-&gt;<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="noopener">http://ttt.company.com/api/xxv/abc/feature</a></p>
 <p><strong><em>ngin配置</em></strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name admin-test.company.com;</span><br><span class="line"></span><br><span class="line">    location /api/abc &#123;</span><br><span class="line">        rewrite /api/abc/(.*) /api/xxv/$1 break;</span><br><span class="line">        proxy_set_header Host $http_host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_pass http://staging.server.hostname:8080;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name admin.company.com;</span><br><span class="line"></span><br><span class="line">    location /api/abc &#123;</span><br><span class="line">        rewrite /api/abc/(.*) /api/xxv/$1 break;</span><br><span class="line">        proxy_set_header Host $http_host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_pass http://myserver-write-nodes;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h2 id="服务端处理跨域请求"><a href="#服务端处理跨域请求" class="headerlink" title="服务端处理跨域请求"></a>服务端处理跨域请求</h2><p>在返回的response header中加入允许跨域访问的属性。例如：</p>
 <p>Access-Control-Allow-Origin: {允许的域名}</p>
 <p>更多信息参考：<a href="https://developer.mozilla.org/zh-CN/docs/Web/HTTP/Access_control_CORS" target="_blank" rel="noopener">跨域 HTTP 请求(Cross-site HTTP request)</a></p>
@@ -1450,6 +1472,7 @@
           <h1 id="Btrace的简介"><a href="#Btrace的简介" class="headerlink" title="Btrace的简介"></a>Btrace的简介</h1><p>Btrace是由Kenai 开发的一个开源项目，是一种动态跟踪分析JAVA源代码的工具。它可以用来帮我们做运行时的JAVA程序分析，监控等等操作。</p>
 <h1 id="官方参考手册"><a href="#官方参考手册" class="headerlink" title="官方参考手册"></a>官方参考手册</h1><p><a href="https://kenai.com/projects/btrace/pages/UserGuide" target="_blank" rel="noopener">https://kenai.com/projects/btrace/pages/UserGuide</a></p>
 <h1 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h1><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> com.sun.btrace.annotations.*;</span><br><span class="line"><span class="keyword">import</span> com.sun.btrace.AnyType;</span><br><span class="line"><span class="keyword">import</span> <span class="keyword">static</span> com.sun.btrace.BTraceUtils.*;</span><br><span class="line"></span><br><span class="line"><span class="meta">@BTrace</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestServiceImplTrace</span> </span>&#123;</span><br><span class="line">    <span class="meta">@TLS</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">long</span> service_get_data_startTime = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnMethod</span>(</span><br><span class="line">            clazz = <span class="string">"com.xxx.mms.test.impl.TestServiceImpl"</span>,</span><br><span class="line">            method = <span class="string">"getTestData"</span></span><br><span class="line">    )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">startTestServiceImplExecute</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        section_facade_impl_startTime = timeMillis();</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@OnMethod</span>(</span><br><span class="line">            clazz = <span class="string">"com.xxx.mms.test.impl.TestServiceImpl"</span>,</span><br><span class="line">            method = <span class="string">"getTestData"</span></span><br><span class="line">            location = <span class="meta">@Location</span>(Kind.RETURN)</span><br><span class="line">    )</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">endTestServiceImplExecute</span><span class="params">(AnyType[] args)</span> </span>&#123; <span class="comment">// 传入所有参数</span></span><br><span class="line">        <span class="keyword">long</span> time = timeMillis() - section_facade_impl_startTime;</span><br><span class="line"></span><br><span class="line">        Object obj = args[<span class="number">4</span>];</span><br><span class="line">        Integer end = (Integer)obj; <span class="comment">// 将第5个参数转成Integer</span></span><br><span class="line"></span><br><span class="line">        printFields(args[<span class="number">0</span>]); <span class="comment">// 打印第1个参数的所有成员变量的值</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span>(end == <span class="number">6</span>)&#123;</span><br><span class="line">                print(strcat(“<span class="function">service getTestData execute <span class="title">time</span><span class="params">(millis)</span>: ", <span class="title">str</span><span class="params">(time)</span>))</span>;</span><br><span class="line">                print(strcat(“\t string param: <span class="string">", str(args[3]))); // 将第4个参数转成string并打印</span></span><br><span class="line"><span class="string">                println(strcat(“\t end: "</span>, str(end)));</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <h1 id="心得"><a href="#心得" class="headerlink" title="心得"></a>心得</h1><ol>
 <li>btrace脚本的函数都没有走进去时，btrace pid tracing.java 是得不到结果的。</li>
 <li>Kind.LINE指向的行必须是代码能运行到的行。比如，以括号结束的行和空行都是无效的。</li>
@@ -1464,15 +1487,21 @@
 </ul>
 <p>抓取了下btrace改写过后的类：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="title">InstrumentServer</span><span class="params">(String ip, String port)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">     $btrace$com$agapple$btrace$Instrumentor$InstrumentTracer$bufferMonitor(<span class="keyword">this</span>);</span><br><span class="line">     <span class="keyword">this</span>.ip = ip;</span><br><span class="line">     <span class="keyword">this</span>.port = port;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> $btrace$com$agapple$btrace$Instrumentor$InstrumentTracer$bufferMonitor(<span class="meta">@Self</span> Object arg0)</span><br><span class="line">&#123;</span><br><span class="line">     <span class="keyword">if</span> (!BTraceRuntime.enter(InstrumentTracer.runtime)) <span class="keyword">return</span>;</span><br><span class="line">     <span class="keyword">try</span> &#123;</span><br><span class="line">          Field ipField = BTraceUtils.field(<span class="string">"com.agapple.btrace.Instrumentor.InstrumentServer"</span>, <span class="string">"ip"</span>);</span><br><span class="line">          Field portField = BTraceUtils.field(<span class="string">"com.agapple.btrace.Instrumentor.InstrumentServer"</span>, <span class="string">"port"</span>);</span><br><span class="line"> </span><br><span class="line">          String ip = (String)BTraceUtils.get(ipField, self);</span><br><span class="line">          String port = (String)BTraceUtils.get(portField, self);</span><br><span class="line"></span><br><span class="line">          BTraceUtils.println(BTraceUtils.strcat(BTraceUtils.strcat(BTraceUtils.strcat(<span class="string">"ip : "</span>, BTraceUtils.str(ip)), <span class="string">" port : "</span>), BTraceUtils.str(port)));</span><br><span class="line">          BTraceRuntime.leave(); <span class="keyword">return</span>; &#125; <span class="keyword">catch</span> (Throwable localThrowable) &#123; BTraceRuntime.handleException(localThrowable);</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>注意其中的</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (!BTraceRuntime.enter(InstrumentTracer.runtime)) <span class="keyword">return</span>;</span><br></pre></td></tr></table></figure>
+
 <p>再看一下BTraceRuntime中对应方法的实现：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> disabled;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">enter</span><span class="params">(BTraceRuntime current)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (current.disabled) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">return</span> map.enter(current);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
 <p>每次执行你的监控代码之前会先进行一个判断，判断当前是否处于监控中。你的客户端发起了exit指令后，该方法判断false，直接return。</p>
 <p><strong>所以btrace使用退出后会让你的代码多走了一个方法调用+一个对象属性判断，所以说影响还是非常少的。</strong></p>
 <h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>Java SE 6 新特性: Instrumentation 新功能 <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
+</blockquote>
+<p>Java SE 6 新特性: Instrumentation 新功能 <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
 
         
       
@@ -1568,11 +1597,16 @@
 
       
           <h2 id="设值注入（推荐）"><a href="#设值注入（推荐）" class="headerlink" title="设值注入（推荐）"></a>设值注入（推荐）</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"myService"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.zane.test.MyServiceImpl"</span>&gt;</span><br><span class="line">    &lt;property name=<span class="string">"serializer"</span> ref=<span class="string">"Serializer"</span>/&gt;</span><br><span class="line">    &lt;property name=<span class="string">"httpService"</span> ref=<span class="string">"httpService"</span>/&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
 <h2 id="构造器注入（死的应用）"><a href="#构造器注入（死的应用）" class="headerlink" title="构造器注入（死的应用）"></a>构造器注入（死的应用）</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"myModel"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"com.zane.test.MyModel"</span>&gt;</span><br><span class="line">    &lt;constructor-arg index=<span class="string">"0"</span> value=<span class="string">"$&#123;name&#125;"</span>/&gt;</span><br><span class="line">    &lt;constructor-arg index=<span class="string">"1"</span> value=“<span class="number">20</span><span class="string">"/&gt;</span></span><br><span class="line"><span class="string">&lt;/bean&gt;</span></span><br></pre></td></tr></table></figure>
+
 <h2 id="注入List"><a href="#注入List" class="headerlink" title="注入List"></a>注入List</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"myTypes"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"java.util.ArrayList"</span>&gt;</span><br><span class="line">    &lt;constructor-arg&gt;</span><br><span class="line">        &lt;list&gt;</span><br><span class="line">            &lt;value type="com.zane.test.MyType"&gt;A&lt;/value&gt;</span><br><span class="line">            &lt;value type="com.zane.test.MyType"&gt;B&lt;/value&gt;</span><br><span class="line">            &lt;value type="com.zane.test.MyType"&gt;C&lt;/value&gt;</span><br><span class="line">        &lt;/list&gt;</span><br><span class="line">    &lt;/constructor-arg&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
 <h2 id="注入Map"><a href="#注入Map" class="headerlink" title="注入Map"></a>注入Map</h2><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;bean id=<span class="string">"myTypeValueMap"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"java.util.HashMap"</span>&gt;</span><br><span class="line">    &lt;constructor-arg&gt;</span><br><span class="line">        &lt;map&gt;</span><br><span class="line">            &lt;entry key=<span class="string">"#&#123;T(com.zane.test.MyType).A&#125;"</span>&gt;</span><br><span class="line">                &lt;value type="java.lang.Integer"&gt;3&lt;/value&gt;</span><br><span class="line">            &lt;/entry&gt;</span><br><span class="line">            &lt;entry key=<span class="string">"#&#123;T(com.zane.test.MyType).B&#125;"</span>&gt;</span><br><span class="line">                &lt;value type="java.lang.Integer"&gt;4&lt;/value&gt;</span><br><span class="line">            &lt;/entry&gt;</span><br><span class="line">            &lt;entry key=<span class="string">"#&#123;T(com.zane.test.MyType).C&#125;"</span>&gt;</span><br><span class="line">                &lt;value type="java.lang.Integer"&gt;5&lt;/value&gt;</span><br><span class="line">            &lt;/entry&gt;</span><br><span class="line">        &lt;/map&gt;</span><br><span class="line">    &lt;/constructor-arg&gt;</span><br><span class="line">&lt;/bean&gt;</span><br></pre></td></tr></table></figure>
+
 <p><strong>当注入的是第三方的jar包的key类型时，需要使用@Resource注入</strong></p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Resource</span></span><br><span class="line"><span class="meta">@Qualifier</span>(<span class="string">"myTypeValueMap"</span>)</span><br><span class="line"><span class="keyword">private</span> Map&lt;MyType, String&gt; myTypeValueMap;</span><br></pre></td></tr></table></figure>
+
 <p>否则使用Autowired即可</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@Autowired</span></span><br><span class="line"><span class="meta">@Qualifier</span>(<span class="string">"myTypeValueMap"</span>)</span><br><span class="line"><span class="keyword">private</span> Map&lt;MyType, String&gt; myTypeValueMap;</span><br></pre></td></tr></table></figure>
         

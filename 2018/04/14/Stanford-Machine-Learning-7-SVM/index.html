@@ -329,34 +329,32 @@
 <ol>
 <li>在logstic回归中我们用0,1代表两个类, 现在我们改用-1,+1, 即 y∈{-1，-1}</li>
 <li>在logistic回归中, 我们的 g 是sigmoid函数, 现在改为:<br>g(z)=1, z&gt;=0<br>g(z)=-1, z&lt;0</li>
-<li>在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,  <script type="math/tex">h_\theta(x)</script><br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</li>
+<li>在logistic回归中, 我们的假设函数为 $h_θ(x)$, 现在改为,  $$h_\theta(x)$$<br>$h_{x,b}(x)=g(w^{T}x+b)$, 其中w相当于$[θ_1,θ_2,θ_3,…θ_n]^T$, b 相当于 $θ_0$，即截距。</li>
 </ol>
 <p>h_{x,b}</p>
-<script type="math/tex; mode=display">
-x=a+b</script><h2 id="函数间隔-functional-margin"><a href="#函数间隔-functional-margin" class="headerlink" title="函数间隔(functional margin)"></a>函数间隔(functional margin)</h2><p>对于一个训练样本 $(x^{(i)}, y^{(i)})$，我们定义它到超平面 (w,b) 的函数间隔为:</p>
-<script type="math/tex; mode=display">\widehat\gamma=y^{(i)}(w^{T}x^{(i)}+b)</script><p>我们希望函数间隔越大越好, 即:<br>if $y^{(i)}=1$, want $(w^{T}x^{(i)}+b) \gg 0 $ (&gt;&gt;代表远大于)<br>if $y^{(i)}=-1$, want $(w^{T}x^{(i)}+b) \ll 0$</p>
+<p>$$<br>x=a+b<br>$$</p>
+<h2 id="函数间隔-functional-margin"><a href="#函数间隔-functional-margin" class="headerlink" title="函数间隔(functional margin)"></a>函数间隔(functional margin)</h2><p>对于一个训练样本 $(x^{(i)}, y^{(i)})$，我们定义它到超平面 (w,b) 的函数间隔为:<br>$$\widehat\gamma=y^{(i)}(w^{T}x^{(i)}+b)$$<br>我们希望函数间隔越大越好, 即:<br>if $y^{(i)}=1$, want $(w^{T}x^{(i)}+b) \gg 0 $ (&gt;&gt;代表远大于)<br>if $y^{(i)}=-1$, want $(w^{T}x^{(i)}+b) \ll 0$</p>
 <p>函数间隔越大，代表我们对于分类的结果非常确定。</p>
 <p>但这里有一个漏洞，即可以在不改变这个超平面的情况下可以让函数间隔任意大，只要我们成比增加 w,b 就可以达到这个目的了。例如，我们将 w 变为 2w， b 变为 2b，那么我们的函数间隔将会是原来的两倍。</p>
-<p>所以对于整个训练集, <strong>函数间隔</strong>定义为：</p>
-<script type="math/tex; mode=display">\widehat\gamma=min{\widehat\gamma^{(i)}}</script><h2 id="几何间隔-geometric-margin"><a href="#几何间隔-geometric-margin" class="headerlink" title="几何间隔(geometric margin)"></a>几何间隔(geometric margin)</h2><p>定义对于一个训练样本 $A(x^{(i)}, y^{(i)})$，它到超平面 $w^{T}x^{(i)}+b$ 的几何距离为 $\gamma^{(i)}$。<br>设 B 为 A 在超平面上的投影，易得超平面的法向量为 $\frac{w}{||w||}$，则有 $A=B+\gamma^{(i)}\frac{w}{||w||}$，<br>即 $B = A - \gamma^{(i)}\frac{w}{||w||}$。又因为 B 在超平面上，所以有<br>$w^{T}(x^{(i)} - \gamma^{(i)}\frac{w}{||w||})+b=0$<br>故几何距离为:</p>
-<script type="math/tex; mode=display">\gamma^{(i)}=(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}</script><p>定义其几何间隔：</p>
-<script type="math/tex; mode=display">\gamma^{(i)}=y^{(i)}[(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}]</script><p>所以对于整个训练集, <strong>几何间隔</strong>定义为：</p>
-<script type="math/tex; mode=display">\gamma=min{\gamma^{(i)}}</script><p>可以发现，当 $||w||=1$时，$\widehat\gamma^{(i)}=\gamma^{(i)}$</p>
-<h1 id="最优间隔分类器"><a href="#最优间隔分类器" class="headerlink" title="最优间隔分类器"></a>最优间隔分类器</h1><p>几何间隔就是在求 $\frac{\widehat\gamma}{||w||}$ 的最小值，可以发现函数间隔 $\widehat\gamma$ 可放大缩小，且其对结果不产生影响，所以不妨设令${\widehat\gamma}=1$。<br>现在，目标函数转为了：</p>
-<script type="math/tex; mode=display">max \frac{1}{||w||}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3...,n</script><p>等价于</p>
-<script type="math/tex; mode=display">min{\frac12{||w||^2}}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3...,n</script><p>利用拉格朗日乘子法可得：</p>
-<script type="math/tex; mode=display">L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]</script><p>令</p>
-<script type="math/tex; mode=display">\theta(w)=\displaystyle\max_{\alpha_i\ge0}L(w, b, \alpha)</script><p>则目标函数变成了：</p>
-<script type="math/tex; mode=display">\displaystyle\min_{w,b}\theta(w)=\displaystyle\min_{w,b}\max_{\alpha_i\ge0}L(w, b, \alpha)=p^\*</script><h1 id="求解目标函数"><a href="#求解目标函数" class="headerlink" title="求解目标函数"></a>求解目标函数</h1><h2 id="使用对偶问题求解"><a href="#使用对偶问题求解" class="headerlink" title="使用对偶问题求解"></a>使用对偶问题求解</h2><p>SVM 中用到了高维映射，将线性不可分的问题映射为线性可分，且映射函数的具体形式无法提前确定，而往往使用核函数映射后，维度 w 会提升很多，甚至至无穷维。<br>在原问题下，求解算法的复杂度与样本维度（w 的维度）相关；<br>在对偶问题下，求解算法的复杂度与样本数量（等于拉格朗日算子 a 的数量）相关。</p>
+<p>所以对于整个训练集, <strong>函数间隔</strong>定义为：<br>$$\widehat\gamma=min{\widehat\gamma^{(i)}}$$</p>
+<h2 id="几何间隔-geometric-margin"><a href="#几何间隔-geometric-margin" class="headerlink" title="几何间隔(geometric margin)"></a>几何间隔(geometric margin)</h2><p>定义对于一个训练样本 $A(x^{(i)}, y^{(i)})$，它到超平面 $w^{T}x^{(i)}+b$ 的几何距离为 $\gamma^{(i)}$。<br>设 B 为 A 在超平面上的投影，易得超平面的法向量为 $\frac{w}{||w||}$，则有 $A=B+\gamma^{(i)}\frac{w}{||w||}$，<br>即 $B = A - \gamma^{(i)}\frac{w}{||w||}$。又因为 B 在超平面上，所以有<br>$w^{T}(x^{(i)} - \gamma^{(i)}\frac{w}{||w||})+b=0$<br>故几何距离为:<br>$$\gamma^{(i)}=(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}$$</p>
+<p>定义其几何间隔：<br>$$\gamma^{(i)}=y^{(i)}[(\frac{w}{||w||})^{T}x^{(i)} + \frac{b}{||w||}]$$</p>
+<p>所以对于整个训练集, <strong>几何间隔</strong>定义为：<br>$$\gamma=min{\gamma^{(i)}}$$</p>
+<p>可以发现，当 $||w||=1$时，$\widehat\gamma^{(i)}=\gamma^{(i)}$</p>
+<h1 id="最优间隔分类器"><a href="#最优间隔分类器" class="headerlink" title="最优间隔分类器"></a>最优间隔分类器</h1><p>几何间隔就是在求 $\frac{\widehat\gamma}{||w||}$ 的最小值，可以发现函数间隔 $\widehat\gamma$ 可放大缩小，且其对结果不产生影响，所以不妨设令${\widehat\gamma}=1$。<br>现在，目标函数转为了：<br>$$max \frac{1}{||w||}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$<br>等价于<br>$$min{\frac12{||w||^2}}, s.t., y^{(i)}(w^{T}x^{(i)}+b)\ge1, i=1,2,3…,n$$</p>
+<p>利用拉格朗日乘子法可得：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
+<p>令<br>$$\theta(w)=\displaystyle\max_{\alpha_i\ge0}L(w, b, \alpha)$$</p>
+<p>则目标函数变成了：<br>$$\displaystyle\min_{w,b}\theta(w)=\displaystyle\min_{w,b}\max_{\alpha_i\ge0}L(w, b, \alpha)=p^*$$</p>
+<h1 id="求解目标函数"><a href="#求解目标函数" class="headerlink" title="求解目标函数"></a>求解目标函数</h1><h2 id="使用对偶问题求解"><a href="#使用对偶问题求解" class="headerlink" title="使用对偶问题求解"></a>使用对偶问题求解</h2><p>SVM 中用到了高维映射，将线性不可分的问题映射为线性可分，且映射函数的具体形式无法提前确定，而往往使用核函数映射后，维度 w 会提升很多，甚至至无穷维。<br>在原问题下，求解算法的复杂度与样本维度（w 的维度）相关；<br>在对偶问题下，求解算法的复杂度与样本数量（等于拉格朗日算子 a 的数量）相关。</p>
 <p>因此，如果是做线性分类，且样本维度低于样本数量的话，可以在原问题下求解。例如 Liblinear 的线性 SVM 默认做法就是这样的；<br>但如果是做非线性分类，那就会涉及到升维（比如使用高斯核做核函数，其实是将样本升到无穷维），升维后的样本维度往往会远大于样本数量，此时显然在对偶问题下求解会更好。</p>
 <p><strong>直接求解原问题有多难？</strong> TBD</p>
 <h3 id="使用对偶问题的解法"><a href="#使用对偶问题的解法" class="headerlink" title="使用对偶问题的解法"></a>使用对偶问题的解法</h3><p>对于不等书约束条件的最优化问题，使用拉格朗日对偶问题来求解。具体介绍见之前的 blog:  <a href="http://luojinping.com/2018/03/04/%E6%8B%89%E6%A0%BC%E6%9C%97%E6%97%A5%E4%B9%98%E5%AD%90%E6%B3%95/">拉格朗日乘子法</a></p>
-<p>用 $p^*$ 表示这个问题的最优值，这个问题和我们最初的问题是等价的。<br>不过，把最小和最大的位置交换一下：</p>
-<script type="math/tex; mode=display">\displaystyle\max_{\alpha_i\ge0}\min_{w,b}L(w, b, \alpha)=d^*</script><p>交换以后的问题不再等价于原问题，新问题的最优值用 $d^<em>$ 来表示。并且，有 $d^</em>$ ≤ $p^*$。</p>
+<p>用 $p^<em>$ 表示这个问题的最优值，这个问题和我们最初的问题是等价的。<br>不过，把最小和最大的位置交换一下：<br>$$\displaystyle\max_{\alpha_i\ge0}\min_{w,b}L(w, b, \alpha)=d^</em>$$</p>
+<p>交换以后的问题不再等价于原问题，新问题的最优值用 $d^<em>$ 来表示。并且，有 $d^</em>$ ≤ $p^*$。</p>
 <p>第二个问题的最优值 $d^<em>$ 提供了一个第一个问题的最优<br>值 $p^</em>$ 的一个下界。经过论证，原始问题满足强对偶所需要的条件，故这两者相等，所以可以通过求解第二个问题来间接地求解第一个问题。 </p>
-<h3 id="优化公式"><a href="#优化公式" class="headerlink" title="优化公式"></a>优化公式</h3><p>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：</p>
-<script type="math/tex; mode=display">\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0</script><script type="math/tex; mode=display">\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0</script><p>将上式代入：</p>
-<script type="math/tex; mode=display">L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]</script><p>推导过程如下：<br><img src="/img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
+<h3 id="优化公式"><a href="#优化公式" class="headerlink" title="优化公式"></a>优化公式</h3><p>要让 L 关于 w 和 b 最小化，分别对 w，b 求偏导数，即令<br>$\frac{∂L}{∂w}$ 和 $\frac{∂L}{∂b}$ 等于零，有：<br>$$\frac{∂L}{∂w}=w-\sum_{i=1}^{n}\alpha_iy^{(i)}x^{(i)}=0$$<br>$$\frac{∂L}{∂b}=\sum_{i=1}^{n}\alpha_iy^{(i)}=0$$</p>
+<p>将上式代入：<br>$$L(w,b,\alpha)=\frac12{||w||^2}-\sum_{i=1}^{n}\alpha_i[y^{(i)}(w^{T}x^{(i)}+b)-1]$$</p>
+<p>推导过程如下：<br><img src="/img/svm_lagrange_dual_1.jpg" alt="svm_lagrange_dual_1"></p>
 <p>这样求出 $\alpha$ 后即可得到 w 和 b。</p>
 <p><img src="/img/svm_lagrange_dual_2.jpg" alt="svm_lagrange_dual_2"></p>
 <p>现在我们的优化问题变成了如上的形式。对于这个问题，我们有更高效的优化算法，即序列最小优化（SMO）算法。我们通过这个优化算法能得到α，再根据α，我们就可以求解出w和b，进而求得我们最初的目的：找到超平面，即”决策平面”。</p>

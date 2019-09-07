@@ -317,12 +317,20 @@
       
         <h2 id="现象"><a href="#现象" class="headerlink" title="现象"></a>现象</h2><p>服务中出现大量乱码数据，并且全部入库。</p>
 <h2 id="原因"><a href="#原因" class="headerlink" title="原因"></a>原因</h2><p>虽然maven项目的pom.xml文件中已配置成UTF-8，并且打出的jar包编码也是UTF-8，但运行时出现中文全是乱码。<br>发现是系统环境变量中未设置LANG相关变量为UTF-8导致的。</p>
-<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dfile.encoding=UTF-<span class="number">8</span> XXX 后彻底解决。</span><br></pre></td></tr></table></figure></p>
-<p>但是这样发布服务时就太依赖发布脚本了，那能否在程序中就设置好编码呢？比如这样：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">"file.encoding"</span>, <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure></p>
+<h2 id="分析"><a href="#分析" class="headerlink" title="分析"></a>分析</h2><p>这是表面原因，究其根本，为什么JVM运行jar包的编码方式会依赖系统环境变量呢？查到原因是因为运行jar包时未指定jvm的 file.encoding参数，改为</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">java -Dfile.encoding=UTF-<span class="number">8</span> XXX 后彻底解决。</span><br></pre></td></tr></table></figure>
+
+<p>但是这样发布服务时就太依赖发布脚本了，那能否在程序中就设置好编码呢？比如这样：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">System.setProperty(<span class="string">"file.encoding"</span>, <span class="string">"UTF-8"</span>);</span><br></pre></td></tr></table></figure>
+
 <p>其实，这样设置是不生效的，因为JVM在启动时就开始cache编码方式了，程序中再设置已然无效。不过可以在程序每个读写数据的地方都设置编码方式，但是这样未免太工程浩大，而且无法保证每个写代码的人都能做到。所以最后改为依赖在发布脚本中设置编码方式，并且在服务启动时对编码进行检查。</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
 <p>As Edward Grech points out, in a special case like this, the environment variable JAVA_TOOL_OPTIONS can be used to specify this property, but it’s normally done like this: java -Dfile.encoding=UTF-8 XXX</p>
+</blockquote>
+<blockquote>
 <p>Charset.defaultCharset() will reflect changes to the file.encoding property, but most of the code in the core Java libraries that need to determine the default character encoding do not use this mechanism.</p>
+</blockquote>
+<blockquote>
 <p><strong>Important points to note:</strong></p>
 <ul>
 <li>JVM caches value of default character encoding once JVM starts and so is the case for default constructors of InputStreamReader and other core Java classes. So calling System.setProperty(“file.encoding” , “UTF-16”) may not have desire effect.</li>
