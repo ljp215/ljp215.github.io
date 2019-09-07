@@ -361,7 +361,6 @@
 <p>其中需要特别处理的特征是 c.bmi 和 c.age。<br>分析数据后发现年龄为空值的情况非常少，所以把 c.age 为空的数据删掉。<br>c.bmi 需要用户填入身高和体重，这部分数据缺失一些，所以填为 c.bmi 这一列的平均值，数据集中的 dataset[c.bmi].mean = 23.3174390247965，符合常识。</p>
 <h3 id="特征标签化"><a href="#特征标签化" class="headerlink" title="特征标签化"></a>特征标签化</h3><p>数据标准化的处理方式如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sklearn <span class="keyword">import</span> preprocessing</span><br><span class="line">le = preprocessing.LabelEncoder()</span><br><span class="line">dataset = dataset.apply(le.fit_transform)</span><br></pre></td></tr></table></figure>
-
 <h3 id="可用数据量"><a href="#可用数据量" class="headerlink" title="可用数据量"></a>可用数据量</h3><p>按如上方式处理完后，最终可用的数据量为：30w</p>
 <h1 id="模型调优"><a href="#模型调优" class="headerlink" title="模型调优"></a>模型调优</h1><h2 id="Decision-Tree-调优"><a href="#Decision-Tree-调优" class="headerlink" title="Decision Tree 调优"></a>Decision Tree 调优</h2><h3 id="树的深度调优"><a href="#树的深度调优" class="headerlink" title="树的深度调优"></a>树的深度调优</h3><p>使用的特征数量为 275 个，使用的训练集数量为 54801。</p>
 <p>不同树深度对应的模型评估如下：</p>
@@ -376,7 +375,6 @@
 <p>但是使用参数后，RF 的 AUC 降到了 0.82，应该是 max_features 和 min_samples_leaf 这两个参数调的不对。</p>
 <h2 id="Adaboost-调优"><a href="#Adaboost-调优" class="headerlink" title="Adaboost 调优"></a>Adaboost 调优</h2><p>AdaBoostClassifier 的 base_estimator 选择已经之前训练好的 DT，效果更好，如下：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">adb_clf = AdaBoostClassifier(n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</span><br><span class="line">AUC Score (Train): <span class="number">0.629162</span></span><br><span class="line">adb_clf_2 = AdaBoostClassifier(clf, n_estimators=<span class="number">100</span>, random_state=<span class="number">100</span>, learning_rate=<span class="number">0.02</span>).fit(X_train, y_train)</span><br><span class="line">AUC Score (Train): <span class="number">0.659129</span></span><br></pre></td></tr></table></figure>
-
 <p>learning_rate 设置为 0.02 能兼顾速度和效果。</p>
 <h1 id="踩过的坑"><a href="#踩过的坑" class="headerlink" title="踩过的坑"></a>踩过的坑</h1><h2 id="信息熵"><a href="#信息熵" class="headerlink" title="信息熵"></a>信息熵</h2><p>基尼指数和信息熵的几乎无差别，不怎么影响结果。</p>
 <h2 id="PCA-降维"><a href="#PCA-降维" class="headerlink" title="PCA 降维"></a>PCA 降维</h2><p>PCA 降维，使用 mle 和 5 个特征，都不好使，准确度反而更低，AUC 得分降至 0.51。</p>

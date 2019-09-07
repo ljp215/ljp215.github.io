@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="grep常用技巧grep匹配TAB 12直接grep tab字符 //命令行下用”ESC TAB”输入grep $&amp;apos;\t&amp;apos;  grep匹配减号 1cat file | grep -- -1  去除所有空行 1cat file | grep -v &amp;quot;^$&amp;quot; &amp;gt; file2  只显示以a开头的行。 1cat file | grep &amp;apos;^a&amp;apo">
+  <meta name="description" content="grep常用技巧grep匹配TAB 12直接grep tab字符 //命令行下用”ESC TAB”输入grep $&amp;apos;\t&amp;apos; grep匹配减号 1cat file | grep -- -1 去除所有空行 1cat file | grep -v &amp;quot;^$&amp;quot; &amp;gt; file2 只显示以a开头的行。 1cat file | grep &amp;apos;^a&amp;apos;">
 <meta name="keywords" content="Tools">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Shell常用技巧">
 <meta property="og:url" content="http://luojinping.com/2015/04/10/Shell常用技巧/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="grep常用技巧grep匹配TAB 12直接grep tab字符 //命令行下用”ESC TAB”输入grep $&amp;apos;\t&amp;apos;  grep匹配减号 1cat file | grep -- -1  去除所有空行 1cat file | grep -v &amp;quot;^$&amp;quot; &amp;gt; file2  只显示以a开头的行。 1cat file | grep &amp;apos;^a&amp;apo">
+<meta property="og:description" content="grep常用技巧grep匹配TAB 12直接grep tab字符 //命令行下用”ESC TAB”输入grep $&amp;apos;\t&amp;apos; grep匹配减号 1cat file | grep -- -1 去除所有空行 1cat file | grep -v &amp;quot;^$&amp;quot; &amp;gt; file2 只显示以a开头的行。 1cat file | grep &amp;apos;^a&amp;apos;">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-25T02:50:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Shell常用技巧">
-<meta name="twitter:description" content="grep常用技巧grep匹配TAB 12直接grep tab字符 //命令行下用”ESC TAB”输入grep $&amp;apos;\t&amp;apos;  grep匹配减号 1cat file | grep -- -1  去除所有空行 1cat file | grep -v &amp;quot;^$&amp;quot; &amp;gt; file2  只显示以a开头的行。 1cat file | grep &amp;apos;^a&amp;apo">
+<meta name="twitter:description" content="grep常用技巧grep匹配TAB 12直接grep tab字符 //命令行下用”ESC TAB”输入grep $&amp;apos;\t&amp;apos; grep匹配减号 1cat file | grep -- -1 去除所有空行 1cat file | grep -v &amp;quot;^$&amp;quot; &amp;gt; file2 只显示以a开头的行。 1cat file | grep &amp;apos;^a&amp;apos;">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/04/10/Shell常用技巧/">
 
@@ -317,43 +317,28 @@
       
         <h2 id="grep常用技巧"><a href="#grep常用技巧" class="headerlink" title="grep常用技巧"></a>grep常用技巧</h2><p>grep匹配TAB</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">直接grep tab字符 //命令行下用”ESC TAB”输入</span><br><span class="line">grep $&apos;\t&apos;</span><br></pre></td></tr></table></figure>
-
 <p>grep匹配减号</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat file | grep -- -1</span><br></pre></td></tr></table></figure>
-
 <p>去除所有空行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat file | grep -v &quot;^$&quot; &gt; file2</span><br></pre></td></tr></table></figure>
-
 <p>只显示以a开头的行。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat file | grep &apos;^a&apos;</span><br></pre></td></tr></table></figure>
-
 <p>显示log中error附近的内容</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat file | grep -C5 &quot;error&quot;</span><br></pre></td></tr></table></figure>
-
-<br>
-
+<p><br></p>
 <h2 id="awk常用技巧"><a href="#awk常用技巧" class="headerlink" title="awk常用技巧"></a>awk常用技巧</h2><p>隔行显示</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat file | awk &apos;&#123;getline; print $1;&#125;&apos;</span><br></pre></td></tr></table></figure>
-
 <p>取奇数/偶数行数据</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">awk &apos;NR%2==1&apos; file  //显示奇数行</span><br><span class="line">awk &apos;NR%2==0&apos; file  //显示偶数行</span><br></pre></td></tr></table></figure>
-
-<br>
-
+<p><br></p>
 <h2 id="vim常用技巧"><a href="#vim常用技巧" class="headerlink" title="vim常用技巧"></a>vim常用技巧</h2><p>vim下将x替换成制表符</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">%s/x/^I</span><br><span class="line">p.s: 直接按TAB就可以啦 ,不需要用转义序列\t的</span><br></pre></td></tr></table></figure>
-
 <p>vim下将x替换成换行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">%s/x/\r</span><br></pre></td></tr></table></figure>
-
-<br>
-
+<p><br></p>
 <h2 id="sed常用技巧"><a href="#sed常用技巧" class="headerlink" title="sed常用技巧"></a>sed常用技巧</h2><p>查看文件选定的行</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">wc -l  a.txt  //统计a.txt 行数</span><br><span class="line">sed -n &apos;190,196p&apos; a.txt //查看第190行到第196行</span><br><span class="line">sed -n &apos;190,1p&apos; a.txt //查看第190行</span><br></pre></td></tr></table></figure>
-
-<p>将文件中的 , 换成 tab 符号</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat data.csv | sed $&apos;s/,/\t/g&apos;</span><br></pre></td></tr></table></figure>
-
+<p>将文件中的 , 换成 tab 符号<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat data.csv | sed $&apos;s/,/\t/g&apos;</span><br></pre></td></tr></table></figure></p>
 
     </div>
 

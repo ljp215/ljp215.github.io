@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2   所以时间复杂度是O(n) B. 用贪心的思维第">
+  <meta name="description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2 所以时间复杂度是O(n) B. 用贪心的思维第一个">
 <meta name="keywords" content="Algorithm">
 <meta property="og:type" content="article">
 <meta property="og:title" content="扔鸡蛋测楼层">
 <meta property="og:url" content="http://luojinping.com/2016/03/03/扔鸡蛋测楼层/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2   所以时间复杂度是O(n) B. 用贪心的思维第">
+<meta property="og:description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2 所以时间复杂度是O(n) B. 用贪心的思维第一个">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-25T13:31:54.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="扔鸡蛋测楼层">
-<meta name="twitter:description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2   所以时间复杂度是O(n) B. 用贪心的思维第">
+<meta name="twitter:description" content="扔瓶子测楼层一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？ A. 只用一个瓶子从第一层扔到第n层找到临界值的扔瓶子次数的期望为每一层的期望次数之和 1E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2 所以时间复杂度是O(n) B. 用贪心的思维第一个">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2016/03/03/扔鸡蛋测楼层/">
 
@@ -318,8 +318,6 @@
         <h2 id="扔瓶子测楼层"><a href="#扔瓶子测楼层" class="headerlink" title="扔瓶子测楼层"></a>扔瓶子测楼层</h2><p>一栋楼有n层，需要测试某种材质的玻璃瓶从哪一层掉下来恰好会碎。现在仅有两个这样的瓶子。请问怎样仍才能最快的测出楼层的临界值？</p>
 <h2 id="A-只用一个瓶子从第一层扔到第n层"><a href="#A-只用一个瓶子从第一层扔到第n层" class="headerlink" title="A. 只用一个瓶子从第一层扔到第n层"></a>A. 只用一个瓶子从第一层扔到第n层</h2><p>找到临界值的扔瓶子次数的期望为每一层的期望次数之和</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">E(x) = 1/n * 1 + 1/n * 2 + 1/n * 3 + ... + 1/n * n = (1+n)/2</span><br></pre></td></tr></table></figure>
-
-
 <p>所以时间复杂度是O(n)</p>
 <h2 id="B-用贪心的思维"><a href="#B-用贪心的思维" class="headerlink" title="B. 用贪心的思维"></a>B. 用贪心的思维</h2><p>第一个瓶子从第1层开始扔，每次层数翻倍，依次为，1，2，4，8，16，直至在第 2^k 层碎掉。<br>第二个瓶子从第 2^(k-1) 层开始扔，直至第 2^k 层为止，中间肯定能找到临界值。<br>所以时间复杂度是O(lgn)</p>
 <h2 id="C-用二分法"><a href="#C-用二分法" class="headerlink" title="C. 用二分法"></a>C. 用二分法</h2><p>第一个瓶子每次以(i, j)为区间，扔的位置为(i+j)/2, 初始情况, i=0,j=n, 如果瓶子没碎，则i=j，直至碎掉。<br>第二个瓶子从第 i 层开始扔，直至第 j 层为止，中间肯定能找到临界值。</p>
@@ -337,10 +335,8 @@
 <p>OK，那如果第一次测试鸡蛋没摔破呢，那N肯定要比x大，要继续往上找，需要在哪一层扔呢？我们可以模仿前面的操作，如果第一个瓶子在第二次测试中摔破了，那么第二个瓶子的测试次数就只剩下x-2次了(第一个瓶子已经用了2次)。这样一来，第二次扔瓶子的楼层和第一次扔瓶子的楼层之间就隔着x-2层。 </p>
 <p>我们再回过头来看一看，第一次扔瓶子的楼层在第x层，第1层到第x层间共x层；第1次扔鸡蛋的楼层到第2次扔瓶子的楼层间共有x-1层(包含第2次扔瓶子的那一层)，同理继续往下，我们可以得出，第2次扔瓶子的楼层到第3次扔瓶子的楼层间共有x-2层，最后把这些互不包含的区间数加起来，应该大于等于总共的楼层数量100，即</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">x + (x-1) + (x-2) + ... + 1 &gt;= 100</span><br><span class="line">(x+1)*x/2 &gt;= 100</span><br><span class="line">得出答案是14</span><br></pre></td></tr></table></figure>
-
 <p>即我先用第1个瓶子在以下序列表示的楼层数不断地向上测试，直到它摔破。 再用第2个瓶子从上一个没摔破的序列数的下一层开始，向上测试，即可保证在最坏情况下也只需要测试14次，就能用2个瓶子找出从哪一层开始，往下扔鸡蛋，瓶子就会摔破。</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">14, 27, 39, 50, 60, 69, 77, 84, 90, 95, 99, 100</span><br></pre></td></tr></table></figure>
-
 <h2 id="E-DP的解法"><a href="#E-DP的解法" class="headerlink" title="E. DP的解法"></a>E. DP的解法</h2><p>假设f(n)表示从第n层楼扔下鸡蛋，没有摔碎的最少尝试次数。第一个鸡蛋，可能的落下位置[1,n],第一个鸡蛋从第i层扔下，有两种情况：</p>
 <ul>
 <li>碎了，第二个鸡蛋，需要从第一层开始试验，有i-1次机会</li>
@@ -348,7 +344,6 @@
 </ul>
 <p>所以，当第一个鸡蛋，由第i个位置落下的时候，要尝试的次数为 1 + max{i - 1, f(n - i)}，那么对于每一个i，尝试次数最少的，就是f(n)的值。<br>状态转移方程如下： </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(n) = min&#123;1 + max&#123;i - 1, f(n - 1)&#125;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>其中: i的范围为[1, n], f(1) = 1.</p>
 <h2 id="F-推广到一般化的问题"><a href="#F-推广到一般化的问题" class="headerlink" title="F. 推广到一般化的问题"></a>F. 推广到一般化的问题</h2><p>为n层楼，m个鸡蛋。<br>如下分析： 假设f(n,m)表示n层楼、m个鸡蛋时找到最高楼层的最少尝试次数。当第一个鸡蛋从第i层扔下，有两种情况：</p>
 <ul>
@@ -357,7 +352,6 @@
 </ul>
 <p>状态转移方程如下： </p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">f(n, m) = min&#123;1 + max&#123;f(n - 1, m - 1), f(n - i, m)&#125;&#125;</span><br></pre></td></tr></table></figure>
-
 <p>其中： i为[1, n], f(i, 1) = 1</p>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
 <p><a href="http://www.cricode.com/3558.html" target="_blank" rel="noopener">http://www.cricode.com/3558.html</a><br><a href="https://gist.github.com/sing1ee/5971946" target="_blank" rel="noopener">https://gist.github.com/sing1ee/5971946</a></p>

@@ -329,17 +329,17 @@
 </li>
 </ul>
 <p>$x^{(j)}_i$: The value of feature j in the ith training example</p>
-<p>例如，当 n=4 时:<br>$$h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4$$</p>
-<p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：<br>$$h_θ(x)=θ^TX$$<br>$θ^T$: [1 * (n+1)] matrix</p>
-<h1 id="多变量的梯度下降"><a href="#多变量的梯度下降" class="headerlink" title="多变量的梯度下降"></a>多变量的梯度下降</h1><h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><p>$$J(θ<em>0, θ_1, …,θ_n) =  \frac1{2m}\sum</em>{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}$$</p>
-<h2 id="Gradient-descent"><a href="#Gradient-descent" class="headerlink" title="Gradient descent"></a>Gradient descent</h2><p>Repeat {<br>  $$ θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, …,θ_n)} $$<br>}</p>
+<p>例如，当 n=4 时:</p>
+<script type="math/tex; mode=display">h_θ(x) = θ_0 + θ_1x_1 + θ_2x_2 + θ_3x_3 + θ_4x_4</script><p>For convenience of notation, $x_0$ = 1, 所以最后的特征向量的维度是 n+1，从 0 开始，记为”X”，<br>则有：</p>
+<script type="math/tex; mode=display">h_θ(x)=θ^TX</script><p>$θ^T$: [1 * (n+1)] matrix</p>
+<h1 id="多变量的梯度下降"><a href="#多变量的梯度下降" class="headerlink" title="多变量的梯度下降"></a>多变量的梯度下降</h1><h2 id="Cost-Function"><a href="#Cost-Function" class="headerlink" title="Cost Function"></a>Cost Function</h2><script type="math/tex; mode=display">J(θ_0, θ_1, ...,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}</script><h2 id="Gradient-descent"><a href="#Gradient-descent" class="headerlink" title="Gradient descent"></a>Gradient descent</h2><p>Repeat {</p>
+<script type="math/tex; mode=display">θ_j = θ_j - α\frac\partial{\partial J(θ_0, θ_1, ...,θ_n)}</script><p>}</p>
 <p>every iterator</p>
 <ul>
 <li>θj = θj - learning rate (α) times the partial derivative of J(θ) with respect to θJ(…)</li>
 <li>We do this through a simultaneous update of every θj value</li>
 </ul>
-<p>$$ \frac\partial{\partial J(θ<em>0, θ_1, …,θ_n)} $$<br>$$ = \frac1m * \sum</em>{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)} $$</p>
-<h1 id="Gradient-Decent-in-practice"><a href="#Gradient-Decent-in-practice" class="headerlink" title="Gradient Decent in practice"></a>Gradient Decent in practice</h1><h2 id="Feature-Scaling"><a href="#Feature-Scaling" class="headerlink" title="Feature Scaling"></a>Feature Scaling</h2><p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
+<script type="math/tex; mode=display">\frac\partial{\partial J(θ_0, θ_1, ...,θ_n)}</script><script type="math/tex; mode=display">= \frac1m * \sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})}*x_j^{(i)}</script><h1 id="Gradient-Decent-in-practice"><a href="#Gradient-Decent-in-practice" class="headerlink" title="Gradient Decent in practice"></a>Gradient Decent in practice</h1><h2 id="Feature-Scaling"><a href="#Feature-Scaling" class="headerlink" title="Feature Scaling"></a>Feature Scaling</h2><p>假设只有 $x_1$,$x_2$ 两个变量，其中：$x_1\in(0,2000), x_2\in(1,5)$，则最后的 J(θ) 图形是一个椭圆，在椭圆下用梯度下降法会比圆形要耗时更久，So we need to rescale this input so it’s more effective，有很多方式，一种是将各个 feature 除以其本身的最大值，缩小范围至[0,1]，一种是各个 feature 减去 mean 然后除以最大值，缩小范围至[-0.5,0.5]</p>
 <h2 id="Learning-Rate-α"><a href="#Learning-Rate-α" class="headerlink" title="Learning Rate α"></a>Learning Rate α</h2><ul>
 <li>working correctly: If gradient descent is working then J(θ) should decrease after every iteration</li>
 <li>convergence: 收敛是指每经过一次迭代，J(θ)的值都变化甚小。</li>
@@ -363,9 +363,12 @@
 <h2 id="Polynomial-regression"><a href="#Polynomial-regression" class="headerlink" title="Polynomial regression"></a>Polynomial regression</h2><p>例如房价的走势，如下图，横坐标 x 为房子的面积，纵坐标为房价，使用一元二次的方程，会得出下图的蓝色曲线。容易得到房价今后会有一个下降的过程，可实际上房价是不会随着面积的增大而下降的。所以需要重新选定 Polynomial regression，可以改为使用一元三次的方程或者使用平凡根的方程。</p>
 <p><strong>所以选择合适的 Features 和 Polynomial regression 都非常重要。</strong></p>
 <p><img src="/img/polynomial_regression_choose.jpg" alt></p>
-<h1 id="Normal-equation-求解多变量线性回归"><a href="#Normal-equation-求解多变量线性回归" class="headerlink" title="Normal equation 求解多变量线性回归"></a>Normal equation 求解多变量线性回归</h1><h2 id="Normal-equation"><a href="#Normal-equation" class="headerlink" title="Normal equation"></a>Normal equation</h2><p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 $$ \frac{d}{dθ}J(θ)=2aθ+b=0$$ 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
-<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：<br>$$ J(θ<em>0, θ_1, …,θ_n) =  \frac1{2m}\sum</em>{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2} $$<br>只需要令：<br>$$ \frac\partial{\partial θ_j}J(θ_0, θ_1, …,θ_n) = … = 0 $$，其中 j = 0,1,2,…,n<br>设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m*n) 的矩阵，y 为 (m*1) 的矩阵，可以推导出求 θ 向量的公式如下：<br>$$θ = (X^TX)^{-1}X^Ty$$</p>
-<h1 id="Gradient-descent-Vs-Normal-equation"><a href="#Gradient-descent-Vs-Normal-equation" class="headerlink" title="Gradient descent Vs Normal equation"></a>Gradient descent Vs Normal equation</h1><h2 id="Gradient-descent-1"><a href="#Gradient-descent-1" class="headerlink" title="Gradient descent"></a>Gradient descent</h2><ul>
+<h1 id="Normal-equation-求解多变量线性回归"><a href="#Normal-equation-求解多变量线性回归" class="headerlink" title="Normal equation 求解多变量线性回归"></a>Normal equation 求解多变量线性回归</h1><h2 id="Normal-equation"><a href="#Normal-equation" class="headerlink" title="Normal equation"></a>Normal equation</h2><p>举例说明，假设 J(θ) 是一元二次方程，如：J(θ)=a$θ^2$+bθ+c，则令 <script type="math/tex">\frac{d}{dθ}J(θ)=2aθ+b=0</script> 即可，求出最终的 θ 则得到了线性回归方程，可以预测出今后的 y 值。</p>
+<p>更普遍地，当 θ 是一个 n+1 维的向量时，θ $\in$ $R^{n+1}$，则 cost function 如下：</p>
+<script type="math/tex; mode=display">J(θ_0, θ_1, ...,θ_n) =  \frac1{2m}\sum_{i=1}^{m}{(h_θ(x^{(i)}) - y^{(i)})^2}</script><p>只需要令：</p>
+<script type="math/tex; mode=display">\frac\partial{\partial θ_j}J(θ_0, θ_1, ...,θ_n) = ... = 0 $$，其中 j = 0,1,2,...,n
+设 X 代表训练集的 features 的值的矩阵，y 代表训练集的结果的值的矩阵，假设训练集数量为 m, features 个数为 n, 则 X 为 (m\*n) 的矩阵，y 为 (m\*1) 的矩阵，可以推导出求 θ 向量的公式如下：
+$$θ = (X^TX)^{-1}X^Ty</script><h1 id="Gradient-descent-Vs-Normal-equation"><a href="#Gradient-descent-Vs-Normal-equation" class="headerlink" title="Gradient descent Vs Normal equation"></a>Gradient descent Vs Normal equation</h1><h2 id="Gradient-descent-1"><a href="#Gradient-descent-1" class="headerlink" title="Gradient descent"></a>Gradient descent</h2><ul>
 <li>Need to chose learning rate</li>
 <li>Needs many iterations - could make it slower</li>
 <li>Works well even when n is massive (millions)</li>
@@ -384,9 +387,9 @@
 <li>Slow of n is large, Can be much slower</li>
 <li>仅适用于线性回归</li>
 </ul>
-<h1 id="局部加权线性回归"><a href="#局部加权线性回归" class="headerlink" title="局部加权线性回归"></a>局部加权线性回归</h1><p>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：<br>$$J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2$$</p>
-<p>其中<br>$$ w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})$$</p>
-<p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
+<h1 id="局部加权线性回归"><a href="#局部加权线性回归" class="headerlink" title="局部加权线性回归"></a>局部加权线性回归</h1><p>局部加权回归(locally weighted regression)简称 loess，其思想是，针对对某训练数据的每一个点，选取这个点及其临近的一批点做线性回归；同时也需要考虑整个训练数据，考虑的原则是距离该区域越近的点贡献越大，反之则贡献越小，这也正说明局部的思想。其 cost function 为：</p>
+<script type="math/tex; mode=display">J(\theta) = \sum_{i=1}^{m} w^{(i)}( y^{(i)}-\theta^Tx^{(i)} )^2</script><p>其中</p>
+<script type="math/tex; mode=display">w^{(i)} =  exp (-\frac{(x^{(i)}-x)^2}{\tau^2})</script><p>$w^{(i)}$的形式跟正态分布很相似，但二者没有任何关系，仅仅只是便于计算。可以发现，$x^{(j)}$ 离 $x^{(i)}$ 非常近时，${w^{(i)}_j}$ 的值接近于1，此时 j 点的贡献很大，当 $x^{(j)}$ 离 $x^{(i)}$ 非常远时，${w^{(i)}_j}$ 的值接近于 0，此时 j 点的贡献很小。</p>
 <p>$\tau^2$ 是波长函数(bandwidth)， 控制权重随距离下降的速度，τ 越小则 x 离 $x^{(i)}$ 越远时 $w^{(i)}$ 的值下降的越快。</p>
 <p>所以，如果沿着 x 轴的每个点都进行局部直线拟合，那么你会发现对于这个数据集合来说，局部加权的预测结果，能够最终跟踪这条非线性的曲线。</p>
 <p>但局部加权回归也有其缺点：</p>
@@ -397,8 +400,8 @@
 <p>对于线性回归算法，一旦拟合出适合训练数据的参数θ，保存这些参数θ，对于之后的预测，不需要再使用原始训练数据集，所以是参数学习算法。</p>
 <p>对于局部加权线性回归算法，每次进行预测都需要全部的训练数据（每次进行的预测得到不同的参数θ），没有固定的参数θ，所以是非参数算法(non-parametric algorithm)。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-</blockquote>
 <p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="noopener">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
+</blockquote>
 
     </div>
 

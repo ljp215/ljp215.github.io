@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)  ** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很">
+  <meta name="description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)   一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决">
 <meta name="keywords" content="Java">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java的内存泄露与垃圾回收">
 <meta property="og:url" content="http://luojinping.com/2015/11/02/Java的内存泄露与垃圾回收/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)  ** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很">
+<meta property="og:description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)   一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-25T13:32:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java的内存泄露与垃圾回收">
-<meta name="twitter:description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)  ** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很">
+<meta name="twitter:description" content="什么是内存泄露内存泄露 memory leak，是指已申请的无用内存无法被回收。 内存泄漏有两种情况：  一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)   一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）   第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2015/11/02/Java的内存泄露与垃圾回收/">
 
@@ -320,13 +320,12 @@
 <ul>
 <li><p>一种情况如在C/C++语言中的，在堆中的分配的内存，在没有将其释放掉的时候，就将所有能访问这块内存的方式都删掉（如指针重新赋值)</p>
 </li>
-<li><p>** 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）**</p>
+<li><p><strong> 一种情况则是在内存对象明明已经不需要的时候，还仍然保留着这块内存和它的访问方式（引用）</strong></p>
 </li>
 </ul>
 <p>第一种情况，在Java中已经由于垃圾回收机制的引入，得到了很好的解决。所以，Java中的内存泄漏，主要指的是第二种情况。</p>
 <p>内存泄露的一个例子：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">1000</span>; i++) &#123;</span><br><span class="line">      Object obj = <span class="keyword">new</span> Object(</span><br><span class="line">      list.add(obj);</span><br><span class="line">      obj = <span class="keyword">null</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>这段代码是：for循环中，new一个Object对象obj，然后将其添加到list中，最后将obj置空。</p>
 <p>这个时候就发生了内存泄露，因为obj是可达的无用对象。发生GC时，尽管obj已经被置空成为了无用对象，但是obj能够从list可达，从而GC无法将其释放掉。次数obj占用的内存就是泄露了。</p>
 <h2 id="内存泄露与内存溢出"><a href="#内存泄露与内存溢出" class="headerlink" title="内存泄露与内存溢出"></a>内存泄露与内存溢出</h2><p>内存溢出 out of memory，是指程序在申请内存时，没有足够的内存空间供其使用，出现out of memory。当发生内存溢出时，程序将无法进行，强制终止。在java中常见的java.lang.OutOfMemoryError就是内存溢出的log。</p>
@@ -363,42 +362,32 @@
 </blockquote>
 <p>例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processObj</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     BigObject obj = … <span class="comment">// 声明大对象obj</span></span><br><span class="line">     doSomethingWith(obj); <span class="comment">// 使用obj</span></span><br><span class="line">     obj = <span class="keyword">null</span>;    <span class="comment">// explicitly set to null</span></span><br><span class="line">     doSomethingElse(); <span class="comment">//非常耗时的操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
 <p>此时显示的设置无用的对象obj为null才有效。</p>
 <h2 id="How-to-avoid-Memory-Leak-in-Java"><a href="#How-to-avoid-Memory-Leak-in-Java" class="headerlink" title="How to avoid Memory Leak in Java"></a>How to avoid Memory Leak in Java</h2><p>贴出 <a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
 <p>How  to avoid Memory Leak in Java?</p>
 <p>While coding if we take care of a few points we can avoid memory leak issue.</p>
 <ol>
-<li><p>Use time out time for the session as low as possible.</p>
-</li>
-<li><p>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</p>
-</li>
-<li><p>Try to store as less data as possible in the HttpSession.</p>
-</li>
+<li>Use time out time for the session as low as possible.</li>
+<li>Release the session when the same is no longer required. We can release the session  by using HttpSession.invalidate().</li>
+<li>Try to store as less data as possible in the HttpSession.</li>
 <li><p>Avoid creating HttpSession in jsp page by default by using the page directive</p>
 <p>  &lt;%@page session=”false”%&gt;</p>
 </li>
 <li><p>Try to use StringBuffer’s append() method instead of string concatenation. String is an immutable object and if we use string concatenation, it will unnecessarily create many temporary objects on heap which results in poor performance.</p>
 <p> For ex. if we write String query =  “SELECT id, name FROM   t_customer whereMsoNormal” style=”margin-bottom: 0.0001pt;”&gt;     it will create 4 String Objects. But if we write the same query using StringBuffer’s append() it will create only one object as StringBuffer is mutable i.e. can be modified over and  over again.</p>
 </li>
-<li><p>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</p>
-</li>
-<li><p>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</p>
-</li>
-<li><p>Try to close the ResultSet and Statement before reusing those.</p>
-</li>
-<li><p>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</p>
-</li>
-<li><p>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</p>
-</li>
+<li>In JDBC code, While writting the query try to avoid “*”. It is a good practice to use column name in select statement.</li>
+<li>Try to use PreparedStatement object instead of Statement object if the query need to be executed frequently as PreparedStatement is a precompiled SQL statement where as Statement is compiled each time the Sql statement is sent to the database.</li>
+<li>Try to close the ResultSet and Statement before reusing those.</li>
+<li>If we use stmt = con.prepareStatement(sql query) inside loop, we should close it in the loop.</li>
+<li>Try to close ResultSet, Statement, PreparedStatement and Connection in finally block.</li>
 </ol>
 <h2 id="在测试内存泄露时，对GC有一些收获"><a href="#在测试内存泄露时，对GC有一些收获" class="headerlink" title="在测试内存泄露时，对GC有一些收获"></a>在测试内存泄露时，对GC有一些收获</h2><ol>
 <li>cannot disable java gc</li>
 <li>我们不能决定什么时候发生GC。</li>
 <li>System.gc() vs GC button in JVisualVM/JConsole<br>As far as I know, Jconsole or any other tool, uses System.gc() only. There is no other option. As everyone know, java tells everyone not to rely on System.gc(), but that doesn’t mean it doesn’t work at all.</li>
 </ol>
-<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><blockquote>
-</blockquote>
+<h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>&gt;</p>
 <ul>
 <li><a href="http://wwsun.me/posts/jvm-gc.html" target="_blank" rel="noopener">http://wwsun.me/posts/jvm-gc.html</a></li>
 <li><a href="http://java.dzone.com/articles/jvm-and-garbage-collection" target="_blank" rel="noopener">http://java.dzone.com/articles/jvm-and-garbage-collection</a></li>

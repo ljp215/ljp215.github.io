@@ -62,10 +62,12 @@
 <meta property="og:site_name" content="Zane Blog">
 <meta property="og:description" content="HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://luojinping.com/img/HBase_%20architecture.jpg">
 <meta property="og:updated_time" content="2019-08-25T03:28:51.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="使用 HBase 总结">
 <meta name="twitter:description" content="HBase 简介HBase是Apache Hadoop的数据库，基于列存储、构建在HDFS上的分布式存储系统，能够对大型数据提供随机、实时的读写访问，是Google的BigTable的开源实现。HBase的目标是存储并处理大型的数据，仅用普通的硬件配置，就能够处理海量数据。 HBase 的优点 高可扩展性HBase 是真正意义上的线性水平扩展。数据量累计到一定程度(可配置)，HBase系统会自动对">
+<meta name="twitter:image" content="http://luojinping.com/img/HBase_%20architecture.jpg">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2016/05/22/使用-HBase-总结/">
 
@@ -333,18 +335,13 @@
 </li>
 <li><p>无模式<br>每行都有一个可排序的主键和任意多的列，列可以根据需要动态的增加，同一张表中不同的行可以有截然不同的列；</p>
 </li>
-<li><p>面向列<br>面向列（族）的存储和权限控制，列（族）独立检索；</p>
-</li>
-<li><p>稀疏<br>对于空（null）的列，并不占用存储空间，表可以设计的非常稀疏；</p>
-</li>
-<li><p>数据多版本<br>每个单元中的数据可以有多个版本，默认情况下版本号自动分配，是单元格插入时的时间戳；</p>
-</li>
-<li><p>数据类型单一<br>HBase中的数据都是字符串，没有类型。</p>
-</li>
-<li><p>存储单元 Cell<br>由{rowkey, colomnFamily:colomnQualifier, version} 确定的唯一单元，存储的数据是byte[]类型的。</p>
-</li>
+<li>面向列<br>面向列（族）的存储和权限控制，列（族）独立检索；</li>
+<li>稀疏<br>对于空（null）的列，并不占用存储空间，表可以设计的非常稀疏；</li>
+<li>数据多版本<br>每个单元中的数据可以有多个版本，默认情况下版本号自动分配，是单元格插入时的时间戳；</li>
+<li>数据类型单一<br>HBase中的数据都是字符串，没有类型。</li>
+<li>存储单元 Cell<br>由{rowkey, colomnFamily:colomnQualifier, version} 确定的唯一单元，存储的数据是byte[]类型的。</li>
 </ol>
-<h1 id="HBase-的设计与实现"><a href="#HBase-的设计与实现" class="headerlink" title="HBase 的设计与实现"></a>HBase 的设计与实现</h1><h2 id="HBase-的架构"><a href="#HBase-的架构" class="headerlink" title="HBase 的架构"></a>HBase 的架构</h2><p>![](/img/HBase_ architecture.jpg)<br>由上图可知，hbase包括Clinet、HMaster、HRegionServer、ZooKeeper组件<br>各组件功能介绍：</p>
+<h1 id="HBase-的设计与实现"><a href="#HBase-的设计与实现" class="headerlink" title="HBase 的设计与实现"></a>HBase 的设计与实现</h1><h2 id="HBase-的架构"><a href="#HBase-的架构" class="headerlink" title="HBase 的架构"></a>HBase 的架构</h2><p><img src="/img/HBase_ architecture.jpg" alt><br>由上图可知，hbase包括Clinet、HMaster、HRegionServer、ZooKeeper组件<br>各组件功能介绍：</p>
 <ol>
 <li>Client<br>Client主要通过ZooKeeper与Hbaser和HRegionServer通信，对于管理操作：client向master发起请求，对于数据读写操作：client向regionserver发起请求</li>
 <li>ZooKeeper<br>zk负责存储_root_表的地址，也负责存储当前服务的master地址,regsion server也会将自身的信息注册到zk中，以便master能够感知region server的状态，zk也会协调active master，也就是可以提供一个选举master leader,也会协调各个region server的容灾流程</li>
@@ -405,7 +402,7 @@
 </ol>
 <p>Since HBase does not guarantee any consistency between regions (and each region is hosted at exactly one RegionServer) all MVCC data structures only need to be kept in memory on every region server.</p>
 <p>I would probably not use HBase for a use case like this. but if you must you can lock the row, read, update if needed - read more about lock and some of its problems here ngdata.com/hbase-row-locks . Again, I’d try to rethink the scenario for instance, HBase support multiple version so you can update anyway and sort things later (e.g. in a coprocessor that runs after update)<br>RowLock and associated operations are deprecated in 0.94 and removed in 0.96.issues.apache.org/jira/browse/HBASE-7315 – Matt Ball</p>
-<ol start="2">
+<ol>
 <li>hbase checkAndPut<br>hbase checkandput performance<br>When you use checkAndPut() you do one RPC-call per request. So, you can’t achieve performance more then 1 / rtt requests per second (rtt is Round Trip Time). If you have rtt 1ms between your client and region server, your theoretical maximum is 1000 rps. When using batch operations like put(List<put>) you need a lot less RPC-calls causing performance increase.</put></li>
 </ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>

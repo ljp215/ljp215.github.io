@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族：$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$  $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition">
+  <meta name="description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族： P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta)) $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition fun">
 <meta name="keywords" content="Machine Learning">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Stanford Machine Learning - 5 广义线性模型">
 <meta property="og:url" content="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族：$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$  $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition">
+<meta property="og:description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族： P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta)) $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition fun">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-25T13:10:05.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Stanford Machine Learning - 5 广义线性模型">
-<meta name="twitter:description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族：$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$  $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition">
+<meta name="twitter:description" content="指数分布族(Exponential Family)指数分布族的定义若一类概率分布可以写成如下形式，那么它就属于指数分布族： P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta)) $\eta$: 自然参数，通常是一个实数 T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识） a($\eta$) 被称为 log partition fun">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="http://luojinping.com/2017/11/05/Stanford-Machine-Learning-5-广义线性模型/">
 
@@ -315,8 +315,8 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="指数分布族-Exponential-Family"><a href="#指数分布族-Exponential-Family" class="headerlink" title="指数分布族(Exponential Family)"></a>指数分布族(Exponential Family)</h1><h2 id="指数分布族的定义"><a href="#指数分布族的定义" class="headerlink" title="指数分布族的定义"></a>指数分布族的定义</h2><p>若一类概率分布可以写成如下形式，那么它就属于指数分布族：<br>$$P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))$$</p>
-<ul>
+        <h1 id="指数分布族-Exponential-Family"><a href="#指数分布族-Exponential-Family" class="headerlink" title="指数分布族(Exponential Family)"></a>指数分布族(Exponential Family)</h1><h2 id="指数分布族的定义"><a href="#指数分布族的定义" class="headerlink" title="指数分布族的定义"></a>指数分布族的定义</h2><p>若一类概率分布可以写成如下形式，那么它就属于指数分布族：</p>
+<script type="math/tex; mode=display">P(y;\eta) = b(y)exp(\eta^TT(y)-a(\eta))</script><ul>
 <li>$\eta$: 自然参数，通常是一个实数</li>
 <li>T(y): 充分统计量，通常，T(y)=y，实际上是一个概率分布的充分统计量（统计学知识）</li>
 <li>a($\eta$) 被称为 log partition function</li>
@@ -333,10 +333,10 @@
 </ul>
 <h1 id="指数分布簇推导"><a href="#指数分布簇推导" class="headerlink" title="指数分布簇推导"></a>指数分布簇推导</h1><p>高斯分布(Gaussian)和伯努利(Bernoulli)分布都可以推导为指数分布族。</p>
 <h2 id="伯努利分布的推导"><a href="#伯努利分布的推导" class="headerlink" title="伯努利分布的推导"></a>伯努利分布的推导</h2><p>伯努利分布的概率公式为：$P(y=1;\phi)=\phi; P(y=0;\phi)=1-\phi;$</p>
-<p>公式可经如下变换：<br>$$P(y;\phi)=\phi^y(1-\phi)^y$$<br>$$=exp(log(\phi^y(1-\phi)^y))=exp(ylog(\phi)+ (1-y)log(1-\phi))$$<br>$$=exp(log(\frac\phi{1-\phi})y + log(1-\phi))$$</p>
-<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
-<h2 id="高斯分布的推导"><a href="#高斯分布的推导" class="headerlink" title="高斯分布的推导"></a>高斯分布的推导</h2><p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：<br>$$P(y;\mu)=\frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2)$$<br>$$=\frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}y^2) * exp({\mu}y-\frac{1}{2}\mu^2)$$</p>
-<p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{ {\mu}^2}2 = \frac{ {\eta}^2}2$</p>
+<p>公式可经如下变换：</p>
+<script type="math/tex; mode=display">P(y;\phi)=\phi^y(1-\phi)^y</script><script type="math/tex; mode=display">=exp(log(\phi^y(1-\phi)^y))=exp(ylog(\phi)+ (1-y)log(1-\phi))</script><script type="math/tex; mode=display">=exp(log(\frac\phi{1-\phi})y + log(1-\phi))</script><p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = 1$<br>$\eta = log(\frac\phi{1-\phi}) =&gt; \phi=\frac1{1+e^{-n}}$<br>$a(\eta) = -log(1-\phi) = log(1+e^n)$</p>
+<h2 id="高斯分布的推导"><a href="#高斯分布的推导" class="headerlink" title="高斯分布的推导"></a>高斯分布的推导</h2><p>在线性回归中，$\sigma$ 对于模型参数 $\theta$  的选择没有影响，为了推导方便我们令 $\sigma = 1$。<br>则有：</p>
+<script type="math/tex; mode=display">P(y;\mu)=\frac{1}{\sqrt{2\pi}}exp(-\frac12(y-\mu)^2)</script><script type="math/tex; mode=display">=\frac{1}{\sqrt{2\pi}}exp(-\frac{1}{2}y^2) * exp({\mu}y-\frac{1}{2}\mu^2)</script><p>对应的指数分布族的参数为：<br>$T(y) = y$<br>$b(y) = \frac{1}{\sqrt{2\pi}}exp(-\frac12y^2)$<br>$\eta = \mu$<br>$a(\eta) = \frac{ {\mu}^2}2 = \frac{ {\eta}^2}2$</p>
 <h1 id="广义线性模型-Generalized-Linear-Model"><a href="#广义线性模型-Generalized-Linear-Model" class="headerlink" title="广义线性模型(Generalized Linear Model)"></a>广义线性模型(Generalized Linear Model)</h1><p>想用 广义线性模型对一般问题进行建模首先需要明确几个 假设：</p>
 <ol>
 <li>$y | x;θ \sim ExponentialFamily(\eta)$ y的条件概率属于指数分布族;</li>
