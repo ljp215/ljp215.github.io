@@ -1,0 +1,1695 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI 行业简报 2026-05-21</title>
+    <style>
+:root {
+  color-scheme: light;
+  --bg: #f3eedf;
+  --surface: #fbf8ee;
+  --surface-muted: #ebe4d3;
+  --ink: #11110f;
+  --muted: #6b675d;
+  --line: #1b1a17;
+  --accent: #8e3218;
+  --accent-strong: #672511;
+  --accent-soft: #ead3c2;
+  --warning-soft: #fff3d6;
+  --rose-soft: #fae8e8;
+  --shadow: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 24px 18px;
+  border-right: 1px solid var(--line);
+  background: #fcfdfe;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+}
+
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  color: #ffffff;
+  background: var(--ink);
+  font-weight: 800;
+}
+
+.brand strong,
+.brand span {
+  display: block;
+}
+
+.brand span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.nav-list {
+  display: grid;
+  gap: 6px;
+  margin: 28px 0;
+}
+
+.nav-item {
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--muted);
+  background: transparent;
+  text-align: left;
+}
+
+.nav-item:hover,
+.nav-item.is-active {
+  color: var(--ink);
+  background: var(--surface-muted);
+}
+
+.source-panel {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.panel-title,
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel-title {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.source-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.source-item {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.source-item input {
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+.source-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.source-category {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.workspace {
+  min-width: 0;
+  padding: 26px 30px 40px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+h2 {
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon-button,
+.primary-button,
+.digest-actions button,
+.card-actions button,
+.open-link {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.icon-button {
+  width: 40px;
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.primary-button {
+  padding: 0 15px;
+  border-color: var(--accent);
+  color: #ffffff;
+  background: var(--accent);
+  font-weight: 700;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.metric {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 28px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 170px 150px auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+label span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+input[type="search"],
+select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 11px;
+  color: var(--ink);
+  background: #ffffff;
+}
+
+.toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.toggle span {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.toggle input {
+  accent-color: var(--accent);
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 18px;
+  align-items: start;
+}
+
+.feed-section,
+.digest-panel {
+  min-width: 0;
+}
+
+.section-heading {
+  margin-bottom: 12px;
+}
+
+.section-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.timestamp {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.article-list {
+  display: grid;
+  gap: 12px;
+}
+
+.article-card,
+.digest-preview {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.article-card {
+  padding: 18px;
+}
+
+.article-card.is-read {
+  box-shadow: none;
+  opacity: 0.76;
+}
+
+.article-meta,
+.card-footer,
+.card-actions,
+.tag-row,
+.digest-actions {
+  display: flex;
+  align-items: center;
+}
+
+.article-meta {
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.category,
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.category {
+  padding: 0 9px;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+time {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.article-card h3 {
+  margin-bottom: 9px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.summary {
+  margin-bottom: 10px;
+  color: #334250;
+  line-height: 1.6;
+}
+
+.impact {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  color: #334250;
+  background: #f3fbfa;
+  line-height: 1.55;
+}
+
+.tag-row {
+  flex-wrap: wrap;
+  gap: 7px;
+  min-height: 24px;
+}
+
+.tag {
+  padding: 0 8px;
+  color: #5f4a03;
+  background: var(--warning-soft);
+}
+
+.card-footer {
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.source {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-actions {
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.card-actions button,
+.open-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 0 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.save-button.is-saved {
+  border-color: #c74e4e;
+  color: #9c2727;
+  background: var(--rose-soft);
+}
+
+.digest-panel {
+  position: sticky;
+  top: 22px;
+}
+
+.digest-preview {
+  padding: 18px;
+}
+
+.digest-preview h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.digest-preview p {
+  color: #334250;
+  line-height: 1.55;
+}
+
+.theme-list {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.theme-item {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.theme-item strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.theme-item span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.digest-actions {
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.digest-actions button {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.empty-state {
+  padding: 28px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: var(--surface);
+  text-align: center;
+}
+
+@media (max-width: 1080px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .digest-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .workspace {
+    padding: 20px 16px 30px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .metrics,
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-box {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .metrics,
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .card-footer,
+  .card-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .card-actions button,
+  .open-link {
+    width: 100%;
+  }
+}
+
+.report-shell {
+  display: grid;
+  grid-template-columns: 186px minmax(0, 1fr);
+  gap: 24px;
+  width: min(1380px, calc(100% - 36px));
+  margin: 0 auto;
+  align-items: start;
+}
+
+.report-history {
+  position: sticky;
+  top: 18px;
+  padding-top: 28px;
+}
+
+.report-history > div {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--line);
+}
+
+.report-history span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--accent-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.report-history strong {
+  font-size: 18px;
+}
+
+.report-history nav {
+  display: grid;
+  gap: 8px;
+}
+
+.report-history a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px 9px;
+  border-left: 4px solid rgba(27, 26, 23, 0.72);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.24);
+  text-decoration: none;
+}
+
+.report-history a:hover,
+.report-history a.is-active {
+  border-left-color: var(--accent);
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+.report-history time,
+.report-history em {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.report-history em {
+  color: var(--muted);
+}
+
+.report-history a:hover em,
+.report-history a.is-active em {
+  color: #d9cfbe;
+}
+
+.report-page {
+  width: 100%;
+  padding: 26px 0 58px;
+}
+
+.report-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--line);
+  color: var(--accent-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.report-topline span:last-child {
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.report-hero {
+  margin: 18px 0 24px;
+  padding: 0 0 24px;
+  border-bottom: 6px solid var(--line);
+}
+
+.report-hero-main {
+  min-width: 0;
+  padding-top: 12px;
+}
+
+.report-hero-main::before {
+  display: block;
+  width: 112px;
+  height: 6px;
+  margin-bottom: 14px;
+  background: var(--accent);
+  content: "";
+}
+
+.report-hero h1 {
+  max-width: 760px;
+  margin-bottom: 16px;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: clamp(42px, 7vw, 82px);
+  line-height: 0.95;
+  letter-spacing: 0;
+}
+
+.report-hero p:last-child {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: #3f3b34;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.75;
+}
+
+.report-hero-panel {
+  align-self: start;
+  min-height: 250px;
+  padding: 24px 24px 22px;
+  border-top: 7px solid var(--accent);
+  color: #f8f2e4;
+  background: #090908;
+}
+
+.report-hero-panel p {
+  margin-bottom: 14px;
+  color: #cf6337;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.report-hero-panel strong,
+.report-hero-panel span {
+  display: block;
+}
+
+.report-hero-panel strong {
+  max-width: 430px;
+  margin-bottom: 18px;
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.report-hero-panel span {
+  border-top: 2px solid var(--accent);
+  padding-top: 12px;
+  color: #d8d0c0;
+  line-height: 1.65;
+}
+
+.report-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0 0 24px;
+}
+
+.report-tabs button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  min-height: 58px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--line);
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 850;
+  text-align: left;
+}
+
+.report-tabs button:hover,
+.report-tabs button.is-active {
+  border-left-color: var(--accent);
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+.report-tabs span {
+  color: var(--accent);
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.report-tabs strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.report-tabs em {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.report-tabs button:hover em,
+.report-tabs button.is-active em {
+  color: #d9cfbe;
+}
+
+.report-tabs button:hover span,
+.report-tabs button.is-active span {
+  color: var(--accent-strong);
+}
+
+.report-section {
+  margin-top: 28px;
+}
+
+.report-tab-panel {
+  display: none;
+}
+
+.report-tab-panel.is-active {
+  display: block;
+}
+
+.report-section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 12px;
+  padding-bottom: 7px;
+  border-bottom: 3px solid var(--line);
+}
+
+.report-section-heading div {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.report-section-heading span {
+  color: var(--accent);
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.report-section-heading h2 {
+  margin-bottom: 0;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.report-section-heading p {
+  margin-bottom: 2px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.report-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+#company-updates .report-list {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+#industry-views .report-list {
+  grid-template-columns: 1fr;
+}
+
+.paper-digest {
+  grid-column: 1 / -1;
+  padding: 16px;
+  border: 2px solid var(--line);
+  border-top: 7px solid var(--accent);
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+.paper-digest-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.paper-digest-header span {
+  display: block;
+  margin-bottom: 5px;
+  color: #cf6337;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.paper-digest-header h3 {
+  margin-bottom: 0;
+  font-size: 22px;
+}
+
+.paper-digest-header a {
+  flex: 0 0 auto;
+  color: #f7efe1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.paper-digest-note {
+  margin-bottom: 14px;
+  color: #d9cfbe;
+  font-size: 14px;
+}
+
+.paper-digest-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.paper-digest-item {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border-left: 3px solid #cf6337;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.08);
+  text-decoration: none;
+}
+
+.paper-digest-item:hover h4 {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.paper-digest-item > span {
+  color: #cf6337;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-weight: 900;
+}
+
+.paper-digest-item h4 {
+  margin-bottom: 7px;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.paper-digest-item p {
+  margin-bottom: 6px;
+  color: #d9cfbe;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.paper-digest-item div div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.paper-digest-item em {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  padding: 0 7px;
+  color: #f7efe1;
+  background: rgba(142, 50, 24, 0.75);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.report-item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
+  border: 2px solid rgba(27, 26, 23, 0.82);
+  border-left-width: 5px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.report-item.is-clickable {
+  cursor: pointer;
+}
+
+.report-item.is-clickable:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.report-item.is-clickable:hover h3 a {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+#company-updates .report-item:first-child {
+  grid-column: span 2;
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+#company-updates .report-item:first-child p,
+#company-updates .report-item:first-child .report-item-meta em {
+  color: #d9cfbe;
+}
+
+#company-updates .report-item:first-child .report-item-meta strong,
+#company-updates .report-item:first-child h3 a:hover {
+  color: #ef7b45;
+}
+
+.report-item > span {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 28px;
+  color: #fbf8ee;
+  background: var(--line);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.report-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.report-item-meta strong {
+  color: var(--accent-strong);
+}
+
+.report-item-meta em {
+  color: var(--muted);
+  font-style: normal;
+}
+
+.report-item-meta b {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--accent-strong);
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.report-item h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.report-item h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.report-item h3 a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.report-item p {
+  margin-bottom: 0;
+  color: #3f3b34;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.source-link,
+.like-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 2px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  background: transparent;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+#company-updates .report-item:first-child .source-link,
+#company-updates .report-item:first-child .like-button {
+  border-color: #f7efe1;
+  color: #f7efe1;
+}
+
+.source-link:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.like-button {
+  gap: 5px;
+}
+
+.like-button.is-liked {
+  border-color: var(--accent);
+  color: #ffffff;
+  background: var(--accent);
+  cursor: default;
+}
+
+.report-empty {
+  grid-column: 1 / -1;
+  padding: 18px;
+  border: 2px dashed rgba(27, 26, 23, 0.45);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.18);
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .report-shell,
+  .report-list,
+  #company-updates .report-list,
+  .paper-digest-list {
+    grid-template-columns: 1fr;
+  }
+
+  .report-history {
+    position: static;
+    padding-top: 18px;
+  }
+
+  .report-history nav {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .report-history a {
+    min-width: 146px;
+  }
+
+  #company-updates .report-item:first-child {
+    grid-column: auto;
+  }
+
+  .report-tabs {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .report-shell {
+    width: min(100% - 24px, 1180px);
+  }
+
+  .report-page {
+    padding-top: 18px;
+  }
+
+  .report-topline,
+  .report-section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .report-topline span:last-child,
+  .report-section-heading p {
+    text-align: left;
+  }
+
+  .report-hero h1 {
+    font-size: 42px;
+  }
+
+  .report-item {
+    grid-template-columns: 1fr;
+  }
+}
+
+</style>
+  </head>
+  <body>
+    <div class="report-shell">
+      <aside class="report-history" aria-label="历史日报">
+        <div>
+          <span>ARCHIVE</span>
+          <strong>历史日报</strong>
+        </div>
+        <nav>
+          <a href="/ai-daily/2026-05-21" class="is-active">
+            <time>2026-05-21</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-05-20" class="">
+            <time>2026-05-20</time>
+            <em>9 条</em>
+          </a>
+        </nav>
+      </aside>
+      <main class="report-page">
+        <div class="report-topline">
+          <span>AI DAILY BRIEF · EVENT NOTES · 2026.05.21</span>
+          <span>for AI era builders</span>
+        </div>
+        <header class="report-hero">
+          <div class="report-hero-main">
+            <p class="eyebrow">EDITORIAL BRIEF</p>
+            <h1>AI 行业简报 2026-05-21</h1>
+            <p>今天筛出 12 个事件：大厂动态 5 条，技术进展 2 条，行业观点 5 条；另读 Hugging Face Papers 7 篇。</p>
+          </div>
+        </header>
+        <nav class="report-tabs" aria-label="日报版块" role="tablist">
+          <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
+    <span>A</span>
+    <strong>大厂动态</strong>
+    <em>5</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="technical-progress" data-tab-target="technical-progress">
+    <span>B</span>
+    <strong>技术进展</strong>
+    <em>3</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="industry-views" data-tab-target="industry-views">
+    <span>C</span>
+    <strong>行业观点</strong>
+    <em>5</em>
+  </button>
+        </nav>
+        <div class="report-tab-panels">
+          <section id="company-updates" class="report-section report-tab-panel is-active" role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>A</span>
+        <h2>大厂动态</h2>
+      </div>
+      <p>AI 公司动态 · 模型发布 · 新业务 · 融资投资 · 人员变动</p>
+    </div>
+    <div class="report-list">
+      
+      <article class="report-item is-clickable" data-url="https://openai.com/index/databricks" data-event-id="96a5307b4398d5" data-title="OpenAI：Databricks brings GPT-5.5 to enterprise agent workflows" data-entity="OpenAI" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：OpenAI：Databricks brings GPT-5.5 to enterprise agent workflows">
+        <span>01</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>OpenAI</b>
+          </div>
+          <h3><a href="https://openai.com/index/databricks" target="_blank" rel="noreferrer">OpenAI：Databricks brings GPT-5.5 to enterprise agent workflows</a></h3>
+          <p>Databricks brings GPT-5.5 to enterprise agent workflows。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://openai.com/index/databricks" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://36kr.com/p/3818450346738823?f=rss" data-event-id="bb67c85bac1d44" data-title="DeepSeek：9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告" data-entity="DeepSeek" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：DeepSeek：9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告">
+        <span>02</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>DeepSeek</strong>
+            <em>模型/产品发布</em>
+            <b>36Kr AI</b>
+          </div>
+          <h3><a href="https://36kr.com/p/3818450346738823?f=rss" target="_blank" rel="noreferrer">DeepSeek：9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告</a></h3>
+          <p>9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告。这是中国模型厂商的有效信号，关键是能力变化能否进入稳定产品体验。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://36kr.com/p/3818450346738823?f=rss" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://x.com/claudeai/status/2056645493493575681" data-event-id="f22e410bc117c7" data-title="Anthropic：Try self-hosted sandboxes today on the Claude Platform, and request access to MCP tunnels: https://t.co/S9VJ8F64dq" data-entity="Anthropic" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Anthropic：Try self-hosted sandboxes today on the Claude Platform, and request access to MCP tunnels: https://t.co/S9VJ8F64dq">
+        <span>03</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>Anthropic</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>X: Claude</b>
+          </div>
+          <h3><a href="https://x.com/claudeai/status/2056645493493575681" target="_blank" rel="noreferrer">Anthropic：Try self-hosted sandboxes today on the Claude Platform, and request access to MCP tunnels: https://t.co/S9VJ8F64dq</a></h3>
+          <p>Try self-hosted sandboxes today on the Claude Platform, and request access to MCP tunnels: https://t.co/S9VJ8F64dq。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/claudeai/status/2056645493493575681" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://www.infoq.cn/article/jAICqmzYVqQ8sHdGSzEH" data-event-id="1ceed2b0f4269e" data-title="阿里发布新一代千问旗舰模型Qwen3.7" data-entity="" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：阿里发布新一代千问旗舰模型Qwen3.7">
+        <span>04</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>模型/产品发布</em>
+            <b>InfoQ 中文</b>
+          </div>
+          <h3><a href="https://www.infoq.cn/article/jAICqmzYVqQ8sHdGSzEH" target="_blank" rel="noreferrer">阿里发布新一代千问旗舰模型Qwen3.7</a></h3>
+          <p>阿里发布新一代千问旗舰模型Qwen3.7。这是中国模型厂商的有效信号，关键是能力变化能否进入稳定产品体验。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://www.infoq.cn/article/jAICqmzYVqQ8sHdGSzEH" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app" data-event-id="b0b778635e2942" data-title="Google DeepMind：The Gemini app becomes more agentic, delivering proactive, 24/7 help" data-entity="Google DeepMind" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Google DeepMind：The Gemini app becomes more agentic, delivering proactive, 24/7 help">
+        <span>05</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>Google DeepMind</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>Google Gemini Blog</b>
+          </div>
+          <h3><a href="https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app" target="_blank" rel="noreferrer">Google DeepMind：The Gemini app becomes more agentic, delivering proactive, 24/7 help</a></h3>
+          <p>The Gemini app becomes more agentic, delivering proactive, 24/7 help。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+          <section id="technical-progress" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>B</span>
+        <h2>技术进展</h2>
+      </div>
+      <p>Hugging Face · 技术报告 · 论文 · Benchmark · RL 研究</p>
+    </div>
+    <div class="report-list">
+      <article class="paper-digest">
+    <div class="paper-digest-header">
+      <div>
+        <span>HF PAPERS</span>
+        <h3>Hugging Face Papers 速读</h3>
+      </div>
+      <a href="https://huggingface.co/papers/date/2026-05-21" target="_blank" rel="noreferrer">查看当天论文</a>
+    </div>
+    <p class="paper-digest-note">逐篇读取当天 paper 页面，当前使用抽取式摘要兜底。</p>
+    <div class="paper-digest-list">
+      <a class="paper-digest-item" href="https://huggingface.co/papers/2605.21131" target="_blank" rel="noreferrer">
+        <span>01</span>
+        <div>
+          <h4>UniT: Unified Geometry Learning with Group Autoregressive Transformer</h4>
+          <p>《UniT: Unified Geometry Learning with Group Autoregressive Transformer》把生成模型推进到几何、3D 或动作生成场景。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>3D/几何</em></div>
+        </div>
+      </a><a class="paper-digest-item" href="https://huggingface.co/papers/2605.21463" target="_blank" rel="noreferrer">
+        <span>02</span>
+        <div>
+          <h4>Adaptive Memory through Learning When and What to Generate</h4>
+          <p>《Adaptive Memory through Learning When and What to Generate》研究模型如何自适应地产生和使用记忆。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>Agent</em><em>RL</em><em>多模态</em></div>
+        </div>
+      </a><a class="paper-digest-item" href="https://huggingface.co/papers/2605.20630" target="_blank" rel="noreferrer">
+        <span>03</span>
+        <div>
+          <h4>Evaluating Temporal Semantic Caching and Workflow Optimization in Agentic Plan-Execute Pipelines</h4>
+          <p>《Evaluating Temporal Semantic Caching and Workflow Optimization in Agentic Plan-Execute Pipelines》讨论 Agent 工作流中的缓存、规划执行和效率优化。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>Agent</em><em>评测</em><em>基础设施</em></div>
+        </div>
+      </a><a class="paper-digest-item" href="https://huggingface.co/papers/2605.19376" target="_blank" rel="noreferrer">
+        <span>04</span>
+        <div>
+          <h4>Generative Recursive Reasoning</h4>
+          <p>《Generative Recursive Reasoning》围绕推理过程建模，探索更强的递归式问题求解。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>基础设施</em><em>LLM</em></div>
+        </div>
+      </a><a class="paper-digest-item" href="https://huggingface.co/papers/2605.20668" target="_blank" rel="noreferrer">
+        <span>05</span>
+        <div>
+          <h4>On the limits and opportunities of AI reviewers: Reviewing the reviews of Nature-family papers with 45 expert scientists</h4>
+          <p>《On the limits and opportunities of AI reviewers: Reviewing the reviews of Nature-family papers with 45 expert scientists》评估 AI 在科研审稿场景里的能力和边界。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>论文</em></div>
+        </div>
+      </a><a class="paper-digest-item" href="https://huggingface.co/papers/2605.21384" target="_blank" rel="noreferrer">
+        <span>06</span>
+        <div>
+          <h4>SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents</h4>
+          <p>《SpecBench: Measuring Reward Hacking in Long-Horizon Coding Agents》关注长程编码 Agent 的评测与奖励黑客问题。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>Agent</em><em>RL</em><em>评测</em></div>
+        </div>
+      </a><a class="paper-digest-item" href="https://huggingface.co/papers/2605.20955" target="_blank" rel="noreferrer">
+        <span>07</span>
+        <div>
+          <h4>Generating 3D Human Motions by Freehand Drawing</h4>
+          <p>《Generating 3D Human Motions by Freehand Drawing》把生成模型推进到几何、3D 或动作生成场景。</p>
+          <p>它可能带来训练或推理基础设施上的效率改进。</p>
+          <div><em>3D/几何</em><em>基础设施</em></div>
+        </div>
+      </a>
+    </div>
+  </article>
+      <article class="report-item is-clickable" data-url="https://x.com/opencode/status/2057017380941795667" data-event-id="7f789b73e51eb7" data-title="Google DeepMind：Gemini 3.5: frontier intelligence with action" data-entity="Google DeepMind" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：Google DeepMind：Gemini 3.5: frontier intelligence with action">
+        <span>01</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>Google DeepMind</strong>
+            <em>模型/产品发布</em>
+            <b>X: Matt Turck · X: Aaron Levie</b>
+          </div>
+          <h3><a href="https://x.com/opencode/status/2057017380941795667" target="_blank" rel="noreferrer">Google DeepMind：Gemini 3.5: frontier intelligence with action</a></h3>
+          <p>Gemini 3.5: frontier intelligence with action。多个独立信号同时出现，可以先当成行业方向变化，而不是单条新闻。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/opencode/status/2057017380941795667" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://www.anthropic.com/research/teaching-claude-why" data-event-id="55fe4f47f40aa4" data-title="Anthropic：Teaching Claude why" data-entity="Anthropic" data-event-type="research_or_benchmark" tabindex="0" aria-label="打开原文：Anthropic：Teaching Claude why">
+        <span>02</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>Anthropic</strong>
+            <em>研究/Benchmark</em>
+            <b>Anthropic Research</b>
+          </div>
+          <h3><a href="https://www.anthropic.com/research/teaching-claude-why" target="_blank" rel="noreferrer">Anthropic：Teaching Claude why</a></h3>
+          <p>Teaching Claude why。官方已经确认，下一步看开发者和企业用户是否快速采用。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://www.anthropic.com/research/teaching-claude-why" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+          <section id="industry-views" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>C</span>
+        <h2>行业观点</h2>
+      </div>
+      <p>X 大 V · YouTube / Podcast · Builder 观察 · 开发者讨论</p>
+    </div>
+    <div class="report-list">
+      
+      <article class="report-item is-clickable" data-url="https://www.youtube.com/watch?v=j7ypvRUFY7M" data-event-id="79d758cca81369" data-title="Rebuilding IT From the Ground Up for the AI Age: Serval&#039;s Jake Stauch" data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：Rebuilding IT From the Ground Up for the AI Age: Serval&#039;s Jake Stauch">
+        <span>01</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>公司/行业动态</em>
+            <b>YouTube / Podcast</b>
+          </div>
+          <h3><a href="https://www.youtube.com/watch?v=j7ypvRUFY7M" target="_blank" rel="noreferrer">Rebuilding IT From the Ground Up for the AI Age: Serval&#039;s Jake Stauch</a></h3>
+          <p>Rebuilding IT From the Ground Up for the AI Age: Serval&#039;s Jake Stauch。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://www.youtube.com/watch?v=j7ypvRUFY7M" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://x.com/karpathy/status/2056753169888334312" data-event-id="713e046dfa446d" data-title="Anthropic：Personal update: I&#039;ve joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&amp;D. I remain deeply passionate about e" data-entity="Anthropic" data-event-type="talent_move" tabindex="0" aria-label="打开原文：Anthropic：Personal update: I&#039;ve joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&amp;D. I remain deeply passionate about e">
+        <span>02</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>Anthropic</strong>
+            <em>关键人才流动</em>
+            <b>X: Andrej Karpathy</b>
+          </div>
+          <h3><a href="https://x.com/karpathy/status/2056753169888334312" target="_blank" rel="noreferrer">Anthropic：Personal update: I&#039;ve joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&amp;D. I remain deeply passionate about e</a></h3>
+          <p>Personal update: I&#039;ve joined Anthropic. I think the next few years at the frontier of LLMs will be especially formative. I am very excited to join the team here and get back to R&amp;D. I remain deeply passionate about e。这是关键人才流动信号，重要性在于它可能改变模型研发和团队叙事。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/karpathy/status/2056753169888334312" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://x.com/rauchg/status/2056735989830471977" data-event-id="b837ccaa65f54d" data-title="Anthropic：Claude Managed Agents 🤝 Vercel Sandbox" data-entity="Anthropic" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Anthropic：Claude Managed Agents 🤝 Vercel Sandbox">
+        <span>03</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>Anthropic</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>X: Guillermo Rauch</b>
+          </div>
+          <h3><a href="https://x.com/rauchg/status/2056735989830471977" target="_blank" rel="noreferrer">Anthropic：Claude Managed Agents 🤝 Vercel Sandbox</a></h3>
+          <p>Claude Managed Agents 🤝 Vercel Sandbox。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/rauchg/status/2056735989830471977" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://x.com/joshwoodward/status/2056873495116845485" data-event-id="7793e09edcf7c6" data-title="Google DeepMind：Introducing Gemini Spark!" data-entity="Google DeepMind" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：Google DeepMind：Introducing Gemini Spark!">
+        <span>04</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>Google DeepMind</strong>
+            <em>模型/产品发布</em>
+            <b>X: Josh Woodward</b>
+          </div>
+          <h3><a href="https://x.com/joshwoodward/status/2056873495116845485" target="_blank" rel="noreferrer">Google DeepMind：Introducing Gemini Spark!</a></h3>
+          <p>Introducing Gemini Spark。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/joshwoodward/status/2056873495116845485" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable" data-url="https://x.com/sama/status/2056834734915977382" data-event-id="699a69a7c5f976" data-title="OpenAI：we will offer this until we sell out of our current allocation for this program. (we will make sure to leave enough capacity for ChatGPT, Codex, etc.)" data-entity="OpenAI" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：OpenAI：we will offer this until we sell out of our current allocation for this program. (we will make sure to leave enough capacity for ChatGPT, Codex, etc.)">
+        <span>05</span>
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>X: Sam Altman</b>
+          </div>
+          <h3><a href="https://x.com/sama/status/2056834734915977382" target="_blank" rel="noreferrer">OpenAI：we will offer this until we sell out of our current allocation for this program. (we will make sure to leave enough capacity for ChatGPT, Codex, etc.)</a></h3>
+          <p>we will offer this until we sell out of our current allocation for this program. (we will make sure to leave enough capacity for ChatGPT, Codex, etc.)。看点在代码工作流：是否能减少真实项目里的上下文切换和人工接线。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/sama/status/2056834734915977382" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+        </div>
+      </main>
+    </div>
+    <script>
+(() => {
+  const storageKey = "aiDaily.likes";
+  const localLikes = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]"));
+  const cards = [...document.querySelectorAll(".report-item")];
+  const tabs = [...document.querySelectorAll("[data-tab-target]")];
+  const panels = [...document.querySelectorAll(".report-tab-panel")];
+
+  setupTabs();
+  hydrateServerLikes();
+  cards.forEach((card) => {
+    const eventId = card.dataset.eventId;
+    const url = card.dataset.url;
+    const button = card.querySelector("[data-like-button]");
+    const count = card.querySelector("[data-like-count]");
+
+    if (url) {
+      card.addEventListener("click", (event) => {
+        if (event.target.closest("a, button")) return;
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
+      card.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        if (event.target.closest("a, button")) return;
+        event.preventDefault();
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
+    }
+
+    if (!button || !eventId) return;
+
+    if (localLikes.has(eventId)) {
+      button.classList.add("is-liked");
+      button.disabled = true;
+    }
+
+    button.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (localLikes.has(eventId)) return;
+      localLikes.add(eventId);
+      localStorage.setItem(storageKey, JSON.stringify([...localLikes]));
+      button.classList.add("is-liked");
+      button.disabled = true;
+      count.textContent = String(Number(count.textContent || "0") + 1);
+
+      try {
+        const response = await fetch("/api/ai-daily/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            event_id: eventId,
+            title: card.dataset.title,
+            entity: card.dataset.entity,
+            event_type: card.dataset.eventType,
+            delta: 1
+          })
+        });
+        if (response.ok) {
+          applyFeedback(await response.json());
+        }
+      } catch {
+        button.title = "已保存在当前浏览器；通过本地服务打开时会写入排序反馈。";
+      }
+    });
+  });
+
+  async function hydrateServerLikes() {
+    try {
+      const response = await fetch("/api/ai-daily/feedback");
+      if (response.ok) applyFeedback(await response.json());
+    } catch {
+      for (const card of cards) {
+        if (localLikes.has(card.dataset.eventId)) {
+          card.querySelector("[data-like-count]").textContent = "1";
+        }
+      }
+    }
+  }
+
+  function applyFeedback(feedback) {
+    for (const card of cards) {
+      const count = feedback.events?.[card.dataset.eventId]?.count || 0;
+      card.querySelector("[data-like-count]").textContent = String(count);
+    }
+  }
+
+  function setupTabs() {
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activateTab(tab.dataset.tabTarget, true));
+    });
+    const hashTarget = location.hash.replace("#", "");
+    if (hashTarget && panels.some((panel) => panel.id === hashTarget)) {
+      activateTab(hashTarget, false);
+    }
+  }
+
+  function activateTab(id, updateHash) {
+    for (const tab of tabs) {
+      const active = tab.dataset.tabTarget === id;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    }
+    for (const panel of panels) {
+      panel.classList.toggle("is-active", panel.id === id);
+    }
+    if (updateHash) history.replaceState(null, "", "#" + id);
+  }
+})();
+</script>
+  </body>
+</html>

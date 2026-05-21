@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AI 行业简报 2026-05-20</title>
+    <link rel="stylesheet" href="/ai-daily/styles.css">
+  </head>
+  <body>
+    <div class="report-shell">
+      <aside class="report-history" aria-label="历史日报">
+        <div>
+          <span>ARCHIVE</span>
+          <strong>历史日报</strong>
+        </div>
+        <nav>
+          <a href="/ai-daily/2026-05-21" class="">
+            <time>2026-05-21</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-05-20" class="is-active">
+            <time>2026-05-20</time>
+            <em>9 条</em>
+          </a>
+        </nav>
+      </aside>
+      <main class="report-page">
+        <div class="report-topline">
+          <span>AI DAILY BRIEF · EVENT NOTES · 2026.05.20</span>
+          <span>for AI era builders</span>
+        </div>
+        <header class="report-hero">
+          <div class="report-hero-main">
+            <p class="eyebrow">EDITORIAL BRIEF</p>
+            <h1>AI 行业简报 2026-05-20</h1>
+            <p>今天筛出 9 个事件：5 个重点，4 个继续观察。</p>
+          </div>
+        </header>
+        <nav class="report-tabs" aria-label="日报版块" role="tablist">
+          <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
+    <span>A</span>
+    <strong>大厂动态</strong>
+    <em>0</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="technical-progress" data-tab-target="technical-progress">
+    <span>B</span>
+    <strong>技术进展</strong>
+    <em>0</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="industry-views" data-tab-target="industry-views">
+    <span>C</span>
+    <strong>行业观点</strong>
+    <em>0</em>
+  </button>
+        </nav>
+        <div class="report-tab-panels">
+          <section id="company-updates" class="report-section report-tab-panel is-active" role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>A</span>
+        <h2>大厂动态</h2>
+      </div>
+      <p>AI 公司动态 · 模型发布 · 新业务 · 融资投资 · 人员变动</p>
+    </div>
+    <div class="report-list">
+      
+      <div class="report-empty">今天没有足够明确的入选事件，先空着。</div>
+    </div>
+  </section>
+          <section id="technical-progress" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>B</span>
+        <h2>技术进展</h2>
+      </div>
+      <p>Hugging Face · 技术报告 · 论文 · Benchmark · RL 研究</p>
+    </div>
+    <div class="report-list">
+      
+      <div class="report-empty">今天没有足够明确的入选事件，先空着。</div>
+    </div>
+  </section>
+          <section id="industry-views" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>C</span>
+        <h2>行业观点</h2>
+      </div>
+      <p>X 大 V · YouTube / Podcast · Builder 观察 · 开发者讨论</p>
+    </div>
+    <div class="report-list">
+      
+      <div class="report-empty">今天没有足够明确的入选事件，先空着。</div>
+    </div>
+  </section>
+        </div>
+      </main>
+    </div>
+    <script>
+(() => {
+  const storageKey = "aiDaily.likes";
+  const localLikes = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]"));
+  const cards = [...document.querySelectorAll(".report-item")];
+  const tabs = [...document.querySelectorAll("[data-tab-target]")];
+  const panels = [...document.querySelectorAll(".report-tab-panel")];
+
+  setupTabs();
+  hydrateServerLikes();
+  cards.forEach((card) => {
+    const eventId = card.dataset.eventId;
+    const url = card.dataset.url;
+    const button = card.querySelector("[data-like-button]");
+    const count = card.querySelector("[data-like-count]");
+
+    if (url) {
+      card.addEventListener("click", (event) => {
+        if (event.target.closest("a, button")) return;
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
+      card.addEventListener("keydown", (event) => {
+        if (event.key !== "Enter" && event.key !== " ") return;
+        if (event.target.closest("a, button")) return;
+        event.preventDefault();
+        window.open(url, "_blank", "noopener,noreferrer");
+      });
+    }
+
+    if (!button || !eventId) return;
+
+    if (localLikes.has(eventId)) {
+      button.classList.add("is-liked");
+      button.disabled = true;
+    }
+
+    button.addEventListener("click", async (event) => {
+      event.preventDefault();
+      event.stopPropagation();
+      if (localLikes.has(eventId)) return;
+      localLikes.add(eventId);
+      localStorage.setItem(storageKey, JSON.stringify([...localLikes]));
+      button.classList.add("is-liked");
+      button.disabled = true;
+      count.textContent = String(Number(count.textContent || "0") + 1);
+
+      try {
+        const response = await fetch("/api/ai-daily/feedback", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            event_id: eventId,
+            title: card.dataset.title,
+            entity: card.dataset.entity,
+            event_type: card.dataset.eventType,
+            delta: 1
+          })
+        });
+        if (response.ok) {
+          applyFeedback(await response.json());
+        }
+      } catch {
+        button.title = "已保存在当前浏览器；通过本地服务打开时会写入排序反馈。";
+      }
+    });
+  });
+
+  async function hydrateServerLikes() {
+    try {
+      const response = await fetch("/api/ai-daily/feedback");
+      if (response.ok) applyFeedback(await response.json());
+    } catch {
+      for (const card of cards) {
+        if (localLikes.has(card.dataset.eventId)) {
+          card.querySelector("[data-like-count]").textContent = "1";
+        }
+      }
+    }
+  }
+
+  function applyFeedback(feedback) {
+    for (const card of cards) {
+      const count = feedback.events?.[card.dataset.eventId]?.count || 0;
+      card.querySelector("[data-like-count]").textContent = String(count);
+    }
+  }
+
+  function setupTabs() {
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activateTab(tab.dataset.tabTarget, true));
+    });
+    const hashTarget = location.hash.replace("#", "");
+    if (hashTarget && panels.some((panel) => panel.id === hashTarget)) {
+      activateTab(hashTarget, false);
+    }
+  }
+
+  function activateTab(id, updateHash) {
+    for (const tab of tabs) {
+      const active = tab.dataset.tabTarget === id;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    }
+    for (const panel of panels) {
+      panel.classList.toggle("is-active", panel.id === id);
+    }
+    if (updateHash) history.replaceState(null, "", "#" + id);
+  }
+})();
+</script>
+  </body>
+</html>
