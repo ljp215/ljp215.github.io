@@ -966,6 +966,18 @@ time {
   text-decoration: none;
 }
 
+.paper-digest-item.has-thumbnail {
+  grid-template-columns: 34px 86px minmax(0, 1fr);
+}
+
+.paper-digest-item > img {
+  width: 86px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(247, 239, 225, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .paper-digest-item:hover h4 {
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -1020,6 +1032,10 @@ time {
   background: rgba(255, 255, 255, 0.28);
 }
 
+.report-item.has-thumbnail {
+  grid-template-columns: 42px minmax(112px, 172px) minmax(0, 1fr);
+}
+
 .report-item.is-clickable {
   cursor: pointer;
 }
@@ -1061,6 +1077,23 @@ time {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 13px;
   font-weight: 900;
+}
+
+.report-thumb {
+  display: block;
+  align-self: stretch;
+  min-height: 116px;
+  border: 2px solid rgba(27, 26, 23, 0.82);
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+.report-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 116px;
+  object-fit: cover;
 }
 
 .report-item-meta {
@@ -1148,6 +1181,11 @@ time {
   color: #f7efe1;
 }
 
+#company-updates .report-item:first-child .report-thumb {
+  border-color: rgba(247, 239, 225, 0.72);
+  background: rgba(247, 239, 225, 0.08);
+}
+
 .source-link:hover {
   border-color: var(--accent);
   color: var(--accent-strong);
@@ -1232,5 +1270,23 @@ time {
 
   .report-item {
     grid-template-columns: 1fr;
+  }
+
+  .report-item.has-thumbnail,
+  .paper-digest-item.has-thumbnail {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-digest-item > span,
+  .report-item > span {
+    width: max-content;
+    min-width: 42px;
+  }
+
+  .paper-digest-item > img,
+  .report-thumb,
+  .report-thumb img {
+    width: 100%;
+    min-height: 156px;
   }
 }

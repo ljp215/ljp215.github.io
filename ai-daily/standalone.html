@@ -973,6 +973,18 @@ time {
   text-decoration: none;
 }
 
+.paper-digest-item.has-thumbnail {
+  grid-template-columns: 34px 86px minmax(0, 1fr);
+}
+
+.paper-digest-item > img {
+  width: 86px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(247, 239, 225, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .paper-digest-item:hover h4 {
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -1027,6 +1039,10 @@ time {
   background: rgba(255, 255, 255, 0.28);
 }
 
+.report-item.has-thumbnail {
+  grid-template-columns: 42px minmax(112px, 172px) minmax(0, 1fr);
+}
+
 .report-item.is-clickable {
   cursor: pointer;
 }
@@ -1068,6 +1084,23 @@ time {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 13px;
   font-weight: 900;
+}
+
+.report-thumb {
+  display: block;
+  align-self: stretch;
+  min-height: 116px;
+  border: 2px solid rgba(27, 26, 23, 0.82);
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+.report-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 116px;
+  object-fit: cover;
 }
 
 .report-item-meta {
@@ -1155,6 +1188,11 @@ time {
   color: #f7efe1;
 }
 
+#company-updates .report-item:first-child .report-thumb {
+  border-color: rgba(247, 239, 225, 0.72);
+  background: rgba(247, 239, 225, 0.08);
+}
+
 .source-link:hover {
   border-color: var(--accent);
   color: var(--accent-strong);
@@ -1240,6 +1278,24 @@ time {
   .report-item {
     grid-template-columns: 1fr;
   }
+
+  .report-item.has-thumbnail,
+  .paper-digest-item.has-thumbnail {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-digest-item > span,
+  .report-item > span {
+    width: max-content;
+    min-width: 42px;
+  }
+
+  .paper-digest-item > img,
+  .report-thumb,
+  .report-thumb img {
+    width: 100%;
+    min-height: 156px;
+  }
 }
 
 </style>
@@ -1254,7 +1310,7 @@ time {
         <nav>
           <a href="/ai-daily/2026-05-21" class="is-active">
             <time>2026-05-21</time>
-            <em>12 条</em>
+            <em>16 条</em>
           </a>
         </nav>
       </aside>
@@ -1267,24 +1323,24 @@ time {
           <div class="report-hero-main">
             <p class="eyebrow">EDITORIAL BRIEF</p>
             <h1>AI 行业简报 2026-05-21</h1>
-            <p>今天筛出 12 个事件：大厂动态 6 条，技术进展 1 条，行业观点 5 条；另读 Hugging Face Papers 0 篇。</p>
+            <p>今天筛出 16 个事件：大厂动态 5 条，技术进展 1 条，行业观点 10 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
     <strong>大厂动态</strong>
-    <em>6</em>
+    <em>5</em>
   </button>
           <button class="" type="button" role="tab" aria-selected="false" aria-controls="technical-progress" data-tab-target="technical-progress">
     <span>B</span>
     <strong>技术进展</strong>
-    <em>1</em>
+    <em>2</em>
   </button>
           <button class="" type="button" role="tab" aria-selected="false" aria-controls="industry-views" data-tab-target="industry-views">
     <span>C</span>
     <strong>行业观点</strong>
-    <em>5</em>
+    <em>10</em>
   </button>
         </nav>
         <div class="report-tab-panels">
@@ -1298,8 +1354,9 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item is-clickable" data-url="https://x.com/opencode/status/2057017380941795667" data-event-id="7f789b73e51eb7" data-title="Google DeepMind：Gemini 3.5: frontier intelligence with action" data-entity="Google DeepMind" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：Google DeepMind：Gemini 3.5: frontier intelligence with action">
+      <article class="report-item is-clickable has-thumbnail" data-url="https://x.com/opencode/status/2057017380941795667" data-event-id="7f789b73e51eb7" data-title="Google DeepMind：Gemini 3.5: frontier intelligence with action" data-entity="Google DeepMind" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：Google DeepMind：Gemini 3.5: frontier intelligence with action">
         <span>01</span>
+        <a class="report-thumb" href="https://x.com/opencode/status/2057017380941795667" target="_blank" rel="noreferrer" aria-label="打开原文：Google DeepMind：Gemini 3.5: frontier intelligence with action"><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini-3-5__keyword__blog-heade.max-600x600.format-webp.webp" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></a>
         <div>
           <div class="report-item-meta">
             <strong>Google DeepMind</strong>
@@ -1313,8 +1370,9 @@ time {
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable" data-url="https://openai.com/index/databricks" data-event-id="96a5307b4398d5" data-title="OpenAI：Databricks brings GPT-5.5 to enterprise agent workflows" data-entity="OpenAI" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：OpenAI：Databricks brings GPT-5.5 to enterprise agent workflows">
+      </article><article class="report-item is-clickable " data-url="https://openai.com/index/databricks" data-event-id="96a5307b4398d5" data-title="OpenAI：Databricks brings GPT-5.5 to enterprise agent workflows" data-entity="OpenAI" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：OpenAI：Databricks brings GPT-5.5 to enterprise agent workflows">
         <span>02</span>
+        
         <div>
           <div class="report-item-meta">
             <strong>OpenAI</strong>
@@ -1328,8 +1386,9 @@ time {
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable" data-url="https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html" data-event-id="eb06b668b95d37" data-title="Anthropic：Using Claude Code: The unreasonable effectiveness of HTML" data-entity="Anthropic" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Anthropic：Using Claude Code: The unreasonable effectiveness of HTML">
+      </article><article class="report-item is-clickable " data-url="https://claude.com/blog/using-claude-code-the-unreasonable-effectiveness-of-html" data-event-id="eb06b668b95d37" data-title="Anthropic：Using Claude Code: The unreasonable effectiveness of HTML" data-entity="Anthropic" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Anthropic：Using Claude Code: The unreasonable effectiveness of HTML">
         <span>03</span>
+        
         <div>
           <div class="report-item-meta">
             <strong>Anthropic</strong>
@@ -1343,23 +1402,25 @@ time {
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable" data-url="https://36kr.com/newsflashes/3818890441819265?f=rss" data-event-id="a0e28a1cee3f7a" data-title="DeepSeek：埃森哲：85%的Z世代高频使用AI工具" data-entity="DeepSeek" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：DeepSeek：埃森哲：85%的Z世代高频使用AI工具">
+      </article><article class="report-item is-clickable has-thumbnail" data-url="https://36kr.com/p/3818450346738823?f=rss" data-event-id="bb67c85bac1d44" data-title="DeepSeek：9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告" data-entity="DeepSeek" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：DeepSeek：9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告">
         <span>04</span>
+        <a class="report-thumb" href="https://36kr.com/p/3818450346738823?f=rss" target="_blank" rel="noreferrer" aria-label="打开原文：DeepSeek：9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告"><img src="https://img.36krcdn.com/hsossms/20260521/v2_896e346869ac4a0a98976bacaf6fca6c@6381723_oswg5927188oswg4488oswg3174_img_png?x-oss-process=image/quality,q_80/format,jpg/interlace,1" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></a>
         <div>
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>模型/产品发布</em>
             <b>36Kr AI</b>
           </div>
-          <h3><a href="https://36kr.com/newsflashes/3818890441819265?f=rss" target="_blank" rel="noreferrer">DeepSeek：埃森哲：85%的Z世代高频使用AI工具</a></h3>
-          <p>埃森哲：85%的Z世代高频使用AI工具。这是中国模型厂商的有效信号，关键是能力变化能否进入稳定产品体验。</p>
+          <h3><a href="https://36kr.com/p/3818450346738823?f=rss" target="_blank" rel="noreferrer">DeepSeek：9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告</a></h3>
+          <p>9亿次点击背后，AI应用的真实江湖｜2026中国AI应用全景图谱报告。这是中国模型厂商的有效信号，关键是能力变化能否进入稳定产品体验。</p>
           <div class="report-actions">
-            <a class="source-link" href="https://36kr.com/newsflashes/3818890441819265?f=rss" target="_blank" rel="noreferrer">打开原文</a>
+            <a class="source-link" href="https://36kr.com/p/3818450346738823?f=rss" target="_blank" rel="noreferrer">打开原文</a>
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable" data-url="https://www.infoq.cn/article/jAICqmzYVqQ8sHdGSzEH" data-event-id="1ceed2b0f4269e" data-title="阿里发布新一代千问旗舰模型Qwen3.7" data-entity="" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：阿里发布新一代千问旗舰模型Qwen3.7">
+      </article><article class="report-item is-clickable " data-url="https://www.infoq.cn/article/jAICqmzYVqQ8sHdGSzEH" data-event-id="1ceed2b0f4269e" data-title="阿里发布新一代千问旗舰模型Qwen3.7" data-entity="" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：阿里发布新一代千问旗舰模型Qwen3.7">
         <span>05</span>
+        
         <div>
           <div class="report-item-meta">
             <strong>AI</strong>
@@ -1370,21 +1431,6 @@ time {
           <p>阿里发布新一代千问旗舰模型Qwen3.7。这是中国模型厂商的有效信号，关键是能力变化能否进入稳定产品体验。</p>
           <div class="report-actions">
             <a class="source-link" href="https://www.infoq.cn/article/jAICqmzYVqQ8sHdGSzEH" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
-          </div>
-        </div>
-      </article><article class="report-item is-clickable" data-url="https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app" data-event-id="b0b778635e2942" data-title="Google DeepMind：The Gemini app becomes more agentic, delivering proactive, 24/7 help" data-entity="Google DeepMind" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Google DeepMind：The Gemini app becomes more agentic, delivering proactive, 24/7 help">
-        <span>06</span>
-        <div>
-          <div class="report-item-meta">
-            <strong>Google DeepMind</strong>
-            <em>Agent/开发者基础设施</em>
-            <b>Google Gemini Blog</b>
-          </div>
-          <h3><a href="https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app" target="_blank" rel="noreferrer">Google DeepMind：The Gemini app becomes more agentic, delivering proactive, 24/7 help</a></h3>
-          <p>The Gemini app becomes more agentic, delivering proactive, 24/7 help。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
-          <div class="report-actions">
-            <a class="source-link" href="https://blog.google/innovation-and-ai/products/gemini-app/next-evolution-gemini-app" target="_blank" rel="noreferrer">打开原文</a>
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
@@ -1400,9 +1446,67 @@ time {
       <p>Hugging Face · 技术报告 · 论文 · Benchmark · RL 研究</p>
     </div>
     <div class="report-list">
-      
-      <article class="report-item is-clickable" data-url="https://www.anthropic.com/research/teaching-claude-why" data-event-id="55fe4f47f40aa4" data-title="Anthropic：Teaching Claude why" data-entity="Anthropic" data-event-type="research_or_benchmark" tabindex="0" aria-label="打开原文：Anthropic：Teaching Claude why">
+      <article class="paper-digest">
+    <div class="paper-digest-header">
+      <div>
+        <span>HF PAPERS</span>
+        <h3>Hugging Face Papers 速读</h3>
+      </div>
+      <a href="https://huggingface.co/papers/date/2026-05-21" target="_blank" rel="noreferrer">查看当天论文</a>
+    </div>
+    <p class="paper-digest-note">逐篇读取当天 paper 页面，当前使用抽取式摘要兜底。</p>
+    <div class="paper-digest-list">
+      <a class="paper-digest-item has-thumbnail" href="https://huggingface.co/papers/2605.19833" target="_blank" rel="noreferrer">
         <span>01</span>
+        <img src="https://arxiv.org/html/2605.19833v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4>Mega-ASR: Towards In-the-wild2 Speech Recognition via Scaling Up Real-world Acoustic Simulation</h4>
+          <p>《Mega-ASR: Towards In-the-wild2 Speech Recognition via Scaling Up Real-world Acoustic Simulation》探索多模态理解、生成或跨模态推理的新方法。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>多模态</em><em>评测</em><em>LLM</em></div>
+        </div>
+      </a><a class="paper-digest-item has-thumbnail" href="https://huggingface.co/papers/2605.18233" target="_blank" rel="noreferrer">
+        <span>02</span>
+        <img src="https://arxiv.org/html/2605.18233v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4>Enhancing Train-Free Infinite-Frame Generation for Consistent Long Videos</h4>
+          <p>《Enhancing Train-Free Infinite-Frame Generation for Consistent Long Videos》研究模型如何自适应地产生和使用记忆。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>多模态</em><em>基础设施</em></div>
+        </div>
+      </a><a class="paper-digest-item has-thumbnail" href="https://huggingface.co/papers/2605.20682" target="_blank" rel="noreferrer">
+        <span>03</span>
+        <img src="https://arxiv.org/html/2605.20682v1/fig/intro16.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4>IndusAgent: Reinforcing Open-Vocabulary Industrial Anomaly Detection with Agentic Tools</h4>
+          <p>《IndusAgent: Reinforcing Open-Vocabulary Industrial Anomaly Detection with Agentic Tools》围绕推理过程建模，探索更强的递归式问题求解。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>Agent</em><em>RL</em><em>多模态</em></div>
+        </div>
+      </a><a class="paper-digest-item has-thumbnail" href="https://huggingface.co/papers/2605.19660" target="_blank" rel="noreferrer">
+        <span>04</span>
+        <img src="https://arxiv.org/html/2605.19660v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4>OScaR: The Occam’s Razor for Extreme KV Cache Quantization in LLMs and Beyond</h4>
+          <p>《OScaR: The Occam’s Razor for Extreme KV Cache Quantization in LLMs and Beyond》研究模型如何自适应地产生和使用记忆。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>评测</em><em>基础设施</em><em>LLM</em></div>
+        </div>
+      </a><a class="paper-digest-item has-thumbnail" href="https://huggingface.co/papers/2605.21468" target="_blank" rel="noreferrer">
+        <span>05</span>
+        <img src="https://arxiv.org/html/2605.21468v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4>You Only Need Minimal RLVR Training: Extrapolating LLMs via Rank-1 Trajectories</h4>
+          <p>《You Only Need Minimal RLVR Training: Extrapolating LLMs via Rank-1 Trajectories》把生成模型推进到几何、3D 或动作生成场景。</p>
+          <p>它可能影响 Agent 训练、推理策略或任务自动化能力。</p>
+          <div><em>RL</em><em>3D/几何</em><em>评测</em></div>
+        </div>
+      </a>
+    </div>
+  </article>
+      <article class="report-item is-clickable " data-url="https://www.anthropic.com/research/teaching-claude-why" data-event-id="55fe4f47f40aa4" data-title="Anthropic：Teaching Claude why" data-entity="Anthropic" data-event-type="research_or_benchmark" tabindex="0" aria-label="打开原文：Anthropic：Teaching Claude why">
+        <span>01</span>
+        
         <div>
           <div class="report-item-meta">
             <strong>Anthropic</strong>
@@ -1429,53 +1533,25 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item is-clickable" data-url="https://x.com/rauchg/status/2057212335811620987" data-event-id="6584f8c96ccf39" data-title="This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO" data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO">
+      <article class="report-item is-clickable " data-url="https://x.com/sama/status/2057218997503086888" data-event-id="d47fe748cdaedf" data-title="OpenAI：three of the things we are most excited about:" data-entity="OpenAI" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：OpenAI：three of the things we are most excited about:">
         <span>01</span>
+        
         <div>
           <div class="report-item-meta">
-            <strong>AI</strong>
-            <em>公司/行业动态</em>
-            <b>X: Guillermo Rauch</b>
-          </div>
-          <h3><a href="https://x.com/rauchg/status/2057212335811620987" target="_blank" rel="noreferrer">This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO</a></h3>
-          <p>This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
-          <div class="report-actions">
-            <a class="source-link" href="https://x.com/rauchg/status/2057212335811620987" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
-          </div>
-        </div>
-      </article><article class="report-item is-clickable" data-url="https://x.com/sama/status/2057203171198636251" data-event-id="349de45e250577" data-title="a general-purpose model solved a major open problem in mathematics." data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：a general-purpose model solved a major open problem in mathematics.">
-        <span>02</span>
-        <div>
-          <div class="report-item-meta">
-            <strong>AI</strong>
-            <em>公司/行业动态</em>
+            <strong>OpenAI</strong>
+            <em>模型/产品发布</em>
             <b>X: Sam Altman</b>
           </div>
-          <h3><a href="https://x.com/sama/status/2057203171198636251" target="_blank" rel="noreferrer">a general-purpose model solved a major open problem in mathematics.</a></h3>
-          <p>a general-purpose model solved a major open problem in mathematics。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <h3><a href="https://x.com/sama/status/2057218997503086888" target="_blank" rel="noreferrer">OpenAI：three of the things we are most excited about:</a></h3>
+          <p>three of the things we are most excited about:。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
           <div class="report-actions">
-            <a class="source-link" href="https://x.com/sama/status/2057203171198636251" target="_blank" rel="noreferrer">打开原文</a>
+            <a class="source-link" href="https://x.com/sama/status/2057218997503086888" target="_blank" rel="noreferrer">打开原文</a>
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable" data-url="https://x.com/swyx/status/2057119153337545096" data-event-id="3c88ba85a9b726" data-title="very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here." data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here.">
-        <span>03</span>
-        <div>
-          <div class="report-item-meta">
-            <strong>AI</strong>
-            <em>Agent/开发者基础设施</em>
-            <b>X: Swyx</b>
-          </div>
-          <h3><a href="https://x.com/swyx/status/2057119153337545096" target="_blank" rel="noreferrer">very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here.</a></h3>
-          <p>very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
-          <div class="report-actions">
-            <a class="source-link" href="https://x.com/swyx/status/2057119153337545096" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
-          </div>
-        </div>
-      </article><article class="report-item is-clickable" data-url="https://x.com/garrytan/status/2057202833251000503" data-event-id="38af6ce10e92f1" data-title="Exa is what I trust for all my agents. We use it at YC. We use it in all my OpenClaw and Hermes Agents. There is no other option that is as fast, as reliable, and as complete." data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Exa is what I trust for all my agents. We use it at YC. We use it in all my OpenClaw and Hermes Agents. There is no other option that is as fast, as reliable, and as complete.">
-        <span>04</span>
+      </article><article class="report-item is-clickable " data-url="https://x.com/garrytan/status/2057202833251000503" data-event-id="38af6ce10e92f1" data-title="Exa is what I trust for all my agents. We use it at YC. We use it in all my OpenClaw and Hermes Agents. There is no other option that is as fast, as reliable, and as complete." data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Exa is what I trust for all my agents. We use it at YC. We use it in all my OpenClaw and Hermes Agents. There is no other option that is as fast, as reliable, and as complete.">
+        <span>02</span>
+        
         <div>
           <div class="report-item-meta">
             <strong>AI</strong>
@@ -1489,18 +1565,131 @@ time {
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable" data-url="https://x.com/sama/status/2057218997503086888" data-event-id="d47fe748cdaedf" data-title="OpenAI：three of the things we are most excited about:" data-entity="OpenAI" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：OpenAI：three of the things we are most excited about:">
-        <span>05</span>
+      </article><article class="report-item is-clickable " data-url="https://x.com/swyx/status/2057119153337545096" data-event-id="3c88ba85a9b726" data-title="very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here." data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here.">
+        <span>03</span>
+        
         <div>
           <div class="report-item-meta">
-            <strong>OpenAI</strong>
-            <em>模型/产品发布</em>
+            <strong>AI</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>X: Swyx</b>
+          </div>
+          <h3><a href="https://x.com/swyx/status/2057119153337545096" target="_blank" rel="noreferrer">very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here.</a></h3>
+          <p>very belated but in retrospect i think @sama&#039;s mythical &quot;build a business that gets better when models get better&quot; is basically what I called Agent Labs here。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/swyx/status/2057119153337545096" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable " data-url="https://x.com/sama/status/2057203171198636251" data-event-id="349de45e250577" data-title="a general-purpose model solved a major open problem in mathematics." data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：a general-purpose model solved a major open problem in mathematics.">
+        <span>04</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>公司/行业动态</em>
             <b>X: Sam Altman</b>
           </div>
-          <h3><a href="https://x.com/sama/status/2057218997503086888" target="_blank" rel="noreferrer">OpenAI：three of the things we are most excited about:</a></h3>
-          <p>three of the things we are most excited about:。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <h3><a href="https://x.com/sama/status/2057203171198636251" target="_blank" rel="noreferrer">a general-purpose model solved a major open problem in mathematics.</a></h3>
+          <p>a general-purpose model solved a major open problem in mathematics。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
           <div class="report-actions">
-            <a class="source-link" href="https://x.com/sama/status/2057218997503086888" target="_blank" rel="noreferrer">打开原文</a>
+            <a class="source-link" href="https://x.com/sama/status/2057203171198636251" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable " data-url="https://x.com/rauchg/status/2057212335811620987" data-event-id="6584f8c96ccf39" data-title="This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO" data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO">
+        <span>05</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>公司/行业动态</em>
+            <b>X: Guillermo Rauch</b>
+          </div>
+          <h3><a href="https://x.com/rauchg/status/2057212335811620987" target="_blank" rel="noreferrer">This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO</a></h3>
+          <p>This will bring AI to 42% of the web. Every model, every provider, every modality (text, image, video, audio). https://t.co/0w3UOLwAQO。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/rauchg/status/2057212335811620987" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable " data-url="https://x.com/nikunj/status/2057242868293816569" data-event-id="228cea6008c606" data-title="Anthropic：If you don&#039;t have time to read 308 pages of the @SpaceX S-1, here&#039;s a summary that Claude helped me put together based on the most interesting findings 🚀 https://t.co/ByhTPsspBk" data-entity="Anthropic" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：Anthropic：If you don&#039;t have time to read 308 pages of the @SpaceX S-1, here&#039;s a summary that Claude helped me put together based on the most interesting findings 🚀 https://t.co/ByhTPsspBk">
+        <span>06</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Anthropic</strong>
+            <em>公司/行业动态</em>
+            <b>X: Nikunj Kothari</b>
+          </div>
+          <h3><a href="https://x.com/nikunj/status/2057242868293816569" target="_blank" rel="noreferrer">Anthropic：If you don&#039;t have time to read 308 pages of the @SpaceX S-1, here&#039;s a summary that Claude helped me put together based on the most interesting findings 🚀 https://t.co/ByhTPsspBk</a></h3>
+          <p>If you don&#039;t have time to read 308 pages of the @SpaceX S-1, here&#039;s a summary that Claude helped me put together based on the most interesting findings 🚀 https://t.co/ByhTPsspBk。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/nikunj/status/2057242868293816569" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable " data-url="https://x.com/nikunj/status/2057134939875991973" data-event-id="b670682c0a5944" data-title="Being a founder is so freaking hard man.. chewing glass every day. If you fail, no one cares. If you succeed, you are given way more problems. Sometimes I really wonder how many founders wake up in the morning and ask th" data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：Being a founder is so freaking hard man.. chewing glass every day. If you fail, no one cares. If you succeed, you are given way more problems. Sometimes I really wonder how many founders wake up in the morning and ask th">
+        <span>07</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>公司/行业动态</em>
+            <b>X: Nikunj Kothari</b>
+          </div>
+          <h3><a href="https://x.com/nikunj/status/2057134939875991973" target="_blank" rel="noreferrer">Being a founder is so freaking hard man.. chewing glass every day. If you fail, no one cares. If you succeed, you are given way more problems. Sometimes I really wonder how many founders wake up in the morning and ask th</a></h3>
+          <p>Being a founder is so freaking hard man.. chewing glass every day. If you fail, no one cares. If you succeed, you are given way more problems. Sometimes I really wonder how many founders wake up in the morning and ask th。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/nikunj/status/2057134939875991973" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable " data-url="https://x.com/garrytan/status/2057168328226230520" data-event-id="42e97df3d7d0f5" data-title="The benefits of AI are real now, but we will never get there in the United States (and America will cede its leadership) if we can&#039;t solve the bigger media issue of a mass smokescreen by forces that want to destroy Ameri" data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：The benefits of AI are real now, but we will never get there in the United States (and America will cede its leadership) if we can&#039;t solve the bigger media issue of a mass smokescreen by forces that want to destroy Ameri">
+        <span>08</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>公司/行业动态</em>
+            <b>X: Garry Tan</b>
+          </div>
+          <h3><a href="https://x.com/garrytan/status/2057168328226230520" target="_blank" rel="noreferrer">The benefits of AI are real now, but we will never get there in the United States (and America will cede its leadership) if we can&#039;t solve the bigger media issue of a mass smokescreen by forces that want to destroy Ameri</a></h3>
+          <p>The benefits of AI are real now, but we will never get there in the United States (and America will cede its leadership) if we can&#039;t solve the bigger media issue of a mass smokescreen by forces that want to destroy Ameri。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/garrytan/status/2057168328226230520" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable " data-url="https://x.com/danshipper/status/2057123430776902031" data-event-id="77e3c9089e3246" data-title="@StainlessAPI @RattrayAlex YouTube: https://t.co/h2mvQD7dTD" data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：@StainlessAPI @RattrayAlex YouTube: https://t.co/h2mvQD7dTD">
+        <span>09</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>X: Dan Shipper</b>
+          </div>
+          <h3><a href="https://x.com/danshipper/status/2057123430776902031" target="_blank" rel="noreferrer">@StainlessAPI @RattrayAlex YouTube: https://t.co/h2mvQD7dTD</a></h3>
+          <p>@StainlessAPI @RattrayAlex YouTube: https://t.co/h2mvQD7dTD。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/danshipper/status/2057123430776902031" target="_blank" rel="noreferrer">打开原文</a>
+            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
+          </div>
+        </div>
+      </article><article class="report-item is-clickable " data-url="https://x.com/kevinweil/status/2057206749552066805" data-event-id="fe0bf80289bab6" data-title="The next in a series of firsts for AI and mathematics! https://t.co/rnI21thKxa" data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：The next in a series of firsts for AI and mathematics! https://t.co/rnI21thKxa">
+        <span>10</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>公司/行业动态</em>
+            <b>X: Kevin Weil</b>
+          </div>
+          <h3><a href="https://x.com/kevinweil/status/2057206749552066805" target="_blank" rel="noreferrer">The next in a series of firsts for AI and mathematics! https://t.co/rnI21thKxa</a></h3>
+          <p>The next in a series of firsts for AI and mathematics! https://t.co/rnI21thKxa。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+          <div class="report-actions">
+            <a class="source-link" href="https://x.com/kevinweil/status/2057206749552066805" target="_blank" rel="noreferrer">打开原文</a>
             <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
