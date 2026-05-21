@@ -1040,7 +1040,11 @@ time {
 }
 
 .report-item.has-thumbnail {
-  grid-template-columns: 42px minmax(112px, 172px) minmax(0, 1fr);
+  grid-template-columns: 42px minmax(0, 1fr);
+}
+
+.report-item.has-thumbnail > div {
+  grid-column: 1 / -1;
 }
 
 .report-item.is-clickable {
@@ -1062,6 +1066,14 @@ time {
   grid-column: span 2;
   background: #0b0a09;
   color: #f7efe1;
+}
+
+#company-updates .report-item:first-child.has-thumbnail {
+  grid-template-columns: 42px minmax(150px, 220px) minmax(0, 1fr);
+}
+
+#company-updates .report-item:first-child.has-thumbnail > div {
+  grid-column: auto;
 }
 
 #company-updates .report-item:first-child p,
@@ -1088,18 +1100,28 @@ time {
 
 .report-thumb {
   display: block;
-  align-self: stretch;
-  min-height: 116px;
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 220px;
   border: 2px solid rgba(27, 26, 23, 0.82);
   background: rgba(255, 255, 255, 0.35);
   overflow: hidden;
+}
+
+#company-updates .report-item:first-child .report-thumb {
+  grid-column: auto;
+  align-self: stretch;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  max-height: none;
 }
 
 .report-thumb img {
   display: block;
   width: 100%;
   height: 100%;
-  min-height: 116px;
   object-fit: cover;
 }
 
