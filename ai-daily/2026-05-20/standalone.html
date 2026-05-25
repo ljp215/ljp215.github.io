@@ -973,6 +973,18 @@ time {
   text-decoration: none;
 }
 
+.paper-digest-item.has-thumbnail {
+  grid-template-columns: 34px 86px minmax(0, 1fr);
+}
+
+.paper-digest-item > img {
+  width: 86px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(247, 239, 225, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+}
+
 .paper-digest-item:hover h4 {
   text-decoration: underline;
   text-decoration-thickness: 2px;
@@ -1027,6 +1039,14 @@ time {
   background: rgba(255, 255, 255, 0.28);
 }
 
+.report-item.has-thumbnail {
+  grid-template-columns: 42px minmax(0, 1fr);
+}
+
+.report-item.has-thumbnail > div {
+  grid-column: 1 / -1;
+}
+
 .report-item.is-clickable {
   cursor: pointer;
 }
@@ -1046,6 +1066,14 @@ time {
   grid-column: span 2;
   background: #0b0a09;
   color: #f7efe1;
+}
+
+#company-updates .report-item:first-child.has-thumbnail {
+  grid-template-columns: 42px minmax(150px, 220px) minmax(0, 1fr);
+}
+
+#company-updates .report-item:first-child.has-thumbnail > div {
+  grid-column: auto;
 }
 
 #company-updates .report-item:first-child p,
@@ -1068,6 +1096,33 @@ time {
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 13px;
   font-weight: 900;
+}
+
+.report-thumb {
+  display: block;
+  grid-column: 1 / -1;
+  justify-self: stretch;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  max-height: 220px;
+  border: 2px solid rgba(27, 26, 23, 0.82);
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+#company-updates .report-item:first-child .report-thumb {
+  grid-column: auto;
+  align-self: stretch;
+  width: auto;
+  aspect-ratio: 1 / 1;
+  max-height: none;
+}
+
+.report-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 .report-item-meta {
@@ -1100,6 +1155,41 @@ time {
   white-space: nowrap;
 }
 
+#industry-views .report-item-meta {
+  gap: 8px 10px;
+  align-items: baseline;
+}
+
+#industry-views .report-item-meta .source-person {
+  display: flex;
+  flex-basis: 100%;
+  gap: 8px;
+  align-items: center;
+  order: -1;
+  overflow: visible;
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: normal;
+}
+
+#industry-views .report-item-meta .source-person small {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 24px;
+  padding: 0 7px;
+  color: #f7efe1;
+  background: var(--line);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
 .report-item h3 {
   margin-bottom: 8px;
   font-size: 18px;
@@ -1117,11 +1207,51 @@ time {
   text-decoration-thickness: 2px;
 }
 
+#industry-views .social-original {
+  max-width: 980px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.social-translation {
+  max-width: 940px;
+  margin-top: 8px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(27, 26, 23, 0.24);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.social-translation span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-right: 8px;
+  padding: 0 6px;
+  color: #f7efe1;
+  background: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
 .report-item p {
   margin-bottom: 0;
   color: #3f3b34;
   font-size: 14px;
   line-height: 1.65;
+}
+
+.report-item .social-translation {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
 }
 
 .report-actions {
@@ -1153,6 +1283,11 @@ time {
 #company-updates .report-item:first-child .like-button {
   border-color: #f7efe1;
   color: #f7efe1;
+}
+
+#company-updates .report-item:first-child .report-thumb {
+  border-color: rgba(247, 239, 225, 0.72);
+  background: rgba(247, 239, 225, 0.08);
 }
 
 .source-link:hover {
@@ -1240,6 +1375,24 @@ time {
   .report-item {
     grid-template-columns: 1fr;
   }
+
+  .report-item.has-thumbnail,
+  .paper-digest-item.has-thumbnail {
+    grid-template-columns: 1fr;
+  }
+
+  .paper-digest-item > span,
+  .report-item > span {
+    width: max-content;
+    min-width: 42px;
+  }
+
+  .paper-digest-item > img,
+  .report-thumb,
+  .report-thumb img {
+    width: 100%;
+    min-height: 156px;
+  }
 }
 
 </style>
@@ -1252,9 +1405,15 @@ time {
           <strong>历史日报</strong>
         </div>
         <nav>
-          <a href="/ai-daily/2026-05-21" class="">
+          <a href="/ai-daily/2026-05-25" class="">
+            <time>2026-05-25</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-05-22" class="">
+            <time>2026-05-22</time>
+            <em>8 条</em>
+          </a><a href="/ai-daily/2026-05-21" class="">
             <time>2026-05-21</time>
-            <em>12 条</em>
+            <em>16 条</em>
           </a><a href="/ai-daily/2026-05-20" class="is-active">
             <time>2026-05-20</time>
             <em>9 条</em>
