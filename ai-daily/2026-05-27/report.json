@@ -1,0 +1,2589 @@
+{
+  "date": "2026-05-27",
+  "version": "V4",
+  "title": "AI 行业简报 2026-05-27",
+  "generated_at": "2026-05-27T01:33:57.455Z",
+  "event_count": 64,
+  "item_count": 15,
+  "summary": "今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。",
+  "sections": {
+    "today_focus": [
+      {
+        "event_id": "3fe7ca48197c00",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Anthropic：半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用",
+        "brief": "半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 77,
+        "evidence_urls": [
+          "https://36kr.com/p/3825882266407815?f=rss"
+        ],
+        "evidence_titles": [
+          "半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用"
+        ],
+        "evidence_summaries": [
+          "5月26日，昆仑万维旗下天工 AI 正式推出高性能 Agent 模型 SkyClaw-v1.0，并同步发布轻量化版本 SkyClaw-v1.0-lite，兼具顶尖性能与极致性价比。 SkyClaw-v1.0 支持百万token上下文，深度适配各类真实智能体工作场景，重点优化复杂工具调用、多轮任务执行、代码生成、文件编辑、交互式应用构建与研究型数据分析。模型经过大规模 mid-train、高质量合成任务 SFT 与端到端强化学习优化，可在 OpenClaw、Hermes、Nanobot 等主流 Agent 环境中运行，同时适配Claude Code、Codex 等代码 Agent 框架，通用性与兼容性拉满。 Agent 模型和 Agent framework 的组合，正在改变模型的使用方式。过去，模型主要回答问题；现在，模型被放进一个能读取仓库、调用工具、编辑文件、运行测试、观察反馈的执行环境里，开始承担完整工作流。SkyClaw-v1.0 针对的正是这个阶段：让模型在长上下文和工具环境中持续推进任务，而不是只生成一段答案。 模型核心亮点 强任务完成能力 ：在主流 Agent benchmark 与 Skywork 内部 Claw 任务评测中，SkyClaw-v1.0 展现出稳定的多步任务执行能力。 全面超越主流开源模型 ：模型表现超过 Minimax 2.7、DeepSeek V4 Flash，以及 Qwen 3.6 35B A3B 和 27B 模型。 接近更大规模顶级模型 ：在 OpenClaw 相关任务上，SkyClaw-v1.0 表现接近 DeepSeek V4 Pro、Claude Opus 4.6、Qwen 3.6 Plus 等更大规模模型。 极具性价比 ：定价低于Minimax 2.7 与 Qwen 3.6 系列模型的一半，让高性能 Agent 能力具备规模化调用基础。 对于应用构建任务，我们建议将 SkyClaw-v1.0 运行在 Hermes、Claude Code 或 Codex 等 Agent 框架中，使其能够完成规划、文件编辑、测试执行与多轮迭代，而不是停留在代码片段生成。 核心训练思路：聚焦实景任务履约能力 SkyClaw-v1.0 的训练目标很明确：提升模型在 Agent framework 中完成真实任务的能力。训练重点放在三件事上：构建可交互的工具环境、筛选高质量任务轨迹，以及用强化学习提升多步执行稳定性。 智能体运行环境搭建Agent Environment 训练环境基于 OpenClaw-style agent frames 构建，覆盖文件读取、代码编辑、检索、测试、页面观察等高频 Agent 动作。模型在训练中不只是生成答案，而是需要选择工具、组合工具，并根据工具返回结果继续推进任务。 团队进一步结合真实 Claw 任务数据和线上 skill 使用反馈，构建工具关系图谱，用来合成更接近真实工作流的复杂任务。这样得到的数据不是孤立问答，而是包含目标拆解、工具调用、结果观察和迭代修正的完整执行链。 精细化合成训练数据Synthetic SFT Data SkyClaw-v1.0 使用大量合成 Agent 轨迹进行 mid-train 与 SFT。 这一步主要解决 Agent 训练中的噪声问题。低质量轨迹会让模型学到无效工具调用、错误观察解释或偏离目标的中间步骤。SkyClaw-v1.0 通过轨迹质量过滤和数据配比实验，保留更稳定、更可复用的任务执行模式。 智能体强化学习迭代Agentic RL 强化学习阶段继续在自建 Claw 环境中进行。模型需要在可交互环境里执行任务、观察反馈、处理失败，并继续修正动作。优化目标从“回答是否好看”转向“任务是否完成、过程是否稳定”。 因此，SkyClaw-v1.0 在 OpenClaw、Hermes、Nanobot、Claude Code、Codex 等环境中使用时，优势更多体现在持续执行、错误恢复和多轮迭代，而不是单次回答的表面完整度。 多场景实战应用 能力全面验证 在 Agent 框架中，SkyClaw-v1.0 可以完成规划、文件编辑、代码生成、测试运行、页面调试与多轮迭代，更适合交付完整应用、交互式游戏和研究型网页报告。这些示例均从自然语言提示开始，在 Hermes、Claude Code 和 Codex 等代理框架中完成。我们强烈建议在代理工作流中使用 SkyClaw-v1.0 作为模型，而不是作为独立的聊天模型使用。 全形态界面设计落地 SkyClaw-v1.0 可生成具备生产级布局、真实导航流程和完整交互状态的应用界面，覆盖多页面结构、列表筛选、详情页、表单、移动端适配等常见产品形态。 b. 沉浸式可交互游戏开发 SkyClaw-v1.0 可生成可运行的交互式游戏与物理模拟，不只输出页面结构，还能处理动画循环、碰撞检测、游戏规则、状态管理和用户输入。 c.专业网页制作 深度研究分析 SkyClaw-v1.0 也适合研究型网页和数据报告生成。模型可以围绕开放主题进行信息组织、数据整理、页面设计和可视化呈现，将自然语言需求转化为可交互的网页报告。 现已接入天工 Skywork，并开放免费试用 SkyClaw-v1.0模型已于2026年5月22日接入天工 Skywork。用户登陆https://tiangong.cn，打开天工Skywork即可直接使用，无需额外配置 Agent 环境。 即日起， SkyClaw-v1.0 与 SkyClaw-v1.0-lite 开放 2 至 4 周免费试用 。用户可以在真实任务中体验模型的长上下文理解、多轮执行、代码生成、工具调用和应用构建能力。 项目地址： https://skyworkai.github.io/skyclaw/ API访问地址： SkyClaw-v1: https://www.apifree.ai/model/skywork-ai/skyclaw-v1?tab=api SkyClaw-v1-lite: https://www.apifree.ai/model/skywork-ai/skyclaw-v1-lite?tab=api 对于开发者，SkyClaw-v1.0 同步通过 APIFree 开放 API 免费调用。注册 APIFree 账号并获取 API Key 后，即可通过兼容 OpenAI 格式的接口接入现有应用或 Agent 框架。API 支持流式输出、工具调用和多轮对话，适合接入代码 Agent、自研工作流系统、企业内部工具和自动化任务平台。 SkyClaw-v1.0 模型的上线，不是一次孤立的模型发布，而是昆仑万维 AGI 产品体系中的关键一环。在产品体系中，SkyClaw-v1.0 承担的是底层 Agent 模型能力升级：它通过百万上下文、Agentic RL、复杂工具调用优化和高性价比 API， 把 Agent 从“可演示”推进到“可高频调用、可真实交付”的阶段 。"
+        ],
+        "thumbnail_url": "https://img.36krcdn.com/hsossms/20260526/v2_3fe4898d8b0b421fb4ccb7d5ad018e72@5023078_oswg115817oswg1080oswg457_img_png?x-oss-process=image/quality,q_100/format,jpg/interlace,1",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "36Kr AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "71570f160596f7",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "MCP：AWS MCP服务器正式可用，全面适配API并支持IAM权限控制",
+        "brief": "AWS MCP服务器正式可用，全面适配API并支持IAM权限控制。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "MCP",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 71,
+        "evidence_urls": [
+          "https://www.infoq.cn/article/4gwXqyRPs4RTUIMpRte7"
+        ],
+        "evidence_titles": [
+          "AWS MCP服务器正式可用，全面适配API并支持IAM权限控制"
+        ],
+        "evidence_summaries": [
+          "点击查看原文>"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "InfoQ 中文",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "e79d53f9628f1d",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search",
+        "brief": "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 61,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/05/26/duckduckgo-installs-are-up-30-as-users-reject-being-force-fed-googles-ai-search"
+        ],
+        "evidence_titles": [
+          "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search"
+        ],
+        "evidence_summaries": [
+          "Google overhauled Search at I/O 2026, replacing blue links with AI agents. The backlash has been swift. DuckDuckGo app installs spiked 30% as users seek a way out."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "40762cd9fed820",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "Anthropic：Uber president says AI spending is getting ‘harder to justify’",
+        "brief": "Uber president says AI spending is getting ‘harder to justify’。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 75,
+        "evidence_urls": [
+          "https://www.theverge.com/transportation/937116/uber-ai-investment-hard-to-justify"
+        ],
+        "evidence_titles": [
+          "Uber president says AI spending is getting ‘harder to justify’"
+        ],
+        "evidence_summaries": [
+          "After reportedly exhausting its annual AI budget just four months into 2026, Uber is now questioning whether it's actually seeing meaningful returns on its investments. In an interview with Rapid Response, Uber president and chief operating officer Andrew Macdonald said the company isn't seeing a connection between rising token consumption for Claude Code and more […]"
+        ],
+        "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2245764686.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "b66dc6c5e1b5d1",
+        "bucket": "today_focus",
+        "section": "industry_views",
+        "title": "OpenAI：Codex is very good. I'm especially impressed by how it uses the browse to test its own work.",
+        "brief": "Codex is very good. I'm especially impressed by how it uses the browse to test its own work。看点在代码工作流：是否能减少真实项目里的上下文切换和人工接线。",
+        "social_original_text": "Codex is very good. I'm especially impressed by how it uses the browse to test its own work.\n\nBut any design related / frontend tasks, Claude still wins.",
+        "translation_zh": "Codex 非常出色。我尤其印象深刻的是它能利用浏览功能自行测试工作成果。但在涉及设计或前端任务时，Claude 依然更胜一筹。",
+        "entity": "OpenAI",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 71.47,
+        "evidence_urls": [
+          "https://x.com/petergyang/status/2059099566377693305"
+        ],
+        "evidence_titles": [
+          "Codex is very good. I'm especially impressed by how it uses the browse to test its own work."
+        ],
+        "evidence_summaries": [
+          "Codex is very good. I'm especially impressed by how it uses the browse to test its own work.\n\nBut any design related / frontend tasks, Claude still wins."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Peter Yang"
+        ],
+        "source_display": "X: Peter Yang",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "petergyang"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 12.470772970092215,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        }
+      }
+    ],
+    "worth_tracking": [
+      {
+        "event_id": "f5f83a53d605bc",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot",
+        "brief": "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 52,
+        "evidence_urls": [
+          "https://www.ithome.com/0/955/658.htm"
+        ],
+        "evidence_titles": [
+          "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot"
+        ],
+        "evidence_summaries": [
+          "IT之家 5 月 27 日消息，科技媒体 Windows Latest 昨日（5 月 26 日）发布博文， 深挖 14 页官方文档内容 ， 发现微软计划 2026 年上线任务栏版 Ask Copilot，以及为 Click to Do 整合 Excel 表格提取工具。 根据官方文档表述，微软首批将邀请企业端 Frontier 试用客户体验，但具体发布时间和可用范围仍可能调整。 任务栏版 Ask Copilot 根据官方文档表述，任务栏版 Ask Copilot 通过升级后的 Composer 体验，进入任务栏和开始菜单，并接入 Microsoft 365 Copilot 以及后台专用 AI 智能体。 任务栏 Ask Copilot 界面示意 用户不必再单独打开浏览器，就能调取公司政策、汇总当前任务、跟进项目更新，尽量减少打断。IT之家附上相关图片如下： Windows 11 任务栏中的 Ask Copilot 微软称 Ask Copilot 主要适用于合规负责人和管理者。这类人群经常要快速查政策更新、待处理问题和截止时间，而新的专用输入栏比传统搜索更干净、更快。 Windows 11 任务栏研究智能体 Click to Do 的 Excel 表格提取工具 该功能适用于 Windows 11 AI+ PC 设备，Click to Do 依靠本地视觉模型识别屏幕上的文字、图形和表格。 Click to Do 图片表格转 Excel 如果图片、网页或 PDF 里的关键业务数据被锁在不可复制的静态图表中，系统会识别表格边界，并把视觉数据直接转成可编辑的 Microsoft Excel 表格。微软称，这种设备端处理可以减少手动重录和复制粘贴后的排版错误。"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/5/65345845-3115-49db-9c55-42342b155bf5.jpg?x-bce-process=image/format,f_auto",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "f0ef6bf6f6b86d",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验",
+        "brief": "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 52,
+        "evidence_urls": [
+          "https://www.ithome.com/0/955/654.htm"
+        ],
+        "evidence_titles": [
+          "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验"
+        ],
+        "evidence_summaries": [
+          "IT之家 5 月 27 日消息，微软今日发布了最新的 Windows 11 24H2/25H2 五月可选更新 KB5089573，其中包含多项质量改进和基础改进，旨在提升 PC 运行速度、响应能力和可靠性。 根据更新日志，本次发布包含常规的操作系统性能改进，“可加速应用启动以及开始菜单、搜索和操作中心等核心外壳体验”。 微软还表示，该更新“改进了 Windows 在登录和锁屏界面、文件资源管理器、触摸屏设备上使用手势操作，以及在设置中更改主题时的可靠性”。 这些性能改进被称为“低延迟配置文件”，其原理是在极短时间内提高 CPU 频率以加快 PC 运行速度，可使系统弹窗响应速度最高提升 70%，应用启动速度最高提升 40%。 启用这些性能改进后，Windows 11 对输入的响应更加灵敏。微软此前已对这些改动进行了数周测试，Windows Central 实测确实获得了性能提升。 微软表示这些改进正在逐步推送中，意味着用户在安装更新后可能不会立刻看到性能提升。相反，性能改进将在未来几周内分多波逐步启用。 除了基础性能问题外，该 OS 更新还包括若干新功能，例如可同时与两个设备共享蓝牙、在设置体验过程中为设备命名，以及任务管理器的更新。 共享音频是本次更新的全新功能，允许两人从同一台 Windows 11 PC 同时收听相同音频。 该功能基于蓝牙 LE Audio 技术，允许多位用户在同一台 PC 上通过各自的蓝牙耳机或音箱同时收听相同的音频内容。 微软在官方博客中分享了一个场景：一位员工与朋友长途飞行时想一起看电影，却发现只能连接一副耳机，最终两人尴尬地各戴一只耳塞，却仍被环境噪音困扰。这一体验促使微软利用蓝牙 LE Audio 标准的演进，解决了传统蓝牙经典音频仅支持单一音频流的限制。 共享音频功能目前已面向 Windows 11 24H2（build 26100.8522 或更新）、25H2（build 26200.8522 或更新）及 26H1（build 28000.2179 或更新）版本逐步开放。 用户可同时连接两台兼容的蓝牙 LE Audio 配件（耳机、耳塞、音箱、助听器或人工耳蜗等），从任务栏扬声器图标打开快速设置，找到“共享音频”按钮，选择两台设备后点击“共享”即可开始。共享期间，Windows 仍可单独调节每台设备的音量，任务栏会显示共享图标以便快速管理。 在共享期间，Windows 仍支持媒体控制、音量调节及电量显示等功能。但如果共享音频为默认音频输出，则所有其他蓝牙音频输入输出端点暂时不可用；语音通话需使用 PC 内置或插入的麦克风。停止共享后，系统即恢复正常。 除此之外，KB5089573 还带来了其他一系列功能优化或更新，IT之家汇总如下： 放大镜功能增强：在放大或缩小、切换视图、开启或关闭颜色反色以及开关放大镜时均会收到有用提示。此外，放大镜现支持对允许的受保护内容进行放大，并提升了镜头模式下的移动平滑度。 Win11 任务管理器增加了对 NPU 使用情况的可见性：在“进程”“用户”和“详细信息”页面中新增可选的 NPU 列，“详细信息”页面还增加了 NPU 专用内存和 NPU 共享内存列。隶属于 GPU 中的神经引擎现可显示在“性能”页面上。同时新增“隔离”列（可选），用于显示哪些应用在 AppContainer 中运行。本次更新还修复了虚拟机从休眠恢复后性能页面 CPU 速度显示异常偏高的问题。 相机方面，Windows 11 的多应用相机功能允许多个应用程序同时访问相机。基本相机模式提供简化的相机功能，便于在相机无法正常工作时进行故障排除或提高稳定性。 Windows 设置新增功能：在设置过程中可在“设备名称”页面为用户文件夹选择自定义名称（须符合标准命名要求）。常规性能改进加速了应用启动以及开始菜单、搜索、操作中心等核心外壳体验。 Windows Hello 优化了生物识别服务在设备从现代待机恢复时的性能，减少了增强登录安全中因缺少安全注册元数据导致的意外验证阻止，并改进了锁屏和登录屏的登录行为 —— 当 Windows Hello 人脸或指纹设置可用时，即使之前使用过其他方法，每次登录也会默认使用该方式。若连续三次改用 PIN 登录，系统将保持 PIN 方式直到用户切换。 Windows 搜索框现在可以查找并优先显示仅输入两个字符的文件。存储方面，创建开发驱动器的对话框现支持以 GB 为单位指定大小（此前仅 MB），在“设置”>“系统”>“存储”中调整卷大小时同样支持该选项；查看临时文件时才会弹出用户账户控制提示，而非打开页面时立即弹出。 USB 改进了 USB4 扩展坞和集线器所连接显示器的可靠性，使显示器在待机恢复后更稳定点亮。USB3 堆栈增加了针对意外硬件故障的额外恢复措施，提高了 USB 设备的可靠性。传感器改进了对可能保持传感器集线器通电并消耗电量的应用的抵御能力。人机接口设备改进了因失败 HID 设备导致的电池续航问题，并优化了可能在待机期间发起 HID 传输的应用的电源卫生。 输入方面改进了登录屏幕上触摸键盘的可靠性（包括输入或更改密码时）、关闭输入切换器时 explorer.exe 的可靠性以及打开或导航到剪贴板历史记录时的性能。Times New Roman 字体家族更新，改进了希腊文和西里尔文中组合附加符号的渲染效果。 任务计划程序现在跨会话保存任务列表视图中的列宽调整。桌面图标改进了加载桌面应用快捷方式的可靠性。Microsoft Store 包含更改以改进下载性能和带宽使用，并改进了因 Windows Update 组策略设置导致的下载失败时的错误报告。可靠性改进了登录和锁屏界面、文件资源管理器、触摸屏设备上使用手势操作以及在设置中更改主题时的 Windows 可靠性。 常规推送功能中还包括安全启动方面的质量改进：Windows 质量更新包含额外的高置信度设备定位数据，增加了有资格自动接收新安全启动证书的设备覆盖率。同时新增了 LimitSecureBootRequiredServiceData 组策略和 MDM 设置，启用后将限制 Windows 发送的安全启动服务数据。 已知问题： 安装此更新（KB5089573）后，部分设备在安装 2026 年 5 月安全更新（KB5089549）时可能失败并报错 0x800f0922，原因在于 EFI 系统分区空闲空间不足（尤其是可用空间低于 10 MB 的设备）。 受影响的用户可通过修改注册表或使用已知问题回滚进行缓解。IT 管理部门可通过安装配置专用组策略以应用缓解措施。 相关阅读： 《 微软推送 Win11 RP 26x00.8514 预览版：新增音频共享、NPU 监控 》"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/5/c6f86913-363d-4e7d-a5ed-f391c6198028.png?x-bce-process=image/format,f_auto",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "a94ad0946021ec",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "Anthropic：微软将弃用Claude：太贵了还是薅明白了？",
+        "brief": "微软将弃用Claude：太贵了还是薅明白了。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 51,
+        "evidence_urls": [
+          "https://www.infoq.cn/article/qdvNe5mRkvPkPS2JGMx2"
+        ],
+        "evidence_titles": [
+          "微软将弃用Claude：太贵了还是薅明白了？"
+        ],
+        "evidence_summaries": [
+          "点击查看原文>"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "InfoQ 中文",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 5,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "6eb45b3484bc3f",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "29股股息率超4%，机构依然看好价值板块中长期配置价值",
+        "brief": "29股股息率超4%，机构依然看好价值板块中长期配置价值。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "financing_or_ma",
+        "event_type_label": "融资/收购/估值",
+        "score": 40,
+        "evidence_urls": [
+          "https://36kr.com/newsflashes/3826794677506945?f=rss"
+        ],
+        "evidence_titles": [
+          "29股股息率超4%，机构依然看好价值板块中长期配置价值"
+        ],
+        "evidence_summaries": [
+          "在当下的市场环境中，价值板块与成长板块呈现出鲜明的风格对立与走势分化。前者主要指代银行、煤炭、白酒等传统行业龙头，其特征是估值处于低位、分红稳定，但业绩增长相对平缓；后者则聚焦于人工智能和半导体等高弹性、高估值的科技成长股。尽管宏观经济整体处于修复通道，但市场对白酒等传统消费需求的复苏强度仍存分歧，叠加地产行业的深度调整，导致相关产业链资产的风险偏好下移。不过，也有机构依然看好价值板块的中长期配置价值。（证券时报）"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "36Kr AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 14,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "6b8d3c1c3ba75b",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "OpenRouter more than doubles valuation to $1.3B in a year",
+        "brief": "OpenRouter more than doubles valuation to $1.3B in a year。资金流向比标题更重要，后续要看它投向算力、分发还是模型研发。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 61,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/05/26/openrouter-more-than-doubles-valuation-to-1-3b-in-a-year"
+        ],
+        "evidence_titles": [
+          "OpenRouter more than doubles valuation to $1.3B in a year"
+        ],
+        "evidence_summaries": [
+          "OpenRouter has raised a $113 million Series B led by CapitalG. Its 5x growth in usage over six months indicates the multi-AI-model future is here."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "a95268ad45229f",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,",
+        "brief": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,。它更像能力温度计，价值在于帮助判断哪些 Agent 能从演示走向稳定任务。",
+        "social_original_text": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code, and rate it on effectiveness. Why isn’t it a 10? How could it be made to be so?\n\nRun this a few times and you will be surprised how fast it gets astonishingly better\n\nAnd since it is in a skill file plus code with evals (LLM as judge) and unit tests, it stays better forever",
+        "translation_zh": "我所说的评估，就是直接告诉代理：根据我们讨论过的目标、原因和实际情况，用三种不同的前沿模型检查你的技能文件调用代码的输入输出，并对其有效性评分。为什么不是满分10分？如何改进才能达到？ 多次运行后，你会惊讶于它提升的速度之快，效果会显著改善。 由于这些改进被整合到技能文件和代码中，结合评估（LLM作为评判）和单元测试，优化效果将永久保持。",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 52.46,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2059148823403082154"
+        ],
+        "evidence_titles": [
+          "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,"
+        ],
+        "evidence_summaries": [
+          "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code, and rate it on effectiveness. Why isn’t it a 10? How could it be made to be so?\n\nRun this a few times and you will be surprised how fast it gets astonishingly better\n\nAnd since it is in a skill file plus code with evals (LLM as judge) and unit tests, it stays better forever"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 7.456808469171364,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        }
+      },
+      {
+        "event_id": "eebb5aa06d73f2",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w",
+        "brief": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w",
+        "translation_zh": "最终，丰饶的黄金时代将是此类技术被构建并部署1000倍。 https://t.co/ezuSdcjE3w",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 30.81,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2059151927011909800"
+        ],
+        "evidence_titles": [
+          "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w"
+        ],
+        "evidence_summaries": [
+          "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 10.806840011174874,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        }
+      },
+      {
+        "event_id": "39fb354ef04526",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "You have to think of tokenmaxxing as eating crab legs at the buffet.",
+        "brief": "You have to think of tokenmaxxing as eating crab legs at the buffet。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "You have to think of tokenmaxxing as eating crab legs at the buffet.\n\nThe buffet (all you can eat AI plans) is not going to last forever so you better eat all the crab legs while you still can.",
+        "translation_zh": "你得把 tokenmaxxing 当作在自助餐厅吃蟹腿。 自助餐（不限量 AI 套餐）不会永远持续，趁现在还能吃，赶紧把蟹腿吃个够。",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 20.53,
+        "evidence_urls": [
+          "https://x.com/petergyang/status/2059070818798465330"
+        ],
+        "evidence_titles": [
+          "You have to think of tokenmaxxing as eating crab legs at the buffet."
+        ],
+        "evidence_summaries": [
+          "You have to think of tokenmaxxing as eating crab legs at the buffet.\n\nThe buffet (all you can eat AI plans) is not going to last forever so you better eat all the crab legs while you still can."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Peter Yang"
+        ],
+        "source_display": "X: Peter Yang",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "petergyang"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 7.5257498915995305,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        }
+      },
+      {
+        "event_id": "3f96d58c85985e",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "This is going to be common from here",
+        "brief": "This is going to be common from here。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "This is going to be common from here\n\nBrave new world\n\nPrompters of the world unite https://t.co/rtuwOGiEzQ",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 22.29,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2059155926939299968"
+        ],
+        "evidence_titles": [
+          "This is going to be common from here"
+        ],
+        "evidence_summaries": [
+          "This is going to be common from here\n\nBrave new world\n\nPrompters of the world unite https://t.co/rtuwOGiEzQ"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 9.286662482156343,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        }
+      },
+      {
+        "event_id": "333fd8f371c68f",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "It's not everyday you get to host someone who's been to space.",
+        "brief": "It's not everyday you get to host someone who's been to space。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "It's not everyday you get to host someone who's been to space.\n\nI'll be chatting with Group Captain Shubhanshu Shukla @gagan_shux at @spc_india.\n\nFighter Pilot. Astronaut. First Indian on the ISS. Incredible guest. Register to attend, BLR, May 28. https://t.co/D0fUyBRgfZ",
+        "translation_zh": "难得有机会接待去过太空的嘉宾。 我将在 @spc_india 与空军上校 Shubhanshu Shukla @gagan_shux 展开对谈。 战斗机飞行员。宇航员。首位登上国际空间站的印度人。令人惊叹的嘉宾。欢迎报名参与，地点：BLR，5月28日。 https://t.co/D0fUyBRgfZ",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 20.24,
+        "evidence_urls": [
+          "https://x.com/adityaag/status/2059135917122838705"
+        ],
+        "evidence_titles": [
+          "It's not everyday you get to host someone who's been to space."
+        ],
+        "evidence_summaries": [
+          "It's not everyday you get to host someone who's been to space.\n\nI'll be chatting with Group Captain Shubhanshu Shukla @gagan_shux at @spc_india.\n\nFighter Pilot. Astronaut. First Indian on the ISS. Incredible guest. Register to attend, BLR, May 28. https://t.co/D0fUyBRgfZ"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Aditya Agarwal"
+        ],
+        "source_display": "X: Aditya Agarwal",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "adityaag"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 7.235790156711096,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        }
+      }
+    ],
+    "company_updates": [
+      {
+        "event_id": "3fe7ca48197c00",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Anthropic：半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用",
+        "brief": "半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 77,
+        "evidence_urls": [
+          "https://36kr.com/p/3825882266407815?f=rss"
+        ],
+        "evidence_titles": [
+          "半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用"
+        ],
+        "evidence_summaries": [
+          "5月26日，昆仑万维旗下天工 AI 正式推出高性能 Agent 模型 SkyClaw-v1.0，并同步发布轻量化版本 SkyClaw-v1.0-lite，兼具顶尖性能与极致性价比。 SkyClaw-v1.0 支持百万token上下文，深度适配各类真实智能体工作场景，重点优化复杂工具调用、多轮任务执行、代码生成、文件编辑、交互式应用构建与研究型数据分析。模型经过大规模 mid-train、高质量合成任务 SFT 与端到端强化学习优化，可在 OpenClaw、Hermes、Nanobot 等主流 Agent 环境中运行，同时适配Claude Code、Codex 等代码 Agent 框架，通用性与兼容性拉满。 Agent 模型和 Agent framework 的组合，正在改变模型的使用方式。过去，模型主要回答问题；现在，模型被放进一个能读取仓库、调用工具、编辑文件、运行测试、观察反馈的执行环境里，开始承担完整工作流。SkyClaw-v1.0 针对的正是这个阶段：让模型在长上下文和工具环境中持续推进任务，而不是只生成一段答案。 模型核心亮点 强任务完成能力 ：在主流 Agent benchmark 与 Skywork 内部 Claw 任务评测中，SkyClaw-v1.0 展现出稳定的多步任务执行能力。 全面超越主流开源模型 ：模型表现超过 Minimax 2.7、DeepSeek V4 Flash，以及 Qwen 3.6 35B A3B 和 27B 模型。 接近更大规模顶级模型 ：在 OpenClaw 相关任务上，SkyClaw-v1.0 表现接近 DeepSeek V4 Pro、Claude Opus 4.6、Qwen 3.6 Plus 等更大规模模型。 极具性价比 ：定价低于Minimax 2.7 与 Qwen 3.6 系列模型的一半，让高性能 Agent 能力具备规模化调用基础。 对于应用构建任务，我们建议将 SkyClaw-v1.0 运行在 Hermes、Claude Code 或 Codex 等 Agent 框架中，使其能够完成规划、文件编辑、测试执行与多轮迭代，而不是停留在代码片段生成。 核心训练思路：聚焦实景任务履约能力 SkyClaw-v1.0 的训练目标很明确：提升模型在 Agent framework 中完成真实任务的能力。训练重点放在三件事上：构建可交互的工具环境、筛选高质量任务轨迹，以及用强化学习提升多步执行稳定性。 智能体运行环境搭建Agent Environment 训练环境基于 OpenClaw-style agent frames 构建，覆盖文件读取、代码编辑、检索、测试、页面观察等高频 Agent 动作。模型在训练中不只是生成答案，而是需要选择工具、组合工具，并根据工具返回结果继续推进任务。 团队进一步结合真实 Claw 任务数据和线上 skill 使用反馈，构建工具关系图谱，用来合成更接近真实工作流的复杂任务。这样得到的数据不是孤立问答，而是包含目标拆解、工具调用、结果观察和迭代修正的完整执行链。 精细化合成训练数据Synthetic SFT Data SkyClaw-v1.0 使用大量合成 Agent 轨迹进行 mid-train 与 SFT。 这一步主要解决 Agent 训练中的噪声问题。低质量轨迹会让模型学到无效工具调用、错误观察解释或偏离目标的中间步骤。SkyClaw-v1.0 通过轨迹质量过滤和数据配比实验，保留更稳定、更可复用的任务执行模式。 智能体强化学习迭代Agentic RL 强化学习阶段继续在自建 Claw 环境中进行。模型需要在可交互环境里执行任务、观察反馈、处理失败，并继续修正动作。优化目标从“回答是否好看”转向“任务是否完成、过程是否稳定”。 因此，SkyClaw-v1.0 在 OpenClaw、Hermes、Nanobot、Claude Code、Codex 等环境中使用时，优势更多体现在持续执行、错误恢复和多轮迭代，而不是单次回答的表面完整度。 多场景实战应用 能力全面验证 在 Agent 框架中，SkyClaw-v1.0 可以完成规划、文件编辑、代码生成、测试运行、页面调试与多轮迭代，更适合交付完整应用、交互式游戏和研究型网页报告。这些示例均从自然语言提示开始，在 Hermes、Claude Code 和 Codex 等代理框架中完成。我们强烈建议在代理工作流中使用 SkyClaw-v1.0 作为模型，而不是作为独立的聊天模型使用。 全形态界面设计落地 SkyClaw-v1.0 可生成具备生产级布局、真实导航流程和完整交互状态的应用界面，覆盖多页面结构、列表筛选、详情页、表单、移动端适配等常见产品形态。 b. 沉浸式可交互游戏开发 SkyClaw-v1.0 可生成可运行的交互式游戏与物理模拟，不只输出页面结构，还能处理动画循环、碰撞检测、游戏规则、状态管理和用户输入。 c.专业网页制作 深度研究分析 SkyClaw-v1.0 也适合研究型网页和数据报告生成。模型可以围绕开放主题进行信息组织、数据整理、页面设计和可视化呈现，将自然语言需求转化为可交互的网页报告。 现已接入天工 Skywork，并开放免费试用 SkyClaw-v1.0模型已于2026年5月22日接入天工 Skywork。用户登陆https://tiangong.cn，打开天工Skywork即可直接使用，无需额外配置 Agent 环境。 即日起， SkyClaw-v1.0 与 SkyClaw-v1.0-lite 开放 2 至 4 周免费试用 。用户可以在真实任务中体验模型的长上下文理解、多轮执行、代码生成、工具调用和应用构建能力。 项目地址： https://skyworkai.github.io/skyclaw/ API访问地址： SkyClaw-v1: https://www.apifree.ai/model/skywork-ai/skyclaw-v1?tab=api SkyClaw-v1-lite: https://www.apifree.ai/model/skywork-ai/skyclaw-v1-lite?tab=api 对于开发者，SkyClaw-v1.0 同步通过 APIFree 开放 API 免费调用。注册 APIFree 账号并获取 API Key 后，即可通过兼容 OpenAI 格式的接口接入现有应用或 Agent 框架。API 支持流式输出、工具调用和多轮对话，适合接入代码 Agent、自研工作流系统、企业内部工具和自动化任务平台。 SkyClaw-v1.0 模型的上线，不是一次孤立的模型发布，而是昆仑万维 AGI 产品体系中的关键一环。在产品体系中，SkyClaw-v1.0 承担的是底层 Agent 模型能力升级：它通过百万上下文、Agentic RL、复杂工具调用优化和高性价比 API， 把 Agent 从“可演示”推进到“可高频调用、可真实交付”的阶段 。"
+        ],
+        "thumbnail_url": "https://img.36krcdn.com/hsossms/20260526/v2_3fe4898d8b0b421fb4ccb7d5ad018e72@5023078_oswg115817oswg1080oswg457_img_png?x-oss-process=image/quality,q_100/format,jpg/interlace,1",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "36Kr AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "f5f83a53d605bc",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot",
+        "brief": "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 52,
+        "evidence_urls": [
+          "https://www.ithome.com/0/955/658.htm"
+        ],
+        "evidence_titles": [
+          "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot"
+        ],
+        "evidence_summaries": [
+          "IT之家 5 月 27 日消息，科技媒体 Windows Latest 昨日（5 月 26 日）发布博文， 深挖 14 页官方文档内容 ， 发现微软计划 2026 年上线任务栏版 Ask Copilot，以及为 Click to Do 整合 Excel 表格提取工具。 根据官方文档表述，微软首批将邀请企业端 Frontier 试用客户体验，但具体发布时间和可用范围仍可能调整。 任务栏版 Ask Copilot 根据官方文档表述，任务栏版 Ask Copilot 通过升级后的 Composer 体验，进入任务栏和开始菜单，并接入 Microsoft 365 Copilot 以及后台专用 AI 智能体。 任务栏 Ask Copilot 界面示意 用户不必再单独打开浏览器，就能调取公司政策、汇总当前任务、跟进项目更新，尽量减少打断。IT之家附上相关图片如下： Windows 11 任务栏中的 Ask Copilot 微软称 Ask Copilot 主要适用于合规负责人和管理者。这类人群经常要快速查政策更新、待处理问题和截止时间，而新的专用输入栏比传统搜索更干净、更快。 Windows 11 任务栏研究智能体 Click to Do 的 Excel 表格提取工具 该功能适用于 Windows 11 AI+ PC 设备，Click to Do 依靠本地视觉模型识别屏幕上的文字、图形和表格。 Click to Do 图片表格转 Excel 如果图片、网页或 PDF 里的关键业务数据被锁在不可复制的静态图表中，系统会识别表格边界，并把视觉数据直接转成可编辑的 Microsoft Excel 表格。微软称，这种设备端处理可以减少手动重录和复制粘贴后的排版错误。"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/5/65345845-3115-49db-9c55-42342b155bf5.jpg?x-bce-process=image/format,f_auto",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "f0ef6bf6f6b86d",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验",
+        "brief": "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 52,
+        "evidence_urls": [
+          "https://www.ithome.com/0/955/654.htm"
+        ],
+        "evidence_titles": [
+          "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验"
+        ],
+        "evidence_summaries": [
+          "IT之家 5 月 27 日消息，微软今日发布了最新的 Windows 11 24H2/25H2 五月可选更新 KB5089573，其中包含多项质量改进和基础改进，旨在提升 PC 运行速度、响应能力和可靠性。 根据更新日志，本次发布包含常规的操作系统性能改进，“可加速应用启动以及开始菜单、搜索和操作中心等核心外壳体验”。 微软还表示，该更新“改进了 Windows 在登录和锁屏界面、文件资源管理器、触摸屏设备上使用手势操作，以及在设置中更改主题时的可靠性”。 这些性能改进被称为“低延迟配置文件”，其原理是在极短时间内提高 CPU 频率以加快 PC 运行速度，可使系统弹窗响应速度最高提升 70%，应用启动速度最高提升 40%。 启用这些性能改进后，Windows 11 对输入的响应更加灵敏。微软此前已对这些改动进行了数周测试，Windows Central 实测确实获得了性能提升。 微软表示这些改进正在逐步推送中，意味着用户在安装更新后可能不会立刻看到性能提升。相反，性能改进将在未来几周内分多波逐步启用。 除了基础性能问题外，该 OS 更新还包括若干新功能，例如可同时与两个设备共享蓝牙、在设置体验过程中为设备命名，以及任务管理器的更新。 共享音频是本次更新的全新功能，允许两人从同一台 Windows 11 PC 同时收听相同音频。 该功能基于蓝牙 LE Audio 技术，允许多位用户在同一台 PC 上通过各自的蓝牙耳机或音箱同时收听相同的音频内容。 微软在官方博客中分享了一个场景：一位员工与朋友长途飞行时想一起看电影，却发现只能连接一副耳机，最终两人尴尬地各戴一只耳塞，却仍被环境噪音困扰。这一体验促使微软利用蓝牙 LE Audio 标准的演进，解决了传统蓝牙经典音频仅支持单一音频流的限制。 共享音频功能目前已面向 Windows 11 24H2（build 26100.8522 或更新）、25H2（build 26200.8522 或更新）及 26H1（build 28000.2179 或更新）版本逐步开放。 用户可同时连接两台兼容的蓝牙 LE Audio 配件（耳机、耳塞、音箱、助听器或人工耳蜗等），从任务栏扬声器图标打开快速设置，找到“共享音频”按钮，选择两台设备后点击“共享”即可开始。共享期间，Windows 仍可单独调节每台设备的音量，任务栏会显示共享图标以便快速管理。 在共享期间，Windows 仍支持媒体控制、音量调节及电量显示等功能。但如果共享音频为默认音频输出，则所有其他蓝牙音频输入输出端点暂时不可用；语音通话需使用 PC 内置或插入的麦克风。停止共享后，系统即恢复正常。 除此之外，KB5089573 还带来了其他一系列功能优化或更新，IT之家汇总如下： 放大镜功能增强：在放大或缩小、切换视图、开启或关闭颜色反色以及开关放大镜时均会收到有用提示。此外，放大镜现支持对允许的受保护内容进行放大，并提升了镜头模式下的移动平滑度。 Win11 任务管理器增加了对 NPU 使用情况的可见性：在“进程”“用户”和“详细信息”页面中新增可选的 NPU 列，“详细信息”页面还增加了 NPU 专用内存和 NPU 共享内存列。隶属于 GPU 中的神经引擎现可显示在“性能”页面上。同时新增“隔离”列（可选），用于显示哪些应用在 AppContainer 中运行。本次更新还修复了虚拟机从休眠恢复后性能页面 CPU 速度显示异常偏高的问题。 相机方面，Windows 11 的多应用相机功能允许多个应用程序同时访问相机。基本相机模式提供简化的相机功能，便于在相机无法正常工作时进行故障排除或提高稳定性。 Windows 设置新增功能：在设置过程中可在“设备名称”页面为用户文件夹选择自定义名称（须符合标准命名要求）。常规性能改进加速了应用启动以及开始菜单、搜索、操作中心等核心外壳体验。 Windows Hello 优化了生物识别服务在设备从现代待机恢复时的性能，减少了增强登录安全中因缺少安全注册元数据导致的意外验证阻止，并改进了锁屏和登录屏的登录行为 —— 当 Windows Hello 人脸或指纹设置可用时，即使之前使用过其他方法，每次登录也会默认使用该方式。若连续三次改用 PIN 登录，系统将保持 PIN 方式直到用户切换。 Windows 搜索框现在可以查找并优先显示仅输入两个字符的文件。存储方面，创建开发驱动器的对话框现支持以 GB 为单位指定大小（此前仅 MB），在“设置”>“系统”>“存储”中调整卷大小时同样支持该选项；查看临时文件时才会弹出用户账户控制提示，而非打开页面时立即弹出。 USB 改进了 USB4 扩展坞和集线器所连接显示器的可靠性，使显示器在待机恢复后更稳定点亮。USB3 堆栈增加了针对意外硬件故障的额外恢复措施，提高了 USB 设备的可靠性。传感器改进了对可能保持传感器集线器通电并消耗电量的应用的抵御能力。人机接口设备改进了因失败 HID 设备导致的电池续航问题，并优化了可能在待机期间发起 HID 传输的应用的电源卫生。 输入方面改进了登录屏幕上触摸键盘的可靠性（包括输入或更改密码时）、关闭输入切换器时 explorer.exe 的可靠性以及打开或导航到剪贴板历史记录时的性能。Times New Roman 字体家族更新，改进了希腊文和西里尔文中组合附加符号的渲染效果。 任务计划程序现在跨会话保存任务列表视图中的列宽调整。桌面图标改进了加载桌面应用快捷方式的可靠性。Microsoft Store 包含更改以改进下载性能和带宽使用，并改进了因 Windows Update 组策略设置导致的下载失败时的错误报告。可靠性改进了登录和锁屏界面、文件资源管理器、触摸屏设备上使用手势操作以及在设置中更改主题时的 Windows 可靠性。 常规推送功能中还包括安全启动方面的质量改进：Windows 质量更新包含额外的高置信度设备定位数据，增加了有资格自动接收新安全启动证书的设备覆盖率。同时新增了 LimitSecureBootRequiredServiceData 组策略和 MDM 设置，启用后将限制 Windows 发送的安全启动服务数据。 已知问题： 安装此更新（KB5089573）后，部分设备在安装 2026 年 5 月安全更新（KB5089549）时可能失败并报错 0x800f0922，原因在于 EFI 系统分区空闲空间不足（尤其是可用空间低于 10 MB 的设备）。 受影响的用户可通过修改注册表或使用已知问题回滚进行缓解。IT 管理部门可通过安装配置专用组策略以应用缓解措施。 相关阅读： 《 微软推送 Win11 RP 26x00.8514 预览版：新增音频共享、NPU 监控 》"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/5/c6f86913-363d-4e7d-a5ed-f391c6198028.png?x-bce-process=image/format,f_auto",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "a94ad0946021ec",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "Anthropic：微软将弃用Claude：太贵了还是薅明白了？",
+        "brief": "微软将弃用Claude：太贵了还是薅明白了。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 51,
+        "evidence_urls": [
+          "https://www.infoq.cn/article/qdvNe5mRkvPkPS2JGMx2"
+        ],
+        "evidence_titles": [
+          "微软将弃用Claude：太贵了还是薅明白了？"
+        ],
+        "evidence_summaries": [
+          "点击查看原文>"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "InfoQ 中文",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 5,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "6eb45b3484bc3f",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "29股股息率超4%，机构依然看好价值板块中长期配置价值",
+        "brief": "29股股息率超4%，机构依然看好价值板块中长期配置价值。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "financing_or_ma",
+        "event_type_label": "融资/收购/估值",
+        "score": 40,
+        "evidence_urls": [
+          "https://36kr.com/newsflashes/3826794677506945?f=rss"
+        ],
+        "evidence_titles": [
+          "29股股息率超4%，机构依然看好价值板块中长期配置价值"
+        ],
+        "evidence_summaries": [
+          "在当下的市场环境中，价值板块与成长板块呈现出鲜明的风格对立与走势分化。前者主要指代银行、煤炭、白酒等传统行业龙头，其特征是估值处于低位、分红稳定，但业绩增长相对平缓；后者则聚焦于人工智能和半导体等高弹性、高估值的科技成长股。尽管宏观经济整体处于修复通道，但市场对白酒等传统消费需求的复苏强度仍存分歧，叠加地产行业的深度调整，导致相关产业链资产的风险偏好下移。不过，也有机构依然看好价值板块的中长期配置价值。（证券时报）"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "36Kr AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 14,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      }
+    ],
+    "technical_progress": [
+      {
+        "event_id": "71570f160596f7",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "MCP：AWS MCP服务器正式可用，全面适配API并支持IAM权限控制",
+        "brief": "AWS MCP服务器正式可用，全面适配API并支持IAM权限控制。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "MCP",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 71,
+        "evidence_urls": [
+          "https://www.infoq.cn/article/4gwXqyRPs4RTUIMpRte7"
+        ],
+        "evidence_titles": [
+          "AWS MCP服务器正式可用，全面适配API并支持IAM权限控制"
+        ],
+        "evidence_summaries": [
+          "点击查看原文>"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "InfoQ 中文",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "e79d53f9628f1d",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search",
+        "brief": "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 61,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/05/26/duckduckgo-installs-are-up-30-as-users-reject-being-force-fed-googles-ai-search"
+        ],
+        "evidence_titles": [
+          "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search"
+        ],
+        "evidence_summaries": [
+          "Google overhauled Search at I/O 2026, replacing blue links with AI agents. The backlash has been swift. DuckDuckGo app installs spiked 30% as users seek a way out."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "40762cd9fed820",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "Anthropic：Uber president says AI spending is getting ‘harder to justify’",
+        "brief": "Uber president says AI spending is getting ‘harder to justify’。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 75,
+        "evidence_urls": [
+          "https://www.theverge.com/transportation/937116/uber-ai-investment-hard-to-justify"
+        ],
+        "evidence_titles": [
+          "Uber president says AI spending is getting ‘harder to justify’"
+        ],
+        "evidence_summaries": [
+          "After reportedly exhausting its annual AI budget just four months into 2026, Uber is now questioning whether it's actually seeing meaningful returns on its investments. In an interview with Rapid Response, Uber president and chief operating officer Andrew Macdonald said the company isn't seeing a connection between rising token consumption for Claude Code and more […]"
+        ],
+        "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2245764686.jpg?quality=90&strip=all&crop=0,0,100,100",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      },
+      {
+        "event_id": "6b8d3c1c3ba75b",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "OpenRouter more than doubles valuation to $1.3B in a year",
+        "brief": "OpenRouter more than doubles valuation to $1.3B in a year。资金流向比标题更重要，后续要看它投向算力、分发还是模型研发。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 61,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/05/26/openrouter-more-than-doubles-valuation-to-1-3b-in-a-year"
+        ],
+        "evidence_titles": [
+          "OpenRouter more than doubles valuation to $1.3B in a year"
+        ],
+        "evidence_summaries": [
+          "OpenRouter has raised a $113 million Series B led by CapitalG. Its 5x growth in usage over six months indicates the multi-AI-model future is here."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        }
+      }
+    ],
+    "industry_views": [
+      {
+        "event_id": "b66dc6c5e1b5d1",
+        "bucket": "today_focus",
+        "section": "industry_views",
+        "title": "OpenAI：Codex is very good. I'm especially impressed by how it uses the browse to test its own work.",
+        "brief": "Codex is very good. I'm especially impressed by how it uses the browse to test its own work。看点在代码工作流：是否能减少真实项目里的上下文切换和人工接线。",
+        "social_original_text": "Codex is very good. I'm especially impressed by how it uses the browse to test its own work.\n\nBut any design related / frontend tasks, Claude still wins.",
+        "translation_zh": "Codex 非常出色。我尤其印象深刻的是它能利用浏览功能自行测试工作成果。但在涉及设计或前端任务时，Claude 依然更胜一筹。",
+        "entity": "OpenAI",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 71.47,
+        "evidence_urls": [
+          "https://x.com/petergyang/status/2059099566377693305"
+        ],
+        "evidence_titles": [
+          "Codex is very good. I'm especially impressed by how it uses the browse to test its own work."
+        ],
+        "evidence_summaries": [
+          "Codex is very good. I'm especially impressed by how it uses the browse to test its own work.\n\nBut any design related / frontend tasks, Claude still wins."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Peter Yang"
+        ],
+        "source_display": "X: Peter Yang",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "petergyang"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 12.470772970092215,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        }
+      },
+      {
+        "event_id": "a95268ad45229f",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,",
+        "brief": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,。它更像能力温度计，价值在于帮助判断哪些 Agent 能从演示走向稳定任务。",
+        "social_original_text": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code, and rate it on effectiveness. Why isn’t it a 10? How could it be made to be so?\n\nRun this a few times and you will be surprised how fast it gets astonishingly better\n\nAnd since it is in a skill file plus code with evals (LLM as judge) and unit tests, it stays better forever",
+        "translation_zh": "我所说的评估，就是直接告诉代理：根据我们讨论过的目标、原因和实际情况，用三种不同的前沿模型检查你的技能文件调用代码的输入输出，并对其有效性评分。为什么不是满分10分？如何改进才能达到？ 多次运行后，你会惊讶于它提升的速度之快，效果会显著改善。 由于这些改进被整合到技能文件和代码中，结合评估（LLM作为评判）和单元测试，优化效果将永久保持。",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 52.46,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2059148823403082154"
+        ],
+        "evidence_titles": [
+          "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,"
+        ],
+        "evidence_summaries": [
+          "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code, and rate it on effectiveness. Why isn’t it a 10? How could it be made to be so?\n\nRun this a few times and you will be surprised how fast it gets astonishingly better\n\nAnd since it is in a skill file plus code with evals (LLM as judge) and unit tests, it stays better forever"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 7.456808469171364,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        }
+      },
+      {
+        "event_id": "eebb5aa06d73f2",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w",
+        "brief": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w",
+        "translation_zh": "最终，丰饶的黄金时代将是此类技术被构建并部署1000倍。 https://t.co/ezuSdcjE3w",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 30.81,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2059151927011909800"
+        ],
+        "evidence_titles": [
+          "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w"
+        ],
+        "evidence_summaries": [
+          "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 10.806840011174874,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        }
+      },
+      {
+        "event_id": "39fb354ef04526",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "You have to think of tokenmaxxing as eating crab legs at the buffet.",
+        "brief": "You have to think of tokenmaxxing as eating crab legs at the buffet。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "You have to think of tokenmaxxing as eating crab legs at the buffet.\n\nThe buffet (all you can eat AI plans) is not going to last forever so you better eat all the crab legs while you still can.",
+        "translation_zh": "你得把 tokenmaxxing 当作在自助餐厅吃蟹腿。 自助餐（不限量 AI 套餐）不会永远持续，趁现在还能吃，赶紧把蟹腿吃个够。",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 20.53,
+        "evidence_urls": [
+          "https://x.com/petergyang/status/2059070818798465330"
+        ],
+        "evidence_titles": [
+          "You have to think of tokenmaxxing as eating crab legs at the buffet."
+        ],
+        "evidence_summaries": [
+          "You have to think of tokenmaxxing as eating crab legs at the buffet.\n\nThe buffet (all you can eat AI plans) is not going to last forever so you better eat all the crab legs while you still can."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Peter Yang"
+        ],
+        "source_display": "X: Peter Yang",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "petergyang"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 7.5257498915995305,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        }
+      },
+      {
+        "event_id": "3f96d58c85985e",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "This is going to be common from here",
+        "brief": "This is going to be common from here。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "This is going to be common from here\n\nBrave new world\n\nPrompters of the world unite https://t.co/rtuwOGiEzQ",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 22.29,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2059155926939299968"
+        ],
+        "evidence_titles": [
+          "This is going to be common from here"
+        ],
+        "evidence_summaries": [
+          "This is going to be common from here\n\nBrave new world\n\nPrompters of the world unite https://t.co/rtuwOGiEzQ"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 9.286662482156343,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        }
+      },
+      {
+        "event_id": "333fd8f371c68f",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "It's not everyday you get to host someone who's been to space.",
+        "brief": "It's not everyday you get to host someone who's been to space。先放在观察位，等更多证据出现后再判断它的行业分量。",
+        "social_original_text": "It's not everyday you get to host someone who's been to space.\n\nI'll be chatting with Group Captain Shubhanshu Shukla @gagan_shux at @spc_india.\n\nFighter Pilot. Astronaut. First Indian on the ISS. Incredible guest. Register to attend, BLR, May 28. https://t.co/D0fUyBRgfZ",
+        "translation_zh": "难得有机会接待去过太空的嘉宾。 我将在 @spc_india 与空军上校 Shubhanshu Shukla @gagan_shux 展开对谈。 战斗机飞行员。宇航员。首位登上国际空间站的印度人。令人惊叹的嘉宾。欢迎报名参与，地点：BLR，5月28日。 https://t.co/D0fUyBRgfZ",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 20.24,
+        "evidence_urls": [
+          "https://x.com/adityaag/status/2059135917122838705"
+        ],
+        "evidence_titles": [
+          "It's not everyday you get to host someone who's been to space."
+        ],
+        "evidence_summaries": [
+          "It's not everyday you get to host someone who's been to space.\n\nI'll be chatting with Group Captain Shubhanshu Shukla @gagan_shux at @spc_india.\n\nFighter Pilot. Astronaut. First Indian on the ISS. Incredible guest. Register to attend, BLR, May 28. https://t.co/D0fUyBRgfZ"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Aditya Agarwal"
+        ],
+        "source_display": "X: Aditya Agarwal",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "adityaag"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 7.235790156711096,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        }
+      }
+    ]
+  },
+  "paper_digest": {
+    "source": "Hugging Face Daily Papers",
+    "source_url": "https://huggingface.co/papers/date/2026-05-27",
+    "generated_at": "2026-05-27T01:33:57.361Z",
+    "llm_provider": "openai_compatible_chat",
+    "llm_model": "qwen3.6-plus",
+    "count": 5,
+    "total_count": 46,
+    "items": [
+      {
+        "paper_id": "2605.25604",
+        "title": "DVAO: Dynamic Variance-adaptive Advantage Optimization for Multi-reward Reinforcement Learning",
+        "title_zh": "DVAO：面向多奖励强化学习的动态方差自适应优势优化",
+        "daily_rank": 1,
+        "url": "https://huggingface.co/papers/2605.25604",
+        "source_url": "https://arxiv.org/html/2605.25604",
+        "thumbnail_url": "https://arxiv.org/html/2605.25604v1/x1.png",
+        "takeaway_zh": "提出DVAO算法，根据奖励方差动态调整多目标组合权重，解决大模型多奖励强化学习中的训练不稳定问题。",
+        "why_it_matters_zh": "提升大模型多目标对齐的训练稳定性与综合性能，为复杂场景下的RLHF提供高效无价值模型的优化方案。",
+        "tags": [
+          "强化学习",
+          "大模型对齐",
+          "多目标优化"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2605.25874",
+        "title": "WBench: A Comprehensive Multi-turn Benchmark for Interactive Video World Model Evaluation",
+        "title_zh": "WBench：交互式视频世界模型综合多轮评测基准",
+        "daily_rank": 2,
+        "url": "https://huggingface.co/papers/2605.25874",
+        "source_url": "https://arxiv.org/html/2605.25874",
+        "thumbnail_url": "https://arxiv.org/html/2605.25874v1/x1.png",
+        "takeaway_zh": "构建涵盖五大维度的多轮交互评测基准，统一多种控制接口，系统评估视频世界模型的生成与交互能力。",
+        "why_it_matters_zh": "填补交互式视频世界模型缺乏统一评测标准的空白，为模型迭代与多模态Agent开发提供可靠诊断依据。",
+        "tags": [
+          "视频生成",
+          "世界模型",
+          "评测基准"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2605.24830",
+        "title": "Macaron-A2UI: A Model for Generative UI in Personal Agents",
+        "title_zh": "Macaron-A2UI：面向个人智能体的生成式UI模型",
+        "daily_rank": 3,
+        "url": "https://huggingface.co/papers/2605.24830",
+        "source_url": "https://arxiv.org/html/2605.24830",
+        "thumbnail_url": "https://arxiv.org/html/2605.24830v1/x1.png",
+        "takeaway_zh": "提出Macaron-A2UI模型，使智能体能实时生成自然语言与可执行UI控件，突破纯文本交互瓶颈。",
+        "why_it_matters_zh": "为个人智能体提供动态界面生成能力，推动交互范式向可操作界面升级，提升复杂任务处理效率。",
+        "tags": [
+          "生成式UI",
+          "个人智能体",
+          "交互范式"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2605.23218",
+        "title": "A Coordination Layer for Agentic Society",
+        "title_zh": "面向智能体社会的协调层协议",
+        "daily_rank": 4,
+        "url": "https://huggingface.co/papers/2605.23218",
+        "source_url": "https://arxiv.org/html/2605.23218",
+        "thumbnail_url": "https://arxiv.org/html/2605.23218v1/x1.png",
+        "takeaway_zh": "提出Foundation Protocol图优先协调层，统一多智能体与人类实体，支持协作、结算与安全审计。",
+        "why_it_matters_zh": "解决多智能体规模化协作瓶颈，提供可组合且可审计的基础协议，为开放可控的AI经济社会奠定基础。",
+        "tags": [
+          "多智能体协作",
+          "基础设施协议",
+          "AI治理"
+        ],
+        "importance": 5,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2605.26115",
+        "title": "1 TriSplat reconstructs simulation-ready 3D scenes from sparse, unposed images. The feed-forward model predicts a triangle mesh in a single pass, enabling direct use in physics engines for locomotion, dynamics, and robotic grasping. The teaser is rendered with Blender.",
+        "title_zh": "TriSplat：面向仿真的稀疏无位姿图像3D场景重建",
+        "daily_rank": 5,
+        "url": "https://huggingface.co/papers/2605.26115",
+        "source_url": "https://arxiv.org/html/2605.26115",
+        "thumbnail_url": "https://arxiv.org/html/2605.26115v1/x1.png",
+        "takeaway_zh": "提出TriSplat前馈模型，单次推理即可从稀疏无位姿图像直接生成三角形网格。",
+        "why_it_matters_zh": "生成的显式网格可直接接入物理引擎，大幅简化机器人抓取与动力学仿真的3D资产构建流程。",
+        "tags": [
+          "3D重建",
+          "机器人仿真",
+          "前馈模型"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      }
+    ]
+  },
+  "items": [
+    {
+      "event_id": "3fe7ca48197c00",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Anthropic：半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用",
+      "brief": "半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Anthropic",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 77,
+      "evidence_urls": [
+        "https://36kr.com/p/3825882266407815?f=rss"
+      ],
+      "evidence_titles": [
+        "半价享顶级性能！天工 SkyClaw Agent 模型限时免费试用"
+      ],
+      "evidence_summaries": [
+        "5月26日，昆仑万维旗下天工 AI 正式推出高性能 Agent 模型 SkyClaw-v1.0，并同步发布轻量化版本 SkyClaw-v1.0-lite，兼具顶尖性能与极致性价比。 SkyClaw-v1.0 支持百万token上下文，深度适配各类真实智能体工作场景，重点优化复杂工具调用、多轮任务执行、代码生成、文件编辑、交互式应用构建与研究型数据分析。模型经过大规模 mid-train、高质量合成任务 SFT 与端到端强化学习优化，可在 OpenClaw、Hermes、Nanobot 等主流 Agent 环境中运行，同时适配Claude Code、Codex 等代码 Agent 框架，通用性与兼容性拉满。 Agent 模型和 Agent framework 的组合，正在改变模型的使用方式。过去，模型主要回答问题；现在，模型被放进一个能读取仓库、调用工具、编辑文件、运行测试、观察反馈的执行环境里，开始承担完整工作流。SkyClaw-v1.0 针对的正是这个阶段：让模型在长上下文和工具环境中持续推进任务，而不是只生成一段答案。 模型核心亮点 强任务完成能力 ：在主流 Agent benchmark 与 Skywork 内部 Claw 任务评测中，SkyClaw-v1.0 展现出稳定的多步任务执行能力。 全面超越主流开源模型 ：模型表现超过 Minimax 2.7、DeepSeek V4 Flash，以及 Qwen 3.6 35B A3B 和 27B 模型。 接近更大规模顶级模型 ：在 OpenClaw 相关任务上，SkyClaw-v1.0 表现接近 DeepSeek V4 Pro、Claude Opus 4.6、Qwen 3.6 Plus 等更大规模模型。 极具性价比 ：定价低于Minimax 2.7 与 Qwen 3.6 系列模型的一半，让高性能 Agent 能力具备规模化调用基础。 对于应用构建任务，我们建议将 SkyClaw-v1.0 运行在 Hermes、Claude Code 或 Codex 等 Agent 框架中，使其能够完成规划、文件编辑、测试执行与多轮迭代，而不是停留在代码片段生成。 核心训练思路：聚焦实景任务履约能力 SkyClaw-v1.0 的训练目标很明确：提升模型在 Agent framework 中完成真实任务的能力。训练重点放在三件事上：构建可交互的工具环境、筛选高质量任务轨迹，以及用强化学习提升多步执行稳定性。 智能体运行环境搭建Agent Environment 训练环境基于 OpenClaw-style agent frames 构建，覆盖文件读取、代码编辑、检索、测试、页面观察等高频 Agent 动作。模型在训练中不只是生成答案，而是需要选择工具、组合工具，并根据工具返回结果继续推进任务。 团队进一步结合真实 Claw 任务数据和线上 skill 使用反馈，构建工具关系图谱，用来合成更接近真实工作流的复杂任务。这样得到的数据不是孤立问答，而是包含目标拆解、工具调用、结果观察和迭代修正的完整执行链。 精细化合成训练数据Synthetic SFT Data SkyClaw-v1.0 使用大量合成 Agent 轨迹进行 mid-train 与 SFT。 这一步主要解决 Agent 训练中的噪声问题。低质量轨迹会让模型学到无效工具调用、错误观察解释或偏离目标的中间步骤。SkyClaw-v1.0 通过轨迹质量过滤和数据配比实验，保留更稳定、更可复用的任务执行模式。 智能体强化学习迭代Agentic RL 强化学习阶段继续在自建 Claw 环境中进行。模型需要在可交互环境里执行任务、观察反馈、处理失败，并继续修正动作。优化目标从“回答是否好看”转向“任务是否完成、过程是否稳定”。 因此，SkyClaw-v1.0 在 OpenClaw、Hermes、Nanobot、Claude Code、Codex 等环境中使用时，优势更多体现在持续执行、错误恢复和多轮迭代，而不是单次回答的表面完整度。 多场景实战应用 能力全面验证 在 Agent 框架中，SkyClaw-v1.0 可以完成规划、文件编辑、代码生成、测试运行、页面调试与多轮迭代，更适合交付完整应用、交互式游戏和研究型网页报告。这些示例均从自然语言提示开始，在 Hermes、Claude Code 和 Codex 等代理框架中完成。我们强烈建议在代理工作流中使用 SkyClaw-v1.0 作为模型，而不是作为独立的聊天模型使用。 全形态界面设计落地 SkyClaw-v1.0 可生成具备生产级布局、真实导航流程和完整交互状态的应用界面，覆盖多页面结构、列表筛选、详情页、表单、移动端适配等常见产品形态。 b. 沉浸式可交互游戏开发 SkyClaw-v1.0 可生成可运行的交互式游戏与物理模拟，不只输出页面结构，还能处理动画循环、碰撞检测、游戏规则、状态管理和用户输入。 c.专业网页制作 深度研究分析 SkyClaw-v1.0 也适合研究型网页和数据报告生成。模型可以围绕开放主题进行信息组织、数据整理、页面设计和可视化呈现，将自然语言需求转化为可交互的网页报告。 现已接入天工 Skywork，并开放免费试用 SkyClaw-v1.0模型已于2026年5月22日接入天工 Skywork。用户登陆https://tiangong.cn，打开天工Skywork即可直接使用，无需额外配置 Agent 环境。 即日起， SkyClaw-v1.0 与 SkyClaw-v1.0-lite 开放 2 至 4 周免费试用 。用户可以在真实任务中体验模型的长上下文理解、多轮执行、代码生成、工具调用和应用构建能力。 项目地址： https://skyworkai.github.io/skyclaw/ API访问地址： SkyClaw-v1: https://www.apifree.ai/model/skywork-ai/skyclaw-v1?tab=api SkyClaw-v1-lite: https://www.apifree.ai/model/skywork-ai/skyclaw-v1-lite?tab=api 对于开发者，SkyClaw-v1.0 同步通过 APIFree 开放 API 免费调用。注册 APIFree 账号并获取 API Key 后，即可通过兼容 OpenAI 格式的接口接入现有应用或 Agent 框架。API 支持流式输出、工具调用和多轮对话，适合接入代码 Agent、自研工作流系统、企业内部工具和自动化任务平台。 SkyClaw-v1.0 模型的上线，不是一次孤立的模型发布，而是昆仑万维 AGI 产品体系中的关键一环。在产品体系中，SkyClaw-v1.0 承担的是底层 Agent 模型能力升级：它通过百万上下文、Agentic RL、复杂工具调用优化和高性价比 API， 把 Agent 从“可演示”推进到“可高频调用、可真实交付”的阶段 。"
+      ],
+      "thumbnail_url": "https://img.36krcdn.com/hsossms/20260526/v2_3fe4898d8b0b421fb4ccb7d5ad018e72@5023078_oswg115817oswg1080oswg457_img_png?x-oss-process=image/quality,q_100/format,jpg/interlace,1",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "36Kr AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "f5f83a53d605bc",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot",
+      "brief": "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 52,
+      "evidence_urls": [
+        "https://www.ithome.com/0/955/658.htm"
+      ],
+      "evidence_titles": [
+        "微软 Win11 今年 AI 规划曝光：图片表格转 Excel、任务栏 Ask Copilot"
+      ],
+      "evidence_summaries": [
+        "IT之家 5 月 27 日消息，科技媒体 Windows Latest 昨日（5 月 26 日）发布博文， 深挖 14 页官方文档内容 ， 发现微软计划 2026 年上线任务栏版 Ask Copilot，以及为 Click to Do 整合 Excel 表格提取工具。 根据官方文档表述，微软首批将邀请企业端 Frontier 试用客户体验，但具体发布时间和可用范围仍可能调整。 任务栏版 Ask Copilot 根据官方文档表述，任务栏版 Ask Copilot 通过升级后的 Composer 体验，进入任务栏和开始菜单，并接入 Microsoft 365 Copilot 以及后台专用 AI 智能体。 任务栏 Ask Copilot 界面示意 用户不必再单独打开浏览器，就能调取公司政策、汇总当前任务、跟进项目更新，尽量减少打断。IT之家附上相关图片如下： Windows 11 任务栏中的 Ask Copilot 微软称 Ask Copilot 主要适用于合规负责人和管理者。这类人群经常要快速查政策更新、待处理问题和截止时间，而新的专用输入栏比传统搜索更干净、更快。 Windows 11 任务栏研究智能体 Click to Do 的 Excel 表格提取工具 该功能适用于 Windows 11 AI+ PC 设备，Click to Do 依靠本地视觉模型识别屏幕上的文字、图形和表格。 Click to Do 图片表格转 Excel 如果图片、网页或 PDF 里的关键业务数据被锁在不可复制的静态图表中，系统会识别表格边界，并把视觉数据直接转成可编辑的 Microsoft Excel 表格。微软称，这种设备端处理可以减少手动重录和复制粘贴后的排版错误。"
+      ],
+      "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/5/65345845-3115-49db-9c55-42342b155bf5.jpg?x-bce-process=image/format,f_auto",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "IT之家",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "f0ef6bf6f6b86d",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验",
+      "brief": "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 52,
+      "evidence_urls": [
+        "https://www.ithome.com/0/955/654.htm"
+      ],
+      "evidence_titles": [
+        "微软 Win11 推送 26x00.8524 预览版更新 KB5089573：加快应用启动速度，优化开始菜单、搜索等核心界面体验"
+      ],
+      "evidence_summaries": [
+        "IT之家 5 月 27 日消息，微软今日发布了最新的 Windows 11 24H2/25H2 五月可选更新 KB5089573，其中包含多项质量改进和基础改进，旨在提升 PC 运行速度、响应能力和可靠性。 根据更新日志，本次发布包含常规的操作系统性能改进，“可加速应用启动以及开始菜单、搜索和操作中心等核心外壳体验”。 微软还表示，该更新“改进了 Windows 在登录和锁屏界面、文件资源管理器、触摸屏设备上使用手势操作，以及在设置中更改主题时的可靠性”。 这些性能改进被称为“低延迟配置文件”，其原理是在极短时间内提高 CPU 频率以加快 PC 运行速度，可使系统弹窗响应速度最高提升 70%，应用启动速度最高提升 40%。 启用这些性能改进后，Windows 11 对输入的响应更加灵敏。微软此前已对这些改动进行了数周测试，Windows Central 实测确实获得了性能提升。 微软表示这些改进正在逐步推送中，意味着用户在安装更新后可能不会立刻看到性能提升。相反，性能改进将在未来几周内分多波逐步启用。 除了基础性能问题外，该 OS 更新还包括若干新功能，例如可同时与两个设备共享蓝牙、在设置体验过程中为设备命名，以及任务管理器的更新。 共享音频是本次更新的全新功能，允许两人从同一台 Windows 11 PC 同时收听相同音频。 该功能基于蓝牙 LE Audio 技术，允许多位用户在同一台 PC 上通过各自的蓝牙耳机或音箱同时收听相同的音频内容。 微软在官方博客中分享了一个场景：一位员工与朋友长途飞行时想一起看电影，却发现只能连接一副耳机，最终两人尴尬地各戴一只耳塞，却仍被环境噪音困扰。这一体验促使微软利用蓝牙 LE Audio 标准的演进，解决了传统蓝牙经典音频仅支持单一音频流的限制。 共享音频功能目前已面向 Windows 11 24H2（build 26100.8522 或更新）、25H2（build 26200.8522 或更新）及 26H1（build 28000.2179 或更新）版本逐步开放。 用户可同时连接两台兼容的蓝牙 LE Audio 配件（耳机、耳塞、音箱、助听器或人工耳蜗等），从任务栏扬声器图标打开快速设置，找到“共享音频”按钮，选择两台设备后点击“共享”即可开始。共享期间，Windows 仍可单独调节每台设备的音量，任务栏会显示共享图标以便快速管理。 在共享期间，Windows 仍支持媒体控制、音量调节及电量显示等功能。但如果共享音频为默认音频输出，则所有其他蓝牙音频输入输出端点暂时不可用；语音通话需使用 PC 内置或插入的麦克风。停止共享后，系统即恢复正常。 除此之外，KB5089573 还带来了其他一系列功能优化或更新，IT之家汇总如下： 放大镜功能增强：在放大或缩小、切换视图、开启或关闭颜色反色以及开关放大镜时均会收到有用提示。此外，放大镜现支持对允许的受保护内容进行放大，并提升了镜头模式下的移动平滑度。 Win11 任务管理器增加了对 NPU 使用情况的可见性：在“进程”“用户”和“详细信息”页面中新增可选的 NPU 列，“详细信息”页面还增加了 NPU 专用内存和 NPU 共享内存列。隶属于 GPU 中的神经引擎现可显示在“性能”页面上。同时新增“隔离”列（可选），用于显示哪些应用在 AppContainer 中运行。本次更新还修复了虚拟机从休眠恢复后性能页面 CPU 速度显示异常偏高的问题。 相机方面，Windows 11 的多应用相机功能允许多个应用程序同时访问相机。基本相机模式提供简化的相机功能，便于在相机无法正常工作时进行故障排除或提高稳定性。 Windows 设置新增功能：在设置过程中可在“设备名称”页面为用户文件夹选择自定义名称（须符合标准命名要求）。常规性能改进加速了应用启动以及开始菜单、搜索、操作中心等核心外壳体验。 Windows Hello 优化了生物识别服务在设备从现代待机恢复时的性能，减少了增强登录安全中因缺少安全注册元数据导致的意外验证阻止，并改进了锁屏和登录屏的登录行为 —— 当 Windows Hello 人脸或指纹设置可用时，即使之前使用过其他方法，每次登录也会默认使用该方式。若连续三次改用 PIN 登录，系统将保持 PIN 方式直到用户切换。 Windows 搜索框现在可以查找并优先显示仅输入两个字符的文件。存储方面，创建开发驱动器的对话框现支持以 GB 为单位指定大小（此前仅 MB），在“设置”>“系统”>“存储”中调整卷大小时同样支持该选项；查看临时文件时才会弹出用户账户控制提示，而非打开页面时立即弹出。 USB 改进了 USB4 扩展坞和集线器所连接显示器的可靠性，使显示器在待机恢复后更稳定点亮。USB3 堆栈增加了针对意外硬件故障的额外恢复措施，提高了 USB 设备的可靠性。传感器改进了对可能保持传感器集线器通电并消耗电量的应用的抵御能力。人机接口设备改进了因失败 HID 设备导致的电池续航问题，并优化了可能在待机期间发起 HID 传输的应用的电源卫生。 输入方面改进了登录屏幕上触摸键盘的可靠性（包括输入或更改密码时）、关闭输入切换器时 explorer.exe 的可靠性以及打开或导航到剪贴板历史记录时的性能。Times New Roman 字体家族更新，改进了希腊文和西里尔文中组合附加符号的渲染效果。 任务计划程序现在跨会话保存任务列表视图中的列宽调整。桌面图标改进了加载桌面应用快捷方式的可靠性。Microsoft Store 包含更改以改进下载性能和带宽使用，并改进了因 Windows Update 组策略设置导致的下载失败时的错误报告。可靠性改进了登录和锁屏界面、文件资源管理器、触摸屏设备上使用手势操作以及在设置中更改主题时的 Windows 可靠性。 常规推送功能中还包括安全启动方面的质量改进：Windows 质量更新包含额外的高置信度设备定位数据，增加了有资格自动接收新安全启动证书的设备覆盖率。同时新增了 LimitSecureBootRequiredServiceData 组策略和 MDM 设置，启用后将限制 Windows 发送的安全启动服务数据。 已知问题： 安装此更新（KB5089573）后，部分设备在安装 2026 年 5 月安全更新（KB5089549）时可能失败并报错 0x800f0922，原因在于 EFI 系统分区空闲空间不足（尤其是可用空间低于 10 MB 的设备）。 受影响的用户可通过修改注册表或使用已知问题回滚进行缓解。IT 管理部门可通过安装配置专用组策略以应用缓解措施。 相关阅读： 《 微软推送 Win11 RP 26x00.8514 预览版：新增音频共享、NPU 监控 》"
+      ],
+      "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/5/c6f86913-363d-4e7d-a5ed-f391c6198028.png?x-bce-process=image/format,f_auto",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "IT之家",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "a94ad0946021ec",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "Anthropic：微软将弃用Claude：太贵了还是薅明白了？",
+      "brief": "微软将弃用Claude：太贵了还是薅明白了。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Anthropic",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 51,
+      "evidence_urls": [
+        "https://www.infoq.cn/article/qdvNe5mRkvPkPS2JGMx2"
+      ],
+      "evidence_titles": [
+        "微软将弃用Claude：太贵了还是薅明白了？"
+      ],
+      "evidence_summaries": [
+        "点击查看原文>"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "InfoQ 中文",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 5,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "6eb45b3484bc3f",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "29股股息率超4%，机构依然看好价值板块中长期配置价值",
+      "brief": "29股股息率超4%，机构依然看好价值板块中长期配置价值。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "financing_or_ma",
+      "event_type_label": "融资/收购/估值",
+      "score": 40,
+      "evidence_urls": [
+        "https://36kr.com/newsflashes/3826794677506945?f=rss"
+      ],
+      "evidence_titles": [
+        "29股股息率超4%，机构依然看好价值板块中长期配置价值"
+      ],
+      "evidence_summaries": [
+        "在当下的市场环境中，价值板块与成长板块呈现出鲜明的风格对立与走势分化。前者主要指代银行、煤炭、白酒等传统行业龙头，其特征是估值处于低位、分红稳定，但业绩增长相对平缓；后者则聚焦于人工智能和半导体等高弹性、高估值的科技成长股。尽管宏观经济整体处于修复通道，但市场对白酒等传统消费需求的复苏强度仍存分歧，叠加地产行业的深度调整，导致相关产业链资产的风险偏好下移。不过，也有机构依然看好价值板块的中长期配置价值。（证券时报）"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "36Kr AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 14,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "71570f160596f7",
+      "bucket": "today_focus",
+      "section": "technical_progress",
+      "title": "MCP：AWS MCP服务器正式可用，全面适配API并支持IAM权限控制",
+      "brief": "AWS MCP服务器正式可用，全面适配API并支持IAM权限控制。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "MCP",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 71,
+      "evidence_urls": [
+        "https://www.infoq.cn/article/4gwXqyRPs4RTUIMpRte7"
+      ],
+      "evidence_titles": [
+        "AWS MCP服务器正式可用，全面适配API并支持IAM权限控制"
+      ],
+      "evidence_summaries": [
+        "点击查看原文>"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "InfoQ 中文",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "e79d53f9628f1d",
+      "bucket": "today_focus",
+      "section": "technical_progress",
+      "title": "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search",
+      "brief": "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 61,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/05/26/duckduckgo-installs-are-up-30-as-users-reject-being-force-fed-googles-ai-search"
+      ],
+      "evidence_titles": [
+        "DuckDuckGo installs are up 30% as users reject being ‘force-fed’ Google’s AI Search"
+      ],
+      "evidence_summaries": [
+        "Google overhauled Search at I/O 2026, replacing blue links with AI agents. The backlash has been swift. DuckDuckGo app installs spiked 30% as users seek a way out."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "TechCrunch AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "40762cd9fed820",
+      "bucket": "today_focus",
+      "section": "technical_progress",
+      "title": "Anthropic：Uber president says AI spending is getting ‘harder to justify’",
+      "brief": "Uber president says AI spending is getting ‘harder to justify’。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Anthropic",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 75,
+      "evidence_urls": [
+        "https://www.theverge.com/transportation/937116/uber-ai-investment-hard-to-justify"
+      ],
+      "evidence_titles": [
+        "Uber president says AI spending is getting ‘harder to justify’"
+      ],
+      "evidence_summaries": [
+        "After reportedly exhausting its annual AI budget just four months into 2026, Uber is now questioning whether it's actually seeing meaningful returns on its investments. In an interview with Rapid Response, Uber president and chief operating officer Andrew Macdonald said the company isn't seeing a connection between rising token consumption for Claude Code and more […]"
+      ],
+      "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/gettyimages-2245764686.jpg?quality=90&strip=all&crop=0,0,100,100",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "The Verge AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "6b8d3c1c3ba75b",
+      "bucket": "worth_tracking",
+      "section": "technical_progress",
+      "title": "OpenRouter more than doubles valuation to $1.3B in a year",
+      "brief": "OpenRouter more than doubles valuation to $1.3B in a year。资金流向比标题更重要，后续要看它投向算力、分发还是模型研发。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 61,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/05/26/openrouter-more-than-doubles-valuation-to-1-3b-in-a-year"
+      ],
+      "evidence_titles": [
+        "OpenRouter more than doubles valuation to $1.3B in a year"
+      ],
+      "evidence_summaries": [
+        "OpenRouter has raised a $113 million Series B led by CapitalG. Its 5x growth in usage over six months indicates the multi-AI-model future is here."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "TechCrunch AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "b66dc6c5e1b5d1",
+      "bucket": "today_focus",
+      "section": "industry_views",
+      "title": "OpenAI：Codex is very good. I'm especially impressed by how it uses the browse to test its own work.",
+      "brief": "Codex is very good. I'm especially impressed by how it uses the browse to test its own work。看点在代码工作流：是否能减少真实项目里的上下文切换和人工接线。",
+      "social_original_text": "Codex is very good. I'm especially impressed by how it uses the browse to test its own work.\n\nBut any design related / frontend tasks, Claude still wins.",
+      "translation_zh": "Codex 非常出色。我尤其印象深刻的是它能利用浏览功能自行测试工作成果。但在涉及设计或前端任务时，Claude 依然更胜一筹。",
+      "entity": "OpenAI",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 71.47,
+      "evidence_urls": [
+        "https://x.com/petergyang/status/2059099566377693305"
+      ],
+      "evidence_titles": [
+        "Codex is very good. I'm especially impressed by how it uses the browse to test its own work."
+      ],
+      "evidence_summaries": [
+        "Codex is very good. I'm especially impressed by how it uses the browse to test its own work.\n\nBut any design related / frontend tasks, Claude still wins."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Peter Yang"
+      ],
+      "source_display": "X: Peter Yang",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "petergyang"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 12.470772970092215,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "a95268ad45229f",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,",
+      "brief": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,。它更像能力温度计，价值在于帮助判断哪些 Agent 能从演示走向稳定任务。",
+      "social_original_text": "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code, and rate it on effectiveness. Why isn’t it a 10? How could it be made to be so?\n\nRun this a few times and you will be surprised how fast it gets astonishingly better\n\nAnd since it is in a skill file plus code with evals (LLM as judge) and unit tests, it stays better forever",
+      "translation_zh": "我所说的评估，就是直接告诉代理：根据我们讨论过的目标、原因和实际情况，用三种不同的前沿模型检查你的技能文件调用代码的输入输出，并对其有效性评分。为什么不是满分10分？如何改进才能达到？ 多次运行后，你会惊讶于它提升的速度之快，效果会显著改善。 由于这些改进被整合到技能文件和代码中，结合评估（LLM作为评判）和单元测试，优化效果将永久保持。",
+      "entity": "",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 52.46,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2059148823403082154"
+      ],
+      "evidence_titles": [
+        "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code,"
+      ],
+      "evidence_summaries": [
+        "By evals I mean literally tell the agent: given what we discussed about what we are doing and why and what happened, use three different frontier models to look at inputs and outputs of your skill file calling the code, and rate it on effectiveness. Why isn’t it a 10? How could it be made to be so?\n\nRun this a few times and you will be surprised how fast it gets astonishingly better\n\nAnd since it is in a skill file plus code with evals (LLM as judge) and unit tests, it stays better forever"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Garry Tan"
+      ],
+      "source_display": "X: Garry Tan",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "garrytan"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 7.456808469171364,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "eebb5aa06d73f2",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w",
+      "brief": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w",
+      "translation_zh": "最终，丰饶的黄金时代将是此类技术被构建并部署1000倍。 https://t.co/ezuSdcjE3w",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 30.81,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2059151927011909800"
+      ],
+      "evidence_titles": [
+        "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w"
+      ],
+      "evidence_summaries": [
+        "Ultimately the golden age of abundance will be this kind of tech built and deployed 1000x https://t.co/ezuSdcjE3w"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Garry Tan"
+      ],
+      "source_display": "X: Garry Tan",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "garrytan"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 10.806840011174874,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "39fb354ef04526",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "You have to think of tokenmaxxing as eating crab legs at the buffet.",
+      "brief": "You have to think of tokenmaxxing as eating crab legs at the buffet。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "You have to think of tokenmaxxing as eating crab legs at the buffet.\n\nThe buffet (all you can eat AI plans) is not going to last forever so you better eat all the crab legs while you still can.",
+      "translation_zh": "你得把 tokenmaxxing 当作在自助餐厅吃蟹腿。 自助餐（不限量 AI 套餐）不会永远持续，趁现在还能吃，赶紧把蟹腿吃个够。",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 20.53,
+      "evidence_urls": [
+        "https://x.com/petergyang/status/2059070818798465330"
+      ],
+      "evidence_titles": [
+        "You have to think of tokenmaxxing as eating crab legs at the buffet."
+      ],
+      "evidence_summaries": [
+        "You have to think of tokenmaxxing as eating crab legs at the buffet.\n\nThe buffet (all you can eat AI plans) is not going to last forever so you better eat all the crab legs while you still can."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Peter Yang"
+      ],
+      "source_display": "X: Peter Yang",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "petergyang"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 7.5257498915995305,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    },
+    {
+      "event_id": "3f96d58c85985e",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "This is going to be common from here",
+      "brief": "This is going to be common from here。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "This is going to be common from here\n\nBrave new world\n\nPrompters of the world unite https://t.co/rtuwOGiEzQ",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 22.29,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2059155926939299968"
+      ],
+      "evidence_titles": [
+        "This is going to be common from here"
+      ],
+      "evidence_summaries": [
+        "This is going to be common from here\n\nBrave new world\n\nPrompters of the world unite https://t.co/rtuwOGiEzQ"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Garry Tan"
+      ],
+      "source_display": "X: Garry Tan",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "garrytan"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 9.286662482156343,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    },
+    {
+      "event_id": "333fd8f371c68f",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "It's not everyday you get to host someone who's been to space.",
+      "brief": "It's not everyday you get to host someone who's been to space。先放在观察位，等更多证据出现后再判断它的行业分量。",
+      "social_original_text": "It's not everyday you get to host someone who's been to space.\n\nI'll be chatting with Group Captain Shubhanshu Shukla @gagan_shux at @spc_india.\n\nFighter Pilot. Astronaut. First Indian on the ISS. Incredible guest. Register to attend, BLR, May 28. https://t.co/D0fUyBRgfZ",
+      "translation_zh": "难得有机会接待去过太空的嘉宾。 我将在 @spc_india 与空军上校 Shubhanshu Shukla @gagan_shux 展开对谈。 战斗机飞行员。宇航员。首位登上国际空间站的印度人。令人惊叹的嘉宾。欢迎报名参与，地点：BLR，5月28日。 https://t.co/D0fUyBRgfZ",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 20.24,
+      "evidence_urls": [
+        "https://x.com/adityaag/status/2059135917122838705"
+      ],
+      "evidence_titles": [
+        "It's not everyday you get to host someone who's been to space."
+      ],
+      "evidence_summaries": [
+        "It's not everyday you get to host someone who's been to space.\n\nI'll be chatting with Group Captain Shubhanshu Shukla @gagan_shux at @spc_india.\n\nFighter Pilot. Astronaut. First Indian on the ISS. Incredible guest. Register to attend, BLR, May 28. https://t.co/D0fUyBRgfZ"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Aditya Agarwal"
+      ],
+      "source_display": "X: Aditya Agarwal",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "adityaag"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 7.235790156711096,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    }
+  ],
+  "trace": [
+    {
+      "event_id": "3fe7ca48197c00",
+      "score": 77,
+      "evidence_urls": [
+        "https://36kr.com/p/3825882266407815?f=rss"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "b66dc6c5e1b5d1",
+      "score": 71.47,
+      "evidence_urls": [
+        "https://x.com/petergyang/status/2059099566377693305"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 12.470772970092215,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "71570f160596f7",
+      "score": 71,
+      "evidence_urls": [
+        "https://www.infoq.cn/article/4gwXqyRPs4RTUIMpRte7"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "e79d53f9628f1d",
+      "score": 61,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/05/26/duckduckgo-installs-are-up-30-as-users-reject-being-force-fed-googles-ai-search"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "40762cd9fed820",
+      "score": 75,
+      "evidence_urls": [
+        "https://www.theverge.com/transportation/937116/uber-ai-investment-hard-to-justify"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "f5f83a53d605bc",
+      "score": 52,
+      "evidence_urls": [
+        "https://www.ithome.com/0/955/658.htm"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "f0ef6bf6f6b86d",
+      "score": 52,
+      "evidence_urls": [
+        "https://www.ithome.com/0/955/654.htm"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "a94ad0946021ec",
+      "score": 51,
+      "evidence_urls": [
+        "https://www.infoq.cn/article/qdvNe5mRkvPkPS2JGMx2"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 5,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "6eb45b3484bc3f",
+      "score": 40,
+      "evidence_urls": [
+        "https://36kr.com/newsflashes/3826794677506945?f=rss"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 14,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "6b8d3c1c3ba75b",
+      "score": 61,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/05/26/openrouter-more-than-doubles-valuation-to-1-3b-in-a-year"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "a95268ad45229f",
+      "score": 52.46,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2059148823403082154"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 7.456808469171364,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "eebb5aa06d73f2",
+      "score": 30.81,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2059151927011909800"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 10.806840011174874,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "39fb354ef04526",
+      "score": 20.53,
+      "evidence_urls": [
+        "https://x.com/petergyang/status/2059070818798465330"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 7.5257498915995305,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    },
+    {
+      "event_id": "3f96d58c85985e",
+      "score": 22.29,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2059155926939299968"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 9.286662482156343,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    },
+    {
+      "event_id": "333fd8f371c68f",
+      "score": 20.24,
+      "evidence_urls": [
+        "https://x.com/adityaag/status/2059135917122838705"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 7.235790156711096,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    }
+  ]
+}
