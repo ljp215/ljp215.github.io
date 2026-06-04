@@ -56,13 +56,13 @@
 
   <meta property="og:type" content="website">
 <meta property="og:title" content="Zane Blog">
-<meta property="og:url" content="http://luojinping.com/page/5/index.html">
+<meta property="og:url" content="https://luojinping.com/page/5/index.html">
 <meta property="og:site_name" content="Zane Blog">
 <meta property="og:locale" content="zh-CN">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zane Blog">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
-  <link rel="canonical" href="http://luojinping.com/page/5/">
+  <link rel="canonical" href="https://luojinping.com/page/5/">
 
 
 <script id="page-configurations">
@@ -240,7 +240,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/07/30/Java的wait和notify/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/07/30/Java的wait和notify/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -357,7 +357,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/07/14/synchronized详解/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/07/14/synchronized详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -465,7 +465,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/07/09/java锁优化/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/07/09/java锁优化/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -675,7 +675,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/06/22/volatile详解/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/06/22/volatile详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -815,7 +815,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/06/22/内存栅栏/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/06/22/内存栅栏/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -930,7 +930,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/06/19/这些年数据挖掘及反思/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/06/19/这些年数据挖掘及反思/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -1151,7 +1151,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/06/19/AbstractQueuedSynchronizer详解/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/06/19/AbstractQueuedSynchronizer详解/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -1261,7 +1261,7 @@
 </table>
 </div>
 <p>节点成为sync队列和condition队列构建的基础，在同步器中就包含了sync队列。同步器拥有三个成员变量：sync队列的头结点head、sync队列的尾节点tail和状态state。对于锁的获取，请求形成节点，将其挂载在尾部，而锁资源的转移（释放再获取）是从头部开始向后进行。对于同步器维护的状态state，多个线程对其的获取将会产生一个链式的结构。</p>
-<p><img src="http://ifeve.com/wp-content/uploads/2013/10/21.png" alt></p>
+
 <h2 id="API说明"><a href="#API说明" class="headerlink" title="API说明"></a>API说明</h2><p><br>实现自定义同步器时，需要使用同步器提供的getState()、setState()和compareAndSetState()方法来操纵状态的变迁。</p>
 <div class="table-container">
 <table>
@@ -1339,7 +1339,7 @@
 <li>状态的获取；<br>一旦成功的修改了状态，当前线程或者说节点，就被设置为头节点。</li>
 <li>sync队列的维护。<br>在获取资源未果的过程中条件不符合的情况下(不该自己，前驱节点不是头节点或者没有获取到资源)进入睡眠状态，停止线程调度器对当前节点线程的调度。<br>这时引入的一个释放的问题，也就是说使睡眠中的Node或者说线程获得通知的关键，就是前驱节点的通知，而这一个过程就是释放，释放会通知它的后继节点从睡眠中返回准备运行。<br>下面的流程图基本描述了一次acquire所需要经历的过程：</li>
 </ol>
-<p><img src="http://img2.tbcdn.cn/L1/461/1/t_9683_1379328542_928191748.png" alt></p>
+
 <p>如上图所示，其中的判定退出队列的条件，判定条件是否满足和休眠当前线程就是完成了自旋spin的过程。</p>
 <h2 id="release"><a href="#release" class="headerlink" title="release"></a>release</h2><p>public final boolean release(int arg)<br>在unlock方法的实现中，使用了同步器的release方法。相对于在之前的acquire方法中可以得出调用acquire，保证能够获取到锁（成功获取状态），而release则表示将状态设置回去，也就是将资源释放，或者说将锁释放。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">release</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tryRelease(arg)) &#123;</span><br><span class="line">        Node h = head;</span><br><span class="line">        <span class="keyword">if</span> (h != <span class="keyword">null</span> &amp;&amp; h.waitStatus != <span class="number">0</span>)</span><br><span class="line">            unparkSuccessor(h);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1370,10 +1370,10 @@
 <li>计算再次休眠的时间；<br>唤醒后的线程，计算仍需要休眠的时间，该时间表示为nanosTimeout = 原有nanosTimeout – now（当前时间）+ lastTime（睡眠之前记录的时间）。其中now – lastTime表示这次睡眠所持续的时间。</li>
 <li>休眠时间的判定。<br>唤醒后的线程，计算仍需要休眠的时间，并无阻塞的尝试再获取状态，如果失败后查看其nanosTimeout是否大于0，如果小于0，那么返回完全超时，没有获取到锁。 如果nanosTimeout小于等于1000L纳秒，则进入快速的自旋过程。那么快速自旋会造成处理器资源紧张吗？结果是不会，经过测算，开销看起来很小，几乎微乎其微。Doug Lea应该测算了在线程调度器上的切换造成的额外开销，因此在短时1000纳秒内就让当前线程进入快速自旋状态，如果这时再休眠相反会让nanosTimeout的获取时间变得更加不精确。<br>上述过程可以如下图所示：</li>
 </ol>
-<p><img src="http://img2.tbcdn.cn/L1/461/1/t_9683_1379328891_568034081.png" alt></p>
+
 <p>上述这个图中可以理解为在类似获取状态需要排队的基础上增加了一个超时控制的逻辑。每次超时的时间就是当前超时剩余的时间减去睡眠的时间，而在这个超时时间的基础上进行了判断，如果大于0那么继续睡眠（等待），可以看出这个超时版本的获取状态只是一个近似超时的获取状态，因此任何含有超时的调用基本结果就是近似于给定超时。</p>
 <h1 id="共享模式"><a href="#共享模式" class="headerlink" title="共享模式"></a>共享模式</h1><h2 id="acquireShared"><a href="#acquireShared" class="headerlink" title="acquireShared"></a>acquireShared</h2><p>public final void acquireShared(int arg)<br>调用该方法能够以共享模式获取状态，共享模式和之前的独占模式有所区别。以文件的查看为例，如果一个程序在对其进行读取操作，那么这一时刻，对这个文件的写操作就被阻塞，相反，这一时刻另一个程序对其进行同样的读操作是可以进行的。如果一个程序在对其进行写操作，那么所有的读与写操作在这一时刻就被阻塞，直到这个程序完成写操作。<br>以读写场景为例，描述共享和独占的访问模式，如下图所示：</p>
-<p><img src="http://img1.tbcdn.cn/L1/461/1/t_9683_1379328959_1702388031.png" alt></p>
+
 <p>上图中，红色代表被阻塞，绿色代表可以通过。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">void</span> <span class="title">acquireShared</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (tryAcquireShared(arg) &lt; <span class="number">0</span>)	doAcquireShared(arg); &#125; <span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">doAcquireShared</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123; 	<span class="keyword">final</span> Node node = addWaiter(Node.SHARED); 	<span class="keyword">boolean</span> failed = <span class="keyword">true</span>; 	<span class="keyword">try</span> &#123; 		<span class="keyword">boolean</span> interrupted = <span class="keyword">false</span>; 		<span class="keyword">for</span> (;;) &#123; 			<span class="keyword">final</span> Node p = node.predecessor(); 			<span class="keyword">if</span> (p == head) &#123; 				<span class="keyword">int</span> r = tryAcquireShared(arg); 				<span class="keyword">if</span> (r &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">					setHeadAndPropagate(node, r);</span><br><span class="line">					p.next = <span class="keyword">null</span>; <span class="comment">// help GC</span></span><br><span class="line">					<span class="keyword">if</span> (interrupted)</span><br><span class="line">						selfInterrupt();</span><br><span class="line">					failed = <span class="keyword">false</span>;</span><br><span class="line">					<span class="keyword">return</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;</span><br><span class="line">			<span class="keyword">if</span> (shouldParkAfterFailedAcquire(p, node) &amp;&amp;</span><br><span class="line">parkAndCheckInterrupt())</span><br><span class="line">			interrupted = <span class="keyword">true</span>;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125; <span class="keyword">finally</span> &#123;</span><br><span class="line">		<span class="keyword">if</span> (failed)</span><br><span class="line">			cancelAcquire(node);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>上述逻辑主要包括：</p>
@@ -1384,7 +1384,7 @@
 <li>获取共享状态成功；<br>在退出队列的条件上，和独占锁之间的主要区别在于获取共享状态成功之后的行为，而如果共享状态获取成功之后会判断后继节点是否是共享模式，如果是共享模式，那么就直接对其进行唤醒操作，也就是同时激发多个线程并发的运行。</li>
 <li>获取共享状态失败。<br>通过使用LockSupport将当前线程从线程调度器上摘下，进入休眠状态。<br>对于上述逻辑中，节点之间的通知过程如下图所示：</li>
 </ol>
-<p><img src="http://img1.tbcdn.cn/L1/461/1/t_9683_1379329217_1542967524.png" alt></p>
+
 <p>上图中，绿色表示共享节点，它们之间的通知和唤醒操作是在前驱节点获取状态时就进行的，红色表示独占节点，它的被唤醒必须取决于前驱节点的释放，也就是release操作，可以看出来图中的独占节点如果要运行，必须等待前面的共享节点均释放了状态才可以。而独占节点如果获取了状态，那么后续的独占式获取和共享式获取均被阻塞。</p>
 <h2 id="releaseShared"><a href="#releaseShared" class="headerlink" title="releaseShared"></a>releaseShared</h2><p>public final boolean releaseShared(int arg)<br>调用该方法释放共享状态，每次获取共享状态acquireShared都会操作状态，同样在共享锁释放的时候，也需要将状态释放。比如说，一个限定一定数量访问的同步工具，每次获取都是共享的，但是如果超过了一定的数量，将会阻塞后续的获取操作，只有当之前获取的消费者将状态释放才可以使阻塞的获取操作得以运行。</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">boolean</span> <span class="title">releaseShared</span><span class="params">(<span class="keyword">int</span> arg)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">if</span> (tryReleaseShared(arg)) &#123;</span><br><span class="line">        doReleaseShared();</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -1428,7 +1428,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/05/21/动态规划算法/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/05/21/动态规划算法/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -1559,7 +1559,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/04/13/Java线程中断/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/04/13/Java线程中断/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
@@ -1683,7 +1683,7 @@
   
   
   <div class="post-block home">
-    <link itemprop="mainEntityOfPage" href="http://luojinping.com/2015/04/13/-转-数据库的乐观锁和悲观锁/">
+    <link itemprop="mainEntityOfPage" href="https://luojinping.com/2015/04/13/-转-数据库的乐观锁和悲观锁/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Jinping Luo">
