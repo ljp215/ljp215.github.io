@@ -52,10 +52,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Anthropic 近期已出现 2 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：Anthropic正从“拼模型参数”转向“拼智能体基建”，托管式智能体、路由策略与安全沙箱直击生产环境可靠性与成本痛点。关注：80倍增速含计费模式切换水分，SWE-bench高分不等于复杂工程落地能力，需验证长程任务闭环的实际失败率与权限管控开销。",
         "reading_questions": [
-          "它解决的是能力问题、入口问题，还是成本问题？",
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？"
+          "当前智能体工作流的“不可验证环节”（如架构设计、安全审查）具体依赖哪些后训练技术（如DPO/GRPO或过程奖励模型）来对齐人类偏好？",
+          "企业从固定订阅转向按量计费后，如何结合提示词缓存命中率与动态路由策略建立Token预算熔断与异常调用监控机制？"
         ],
         "memory_subjects": [
           {
@@ -78,7 +78,27 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着大模型竞争重心从单一基准测试转向生产级智能体编排、动态路由成本控制与工程安全护栏基建。",
+          "skepticism": "80倍年化增速主要源于按量计费模式切换而非纯需求爆发，且SWE-bench高分难以反映真实遗留系统维护、模糊需求对齐与跨域协作的工程复杂度。",
+          "watch_points": [
+            "托管智能体在真实CI/CD流水线中的自动PR合并率、幻觉引入率与人工干预频次",
+            "Advisor/Critic路由架构在大规模并发下的Token成本节约比例、冷启动延迟与状态一致性",
+            "能力曲线预测与实际开发者人效提升（如需求交付周期、线上缺陷率）的拟合度及企业预算消耗曲线"
+          ],
+          "related_sources": [
+            {
+              "title": "Anthropic在Code With Claude上发布托管式智能体、主动式工作流与能力曲线",
+              "url": "https://www.infoq.cn/article/4lvrePvgNC6vuCKkvZKe"
+            },
+            {
+              "title": "Anthropic Official News & Releases",
+              "url": "https://www.anthropic.com/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "6479f456ff66f9",
@@ -124,10 +144,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "xAI 近期已出现 2 次相关信号；这条可放在「AI Safety / Policy」脉络下看，和此前「CollectionLoRA: Collecting 50 Effects in 1 LoRA via Multi-Teacher On-Policy Distillation」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "此披露非孤立事件，而是AI算力基建从“唯电力论”转向“水电双约束”的标志性信号。对从业者而言，冷却架构演进与选址策略将直接决定大模型训练成本与交付周期。需警惕企业将SEC合规披露包装为技术叙事，实际瓶颈更多取决于区域水务政策与工程迭代，而非单纯算力堆叠。后续应聚焦WUE指标与替代方案落地。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "在电力与水资源双重约束下，下一代大模型训练集群的架构设计将如何调整以优化PUE/WUE？",
+          "企业披露此类风险后，是否会加速推动闭式循环冷却或AI原生低功耗芯片的商业化落地？"
         ],
         "memory_subjects": [
           {
@@ -145,7 +165,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着AI算力基建的物理约束已从单一电力瓶颈扩展至水资源红线，直接重塑数据中心选址逻辑与冷却技术路线的商业优先级。",
+          "skepticism": "需验证该条款是SEC强制合规披露还是xAI实际面临区域性缺水危机，且企业常以风险提示对冲未来基建延期责任，未必代表底层冷却技术已遇实质瓶颈。",
+          "watch_points": [
+            "SEC问询函公开后，该风险条款的具体触发条件与量化阈值",
+            "xAI/SpaceX数据中心实际WUE（水利用效率）指标及液冷/干冷技术替代方案的投资占比",
+            "美国各州针对AI数据中心用水的监管政策收紧趋势及电价/水价联动机制"
+          ],
+          "related_sources": [
+            {
+              "title": "SpaceX IPO 文件新增风险提示：AI 数据中心面临水资源短缺风险",
+              "url": "https://www.ithome.com/0/958/465.htm"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "f71930a42a3385",
@@ -191,10 +227,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "OpenAI 近期已出现 4 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：OpenAI 借 AWS 补齐企业级合规、采购与网络隔离短板，是前沿模型与代码 Agent 规模化落地的关键基建。关注点：Codex 能否在 AWS VPC 内实现真正的代码 Agent 闭环（而非 API 透传）；实际推理延迟、数据驻留策略与定价将决定企业迁移意愿。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "该集成在数据主权、合规审计与计费模型上，相比直连 OpenAI API 或 Azure 有何实质性差异？",
+          "Codex 在 AWS 上是否支持本地代码库的私有化索引与 Agent 自主调试，还是仅限云端 Prompt 交互？"
         ],
         "memory_subjects": [
           {
@@ -222,7 +258,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "打通 AWS 企业级 IAM、VPC 隔离与采购流程，显著降低前沿模型与代码 Agent 进入传统 IT 架构的合规与集成门槛。",
+          "skepticism": "需验证该集成是深度原生架构还是 API 代理转售，且 Codex 在复杂企业代码库中的 Agent 自主调试能力与数据隔离承诺是否被营销话术夸大。",
+          "watch_points": [
+            "AWS PrivateLink 集成下的实际推理延迟与数据出网成本",
+            "Codex 在 AWS 环境中的代码 Agent 闭环（自动跑测试/修复）落地指标",
+            "企业客户对数据训练豁免、审计日志与 VPC 隔离的实际采用率"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI frontier models and Codex are now available on AWS",
+              "url": "https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "dab5c4208ef8c7",
@@ -268,10 +320,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Google DeepMind 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：Gemini Spark标志着LLM从对话交互向常驻后台Agent的范式跨越，多步工具调用与权限校验已跑通。关注点：需警惕长尾任务幻觉、持续后台运行的算力成本与隐私越界，重点验证其错误恢复机制与人机协同摩擦。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "Agent在跨应用状态同步时，如何保证事务一致性与权限最小化？",
+          "当前架构下，持续后台轮询与事件驱动哪种更经济可靠？"
         ],
         "memory_subjects": [
           {
@@ -294,7 +346,23 @@
             "key": "ai-safety-policy",
             "label": "AI Safety / Policy"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "验证了“设定即遗忘”型Agent在跨应用复杂工作流中的工程可行性，是工具调用架构与后训练对齐走向规模化落地的关键节点。",
+          "skepticism": "实测已暴露模糊指令下的工具链断裂，所谓“始终受控”可能掩盖高延迟、持续推理成本及数据越权风险，Demo存在明显场景筛选偏差。",
+          "watch_points": [
+            "复杂多步任务的真实成功率与自动回滚/纠错机制",
+            "24/7后台常驻的推理成本模型与隐私数据隔离架构",
+            "面向开发者的工具调用API开放程度与标准化程度"
+          ],
+          "related_sources": [
+            {
+              "title": "Gemini’s new AI agent is about as good as Google’s demo",
+              "url": "https://www.theverge.com/tech/941138/google-gemini-spark-ai-agent-hands-on"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "c3e6fdd3ea6103",
@@ -338,10 +406,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：企业AI落地正从“拼上下文窗口”转向“确定性逻辑+LLM引导”的混合架构。关注点：IBM提出用静态分析、知识图谱等“Agent Logic”压缩LLM搜索空间，宣称显著降本提效。需警惕其指标基于内部专有工具，且该概念本质是传统程序分析的工程化封装。后续看该范式能否脱离IBM生态复现，并与Agent后训练技术融合。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "传统程序分析/规则引擎与LLM的协同边界如何界定？何时应强制走确定性逻辑，何时应交由模型概率推理？",
+          "在缺乏高质量Agent交互轨迹数据的情况下，中小企业如何低成本构建、验证并持续迭代此类混合架构？"
         ],
         "memory_subjects": [
           {
@@ -354,7 +422,27 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着企业级AI从“大模型单点能力竞赛”转向“确定性工程逻辑与概率模型协同”的架构范式，直击生产环境成本、幻觉与长周期工作流可靠性痛点。",
+          "skepticism": "核心指标（30倍Token节省、覆盖率提升）基于IBM闭源工具与内部数据集，缺乏第三方开源复现，且“Agent Logic”有将传统静态分析与规则引擎重新包装之嫌。",
+          "watch_points": [
+            "核心Agent Logic框架或评估基准是否开源，以及在非IBM代码库/工作流上的跨厂商复现结果",
+            "该确定性引导范式与GRPO/DPO等基于轨迹优化的Agent后训练路线的效能对比与融合路径",
+            "非IBM生态企业在金融、制造等强合规场景中的实际ROI、长尾故障率与运维成本数据"
+          ],
+          "related_sources": [
+            {
+              "title": "Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic",
+              "url": "https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption"
+            },
+            {
+              "title": "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines",
+              "url": "https://arxiv.org/abs/2310.03714"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       }
     ],
     "worth_tracking": [
@@ -400,12 +488,28 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "JetBrains推出12B MoE模型Mellum2，标志IDE巨头从API集成转向垂直模型自研。12B MoE精准匹配IDE低延迟与成本诉求，但需警惕参数营销掩盖激活规模与路由开销。JetBrains缺预训练基因，大概率为开源基座后训练。后续看代码基准实测、端侧部署及生态采纳。",
         "reading_questions": [
-          "它解决的是能力问题、入口问题，还是成本问题？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "Mellum2的稀疏路由机制如何保证跨编程语言生成的一致性与可解释性？",
+          "该模型在JetBrains AI Assistant中的实际替换率与API成本下降幅度是多少？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "垂直IDE场景自研12B MoE模型，为开发者工具链提供低延迟、高隐私的代码生成底座，推动AI编程向领域稀疏架构演进。",
+          "skepticism": "12B MoE的激活参数量、路由延迟及训练数据配比未透明披露，需验证其是否为开源基座微调套壳，以及MoE在复杂多语言代码中的专家坍缩风险。",
+          "watch_points": [
+            "开源权重与量化版本（GGUF/AWQ）的发布进度及端侧VRAM占用",
+            "SWE-bench/HumanEval等代码基准的透明评测数据与对比基线",
+            "IDE插件实际调用延迟、长上下文利用率及企业私有化部署反馈"
+          ],
+          "related_sources": [
+            {
+              "title": "Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains",
+              "url": "https://huggingface.co/blog/JetBrains/mellum2-launch"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "a3719063e70e61",
@@ -451,10 +555,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Google DeepMind 近期已有相关记忆：苹果WWDC将推AI升级：Gemini蒸馏模型本地运行，但技术栈外部依赖显著。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
+        "memory_note": "判断：此为典型的工作流整合PR，非模型底层突破。重点在于多模态AI如何嵌入创意生产管线（一致性控制、Vibe Coding、人机协同迭代）。关注：内部实验模型与定制工具的实际泛化能力、公开API的可用性，以及非头部团队复现该管线的成本与门槛。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "公开版Gemini API能否在不依赖内部微调与定制工具的情况下，达到同等质量与帧级一致性？",
+          "此类AI辅助管线对传统创意软件生态的替代边界在哪里，中小团队应如何构建可复用的技术护城河？"
         ],
         "memory_subjects": [
           {
@@ -462,7 +566,23 @@
             "key": "google-deepmind",
             "label": "Google DeepMind"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "展示了头部大厂将多模态大模型从单点能力演示推向工业化创意管线的落地范式，标志着AI应用重心正式转向工作流编排与工具链整合。",
+          "skepticism": "文中大量依赖未公开的“实验性模型”与内部定制工具，且高度强调人工精修与迭代提示，实际自动化程度与公开版Gemini的真实能力存在显著信息差。",
+          "watch_points": [
+            "内部定制管线（如Nano Banana一致性控制、Antigravity Vibe Coding）是否开放为公共API或SDK",
+            "开发者社区复现该多模态创意工作流的实际算力成本、推理延迟与成功率",
+            "该模式在营销/内容生产场景的ROI数据及规模化部署的稳定性"
+          ],
+          "related_sources": [
+            {
+              "title": "How Google used Gemini and other AI products to build I/O 2026",
+              "url": "https://blog.google/innovation-and-ai/technology/ai/io-2026-google-ai"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "5c1c39e897dcb3",
@@ -508,10 +628,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Anthropic 近期已有相关记忆：Claude Code——文档中未提及的所有可配置选项。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
+        "memory_note": "判断：Anthropic启动IPO是AI资本化关键节点，但$965B估值属私募定价，需警惕公开市场重估。关注点：S-1披露的真实营收结构、算力成本占比及SpaceX $15B/年数据中心协议对毛利率的实际影响。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "公开市场盈利要求是否会迫使Anthropic放缓前沿模型研发或提高API价格？",
+          "$15B/年算力绑定是构建基础设施护城河，还是成为固定成本负担？"
         ],
         "memory_subjects": [
           {
@@ -519,7 +639,27 @@
             "key": "anthropic",
             "label": "Anthropic"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "推动大模型行业从私募烧钱转向公开市场盈利考核，倒逼算力成本、API定价与企业采用率的透明化。",
+          "skepticism": "私募高估值未经历公开市场流动性检验，$15B/年固定算力支出可能挤压毛利率，且保密申报掩盖了客户集中度与真实盈利路径。",
+          "watch_points": [
+            "SEC公开S-1文件中的营收拆分、毛利率与算力成本占比",
+            "上市后API定价策略与模型迭代节奏是否受财报压力影响",
+            "SpaceX数据中心协议的实际利用率与对推理/训练吞吐的边际贡献"
+          ],
+          "related_sources": [
+            {
+              "title": "Anthropic has officially filed to go public | The Verge",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/941016/anthropic-has-officially-filed-to-go-public"
+            },
+            {
+              "title": "Anthropic Official Blog",
+              "url": "https://www.anthropic.com/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "d0ef09ef365333",
@@ -565,10 +705,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：NVIDIA 以 RTX Spark 切入端侧 Agent PC，本质是推理算力下沉与系统级生态卡位，而非单纯硬件迭代。关注点：本地 Agent 的权限沙箱闭环、CUDA 推理栈在端侧的能效比，以及 Windows 系统级调度能否真正替代传统 GUI 交互。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "端侧模型压缩与量化是否会显著削弱 Agent 的复杂任务规划与多步推理能力，导致“本地可用”但“云端更强”的割裂？",
+          "在 vLLM、llama.cpp 等开源推理框架已高度优化的背景下，NVIDIA 的 CUDA 生态壁垒在端侧能否有效转化为开发者留存率？"
         ],
         "memory_subjects": [
           {
@@ -576,7 +716,27 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着 AI 推理与 Agent 执行从云端向端侧 PC 的架构迁移，可能重塑个人计算交互范式与本地算力分发格局。",
+          "skepticism": "需验证 1 petaflop 宣称算力在端侧散热与功耗限制下的真实持续输出，以及“安全沙箱+工具调用”在复杂跨应用场景中的延迟与可靠性是否被营销叙事放大。",
+          "watch_points": [
+            "实际上市定价与 Mac Mini/传统 x86 AI PC 的性价比对比，及开发者对本地 CUDA 推理栈的适配与迁移成本。",
+            "微软 Windows 沙箱对 Agent 跨进程权限管控的 API 开放程度，与第三方工具链（如 OpenClaw）的集成稳定性。",
+            "端侧 Agent 在长上下文与多模态输入下的实际响应延迟、内存占用及量化精度损失，能否支撑“免点击”复杂工作流。"
+          ],
+          "related_sources": [
+            {
+              "title": "Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP | TechCrunch",
+              "url": "https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp"
+            },
+            {
+              "title": "NVIDIA RTX Spark 个人电脑 | NVIDIA 官方",
+              "url": "https://www.nvidia.cn/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "b091af4ff97e2d",
@@ -628,10 +788,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "OpenAI 近期已出现 4 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：此问折射AI编程正从“交互式对话”向“持久化工作流”演进，核心诉求是降低开发者上下文切换与人工接线成本。关注点：两者在状态持久化、工具调用失败重试、CI/CD集成深度及长程任务可靠性上的底层架构差异，而非营销命名。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "在复杂多模块项目中，AI自动化工作流如何保证代码生成的一致性与变更可追溯性？",
+          "当定时任务触发模型幻觉或外部API调用失败时，两者的降级策略与人工接管机制有何差异？"
         ],
         "memory_subjects": [
           {
@@ -654,7 +814,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着AI代码助手从单次问答向可编排、自动化的研发基础设施演进，直接决定Agent在真实DevOps与持续交付场景的落地效能。",
+          "skepticism": "需警惕“自动化/例程”仅为简单定时脚本或Prompt链包装，其在长上下文保持、复杂依赖解析、生产级容错与权限隔离上仍缺乏公开基准验证。",
+          "watch_points": [
+            "两者在长程代码任务中的状态管理与错误自愈机制实测表现",
+            "与现有CI/CD流水线（如GitHub Actions/GitLab CI）的原生集成深度与沙箱隔离能力",
+            "开源社区或企业生产环境中的实际采用率、任务成功率与人工介入频率"
+          ],
+          "related_sources": [
+            {
+              "title": "Twitter/X 原始讨论帖",
+              "url": "https://x.com/petergyang/status/2061277577785000203"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "f12e9a9167fe66",
@@ -706,10 +882,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：企业Agent落地瓶颈确在上下文工程，但本质是数据治理与权限架构，非模型能力问题。关注点：警惕云厂商将“强制上云”包装为AI刚需；实际突破依赖权限感知检索、隐性知识数字化流程及动作安全闭环，而非单纯堆砌连接器。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "如何在不强制数据上云的前提下，实现跨遗留系统的权限对齐与上下文安全注入？",
+          "FDE/SI模式能否沉淀为标准化产品，还是注定沦为高成本定制服务？"
         ],
         "memory_subjects": [
           {
@@ -727,7 +903,27 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "上下文质量与权限对齐直接决定企业Agent的幻觉率、合规性与ROI，是从Demo走向生产的关键分水岭。",
+          "skepticism": "“上下文是头号问题”带有云存储厂商叙事色彩；企业数据上云成本极高，且隐性知识数字化是组织变革难题，非技术单点可解。",
+          "watch_points": [
+            "权限感知型RAG/Agent架构（如动态ACL映射与零信任调用）的工程化进展",
+            "流程挖掘（Process Mining）与大模型结合提取隐性工作流的实际转化率",
+            "企业级Agent基准测试是否从Web模拟转向真实ERP/CRM环境下的动作成功率与合规审计"
+          ],
+          "related_sources": [
+            {
+              "title": "This is effectively the #1 problem for AI agents in the enterprise.",
+              "url": "https://x.com/levie/status/2061247380897579500"
+            },
+            {
+              "title": "Building Effective Agents (Anthropic Research)",
+              "url": "https://www.anthropic.com/research/building-effective-agents"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "d9b9051d1841e8",
@@ -857,10 +1053,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：该吐槽直指当前编程智能体“聊天式交互”与真实工程工作流的错位。关注点：Agent需从被动响应转向主动协作，核心在于上下文状态管理、任务自主拆解与IDE深度集成，而非拟人化话术优化。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "如何设计Agent的交互协议与状态同步机制以匹配异步、状态驱动的工程流？",
+          "哪些底层能力（长期记忆、分层规划、工具链编排）是跨越‘被动执行’到‘主动协作’的技术前提？"
         ],
         "memory_subjects": [
           {
@@ -873,7 +1069,27 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "揭示了AI编程工具从对话范式向工程协作范式演进时，交互设计与工作流集成的关键瓶颈。",
+          "skepticism": "“联合创始人”是产品修辞而非技术现实，当前Agent缺乏长期记忆、架构级理解与业务上下文，过度拟人化易掩盖其在代码可靠性、安全边界与长程规划上的短板。",
+          "watch_points": [
+            "IDE原生集成与状态机设计是否逐步替代Chat式对话界面",
+            "Agent在真实PR/Issue中的上下文保持率与人工接管频次变化",
+            "团队级研发指标（交付吞吐量、缺陷率、上下文切换成本）是否因Agent协作模式改善"
+          ],
+          "related_sources": [
+            {
+              "title": "Cursor: AI-Powered IDE Architecture & Workflow",
+              "url": "https://www.cursor.com/"
+            },
+            {
+              "title": "GitHub Copilot Workspace: Technical Overview",
+              "url": "https://github.blog/2024-04-29-introducing-github-copilot-workspace/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "a10c36468e24b0",
@@ -1035,10 +1251,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Anthropic 近期已出现 2 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：Anthropic正从“拼模型参数”转向“拼智能体基建”，托管式智能体、路由策略与安全沙箱直击生产环境可靠性与成本痛点。关注：80倍增速含计费模式切换水分，SWE-bench高分不等于复杂工程落地能力，需验证长程任务闭环的实际失败率与权限管控开销。",
         "reading_questions": [
-          "它解决的是能力问题、入口问题，还是成本问题？",
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？"
+          "当前智能体工作流的“不可验证环节”（如架构设计、安全审查）具体依赖哪些后训练技术（如DPO/GRPO或过程奖励模型）来对齐人类偏好？",
+          "企业从固定订阅转向按量计费后，如何结合提示词缓存命中率与动态路由策略建立Token预算熔断与异常调用监控机制？"
         ],
         "memory_subjects": [
           {
@@ -1061,7 +1277,27 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着大模型竞争重心从单一基准测试转向生产级智能体编排、动态路由成本控制与工程安全护栏基建。",
+          "skepticism": "80倍年化增速主要源于按量计费模式切换而非纯需求爆发，且SWE-bench高分难以反映真实遗留系统维护、模糊需求对齐与跨域协作的工程复杂度。",
+          "watch_points": [
+            "托管智能体在真实CI/CD流水线中的自动PR合并率、幻觉引入率与人工干预频次",
+            "Advisor/Critic路由架构在大规模并发下的Token成本节约比例、冷启动延迟与状态一致性",
+            "能力曲线预测与实际开发者人效提升（如需求交付周期、线上缺陷率）的拟合度及企业预算消耗曲线"
+          ],
+          "related_sources": [
+            {
+              "title": "Anthropic在Code With Claude上发布托管式智能体、主动式工作流与能力曲线",
+              "url": "https://www.infoq.cn/article/4lvrePvgNC6vuCKkvZKe"
+            },
+            {
+              "title": "Anthropic Official News & Releases",
+              "url": "https://www.anthropic.com/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "6479f456ff66f9",
@@ -1107,10 +1343,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "xAI 近期已出现 2 次相关信号；这条可放在「AI Safety / Policy」脉络下看，和此前「CollectionLoRA: Collecting 50 Effects in 1 LoRA via Multi-Teacher On-Policy Distillation」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "此披露非孤立事件，而是AI算力基建从“唯电力论”转向“水电双约束”的标志性信号。对从业者而言，冷却架构演进与选址策略将直接决定大模型训练成本与交付周期。需警惕企业将SEC合规披露包装为技术叙事，实际瓶颈更多取决于区域水务政策与工程迭代，而非单纯算力堆叠。后续应聚焦WUE指标与替代方案落地。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "在电力与水资源双重约束下，下一代大模型训练集群的架构设计将如何调整以优化PUE/WUE？",
+          "企业披露此类风险后，是否会加速推动闭式循环冷却或AI原生低功耗芯片的商业化落地？"
         ],
         "memory_subjects": [
           {
@@ -1128,7 +1364,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着AI算力基建的物理约束已从单一电力瓶颈扩展至水资源红线，直接重塑数据中心选址逻辑与冷却技术路线的商业优先级。",
+          "skepticism": "需验证该条款是SEC强制合规披露还是xAI实际面临区域性缺水危机，且企业常以风险提示对冲未来基建延期责任，未必代表底层冷却技术已遇实质瓶颈。",
+          "watch_points": [
+            "SEC问询函公开后，该风险条款的具体触发条件与量化阈值",
+            "xAI/SpaceX数据中心实际WUE（水利用效率）指标及液冷/干冷技术替代方案的投资占比",
+            "美国各州针对AI数据中心用水的监管政策收紧趋势及电价/水价联动机制"
+          ],
+          "related_sources": [
+            {
+              "title": "SpaceX IPO 文件新增风险提示：AI 数据中心面临水资源短缺风险",
+              "url": "https://www.ithome.com/0/958/465.htm"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "8c56c003f0d230",
@@ -1172,12 +1424,28 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "JetBrains推出12B MoE模型Mellum2，标志IDE巨头从API集成转向垂直模型自研。12B MoE精准匹配IDE低延迟与成本诉求，但需警惕参数营销掩盖激活规模与路由开销。JetBrains缺预训练基因，大概率为开源基座后训练。后续看代码基准实测、端侧部署及生态采纳。",
         "reading_questions": [
-          "它解决的是能力问题、入口问题，还是成本问题？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "Mellum2的稀疏路由机制如何保证跨编程语言生成的一致性与可解释性？",
+          "该模型在JetBrains AI Assistant中的实际替换率与API成本下降幅度是多少？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "垂直IDE场景自研12B MoE模型，为开发者工具链提供低延迟、高隐私的代码生成底座，推动AI编程向领域稀疏架构演进。",
+          "skepticism": "12B MoE的激活参数量、路由延迟及训练数据配比未透明披露，需验证其是否为开源基座微调套壳，以及MoE在复杂多语言代码中的专家坍缩风险。",
+          "watch_points": [
+            "开源权重与量化版本（GGUF/AWQ）的发布进度及端侧VRAM占用",
+            "SWE-bench/HumanEval等代码基准的透明评测数据与对比基线",
+            "IDE插件实际调用延迟、长上下文利用率及企业私有化部署反馈"
+          ],
+          "related_sources": [
+            {
+              "title": "Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains",
+              "url": "https://huggingface.co/blog/JetBrains/mellum2-launch"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "a3719063e70e61",
@@ -1223,10 +1491,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Google DeepMind 近期已有相关记忆：苹果WWDC将推AI升级：Gemini蒸馏模型本地运行，但技术栈外部依赖显著。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
+        "memory_note": "判断：此为典型的工作流整合PR，非模型底层突破。重点在于多模态AI如何嵌入创意生产管线（一致性控制、Vibe Coding、人机协同迭代）。关注：内部实验模型与定制工具的实际泛化能力、公开API的可用性，以及非头部团队复现该管线的成本与门槛。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "公开版Gemini API能否在不依赖内部微调与定制工具的情况下，达到同等质量与帧级一致性？",
+          "此类AI辅助管线对传统创意软件生态的替代边界在哪里，中小团队应如何构建可复用的技术护城河？"
         ],
         "memory_subjects": [
           {
@@ -1234,7 +1502,23 @@
             "key": "google-deepmind",
             "label": "Google DeepMind"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "展示了头部大厂将多模态大模型从单点能力演示推向工业化创意管线的落地范式，标志着AI应用重心正式转向工作流编排与工具链整合。",
+          "skepticism": "文中大量依赖未公开的“实验性模型”与内部定制工具，且高度强调人工精修与迭代提示，实际自动化程度与公开版Gemini的真实能力存在显著信息差。",
+          "watch_points": [
+            "内部定制管线（如Nano Banana一致性控制、Antigravity Vibe Coding）是否开放为公共API或SDK",
+            "开发者社区复现该多模态创意工作流的实际算力成本、推理延迟与成功率",
+            "该模式在营销/内容生产场景的ROI数据及规模化部署的稳定性"
+          ],
+          "related_sources": [
+            {
+              "title": "How Google used Gemini and other AI products to build I/O 2026",
+              "url": "https://blog.google/innovation-and-ai/technology/ai/io-2026-google-ai"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "5c1c39e897dcb3",
@@ -1280,10 +1564,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Anthropic 近期已有相关记忆：Claude Code——文档中未提及的所有可配置选项。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
+        "memory_note": "判断：Anthropic启动IPO是AI资本化关键节点，但$965B估值属私募定价，需警惕公开市场重估。关注点：S-1披露的真实营收结构、算力成本占比及SpaceX $15B/年数据中心协议对毛利率的实际影响。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "公开市场盈利要求是否会迫使Anthropic放缓前沿模型研发或提高API价格？",
+          "$15B/年算力绑定是构建基础设施护城河，还是成为固定成本负担？"
         ],
         "memory_subjects": [
           {
@@ -1291,7 +1575,27 @@
             "key": "anthropic",
             "label": "Anthropic"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "推动大模型行业从私募烧钱转向公开市场盈利考核，倒逼算力成本、API定价与企业采用率的透明化。",
+          "skepticism": "私募高估值未经历公开市场流动性检验，$15B/年固定算力支出可能挤压毛利率，且保密申报掩盖了客户集中度与真实盈利路径。",
+          "watch_points": [
+            "SEC公开S-1文件中的营收拆分、毛利率与算力成本占比",
+            "上市后API定价策略与模型迭代节奏是否受财报压力影响",
+            "SpaceX数据中心协议的实际利用率与对推理/训练吞吐的边际贡献"
+          ],
+          "related_sources": [
+            {
+              "title": "Anthropic has officially filed to go public | The Verge",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/941016/anthropic-has-officially-filed-to-go-public"
+            },
+            {
+              "title": "Anthropic Official Blog",
+              "url": "https://www.anthropic.com/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       }
     ],
     "technical_progress": [
@@ -1339,10 +1643,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "OpenAI 近期已出现 4 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：OpenAI 借 AWS 补齐企业级合规、采购与网络隔离短板，是前沿模型与代码 Agent 规模化落地的关键基建。关注点：Codex 能否在 AWS VPC 内实现真正的代码 Agent 闭环（而非 API 透传）；实际推理延迟、数据驻留策略与定价将决定企业迁移意愿。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "该集成在数据主权、合规审计与计费模型上，相比直连 OpenAI API 或 Azure 有何实质性差异？",
+          "Codex 在 AWS 上是否支持本地代码库的私有化索引与 Agent 自主调试，还是仅限云端 Prompt 交互？"
         ],
         "memory_subjects": [
           {
@@ -1370,7 +1674,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "打通 AWS 企业级 IAM、VPC 隔离与采购流程，显著降低前沿模型与代码 Agent 进入传统 IT 架构的合规与集成门槛。",
+          "skepticism": "需验证该集成是深度原生架构还是 API 代理转售，且 Codex 在复杂企业代码库中的 Agent 自主调试能力与数据隔离承诺是否被营销话术夸大。",
+          "watch_points": [
+            "AWS PrivateLink 集成下的实际推理延迟与数据出网成本",
+            "Codex 在 AWS 环境中的代码 Agent 闭环（自动跑测试/修复）落地指标",
+            "企业客户对数据训练豁免、审计日志与 VPC 隔离的实际采用率"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI frontier models and Codex are now available on AWS",
+              "url": "https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "dab5c4208ef8c7",
@@ -1416,10 +1736,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "Google DeepMind 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：Gemini Spark标志着LLM从对话交互向常驻后台Agent的范式跨越，多步工具调用与权限校验已跑通。关注点：需警惕长尾任务幻觉、持续后台运行的算力成本与隐私越界，重点验证其错误恢复机制与人机协同摩擦。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "Agent在跨应用状态同步时，如何保证事务一致性与权限最小化？",
+          "当前架构下，持续后台轮询与事件驱动哪种更经济可靠？"
         ],
         "memory_subjects": [
           {
@@ -1442,7 +1762,23 @@
             "key": "ai-safety-policy",
             "label": "AI Safety / Policy"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "验证了“设定即遗忘”型Agent在跨应用复杂工作流中的工程可行性，是工具调用架构与后训练对齐走向规模化落地的关键节点。",
+          "skepticism": "实测已暴露模糊指令下的工具链断裂，所谓“始终受控”可能掩盖高延迟、持续推理成本及数据越权风险，Demo存在明显场景筛选偏差。",
+          "watch_points": [
+            "复杂多步任务的真实成功率与自动回滚/纠错机制",
+            "24/7后台常驻的推理成本模型与隐私数据隔离架构",
+            "面向开发者的工具调用API开放程度与标准化程度"
+          ],
+          "related_sources": [
+            {
+              "title": "Gemini’s new AI agent is about as good as Google’s demo",
+              "url": "https://www.theverge.com/tech/941138/google-gemini-spark-ai-agent-hands-on"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "c3e6fdd3ea6103",
@@ -1486,10 +1822,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：企业AI落地正从“拼上下文窗口”转向“确定性逻辑+LLM引导”的混合架构。关注点：IBM提出用静态分析、知识图谱等“Agent Logic”压缩LLM搜索空间，宣称显著降本提效。需警惕其指标基于内部专有工具，且该概念本质是传统程序分析的工程化封装。后续看该范式能否脱离IBM生态复现，并与Agent后训练技术融合。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "传统程序分析/规则引擎与LLM的协同边界如何界定？何时应强制走确定性逻辑，何时应交由模型概率推理？",
+          "在缺乏高质量Agent交互轨迹数据的情况下，中小企业如何低成本构建、验证并持续迭代此类混合架构？"
         ],
         "memory_subjects": [
           {
@@ -1502,7 +1838,27 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着企业级AI从“大模型单点能力竞赛”转向“确定性工程逻辑与概率模型协同”的架构范式，直击生产环境成本、幻觉与长周期工作流可靠性痛点。",
+          "skepticism": "核心指标（30倍Token节省、覆盖率提升）基于IBM闭源工具与内部数据集，缺乏第三方开源复现，且“Agent Logic”有将传统静态分析与规则引擎重新包装之嫌。",
+          "watch_points": [
+            "核心Agent Logic框架或评估基准是否开源，以及在非IBM代码库/工作流上的跨厂商复现结果",
+            "该确定性引导范式与GRPO/DPO等基于轨迹优化的Agent后训练路线的效能对比与融合路径",
+            "非IBM生态企业在金融、制造等强合规场景中的实际ROI、长尾故障率与运维成本数据"
+          ],
+          "related_sources": [
+            {
+              "title": "Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic",
+              "url": "https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption"
+            },
+            {
+              "title": "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines",
+              "url": "https://arxiv.org/abs/2310.03714"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "d0ef09ef365333",
@@ -1548,10 +1904,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：NVIDIA 以 RTX Spark 切入端侧 Agent PC，本质是推理算力下沉与系统级生态卡位，而非单纯硬件迭代。关注点：本地 Agent 的权限沙箱闭环、CUDA 推理栈在端侧的能效比，以及 Windows 系统级调度能否真正替代传统 GUI 交互。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "端侧模型压缩与量化是否会显著削弱 Agent 的复杂任务规划与多步推理能力，导致“本地可用”但“云端更强”的割裂？",
+          "在 vLLM、llama.cpp 等开源推理框架已高度优化的背景下，NVIDIA 的 CUDA 生态壁垒在端侧能否有效转化为开发者留存率？"
         ],
         "memory_subjects": [
           {
@@ -1559,7 +1915,27 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着 AI 推理与 Agent 执行从云端向端侧 PC 的架构迁移，可能重塑个人计算交互范式与本地算力分发格局。",
+          "skepticism": "需验证 1 petaflop 宣称算力在端侧散热与功耗限制下的真实持续输出，以及“安全沙箱+工具调用”在复杂跨应用场景中的延迟与可靠性是否被营销叙事放大。",
+          "watch_points": [
+            "实际上市定价与 Mac Mini/传统 x86 AI PC 的性价比对比，及开发者对本地 CUDA 推理栈的适配与迁移成本。",
+            "微软 Windows 沙箱对 Agent 跨进程权限管控的 API 开放程度，与第三方工具链（如 OpenClaw）的集成稳定性。",
+            "端侧 Agent 在长上下文与多模态输入下的实际响应延迟、内存占用及量化精度损失，能否支撑“免点击”复杂工作流。"
+          ],
+          "related_sources": [
+            {
+              "title": "Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP | TechCrunch",
+              "url": "https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp"
+            },
+            {
+              "title": "NVIDIA RTX Spark 个人电脑 | NVIDIA 官方",
+              "url": "https://www.nvidia.cn/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       }
     ],
     "industry_views": [
@@ -1613,10 +1989,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "OpenAI 近期已出现 4 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：此问折射AI编程正从“交互式对话”向“持久化工作流”演进，核心诉求是降低开发者上下文切换与人工接线成本。关注点：两者在状态持久化、工具调用失败重试、CI/CD集成深度及长程任务可靠性上的底层架构差异，而非营销命名。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "在复杂多模块项目中，AI自动化工作流如何保证代码生成的一致性与变更可追溯性？",
+          "当定时任务触发模型幻觉或外部API调用失败时，两者的降级策略与人工接管机制有何差异？"
         ],
         "memory_subjects": [
           {
@@ -1639,7 +2015,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着AI代码助手从单次问答向可编排、自动化的研发基础设施演进，直接决定Agent在真实DevOps与持续交付场景的落地效能。",
+          "skepticism": "需警惕“自动化/例程”仅为简单定时脚本或Prompt链包装，其在长上下文保持、复杂依赖解析、生产级容错与权限隔离上仍缺乏公开基准验证。",
+          "watch_points": [
+            "两者在长程代码任务中的状态管理与错误自愈机制实测表现",
+            "与现有CI/CD流水线（如GitHub Actions/GitLab CI）的原生集成深度与沙箱隔离能力",
+            "开源社区或企业生产环境中的实际采用率、任务成功率与人工介入频率"
+          ],
+          "related_sources": [
+            {
+              "title": "Twitter/X 原始讨论帖",
+              "url": "https://x.com/petergyang/status/2061277577785000203"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "f12e9a9167fe66",
@@ -1691,10 +2083,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：企业Agent落地瓶颈确在上下文工程，但本质是数据治理与权限架构，非模型能力问题。关注点：警惕云厂商将“强制上云”包装为AI刚需；实际突破依赖权限感知检索、隐性知识数字化流程及动作安全闭环，而非单纯堆砌连接器。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "如何在不强制数据上云的前提下，实现跨遗留系统的权限对齐与上下文安全注入？",
+          "FDE/SI模式能否沉淀为标准化产品，还是注定沦为高成本定制服务？"
         ],
         "memory_subjects": [
           {
@@ -1712,7 +2104,27 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "上下文质量与权限对齐直接决定企业Agent的幻觉率、合规性与ROI，是从Demo走向生产的关键分水岭。",
+          "skepticism": "“上下文是头号问题”带有云存储厂商叙事色彩；企业数据上云成本极高，且隐性知识数字化是组织变革难题，非技术单点可解。",
+          "watch_points": [
+            "权限感知型RAG/Agent架构（如动态ACL映射与零信任调用）的工程化进展",
+            "流程挖掘（Process Mining）与大模型结合提取隐性工作流的实际转化率",
+            "企业级Agent基准测试是否从Web模拟转向真实ERP/CRM环境下的动作成功率与合规审计"
+          ],
+          "related_sources": [
+            {
+              "title": "This is effectively the #1 problem for AI agents in the enterprise.",
+              "url": "https://x.com/levie/status/2061247380897579500"
+            },
+            {
+              "title": "Building Effective Agents (Anthropic Research)",
+              "url": "https://www.anthropic.com/research/building-effective-agents"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "d9b9051d1841e8",
@@ -1842,10 +2254,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：该吐槽直指当前编程智能体“聊天式交互”与真实工程工作流的错位。关注点：Agent需从被动响应转向主动协作，核心在于上下文状态管理、任务自主拆解与IDE深度集成，而非拟人化话术优化。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "如何设计Agent的交互协议与状态同步机制以匹配异步、状态驱动的工程流？",
+          "哪些底层能力（长期记忆、分层规划、工具链编排）是跨越‘被动执行’到‘主动协作’的技术前提？"
         ],
         "memory_subjects": [
           {
@@ -1858,7 +2270,27 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "揭示了AI编程工具从对话范式向工程协作范式演进时，交互设计与工作流集成的关键瓶颈。",
+          "skepticism": "“联合创始人”是产品修辞而非技术现实，当前Agent缺乏长期记忆、架构级理解与业务上下文，过度拟人化易掩盖其在代码可靠性、安全边界与长程规划上的短板。",
+          "watch_points": [
+            "IDE原生集成与状态机设计是否逐步替代Chat式对话界面",
+            "Agent在真实PR/Issue中的上下文保持率与人工接管频次变化",
+            "团队级研发指标（交付吞吐量、缺陷率、上下文切换成本）是否因Agent协作模式改善"
+          ],
+          "related_sources": [
+            {
+              "title": "Cursor: AI-Powered IDE Architecture & Workflow",
+              "url": "https://www.cursor.com/"
+            },
+            {
+              "title": "GitHub Copilot Workspace: Technical Overview",
+              "url": "https://github.blog/2024-04-29-introducing-github-copilot-workspace/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "a10c36468e24b0",
@@ -2122,10 +2554,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "Anthropic 近期已出现 2 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "判断：Anthropic正从“拼模型参数”转向“拼智能体基建”，托管式智能体、路由策略与安全沙箱直击生产环境可靠性与成本痛点。关注：80倍增速含计费模式切换水分，SWE-bench高分不等于复杂工程落地能力，需验证长程任务闭环的实际失败率与权限管控开销。",
       "reading_questions": [
-        "它解决的是能力问题、入口问题，还是成本问题？",
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？"
+        "当前智能体工作流的“不可验证环节”（如架构设计、安全审查）具体依赖哪些后训练技术（如DPO/GRPO或过程奖励模型）来对齐人类偏好？",
+        "企业从固定订阅转向按量计费后，如何结合提示词缓存命中率与动态路由策略建立Token预算熔断与异常调用监控机制？"
       ],
       "memory_subjects": [
         {
@@ -2148,7 +2580,27 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "标志着大模型竞争重心从单一基准测试转向生产级智能体编排、动态路由成本控制与工程安全护栏基建。",
+        "skepticism": "80倍年化增速主要源于按量计费模式切换而非纯需求爆发，且SWE-bench高分难以反映真实遗留系统维护、模糊需求对齐与跨域协作的工程复杂度。",
+        "watch_points": [
+          "托管智能体在真实CI/CD流水线中的自动PR合并率、幻觉引入率与人工干预频次",
+          "Advisor/Critic路由架构在大规模并发下的Token成本节约比例、冷启动延迟与状态一致性",
+          "能力曲线预测与实际开发者人效提升（如需求交付周期、线上缺陷率）的拟合度及企业预算消耗曲线"
+        ],
+        "related_sources": [
+          {
+            "title": "Anthropic在Code With Claude上发布托管式智能体、主动式工作流与能力曲线",
+            "url": "https://www.infoq.cn/article/4lvrePvgNC6vuCKkvZKe"
+          },
+          {
+            "title": "Anthropic Official News & Releases",
+            "url": "https://www.anthropic.com/"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "6479f456ff66f9",
@@ -2194,10 +2646,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "xAI 近期已出现 2 次相关信号；这条可放在「AI Safety / Policy」脉络下看，和此前「CollectionLoRA: Collecting 50 Effects in 1 LoRA via Multi-Teacher On-Policy Distillation」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "此披露非孤立事件，而是AI算力基建从“唯电力论”转向“水电双约束”的标志性信号。对从业者而言，冷却架构演进与选址策略将直接决定大模型训练成本与交付周期。需警惕企业将SEC合规披露包装为技术叙事，实际瓶颈更多取决于区域水务政策与工程迭代，而非单纯算力堆叠。后续应聚焦WUE指标与替代方案落地。",
       "reading_questions": [
-        "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "在电力与水资源双重约束下，下一代大模型训练集群的架构设计将如何调整以优化PUE/WUE？",
+        "企业披露此类风险后，是否会加速推动闭式循环冷却或AI原生低功耗芯片的商业化落地？"
       ],
       "memory_subjects": [
         {
@@ -2215,7 +2667,23 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "标志着AI算力基建的物理约束已从单一电力瓶颈扩展至水资源红线，直接重塑数据中心选址逻辑与冷却技术路线的商业优先级。",
+        "skepticism": "需验证该条款是SEC强制合规披露还是xAI实际面临区域性缺水危机，且企业常以风险提示对冲未来基建延期责任，未必代表底层冷却技术已遇实质瓶颈。",
+        "watch_points": [
+          "SEC问询函公开后，该风险条款的具体触发条件与量化阈值",
+          "xAI/SpaceX数据中心实际WUE（水利用效率）指标及液冷/干冷技术替代方案的投资占比",
+          "美国各州针对AI数据中心用水的监管政策收紧趋势及电价/水价联动机制"
+        ],
+        "related_sources": [
+          {
+            "title": "SpaceX IPO 文件新增风险提示：AI 数据中心面临水资源短缺风险",
+            "url": "https://www.ithome.com/0/958/465.htm"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "8c56c003f0d230",
@@ -2259,12 +2727,28 @@
         "DuplicatePenalty": 0,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "",
+      "memory_note": "JetBrains推出12B MoE模型Mellum2，标志IDE巨头从API集成转向垂直模型自研。12B MoE精准匹配IDE低延迟与成本诉求，但需警惕参数营销掩盖激活规模与路由开销。JetBrains缺预训练基因，大概率为开源基座后训练。后续看代码基准实测、端侧部署及生态采纳。",
       "reading_questions": [
-        "它解决的是能力问题、入口问题，还是成本问题？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "Mellum2的稀疏路由机制如何保证跨编程语言生成的一致性与可解释性？",
+        "该模型在JetBrains AI Assistant中的实际替换率与API成本下降幅度是多少？"
       ],
-      "memory_subjects": []
+      "memory_subjects": [],
+      "expert_review": {
+        "importance": "垂直IDE场景自研12B MoE模型，为开发者工具链提供低延迟、高隐私的代码生成底座，推动AI编程向领域稀疏架构演进。",
+        "skepticism": "12B MoE的激活参数量、路由延迟及训练数据配比未透明披露，需验证其是否为开源基座微调套壳，以及MoE在复杂多语言代码中的专家坍缩风险。",
+        "watch_points": [
+          "开源权重与量化版本（GGUF/AWQ）的发布进度及端侧VRAM占用",
+          "SWE-bench/HumanEval等代码基准的透明评测数据与对比基线",
+          "IDE插件实际调用延迟、长上下文利用率及企业私有化部署反馈"
+        ],
+        "related_sources": [
+          {
+            "title": "Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains",
+            "url": "https://huggingface.co/blog/JetBrains/mellum2-launch"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "a3719063e70e61",
@@ -2310,10 +2794,10 @@
         "DuplicatePenalty": 0,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "Google DeepMind 近期已有相关记忆：苹果WWDC将推AI升级：Gemini蒸馏模型本地运行，但技术栈外部依赖显著。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
+      "memory_note": "判断：此为典型的工作流整合PR，非模型底层突破。重点在于多模态AI如何嵌入创意生产管线（一致性控制、Vibe Coding、人机协同迭代）。关注：内部实验模型与定制工具的实际泛化能力、公开API的可用性，以及非头部团队复现该管线的成本与门槛。",
       "reading_questions": [
-        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "公开版Gemini API能否在不依赖内部微调与定制工具的情况下，达到同等质量与帧级一致性？",
+        "此类AI辅助管线对传统创意软件生态的替代边界在哪里，中小团队应如何构建可复用的技术护城河？"
       ],
       "memory_subjects": [
         {
@@ -2321,7 +2805,23 @@
           "key": "google-deepmind",
           "label": "Google DeepMind"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "展示了头部大厂将多模态大模型从单点能力演示推向工业化创意管线的落地范式，标志着AI应用重心正式转向工作流编排与工具链整合。",
+        "skepticism": "文中大量依赖未公开的“实验性模型”与内部定制工具，且高度强调人工精修与迭代提示，实际自动化程度与公开版Gemini的真实能力存在显著信息差。",
+        "watch_points": [
+          "内部定制管线（如Nano Banana一致性控制、Antigravity Vibe Coding）是否开放为公共API或SDK",
+          "开发者社区复现该多模态创意工作流的实际算力成本、推理延迟与成功率",
+          "该模式在营销/内容生产场景的ROI数据及规模化部署的稳定性"
+        ],
+        "related_sources": [
+          {
+            "title": "How Google used Gemini and other AI products to build I/O 2026",
+            "url": "https://blog.google/innovation-and-ai/technology/ai/io-2026-google-ai"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "5c1c39e897dcb3",
@@ -2367,10 +2867,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "Anthropic 近期已有相关记忆：Claude Code——文档中未提及的所有可配置选项。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
+      "memory_note": "判断：Anthropic启动IPO是AI资本化关键节点，但$965B估值属私募定价，需警惕公开市场重估。关注点：S-1披露的真实营收结构、算力成本占比及SpaceX $15B/年数据中心协议对毛利率的实际影响。",
       "reading_questions": [
-        "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "公开市场盈利要求是否会迫使Anthropic放缓前沿模型研发或提高API价格？",
+        "$15B/年算力绑定是构建基础设施护城河，还是成为固定成本负担？"
       ],
       "memory_subjects": [
         {
@@ -2378,7 +2878,27 @@
           "key": "anthropic",
           "label": "Anthropic"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "推动大模型行业从私募烧钱转向公开市场盈利考核，倒逼算力成本、API定价与企业采用率的透明化。",
+        "skepticism": "私募高估值未经历公开市场流动性检验，$15B/年固定算力支出可能挤压毛利率，且保密申报掩盖了客户集中度与真实盈利路径。",
+        "watch_points": [
+          "SEC公开S-1文件中的营收拆分、毛利率与算力成本占比",
+          "上市后API定价策略与模型迭代节奏是否受财报压力影响",
+          "SpaceX数据中心协议的实际利用率与对推理/训练吞吐的边际贡献"
+        ],
+        "related_sources": [
+          {
+            "title": "Anthropic has officially filed to go public | The Verge",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/941016/anthropic-has-officially-filed-to-go-public"
+          },
+          {
+            "title": "Anthropic Official Blog",
+            "url": "https://www.anthropic.com/"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "f71930a42a3385",
@@ -2424,10 +2944,10 @@
         "DuplicatePenalty": 0,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "OpenAI 近期已出现 4 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "判断：OpenAI 借 AWS 补齐企业级合规、采购与网络隔离短板，是前沿模型与代码 Agent 规模化落地的关键基建。关注点：Codex 能否在 AWS VPC 内实现真正的代码 Agent 闭环（而非 API 透传）；实际推理延迟、数据驻留策略与定价将决定企业迁移意愿。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "该集成在数据主权、合规审计与计费模型上，相比直连 OpenAI API 或 Azure 有何实质性差异？",
+        "Codex 在 AWS 上是否支持本地代码库的私有化索引与 Agent 自主调试，还是仅限云端 Prompt 交互？"
       ],
       "memory_subjects": [
         {
@@ -2455,7 +2975,23 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "打通 AWS 企业级 IAM、VPC 隔离与采购流程，显著降低前沿模型与代码 Agent 进入传统 IT 架构的合规与集成门槛。",
+        "skepticism": "需验证该集成是深度原生架构还是 API 代理转售，且 Codex 在复杂企业代码库中的 Agent 自主调试能力与数据隔离承诺是否被营销话术夸大。",
+        "watch_points": [
+          "AWS PrivateLink 集成下的实际推理延迟与数据出网成本",
+          "Codex 在 AWS 环境中的代码 Agent 闭环（自动跑测试/修复）落地指标",
+          "企业客户对数据训练豁免、审计日志与 VPC 隔离的实际采用率"
+        ],
+        "related_sources": [
+          {
+            "title": "OpenAI frontier models and Codex are now available on AWS",
+            "url": "https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "dab5c4208ef8c7",
@@ -2501,10 +3037,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "Google DeepMind 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "判断：Gemini Spark标志着LLM从对话交互向常驻后台Agent的范式跨越，多步工具调用与权限校验已跑通。关注点：需警惕长尾任务幻觉、持续后台运行的算力成本与隐私越界，重点验证其错误恢复机制与人机协同摩擦。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "Agent在跨应用状态同步时，如何保证事务一致性与权限最小化？",
+        "当前架构下，持续后台轮询与事件驱动哪种更经济可靠？"
       ],
       "memory_subjects": [
         {
@@ -2527,7 +3063,23 @@
           "key": "ai-safety-policy",
           "label": "AI Safety / Policy"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "验证了“设定即遗忘”型Agent在跨应用复杂工作流中的工程可行性，是工具调用架构与后训练对齐走向规模化落地的关键节点。",
+        "skepticism": "实测已暴露模糊指令下的工具链断裂，所谓“始终受控”可能掩盖高延迟、持续推理成本及数据越权风险，Demo存在明显场景筛选偏差。",
+        "watch_points": [
+          "复杂多步任务的真实成功率与自动回滚/纠错机制",
+          "24/7后台常驻的推理成本模型与隐私数据隔离架构",
+          "面向开发者的工具调用API开放程度与标准化程度"
+        ],
+        "related_sources": [
+          {
+            "title": "Gemini’s new AI agent is about as good as Google’s demo",
+            "url": "https://www.theverge.com/tech/941138/google-gemini-spark-ai-agent-hands-on"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "c3e6fdd3ea6103",
@@ -2571,10 +3123,10 @@
         "DuplicatePenalty": 0,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+      "memory_note": "判断：企业AI落地正从“拼上下文窗口”转向“确定性逻辑+LLM引导”的混合架构。关注点：IBM提出用静态分析、知识图谱等“Agent Logic”压缩LLM搜索空间，宣称显著降本提效。需警惕其指标基于内部专有工具，且该概念本质是传统程序分析的工程化封装。后续看该范式能否脱离IBM生态复现，并与Agent后训练技术融合。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "传统程序分析/规则引擎与LLM的协同边界如何界定？何时应强制走确定性逻辑，何时应交由模型概率推理？",
+        "在缺乏高质量Agent交互轨迹数据的情况下，中小企业如何低成本构建、验证并持续迭代此类混合架构？"
       ],
       "memory_subjects": [
         {
@@ -2587,7 +3139,27 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "标志着企业级AI从“大模型单点能力竞赛”转向“确定性工程逻辑与概率模型协同”的架构范式，直击生产环境成本、幻觉与长周期工作流可靠性痛点。",
+        "skepticism": "核心指标（30倍Token节省、覆盖率提升）基于IBM闭源工具与内部数据集，缺乏第三方开源复现，且“Agent Logic”有将传统静态分析与规则引擎重新包装之嫌。",
+        "watch_points": [
+          "核心Agent Logic框架或评估基准是否开源，以及在非IBM代码库/工作流上的跨厂商复现结果",
+          "该确定性引导范式与GRPO/DPO等基于轨迹优化的Agent后训练路线的效能对比与融合路径",
+          "非IBM生态企业在金融、制造等强合规场景中的实际ROI、长尾故障率与运维成本数据"
+        ],
+        "related_sources": [
+          {
+            "title": "Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic",
+            "url": "https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption"
+          },
+          {
+            "title": "DSPy: Compiling Declarative Language Model Calls into Self-Improving Pipelines",
+            "url": "https://arxiv.org/abs/2310.03714"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "d0ef09ef365333",
@@ -2633,10 +3205,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+      "memory_note": "判断：NVIDIA 以 RTX Spark 切入端侧 Agent PC，本质是推理算力下沉与系统级生态卡位，而非单纯硬件迭代。关注点：本地 Agent 的权限沙箱闭环、CUDA 推理栈在端侧的能效比，以及 Windows 系统级调度能否真正替代传统 GUI 交互。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "端侧模型压缩与量化是否会显著削弱 Agent 的复杂任务规划与多步推理能力，导致“本地可用”但“云端更强”的割裂？",
+        "在 vLLM、llama.cpp 等开源推理框架已高度优化的背景下，NVIDIA 的 CUDA 生态壁垒在端侧能否有效转化为开发者留存率？"
       ],
       "memory_subjects": [
         {
@@ -2644,7 +3216,27 @@
           "key": "agent-systems",
           "label": "Agent Systems"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "标志着 AI 推理与 Agent 执行从云端向端侧 PC 的架构迁移，可能重塑个人计算交互范式与本地算力分发格局。",
+        "skepticism": "需验证 1 petaflop 宣称算力在端侧散热与功耗限制下的真实持续输出，以及“安全沙箱+工具调用”在复杂跨应用场景中的延迟与可靠性是否被营销叙事放大。",
+        "watch_points": [
+          "实际上市定价与 Mac Mini/传统 x86 AI PC 的性价比对比，及开发者对本地 CUDA 推理栈的适配与迁移成本。",
+          "微软 Windows 沙箱对 Agent 跨进程权限管控的 API 开放程度，与第三方工具链（如 OpenClaw）的集成稳定性。",
+          "端侧 Agent 在长上下文与多模态输入下的实际响应延迟、内存占用及量化精度损失，能否支撑“免点击”复杂工作流。"
+        ],
+        "related_sources": [
+          {
+            "title": "Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP | TechCrunch",
+            "url": "https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp"
+          },
+          {
+            "title": "NVIDIA RTX Spark 个人电脑 | NVIDIA 官方",
+            "url": "https://www.nvidia.cn/"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "b091af4ff97e2d",
@@ -2696,10 +3288,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "OpenAI 近期已出现 4 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "判断：此问折射AI编程正从“交互式对话”向“持久化工作流”演进，核心诉求是降低开发者上下文切换与人工接线成本。关注点：两者在状态持久化、工具调用失败重试、CI/CD集成深度及长程任务可靠性上的底层架构差异，而非营销命名。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "在复杂多模块项目中，AI自动化工作流如何保证代码生成的一致性与变更可追溯性？",
+        "当定时任务触发模型幻觉或外部API调用失败时，两者的降级策略与人工接管机制有何差异？"
       ],
       "memory_subjects": [
         {
@@ -2722,7 +3314,23 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "标志着AI代码助手从单次问答向可编排、自动化的研发基础设施演进，直接决定Agent在真实DevOps与持续交付场景的落地效能。",
+        "skepticism": "需警惕“自动化/例程”仅为简单定时脚本或Prompt链包装，其在长上下文保持、复杂依赖解析、生产级容错与权限隔离上仍缺乏公开基准验证。",
+        "watch_points": [
+          "两者在长程代码任务中的状态管理与错误自愈机制实测表现",
+          "与现有CI/CD流水线（如GitHub Actions/GitLab CI）的原生集成深度与沙箱隔离能力",
+          "开源社区或企业生产环境中的实际采用率、任务成功率与人工介入频率"
+        ],
+        "related_sources": [
+          {
+            "title": "Twitter/X 原始讨论帖",
+            "url": "https://x.com/petergyang/status/2061277577785000203"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "f12e9a9167fe66",
@@ -2774,10 +3382,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+      "memory_note": "判断：企业Agent落地瓶颈确在上下文工程，但本质是数据治理与权限架构，非模型能力问题。关注点：警惕云厂商将“强制上云”包装为AI刚需；实际突破依赖权限感知检索、隐性知识数字化流程及动作安全闭环，而非单纯堆砌连接器。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "如何在不强制数据上云的前提下，实现跨遗留系统的权限对齐与上下文安全注入？",
+        "FDE/SI模式能否沉淀为标准化产品，还是注定沦为高成本定制服务？"
       ],
       "memory_subjects": [
         {
@@ -2795,7 +3403,27 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "上下文质量与权限对齐直接决定企业Agent的幻觉率、合规性与ROI，是从Demo走向生产的关键分水岭。",
+        "skepticism": "“上下文是头号问题”带有云存储厂商叙事色彩；企业数据上云成本极高，且隐性知识数字化是组织变革难题，非技术单点可解。",
+        "watch_points": [
+          "权限感知型RAG/Agent架构（如动态ACL映射与零信任调用）的工程化进展",
+          "流程挖掘（Process Mining）与大模型结合提取隐性工作流的实际转化率",
+          "企业级Agent基准测试是否从Web模拟转向真实ERP/CRM环境下的动作成功率与合规审计"
+        ],
+        "related_sources": [
+          {
+            "title": "This is effectively the #1 problem for AI agents in the enterprise.",
+            "url": "https://x.com/levie/status/2061247380897579500"
+          },
+          {
+            "title": "Building Effective Agents (Anthropic Research)",
+            "url": "https://www.anthropic.com/research/building-effective-agents"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "d9b9051d1841e8",
@@ -2925,10 +3553,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+      "memory_note": "判断：该吐槽直指当前编程智能体“聊天式交互”与真实工程工作流的错位。关注点：Agent需从被动响应转向主动协作，核心在于上下文状态管理、任务自主拆解与IDE深度集成，而非拟人化话术优化。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "如何设计Agent的交互协议与状态同步机制以匹配异步、状态驱动的工程流？",
+        "哪些底层能力（长期记忆、分层规划、工具链编排）是跨越‘被动执行’到‘主动协作’的技术前提？"
       ],
       "memory_subjects": [
         {
@@ -2941,7 +3569,27 @@
           "key": "ai-coding",
           "label": "AI Coding"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "揭示了AI编程工具从对话范式向工程协作范式演进时，交互设计与工作流集成的关键瓶颈。",
+        "skepticism": "“联合创始人”是产品修辞而非技术现实，当前Agent缺乏长期记忆、架构级理解与业务上下文，过度拟人化易掩盖其在代码可靠性、安全边界与长程规划上的短板。",
+        "watch_points": [
+          "IDE原生集成与状态机设计是否逐步替代Chat式对话界面",
+          "Agent在真实PR/Issue中的上下文保持率与人工接管频次变化",
+          "团队级研发指标（交付吞吐量、缺陷率、上下文切换成本）是否因Agent协作模式改善"
+        ],
+        "related_sources": [
+          {
+            "title": "Cursor: AI-Powered IDE Architecture & Workflow",
+            "url": "https://www.cursor.com/"
+          },
+          {
+            "title": "GitHub Copilot Workspace: Technical Overview",
+            "url": "https://github.blog/2024-04-29-introducing-github-copilot-workspace/"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "a10c36468e24b0",

@@ -52,10 +52,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -13
         },
-        "memory_note": "DeepSeek 近期已出现 2 次相关信号；这条可放在「AI Coding」脉络下看，和此前「EarlyTom: Early Token Compression Completes Fast Video Understanding」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：V4 Flash 上线是国产模型从刷榜走向工程落地的关键试探。关注点：mHC 架构与混合注意力能否在 1M 上下文与代码 Agent 中兑现低延迟，以及 13B 激活参数下的真实推理成本是否具备商业竞争力。",
         "reading_questions": [
-          "它解决的是能力问题、入口问题，还是成本问题？",
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？"
+          "13B 激活参数在 1M 上下文下的实际推理成本能否支撑高频 Agent 调用？",
+          "“灵活推理深度”是动态路由还是后训练策略，对输出一致性与幻觉率有何影响？"
         ],
         "memory_subjects": [
           {
@@ -68,7 +68,27 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "验证了国产混合注意力与 MoE 架构在超长上下文与代码推理场景的工程可用性，为低成本 Agent 部署提供新基线。",
+          "skepticism": "需警惕未披露的训练数据配比与对齐细节，基准分数与算力宣称可能依赖特定硬件优化，实际 API 延迟与稳定性需独立压测。",
+          "watch_points": [
+            "OpenCode Zen 实际调用下的 TTFT、TPS 与 KV Cache 显存占用曲线",
+            "独立社区对 V4 Flash 在长代码仓库与多步 Agent 任务上的复现结果",
+            "官方是否发布技术报告披露 mHC/CSA 架构细节与训练稳定性数据"
+          ],
+          "related_sources": [
+            {
+              "title": "DeepSeek | 深度求索",
+              "url": "https://www.deepseek.com/"
+            },
+            {
+              "title": "deepseekv4.wiki",
+              "url": "https://deepseekv4.wiki/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "45953ba0e378ce",
@@ -120,10 +140,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "OpenAI 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：OpenAI 正从“基准测试刷榜”转向“开发者工作流深水区”，直面 AI 编程工具的工程落地摩擦。关注点：能否突破大代码库上下文碎片化、Agent 跨会话状态丢失及工具链集成瓶颈，而非仅做表层交互优化。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "OpenAI 将如何通过后训练（如 DPO/GRPO）平衡 Agent 自主性与代码安全合规审查？",
+          "其推理基础设施是否会针对代码生成特有的结构化输出与长程依赖进行专项优化？"
         ],
         "memory_subjects": [
           {
@@ -141,7 +161,23 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着 AI 编程竞争核心从单点生成准确率，转向真实研发场景下的上下文连贯性与自动化管线集成能力。",
+          "skepticism": "需验证该反馈征集是否伴随底层架构升级（如长程记忆机制、确定性执行沙箱、后训练对齐策略优化），而非仅用于营销造势。",
+          "watch_points": [
+            "是否公开针对 Repo 级上下文压缩与跨会话状态保持的架构方案",
+            "Agent 自主循环在复杂重构/调试场景下的失败率与人工接管阈值变化",
+            "与主流 IDE、Git 及 CI/CD 工具的深度集成进度及企业级采纳率"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI Codex 开发者反馈征集",
+              "url": "https://x.com/thsottiaux/status/2060960564676034726"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "c994d0f130583e",
@@ -193,10 +229,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条属于「Inference Infrastructure」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：AI 正从“降本叙事”转向“产能扩张叙事”，符合杰文斯悖论在企业软件中的体现。关注点：该结论基于头部企业高管访谈，存在幸存者偏差；需验证效率红利是否被算力/推理成本抵消，以及新增岗位的真实产出比。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "企业如何量化 AI 带来的‘效率节省’并建立再投资闭环，而非陷入算力军备竞赛？",
+          "在推理成本尚未指数级下降前，中小企业能否复制这种‘扩张型’AI 落地路径？"
         ],
         "memory_subjects": [
           {
@@ -209,7 +245,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "打破“AI 必然裁员”的线性预期，提示技术管理者应将 AI 视为打破业务瓶颈的杠杆而非单纯的成本削减工具。",
+          "skepticism": "头部企业样本存在幸存者偏差，且“节省资金再投资”常被高估，实际可能被 GPU 推理成本、模型迭代开销及合规支出吞噬，净 ROI 需财务数据交叉验证。",
+          "watch_points": [
+            "头部 SaaS 财报中 AI 功能对 ACV 增长与毛利率的实际影响",
+            "企业 AI 算力/推理支出与人力成本的结构变化趋势",
+            "新增 AI 工程岗位（如 FDE、AI Agent 开发）的 6-12 个月留存率与业务指标挂钩情况"
+          ],
+          "related_sources": [
+            {
+              "title": "Aaron Levie on Enterprise AI Adoption Trends (X)",
+              "url": "https://x.com/levie/status/2060923684295221390"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "eb43030b215219",
@@ -261,10 +313,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "OpenAI 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "一线开发者对 OpenAI 与 Anthropic 的反馈呈现“梗图化”与“长文分析化”分野，折射出产品定位差异：OpenAI 重快速迭代与工具链整合，Anthropic 侧重可靠性与深度推理。需警惕社媒情绪替代工程指标，应聚焦 Agent 工作流落地率、API 稳定性与推理成本。后续验证代码生成基准、长上下文工程表现及企业采纳数据。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "社区反馈的“梗图化”与“长文分析化”分化，是否预示 AI 编程工具正走向“快迭代/重生态”与“稳对齐/重工程”的两条路线？",
+          "在构建生产级 Agent 时，开发者应如何根据任务容错率与成本约束，在两家模型的 API 可靠性与迭代速度间做架构权衡？"
         ],
         "memory_subjects": [
           {
@@ -282,7 +334,31 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "开发者社区情绪是 AI 基础设施选型与 Agent 工作流演进的领先指标，直接反映技术栈渗透路径与生态竞争格局。",
+          "skepticism": "社交媒体热度不等于工程可用性，梗图与长文可能掩盖 API 延迟、代码幻觉率、实际 Agent 编排成功率及企业级 SLA 等核心指标。",
+          "watch_points": [
+            "OpenAI 代码模型与 Anthropic Claude 在真实 Agent 工作流中的任务完成率、上下文窗口利用率与推理延迟对比",
+            "两家在代码后训练（如 DPO/GRPO 应用于编程指令对齐）与推理基础设施优化上的技术路线差异",
+            "企业级开发者从原型验证转向生产部署时的实际技术栈收敛趋势与成本结构变化"
+          ],
+          "related_sources": [
+            {
+              "title": "Anthropic Research: Claude & Alignment Methodology",
+              "url": "https://www.anthropic.com/research"
+            },
+            {
+              "title": "OpenAI Developer Documentation & API Updates",
+              "url": "https://platform.openai.com/docs"
+            },
+            {
+              "title": "Hugging Face Open LLM Leaderboard & Code Benchmarks",
+              "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "a18edd8134611a",
@@ -334,12 +410,32 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "",
+        "memory_note": "判断：AI 编程助手突破 500 万用户并重置额度，标志产品跨越早期尝鲜期，进入基建与留存博弈阶段。关注点：500 万是注册还是活跃？取消限流是推理成本可控的信号，还是短期营销？需验证其 /fast 路由策略与单位经济模型是否支撑长期策略，警惕规模增长掩盖单用户亏损。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "AI 编程工具的‘去限流’策略，是技术基建成熟的标志，还是资本补贴下的增长幻觉？",
+          "当开发者工作流深度绑定单一 AI IDE，其代码资产安全与供应商锁定风险如何评估？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "标志着 AI 原生开发工具跨越早期采用者鸿沟，行业竞争焦点正式转向推理成本控制、模型路由优化与开发者工作流深度集成。",
+          "skepticism": "需警惕“500万”为累计注册而非活跃指标，且临时取消限流可能掩盖推理成本压力或后台模型降级（如用小模型/缓存替代大模型）的实质。",
+          "watch_points": [
+            "重置限制后 30 日的 DAU/MAU 比值与核心功能使用频次",
+            "/fast 模式背后的推理路由架构（是否采用 MoE、KV Cache 优化或模型蒸馏降本）",
+            "企业级订阅转化率与私有化部署方案的商业化节奏"
+          ],
+          "related_sources": [
+            {
+              "title": "Cursor 官方公告与产品更新",
+              "url": "https://www.cursor.com/blog"
+            },
+            {
+              "title": "原始推文：Five million users would agree",
+              "url": "https://x.com/thsottiaux/status/2060964284117782996"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       }
     ],
     "worth_tracking": [
@@ -387,12 +483,28 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "判断：数据中心“黑盒化”正从工程问题演变为合规与社区治理风险。关注点：AI算力扩张的物理瓶颈已从芯片转向土地、电网与公众许可；透明度诉求若转化为强制披露或听证制度，将拉长基建周期、推高CapEx，并倒逼企业优化能效架构或转向边缘部署。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "AI企业如何在保障基础设施安全与满足社区知情权之间建立可操作的披露框架？",
+          "若选址与审批成本显著上升，是否会加速模型压缩、液冷技术或分布式推理架构的商业化？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "算力基建的社区许可与透明度正成为制约AI规模化落地的新型非技术瓶颈。",
+          "skepticism": "需验证该倡议能否跨越名人效应转化为具约束力的地方法规，以及“透明度”诉求是否会与数据中心物理安全、商业机密及电网调度产生实质性冲突。",
+          "watch_points": [
+            "各州是否出台数据中心环境影响强制披露与公众听证法案",
+            "头部云厂商是否发布自愿性透明度报告或调整选址策略",
+            "社区诉讼或监管审查对新建AI集群交付周期的实际延误数据"
+          ],
+          "related_sources": [
+            {
+              "title": "Erin Brockovich takes aim at data center secrecy | TechCrunch",
+              "url": "https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "49c46aa7beb49d",
@@ -438,12 +550,28 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "判断：行业正从技术狂热转向体验反噬期，核心矛盾是生成式对齐与确定性检索的冲突。关注点：1. 搜索产品 AI 化边界与事实性幻觉控制；2. 反 AI 情绪能否支撑独立产品商业化；3. 后训练阶段如何平衡商业转化指令与基础信息保真度。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "当 RLHF 过度优化商业转化或讨好型回复时，如何从数据配比或架构层面恢复信息检索的确定性？",
+          "开发者应如何评估“反 AI 情绪”带来的机会，是回归传统算法还是构建可解释/可干预的 AI 中间层？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "标志着 AI 产品从参数竞赛进入用户心智博弈期，直接倒逼基础模型后训练对齐策略与检索增强架构的重构。",
+          "skepticism": "需警惕将短期舆情等同于技术路线失败，DuckDuckGo 增长可能源于隐私诉求而非反 AI，且搜索拼写错误未必是 LLM 幻觉而是传统 NLP 缺陷。",
+          "watch_points": [
+            "Google/Bing AI Overviews 的事实准确率与用户留存数据变化",
+            "主打“无 AI/可开关 AI”的搜索或 Agent 产品能否跑通商业化",
+            "后训练阶段是否出现针对“过度拟人化/幻觉”的专项 DPO/RLHF 奖励函数设计"
+          ],
+          "related_sources": [
+            {
+              "title": "Making sense of the debate over AI psychosis | TechCrunch",
+              "url": "https://techcrunch.com/2026/05/31/making-sense-of-the-debate-over-ai-psychosis"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "6744fad3496b79",
@@ -489,12 +617,32 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "判断：典型“AI Agent+Web3”营销噱头，无实质技术落地。关注点：所谓“Agentic设备”与“AI资产工具”缺乏边缘计算、传感器数据流或大模型调用证据，奖励机制大概率为中心化补贴而非链上验证。此案例警示AI术语滥用正引发监管审查，从业者需警惕硬件赛道“贴牌AI”对技术信誉的稀释。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "在缺乏明确算力、数据输入与反馈闭环的情况下，该设备如何满足AI智能体（Agent）感知-决策-执行的基本定义？",
+          "此类营销叙事若持续泛滥，是否会促使FTC或各国监管机构出台针对“AI硬件”标签的强制披露标准？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "揭示消费级硬件滥用“AI Agent”与加密叙事进行营销包装的现状，为技术社区提供识别伪AI产品与应对监管合规风险的反面教材。",
+          "skepticism": "需验证其是否搭载真实边缘推理芯片或具备本地/云端模型调用链路，所谓“每口赚比特币”极可能是中心化积分返利而非真正的链上智能合约或PoW机制。",
+          "watch_points": [
+            "加州大麻管制局对“消费返利型”产品的合规裁定与处罚结果",
+            "第三方硬件拆解是否发现NPU、环境传感器及实际AI推理模块",
+            "官方是否公开“AI资产工具”的技术架构、API或开发者文档"
+          ],
+          "related_sources": [
+            {
+              "title": "I went looking for the AI weed vape that gives you Bitcoin for smoking | The Verge",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/933916/ai-powered-crypto-cannabis-vape"
+            },
+            {
+              "title": "California Department of Cannabis Control - Regulatory Framework",
+              "url": "https://cannabis.ca.gov/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "e12f61cc390da2",
@@ -540,10 +688,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条属于「AI Safety / Policy」的连续信号；此前相关项包括「CollectionLoRA: Collecting 50 Effects in 1 LoRA via Multi-Teacher On-Policy Distillation」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：非AI原生事件，但精准映射大模型上线前的“长尾安全边界”盲区。关注点：LLM产品常依赖RLHF对齐常规分布，却缺乏对极端语义触发器的鲁棒性设计。航空级安全协议启示我们，AI部署需从“能力优先”转向“失效安全优先”，建立类似红蓝对抗的边界压力测试，而非仅依赖基准测试刷榜。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "当前LLM安全对齐（RLHF/DPO）能否覆盖此类非典型语义触发？",
+          "AI产品如何平衡“用户体验”与“航空级安全冗余”？"
         ],
         "memory_subjects": [
           {
@@ -551,7 +699,27 @@
             "key": "ai-safety-policy",
             "label": "AI Safety / Policy"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "揭示AI产品从实验室到生产环境的核心断层：长尾语义触发与系统级安全协议的缺失。",
+          "skepticism": "警惕将航空安全叙事直接套用于AI，当前LLM安全护栏多依赖静态规则或弱泛化分类器，未必能真正拦截高维对抗性输入。",
+          "watch_points": [
+            "头部厂商是否将“极端语义压力测试”纳入发布前SOP",
+            "开源安全框架（如Llama Guard）对低概率高影响触发器的检测率演进",
+            "监管是否推动AI部署的“失效安全”认证标准"
+          ],
+          "related_sources": [
+            {
+              "title": "Red Teaming Language Models to Reduce Harms",
+              "url": "https://arxiv.org/abs/2212.08073"
+            },
+            {
+              "title": "Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations",
+              "url": "https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "bb21d44830e011",
@@ -603,12 +771,32 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -13
         },
-        "memory_note": "",
+        "memory_note": "该动态折射AI教育正从“内容数字化”转向“交互式AI陪练”。Joyce B的对战机制验证了游戏化+LLM代理在提升学习粘性上的潜力，但单点社交热度不等于产品壁垒。需关注其底层是轻量微调模型还是规则引擎包装，以及实际知识留存率与推理成本控制。后续看技术架构披露与规模化留存数据。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "Joyce B是端到端大模型驱动，还是基于RAG+规则引擎的混合架构？其教学反馈延迟与上下文窗口如何优化？",
+          "在K-12/CS启蒙场景中，如何量化评估AI陪练对计算思维培养的真实贡献，而非仅停留在互动时长指标？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "AI原生教育产品正通过“人机对战”机制验证LLM代理在提升学习动机与交互留存上的可行性，为垂直领域Agent落地提供早期信号。",
+          "skepticism": "缺乏对底层模型架构、幻觉控制、教育有效性对照及单次交互推理成本的披露，社交热度易掩盖“游戏化包装替代真实能力跃迁”的风险。",
+          "watch_points": [
+            "Brilliant是否披露Joyce B的模型选型、对齐策略（如DPO/RLHF用于教学对话）及防幻觉安全护栏",
+            "该功能在CS 101课程中的完课率、知识迁移效果与传统视频/习题模式的A/B测试数据",
+            "竞品（如Khanmigo、Duolingo Max）是否跟进同类Agent交互，以及行业如何平衡实时对话的推理成本与毛利率"
+          ],
+          "related_sources": [
+            {
+              "title": "Khan Academy Khanmigo: AI Tutoring Architecture & Safety",
+              "url": "https://blog.khanacademy.org/khanmigo/"
+            },
+            {
+              "title": "Hugging Face: Alignment Techniques for Educational LLMs",
+              "url": "https://huggingface.co/blog/educational-llm-alignment"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "9b4fe4161b4227",
@@ -660,12 +848,28 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "",
+        "memory_note": "判断：VC视角的“建设热潮未至旧金山”实为生态叙事，反映AI应用层从模型竞赛向工作流落地的过渡期阵痛。关注点：需剥离融资话术，聚焦开发者真实工具链采用率、本地算力调度效率及企业AI试点转化率，警惕将VC动员令误读为产业拐点。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "如何区分VC生态动员叙事与真实的开发者生产力跃迁？",
+          "当前阻碍旧金山AI产品规模化落地的核心工作流或算力瓶颈是什么？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "该观点揭示了AI创业地理分布与资本预期的错位，提示从业者关注模型能力向实际工作流转化的真实瓶颈。",
+          "skepticism": "“建设热潮”缺乏量化定义，可能是VC为刺激本地生态的叙事策略，需验证是否混淆了社交媒体热度与实际开发者生产力指标。",
+          "watch_points": [
+            "YC及湾区AI初创企业注册数、融资流向与开源贡献地理分布数据",
+            "SF地区企业级LLM API调用量、Agent框架部署率及从PoC到生产环境的转化率",
+            "本地推理基础设施（如vLLM/TGI集群）利用率与开发者工具链的实际留存指标"
+          ],
+          "related_sources": [
+            {
+              "title": "Garry Tan on X: Building boom & SF ecosystem",
+              "url": "https://x.com/garrytan/status/2060949003790176667"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       }
     ],
     "company_updates": [
@@ -713,10 +917,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -13
         },
-        "memory_note": "DeepSeek 近期已出现 2 次相关信号；这条可放在「AI Coding」脉络下看，和此前「EarlyTom: Early Token Compression Completes Fast Video Understanding」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：V4 Flash 上线是国产模型从刷榜走向工程落地的关键试探。关注点：mHC 架构与混合注意力能否在 1M 上下文与代码 Agent 中兑现低延迟，以及 13B 激活参数下的真实推理成本是否具备商业竞争力。",
         "reading_questions": [
-          "它解决的是能力问题、入口问题，还是成本问题？",
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？"
+          "13B 激活参数在 1M 上下文下的实际推理成本能否支撑高频 Agent 调用？",
+          "“灵活推理深度”是动态路由还是后训练策略，对输出一致性与幻觉率有何影响？"
         ],
         "memory_subjects": [
           {
@@ -729,7 +933,27 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "验证了国产混合注意力与 MoE 架构在超长上下文与代码推理场景的工程可用性，为低成本 Agent 部署提供新基线。",
+          "skepticism": "需警惕未披露的训练数据配比与对齐细节，基准分数与算力宣称可能依赖特定硬件优化，实际 API 延迟与稳定性需独立压测。",
+          "watch_points": [
+            "OpenCode Zen 实际调用下的 TTFT、TPS 与 KV Cache 显存占用曲线",
+            "独立社区对 V4 Flash 在长代码仓库与多步 Agent 任务上的复现结果",
+            "官方是否发布技术报告披露 mHC/CSA 架构细节与训练稳定性数据"
+          ],
+          "related_sources": [
+            {
+              "title": "DeepSeek | 深度求索",
+              "url": "https://www.deepseek.com/"
+            },
+            {
+              "title": "deepseekv4.wiki",
+              "url": "https://deepseekv4.wiki/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "14a2e683bacdf2",
@@ -775,12 +999,28 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "判断：数据中心“黑盒化”正从工程问题演变为合规与社区治理风险。关注点：AI算力扩张的物理瓶颈已从芯片转向土地、电网与公众许可；透明度诉求若转化为强制披露或听证制度，将拉长基建周期、推高CapEx，并倒逼企业优化能效架构或转向边缘部署。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "AI企业如何在保障基础设施安全与满足社区知情权之间建立可操作的披露框架？",
+          "若选址与审批成本显著上升，是否会加速模型压缩、液冷技术或分布式推理架构的商业化？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "算力基建的社区许可与透明度正成为制约AI规模化落地的新型非技术瓶颈。",
+          "skepticism": "需验证该倡议能否跨越名人效应转化为具约束力的地方法规，以及“透明度”诉求是否会与数据中心物理安全、商业机密及电网调度产生实质性冲突。",
+          "watch_points": [
+            "各州是否出台数据中心环境影响强制披露与公众听证法案",
+            "头部云厂商是否发布自愿性透明度报告或调整选址策略",
+            "社区诉讼或监管审查对新建AI集群交付周期的实际延误数据"
+          ],
+          "related_sources": [
+            {
+              "title": "Erin Brockovich takes aim at data center secrecy | TechCrunch",
+              "url": "https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "49c46aa7beb49d",
@@ -826,12 +1066,28 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "判断：行业正从技术狂热转向体验反噬期，核心矛盾是生成式对齐与确定性检索的冲突。关注点：1. 搜索产品 AI 化边界与事实性幻觉控制；2. 反 AI 情绪能否支撑独立产品商业化；3. 后训练阶段如何平衡商业转化指令与基础信息保真度。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "当 RLHF 过度优化商业转化或讨好型回复时，如何从数据配比或架构层面恢复信息检索的确定性？",
+          "开发者应如何评估“反 AI 情绪”带来的机会，是回归传统算法还是构建可解释/可干预的 AI 中间层？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "标志着 AI 产品从参数竞赛进入用户心智博弈期，直接倒逼基础模型后训练对齐策略与检索增强架构的重构。",
+          "skepticism": "需警惕将短期舆情等同于技术路线失败，DuckDuckGo 增长可能源于隐私诉求而非反 AI，且搜索拼写错误未必是 LLM 幻觉而是传统 NLP 缺陷。",
+          "watch_points": [
+            "Google/Bing AI Overviews 的事实准确率与用户留存数据变化",
+            "主打“无 AI/可开关 AI”的搜索或 Agent 产品能否跑通商业化",
+            "后训练阶段是否出现针对“过度拟人化/幻觉”的专项 DPO/RLHF 奖励函数设计"
+          ],
+          "related_sources": [
+            {
+              "title": "Making sense of the debate over AI psychosis | TechCrunch",
+              "url": "https://techcrunch.com/2026/05/31/making-sense-of-the-debate-over-ai-psychosis"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "6744fad3496b79",
@@ -877,12 +1133,32 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "",
+        "memory_note": "判断：典型“AI Agent+Web3”营销噱头，无实质技术落地。关注点：所谓“Agentic设备”与“AI资产工具”缺乏边缘计算、传感器数据流或大模型调用证据，奖励机制大概率为中心化补贴而非链上验证。此案例警示AI术语滥用正引发监管审查，从业者需警惕硬件赛道“贴牌AI”对技术信誉的稀释。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "在缺乏明确算力、数据输入与反馈闭环的情况下，该设备如何满足AI智能体（Agent）感知-决策-执行的基本定义？",
+          "此类营销叙事若持续泛滥，是否会促使FTC或各国监管机构出台针对“AI硬件”标签的强制披露标准？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "揭示消费级硬件滥用“AI Agent”与加密叙事进行营销包装的现状，为技术社区提供识别伪AI产品与应对监管合规风险的反面教材。",
+          "skepticism": "需验证其是否搭载真实边缘推理芯片或具备本地/云端模型调用链路，所谓“每口赚比特币”极可能是中心化积分返利而非真正的链上智能合约或PoW机制。",
+          "watch_points": [
+            "加州大麻管制局对“消费返利型”产品的合规裁定与处罚结果",
+            "第三方硬件拆解是否发现NPU、环境传感器及实际AI推理模块",
+            "官方是否公开“AI资产工具”的技术架构、API或开发者文档"
+          ],
+          "related_sources": [
+            {
+              "title": "I went looking for the AI weed vape that gives you Bitcoin for smoking | The Verge",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/933916/ai-powered-crypto-cannabis-vape"
+            },
+            {
+              "title": "California Department of Cannabis Control - Regulatory Framework",
+              "url": "https://cannabis.ca.gov/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "e12f61cc390da2",
@@ -928,10 +1204,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条属于「AI Safety / Policy」的连续信号；此前相关项包括「CollectionLoRA: Collecting 50 Effects in 1 LoRA via Multi-Teacher On-Policy Distillation」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：非AI原生事件，但精准映射大模型上线前的“长尾安全边界”盲区。关注点：LLM产品常依赖RLHF对齐常规分布，却缺乏对极端语义触发器的鲁棒性设计。航空级安全协议启示我们，AI部署需从“能力优先”转向“失效安全优先”，建立类似红蓝对抗的边界压力测试，而非仅依赖基准测试刷榜。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "当前LLM安全对齐（RLHF/DPO）能否覆盖此类非典型语义触发？",
+          "AI产品如何平衡“用户体验”与“航空级安全冗余”？"
         ],
         "memory_subjects": [
           {
@@ -939,7 +1215,27 @@
             "key": "ai-safety-policy",
             "label": "AI Safety / Policy"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "揭示AI产品从实验室到生产环境的核心断层：长尾语义触发与系统级安全协议的缺失。",
+          "skepticism": "警惕将航空安全叙事直接套用于AI，当前LLM安全护栏多依赖静态规则或弱泛化分类器，未必能真正拦截高维对抗性输入。",
+          "watch_points": [
+            "头部厂商是否将“极端语义压力测试”纳入发布前SOP",
+            "开源安全框架（如Llama Guard）对低概率高影响触发器的检测率演进",
+            "监管是否推动AI部署的“失效安全”认证标准"
+          ],
+          "related_sources": [
+            {
+              "title": "Red Teaming Language Models to Reduce Harms",
+              "url": "https://arxiv.org/abs/2212.08073"
+            },
+            {
+              "title": "Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations",
+              "url": "https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       }
     ],
     "technical_progress": [],
@@ -994,10 +1290,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "OpenAI 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "判断：OpenAI 正从“基准测试刷榜”转向“开发者工作流深水区”，直面 AI 编程工具的工程落地摩擦。关注点：能否突破大代码库上下文碎片化、Agent 跨会话状态丢失及工具链集成瓶颈，而非仅做表层交互优化。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "OpenAI 将如何通过后训练（如 DPO/GRPO）平衡 Agent 自主性与代码安全合规审查？",
+          "其推理基础设施是否会针对代码生成特有的结构化输出与长程依赖进行专项优化？"
         ],
         "memory_subjects": [
           {
@@ -1015,7 +1311,23 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "标志着 AI 编程竞争核心从单点生成准确率，转向真实研发场景下的上下文连贯性与自动化管线集成能力。",
+          "skepticism": "需验证该反馈征集是否伴随底层架构升级（如长程记忆机制、确定性执行沙箱、后训练对齐策略优化），而非仅用于营销造势。",
+          "watch_points": [
+            "是否公开针对 Repo 级上下文压缩与跨会话状态保持的架构方案",
+            "Agent 自主循环在复杂重构/调试场景下的失败率与人工接管阈值变化",
+            "与主流 IDE、Git 及 CI/CD 工具的深度集成进度及企业级采纳率"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI Codex 开发者反馈征集",
+              "url": "https://x.com/thsottiaux/status/2060960564676034726"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "c994d0f130583e",
@@ -1067,10 +1379,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条属于「Inference Infrastructure」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+        "memory_note": "判断：AI 正从“降本叙事”转向“产能扩张叙事”，符合杰文斯悖论在企业软件中的体现。关注点：该结论基于头部企业高管访谈，存在幸存者偏差；需验证效率红利是否被算力/推理成本抵消，以及新增岗位的真实产出比。",
         "reading_questions": [
-          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "企业如何量化 AI 带来的‘效率节省’并建立再投资闭环，而非陷入算力军备竞赛？",
+          "在推理成本尚未指数级下降前，中小企业能否复制这种‘扩张型’AI 落地路径？"
         ],
         "memory_subjects": [
           {
@@ -1083,7 +1395,23 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "打破“AI 必然裁员”的线性预期，提示技术管理者应将 AI 视为打破业务瓶颈的杠杆而非单纯的成本削减工具。",
+          "skepticism": "头部企业样本存在幸存者偏差，且“节省资金再投资”常被高估，实际可能被 GPU 推理成本、模型迭代开销及合规支出吞噬，净 ROI 需财务数据交叉验证。",
+          "watch_points": [
+            "头部 SaaS 财报中 AI 功能对 ACV 增长与毛利率的实际影响",
+            "企业 AI 算力/推理支出与人力成本的结构变化趋势",
+            "新增 AI 工程岗位（如 FDE、AI Agent 开发）的 6-12 个月留存率与业务指标挂钩情况"
+          ],
+          "related_sources": [
+            {
+              "title": "Aaron Levie on Enterprise AI Adoption Trends (X)",
+              "url": "https://x.com/levie/status/2060923684295221390"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "eb43030b215219",
@@ -1135,10 +1463,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "OpenAI 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+        "memory_note": "一线开发者对 OpenAI 与 Anthropic 的反馈呈现“梗图化”与“长文分析化”分野，折射出产品定位差异：OpenAI 重快速迭代与工具链整合，Anthropic 侧重可靠性与深度推理。需警惕社媒情绪替代工程指标，应聚焦 Agent 工作流落地率、API 稳定性与推理成本。后续验证代码生成基准、长上下文工程表现及企业采纳数据。",
         "reading_questions": [
-          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "社区反馈的“梗图化”与“长文分析化”分化，是否预示 AI 编程工具正走向“快迭代/重生态”与“稳对齐/重工程”的两条路线？",
+          "在构建生产级 Agent 时，开发者应如何根据任务容错率与成本约束，在两家模型的 API 可靠性与迭代速度间做架构权衡？"
         ],
         "memory_subjects": [
           {
@@ -1156,7 +1484,31 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ]
+        ],
+        "expert_review": {
+          "importance": "开发者社区情绪是 AI 基础设施选型与 Agent 工作流演进的领先指标，直接反映技术栈渗透路径与生态竞争格局。",
+          "skepticism": "社交媒体热度不等于工程可用性，梗图与长文可能掩盖 API 延迟、代码幻觉率、实际 Agent 编排成功率及企业级 SLA 等核心指标。",
+          "watch_points": [
+            "OpenAI 代码模型与 Anthropic Claude 在真实 Agent 工作流中的任务完成率、上下文窗口利用率与推理延迟对比",
+            "两家在代码后训练（如 DPO/GRPO 应用于编程指令对齐）与推理基础设施优化上的技术路线差异",
+            "企业级开发者从原型验证转向生产部署时的实际技术栈收敛趋势与成本结构变化"
+          ],
+          "related_sources": [
+            {
+              "title": "Anthropic Research: Claude & Alignment Methodology",
+              "url": "https://www.anthropic.com/research"
+            },
+            {
+              "title": "OpenAI Developer Documentation & API Updates",
+              "url": "https://platform.openai.com/docs"
+            },
+            {
+              "title": "Hugging Face Open LLM Leaderboard & Code Benchmarks",
+              "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "a18edd8134611a",
@@ -1208,12 +1560,32 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "",
+        "memory_note": "判断：AI 编程助手突破 500 万用户并重置额度，标志产品跨越早期尝鲜期，进入基建与留存博弈阶段。关注点：500 万是注册还是活跃？取消限流是推理成本可控的信号，还是短期营销？需验证其 /fast 路由策略与单位经济模型是否支撑长期策略，警惕规模增长掩盖单用户亏损。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "AI 编程工具的‘去限流’策略，是技术基建成熟的标志，还是资本补贴下的增长幻觉？",
+          "当开发者工作流深度绑定单一 AI IDE，其代码资产安全与供应商锁定风险如何评估？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "标志着 AI 原生开发工具跨越早期采用者鸿沟，行业竞争焦点正式转向推理成本控制、模型路由优化与开发者工作流深度集成。",
+          "skepticism": "需警惕“500万”为累计注册而非活跃指标，且临时取消限流可能掩盖推理成本压力或后台模型降级（如用小模型/缓存替代大模型）的实质。",
+          "watch_points": [
+            "重置限制后 30 日的 DAU/MAU 比值与核心功能使用频次",
+            "/fast 模式背后的推理路由架构（是否采用 MoE、KV Cache 优化或模型蒸馏降本）",
+            "企业级订阅转化率与私有化部署方案的商业化节奏"
+          ],
+          "related_sources": [
+            {
+              "title": "Cursor 官方公告与产品更新",
+              "url": "https://www.cursor.com/blog"
+            },
+            {
+              "title": "原始推文：Five million users would agree",
+              "url": "https://x.com/thsottiaux/status/2060964284117782996"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "bb21d44830e011",
@@ -1265,12 +1637,32 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -13
         },
-        "memory_note": "",
+        "memory_note": "该动态折射AI教育正从“内容数字化”转向“交互式AI陪练”。Joyce B的对战机制验证了游戏化+LLM代理在提升学习粘性上的潜力，但单点社交热度不等于产品壁垒。需关注其底层是轻量微调模型还是规则引擎包装，以及实际知识留存率与推理成本控制。后续看技术架构披露与规模化留存数据。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "Joyce B是端到端大模型驱动，还是基于RAG+规则引擎的混合架构？其教学反馈延迟与上下文窗口如何优化？",
+          "在K-12/CS启蒙场景中，如何量化评估AI陪练对计算思维培养的真实贡献，而非仅停留在互动时长指标？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "AI原生教育产品正通过“人机对战”机制验证LLM代理在提升学习动机与交互留存上的可行性，为垂直领域Agent落地提供早期信号。",
+          "skepticism": "缺乏对底层模型架构、幻觉控制、教育有效性对照及单次交互推理成本的披露，社交热度易掩盖“游戏化包装替代真实能力跃迁”的风险。",
+          "watch_points": [
+            "Brilliant是否披露Joyce B的模型选型、对齐策略（如DPO/RLHF用于教学对话）及防幻觉安全护栏",
+            "该功能在CS 101课程中的完课率、知识迁移效果与传统视频/习题模式的A/B测试数据",
+            "竞品（如Khanmigo、Duolingo Max）是否跟进同类Agent交互，以及行业如何平衡实时对话的推理成本与毛利率"
+          ],
+          "related_sources": [
+            {
+              "title": "Khan Academy Khanmigo: AI Tutoring Architecture & Safety",
+              "url": "https://blog.khanacademy.org/khanmigo/"
+            },
+            {
+              "title": "Hugging Face: Alignment Techniques for Educational LLMs",
+              "url": "https://huggingface.co/blog/educational-llm-alignment"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       },
       {
         "event_id": "9b4fe4161b4227",
@@ -1322,12 +1714,28 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "",
+        "memory_note": "判断：VC视角的“建设热潮未至旧金山”实为生态叙事，反映AI应用层从模型竞赛向工作流落地的过渡期阵痛。关注点：需剥离融资话术，聚焦开发者真实工具链采用率、本地算力调度效率及企业AI试点转化率，警惕将VC动员令误读为产业拐点。",
         "reading_questions": [
-          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-          "后续应该观察哪一个可验证结果来判断它是否重要？"
+          "如何区分VC生态动员叙事与真实的开发者生产力跃迁？",
+          "当前阻碍旧金山AI产品规模化落地的核心工作流或算力瓶颈是什么？"
         ],
-        "memory_subjects": []
+        "memory_subjects": [],
+        "expert_review": {
+          "importance": "该观点揭示了AI创业地理分布与资本预期的错位，提示从业者关注模型能力向实际工作流转化的真实瓶颈。",
+          "skepticism": "“建设热潮”缺乏量化定义，可能是VC为刺激本地生态的叙事策略，需验证是否混淆了社交媒体热度与实际开发者生产力指标。",
+          "watch_points": [
+            "YC及湾区AI初创企业注册数、融资流向与开源贡献地理分布数据",
+            "SF地区企业级LLM API调用量、Agent框架部署率及从PoC到生产环境的转化率",
+            "本地推理基础设施（如vLLM/TGI集群）利用率与开发者工具链的实际留存指标"
+          ],
+          "related_sources": [
+            {
+              "title": "Garry Tan on X: Building boom & SF ecosystem",
+              "url": "https://x.com/garrytan/status/2060949003790176667"
+            }
+          ],
+          "method": "llm_expert_backfill"
+        }
       }
     ]
   },
@@ -1477,10 +1885,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -13
       },
-      "memory_note": "DeepSeek 近期已出现 2 次相关信号；这条可放在「AI Coding」脉络下看，和此前「EarlyTom: Early Token Compression Completes Fast Video Understanding」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "判断：V4 Flash 上线是国产模型从刷榜走向工程落地的关键试探。关注点：mHC 架构与混合注意力能否在 1M 上下文与代码 Agent 中兑现低延迟，以及 13B 激活参数下的真实推理成本是否具备商业竞争力。",
       "reading_questions": [
-        "它解决的是能力问题、入口问题，还是成本问题？",
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？"
+        "13B 激活参数在 1M 上下文下的实际推理成本能否支撑高频 Agent 调用？",
+        "“灵活推理深度”是动态路由还是后训练策略，对输出一致性与幻觉率有何影响？"
       ],
       "memory_subjects": [
         {
@@ -1493,7 +1901,27 @@
           "key": "ai-coding",
           "label": "AI Coding"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "验证了国产混合注意力与 MoE 架构在超长上下文与代码推理场景的工程可用性，为低成本 Agent 部署提供新基线。",
+        "skepticism": "需警惕未披露的训练数据配比与对齐细节，基准分数与算力宣称可能依赖特定硬件优化，实际 API 延迟与稳定性需独立压测。",
+        "watch_points": [
+          "OpenCode Zen 实际调用下的 TTFT、TPS 与 KV Cache 显存占用曲线",
+          "独立社区对 V4 Flash 在长代码仓库与多步 Agent 任务上的复现结果",
+          "官方是否发布技术报告披露 mHC/CSA 架构细节与训练稳定性数据"
+        ],
+        "related_sources": [
+          {
+            "title": "DeepSeek | 深度求索",
+            "url": "https://www.deepseek.com/"
+          },
+          {
+            "title": "deepseekv4.wiki",
+            "url": "https://deepseekv4.wiki/"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "14a2e683bacdf2",
@@ -1539,12 +1967,28 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "",
+      "memory_note": "判断：数据中心“黑盒化”正从工程问题演变为合规与社区治理风险。关注点：AI算力扩张的物理瓶颈已从芯片转向土地、电网与公众许可；透明度诉求若转化为强制披露或听证制度，将拉长基建周期、推高CapEx，并倒逼企业优化能效架构或转向边缘部署。",
       "reading_questions": [
-        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "AI企业如何在保障基础设施安全与满足社区知情权之间建立可操作的披露框架？",
+        "若选址与审批成本显著上升，是否会加速模型压缩、液冷技术或分布式推理架构的商业化？"
       ],
-      "memory_subjects": []
+      "memory_subjects": [],
+      "expert_review": {
+        "importance": "算力基建的社区许可与透明度正成为制约AI规模化落地的新型非技术瓶颈。",
+        "skepticism": "需验证该倡议能否跨越名人效应转化为具约束力的地方法规，以及“透明度”诉求是否会与数据中心物理安全、商业机密及电网调度产生实质性冲突。",
+        "watch_points": [
+          "各州是否出台数据中心环境影响强制披露与公众听证法案",
+          "头部云厂商是否发布自愿性透明度报告或调整选址策略",
+          "社区诉讼或监管审查对新建AI集群交付周期的实际延误数据"
+        ],
+        "related_sources": [
+          {
+            "title": "Erin Brockovich takes aim at data center secrecy | TechCrunch",
+            "url": "https://techcrunch.com/2026/05/31/erin-brockovich-takes-aim-at-data-center-secrecy"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "49c46aa7beb49d",
@@ -1590,12 +2034,28 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "",
+      "memory_note": "判断：行业正从技术狂热转向体验反噬期，核心矛盾是生成式对齐与确定性检索的冲突。关注点：1. 搜索产品 AI 化边界与事实性幻觉控制；2. 反 AI 情绪能否支撑独立产品商业化；3. 后训练阶段如何平衡商业转化指令与基础信息保真度。",
       "reading_questions": [
-        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "当 RLHF 过度优化商业转化或讨好型回复时，如何从数据配比或架构层面恢复信息检索的确定性？",
+        "开发者应如何评估“反 AI 情绪”带来的机会，是回归传统算法还是构建可解释/可干预的 AI 中间层？"
       ],
-      "memory_subjects": []
+      "memory_subjects": [],
+      "expert_review": {
+        "importance": "标志着 AI 产品从参数竞赛进入用户心智博弈期，直接倒逼基础模型后训练对齐策略与检索增强架构的重构。",
+        "skepticism": "需警惕将短期舆情等同于技术路线失败，DuckDuckGo 增长可能源于隐私诉求而非反 AI，且搜索拼写错误未必是 LLM 幻觉而是传统 NLP 缺陷。",
+        "watch_points": [
+          "Google/Bing AI Overviews 的事实准确率与用户留存数据变化",
+          "主打“无 AI/可开关 AI”的搜索或 Agent 产品能否跑通商业化",
+          "后训练阶段是否出现针对“过度拟人化/幻觉”的专项 DPO/RLHF 奖励函数设计"
+        ],
+        "related_sources": [
+          {
+            "title": "Making sense of the debate over AI psychosis | TechCrunch",
+            "url": "https://techcrunch.com/2026/05/31/making-sense-of-the-debate-over-ai-psychosis"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "6744fad3496b79",
@@ -1641,12 +2101,32 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "",
+      "memory_note": "判断：典型“AI Agent+Web3”营销噱头，无实质技术落地。关注点：所谓“Agentic设备”与“AI资产工具”缺乏边缘计算、传感器数据流或大模型调用证据，奖励机制大概率为中心化补贴而非链上验证。此案例警示AI术语滥用正引发监管审查，从业者需警惕硬件赛道“贴牌AI”对技术信誉的稀释。",
       "reading_questions": [
-        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "在缺乏明确算力、数据输入与反馈闭环的情况下，该设备如何满足AI智能体（Agent）感知-决策-执行的基本定义？",
+        "此类营销叙事若持续泛滥，是否会促使FTC或各国监管机构出台针对“AI硬件”标签的强制披露标准？"
       ],
-      "memory_subjects": []
+      "memory_subjects": [],
+      "expert_review": {
+        "importance": "揭示消费级硬件滥用“AI Agent”与加密叙事进行营销包装的现状，为技术社区提供识别伪AI产品与应对监管合规风险的反面教材。",
+        "skepticism": "需验证其是否搭载真实边缘推理芯片或具备本地/云端模型调用链路，所谓“每口赚比特币”极可能是中心化积分返利而非真正的链上智能合约或PoW机制。",
+        "watch_points": [
+          "加州大麻管制局对“消费返利型”产品的合规裁定与处罚结果",
+          "第三方硬件拆解是否发现NPU、环境传感器及实际AI推理模块",
+          "官方是否公开“AI资产工具”的技术架构、API或开发者文档"
+        ],
+        "related_sources": [
+          {
+            "title": "I went looking for the AI weed vape that gives you Bitcoin for smoking | The Verge",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/933916/ai-powered-crypto-cannabis-vape"
+          },
+          {
+            "title": "California Department of Cannabis Control - Regulatory Framework",
+            "url": "https://cannabis.ca.gov/"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "e12f61cc390da2",
@@ -1692,10 +2172,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "这条属于「AI Safety / Policy」的连续信号；此前相关项包括「CollectionLoRA: Collecting 50 Effects in 1 LoRA via Multi-Teacher On-Policy Distillation」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+      "memory_note": "判断：非AI原生事件，但精准映射大模型上线前的“长尾安全边界”盲区。关注点：LLM产品常依赖RLHF对齐常规分布，却缺乏对极端语义触发器的鲁棒性设计。航空级安全协议启示我们，AI部署需从“能力优先”转向“失效安全优先”，建立类似红蓝对抗的边界压力测试，而非仅依赖基准测试刷榜。",
       "reading_questions": [
-        "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "当前LLM安全对齐（RLHF/DPO）能否覆盖此类非典型语义触发？",
+        "AI产品如何平衡“用户体验”与“航空级安全冗余”？"
       ],
       "memory_subjects": [
         {
@@ -1703,7 +2183,27 @@
           "key": "ai-safety-policy",
           "label": "AI Safety / Policy"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "揭示AI产品从实验室到生产环境的核心断层：长尾语义触发与系统级安全协议的缺失。",
+        "skepticism": "警惕将航空安全叙事直接套用于AI，当前LLM安全护栏多依赖静态规则或弱泛化分类器，未必能真正拦截高维对抗性输入。",
+        "watch_points": [
+          "头部厂商是否将“极端语义压力测试”纳入发布前SOP",
+          "开源安全框架（如Llama Guard）对低概率高影响触发器的检测率演进",
+          "监管是否推动AI部署的“失效安全”认证标准"
+        ],
+        "related_sources": [
+          {
+            "title": "Red Teaming Language Models to Reduce Harms",
+            "url": "https://arxiv.org/abs/2212.08073"
+          },
+          {
+            "title": "Llama Guard: LLM-based Input-Output Safeguard for Human-AI Conversations",
+            "url": "https://ai.meta.com/research/publications/llama-guard-llm-based-input-output-safeguard-for-human-ai-conversations/"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "45953ba0e378ce",
@@ -1755,10 +2255,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "OpenAI 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "判断：OpenAI 正从“基准测试刷榜”转向“开发者工作流深水区”，直面 AI 编程工具的工程落地摩擦。关注点：能否突破大代码库上下文碎片化、Agent 跨会话状态丢失及工具链集成瓶颈，而非仅做表层交互优化。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "OpenAI 将如何通过后训练（如 DPO/GRPO）平衡 Agent 自主性与代码安全合规审查？",
+        "其推理基础设施是否会针对代码生成特有的结构化输出与长程依赖进行专项优化？"
       ],
       "memory_subjects": [
         {
@@ -1776,7 +2276,23 @@
           "key": "ai-coding",
           "label": "AI Coding"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "标志着 AI 编程竞争核心从单点生成准确率，转向真实研发场景下的上下文连贯性与自动化管线集成能力。",
+        "skepticism": "需验证该反馈征集是否伴随底层架构升级（如长程记忆机制、确定性执行沙箱、后训练对齐策略优化），而非仅用于营销造势。",
+        "watch_points": [
+          "是否公开针对 Repo 级上下文压缩与跨会话状态保持的架构方案",
+          "Agent 自主循环在复杂重构/调试场景下的失败率与人工接管阈值变化",
+          "与主流 IDE、Git 及 CI/CD 工具的深度集成进度及企业级采纳率"
+        ],
+        "related_sources": [
+          {
+            "title": "OpenAI Codex 开发者反馈征集",
+            "url": "https://x.com/thsottiaux/status/2060960564676034726"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "c994d0f130583e",
@@ -1828,10 +2344,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "这条属于「Inference Infrastructure」的连续信号；此前相关项包括「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
+      "memory_note": "判断：AI 正从“降本叙事”转向“产能扩张叙事”，符合杰文斯悖论在企业软件中的体现。关注点：该结论基于头部企业高管访谈，存在幸存者偏差；需验证效率红利是否被算力/推理成本抵消，以及新增岗位的真实产出比。",
       "reading_questions": [
-        "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "企业如何量化 AI 带来的‘效率节省’并建立再投资闭环，而非陷入算力军备竞赛？",
+        "在推理成本尚未指数级下降前，中小企业能否复制这种‘扩张型’AI 落地路径？"
       ],
       "memory_subjects": [
         {
@@ -1844,7 +2360,23 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "打破“AI 必然裁员”的线性预期，提示技术管理者应将 AI 视为打破业务瓶颈的杠杆而非单纯的成本削减工具。",
+        "skepticism": "头部企业样本存在幸存者偏差，且“节省资金再投资”常被高估，实际可能被 GPU 推理成本、模型迭代开销及合规支出吞噬，净 ROI 需财务数据交叉验证。",
+        "watch_points": [
+          "头部 SaaS 财报中 AI 功能对 ACV 增长与毛利率的实际影响",
+          "企业 AI 算力/推理支出与人力成本的结构变化趋势",
+          "新增 AI 工程岗位（如 FDE、AI Agent 开发）的 6-12 个月留存率与业务指标挂钩情况"
+        ],
+        "related_sources": [
+          {
+            "title": "Aaron Levie on Enterprise AI Adoption Trends (X)",
+            "url": "https://x.com/levie/status/2060923684295221390"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "eb43030b215219",
@@ -1896,10 +2428,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "OpenAI 近期已出现 3 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「Layer-wise Representation Analysis for Detecting Data Contamination in RL Post-Training」共同说明该方向正在从单点事件变成持续议题。",
+      "memory_note": "一线开发者对 OpenAI 与 Anthropic 的反馈呈现“梗图化”与“长文分析化”分野，折射出产品定位差异：OpenAI 重快速迭代与工具链整合，Anthropic 侧重可靠性与深度推理。需警惕社媒情绪替代工程指标，应聚焦 Agent 工作流落地率、API 稳定性与推理成本。后续验证代码生成基准、长上下文工程表现及企业采纳数据。",
       "reading_questions": [
-        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "社区反馈的“梗图化”与“长文分析化”分化，是否预示 AI 编程工具正走向“快迭代/重生态”与“稳对齐/重工程”的两条路线？",
+        "在构建生产级 Agent 时，开发者应如何根据任务容错率与成本约束，在两家模型的 API 可靠性与迭代速度间做架构权衡？"
       ],
       "memory_subjects": [
         {
@@ -1917,7 +2449,31 @@
           "key": "ai-coding",
           "label": "AI Coding"
         }
-      ]
+      ],
+      "expert_review": {
+        "importance": "开发者社区情绪是 AI 基础设施选型与 Agent 工作流演进的领先指标，直接反映技术栈渗透路径与生态竞争格局。",
+        "skepticism": "社交媒体热度不等于工程可用性，梗图与长文可能掩盖 API 延迟、代码幻觉率、实际 Agent 编排成功率及企业级 SLA 等核心指标。",
+        "watch_points": [
+          "OpenAI 代码模型与 Anthropic Claude 在真实 Agent 工作流中的任务完成率、上下文窗口利用率与推理延迟对比",
+          "两家在代码后训练（如 DPO/GRPO 应用于编程指令对齐）与推理基础设施优化上的技术路线差异",
+          "企业级开发者从原型验证转向生产部署时的实际技术栈收敛趋势与成本结构变化"
+        ],
+        "related_sources": [
+          {
+            "title": "Anthropic Research: Claude & Alignment Methodology",
+            "url": "https://www.anthropic.com/research"
+          },
+          {
+            "title": "OpenAI Developer Documentation & API Updates",
+            "url": "https://platform.openai.com/docs"
+          },
+          {
+            "title": "Hugging Face Open LLM Leaderboard & Code Benchmarks",
+            "url": "https://huggingface.co/spaces/open-llm-leaderboard/open_llm_leaderboard"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "a18edd8134611a",
@@ -1969,12 +2525,32 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "",
+      "memory_note": "判断：AI 编程助手突破 500 万用户并重置额度，标志产品跨越早期尝鲜期，进入基建与留存博弈阶段。关注点：500 万是注册还是活跃？取消限流是推理成本可控的信号，还是短期营销？需验证其 /fast 路由策略与单位经济模型是否支撑长期策略，警惕规模增长掩盖单用户亏损。",
       "reading_questions": [
-        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "AI 编程工具的‘去限流’策略，是技术基建成熟的标志，还是资本补贴下的增长幻觉？",
+        "当开发者工作流深度绑定单一 AI IDE，其代码资产安全与供应商锁定风险如何评估？"
       ],
-      "memory_subjects": []
+      "memory_subjects": [],
+      "expert_review": {
+        "importance": "标志着 AI 原生开发工具跨越早期采用者鸿沟，行业竞争焦点正式转向推理成本控制、模型路由优化与开发者工作流深度集成。",
+        "skepticism": "需警惕“500万”为累计注册而非活跃指标，且临时取消限流可能掩盖推理成本压力或后台模型降级（如用小模型/缓存替代大模型）的实质。",
+        "watch_points": [
+          "重置限制后 30 日的 DAU/MAU 比值与核心功能使用频次",
+          "/fast 模式背后的推理路由架构（是否采用 MoE、KV Cache 优化或模型蒸馏降本）",
+          "企业级订阅转化率与私有化部署方案的商业化节奏"
+        ],
+        "related_sources": [
+          {
+            "title": "Cursor 官方公告与产品更新",
+            "url": "https://www.cursor.com/blog"
+          },
+          {
+            "title": "原始推文：Five million users would agree",
+            "url": "https://x.com/thsottiaux/status/2060964284117782996"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "bb21d44830e011",
@@ -2026,12 +2602,32 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -13
       },
-      "memory_note": "",
+      "memory_note": "该动态折射AI教育正从“内容数字化”转向“交互式AI陪练”。Joyce B的对战机制验证了游戏化+LLM代理在提升学习粘性上的潜力，但单点社交热度不等于产品壁垒。需关注其底层是轻量微调模型还是规则引擎包装，以及实际知识留存率与推理成本控制。后续看技术架构披露与规模化留存数据。",
       "reading_questions": [
-        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "Joyce B是端到端大模型驱动，还是基于RAG+规则引擎的混合架构？其教学反馈延迟与上下文窗口如何优化？",
+        "在K-12/CS启蒙场景中，如何量化评估AI陪练对计算思维培养的真实贡献，而非仅停留在互动时长指标？"
       ],
-      "memory_subjects": []
+      "memory_subjects": [],
+      "expert_review": {
+        "importance": "AI原生教育产品正通过“人机对战”机制验证LLM代理在提升学习动机与交互留存上的可行性，为垂直领域Agent落地提供早期信号。",
+        "skepticism": "缺乏对底层模型架构、幻觉控制、教育有效性对照及单次交互推理成本的披露，社交热度易掩盖“游戏化包装替代真实能力跃迁”的风险。",
+        "watch_points": [
+          "Brilliant是否披露Joyce B的模型选型、对齐策略（如DPO/RLHF用于教学对话）及防幻觉安全护栏",
+          "该功能在CS 101课程中的完课率、知识迁移效果与传统视频/习题模式的A/B测试数据",
+          "竞品（如Khanmigo、Duolingo Max）是否跟进同类Agent交互，以及行业如何平衡实时对话的推理成本与毛利率"
+        ],
+        "related_sources": [
+          {
+            "title": "Khan Academy Khanmigo: AI Tutoring Architecture & Safety",
+            "url": "https://blog.khanacademy.org/khanmigo/"
+          },
+          {
+            "title": "Hugging Face: Alignment Techniques for Educational LLMs",
+            "url": "https://huggingface.co/blog/educational-llm-alignment"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     },
     {
       "event_id": "9b4fe4161b4227",
@@ -2083,12 +2679,28 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "",
+      "memory_note": "判断：VC视角的“建设热潮未至旧金山”实为生态叙事，反映AI应用层从模型竞赛向工作流落地的过渡期阵痛。关注点：需剥离融资话术，聚焦开发者真实工具链采用率、本地算力调度效率及企业AI试点转化率，警惕将VC动员令误读为产业拐点。",
       "reading_questions": [
-        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
-        "后续应该观察哪一个可验证结果来判断它是否重要？"
+        "如何区分VC生态动员叙事与真实的开发者生产力跃迁？",
+        "当前阻碍旧金山AI产品规模化落地的核心工作流或算力瓶颈是什么？"
       ],
-      "memory_subjects": []
+      "memory_subjects": [],
+      "expert_review": {
+        "importance": "该观点揭示了AI创业地理分布与资本预期的错位，提示从业者关注模型能力向实际工作流转化的真实瓶颈。",
+        "skepticism": "“建设热潮”缺乏量化定义，可能是VC为刺激本地生态的叙事策略，需验证是否混淆了社交媒体热度与实际开发者生产力指标。",
+        "watch_points": [
+          "YC及湾区AI初创企业注册数、融资流向与开源贡献地理分布数据",
+          "SF地区企业级LLM API调用量、Agent框架部署率及从PoC到生产环境的转化率",
+          "本地推理基础设施（如vLLM/TGI集群）利用率与开发者工具链的实际留存指标"
+        ],
+        "related_sources": [
+          {
+            "title": "Garry Tan on X: Building boom & SF ecosystem",
+            "url": "https://x.com/garrytan/status/2060949003790176667"
+          }
+        ],
+        "method": "llm_expert_backfill"
+      }
     }
   ],
   "trace": [
