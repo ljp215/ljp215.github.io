@@ -719,11 +719,11 @@ time {
 
 .report-hero h1 {
   max-width: 760px;
-  margin-bottom: 16px;
+  margin-bottom: 12px;
   color: var(--ink);
   font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
-  font-size: clamp(42px, 7vw, 82px);
-  line-height: 0.95;
+  font-size: clamp(34px, 4.8vw, 56px);
+  line-height: 1.05;
   letter-spacing: 0;
 }
 
@@ -1304,8 +1304,8 @@ time {
   margin-top: 14px;
 }
 
-.source-link,
-.like-button {
+.reading-time,
+.source-link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1321,8 +1321,14 @@ time {
   text-decoration: none;
 }
 
+.reading-time {
+  border-color: rgba(27, 26, 23, 0.28);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.3);
+}
+
 #company-updates .report-item:first-child .source-link,
-#company-updates .report-item:first-child .like-button {
+#company-updates .report-item:first-child .reading-time {
   border-color: #f7efe1;
   color: #f7efe1;
 }
@@ -1337,17 +1343,6 @@ time {
   color: var(--accent-strong);
 }
 
-.like-button {
-  gap: 5px;
-}
-
-.like-button.is-liked {
-  border-color: var(--accent);
-  color: #ffffff;
-  background: var(--accent);
-  cursor: default;
-}
-
 .report-empty {
   grid-column: 1 / -1;
   padding: 18px;
@@ -1358,11 +1353,14 @@ time {
 }
 
 @media (max-width: 980px) {
-  .report-shell,
+  .report-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
   .report-list,
   #company-updates .report-list,
   .paper-digest-list {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .report-history {
@@ -1391,12 +1389,59 @@ time {
 }
 
 @media (max-width: 640px) {
+  body {
+    background-attachment: scroll;
+  }
+
   .report-shell {
-    width: min(100% - 24px, 1180px);
+    width: 100%;
+    max-width: 100%;
+    padding: 0 12px;
+    gap: 12px;
+    overflow-x: hidden;
   }
 
   .report-page {
-    padding-top: 18px;
+    min-width: 0;
+    padding-top: 8px;
+    padding-bottom: 36px;
+  }
+
+  .report-history {
+    min-width: 0;
+    padding-top: 10px;
+    overflow: hidden;
+  }
+
+  .report-history > div {
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+    border-bottom-width: 2px;
+  }
+
+  .report-history strong {
+    font-size: 15px;
+  }
+
+  .report-history nav {
+    margin: 0 -12px;
+    padding: 0 12px 6px;
+    scrollbar-width: none;
+  }
+
+  .report-history nav::-webkit-scrollbar {
+    display: none;
+  }
+
+  .report-history a {
+    min-width: 118px;
+    padding: 8px 8px;
+    border-left-width: 3px;
+  }
+
+  .report-history time,
+  .report-history em {
+    font-size: 11px;
   }
 
   .report-topline,
@@ -1410,16 +1455,133 @@ time {
     text-align: left;
   }
 
+  .report-topline {
+    gap: 6px;
+    padding-bottom: 9px;
+    border-bottom-width: 2px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .report-topline span:last-child {
+    display: none;
+  }
+
+  .report-hero {
+    margin: 12px 0 14px;
+    padding-bottom: 14px;
+    border-bottom-width: 3px;
+  }
+
+  .report-hero-main {
+    padding-top: 4px;
+  }
+
+  .report-hero-main::before {
+    width: 72px;
+    height: 4px;
+    margin-bottom: 10px;
+  }
+
   .report-hero h1 {
-    font-size: 42px;
+    max-width: 100%;
+    margin-bottom: 9px;
+    font-size: 30px;
+    line-height: 1.15;
+  }
+
+  .report-hero p:last-child {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .report-tabs {
+    position: sticky;
+    z-index: 5;
+    top: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    margin: 0 -12px 16px;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(27, 26, 23, 0.18);
+    background: rgba(247, 239, 225, 0.96);
+    backdrop-filter: blur(10px);
+  }
+
+  .report-tabs button {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    min-height: 54px;
+    padding: 8px 6px;
+    border-left-width: 3px;
+    text-align: center;
+  }
+
+  .report-tabs span {
+    font-size: 19px;
+  }
+
+  .report-tabs strong {
+    font-size: 13px;
+    white-space: normal;
+  }
+
+  .report-tabs em {
+    display: none;
+  }
+
+  .report-section {
+    margin-top: 16px;
+  }
+
+  .report-section-heading {
+    gap: 7px;
+    margin-bottom: 10px;
+    border-bottom-width: 2px;
+  }
+
+  .report-section-heading span {
+    font-size: 26px;
+  }
+
+  .report-section-heading h2 {
+    font-size: 20px;
+  }
+
+  .report-section-heading p {
+    font-size: 10px;
+    line-height: 1.55;
+    letter-spacing: 0.08em;
   }
 
   .report-item {
     grid-template-columns: 1fr;
+    gap: 10px;
+    padding: 13px 12px;
+    border-width: 1px;
+    border-left-width: 4px;
   }
 
   .report-item.has-thumbnail,
   .paper-digest-item.has-thumbnail {
+    grid-template-columns: 1fr;
+  }
+
+  #company-updates .report-item:first-child {
+    color: var(--ink);
+    background: rgba(255, 255, 255, 0.28);
+  }
+
+  #company-updates .report-item:first-child p,
+  #company-updates .report-item:first-child .report-item-meta em {
+    color: #3f3b34;
+  }
+
+  #company-updates .report-item:first-child .report-item-meta strong {
+    color: var(--accent-strong);
+  }
+
+  #company-updates .report-item:first-child.has-thumbnail {
     grid-template-columns: 1fr;
   }
 
@@ -1433,7 +1595,92 @@ time {
   .report-thumb,
   .report-thumb img {
     width: 100%;
-    min-height: 156px;
+    min-height: 0;
+  }
+
+  .report-thumb {
+    aspect-ratio: 16 / 9;
+    max-height: 210px;
+  }
+
+  #company-updates .report-item:first-child .report-thumb {
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    border-color: rgba(27, 26, 23, 0.82);
+    background: rgba(255, 255, 255, 0.35);
+  }
+
+  .report-item-meta {
+    gap: 6px 8px;
+    margin-bottom: 7px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  #industry-views .report-item-meta .source-person {
+    font-size: 18px;
+  }
+
+  .report-item h3 {
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .report-item p,
+  .memory-note p,
+  .memory-note ul,
+  .report-item .social-translation {
+    font-size: 14px;
+    line-height: 1.72;
+  }
+
+  #industry-views .social-original {
+    font-size: 14px;
+    line-height: 1.76;
+  }
+
+  .memory-note {
+    margin-top: 10px;
+    padding: 10px 11px;
+  }
+
+  .report-actions {
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .reading-time,
+  .source-link {
+    min-height: 34px;
+    font-size: 11px;
+  }
+
+  #company-updates .report-item:first-child .source-link,
+  #company-updates .report-item:first-child .reading-time {
+    border-color: var(--line);
+    color: var(--ink);
+  }
+
+  .paper-digest {
+    padding: 13px 12px;
+  }
+
+  .paper-digest-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .paper-digest-header h3 {
+    font-size: 19px;
+  }
+
+  .paper-digest-item {
+    padding: 11px;
+  }
+
+  .paper-digest-item h4 {
+    font-size: 15px;
+    line-height: 1.42;
   }
 }
 
@@ -1514,7 +1761,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item is-clickable " data-url="https://www.infoq.cn/article/4lvrePvgNC6vuCKkvZKe" data-event-id="56ae3cb37acf7a" data-title="Anthropic：Anthropic在Code With Claude上发布托管式智能体、主动式工作流与能力曲线" data-entity="Anthropic" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：Anthropic：Anthropic在Code With Claude上发布托管式智能体、主动式工作流与能力曲线">
+      <article class="report-item is-clickable " data-url="https://www.infoq.cn/article/4lvrePvgNC6vuCKkvZKe" tabindex="0" aria-label="打开原文：Anthropic：Anthropic在Code With Claude上发布托管式智能体、主动式工作流与能力曲线">
         <span>01</span>
         
         <div>
@@ -1530,11 +1777,11 @@ time {
     <ul><li>当前智能体工作流的“不可验证环节”（如架构设计、安全审查）具体依赖哪些后训练技术（如DPO/GRPO或过程奖励模型）来对齐人类偏好？</li><li>企业从固定订阅转向按量计费后，如何结合提示词缓存命中率与动态路由策略建立Token预算熔断与异常调用监控机制？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://www.infoq.cn/article/4lvrePvgNC6vuCKkvZKe" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable has-thumbnail" data-url="https://www.ithome.com/0/958/465.htm" data-event-id="6479f456ff66f9" data-title="xAI：SpaceX IPO 文件新增风险提示：AI 数据中心面临水资源短缺风险" data-entity="xAI" data-event-type="financing_or_ma" tabindex="0" aria-label="打开原文：xAI：SpaceX IPO 文件新增风险提示：AI 数据中心面临水资源短缺风险">
+      </article><article class="report-item is-clickable has-thumbnail" data-url="https://www.ithome.com/0/958/465.htm" tabindex="0" aria-label="打开原文：xAI：SpaceX IPO 文件新增风险提示：AI 数据中心面临水资源短缺风险">
         <span>02</span>
         <a class="report-thumb" href="https://www.ithome.com/0/958/465.htm" target="_blank" rel="noreferrer" aria-label="打开原文：xAI：SpaceX IPO 文件新增风险提示：AI 数据中心面临水资源短缺风险"><img src="https://img.ithome.com/newsuploadfiles/2025/6/0e3819d0-7c0d-4ed4-8f96-6bdee9a89a90.jpg?x-bce-process=image/format,f_auto" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></a>
         <div>
@@ -1550,11 +1797,11 @@ time {
     <ul><li>在电力与水资源双重约束下，下一代大模型训练集群的架构设计将如何调整以优化PUE/WUE？</li><li>企业披露此类风险后，是否会加速推动闭式循环冷却或AI原生低功耗芯片的商业化落地？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://www.ithome.com/0/958/465.htm" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://huggingface.co/blog/JetBrains/mellum2-launch" data-event-id="8c56c003f0d230" data-title="Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains" data-entity="" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains">
+      </article><article class="report-item is-clickable " data-url="https://huggingface.co/blog/JetBrains/mellum2-launch" tabindex="0" aria-label="打开原文：Introducing Mellum2: A 12B Mixture-of-Experts Model by JetBrains">
         <span>03</span>
         
         <div>
@@ -1570,11 +1817,11 @@ time {
     <ul><li>Mellum2的稀疏路由机制如何保证跨编程语言生成的一致性与可解释性？</li><li>该模型在JetBrains AI Assistant中的实际替换率与API成本下降幅度是多少？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://huggingface.co/blog/JetBrains/mellum2-launch" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable has-thumbnail" data-url="https://blog.google/innovation-and-ai/technology/ai/io-2026-google-ai" data-event-id="a3719063e70e61" data-title="Google DeepMind：How we used Gemini to build Google I/O 2026" data-entity="Google DeepMind" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：Google DeepMind：How we used Gemini to build Google I/O 2026">
+      </article><article class="report-item is-clickable has-thumbnail" data-url="https://blog.google/innovation-and-ai/technology/ai/io-2026-google-ai" tabindex="0" aria-label="打开原文：Google DeepMind：How we used Gemini to build Google I/O 2026">
         <span>04</span>
         <a class="report-thumb" href="https://blog.google/innovation-and-ai/technology/ai/io-2026-google-ai" target="_blank" rel="noreferrer" aria-label="打开原文：Google DeepMind：How we used Gemini to build Google I/O 2026"><img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/AI_IO.max-600x600.format-webp.webp" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></a>
         <div>
@@ -1590,11 +1837,11 @@ time {
     <ul><li>公开版Gemini API能否在不依赖内部微调与定制工具的情况下，达到同等质量与帧级一致性？</li><li>此类AI辅助管线对传统创意软件生态的替代边界在哪里，中小团队应如何构建可复用的技术护城河？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://blog.google/innovation-and-ai/technology/ai/io-2026-google-ai" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable has-thumbnail" data-url="https://www.theverge.com/ai-artificial-intelligence/941016/anthropic-has-officially-filed-to-go-public" data-event-id="5c1c39e897dcb3" data-title="Anthropic：Anthropic has officially filed to go public" data-entity="Anthropic" data-event-type="financing_or_ma" tabindex="0" aria-label="打开原文：Anthropic：Anthropic has officially filed to go public">
+      </article><article class="report-item is-clickable has-thumbnail" data-url="https://www.theverge.com/ai-artificial-intelligence/941016/anthropic-has-officially-filed-to-go-public" tabindex="0" aria-label="打开原文：Anthropic：Anthropic has officially filed to go public">
         <span>05</span>
         <a class="report-thumb" href="https://www.theverge.com/ai-artificial-intelligence/941016/anthropic-has-officially-filed-to-go-public" target="_blank" rel="noreferrer" aria-label="打开原文：Anthropic：Anthropic has officially filed to go public"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/chorus/uploads/chorus_asset/file/25469941/STK202_DARIO_AMODEI_CVIRGINIA_D.jpg?quality=90&amp;strip=all&amp;crop=0,0,100,100" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></a>
         <div>
@@ -1610,8 +1857,8 @@ time {
     <ul><li>公开市场盈利要求是否会迫使Anthropic放缓前沿模型研发或提高API价格？</li><li>$15B/年算力绑定是构建基础设施护城河，还是成为固定成本负担？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://www.theverge.com/ai-artificial-intelligence/941016/anthropic-has-officially-filed-to-go-public" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
       </article>
@@ -1684,7 +1931,7 @@ time {
       </a>
     </div>
   </article>
-      <article class="report-item is-clickable " data-url="https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws" data-event-id="f71930a42a3385" data-title="OpenAI：OpenAI frontier models and Codex are now available on AWS" data-entity="OpenAI" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：OpenAI：OpenAI frontier models and Codex are now available on AWS">
+      <article class="report-item is-clickable " data-url="https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws" tabindex="0" aria-label="打开原文：OpenAI：OpenAI frontier models and Codex are now available on AWS">
         <span>01</span>
         
         <div>
@@ -1700,11 +1947,11 @@ time {
     <ul><li>该集成在数据主权、合规审计与计费模型上，相比直连 OpenAI API 或 Azure 有何实质性差异？</li><li>Codex 在 AWS 上是否支持本地代码库的私有化索引与 Agent 自主调试，还是仅限云端 Prompt 交互？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://openai.com/index/openai-frontier-models-and-codex-are-now-available-on-aws" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable has-thumbnail" data-url="https://www.theverge.com/tech/941138/google-gemini-spark-ai-agent-hands-on" data-event-id="dab5c4208ef8c7" data-title="Google DeepMind：Gemini’s new AI agent is about as good as Google’s demo" data-entity="Google DeepMind" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Google DeepMind：Gemini’s new AI agent is about as good as Google’s demo">
+      </article><article class="report-item is-clickable has-thumbnail" data-url="https://www.theverge.com/tech/941138/google-gemini-spark-ai-agent-hands-on" tabindex="0" aria-label="打开原文：Google DeepMind：Gemini’s new AI agent is about as good as Google’s demo">
         <span>02</span>
         <a class="report-thumb" href="https://www.theverge.com/tech/941138/google-gemini-spark-ai-agent-hands-on" target="_blank" rel="noreferrer" aria-label="打开原文：Google DeepMind：Gemini’s new AI agent is about as good as Google’s demo"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/lcimg-0ebbe911-9fbb-4f68-97b0-b7361d7cb53c.jpeg?quality=90&amp;strip=all&amp;crop=0,0,100,100" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></a>
         <div>
@@ -1720,11 +1967,11 @@ time {
     <ul><li>Agent在跨应用状态同步时，如何保证事务一致性与权限最小化？</li><li>当前架构下，持续后台轮询与事件驱动哪种更经济可靠？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://www.theverge.com/tech/941138/google-gemini-spark-ai-agent-hands-on" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption" data-event-id="c3e6fdd3ea6103" data-title="Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic" data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic">
+      </article><article class="report-item is-clickable " data-url="https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption" tabindex="0" aria-label="打开原文：Beyond LLMs: Why Scalable Enterprise AI Adoption Depends on Agent Logic">
         <span>03</span>
         
         <div>
@@ -1740,11 +1987,11 @@ time {
     <ul><li>传统程序分析/规则引擎与LLM的协同边界如何界定？何时应强制走确定性逻辑，何时应交由模型概率推理？</li><li>在缺乏高质量Agent交互轨迹数据的情况下，中小企业如何低成本构建、验证并持续迭代此类混合架构？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://huggingface.co/blog/ibm-research/agent-logic-and-scalable-ai-adoption" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp" data-event-id="d0ef09ef365333" data-title="Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP" data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP">
+      </article><article class="report-item is-clickable " data-url="https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp" tabindex="0" aria-label="打开原文：Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP">
         <span>04</span>
         
         <div>
@@ -1760,8 +2007,8 @@ time {
     <ul><li>端侧模型压缩与量化是否会显著削弱 Agent 的复杂任务规划与多步推理能力，导致“本地可用”但“云端更强”的割裂？</li><li>在 vLLM、llama.cpp 等开源推理框架已高度优化的背景下，NVIDIA 的 CUDA 生态壁垒在端侧能否有效转化为开发者留存率？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
       </article>
@@ -1777,7 +2024,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item is-clickable " data-url="https://x.com/petergyang/status/2061277577785000203" data-event-id="b091af4ff97e2d" data-title="OpenAI：Ok is there any difference between Codex automations and Claude Code routines? Which one is better?" data-entity="OpenAI" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：OpenAI：Ok is there any difference between Codex automations and Claude Code routines? Which one is better?">
+      <article class="report-item is-clickable " data-url="https://x.com/petergyang/status/2061277577785000203" tabindex="0" aria-label="打开原文：OpenAI：Ok is there any difference between Codex automations and Claude Code routines? Which one is better?">
         <span>01</span>
         
         <div>
@@ -1793,11 +2040,11 @@ I want to consolidate all my cron jobs in one list.</a></h3><p class="social-tra
     <ul><li>在复杂多模块项目中，AI自动化工作流如何保证代码生成的一致性与变更可追溯性？</li><li>当定时任务触发模型幻觉或外部API调用失败时，两者的降级策略与人工接管机制有何差异？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
             <a class="source-link" href="https://x.com/petergyang/status/2061277577785000203" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://x.com/levie/status/2061247380897579500" data-event-id="f12e9a9167fe66" data-title="This is effectively the #1 problem for AI agents in the enterprise." data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：This is effectively the #1 problem for AI agents in the enterprise.">
+      </article><article class="report-item is-clickable " data-url="https://x.com/levie/status/2061247380897579500" tabindex="0" aria-label="打开原文：This is effectively the #1 problem for AI agents in the enterprise.">
         <span>02</span>
         
         <div>
@@ -1821,11 +2068,11 @@ The companies that figure this out will be able to get the most out of AI going 
     <ul><li>如何在不强制数据上云的前提下，实现跨遗留系统的权限对齐与上下文安全注入？</li><li>FDE/SI模式能否沉淀为标准化产品，还是注定沦为高成本定制服务？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 4 分钟</span>
             <a class="source-link" href="https://x.com/levie/status/2061247380897579500" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://x.com/swyx/status/2061256096719970337" data-event-id="d9b9051d1841e8" data-title="just a small zoom out on the vibe shift:" data-entity="" data-event-type="product_or_model_release" tabindex="0" aria-label="打开原文：just a small zoom out on the vibe shift:">
+      </article><article class="report-item is-clickable " data-url="https://x.com/swyx/status/2061256096719970337" tabindex="0" aria-label="打开原文：just a small zoom out on the vibe shift:">
         <span>03</span>
         
         <div>
@@ -1845,11 +2092,11 @@ if your Knowledge Work Agents startup can&#039;t beat pewdiepie you might as wel
     <ul><li>它解决的是能力问题、入口问题，还是成本问题？</li><li>这个进展是否减少了真实工作流里的人工接线和结果校验成本？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
             <a class="source-link" href="https://x.com/swyx/status/2061256096719970337" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://x.com/zarazhangrui/status/2061341642544783801" data-event-id="3e3d99459c6dbd" data-title="Why do I get so annoyed when a coding agent ends a message with &quot;just say the word&quot;" data-entity="" data-event-type="agent_or_developer_infra" tabindex="0" aria-label="打开原文：Why do I get so annoyed when a coding agent ends a message with &quot;just say the word&quot;">
+      </article><article class="report-item is-clickable " data-url="https://x.com/zarazhangrui/status/2061341642544783801" tabindex="0" aria-label="打开原文：Why do I get so annoyed when a coding agent ends a message with &quot;just say the word&quot;">
         <span>04</span>
         
         <div>
@@ -1865,11 +2112,11 @@ You&#039;re my cofounder, not my servant</a></h3><p class="social-translation"><
     <ul><li>如何设计Agent的交互协议与状态同步机制以匹配异步、状态驱动的工程流？</li><li>哪些底层能力（长期记忆、分层规划、工具链编排）是跨越‘被动执行’到‘主动协作’的技术前提？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://x.com/zarazhangrui/status/2061341642544783801" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://x.com/garrytan/status/2061251376802599397" data-event-id="a10c36468e24b0" data-title="We have 16 partners funding 40 to 60 companies per year, usually amounting to more than 50 to 200 new SF residents per partner per year (depending on how many cofounders and how many already live here, but multiply by 16" data-entity="" data-event-type="financing_or_ma" tabindex="0" aria-label="打开原文：We have 16 partners funding 40 to 60 companies per year, usually amounting to more than 50 to 200 new SF residents per partner per year (depending on how many cofounders and how many already live here, but multiply by 16">
+      </article><article class="report-item is-clickable " data-url="https://x.com/garrytan/status/2061251376802599397" tabindex="0" aria-label="打开原文：We have 16 partners funding 40 to 60 companies per year, usually amounting to more than 50 to 200 new SF residents per partner per year (depending on how many cofounders and how many already live here, but multiply by 16">
         <span>05</span>
         
         <div>
@@ -1883,11 +2130,11 @@ You&#039;re my cofounder, not my servant</a></h3><p class="social-translation"><
     <ul><li>这条信息和过去一周的 AI 主线相比，新增了什么判断依据？</li><li>后续应该观察哪一个可验证结果来判断它是否重要？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
             <a class="source-link" href="https://x.com/garrytan/status/2061251376802599397" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
-      </article><article class="report-item is-clickable " data-url="https://x.com/adityaag/status/2061312610172051900" data-event-id="25da82349634bc" data-title="Indian Dynamism." data-entity="" data-event-type="company_or_industry_update" tabindex="0" aria-label="打开原文：Indian Dynamism.">
+      </article><article class="report-item is-clickable " data-url="https://x.com/adityaag/status/2061312610172051900" tabindex="0" aria-label="打开原文：Indian Dynamism.">
         <span>06</span>
         
         <div>
@@ -1903,8 +2150,8 @@ You&#039;re my cofounder, not my servant</a></h3><p class="social-translation"><
     <ul><li>这更像短期舆论信号，还是会改变产品、组织或开发者行为？</li><li>后续应该观察哪一个可验证结果来判断它是否重要？</li></ul>
   </div>
           <div class="report-actions">
+            <span class="reading-time">预计阅读 1 分钟</span>
             <a class="source-link" href="https://x.com/adityaag/status/2061312610172051900" target="_blank" rel="noreferrer">打开原文</a>
-            <button class="like-button" type="button" data-like-button>赞 <span data-like-count>0</span></button>
           </div>
         </div>
       </article>
@@ -1915,90 +2162,27 @@ You&#039;re my cofounder, not my servant</a></h3><p class="social-translation"><
     </div>
     <script>
 (() => {
-  const storageKey = "aiDaily.likes";
-  const localLikes = new Set(JSON.parse(localStorage.getItem(storageKey) || "[]"));
   const cards = [...document.querySelectorAll(".report-item")];
   const tabs = [...document.querySelectorAll("[data-tab-target]")];
   const panels = [...document.querySelectorAll(".report-tab-panel")];
 
   setupTabs();
-  hydrateServerLikes();
   cards.forEach((card) => {
-    const eventId = card.dataset.eventId;
     const url = card.dataset.url;
-    const button = card.querySelector("[data-like-button]");
-    const count = card.querySelector("[data-like-count]");
 
     if (url) {
       card.addEventListener("click", (event) => {
-        if (event.target.closest("a, button")) return;
+        if (event.target.closest("a")) return;
         window.open(url, "_blank", "noopener,noreferrer");
       });
       card.addEventListener("keydown", (event) => {
         if (event.key !== "Enter" && event.key !== " ") return;
-        if (event.target.closest("a, button")) return;
+        if (event.target.closest("a")) return;
         event.preventDefault();
         window.open(url, "_blank", "noopener,noreferrer");
       });
     }
-
-    if (!button || !eventId) return;
-
-    if (localLikes.has(eventId)) {
-      button.classList.add("is-liked");
-      button.disabled = true;
-    }
-
-    button.addEventListener("click", async (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      if (localLikes.has(eventId)) return;
-      localLikes.add(eventId);
-      localStorage.setItem(storageKey, JSON.stringify([...localLikes]));
-      button.classList.add("is-liked");
-      button.disabled = true;
-      count.textContent = String(Number(count.textContent || "0") + 1);
-
-      try {
-        const response = await fetch("/api/ai-daily/feedback", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            event_id: eventId,
-            title: card.dataset.title,
-            entity: card.dataset.entity,
-            event_type: card.dataset.eventType,
-            delta: 1
-          })
-        });
-        if (response.ok) {
-          applyFeedback(await response.json());
-        }
-      } catch {
-        button.title = "已保存在当前浏览器；通过本地服务打开时会写入排序反馈。";
-      }
-    });
   });
-
-  async function hydrateServerLikes() {
-    try {
-      const response = await fetch("/api/ai-daily/feedback");
-      if (response.ok) applyFeedback(await response.json());
-    } catch {
-      for (const card of cards) {
-        if (localLikes.has(card.dataset.eventId)) {
-          card.querySelector("[data-like-count]").textContent = "1";
-        }
-      }
-    }
-  }
-
-  function applyFeedback(feedback) {
-    for (const card of cards) {
-      const count = feedback.events?.[card.dataset.eventId]?.count || 0;
-      card.querySelector("[data-like-count]").textContent = String(count);
-    }
-  }
 
   function setupTabs() {
     tabs.forEach((tab) => {
