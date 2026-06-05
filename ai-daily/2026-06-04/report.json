@@ -2,8 +2,8 @@
   "date": "2026-06-04",
   "version": "V4",
   "title": "AI 行业简报 2026-06-04",
-  "generated_at": "2026-06-04T07:52:53.252Z",
-  "event_count": 62,
+  "generated_at": "2026-06-04T01:33:49.366Z",
+  "event_count": 67,
   "item_count": 15,
   "summary": "今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。",
   "sections": {
@@ -52,10 +52,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：AI编程正从应用层向底层基础设施渗透，工程价值显著但需警惕“一次性交付”幻觉。关注点：验证生成代码在边缘侧的性能、安全隔离与长期维护成本；观察Codex在复杂调试与失败恢复中的自主闭环能力，而非仅看初期开发速度。",
+        "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "AI生成的边缘运行时在真实高并发场景下的稳定性与性能损耗如何量化？",
-          "开发者在此流程中的角色是否已从“编码者”彻底转变为“架构评审与自动化测试验证者”？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -73,23 +73,7 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ],
-        "expert_review": {
-          "importance": "标志着AI编程智能体从辅助业务逻辑正式切入底层运行时构建，验证了GPT-5.5/Codex在复杂系统工程中的实际杠杆效应。",
-          "skepticism": "“10x-20x提效”属典型厂商叙事，需验证该运行时在边缘侧的真实性能、安全隔离及后期维护成本，而非仅看初期交付速度。",
-          "watch_points": [
-            "生成代码在边缘环境（WASM/冷启动/内存限制）下的长期可维护性与性能损耗",
-            "Codex在复杂调试、权限沙箱配置与失败恢复中的自主闭环能力",
-            "该AI驱动基建模式能否横向复用到数据库引擎或网络协议栈等更底层领域"
-          ],
-          "related_sources": [
-            {
-              "title": "How Wasmer used Codex to build a Node.js runtime for the edge",
-              "url": "https://openai.com/index/wasmer"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "404c8e05fa089d",
@@ -135,10 +119,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "星尘智能的百亿估值与绳驱路线，标志着具身智能从演示驱动进入软硬协同与规模化交付深水区。其快慢双系统直击实时控制与长程规划的算力矛盾，但绳驱传动的长期可靠性、Lumo模型的真实数据闭环效率及8.99万定价的商业ROI仍需真机验证。读者应聚焦千台交付良率与具身OS泛化边界。",
+        "memory_note": "这条属于「Inference Infrastructure」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
-          "在缺乏海量真实物理交互数据的前提下，星尘智能如何保证Lumo模型在分布外（OOD）场景中的泛化能力与安全性？",
-          "快慢协同架构（DuoCore）在底层控制延迟、算力分配与故障切换机制上，相比传统分层控制或Figure的Helix架构有何实质性工程突破？"
+          "它解决的是能力问题、入口问题，还是成本问题？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -166,23 +150,7 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ],
-        "expert_review": {
-          "importance": "该报道揭示了具身智能赛道正从资本叙事转向硬件架构创新与真实场景规模化落地的关键拐点，其“绳驱本体+快慢双系统”路线为突破机器人实时响应与复杂推理的算力瓶颈提供了工程化参考。",
-          "skepticism": "需警惕“全球首家量产绳驱”与“千台级订单”的营销话术，重点验证绳驱关节在高频作业下的磨损寿命、Lumo模型“数据效率驱动”背后的真实训练管线（如是否依赖大规模仿真或特定RL/DPO对齐），以及8.99万售价在非标场景中的实际投资回报周期。",
-          "watch_points": [
-            "绳驱传动模块在工业/商业连续运行场景下的MTBF（平均无故障时间）与张力校准维护成本",
-            "Lumo基座模型的真实训练范式：预训练数据来源、真机对齐采用的具体算法（如IL、RLHF或DPO变体）及Sim2Real泛化能力",
-            "与中科创达等客户的“千台订单”是采购合同、联合开发还是试点部署，以及实际落地后的任务成功率与停机率"
-          ],
-          "related_sources": [
-            {
-              "title": "深圳具身公司星尘智能完成超10亿B轮融资，估值破百亿｜硬氪首发",
-              "url": "https://36kr.com/p/3836068296209537?f=rss"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "453c71ac4817ba",
@@ -228,10 +196,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：微软此举意在摆脱OpenAI依赖，以“零蒸馏+合规数据”切入企业级采购痛点，战略意义大于短期性能突破。关注点：35B活跃/1T总参MoE架构的真实推理成本、未披露的RL训练细节，以及“无AI生成数据”在2026年数据管线中的可行性与性能天花板。",
+        "memory_note": "Anthropic 近期已出现 4 次相关信号；这条可放在「Inference Infrastructure」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "在明确拒绝蒸馏与第三方模型输出的前提下，该模型依赖何种后训练范式（如过程奖励建模或可验证RL）实现推理能力跃升？",
-          "“排除AI生成内容”的数据策略是否会成为未来Scaling Law的瓶颈，还是仅作为短期合规营销话术？"
+          "它解决的是能力问题、入口问题，还是成本问题？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -244,27 +212,7 @@
             "key": "inference-infrastructure",
             "label": "Inference Infrastructure"
           }
-        ],
-        "expert_review": {
-          "importance": "标志着微软从OpenAI生态依赖转向全栈自研模型基建，以“数据合规与零蒸馏”构建企业级采购护城河。",
-          "skepticism": "“完全零蒸馏且排除AI生成数据”在2026年极难实现，且35B活跃参数模型在SWE Bench Pro与AIME上的高分缺乏独立复现与训练配方（如RLVR/GRPO细节）支撑。",
-          "watch_points": [
-            "第三方独立评测机构对MAI-Thinking-1在SWE Bench Pro及数学基准上的复现结果与数据污染排查",
-            "1T参数MoE架构在实际生产环境中的路由延迟、激活成本与Token定价策略",
-            "企业客户对“零蒸馏/干净IP”卖点的实际采购转化率及合规审计落地情况"
-          ],
-          "related_sources": [
-            {
-              "title": "拒绝蒸馏！微软发布自研MAI-Thinking-1追平Claude Opus 4.6：完全从零训练，不沾任何第三方模型输出",
-              "url": "https://www.infoq.cn/article/StrGjRRmFKm4fXCvLOSP"
-            },
-            {
-              "title": "Microsoft Build 2026 MAI Keynote Transcript",
-              "url": "https://microsoft.ai/news/microsoft-build-2026-mai-keynote-transcript/"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "03eb661497428b",
@@ -310,10 +258,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：本文刺破了Agent“效率万能”的商业叙事，指出技术红利若脱离分配机制将沦为空洞承诺。关注点：从业者应聚焦Agent在长链路中的权限隔离、失败回滚与审计能力，验证其能否真实降低人工接线与结果校验成本，而非停留于浅层日程管理。",
+        "memory_note": "Google DeepMind 近期已出现 5 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "在现有架构下，Agent的“自主性”边界究竟由模型推理能力决定，还是由产品定义的权限沙箱决定？",
-          "当AI接管重复性生产力工具后，企业IT架构与员工技能栈将如何重构以承接新增的非结构化决策工作？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -326,23 +274,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": {
-          "importance": "揭示了AI Agent商业化叙事与宏观社会经济现实之间的结构性错位，提醒技术圈跳出“效率至上”的单一评估框架。",
-          "skepticism": "需验证Spark的“无提示记忆”是真正的上下文工程突破，还是依赖底层数据抓取与隐私妥协的营销包装。",
-          "watch_points": [
-            "Spark在长链路任务中的权限隔离、失败回滚与审计日志机制是否达到企业级标准",
-            "实际部署中能否量化降低人工接线与结果校验成本，而非仅停留在日程管理等浅层场景",
-            "监管与隐私合规政策对Agent跨应用数据调用的限制力度及厂商应对策略"
-          ],
-          "related_sources": [
-            {
-              "title": "As AI gets better, it reveals an empty promise | The Verge",
-              "url": "https://www.theverge.com/ai-artificial-intelligence/942629/as-ai-gets-better-it-reveals-an-empty-promise"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "14db40754939c1",
@@ -388,10 +320,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：这是 Agent 工程化从“跑通 Demo”走向“成本可控”的关键一步，核心价值在于用自动化审计闭环替代人工调优，直击 MCP 工具 Schema 冗余与上下文膨胀痛点。关注点：ET 指标能否跨团队复用、审计 Agent 自身的开销边界，以及该模式在非 GitHub 生态中的泛化能力。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
-          "在工具 Schema 仅占上下文极小比例的场景中，除了精简 MCP，还有哪些架构级手段能有效控制 Token 消耗？",
-          "自动化优化 Agent 生成的 Issue 建议，在实际落地时如何建立沙箱验证机制以避免引入逻辑错误？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -409,27 +341,7 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ],
-        "expert_review": {
-          "importance": "首次将 Agent 成本优化从静态 Prompt 工程升级为动态“审计-优化”自动化闭环，为 CI/CD 场景下的 LLM Agent 规模化落地提供了可量化的工程范式。",
-          "skepticism": "ET 指标中的模型权重系数是否具备跨业务普适性，且“未使用工具不降成本”的案例是否暴露了 MCP 协议在动态上下文裁剪上的架构局限。",
-          "watch_points": [
-            "ET 指标在长上下文推理或多模态 Agent 场景下的成本映射准确度",
-            "gh-aw CLI 在非 GitHub 原生环境（如自建 MCP Server、私有化部署）的适配与开源反馈",
-            "下一阶段“工作流组合分析”能否真正实现跨 Agent 的中间状态共享与去重"
-          ],
-          "related_sources": [
-            {
-              "title": "什么是 Model Context Protocol ( MCP )？和 Function Calling ...",
-              "url": "https://javaguide.cn/ai/agent/mcp.html"
-            },
-            {
-              "title": "MCP 中文站（Model Context Protocol 中文）",
-              "url": "https://mcpcn.com/"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       }
     ],
     "worth_tracking": [
@@ -477,10 +389,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：此更新非单纯参数迭代，而是将LLM能力深度锚定至生命科学垂直工作流，具备明确的产业落地指向。关注点：需穿透PR叙事，重点验证其“生物推理与实验工作流”是底层预训练/后训练路线的实质性突破，还是依赖外部工具链拼接；同时关注真实科研场景下的调用成本、幻觉控制与开发者留存。",
+        "memory_note": "这条属于「Enterprise AI Workflow」的连续信号；此前相关项包括「AWS has massive enterprise traction, with large committed contracts from enterprises. So this partnership opens up both increased distribution for OpenAI’s models, but also likely drives an increase in token consumption」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
-          "该能力升级是解决了生命科学领域的核心推理瓶颈，还是仅优化了交互入口？",
-          "后续应通过哪些可复现的实验指标来验证其在真实科研场景中的有效性？"
+          "它解决的是能力问题、入口问题，还是成本问题？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -488,23 +400,7 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ],
-        "expert_review": {
-          "importance": "标志着大模型从通用交互向高门槛科学工作流（药物研发/基因组学）的实质性渗透，直接扩展了可调用能力边界。",
-          "skepticism": "需验证其宣称的增强能力是模型架构或对齐训练的真实突破，还是仅靠Prompt模板与外部API封装的营销包装。",
-          "watch_points": [
-            "第三方独立基准在真实药物发现管线中的准确率与幻觉率表现",
-            "科研机构/药企的实际API调用留存率与单次推理成本效益",
-            "是否开放细粒度权重或提供可复现的训练/对齐路线细节"
-          ],
-          "related_sources": [
-            {
-              "title": "Introducing new capabilities to GPT-Rosalind",
-              "url": "https://openai.com/index/introducing-new-capabilities-to-gpt-rosalind"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "9d1e29cf0783cb",
@@ -550,10 +446,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：Anthropic营收暴增与盈利拐点并非单纯源于模型能力跃升，而是企业定价从“订阅包月”转向“API按量计费”叠加编程Agent高并发子代理架构的必然结果。关注点：需剥离Run Rate水分，验证企业客户在真实Token成本下的续费率与ROI，以及Opus 4.8并行架构的推理成本优化路径。",
+        "memory_note": "Anthropic 近期已有相关记忆：Anthropic scales Claude Mythos to critical infrastructure in 15+ countries。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
         "reading_questions": [
-          "在Agent并行调用成为常态后，LLM厂商如何平衡模型智能度与Token经济性？",
-          "定价策略转向按API实付后，中小开发者与企业客户的采用门槛将如何分化？"
+          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -561,27 +457,7 @@
             "key": "anthropic",
             "label": "Anthropic"
           }
-        ],
-        "expert_review": {
-          "importance": "揭示了大模型商业化从“补贴换增长”转向“按量计费+Agent架构驱动”的关键拐点，为LLM基础设施的定价权与盈利模型提供了现实样本。",
-          "skepticism": "Run Rate不等于实际确认收入，且“单月5亿美元账单”为未证实传闻，需验证企业客户在API实付模式下的真实留存率与Token消耗效率。",
-          "watch_points": [
-            "Q2财报中实际确认营收与毛利率，验证运营盈利是否可持续",
-            "企业客户对Claude Code按量计费的续约率及ROI反馈",
-            "Opus 4.8动态子代理架构的Token利用率优化与推理成本控制进展"
-          ],
-          "related_sources": [
-            {
-              "title": "Anthropic冲刺IPO：Claude一个月烧掉客户5亿美元，却成了上市前最强广告 - InfoQ",
-              "url": "https://www.infoq.cn/article/ZIU2RR7Q1ldqCvD0gTQH"
-            },
-            {
-              "title": "Home \\ Anthropic",
-              "url": "https://www.anthropic.com/"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "3be5d216d2afc2",
@@ -627,7 +503,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -638,8 +514,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": null
+        ]
       },
       {
         "event_id": "754ccfe3fea84b",
@@ -685,7 +560,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -696,8 +571,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": null
+        ]
       },
       {
         "event_id": "56b5753161258e",
@@ -706,7 +580,7 @@
         "title": "OpenAI：ChatGPT",
         "brief": "ChatGPT。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "ChatGPT\n\nWhether you understand the name or not. It's here to stay. It's the past, the present, the future. Synonym with AI, soon synonym with agents. Much to build.",
-        "translation_zh": "ChatGPT 无论你是否理解这个名字，它都将长存。它是过去、现在，也是未来。它是AI的代名词，很快也将成为智能体的代名词。仍有大量工作待构建。",
+        "translation_zh": "ChatGPT 无论你是否理解这个名字，它都将长久存在。它是过去、现在，也是未来。它是 AI 的代名词，很快也将成为 Agent 的代名词。仍有大量工作待构建。",
         "entity": "OpenAI",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -749,10 +623,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "判断：品牌叙事向Agent基础设施倾斜，但工程落地价值取决于底层架构是否支持确定性执行。关注点：需验证其长任务状态管理、失败恢复机制与企业级审计能力，而非仅停留在API调用或Prompt拼接层面。",
+        "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "ChatGPT的Agent化是模型原生架构升级，还是依赖外部工作流编排的包装？",
-          "在真实企业场景中，它能否实质性降低人工接线、上下文切换与结果校验的隐性成本？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -765,31 +639,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": {
-          "importance": "该推文将ChatGPT定位从对话模型转向智能体基础设施，标志着OpenAI正试图重塑开发者心智，推动产品向工作流自动化与Agent生态演进。",
-          "skepticism": "“soon synonym with agents”属典型市场叙事，需验证其底层是否具备原生状态管理、工具调用标准化与确定性推理能力，而非依赖外部编排。",
-          "watch_points": [
-            "OpenAI是否发布面向Agent的专用推理框架或持久化记忆协议",
-            "复杂业务流中的失败恢复率、权限隔离与审计日志是否达企业级标准",
-            "对比开源Agent框架与竞品，其开箱即用体验与推理成本的实际优势"
-          ],
-          "related_sources": [
-            {
-              "title": "ChatGPT (X Post)",
-              "url": "https://x.com/thsottiaux/status/2062057881424506950"
-            },
-            {
-              "title": "OpenAI 官网入口地址：如何轻松找到",
-              "url": "https://apifox.com/apiskills/openai-official-portal/"
-            },
-            {
-              "title": "OpenAI _百度百科",
-              "url": "https://baike.baidu.com/item/OpenAI/19758408"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "7db977d93ee575",
@@ -798,7 +648,7 @@
         "title": "Google DeepMind：✅ Papercut fixed: Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW",
         "brief": "✅ Papercut fixed: Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW",
-        "translation_zh": "思考层级功能现已在网页版、iOS 和 Android 端的 Gemini 上上线。https://t.co/aF02kkUekW",
+        "translation_zh": "“思考层级”现已在网页版、iOS 和 Android 端的 Gemini 上全面上线。https://t.co/aF02kkUekW",
         "entity": "Google DeepMind",
         "event_type": "research_or_benchmark",
         "event_type_label": "研究/Benchmark",
@@ -841,10 +691,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "判断：Gemini全端上线“Thinking Levels”是推理时计算预算产品化的关键节点，但技术实质需剥离UI包装。关注点：重点验证其是动态调整推理步数/Token预算，还是简单切换模型路由或提示词；密切跟踪API计费逻辑、延迟指标及官方是否披露后训练对齐管线，以评估真实架构演进。",
+        "memory_note": "Google DeepMind 近期已出现 5 次相关信号；这条可放在「Evaluation / Benchmark」脉络下看，和此前「Which Pretraining Paradigm Better Serves Spatial Intelligence? An Empirical Comparison of Vision-Language and Video Generation Models」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "该功能是动态调整同一模型的推理步数，还是简单切换不同参数规模的模型实例？",
-          "上线后Gemini在代码生成与数学推理等强依赖推理预算的基准上是否有可复现的提升？"
+          "评测提升来自方法本身，还是来自数据、奖励设计或推理预算变化？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -857,23 +707,7 @@
             "key": "evaluation-benchmark",
             "label": "Evaluation / Benchmark"
           }
-        ],
-        "expert_review": {
-          "importance": "将“思考层级”全平台推送，标志着推理时计算预算正式从实验特性转化为用户可配置的产品能力，直接重塑复杂任务的成本与延迟权衡。",
-          "skepticism": "需验证该功能是否仅为前端路由或提示词包装，而非真正基于动态推理预算分配与后训练对齐带来的架构级能力跃迁。",
-          "watch_points": [
-            "不同Thinking Level对应的实际Token消耗、延迟与API定价策略变化",
-            "官方是否公开该功能背后的训练管线与强化学习对齐细节",
-            "跨端部署在长上下文与多模态任务中的实际收益与一致性"
-          ],
-          "related_sources": [
-            {
-              "title": "Josh Woodward on X: Thinking Levels rollout",
-              "url": "https://x.com/joshwoodward/status/2062025667852812583"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "51211c103efda6",
@@ -882,7 +716,7 @@
         "title": "OpenAI：@saranormous codex is agi man",
         "brief": "@saranormous codex is agi man。看点在代码工作流：是否能减少真实项目里的上下文切换和人工接线。",
         "social_original_text": "@saranormous codex is agi man\n\nhttps://t.co/LFzyjAdKfm\n\noneshotted this, no notes\n\nhttps://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
-        "translation_zh": "@saranormous Codex 就是 AGI，真的绝了 https://t.co/LFzyjAdKfm 一次跑通，无可挑剔 https://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
+        "translation_zh": "@saranormous codex 就是 AGI 啊 https://t.co/LFzyjAdKfm 一次搞定，无可挑剔 https://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
         "entity": "OpenAI",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -925,7 +759,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 OpenAI 近期已有相关动作；和此前「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」放在一起看，这不是孤立新闻，而是在同一条产品或市场主线上继续加码。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -946,8 +780,7 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ],
-        "expert_review": null
+        ]
       },
       {
         "event_id": "e9175bfc301181",
@@ -956,7 +789,7 @@
         "title": "The best founders treat the following as a necessary component of their business but NOT the entire business..",
         "brief": "The best founders treat the following as a necessary component of their business but NOT the entire business.。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "The best founders treat the following as a necessary component of their business but NOT the entire business..\n\n> AI / timing / why now\n> Funding\n> Distribution / hype\n> Market\n> Product\n> Revenue\n\nI’m seeing too many pitches that are touting only one of these as the core reason to invest.\n\nThe bar has frankly never been higher (see the seed - A gap) and you really need to be able to explain how you’re capturing at least multiple of these in a unique way that’ll be hard for others to copy.\n\nEspecially in overcrowded categories. Otherwise, it gets very hard for the other side (aka VC) to make a case for their own partners to write the check.\n\nAnd, founders often get frustrated because their businesses are strong. Stronger than they have ever been in the past. Why can’t people just write the check? Like why do I need to waste time fundraising? It’s because like it or not the levels do keep going up. Narrative matters, ambition matters and try to understand the opportunity cost has also never been higher on the other side. If you’re profitable and don’t need capital, then who cares. And you don’t need to optimize for VCs but you DO need to give them a reason to believe.\n\nSo, keep your bar high. Find a capital partner that still has conviction and deserves equity in your company. But, please take those ten extra minutes to communicate your long term ambition, because that might be the only small difference between you and the next round.",
-        "translation_zh": "最优秀的创始人会将以下要素视为业务的必要组成部分，但绝非全部： > AI / 时机 / 为什么是现在 > 融资 > 分发 / 造势 > 市场 > 产品 > 收入 我看到太多路演只把其中某一项吹捧为投资的核心理由。 坦白说，现在的门槛前所未有地高（看看种子轮到A轮的差距就知道了）。你必须能够解释，你如何以独特且难以复制的方式，至少同时占据其中的多项优势。 在过度拥挤的赛道中尤其如此。否则，投资方（即VC）将很难向他们的合伙人证明这笔投资值得签字打款。 创始人常常感到沮丧，因为他们的业务明明很强，甚至比过去任何时候都强。为什么大家不能直接打款？为什么我要浪费时间融资？原因在于，无论你是否接受，标准确实在不断提高。叙事很重要，野心很重要，你也得明白，投资方的机会成本同样处于历史高位。如果你已经盈利且不需要资金，那确实无所谓。你不需要一味迎合VC，但你必须给他们一个相信你的理由。 所以，保持高标准。找到一位仍有坚定信念、配得上你公司股权的资本伙伴。但请务必多花十分钟阐述你的长期愿景，因为这或许就是你与下一轮融资之间唯一的微小差距。",
+        "translation_zh": "顶尖创始人会将以下要素视为业务的必要组成部分，但绝不会将其等同于业务全貌： > AI / 时机 / 为什么是现在 > 融资 > 分发 / 声量 > 市场 > 产品 > 营收 我见过太多路演仅凭其中一项就作为核心投资理由。 坦白说，当前融资门槛已前所未有地提高（参考种子轮到A轮的断层）。你必须清晰阐述，自己如何以独特且难以复制的方式，同时占据其中多项优势。 在过度拥挤的赛道尤其如此。否则，VC很难向合伙人证明这笔投资的合理性。 创始人常感沮丧：业务明明很强，甚至强于以往，为什么就是拿不到钱？为什么非要花时间融资？因为无论你是否接受，行业标准确实在不断攀升。叙事和野心至关重要，同时你必须意识到，投资方的机会成本也处于历史高位。若你已盈利且无需资金，大可不必在意。你无需刻意迎合VC，但必须给他们一个相信你的理由。 因此，保持高标准。寻找仍有坚定信念、配得上你公司股权的资本伙伴。但请务必多花十分钟沟通你的长期愿景，因为这或许就是你与下一轮融资之间唯一的微小差距。",
         "entity": "",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -999,7 +832,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条的重点不是一次普通合作，而是模型公司把增长入口嵌进云厂商和企业采购链路；它可能直接影响模型分发、调用量和客户锁定。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续最该看的是：企业客户是否真实迁移工作负载、token 消耗是否增长，以及这会不会削弱模型公司的直销议价权。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -1015,8 +848,7 @@
             "key": "inference-infrastructure",
             "label": "Inference Infrastructure"
           }
-        ],
-        "expert_review": null
+        ]
       },
       {
         "event_id": "709c1d1da7558d",
@@ -1025,7 +857,7 @@
         "title": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders.",
         "brief": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders.\n\nthe new EO gets the balance right.",
-        "translation_zh": "美国应在AI领域保持领先，持续研发最顶尖的模型，确保其安全，并将网络安全工具交予值得信赖的防御者。新行政令的平衡把握得恰到好处。",
+        "translation_zh": "美国应通过持续研发最顶尖的AI模型、确保其安全性，并将网络安全工具交予可信赖的防御方，从而在AI领域保持领先。 新行政令很好地把握了平衡。",
         "entity": "",
         "event_type": "company_or_industry_update",
         "event_type_label": "公司/行业动态",
@@ -1068,13 +900,12 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "memory_note": "",
         "reading_questions": [
           "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
-        "memory_subjects": [],
-        "expert_review": null
+        "memory_subjects": []
       },
       {
         "event_id": "8dfda3f9cfe5c7",
@@ -1083,7 +914,7 @@
         "title": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS",
         "brief": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS。它更像能力温度计，价值在于帮助判断哪些 Agent 能从演示走向稳定任务。",
         "social_original_text": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS",
-        "translation_zh": "",
+        "translation_zh": "GBrain 是面向检索与记忆的 Agent 瑞士军刀 https://t.co/EgXmcs6ZOS",
         "entity": "",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -1126,7 +957,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -1142,8 +973,7 @@
             "key": "evaluation-benchmark",
             "label": "Evaluation / Benchmark"
           }
-        ],
-        "expert_review": null
+        ]
       }
     ],
     "company_updates": [
@@ -1191,10 +1021,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：AI编程正从应用层向底层基础设施渗透，工程价值显著但需警惕“一次性交付”幻觉。关注点：验证生成代码在边缘侧的性能、安全隔离与长期维护成本；观察Codex在复杂调试与失败恢复中的自主闭环能力，而非仅看初期开发速度。",
+        "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "AI生成的边缘运行时在真实高并发场景下的稳定性与性能损耗如何量化？",
-          "开发者在此流程中的角色是否已从“编码者”彻底转变为“架构评审与自动化测试验证者”？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1212,23 +1042,7 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ],
-        "expert_review": {
-          "importance": "标志着AI编程智能体从辅助业务逻辑正式切入底层运行时构建，验证了GPT-5.5/Codex在复杂系统工程中的实际杠杆效应。",
-          "skepticism": "“10x-20x提效”属典型厂商叙事，需验证该运行时在边缘侧的真实性能、安全隔离及后期维护成本，而非仅看初期交付速度。",
-          "watch_points": [
-            "生成代码在边缘环境（WASM/冷启动/内存限制）下的长期可维护性与性能损耗",
-            "Codex在复杂调试、权限沙箱配置与失败恢复中的自主闭环能力",
-            "该AI驱动基建模式能否横向复用到数据库引擎或网络协议栈等更底层领域"
-          ],
-          "related_sources": [
-            {
-              "title": "How Wasmer used Codex to build a Node.js runtime for the edge",
-              "url": "https://openai.com/index/wasmer"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "404c8e05fa089d",
@@ -1274,10 +1088,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "星尘智能的百亿估值与绳驱路线，标志着具身智能从演示驱动进入软硬协同与规模化交付深水区。其快慢双系统直击实时控制与长程规划的算力矛盾，但绳驱传动的长期可靠性、Lumo模型的真实数据闭环效率及8.99万定价的商业ROI仍需真机验证。读者应聚焦千台交付良率与具身OS泛化边界。",
+        "memory_note": "这条属于「Inference Infrastructure」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
-          "在缺乏海量真实物理交互数据的前提下，星尘智能如何保证Lumo模型在分布外（OOD）场景中的泛化能力与安全性？",
-          "快慢协同架构（DuoCore）在底层控制延迟、算力分配与故障切换机制上，相比传统分层控制或Figure的Helix架构有何实质性工程突破？"
+          "它解决的是能力问题、入口问题，还是成本问题？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1305,23 +1119,7 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ],
-        "expert_review": {
-          "importance": "该报道揭示了具身智能赛道正从资本叙事转向硬件架构创新与真实场景规模化落地的关键拐点，其“绳驱本体+快慢双系统”路线为突破机器人实时响应与复杂推理的算力瓶颈提供了工程化参考。",
-          "skepticism": "需警惕“全球首家量产绳驱”与“千台级订单”的营销话术，重点验证绳驱关节在高频作业下的磨损寿命、Lumo模型“数据效率驱动”背后的真实训练管线（如是否依赖大规模仿真或特定RL/DPO对齐），以及8.99万售价在非标场景中的实际投资回报周期。",
-          "watch_points": [
-            "绳驱传动模块在工业/商业连续运行场景下的MTBF（平均无故障时间）与张力校准维护成本",
-            "Lumo基座模型的真实训练范式：预训练数据来源、真机对齐采用的具体算法（如IL、RLHF或DPO变体）及Sim2Real泛化能力",
-            "与中科创达等客户的“千台订单”是采购合同、联合开发还是试点部署，以及实际落地后的任务成功率与停机率"
-          ],
-          "related_sources": [
-            {
-              "title": "深圳具身公司星尘智能完成超10亿B轮融资，估值破百亿｜硬氪首发",
-              "url": "https://36kr.com/p/3836068296209537?f=rss"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "453c71ac4817ba",
@@ -1367,10 +1165,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：微软此举意在摆脱OpenAI依赖，以“零蒸馏+合规数据”切入企业级采购痛点，战略意义大于短期性能突破。关注点：35B活跃/1T总参MoE架构的真实推理成本、未披露的RL训练细节，以及“无AI生成数据”在2026年数据管线中的可行性与性能天花板。",
+        "memory_note": "Anthropic 近期已出现 4 次相关信号；这条可放在「Inference Infrastructure」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "在明确拒绝蒸馏与第三方模型输出的前提下，该模型依赖何种后训练范式（如过程奖励建模或可验证RL）实现推理能力跃升？",
-          "“排除AI生成内容”的数据策略是否会成为未来Scaling Law的瓶颈，还是仅作为短期合规营销话术？"
+          "它解决的是能力问题、入口问题，还是成本问题？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1383,27 +1181,7 @@
             "key": "inference-infrastructure",
             "label": "Inference Infrastructure"
           }
-        ],
-        "expert_review": {
-          "importance": "标志着微软从OpenAI生态依赖转向全栈自研模型基建，以“数据合规与零蒸馏”构建企业级采购护城河。",
-          "skepticism": "“完全零蒸馏且排除AI生成数据”在2026年极难实现，且35B活跃参数模型在SWE Bench Pro与AIME上的高分缺乏独立复现与训练配方（如RLVR/GRPO细节）支撑。",
-          "watch_points": [
-            "第三方独立评测机构对MAI-Thinking-1在SWE Bench Pro及数学基准上的复现结果与数据污染排查",
-            "1T参数MoE架构在实际生产环境中的路由延迟、激活成本与Token定价策略",
-            "企业客户对“零蒸馏/干净IP”卖点的实际采购转化率及合规审计落地情况"
-          ],
-          "related_sources": [
-            {
-              "title": "拒绝蒸馏！微软发布自研MAI-Thinking-1追平Claude Opus 4.6：完全从零训练，不沾任何第三方模型输出",
-              "url": "https://www.infoq.cn/article/StrGjRRmFKm4fXCvLOSP"
-            },
-            {
-              "title": "Microsoft Build 2026 MAI Keynote Transcript",
-              "url": "https://microsoft.ai/news/microsoft-build-2026-mai-keynote-transcript/"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "9055539deb8662",
@@ -1449,10 +1227,10 @@
           "DuplicatePenalty": 0,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：此更新非单纯参数迭代，而是将LLM能力深度锚定至生命科学垂直工作流，具备明确的产业落地指向。关注点：需穿透PR叙事，重点验证其“生物推理与实验工作流”是底层预训练/后训练路线的实质性突破，还是依赖外部工具链拼接；同时关注真实科研场景下的调用成本、幻觉控制与开发者留存。",
+        "memory_note": "这条属于「Enterprise AI Workflow」的连续信号；此前相关项包括「AWS has massive enterprise traction, with large committed contracts from enterprises. So this partnership opens up both increased distribution for OpenAI’s models, but also likely drives an increase in token consumption」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
-          "该能力升级是解决了生命科学领域的核心推理瓶颈，还是仅优化了交互入口？",
-          "后续应通过哪些可复现的实验指标来验证其在真实科研场景中的有效性？"
+          "它解决的是能力问题、入口问题，还是成本问题？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1460,23 +1238,7 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ],
-        "expert_review": {
-          "importance": "标志着大模型从通用交互向高门槛科学工作流（药物研发/基因组学）的实质性渗透，直接扩展了可调用能力边界。",
-          "skepticism": "需验证其宣称的增强能力是模型架构或对齐训练的真实突破，还是仅靠Prompt模板与外部API封装的营销包装。",
-          "watch_points": [
-            "第三方独立基准在真实药物发现管线中的准确率与幻觉率表现",
-            "科研机构/药企的实际API调用留存率与单次推理成本效益",
-            "是否开放细粒度权重或提供可复现的训练/对齐路线细节"
-          ],
-          "related_sources": [
-            {
-              "title": "Introducing new capabilities to GPT-Rosalind",
-              "url": "https://openai.com/index/introducing-new-capabilities-to-gpt-rosalind"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "9d1e29cf0783cb",
@@ -1522,10 +1284,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：Anthropic营收暴增与盈利拐点并非单纯源于模型能力跃升，而是企业定价从“订阅包月”转向“API按量计费”叠加编程Agent高并发子代理架构的必然结果。关注点：需剥离Run Rate水分，验证企业客户在真实Token成本下的续费率与ROI，以及Opus 4.8并行架构的推理成本优化路径。",
+        "memory_note": "Anthropic 近期已有相关记忆：Anthropic scales Claude Mythos to critical infrastructure in 15+ countries。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
         "reading_questions": [
-          "在Agent并行调用成为常态后，LLM厂商如何平衡模型智能度与Token经济性？",
-          "定价策略转向按API实付后，中小开发者与企业客户的采用门槛将如何分化？"
+          "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1533,27 +1295,7 @@
             "key": "anthropic",
             "label": "Anthropic"
           }
-        ],
-        "expert_review": {
-          "importance": "揭示了大模型商业化从“补贴换增长”转向“按量计费+Agent架构驱动”的关键拐点，为LLM基础设施的定价权与盈利模型提供了现实样本。",
-          "skepticism": "Run Rate不等于实际确认收入，且“单月5亿美元账单”为未证实传闻，需验证企业客户在API实付模式下的真实留存率与Token消耗效率。",
-          "watch_points": [
-            "Q2财报中实际确认营收与毛利率，验证运营盈利是否可持续",
-            "企业客户对Claude Code按量计费的续约率及ROI反馈",
-            "Opus 4.8动态子代理架构的Token利用率优化与推理成本控制进展"
-          ],
-          "related_sources": [
-            {
-              "title": "Anthropic冲刺IPO：Claude一个月烧掉客户5亿美元，却成了上市前最强广告 - InfoQ",
-              "url": "https://www.infoq.cn/article/ZIU2RR7Q1ldqCvD0gTQH"
-            },
-            {
-              "title": "Home \\ Anthropic",
-              "url": "https://www.anthropic.com/"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       }
     ],
     "technical_progress": [
@@ -1601,10 +1343,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：本文刺破了Agent“效率万能”的商业叙事，指出技术红利若脱离分配机制将沦为空洞承诺。关注点：从业者应聚焦Agent在长链路中的权限隔离、失败回滚与审计能力，验证其能否真实降低人工接线与结果校验成本，而非停留于浅层日程管理。",
+        "memory_note": "Google DeepMind 近期已出现 5 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "在现有架构下，Agent的“自主性”边界究竟由模型推理能力决定，还是由产品定义的权限沙箱决定？",
-          "当AI接管重复性生产力工具后，企业IT架构与员工技能栈将如何重构以承接新增的非结构化决策工作？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1617,23 +1359,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": {
-          "importance": "揭示了AI Agent商业化叙事与宏观社会经济现实之间的结构性错位，提醒技术圈跳出“效率至上”的单一评估框架。",
-          "skepticism": "需验证Spark的“无提示记忆”是真正的上下文工程突破，还是依赖底层数据抓取与隐私妥协的营销包装。",
-          "watch_points": [
-            "Spark在长链路任务中的权限隔离、失败回滚与审计日志机制是否达到企业级标准",
-            "实际部署中能否量化降低人工接线与结果校验成本，而非仅停留在日程管理等浅层场景",
-            "监管与隐私合规政策对Agent跨应用数据调用的限制力度及厂商应对策略"
-          ],
-          "related_sources": [
-            {
-              "title": "As AI gets better, it reveals an empty promise | The Verge",
-              "url": "https://www.theverge.com/ai-artificial-intelligence/942629/as-ai-gets-better-it-reveals-an-empty-promise"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "14db40754939c1",
@@ -1679,10 +1405,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "判断：这是 Agent 工程化从“跑通 Demo”走向“成本可控”的关键一步，核心价值在于用自动化审计闭环替代人工调优，直击 MCP 工具 Schema 冗余与上下文膨胀痛点。关注点：ET 指标能否跨团队复用、审计 Agent 自身的开销边界，以及该模式在非 GitHub 生态中的泛化能力。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
-          "在工具 Schema 仅占上下文极小比例的场景中，除了精简 MCP，还有哪些架构级手段能有效控制 Token 消耗？",
-          "自动化优化 Agent 生成的 Issue 建议，在实际落地时如何建立沙箱验证机制以避免引入逻辑错误？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1700,27 +1426,7 @@
             "key": "enterprise-ai-workflow",
             "label": "Enterprise AI Workflow"
           }
-        ],
-        "expert_review": {
-          "importance": "首次将 Agent 成本优化从静态 Prompt 工程升级为动态“审计-优化”自动化闭环，为 CI/CD 场景下的 LLM Agent 规模化落地提供了可量化的工程范式。",
-          "skepticism": "ET 指标中的模型权重系数是否具备跨业务普适性，且“未使用工具不降成本”的案例是否暴露了 MCP 协议在动态上下文裁剪上的架构局限。",
-          "watch_points": [
-            "ET 指标在长上下文推理或多模态 Agent 场景下的成本映射准确度",
-            "gh-aw CLI 在非 GitHub 原生环境（如自建 MCP Server、私有化部署）的适配与开源反馈",
-            "下一阶段“工作流组合分析”能否真正实现跨 Agent 的中间状态共享与去重"
-          ],
-          "related_sources": [
-            {
-              "title": "什么是 Model Context Protocol ( MCP )？和 Function Calling ...",
-              "url": "https://javaguide.cn/ai/agent/mcp.html"
-            },
-            {
-              "title": "MCP 中文站（Model Context Protocol 中文）",
-              "url": "https://mcpcn.com/"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "3be5d216d2afc2",
@@ -1766,7 +1472,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -1777,8 +1483,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": null
+        ]
       },
       {
         "event_id": "754ccfe3fea84b",
@@ -1824,7 +1529,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": 0
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -1835,8 +1540,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": null
+        ]
       }
     ],
     "industry_views": [
@@ -1847,7 +1551,7 @@
         "title": "OpenAI：ChatGPT",
         "brief": "ChatGPT。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "ChatGPT\n\nWhether you understand the name or not. It's here to stay. It's the past, the present, the future. Synonym with AI, soon synonym with agents. Much to build.",
-        "translation_zh": "ChatGPT 无论你是否理解这个名字，它都将长存。它是过去、现在，也是未来。它是AI的代名词，很快也将成为智能体的代名词。仍有大量工作待构建。",
+        "translation_zh": "ChatGPT 无论你是否理解这个名字，它都将长久存在。它是过去、现在，也是未来。它是 AI 的代名词，很快也将成为 Agent 的代名词。仍有大量工作待构建。",
         "entity": "OpenAI",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -1890,10 +1594,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "判断：品牌叙事向Agent基础设施倾斜，但工程落地价值取决于底层架构是否支持确定性执行。关注点：需验证其长任务状态管理、失败恢复机制与企业级审计能力，而非仅停留在API调用或Prompt拼接层面。",
+        "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "ChatGPT的Agent化是模型原生架构升级，还是依赖外部工作流编排的包装？",
-          "在真实企业场景中，它能否实质性降低人工接线、上下文切换与结果校验的隐性成本？"
+          "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1906,31 +1610,7 @@
             "key": "agent-systems",
             "label": "Agent Systems"
           }
-        ],
-        "expert_review": {
-          "importance": "该推文将ChatGPT定位从对话模型转向智能体基础设施，标志着OpenAI正试图重塑开发者心智，推动产品向工作流自动化与Agent生态演进。",
-          "skepticism": "“soon synonym with agents”属典型市场叙事，需验证其底层是否具备原生状态管理、工具调用标准化与确定性推理能力，而非依赖外部编排。",
-          "watch_points": [
-            "OpenAI是否发布面向Agent的专用推理框架或持久化记忆协议",
-            "复杂业务流中的失败恢复率、权限隔离与审计日志是否达企业级标准",
-            "对比开源Agent框架与竞品，其开箱即用体验与推理成本的实际优势"
-          ],
-          "related_sources": [
-            {
-              "title": "ChatGPT (X Post)",
-              "url": "https://x.com/thsottiaux/status/2062057881424506950"
-            },
-            {
-              "title": "OpenAI 官网入口地址：如何轻松找到",
-              "url": "https://apifox.com/apiskills/openai-official-portal/"
-            },
-            {
-              "title": "OpenAI _百度百科",
-              "url": "https://baike.baidu.com/item/OpenAI/19758408"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "7db977d93ee575",
@@ -1939,7 +1619,7 @@
         "title": "Google DeepMind：✅ Papercut fixed: Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW",
         "brief": "✅ Papercut fixed: Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW",
-        "translation_zh": "思考层级功能现已在网页版、iOS 和 Android 端的 Gemini 上上线。https://t.co/aF02kkUekW",
+        "translation_zh": "“思考层级”现已在网页版、iOS 和 Android 端的 Gemini 上全面上线。https://t.co/aF02kkUekW",
         "entity": "Google DeepMind",
         "event_type": "research_or_benchmark",
         "event_type_label": "研究/Benchmark",
@@ -1982,10 +1662,10 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "判断：Gemini全端上线“Thinking Levels”是推理时计算预算产品化的关键节点，但技术实质需剥离UI包装。关注点：重点验证其是动态调整推理步数/Token预算，还是简单切换模型路由或提示词；密切跟踪API计费逻辑、延迟指标及官方是否披露后训练对齐管线，以评估真实架构演进。",
+        "memory_note": "Google DeepMind 近期已出现 5 次相关信号；这条可放在「Evaluation / Benchmark」脉络下看，和此前「Which Pretraining Paradigm Better Serves Spatial Intelligence? An Empirical Comparison of Vision-Language and Video Generation Models」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
-          "该功能是动态调整同一模型的推理步数，还是简单切换不同参数规模的模型实例？",
-          "上线后Gemini在代码生成与数学推理等强依赖推理预算的基准上是否有可复现的提升？"
+          "评测提升来自方法本身，还是来自数据、奖励设计或推理预算变化？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
         "memory_subjects": [
           {
@@ -1998,23 +1678,7 @@
             "key": "evaluation-benchmark",
             "label": "Evaluation / Benchmark"
           }
-        ],
-        "expert_review": {
-          "importance": "将“思考层级”全平台推送，标志着推理时计算预算正式从实验特性转化为用户可配置的产品能力，直接重塑复杂任务的成本与延迟权衡。",
-          "skepticism": "需验证该功能是否仅为前端路由或提示词包装，而非真正基于动态推理预算分配与后训练对齐带来的架构级能力跃迁。",
-          "watch_points": [
-            "不同Thinking Level对应的实际Token消耗、延迟与API定价策略变化",
-            "官方是否公开该功能背后的训练管线与强化学习对齐细节",
-            "跨端部署在长上下文与多模态任务中的实际收益与一致性"
-          ],
-          "related_sources": [
-            {
-              "title": "Josh Woodward on X: Thinking Levels rollout",
-              "url": "https://x.com/joshwoodward/status/2062025667852812583"
-            }
-          ],
-          "method": "llm_expert_review"
-        }
+        ]
       },
       {
         "event_id": "51211c103efda6",
@@ -2023,7 +1687,7 @@
         "title": "OpenAI：@saranormous codex is agi man",
         "brief": "@saranormous codex is agi man。看点在代码工作流：是否能减少真实项目里的上下文切换和人工接线。",
         "social_original_text": "@saranormous codex is agi man\n\nhttps://t.co/LFzyjAdKfm\n\noneshotted this, no notes\n\nhttps://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
-        "translation_zh": "@saranormous Codex 就是 AGI，真的绝了 https://t.co/LFzyjAdKfm 一次跑通，无可挑剔 https://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
+        "translation_zh": "@saranormous codex 就是 AGI 啊 https://t.co/LFzyjAdKfm 一次搞定，无可挑剔 https://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
         "entity": "OpenAI",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -2066,7 +1730,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 OpenAI 近期已有相关动作；和此前「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」放在一起看，这不是孤立新闻，而是在同一条产品或市场主线上继续加码。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -2087,8 +1751,7 @@
             "key": "ai-coding",
             "label": "AI Coding"
           }
-        ],
-        "expert_review": null
+        ]
       },
       {
         "event_id": "e9175bfc301181",
@@ -2097,7 +1760,7 @@
         "title": "The best founders treat the following as a necessary component of their business but NOT the entire business..",
         "brief": "The best founders treat the following as a necessary component of their business but NOT the entire business.。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "The best founders treat the following as a necessary component of their business but NOT the entire business..\n\n> AI / timing / why now\n> Funding\n> Distribution / hype\n> Market\n> Product\n> Revenue\n\nI’m seeing too many pitches that are touting only one of these as the core reason to invest.\n\nThe bar has frankly never been higher (see the seed - A gap) and you really need to be able to explain how you’re capturing at least multiple of these in a unique way that’ll be hard for others to copy.\n\nEspecially in overcrowded categories. Otherwise, it gets very hard for the other side (aka VC) to make a case for their own partners to write the check.\n\nAnd, founders often get frustrated because their businesses are strong. Stronger than they have ever been in the past. Why can’t people just write the check? Like why do I need to waste time fundraising? It’s because like it or not the levels do keep going up. Narrative matters, ambition matters and try to understand the opportunity cost has also never been higher on the other side. If you’re profitable and don’t need capital, then who cares. And you don’t need to optimize for VCs but you DO need to give them a reason to believe.\n\nSo, keep your bar high. Find a capital partner that still has conviction and deserves equity in your company. But, please take those ten extra minutes to communicate your long term ambition, because that might be the only small difference between you and the next round.",
-        "translation_zh": "最优秀的创始人会将以下要素视为业务的必要组成部分，但绝非全部： > AI / 时机 / 为什么是现在 > 融资 > 分发 / 造势 > 市场 > 产品 > 收入 我看到太多路演只把其中某一项吹捧为投资的核心理由。 坦白说，现在的门槛前所未有地高（看看种子轮到A轮的差距就知道了）。你必须能够解释，你如何以独特且难以复制的方式，至少同时占据其中的多项优势。 在过度拥挤的赛道中尤其如此。否则，投资方（即VC）将很难向他们的合伙人证明这笔投资值得签字打款。 创始人常常感到沮丧，因为他们的业务明明很强，甚至比过去任何时候都强。为什么大家不能直接打款？为什么我要浪费时间融资？原因在于，无论你是否接受，标准确实在不断提高。叙事很重要，野心很重要，你也得明白，投资方的机会成本同样处于历史高位。如果你已经盈利且不需要资金，那确实无所谓。你不需要一味迎合VC，但你必须给他们一个相信你的理由。 所以，保持高标准。找到一位仍有坚定信念、配得上你公司股权的资本伙伴。但请务必多花十分钟阐述你的长期愿景，因为这或许就是你与下一轮融资之间唯一的微小差距。",
+        "translation_zh": "顶尖创始人会将以下要素视为业务的必要组成部分，但绝不会将其等同于业务全貌： > AI / 时机 / 为什么是现在 > 融资 > 分发 / 声量 > 市场 > 产品 > 营收 我见过太多路演仅凭其中一项就作为核心投资理由。 坦白说，当前融资门槛已前所未有地提高（参考种子轮到A轮的断层）。你必须清晰阐述，自己如何以独特且难以复制的方式，同时占据其中多项优势。 在过度拥挤的赛道尤其如此。否则，VC很难向合伙人证明这笔投资的合理性。 创始人常感沮丧：业务明明很强，甚至强于以往，为什么就是拿不到钱？为什么非要花时间融资？因为无论你是否接受，行业标准确实在不断攀升。叙事和野心至关重要，同时你必须意识到，投资方的机会成本也处于历史高位。若你已盈利且无需资金，大可不必在意。你无需刻意迎合VC，但必须给他们一个相信你的理由。 因此，保持高标准。寻找仍有坚定信念、配得上你公司股权的资本伙伴。但请务必多花十分钟沟通你的长期愿景，因为这或许就是你与下一轮融资之间唯一的微小差距。",
         "entity": "",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -2140,7 +1803,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条的重点不是一次普通合作，而是模型公司把增长入口嵌进云厂商和企业采购链路；它可能直接影响模型分发、调用量和客户锁定。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续最该看的是：企业客户是否真实迁移工作负载、token 消耗是否增长，以及这会不会削弱模型公司的直销议价权。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -2156,8 +1819,7 @@
             "key": "inference-infrastructure",
             "label": "Inference Infrastructure"
           }
-        ],
-        "expert_review": null
+        ]
       },
       {
         "event_id": "709c1d1da7558d",
@@ -2166,7 +1828,7 @@
         "title": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders.",
         "brief": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
         "social_original_text": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders.\n\nthe new EO gets the balance right.",
-        "translation_zh": "美国应在AI领域保持领先，持续研发最顶尖的模型，确保其安全，并将网络安全工具交予值得信赖的防御者。新行政令的平衡把握得恰到好处。",
+        "translation_zh": "美国应通过持续研发最顶尖的AI模型、确保其安全性，并将网络安全工具交予可信赖的防御方，从而在AI领域保持领先。 新行政令很好地把握了平衡。",
         "entity": "",
         "event_type": "company_or_industry_update",
         "event_type_label": "公司/行业动态",
@@ -2209,13 +1871,12 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "memory_note": "",
         "reading_questions": [
           "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
         ],
-        "memory_subjects": [],
-        "expert_review": null
+        "memory_subjects": []
       },
       {
         "event_id": "8dfda3f9cfe5c7",
@@ -2224,7 +1885,7 @@
         "title": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS",
         "brief": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS。它更像能力温度计，价值在于帮助判断哪些 Agent 能从演示走向稳定任务。",
         "social_original_text": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS",
-        "translation_zh": "",
+        "translation_zh": "GBrain 是面向检索与记忆的 Agent 瑞士军刀 https://t.co/EgXmcs6ZOS",
         "entity": "",
         "event_type": "agent_or_developer_infra",
         "event_type_label": "Agent/开发者基础设施",
@@ -2267,7 +1928,7 @@
           "DuplicatePenalty": -4,
           "LowConfidencePenalty": -6
         },
-        "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+        "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
         "reading_questions": [
           "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
           "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -2283,106 +1944,105 @@
             "key": "evaluation-benchmark",
             "label": "Evaluation / Benchmark"
           }
-        ],
-        "expert_review": null
+        ]
       }
     ]
   },
   "paper_digest": {
     "source": "Hugging Face Daily Papers",
     "source_url": "https://huggingface.co/papers/date/2026-06-04",
-    "generated_at": "2026-06-04T07:46:30.858Z",
+    "generated_at": "2026-06-04T01:33:49.152Z",
     "llm_provider": "openai_compatible_chat",
     "llm_model": "qwen3.6-plus",
     "count": 5,
-    "total_count": 23,
+    "total_count": 36,
     "items": [
       {
-        "paper_id": "2606.02060",
-        "title": "Where Do Deep-Research Agents Go Wrong? Span-Level Error Localization in Agent Trajectories",
-        "title_zh": "深度研究智能体错在哪？智能体轨迹中的跨度级错误定位",
+        "paper_id": "2606.00683",
+        "title": "OCC-RAG: Optimal Cognitive Core for Faithful Question Answering",
+        "title_zh": "OCC-RAG：面向忠实问答的最优认知核心",
+        "daily_rank": 1,
+        "url": "https://huggingface.co/papers/2606.00683",
+        "source_url": "https://arxiv.org/html/2606.00683",
+        "thumbnail_url": "https://arxiv.org/html/2606.00683v1/x1.png",
+        "takeaway_zh": "提出面向忠实问答的专用小模型OCC-RAG，通过合成多跳推理数据训练，实现基于上下文的精准引用与推理。",
+        "why_it_matters_zh": "证明专用小模型在特定任务上可超越大数倍通用模型，为低成本、高可靠性的RAG应用提供新范式。",
+        "tags": [
+          "小语言模型",
+          "检索增强生成",
+          "多跳推理"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2605.23895",
+        "title": "From Activation to Causality: Discovery of Causal Visual Representations in the Human Brain",
+        "title_zh": "BrainCause：从激活到因果的脑视觉表征发现",
         "daily_rank": 2,
-        "url": "https://huggingface.co/papers/2606.02060",
-        "source_url": "https://arxiv.org/html/2606.02060",
-        "thumbnail_url": "https://arxiv.org/html/2606.02060v1/x1.png",
-        "takeaway_zh": "提出跨度级错误定位方法，追踪智能体决策轨迹中早期错误承诺的传递与复用。",
-        "why_it_matters_zh": "精准定位推理链早期错误源头，提升复杂研究智能体的可靠性与调试效率。",
+        "url": "https://huggingface.co/papers/2605.23895",
+        "source_url": "https://arxiv.org/html/2605.23895",
+        "thumbnail_url": "https://arxiv.org/html/2605.23895v1/x1.png",
+        "takeaway_zh": "提出BrainCause框架，结合生成模型与脑模型合成对照刺激，通过因果测试精准定位大脑视觉概念表征。",
+        "why_it_matters_zh": "突破传统仅靠激活强度的局限，引入因果验证机制，为神经科学脑区定位与脑机接口研究提供更可靠的方法。",
         "tags": [
-          "智能体调试",
-          "错误定位",
-          "推理轨迹"
+          "神经科学",
+          "因果推断",
+          "脑机接口"
+        ],
+        "importance": 3,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2606.01249",
+        "title": "Trust Region On-Policy Distillation",
+        "title_zh": "信任域在线策略蒸馏",
+        "daily_rank": 3,
+        "url": "https://huggingface.co/papers/2606.01249",
+        "source_url": "https://arxiv.org/html/2606.01249",
+        "thumbnail_url": "https://arxiv.org/html/2606.01249v1/x1.png",
+        "takeaway_zh": "提出TrOPD方法，通过信任域学习、异常值估计与离线引导，解决大模型在线蒸馏中师生分布差异导致的训练不稳定问题。",
+        "why_it_matters_zh": "提升大模型后训练与压缩的稳定性，为智能体学习与多任务增强提供更可靠的策略优化方案。",
+        "tags": [
+          "大模型后训练",
+          "策略蒸馏",
+          "强化学习"
         ],
         "importance": 4,
         "summary_method": "llm"
       },
       {
-        "paper_id": "2606.03746",
-        "title": "Qwen-Image-Flash: Beyond Objective Design",
-        "title_zh": "Qwen-Image-Flash：超越目标设计的少步蒸馏",
+        "paper_id": "2606.03985",
+        "title": "Humanoid-GPT: Scaling Data and Structure for Zero-Shot Motion Tracking",
+        "title_zh": "Humanoid-GPT：面向零样本动作追踪的数据与结构扩展",
+        "daily_rank": 4,
+        "url": "https://huggingface.co/papers/2606.03985",
+        "source_url": "https://arxiv.org/html/2606.03985",
+        "thumbnail_url": "https://arxiv.org/html/2606.03985v1/x1.png",
+        "takeaway_zh": "提出基于大规模动作语料预训练的GPT式Transformer，实现全身控制与复杂动态动作的零样本泛化追踪。",
+        "why_it_matters_zh": "突破传统浅层网络的数据与泛化瓶颈，为人形机器人及具身智能提供高鲁棒性的运动控制基座模型。",
+        "tags": [
+          "具身智能",
+          "运动控制",
+          "大模型预训练"
+        ],
+        "importance": 5,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2606.03458",
+        "title": "KVarN: Variance-Normalized KV-Cache Quantization Mitigates Error Accumulation in Reasoning Tasks",
+        "title_zh": "KVarN：方差归一化KV缓存量化缓解推理任务误差累积",
         "daily_rank": 5,
-        "url": "https://huggingface.co/papers/2606.03746",
-        "source_url": "https://arxiv.org/html/2606.03746",
-        "thumbnail_url": "https://arxiv.org/html/2606.03746v1/x1.png",
-        "takeaway_zh": "从训练配方视角优化少步蒸馏，结合数据、教师指导与任务混合，实现4步生成与编辑。",
-        "why_it_matters_zh": "突破仅优化蒸馏目标的局限，为视觉大模型高效加速与统一生成编辑提供新范式。",
+        "url": "https://huggingface.co/papers/2606.03458",
+        "source_url": "https://arxiv.org/html/2606.03458",
+        "thumbnail_url": "https://arxiv.org/html/2606.03458v1/x1.png",
+        "takeaway_zh": "提出免校准的KVarN量化方法，通过哈达玛变换与双轴方差归一化，解决自回归解码中KV缓存量化误差累积问题。",
+        "why_it_matters_zh": "突破长程推理显存瓶颈，在2bit精度下保持SOTA性能，为高效推理部署提供新方案。",
         "tags": [
-          "图像生成",
-          "模型蒸馏",
-          "训练策略"
-        ],
-        "importance": 4,
-        "summary_method": "llm"
-      },
-      {
-        "paper_id": "2606.05008",
-        "title": "Multi-Modal Memory Evaluation through Cognitively-Grounded Video Tasks",
-        "title_zh": "基于认知视频任务的多模态记忆评估",
-        "daily_rank": 6,
-        "url": "https://huggingface.co/papers/2606.05008",
-        "source_url": "https://arxiv.org/html/2606.05008",
-        "thumbnail_url": "https://arxiv.org/html/2606.05008v1/x1.png",
-        "takeaway_zh": "提出M³Eval基准，基于认知心理学任务系统评估多模态模型在长视频中的记忆保持与抗干扰能力。",
-        "why_it_matters_zh": "揭示模型记忆维度的系统性短板，为设计更有效的多模态记忆机制提供关键评估依据。",
-        "tags": [
-          "多模态评估",
-          "视频理解",
-          "记忆机制"
-        ],
-        "importance": 4,
-        "summary_method": "llm"
-      },
-      {
-        "paper_id": "2605.27492",
-        "title": "Benchmarks are Not Enough: Ramp for Runtime Assessing of Agentic Models in Production Systems∗",
-        "title_zh": "Ramp：面向生产系统的智能体运行时评估框架",
-        "daily_rank": 8,
-        "url": "https://huggingface.co/papers/2605.27492",
-        "source_url": "https://arxiv.org/html/2605.27492",
-        "thumbnail_url": "https://arxiv.org/html/2605.27492v1/figures/fig3_task_achive.png",
-        "takeaway_zh": "提出Ramp运行时评估框架，在真实生产环境中测试LLM智能体处理长周期软件工程任务的能力。",
-        "why_it_matters_zh": "弥补静态基准与真实工作流的差距，为智能体向自主软件工程系统演进提供动态评估标准。",
-        "tags": [
-          "智能体评估",
-          "软件工程",
-          "生产环境"
-        ],
-        "importance": 4,
-        "summary_method": "llm"
-      },
-      {
-        "paper_id": "2606.01993",
-        "title": "MMG2Skill: Can Agents Distill In-the-Wild Guides into Self-Evolving Skills?",
-        "title_zh": "MMG2Skill：智能体能否将野外指南提炼为自进化技能？",
-        "daily_rank": 9,
-        "url": "https://huggingface.co/papers/2606.01993",
-        "source_url": "https://arxiv.org/html/2606.01993",
-        "thumbnail_url": "https://arxiv.org/html/2606.01993v1/x1.png",
-        "takeaway_zh": "提出从公开网络指南中自动提炼可执行、可编辑的程序化技能，赋予智能体长程任务的过程锚定与自我进化能力。",
-        "why_it_matters_zh": "解决智能体长程任务中过程知识复用与状态恢复难题，降低人工编写技能成本，提升复杂环境下的自主执行效率。",
-        "tags": [
-          "智能体技能学习",
-          "过程锚定",
-          "网络指南蒸馏"
+          "KV缓存量化",
+          "推理加速",
+          "大模型部署"
         ],
         "importance": 4,
         "summary_method": "llm"
@@ -2434,10 +2094,10 @@
         "DuplicatePenalty": 0,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "判断：AI编程正从应用层向底层基础设施渗透，工程价值显著但需警惕“一次性交付”幻觉。关注点：验证生成代码在边缘侧的性能、安全隔离与长期维护成本；观察Codex在复杂调试与失败恢复中的自主闭环能力，而非仅看初期开发速度。",
+      "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
       "reading_questions": [
-        "AI生成的边缘运行时在真实高并发场景下的稳定性与性能损耗如何量化？",
-        "开发者在此流程中的角色是否已从“编码者”彻底转变为“架构评审与自动化测试验证者”？"
+        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -2455,23 +2115,7 @@
           "key": "ai-coding",
           "label": "AI Coding"
         }
-      ],
-      "expert_review": {
-        "importance": "标志着AI编程智能体从辅助业务逻辑正式切入底层运行时构建，验证了GPT-5.5/Codex在复杂系统工程中的实际杠杆效应。",
-        "skepticism": "“10x-20x提效”属典型厂商叙事，需验证该运行时在边缘侧的真实性能、安全隔离及后期维护成本，而非仅看初期交付速度。",
-        "watch_points": [
-          "生成代码在边缘环境（WASM/冷启动/内存限制）下的长期可维护性与性能损耗",
-          "Codex在复杂调试、权限沙箱配置与失败恢复中的自主闭环能力",
-          "该AI驱动基建模式能否横向复用到数据库引擎或网络协议栈等更底层领域"
-        ],
-        "related_sources": [
-          {
-            "title": "How Wasmer used Codex to build a Node.js runtime for the edge",
-            "url": "https://openai.com/index/wasmer"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "404c8e05fa089d",
@@ -2517,10 +2161,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "星尘智能的百亿估值与绳驱路线，标志着具身智能从演示驱动进入软硬协同与规模化交付深水区。其快慢双系统直击实时控制与长程规划的算力矛盾，但绳驱传动的长期可靠性、Lumo模型的真实数据闭环效率及8.99万定价的商业ROI仍需真机验证。读者应聚焦千台交付良率与具身OS泛化边界。",
+      "memory_note": "这条属于「Inference Infrastructure」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
       "reading_questions": [
-        "在缺乏海量真实物理交互数据的前提下，星尘智能如何保证Lumo模型在分布外（OOD）场景中的泛化能力与安全性？",
-        "快慢协同架构（DuoCore）在底层控制延迟、算力分配与故障切换机制上，相比传统分层控制或Figure的Helix架构有何实质性工程突破？"
+        "它解决的是能力问题、入口问题，还是成本问题？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -2548,23 +2192,7 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ],
-      "expert_review": {
-        "importance": "该报道揭示了具身智能赛道正从资本叙事转向硬件架构创新与真实场景规模化落地的关键拐点，其“绳驱本体+快慢双系统”路线为突破机器人实时响应与复杂推理的算力瓶颈提供了工程化参考。",
-        "skepticism": "需警惕“全球首家量产绳驱”与“千台级订单”的营销话术，重点验证绳驱关节在高频作业下的磨损寿命、Lumo模型“数据效率驱动”背后的真实训练管线（如是否依赖大规模仿真或特定RL/DPO对齐），以及8.99万售价在非标场景中的实际投资回报周期。",
-        "watch_points": [
-          "绳驱传动模块在工业/商业连续运行场景下的MTBF（平均无故障时间）与张力校准维护成本",
-          "Lumo基座模型的真实训练范式：预训练数据来源、真机对齐采用的具体算法（如IL、RLHF或DPO变体）及Sim2Real泛化能力",
-          "与中科创达等客户的“千台订单”是采购合同、联合开发还是试点部署，以及实际落地后的任务成功率与停机率"
-        ],
-        "related_sources": [
-          {
-            "title": "深圳具身公司星尘智能完成超10亿B轮融资，估值破百亿｜硬氪首发",
-            "url": "https://36kr.com/p/3836068296209537?f=rss"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "453c71ac4817ba",
@@ -2610,10 +2238,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "判断：微软此举意在摆脱OpenAI依赖，以“零蒸馏+合规数据”切入企业级采购痛点，战略意义大于短期性能突破。关注点：35B活跃/1T总参MoE架构的真实推理成本、未披露的RL训练细节，以及“无AI生成数据”在2026年数据管线中的可行性与性能天花板。",
+      "memory_note": "Anthropic 近期已出现 4 次相关信号；这条可放在「Inference Infrastructure」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
       "reading_questions": [
-        "在明确拒绝蒸馏与第三方模型输出的前提下，该模型依赖何种后训练范式（如过程奖励建模或可验证RL）实现推理能力跃升？",
-        "“排除AI生成内容”的数据策略是否会成为未来Scaling Law的瓶颈，还是仅作为短期合规营销话术？"
+        "它解决的是能力问题、入口问题，还是成本问题？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -2626,27 +2254,7 @@
           "key": "inference-infrastructure",
           "label": "Inference Infrastructure"
         }
-      ],
-      "expert_review": {
-        "importance": "标志着微软从OpenAI生态依赖转向全栈自研模型基建，以“数据合规与零蒸馏”构建企业级采购护城河。",
-        "skepticism": "“完全零蒸馏且排除AI生成数据”在2026年极难实现，且35B活跃参数模型在SWE Bench Pro与AIME上的高分缺乏独立复现与训练配方（如RLVR/GRPO细节）支撑。",
-        "watch_points": [
-          "第三方独立评测机构对MAI-Thinking-1在SWE Bench Pro及数学基准上的复现结果与数据污染排查",
-          "1T参数MoE架构在实际生产环境中的路由延迟、激活成本与Token定价策略",
-          "企业客户对“零蒸馏/干净IP”卖点的实际采购转化率及合规审计落地情况"
-        ],
-        "related_sources": [
-          {
-            "title": "拒绝蒸馏！微软发布自研MAI-Thinking-1追平Claude Opus 4.6：完全从零训练，不沾任何第三方模型输出",
-            "url": "https://www.infoq.cn/article/StrGjRRmFKm4fXCvLOSP"
-          },
-          {
-            "title": "Microsoft Build 2026 MAI Keynote Transcript",
-            "url": "https://microsoft.ai/news/microsoft-build-2026-mai-keynote-transcript/"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "9055539deb8662",
@@ -2692,10 +2300,10 @@
         "DuplicatePenalty": 0,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "判断：此更新非单纯参数迭代，而是将LLM能力深度锚定至生命科学垂直工作流，具备明确的产业落地指向。关注点：需穿透PR叙事，重点验证其“生物推理与实验工作流”是底层预训练/后训练路线的实质性突破，还是依赖外部工具链拼接；同时关注真实科研场景下的调用成本、幻觉控制与开发者留存。",
+      "memory_note": "这条属于「Enterprise AI Workflow」的连续信号；此前相关项包括「AWS has massive enterprise traction, with large committed contracts from enterprises. So this partnership opens up both increased distribution for OpenAI’s models, but also likely drives an increase in token consumption」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
       "reading_questions": [
-        "该能力升级是解决了生命科学领域的核心推理瓶颈，还是仅优化了交互入口？",
-        "后续应通过哪些可复现的实验指标来验证其在真实科研场景中的有效性？"
+        "它解决的是能力问题、入口问题，还是成本问题？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -2703,23 +2311,7 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ],
-      "expert_review": {
-        "importance": "标志着大模型从通用交互向高门槛科学工作流（药物研发/基因组学）的实质性渗透，直接扩展了可调用能力边界。",
-        "skepticism": "需验证其宣称的增强能力是模型架构或对齐训练的真实突破，还是仅靠Prompt模板与外部API封装的营销包装。",
-        "watch_points": [
-          "第三方独立基准在真实药物发现管线中的准确率与幻觉率表现",
-          "科研机构/药企的实际API调用留存率与单次推理成本效益",
-          "是否开放细粒度权重或提供可复现的训练/对齐路线细节"
-        ],
-        "related_sources": [
-          {
-            "title": "Introducing new capabilities to GPT-Rosalind",
-            "url": "https://openai.com/index/introducing-new-capabilities-to-gpt-rosalind"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "9d1e29cf0783cb",
@@ -2765,10 +2357,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "判断：Anthropic营收暴增与盈利拐点并非单纯源于模型能力跃升，而是企业定价从“订阅包月”转向“API按量计费”叠加编程Agent高并发子代理架构的必然结果。关注点：需剥离Run Rate水分，验证企业客户在真实Token成本下的续费率与ROI，以及Opus 4.8并行架构的推理成本优化路径。",
+      "memory_note": "Anthropic 近期已有相关记忆：Anthropic scales Claude Mythos to critical infrastructure in 15+ countries。这次的新信息更适合用来判断它的产品路线、组织选择或外部叙事是否延续。",
       "reading_questions": [
-        "在Agent并行调用成为常态后，LLM厂商如何平衡模型智能度与Token经济性？",
-        "定价策略转向按API实付后，中小开发者与企业客户的采用门槛将如何分化？"
+        "这条信息和过去一周的 AI 主线相比，新增了什么判断依据？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -2776,27 +2368,7 @@
           "key": "anthropic",
           "label": "Anthropic"
         }
-      ],
-      "expert_review": {
-        "importance": "揭示了大模型商业化从“补贴换增长”转向“按量计费+Agent架构驱动”的关键拐点，为LLM基础设施的定价权与盈利模型提供了现实样本。",
-        "skepticism": "Run Rate不等于实际确认收入，且“单月5亿美元账单”为未证实传闻，需验证企业客户在API实付模式下的真实留存率与Token消耗效率。",
-        "watch_points": [
-          "Q2财报中实际确认营收与毛利率，验证运营盈利是否可持续",
-          "企业客户对Claude Code按量计费的续约率及ROI反馈",
-          "Opus 4.8动态子代理架构的Token利用率优化与推理成本控制进展"
-        ],
-        "related_sources": [
-          {
-            "title": "Anthropic冲刺IPO：Claude一个月烧掉客户5亿美元，却成了上市前最强广告 - InfoQ",
-            "url": "https://www.infoq.cn/article/ZIU2RR7Q1ldqCvD0gTQH"
-          },
-          {
-            "title": "Home \\ Anthropic",
-            "url": "https://www.anthropic.com/"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "03eb661497428b",
@@ -2842,10 +2414,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "判断：本文刺破了Agent“效率万能”的商业叙事，指出技术红利若脱离分配机制将沦为空洞承诺。关注点：从业者应聚焦Agent在长链路中的权限隔离、失败回滚与审计能力，验证其能否真实降低人工接线与结果校验成本，而非停留于浅层日程管理。",
+      "memory_note": "Google DeepMind 近期已出现 5 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
       "reading_questions": [
-        "在现有架构下，Agent的“自主性”边界究竟由模型推理能力决定，还是由产品定义的权限沙箱决定？",
-        "当AI接管重复性生产力工具后，企业IT架构与员工技能栈将如何重构以承接新增的非结构化决策工作？"
+        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -2858,23 +2430,7 @@
           "key": "agent-systems",
           "label": "Agent Systems"
         }
-      ],
-      "expert_review": {
-        "importance": "揭示了AI Agent商业化叙事与宏观社会经济现实之间的结构性错位，提醒技术圈跳出“效率至上”的单一评估框架。",
-        "skepticism": "需验证Spark的“无提示记忆”是真正的上下文工程突破，还是依赖底层数据抓取与隐私妥协的营销包装。",
-        "watch_points": [
-          "Spark在长链路任务中的权限隔离、失败回滚与审计日志机制是否达到企业级标准",
-          "实际部署中能否量化降低人工接线与结果校验成本，而非仅停留在日程管理等浅层场景",
-          "监管与隐私合规政策对Agent跨应用数据调用的限制力度及厂商应对策略"
-        ],
-        "related_sources": [
-          {
-            "title": "As AI gets better, it reveals an empty promise | The Verge",
-            "url": "https://www.theverge.com/ai-artificial-intelligence/942629/as-ai-gets-better-it-reveals-an-empty-promise"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "14db40754939c1",
@@ -2920,10 +2476,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "判断：这是 Agent 工程化从“跑通 Demo”走向“成本可控”的关键一步，核心价值在于用自动化审计闭环替代人工调优，直击 MCP 工具 Schema 冗余与上下文膨胀痛点。关注点：ET 指标能否跨团队复用、审计 Agent 自身的开销边界，以及该模式在非 GitHub 生态中的泛化能力。",
+      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
       "reading_questions": [
-        "在工具 Schema 仅占上下文极小比例的场景中，除了精简 MCP，还有哪些架构级手段能有效控制 Token 消耗？",
-        "自动化优化 Agent 生成的 Issue 建议，在实际落地时如何建立沙箱验证机制以避免引入逻辑错误？"
+        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -2941,27 +2497,7 @@
           "key": "enterprise-ai-workflow",
           "label": "Enterprise AI Workflow"
         }
-      ],
-      "expert_review": {
-        "importance": "首次将 Agent 成本优化从静态 Prompt 工程升级为动态“审计-优化”自动化闭环，为 CI/CD 场景下的 LLM Agent 规模化落地提供了可量化的工程范式。",
-        "skepticism": "ET 指标中的模型权重系数是否具备跨业务普适性，且“未使用工具不降成本”的案例是否暴露了 MCP 协议在动态上下文裁剪上的架构局限。",
-        "watch_points": [
-          "ET 指标在长上下文推理或多模态 Agent 场景下的成本映射准确度",
-          "gh-aw CLI 在非 GitHub 原生环境（如自建 MCP Server、私有化部署）的适配与开源反馈",
-          "下一阶段“工作流组合分析”能否真正实现跨 Agent 的中间状态共享与去重"
-        ],
-        "related_sources": [
-          {
-            "title": "什么是 Model Context Protocol ( MCP )？和 Function Calling ...",
-            "url": "https://javaguide.cn/ai/agent/mcp.html"
-          },
-          {
-            "title": "MCP 中文站（Model Context Protocol 中文）",
-            "url": "https://mcpcn.com/"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "3be5d216d2afc2",
@@ -3007,7 +2543,7 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
       "reading_questions": [
         "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
         "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -3018,8 +2554,7 @@
           "key": "agent-systems",
           "label": "Agent Systems"
         }
-      ],
-      "expert_review": null
+      ]
     },
     {
       "event_id": "754ccfe3fea84b",
@@ -3065,7 +2600,7 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": 0
       },
-      "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
       "reading_questions": [
         "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
         "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -3076,8 +2611,7 @@
           "key": "agent-systems",
           "label": "Agent Systems"
         }
-      ],
-      "expert_review": null
+      ]
     },
     {
       "event_id": "56b5753161258e",
@@ -3086,7 +2620,7 @@
       "title": "OpenAI：ChatGPT",
       "brief": "ChatGPT。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
       "social_original_text": "ChatGPT\n\nWhether you understand the name or not. It's here to stay. It's the past, the present, the future. Synonym with AI, soon synonym with agents. Much to build.",
-      "translation_zh": "ChatGPT 无论你是否理解这个名字，它都将长存。它是过去、现在，也是未来。它是AI的代名词，很快也将成为智能体的代名词。仍有大量工作待构建。",
+      "translation_zh": "ChatGPT 无论你是否理解这个名字，它都将长久存在。它是过去、现在，也是未来。它是 AI 的代名词，很快也将成为 Agent 的代名词。仍有大量工作待构建。",
       "entity": "OpenAI",
       "event_type": "agent_or_developer_infra",
       "event_type_label": "Agent/开发者基础设施",
@@ -3129,10 +2663,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "判断：品牌叙事向Agent基础设施倾斜，但工程落地价值取决于底层架构是否支持确定性执行。关注点：需验证其长任务状态管理、失败恢复机制与企业级审计能力，而非仅停留在API调用或Prompt拼接层面。",
+      "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
       "reading_questions": [
-        "ChatGPT的Agent化是模型原生架构升级，还是依赖外部工作流编排的包装？",
-        "在真实企业场景中，它能否实质性降低人工接线、上下文切换与结果校验的隐性成本？"
+        "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -3145,31 +2679,7 @@
           "key": "agent-systems",
           "label": "Agent Systems"
         }
-      ],
-      "expert_review": {
-        "importance": "该推文将ChatGPT定位从对话模型转向智能体基础设施，标志着OpenAI正试图重塑开发者心智，推动产品向工作流自动化与Agent生态演进。",
-        "skepticism": "“soon synonym with agents”属典型市场叙事，需验证其底层是否具备原生状态管理、工具调用标准化与确定性推理能力，而非依赖外部编排。",
-        "watch_points": [
-          "OpenAI是否发布面向Agent的专用推理框架或持久化记忆协议",
-          "复杂业务流中的失败恢复率、权限隔离与审计日志是否达企业级标准",
-          "对比开源Agent框架与竞品，其开箱即用体验与推理成本的实际优势"
-        ],
-        "related_sources": [
-          {
-            "title": "ChatGPT (X Post)",
-            "url": "https://x.com/thsottiaux/status/2062057881424506950"
-          },
-          {
-            "title": "OpenAI 官网入口地址：如何轻松找到",
-            "url": "https://apifox.com/apiskills/openai-official-portal/"
-          },
-          {
-            "title": "OpenAI _百度百科",
-            "url": "https://baike.baidu.com/item/OpenAI/19758408"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "7db977d93ee575",
@@ -3178,7 +2688,7 @@
       "title": "Google DeepMind：✅ Papercut fixed: Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW",
       "brief": "✅ Papercut fixed: Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
       "social_original_text": "Thinking Levels are now available on Gemini across Web, iOS, and Android. https://t.co/aF02kkUekW",
-      "translation_zh": "思考层级功能现已在网页版、iOS 和 Android 端的 Gemini 上上线。https://t.co/aF02kkUekW",
+      "translation_zh": "“思考层级”现已在网页版、iOS 和 Android 端的 Gemini 上全面上线。https://t.co/aF02kkUekW",
       "entity": "Google DeepMind",
       "event_type": "research_or_benchmark",
       "event_type_label": "研究/Benchmark",
@@ -3221,10 +2731,10 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "判断：Gemini全端上线“Thinking Levels”是推理时计算预算产品化的关键节点，但技术实质需剥离UI包装。关注点：重点验证其是动态调整推理步数/Token预算，还是简单切换模型路由或提示词；密切跟踪API计费逻辑、延迟指标及官方是否披露后训练对齐管线，以评估真实架构演进。",
+      "memory_note": "Google DeepMind 近期已出现 5 次相关信号；这条可放在「Evaluation / Benchmark」脉络下看，和此前「Which Pretraining Paradigm Better Serves Spatial Intelligence? An Empirical Comparison of Vision-Language and Video Generation Models」共同说明该方向正在从单点事件变成持续议题。",
       "reading_questions": [
-        "该功能是动态调整同一模型的推理步数，还是简单切换不同参数规模的模型实例？",
-        "上线后Gemini在代码生成与数学推理等强依赖推理预算的基准上是否有可复现的提升？"
+        "评测提升来自方法本身，还是来自数据、奖励设计或推理预算变化？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
       "memory_subjects": [
         {
@@ -3237,23 +2747,7 @@
           "key": "evaluation-benchmark",
           "label": "Evaluation / Benchmark"
         }
-      ],
-      "expert_review": {
-        "importance": "将“思考层级”全平台推送，标志着推理时计算预算正式从实验特性转化为用户可配置的产品能力，直接重塑复杂任务的成本与延迟权衡。",
-        "skepticism": "需验证该功能是否仅为前端路由或提示词包装，而非真正基于动态推理预算分配与后训练对齐带来的架构级能力跃迁。",
-        "watch_points": [
-          "不同Thinking Level对应的实际Token消耗、延迟与API定价策略变化",
-          "官方是否公开该功能背后的训练管线与强化学习对齐细节",
-          "跨端部署在长上下文与多模态任务中的实际收益与一致性"
-        ],
-        "related_sources": [
-          {
-            "title": "Josh Woodward on X: Thinking Levels rollout",
-            "url": "https://x.com/joshwoodward/status/2062025667852812583"
-          }
-        ],
-        "method": "llm_expert_review"
-      }
+      ]
     },
     {
       "event_id": "51211c103efda6",
@@ -3262,7 +2756,7 @@
       "title": "OpenAI：@saranormous codex is agi man",
       "brief": "@saranormous codex is agi man。看点在代码工作流：是否能减少真实项目里的上下文切换和人工接线。",
       "social_original_text": "@saranormous codex is agi man\n\nhttps://t.co/LFzyjAdKfm\n\noneshotted this, no notes\n\nhttps://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
-      "translation_zh": "@saranormous Codex 就是 AGI，真的绝了 https://t.co/LFzyjAdKfm 一次跑通，无可挑剔 https://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
+      "translation_zh": "@saranormous codex 就是 AGI 啊 https://t.co/LFzyjAdKfm 一次搞定，无可挑剔 https://t.co/8tCIUSdxON https://t.co/LSoEaEHqfP",
       "entity": "OpenAI",
       "event_type": "agent_or_developer_infra",
       "event_type_label": "Agent/开发者基础设施",
@@ -3305,7 +2799,7 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 OpenAI 近期已有相关动作；和此前「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」放在一起看，这不是孤立新闻，而是在同一条产品或市场主线上继续加码。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+      "memory_note": "OpenAI 近期已出现 6 次相关信号；这条可放在「Agent Systems」脉络下看，和此前「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」共同说明该方向正在从单点事件变成持续议题。",
       "reading_questions": [
         "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
         "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -3326,8 +2820,7 @@
           "key": "ai-coding",
           "label": "AI Coding"
         }
-      ],
-      "expert_review": null
+      ]
     },
     {
       "event_id": "e9175bfc301181",
@@ -3336,7 +2829,7 @@
       "title": "The best founders treat the following as a necessary component of their business but NOT the entire business..",
       "brief": "The best founders treat the following as a necessary component of their business but NOT the entire business.。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
       "social_original_text": "The best founders treat the following as a necessary component of their business but NOT the entire business..\n\n> AI / timing / why now\n> Funding\n> Distribution / hype\n> Market\n> Product\n> Revenue\n\nI’m seeing too many pitches that are touting only one of these as the core reason to invest.\n\nThe bar has frankly never been higher (see the seed - A gap) and you really need to be able to explain how you’re capturing at least multiple of these in a unique way that’ll be hard for others to copy.\n\nEspecially in overcrowded categories. Otherwise, it gets very hard for the other side (aka VC) to make a case for their own partners to write the check.\n\nAnd, founders often get frustrated because their businesses are strong. Stronger than they have ever been in the past. Why can’t people just write the check? Like why do I need to waste time fundraising? It’s because like it or not the levels do keep going up. Narrative matters, ambition matters and try to understand the opportunity cost has also never been higher on the other side. If you’re profitable and don’t need capital, then who cares. And you don’t need to optimize for VCs but you DO need to give them a reason to believe.\n\nSo, keep your bar high. Find a capital partner that still has conviction and deserves equity in your company. But, please take those ten extra minutes to communicate your long term ambition, because that might be the only small difference between you and the next round.",
-      "translation_zh": "最优秀的创始人会将以下要素视为业务的必要组成部分，但绝非全部： > AI / 时机 / 为什么是现在 > 融资 > 分发 / 造势 > 市场 > 产品 > 收入 我看到太多路演只把其中某一项吹捧为投资的核心理由。 坦白说，现在的门槛前所未有地高（看看种子轮到A轮的差距就知道了）。你必须能够解释，你如何以独特且难以复制的方式，至少同时占据其中的多项优势。 在过度拥挤的赛道中尤其如此。否则，投资方（即VC）将很难向他们的合伙人证明这笔投资值得签字打款。 创始人常常感到沮丧，因为他们的业务明明很强，甚至比过去任何时候都强。为什么大家不能直接打款？为什么我要浪费时间融资？原因在于，无论你是否接受，标准确实在不断提高。叙事很重要，野心很重要，你也得明白，投资方的机会成本同样处于历史高位。如果你已经盈利且不需要资金，那确实无所谓。你不需要一味迎合VC，但你必须给他们一个相信你的理由。 所以，保持高标准。找到一位仍有坚定信念、配得上你公司股权的资本伙伴。但请务必多花十分钟阐述你的长期愿景，因为这或许就是你与下一轮融资之间唯一的微小差距。",
+      "translation_zh": "顶尖创始人会将以下要素视为业务的必要组成部分，但绝不会将其等同于业务全貌： > AI / 时机 / 为什么是现在 > 融资 > 分发 / 声量 > 市场 > 产品 > 营收 我见过太多路演仅凭其中一项就作为核心投资理由。 坦白说，当前融资门槛已前所未有地提高（参考种子轮到A轮的断层）。你必须清晰阐述，自己如何以独特且难以复制的方式，同时占据其中多项优势。 在过度拥挤的赛道尤其如此。否则，VC很难向合伙人证明这笔投资的合理性。 创始人常感沮丧：业务明明很强，甚至强于以往，为什么就是拿不到钱？为什么非要花时间融资？因为无论你是否接受，行业标准确实在不断攀升。叙事和野心至关重要，同时你必须意识到，投资方的机会成本也处于历史高位。若你已盈利且无需资金，大可不必在意。你无需刻意迎合VC，但必须给他们一个相信你的理由。 因此，保持高标准。寻找仍有坚定信念、配得上你公司股权的资本伙伴。但请务必多花十分钟沟通你的长期愿景，因为这或许就是你与下一轮融资之间唯一的微小差距。",
       "entity": "",
       "event_type": "agent_or_developer_infra",
       "event_type_label": "Agent/开发者基础设施",
@@ -3379,7 +2872,7 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "这条的重点不是一次普通合作，而是模型公司把增长入口嵌进云厂商和企业采购链路；它可能直接影响模型分发、调用量和客户锁定。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续最该看的是：企业客户是否真实迁移工作负载、token 消耗是否增长，以及这会不会削弱模型公司的直销议价权。",
+      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
       "reading_questions": [
         "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
         "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -3395,8 +2888,7 @@
           "key": "inference-infrastructure",
           "label": "Inference Infrastructure"
         }
-      ],
-      "expert_review": null
+      ]
     },
     {
       "event_id": "709c1d1da7558d",
@@ -3405,7 +2897,7 @@
       "title": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders.",
       "brief": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
       "social_original_text": "theUSshould lead on AI by continuing to develop the very best models, making sure they're safe, and getting cyber tools into the hands of trusted defenders.\n\nthe new EO gets the balance right.",
-      "translation_zh": "美国应在AI领域保持领先，持续研发最顶尖的模型，确保其安全，并将网络安全工具交予值得信赖的防御者。新行政令的平衡把握得恰到好处。",
+      "translation_zh": "美国应通过持续研发最顶尖的AI模型、确保其安全性，并将网络安全工具交予可信赖的防御方，从而在AI领域保持领先。 新行政令很好地把握了平衡。",
       "entity": "",
       "event_type": "company_or_industry_update",
       "event_type_label": "公司/行业动态",
@@ -3448,13 +2940,12 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+      "memory_note": "",
       "reading_questions": [
         "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
         "后续应该观察哪一个可验证结果来判断它是否重要？"
       ],
-      "memory_subjects": [],
-      "expert_review": null
+      "memory_subjects": []
     },
     {
       "event_id": "8dfda3f9cfe5c7",
@@ -3463,7 +2954,7 @@
       "title": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS",
       "brief": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS。它更像能力温度计，价值在于帮助判断哪些 Agent 能从演示走向稳定任务。",
       "social_original_text": "GBrain is the agentic swiss army knife for retrieval and memory https://t.co/EgXmcs6ZOS",
-      "translation_zh": "",
+      "translation_zh": "GBrain 是面向检索与记忆的 Agent 瑞士军刀 https://t.co/EgXmcs6ZOS",
       "entity": "",
       "event_type": "agent_or_developer_infra",
       "event_type_label": "Agent/开发者基础设施",
@@ -3506,7 +2997,7 @@
         "DuplicatePenalty": -4,
         "LowConfidencePenalty": -6
       },
-      "memory_note": "这条值得看的是工程落地价值：它是否能减少真实工作流里的人工接线、上下文切换和结果校验成本。 这条报道延续了「Agent Systems」方向，此前相关项包括「SCOPE: Simulating Cross-game Operations in Playable Environments for FPS World Models」；读者要看它是否解决了旧瓶颈，而不只是换了术语。 后续要看它能否在长任务、权限管理、失败恢复和审计上稳定工作。",
+      "memory_note": "这条属于「Agent Systems」的连续信号；此前相关项包括「SkillAdaptor: Self-Adapting Skills for LLM Agents from Trajectories」，适合重点看新方法是否解决了旧问题，而不只是换了术语。",
       "reading_questions": [
         "这个进展是否减少了真实工作流里的人工接线和结果校验成本？",
         "后续应该观察哪一个可验证结果来判断它是否重要？"
@@ -3522,8 +3013,7 @@
           "key": "evaluation-benchmark",
           "label": "Evaluation / Benchmark"
         }
-      ],
-      "expert_review": null
+      ]
     }
   ],
   "trace": [
