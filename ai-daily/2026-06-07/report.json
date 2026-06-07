@@ -1,0 +1,2901 @@
+{
+  "date": "2026-06-07",
+  "version": "V4",
+  "title": "AI 行业简报 2026-06-07",
+  "generated_at": "2026-06-07T01:39:29.867Z",
+  "event_count": 46,
+  "item_count": 12,
+  "summary": "今天筛出 12 个事件：大厂动态 5 条，技术进展 1 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。",
+  "sections": {
+    "today_focus": [
+      {
+        "event_id": "87913e84bcaa85",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "OpenAI：OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks",
+        "brief": "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 70,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks"
+        ],
+        "evidence_titles": [
+          "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks"
+        ],
+        "evidence_summaries": [
+          "Even with Lockdown Mode, ChatGPT could be still vulnerable to prompt injections, but the goal is to reduce the likelihood that sensitive data gets shared in the process."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：这是 OpenAI 从“能力扩张”转向“企业安全基建”的关键信号，但本质是功能降级而非架构突破。关注点：需警惕其以“安全”名义掩盖底层对齐缺陷；重点观察第三方红队测试结果、企业客户在断网/关Agent后的真实工作流替代方案，以及该模式是否会演变为 API 层的强制安全基线。",
+        "reading_questions": [
+          "牺牲联网与 Agent 能力换取安全，是否意味着当前 LLM 架构在开放环境交互与数据隔离之间存在不可调和的权衡？",
+          "对于开发者与企业而言，该模式是应对合规的临时补丁，还是未来 API 调用的默认安全基线？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          }
+        ],
+        "expert_review": {
+          "importance": "标志着大模型产品从追求能力上限转向企业级安全与可控性基建，直接回应 Agent 与联网场景下的数据泄露痛点。",
+          "skepticism": "官方已承认该模式无法根除注入攻击，需验证其安全收益是否仅依赖功能阉割（断网/禁用Agent），而非底层对齐或推理隔离机制的实质改进。",
+          "watch_points": [
+            "第三方安全团队对 Lockdown Mode 的绕过测试（Red Teaming）与漏洞披露情况。",
+            "企业客户在牺牲联网与 Agent 能力后，对 ChatGPT 核心工作流的替代方案或付费留存率变化。",
+            "OpenAI 后续是否会推出基于系统提示词隔离或沙箱执行的底层安全方案，而非仅依赖前端功能开关。"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks | TechCrunch",
+              "url": "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "c45b6d7f69676e",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露",
+        "brief": "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 66,
+        "evidence_urls": [
+          "https://www.ithome.com/0/960/994.htm"
+        ],
+        "evidence_titles": [
+          "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露"
+        ],
+        "evidence_summaries": [
+          "IT之家 6 月 7 日消息，微软研究人员发现，Anthropic 旗下 Claude Code 的 GitHub 自动化流程存在一处漏洞，该漏洞可能导致持续集成 / 持续部署（CI / CD）工作流中的机密信息泄露，攻击者或可通过提示词注入攻击窃取敏感凭证。 微软威胁情报团队在监测到公开代码库中出现针对人工智能辅助型 GitHub 工作流的提示词注入尝试后，启动了本次研究。 据IT之家了解，提示词注入是一类人工智能安全漏洞。攻击者会在大模型处理的内容中嵌入误导性指令，以此操控模型行为。大型语言模型的常规设计逻辑是遵循开发者指令、响应用户提问，而攻击者会设法诱骗模型，使其无视预设指令。 研究人员举例说明，有攻击者将注入指令藏在 HTML 注释中。这类内容在 GitHub 展示界面中不可见，但读取原始 Markdown 源码的人工智能模型却能识别。涉事代码库当时借助 GitHub 自动化流程来自动处理工单问题。 攻击者可将恶意指令伪装成普通的功能需求，无需获得项目修改权限，仅需提交一条 GitHub 工单，就能诱骗人工智能机器人代为执行修改操作。 微软证实，同类提示词注入手段同样可针对 Anthropic 的 Claude Code GitHub 自动化流程发起攻击。此前 Anthropic 已为部分工具（例如可让 Claude 在系统中执行命令的 Bash 工具）设置了沙箱防护。 但微软发现，Claude 用于读取文件的读取工具并未受到同等安全限制。 研究人员制作了提示词注入攻击载荷，对该漏洞进行验证测试。测试中，恶意提示词成功绕过两层防护，诱导这款人工智能助手读取了存放着应用程序接口密钥及其他凭证的系统文件。 微软于 4 月 29 日向 Anthropic 上报了该漏洞 。Anthropic 已于 5 月 5 日发布 Claude Code 2.1.128 版本完成修复，通过限制程序对 /proc/ 目录下敏感文件的访问，防止相关信息被非法窃取。"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/6/30a51401-4f34-4957-a1a3-034b4e841188.png?x-bce-process=image/format,f_auto",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "此事件暴露了AI编程智能体在工具权限隔离与提示词解析上的架构短板。重要性不在于单次漏洞，而在于CI/CD自动化场景下“模型即执行器”的安全范式转移。需警惕厂商仅做表面修补，应关注底层沙箱统一化与输入清洗机制。后续重点观察Anthropic是否重构工具调用安全边界，以及企业级AI工作流如何建立“零信任”执行策略。",
+        "reading_questions": [
+          "限制特定系统目录访问能否从根本上解决模型对不可信外部输入（如Issue/PR描述）的指令解析风险？",
+          "企业在引入AI编程助手自动化CI/CD时，应如何设计权限隔离与输出验证流水线以平衡效率与安全？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-safety-policy",
+            "label": "AI Safety / Policy"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": {
+          "importance": "该漏洞揭示了AI编程智能体在自动化CI/CD流程中，因工具沙箱权限不对称与提示词注入防御缺失，可能直接导致生产环境凭证泄露的系统性风险。",
+          "skepticism": "仅限制/proc/目录访问是否足以根治提示词注入？需验证该修复是否真正统一了文件读取与命令执行工具的安全边界，还是仅针对单一攻击路径的临时规避。",
+          "watch_points": [
+            "Anthropic后续版本是否引入统一的工具调用沙箱策略与严格的输入内容清洗/隔离机制",
+            "主流CI/CD平台与AI Agent集成时，是否会转向“最小权限+人工审批/结果校验”的零信任架构",
+            "行业是否将建立针对AI辅助开发工作流的标准化安全评测基准（如提示词注入鲁棒性测试）"
+          ],
+          "related_sources": [
+            {
+              "title": "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露",
+              "url": "https://www.ithome.com/0/960/994.htm"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "b2ac8d97021c0f",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Meta：Meta made its own AI-generated clickbait news feed",
+        "brief": "Meta made its own AI-generated clickbait news feed。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Meta",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 50,
+        "evidence_urls": [
+          "https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles"
+        ],
+        "evidence_titles": [
+          "Meta made its own AI-generated clickbait news feed"
+        ],
+        "evidence_summaries": [
+          "Facebook has long been filled with feeds of clickbait articles. Now, Meta is making its own clickbait articles with AI. The standalone Meta AI app now has a \"For You\" section that populates a list of clickbait-style stories for you to read. But the topics, images, and text are all AI-generated - and as questionable […]"
+        ],
+        "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/ai-label-14.png?quality=90&strip=all&crop=0,0,100,100",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "该事件并非单纯的产品翻车，而是大模型从“对话助手”向“主动内容引擎”转型的典型压力测试。暴露出当前多模态管线在事实对齐、溯源机制与系统提示词控制上的短板。需关注 Meta 后续是否引入检索增强或事实校验模块，以及行业对 AI 原生信息流的治理标准。对开发者而言，重点在于如何构建可验证、低幻觉的生成架构。",
+        "reading_questions": [
+          "当 LLM 从工具变为内容源，开发者应如何设计强制引用、置信度阈值等可验证的生成架构？",
+          "此类 AI 信息流若规模化，对现有推荐系统的流量分配与内容生态将产生何种结构性冲击？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "meta",
+            "label": "Meta"
+          },
+          {
+            "kind": "topic",
+            "key": "multimodal-generation",
+            "label": "Multimodal Generation"
+          }
+        ],
+        "expert_review": {
+          "importance": "揭示了大模型从被动问答向主动内容生产与推荐演进的产品形态，暴露出当前多模态生成在事实对齐、溯源与系统提示词工程上的真实落地瓶颈。",
+          "skepticism": "该功能是否为缺乏检索增强（RAG）与事实校验的纯生成管线？其底层是刻意追求高互动性而牺牲准确性，还是对齐策略在开放域长文本中失效？",
+          "watch_points": [
+            "Meta 是否会公开该功能的系统架构与对齐策略（如是否引入实时搜索或知识图谱约束）",
+            "行业对“AI原生信息流”的内容治理标准与平台推荐算法的适配演进",
+            "多模态大模型在开放域生成中的幻觉抑制、一致性控制与可验证管线技术进展"
+          ],
+          "related_sources": [
+            {
+              "title": "Meta made its own AI-generated clickbait news feed",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "0737b82d468c35",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具",
+        "brief": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 59,
+        "evidence_urls": [
+          "https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf"
+        ],
+        "evidence_titles": [
+          "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具"
+        ],
+        "evidence_summaries": [
+          "点击查看原文>"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "InfoQ 中文",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：此次更新是前端框架向 Agent 原生工作流的工程适配，而非底层模型或推理架构突破。关注点：需警惕“4倍提速”的基准测试偏差，重点验证 AGENTS.md 规范在复杂多步调用中的实际稳定性、流式断连的框架级兜底效果，以及全异步 API 迁移对存量项目的真实重构成本。",
+        "reading_questions": [
+          "框架内置的 Agent 工具链是优化了前端调试体验，还是实质性降低了多智能体协作的编排与状态校验成本？",
+          "在脱离 Vercel 托管环境后，这些 AI 适配特性在自建推理基础设施上的兼容性与性能损耗如何？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "Next.js 16.2 将 AI Agent 调试与上下文规范原生嵌入前端框架，标志着 Web 开发范式向“框架即智能体运行时”演进，大幅降低 AI 应用工程化门槛。",
+          "skepticism": "官方性能数据高度依赖理想化基准与 Turbopack 缓存策略，需验证在复杂业务逻辑、长链路流式输出及高并发场景下的真实性能与稳定性。",
+          "watch_points": [
+            "AGENTS.md 规范与内置 CLI 在主流 AI 编码助手中的实际调用成功率与上下文幻觉率。",
+            "框架层是否真正解决了流式响应断连重连的痛点，抑或仍需开发者手动处理。",
+            "向全异步请求 API 迁移对存量 Next.js 15 项目的重构成本与长期维护收益。"
+          ],
+          "related_sources": [
+            {
+              "title": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具",
+              "url": "https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "7d80220c93c71f",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "Sriram Krishnan is leaving his role as White House AI advisor",
+        "brief": "Sriram Krishnan is leaving his role as White House AI advisor。它说明 Agent 能力正在向工程化落地推进，真正的门槛会落在权限、评测和错误恢复上。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 61,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor"
+        ],
+        "evidence_titles": [
+          "Sriram Krishnan is leaving his role as White House AI advisor"
+        ],
+        "evidence_summaries": [
+          "Krishnan is reportedly starting a new institution to continue shaping Trump's AI policy."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：此人事变动并非单纯离职，而是美国AI治理范式向“基建优先、监管后置”的制度化延续。关注点：政策重心转向数据中心与能源配套，将直接压低算力成本并加速模型迭代，但安全与对齐研究的政策空间可能被压缩。从业者需警惕监管套利窗口期的短暂性，并评估算力红利能否转化为实际产品壁垒。",
+        "reading_questions": [
+          "算力基建红利释放后，中小团队能否真正获得低成本训练资源，还是仅进一步巩固头部云厂商的垄断地位？",
+          "在监管后置与快速迭代并存的环境下，企业应如何构建数据合规与安全对齐的底层架构以规避长期风险？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-safety-policy",
+            "label": "AI Safety / Policy"
+          }
+        ],
+        "expert_review": {
+          "importance": "标志着美国AI政策从安全合规优先彻底转向算力基建与产业扩张优先，将直接重塑大模型训练成本结构、数据获取路径及初创企业的监管环境。",
+          "skepticism": "需验证其新机构是否仅为行业利益输送的游说马甲，以及“政府持股AI企业”构想是否具备立法可行性而非短期政治叙事。",
+          "watch_points": [
+            "新机构的具体章程、资金来源及其与原白宫AI行动计划的实质承接关系",
+            "联邦层面挑战州级AI监管的行政令或法案落地进度，以及安全审查被稀释的实际程度",
+            "政府持股提案的推进节奏及其对开源生态与商业闭源模型竞争格局的潜在干预"
+          ],
+          "related_sources": [
+            {
+              "title": "Sriram Krishnan is leaving his role as White House AI advisor | TechCrunch",
+              "url": "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      }
+    ],
+    "worth_tracking": [
+      {
+        "event_id": "ae062c4557bede",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "OpenAI：The Trump administration might take an equity stake in OpenAI",
+        "brief": "The Trump administration might take an equity stake in OpenAI。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 50,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai"
+        ],
+        "evidence_titles": [
+          "The Trump administration might take an equity stake in OpenAI"
+        ],
+        "evidence_summaries": [
+          "President Donald Trump said he's discussing deals \"where the American people can benefit from the success of AI.\""
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：非单纯融资新闻，而是AI治理范式转向“国家资本深度介入”的信号。关注点：股权让渡是否附带算力采购/数据合规对赌，以及该叙事会否倒逼OpenAI调整开源节奏与API定价策略。需以实际财务披露与立法进展为准。",
+        "reading_questions": [
+          "政府持股是否会改变OpenAI在RLHF/DPO数据标注、算力集群选址上的商业决策独立性？",
+          "若股权让渡落地，开发者生态与下游企业客户应如何评估其API服务的长期稳定性与合规风险？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          }
+        ],
+        "expert_review": {
+          "importance": "该事件标志着AI头部企业的资本结构与治理模式可能从纯市场化向“政商共生”转变，将直接重塑模型开源策略、算力采购合规性及未来IPO估值逻辑。",
+          "skepticism": "需警惕“公共财富基金”叙事是否仅为缓解监管压力或为高估值IPO铺路的公关话术，实际股权比例、投票权归属及资金流向尚无法律与财务细节支撑。",
+          "watch_points": [
+            "OpenAI是否调整API定价、数据使用条款或开源模型发布节奏以配合潜在政府合规要求",
+            "“公共财富基金”的具体架构设计：是优先股还是普通股，是否附带算力采购或本土化部署的强制对赌条款",
+            "跨党派立法博弈进度，是否演变为针对AI基础设施的专项税收或反垄断审查"
+          ],
+          "related_sources": [
+            {
+              "title": "The Trump administration might take an equity stake in OpenAI",
+              "url": "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "829e84ac637f15",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn",
+        "brief": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn",
+        "translation_zh": "GBrain 为 OpenClaw 和 Hermes Agent 插上翅膀 https://t.co/gUt6ll33Vn",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 51.39,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2063157328753594505"
+        ],
+        "evidence_titles": [
+          "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn"
+        ],
+        "evidence_summaries": [
+          "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 6.393768004764144,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "判断：该动态反映Agent基础设施正从单点工具向多智能体协同编排演进，但当前仅为早期宣发，工程价值待验。关注点：需剥离“赋能”叙事，聚焦其是否真正降低多Agent工作流中的上下文切换、状态管理与失败重试成本，而非仅做接口拼接。",
+        "reading_questions": [
+          "该架构能否在复杂业务流中显著降低人工接线与结果校验成本？",
+          "其性能提升是否依赖特定基座模型，还是具备真正的框架无关性？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "标志着Agent开发框架开始尝试跨模型与跨任务的底层编排能力整合，可能影响企业级智能体系统的技术选型。",
+          "skepticism": "需验证其“赋能”是实质性的推理路由与状态管理优化，还是依赖简单模板拼接的营销话术。",
+          "watch_points": [
+            "长链路任务中的状态一致性与自动化失败恢复机制",
+            "多Agent权限隔离、安全沙箱与操作审计的工程实现",
+            "实际业务场景下的端到端延迟与Token成本对比数据"
+          ],
+          "related_sources": [
+            {
+              "title": "GBrain gives OpenClaw and Hermes Agent wings (Garry Tan Tweet)",
+              "url": "https://x.com/garrytan/status/2063157328753594505"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "058939938185a7",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "a smarter alternative to \"always use plan mode\":",
+        "brief": "a smarter alternative to \"always use plan mode\":。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "a smarter alternative to \"always use plan mode\":\n\nalways frame your task as a question, so that the model is invited to push back and rate the quality of the idea/suggest alternatives, rather than blindly execute what you SAID to do\n\n(which is often not precisely what you MEANT)\n\nliterally just appending \"?\" to the end of your prompt often does it",
+        "translation_zh": "比“始终使用计划模式”更聪明的替代方案： 始终将任务以提问的方式表述，引导模型提出质疑、评估想法质量或提供替代方案，而不是盲目执行你“说”要做的事（而这往往并不完全符合你的“本意”）。 实际上，只需在提示词末尾加个“？”通常就能奏效。",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 31.13,
+        "evidence_urls": [
+          "https://x.com/swyx/status/2063082950317486133"
+        ],
+        "evidence_titles": [
+          "a smarter alternative to \"always use plan mode\":"
+        ],
+        "evidence_summaries": [
+          "a smarter alternative to \"always use plan mode\":\n\nalways frame your task as a question, so that the model is invited to push back and rate the quality of the idea/suggest alternatives, rather than blindly execute what you SAID to do\n\n(which is often not precisely what you MEANT)\n\nliterally just appending \"?\" to the end of your prompt often does it"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Swyx"
+        ],
+        "source_display": "X: Swyx",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "swyx"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 11.126546408629315,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "6b8a3e5b5f2af9",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX",
+        "brief": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX",
+        "translation_zh": "我几乎每天都会听到类似的说法。https://t.co/OEI3CkrtcX",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 31.24,
+        "evidence_urls": [
+          "https://x.com/amasad/status/2063089288997491063"
+        ],
+        "evidence_titles": [
+          "I hear a version of this almost daily. https://t.co/OEI3CkrtcX"
+        ],
+        "evidence_summaries": [
+          "I hear a version of this almost daily. https://t.co/OEI3CkrtcX"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Amjad Masad"
+        ],
+        "source_display": "X: Amjad Masad",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "amasad"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 11.239866331809033,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "cc1c3c702f1b67",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "go Knicks!!",
+        "brief": "go Knicks!。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "go Knicks!!",
+        "translation_zh": "尼克斯加油！！",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 18.73,
+        "evidence_urls": [
+          "https://x.com/danshipper/status/2063100104274280597"
+        ],
+        "evidence_titles": [
+          "go Knicks!!"
+        ],
+        "evidence_summaries": [
+          "go Knicks!!"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Dan Shipper"
+        ],
+        "source_display": "X: Dan Shipper",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "danshipper"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 5.73064017839119,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "bdf3b86f6cf5f8",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Replit x Shopify! https://t.co/QgJZLu4eFK",
+        "brief": "Replit x Shopify! https://t.co/QgJZLu4eFK。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "Replit x Shopify! https://t.co/QgJZLu4eFK",
+        "translation_zh": "Replit × Shopify！https://t.co/QgJZLu4eFK",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 22.8,
+        "evidence_urls": [
+          "https://x.com/amasad/status/2063065480878063694"
+        ],
+        "evidence_titles": [
+          "Replit x Shopify! https://t.co/QgJZLu4eFK"
+        ],
+        "evidence_summaries": [
+          "Replit x Shopify! https://t.co/QgJZLu4eFK"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Amjad Masad"
+        ],
+        "source_display": "X: Amjad Masad",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "amasad"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 9.795206961605468,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "d16188af6f5b0c",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "You can now finally try one of those big projects I was teasing that I started working on a few months ago.",
+        "brief": "You can now finally try one of those big projects I was teasing that I started working on a few months ago。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "You can now finally try one of those big projects I was teasing that I started working on a few months ago.\n\nWe want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB",
+        "translation_zh": "你现在终于可以试用我几个月前启动、此前一直预告的那个大项目了。 我们希望它能持续优化，更好地助你掌握最佳技巧，从而更快、更优地构建软件。 https://t.co/hQpYCpl9JB",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 21.62,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2063146456106795457"
+        ],
+        "evidence_titles": [
+          "You can now finally try one of those big projects I was teasing that I started working on a few months ago."
+        ],
+        "evidence_summaries": [
+          "You can now finally try one of those big projects I was teasing that I started working on a few months ago.\n\nWe want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 8.621379348003945,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      }
+    ],
+    "company_updates": [
+      {
+        "event_id": "87913e84bcaa85",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "OpenAI：OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks",
+        "brief": "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 70,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks"
+        ],
+        "evidence_titles": [
+          "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks"
+        ],
+        "evidence_summaries": [
+          "Even with Lockdown Mode, ChatGPT could be still vulnerable to prompt injections, but the goal is to reduce the likelihood that sensitive data gets shared in the process."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：这是 OpenAI 从“能力扩张”转向“企业安全基建”的关键信号，但本质是功能降级而非架构突破。关注点：需警惕其以“安全”名义掩盖底层对齐缺陷；重点观察第三方红队测试结果、企业客户在断网/关Agent后的真实工作流替代方案，以及该模式是否会演变为 API 层的强制安全基线。",
+        "reading_questions": [
+          "牺牲联网与 Agent 能力换取安全，是否意味着当前 LLM 架构在开放环境交互与数据隔离之间存在不可调和的权衡？",
+          "对于开发者与企业而言，该模式是应对合规的临时补丁，还是未来 API 调用的默认安全基线？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          }
+        ],
+        "expert_review": {
+          "importance": "标志着大模型产品从追求能力上限转向企业级安全与可控性基建，直接回应 Agent 与联网场景下的数据泄露痛点。",
+          "skepticism": "官方已承认该模式无法根除注入攻击，需验证其安全收益是否仅依赖功能阉割（断网/禁用Agent），而非底层对齐或推理隔离机制的实质改进。",
+          "watch_points": [
+            "第三方安全团队对 Lockdown Mode 的绕过测试（Red Teaming）与漏洞披露情况。",
+            "企业客户在牺牲联网与 Agent 能力后，对 ChatGPT 核心工作流的替代方案或付费留存率变化。",
+            "OpenAI 后续是否会推出基于系统提示词隔离或沙箱执行的底层安全方案，而非仅依赖前端功能开关。"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks | TechCrunch",
+              "url": "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "c45b6d7f69676e",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露",
+        "brief": "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Anthropic",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 66,
+        "evidence_urls": [
+          "https://www.ithome.com/0/960/994.htm"
+        ],
+        "evidence_titles": [
+          "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露"
+        ],
+        "evidence_summaries": [
+          "IT之家 6 月 7 日消息，微软研究人员发现，Anthropic 旗下 Claude Code 的 GitHub 自动化流程存在一处漏洞，该漏洞可能导致持续集成 / 持续部署（CI / CD）工作流中的机密信息泄露，攻击者或可通过提示词注入攻击窃取敏感凭证。 微软威胁情报团队在监测到公开代码库中出现针对人工智能辅助型 GitHub 工作流的提示词注入尝试后，启动了本次研究。 据IT之家了解，提示词注入是一类人工智能安全漏洞。攻击者会在大模型处理的内容中嵌入误导性指令，以此操控模型行为。大型语言模型的常规设计逻辑是遵循开发者指令、响应用户提问，而攻击者会设法诱骗模型，使其无视预设指令。 研究人员举例说明，有攻击者将注入指令藏在 HTML 注释中。这类内容在 GitHub 展示界面中不可见，但读取原始 Markdown 源码的人工智能模型却能识别。涉事代码库当时借助 GitHub 自动化流程来自动处理工单问题。 攻击者可将恶意指令伪装成普通的功能需求，无需获得项目修改权限，仅需提交一条 GitHub 工单，就能诱骗人工智能机器人代为执行修改操作。 微软证实，同类提示词注入手段同样可针对 Anthropic 的 Claude Code GitHub 自动化流程发起攻击。此前 Anthropic 已为部分工具（例如可让 Claude 在系统中执行命令的 Bash 工具）设置了沙箱防护。 但微软发现，Claude 用于读取文件的读取工具并未受到同等安全限制。 研究人员制作了提示词注入攻击载荷，对该漏洞进行验证测试。测试中，恶意提示词成功绕过两层防护，诱导这款人工智能助手读取了存放着应用程序接口密钥及其他凭证的系统文件。 微软于 4 月 29 日向 Anthropic 上报了该漏洞 。Anthropic 已于 5 月 5 日发布 Claude Code 2.1.128 版本完成修复，通过限制程序对 /proc/ 目录下敏感文件的访问，防止相关信息被非法窃取。"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/6/30a51401-4f34-4957-a1a3-034b4e841188.png?x-bce-process=image/format,f_auto",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "此事件暴露了AI编程智能体在工具权限隔离与提示词解析上的架构短板。重要性不在于单次漏洞，而在于CI/CD自动化场景下“模型即执行器”的安全范式转移。需警惕厂商仅做表面修补，应关注底层沙箱统一化与输入清洗机制。后续重点观察Anthropic是否重构工具调用安全边界，以及企业级AI工作流如何建立“零信任”执行策略。",
+        "reading_questions": [
+          "限制特定系统目录访问能否从根本上解决模型对不可信外部输入（如Issue/PR描述）的指令解析风险？",
+          "企业在引入AI编程助手自动化CI/CD时，应如何设计权限隔离与输出验证流水线以平衡效率与安全？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-safety-policy",
+            "label": "AI Safety / Policy"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": {
+          "importance": "该漏洞揭示了AI编程智能体在自动化CI/CD流程中，因工具沙箱权限不对称与提示词注入防御缺失，可能直接导致生产环境凭证泄露的系统性风险。",
+          "skepticism": "仅限制/proc/目录访问是否足以根治提示词注入？需验证该修复是否真正统一了文件读取与命令执行工具的安全边界，还是仅针对单一攻击路径的临时规避。",
+          "watch_points": [
+            "Anthropic后续版本是否引入统一的工具调用沙箱策略与严格的输入内容清洗/隔离机制",
+            "主流CI/CD平台与AI Agent集成时，是否会转向“最小权限+人工审批/结果校验”的零信任架构",
+            "行业是否将建立针对AI辅助开发工作流的标准化安全评测基准（如提示词注入鲁棒性测试）"
+          ],
+          "related_sources": [
+            {
+              "title": "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露",
+              "url": "https://www.ithome.com/0/960/994.htm"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "b2ac8d97021c0f",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Meta：Meta made its own AI-generated clickbait news feed",
+        "brief": "Meta made its own AI-generated clickbait news feed。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Meta",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 50,
+        "evidence_urls": [
+          "https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles"
+        ],
+        "evidence_titles": [
+          "Meta made its own AI-generated clickbait news feed"
+        ],
+        "evidence_summaries": [
+          "Facebook has long been filled with feeds of clickbait articles. Now, Meta is making its own clickbait articles with AI. The standalone Meta AI app now has a \"For You\" section that populates a list of clickbait-style stories for you to read. But the topics, images, and text are all AI-generated - and as questionable […]"
+        ],
+        "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/ai-label-14.png?quality=90&strip=all&crop=0,0,100,100",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "该事件并非单纯的产品翻车，而是大模型从“对话助手”向“主动内容引擎”转型的典型压力测试。暴露出当前多模态管线在事实对齐、溯源机制与系统提示词控制上的短板。需关注 Meta 后续是否引入检索增强或事实校验模块，以及行业对 AI 原生信息流的治理标准。对开发者而言，重点在于如何构建可验证、低幻觉的生成架构。",
+        "reading_questions": [
+          "当 LLM 从工具变为内容源，开发者应如何设计强制引用、置信度阈值等可验证的生成架构？",
+          "此类 AI 信息流若规模化，对现有推荐系统的流量分配与内容生态将产生何种结构性冲击？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "meta",
+            "label": "Meta"
+          },
+          {
+            "kind": "topic",
+            "key": "multimodal-generation",
+            "label": "Multimodal Generation"
+          }
+        ],
+        "expert_review": {
+          "importance": "揭示了大模型从被动问答向主动内容生产与推荐演进的产品形态，暴露出当前多模态生成在事实对齐、溯源与系统提示词工程上的真实落地瓶颈。",
+          "skepticism": "该功能是否为缺乏检索增强（RAG）与事实校验的纯生成管线？其底层是刻意追求高互动性而牺牲准确性，还是对齐策略在开放域长文本中失效？",
+          "watch_points": [
+            "Meta 是否会公开该功能的系统架构与对齐策略（如是否引入实时搜索或知识图谱约束）",
+            "行业对“AI原生信息流”的内容治理标准与平台推荐算法的适配演进",
+            "多模态大模型在开放域生成中的幻觉抑制、一致性控制与可验证管线技术进展"
+          ],
+          "related_sources": [
+            {
+              "title": "Meta made its own AI-generated clickbait news feed",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "0737b82d468c35",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具",
+        "brief": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 59,
+        "evidence_urls": [
+          "https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf"
+        ],
+        "evidence_titles": [
+          "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具"
+        ],
+        "evidence_summaries": [
+          "点击查看原文>"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "InfoQ 中文",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：此次更新是前端框架向 Agent 原生工作流的工程适配，而非底层模型或推理架构突破。关注点：需警惕“4倍提速”的基准测试偏差，重点验证 AGENTS.md 规范在复杂多步调用中的实际稳定性、流式断连的框架级兜底效果，以及全异步 API 迁移对存量项目的真实重构成本。",
+        "reading_questions": [
+          "框架内置的 Agent 工具链是优化了前端调试体验，还是实质性降低了多智能体协作的编排与状态校验成本？",
+          "在脱离 Vercel 托管环境后，这些 AI 适配特性在自建推理基础设施上的兼容性与性能损耗如何？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "Next.js 16.2 将 AI Agent 调试与上下文规范原生嵌入前端框架，标志着 Web 开发范式向“框架即智能体运行时”演进，大幅降低 AI 应用工程化门槛。",
+          "skepticism": "官方性能数据高度依赖理想化基准与 Turbopack 缓存策略，需验证在复杂业务逻辑、长链路流式输出及高并发场景下的真实性能与稳定性。",
+          "watch_points": [
+            "AGENTS.md 规范与内置 CLI 在主流 AI 编码助手中的实际调用成功率与上下文幻觉率。",
+            "框架层是否真正解决了流式响应断连重连的痛点，抑或仍需开发者手动处理。",
+            "向全异步请求 API 迁移对存量 Next.js 15 项目的重构成本与长期维护收益。"
+          ],
+          "related_sources": [
+            {
+              "title": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具",
+              "url": "https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "ae062c4557bede",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "OpenAI：The Trump administration might take an equity stake in OpenAI",
+        "brief": "The Trump administration might take an equity stake in OpenAI。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 50,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai"
+        ],
+        "evidence_titles": [
+          "The Trump administration might take an equity stake in OpenAI"
+        ],
+        "evidence_summaries": [
+          "President Donald Trump said he's discussing deals \"where the American people can benefit from the success of AI.\""
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：非单纯融资新闻，而是AI治理范式转向“国家资本深度介入”的信号。关注点：股权让渡是否附带算力采购/数据合规对赌，以及该叙事会否倒逼OpenAI调整开源节奏与API定价策略。需以实际财务披露与立法进展为准。",
+        "reading_questions": [
+          "政府持股是否会改变OpenAI在RLHF/DPO数据标注、算力集群选址上的商业决策独立性？",
+          "若股权让渡落地，开发者生态与下游企业客户应如何评估其API服务的长期稳定性与合规风险？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          }
+        ],
+        "expert_review": {
+          "importance": "该事件标志着AI头部企业的资本结构与治理模式可能从纯市场化向“政商共生”转变，将直接重塑模型开源策略、算力采购合规性及未来IPO估值逻辑。",
+          "skepticism": "需警惕“公共财富基金”叙事是否仅为缓解监管压力或为高估值IPO铺路的公关话术，实际股权比例、投票权归属及资金流向尚无法律与财务细节支撑。",
+          "watch_points": [
+            "OpenAI是否调整API定价、数据使用条款或开源模型发布节奏以配合潜在政府合规要求",
+            "“公共财富基金”的具体架构设计：是优先股还是普通股，是否附带算力采购或本土化部署的强制对赌条款",
+            "跨党派立法博弈进度，是否演变为针对AI基础设施的专项税收或反垄断审查"
+          ],
+          "related_sources": [
+            {
+              "title": "The Trump administration might take an equity stake in OpenAI",
+              "url": "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      }
+    ],
+    "technical_progress": [
+      {
+        "event_id": "7d80220c93c71f",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "Sriram Krishnan is leaving his role as White House AI advisor",
+        "brief": "Sriram Krishnan is leaving his role as White House AI advisor。它说明 Agent 能力正在向工程化落地推进，真正的门槛会落在权限、评测和错误恢复上。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 61,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor"
+        ],
+        "evidence_titles": [
+          "Sriram Krishnan is leaving his role as White House AI advisor"
+        ],
+        "evidence_summaries": [
+          "Krishnan is reportedly starting a new institution to continue shaping Trump's AI policy."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "判断：此人事变动并非单纯离职，而是美国AI治理范式向“基建优先、监管后置”的制度化延续。关注点：政策重心转向数据中心与能源配套，将直接压低算力成本并加速模型迭代，但安全与对齐研究的政策空间可能被压缩。从业者需警惕监管套利窗口期的短暂性，并评估算力红利能否转化为实际产品壁垒。",
+        "reading_questions": [
+          "算力基建红利释放后，中小团队能否真正获得低成本训练资源，还是仅进一步巩固头部云厂商的垄断地位？",
+          "在监管后置与快速迭代并存的环境下，企业应如何构建数据合规与安全对齐的底层架构以规避长期风险？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-safety-policy",
+            "label": "AI Safety / Policy"
+          }
+        ],
+        "expert_review": {
+          "importance": "标志着美国AI政策从安全合规优先彻底转向算力基建与产业扩张优先，将直接重塑大模型训练成本结构、数据获取路径及初创企业的监管环境。",
+          "skepticism": "需验证其新机构是否仅为行业利益输送的游说马甲，以及“政府持股AI企业”构想是否具备立法可行性而非短期政治叙事。",
+          "watch_points": [
+            "新机构的具体章程、资金来源及其与原白宫AI行动计划的实质承接关系",
+            "联邦层面挑战州级AI监管的行政令或法案落地进度，以及安全审查被稀释的实际程度",
+            "政府持股提案的推进节奏及其对开源生态与商业闭源模型竞争格局的潜在干预"
+          ],
+          "related_sources": [
+            {
+              "title": "Sriram Krishnan is leaving his role as White House AI advisor | TechCrunch",
+              "url": "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      }
+    ],
+    "industry_views": [
+      {
+        "event_id": "829e84ac637f15",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn",
+        "brief": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+        "social_original_text": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn",
+        "translation_zh": "GBrain 为 OpenClaw 和 Hermes Agent 插上翅膀 https://t.co/gUt6ll33Vn",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 51.39,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2063157328753594505"
+        ],
+        "evidence_titles": [
+          "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn"
+        ],
+        "evidence_summaries": [
+          "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 6.393768004764144,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "判断：该动态反映Agent基础设施正从单点工具向多智能体协同编排演进，但当前仅为早期宣发，工程价值待验。关注点：需剥离“赋能”叙事，聚焦其是否真正降低多Agent工作流中的上下文切换、状态管理与失败重试成本，而非仅做接口拼接。",
+        "reading_questions": [
+          "该架构能否在复杂业务流中显著降低人工接线与结果校验成本？",
+          "其性能提升是否依赖特定基座模型，还是具备真正的框架无关性？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "标志着Agent开发框架开始尝试跨模型与跨任务的底层编排能力整合，可能影响企业级智能体系统的技术选型。",
+          "skepticism": "需验证其“赋能”是实质性的推理路由与状态管理优化，还是依赖简单模板拼接的营销话术。",
+          "watch_points": [
+            "长链路任务中的状态一致性与自动化失败恢复机制",
+            "多Agent权限隔离、安全沙箱与操作审计的工程实现",
+            "实际业务场景下的端到端延迟与Token成本对比数据"
+          ],
+          "related_sources": [
+            {
+              "title": "GBrain gives OpenClaw and Hermes Agent wings (Garry Tan Tweet)",
+              "url": "https://x.com/garrytan/status/2063157328753594505"
+            }
+          ],
+          "method": "llm_expert_review"
+        }
+      },
+      {
+        "event_id": "058939938185a7",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "a smarter alternative to \"always use plan mode\":",
+        "brief": "a smarter alternative to \"always use plan mode\":。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "a smarter alternative to \"always use plan mode\":\n\nalways frame your task as a question, so that the model is invited to push back and rate the quality of the idea/suggest alternatives, rather than blindly execute what you SAID to do\n\n(which is often not precisely what you MEANT)\n\nliterally just appending \"?\" to the end of your prompt often does it",
+        "translation_zh": "比“始终使用计划模式”更聪明的替代方案： 始终将任务以提问的方式表述，引导模型提出质疑、评估想法质量或提供替代方案，而不是盲目执行你“说”要做的事（而这往往并不完全符合你的“本意”）。 实际上，只需在提示词末尾加个“？”通常就能奏效。",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 31.13,
+        "evidence_urls": [
+          "https://x.com/swyx/status/2063082950317486133"
+        ],
+        "evidence_titles": [
+          "a smarter alternative to \"always use plan mode\":"
+        ],
+        "evidence_summaries": [
+          "a smarter alternative to \"always use plan mode\":\n\nalways frame your task as a question, so that the model is invited to push back and rate the quality of the idea/suggest alternatives, rather than blindly execute what you SAID to do\n\n(which is often not precisely what you MEANT)\n\nliterally just appending \"?\" to the end of your prompt often does it"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Swyx"
+        ],
+        "source_display": "X: Swyx",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "swyx"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 11.126546408629315,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "6b8a3e5b5f2af9",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX",
+        "brief": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX",
+        "translation_zh": "我几乎每天都会听到类似的说法。https://t.co/OEI3CkrtcX",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 31.24,
+        "evidence_urls": [
+          "https://x.com/amasad/status/2063089288997491063"
+        ],
+        "evidence_titles": [
+          "I hear a version of this almost daily. https://t.co/OEI3CkrtcX"
+        ],
+        "evidence_summaries": [
+          "I hear a version of this almost daily. https://t.co/OEI3CkrtcX"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Amjad Masad"
+        ],
+        "source_display": "X: Amjad Masad",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "amasad"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 11.239866331809033,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "cc1c3c702f1b67",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "go Knicks!!",
+        "brief": "go Knicks!。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "go Knicks!!",
+        "translation_zh": "尼克斯加油！！",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 18.73,
+        "evidence_urls": [
+          "https://x.com/danshipper/status/2063100104274280597"
+        ],
+        "evidence_titles": [
+          "go Knicks!!"
+        ],
+        "evidence_summaries": [
+          "go Knicks!!"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Dan Shipper"
+        ],
+        "source_display": "X: Dan Shipper",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "danshipper"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 5.73064017839119,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "bdf3b86f6cf5f8",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Replit x Shopify! https://t.co/QgJZLu4eFK",
+        "brief": "Replit x Shopify! https://t.co/QgJZLu4eFK。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "Replit x Shopify! https://t.co/QgJZLu4eFK",
+        "translation_zh": "Replit × Shopify！https://t.co/QgJZLu4eFK",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 22.8,
+        "evidence_urls": [
+          "https://x.com/amasad/status/2063065480878063694"
+        ],
+        "evidence_titles": [
+          "Replit x Shopify! https://t.co/QgJZLu4eFK"
+        ],
+        "evidence_summaries": [
+          "Replit x Shopify! https://t.co/QgJZLu4eFK"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Amjad Masad"
+        ],
+        "source_display": "X: Amjad Masad",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "amasad"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 9.795206961605468,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      },
+      {
+        "event_id": "d16188af6f5b0c",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "You can now finally try one of those big projects I was teasing that I started working on a few months ago.",
+        "brief": "You can now finally try one of those big projects I was teasing that I started working on a few months ago。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+        "social_original_text": "You can now finally try one of those big projects I was teasing that I started working on a few months ago.\n\nWe want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB",
+        "translation_zh": "你现在终于可以试用我几个月前启动、此前一直预告的那个大项目了。 我们希望它能持续优化，更好地助你掌握最佳技巧，从而更快、更优地构建软件。 https://t.co/hQpYCpl9JB",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 21.62,
+        "evidence_urls": [
+          "https://x.com/garrytan/status/2063146456106795457"
+        ],
+        "evidence_titles": [
+          "You can now finally try one of those big projects I was teasing that I started working on a few months ago."
+        ],
+        "evidence_summaries": [
+          "You can now finally try one of those big projects I was teasing that I started working on a few months ago.\n\nWe want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Garry Tan"
+        ],
+        "source_display": "X: Garry Tan",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "garrytan"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 8.621379348003945,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+        "reading_questions": [
+          "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+          "后续应该观察哪一个可验证结果来判断它是否重要？"
+        ],
+        "memory_subjects": [],
+        "expert_review": null
+      }
+    ]
+  },
+  "paper_digest": {
+    "source": "Hugging Face Daily Papers",
+    "source_url": "https://huggingface.co/papers/date/2026-06-07",
+    "generated_at": "2026-06-07T01:33:42.114Z",
+    "llm_provider": "openai_compatible_chat",
+    "llm_model": "qwen3.6-plus",
+    "count": 5,
+    "total_count": 46,
+    "items": [
+      {
+        "paper_id": "2606.06492",
+        "title": "Code2LoRA: Hypernetwork-Generated Adapters for Code Language Models under Software Evolution",
+        "title_zh": "Code2LoRA：面向软件演进的超网络生成代码模型适配器",
+        "daily_rank": 1,
+        "url": "https://huggingface.co/papers/2606.06492",
+        "source_url": "https://arxiv.org/html/2606.06492",
+        "thumbnail_url": "https://arxiv.org/html/2606.06492v1/x1.png",
+        "takeaway_zh": "提出超网络框架自动生成仓库专属LoRA适配器，以零推理开销注入代码库知识，支持静态与动态演进场景。",
+        "why_it_matters_zh": "解决代码大模型适配多仓库成本高、难跟进代码变更的痛点，为大规模代码库的高效微调提供轻量级方案。",
+        "tags": [
+          "代码大模型",
+          "参数高效微调",
+          "超网络"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2606.04743",
+        "title": "TIDE: Proactive Multi-Problem Discovery via Template-Guided Iteration",
+        "title_zh": "TIDE：基于模板引导迭代的主动式多问题发现框架",
+        "daily_rank": 3,
+        "url": "https://huggingface.co/papers/2606.04743",
+        "source_url": "https://arxiv.org/html/2606.04743",
+        "thumbnail_url": "https://arxiv.org/html/2606.04743v1/x1.png",
+        "takeaway_zh": "提出模板引导的迭代发现框架，通过分轮次挖掘与可复用思维模板，主动识别上下文中隐藏的多个问题。",
+        "why_it_matters_zh": "突破智能体仅响应显式指令的局限，提升其在复杂工作流中主动排查隐患与覆盖长尾问题的能力。",
+        "tags": [
+          "智能体",
+          "问题发现",
+          "迭代推理"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2606.05622",
+        "title": "AdaPlanBench: Evaluating Adaptive Planning in Large Language Model Agents under World and User Constraints",
+        "title_zh": "AdaPlanBench：评估大模型智能体在双重约束下的自适应规划能力",
+        "daily_rank": 4,
+        "url": "https://huggingface.co/papers/2606.05622",
+        "source_url": "https://arxiv.org/html/2606.05622",
+        "thumbnail_url": "https://arxiv.org/html/2606.05622v1/x1.png",
+        "takeaway_zh": "提出动态交互基准AdaPlanBench，评估大模型智能体在逐步揭示的双重约束下的自适应规划能力。",
+        "why_it_matters_zh": "填补渐进式约束下智能体规划评估空白，为提升Agent在复杂真实场景中的动态适应与可靠交互提供测试基座。",
+        "tags": [
+          "智能体评估",
+          "自适应规划",
+          "基准测试"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2606.05259",
+        "title": "VideoKR: Towards Knowledge- and Reasoning-Intensive Video Understanding",
+        "title_zh": "VideoKR：面向知识与推理密集型视频理解的大规模训练语料库",
+        "daily_rank": 5,
+        "url": "https://huggingface.co/papers/2606.05259",
+        "source_url": "https://arxiv.org/html/2606.05259",
+        "thumbnail_url": "https://arxiv.org/html/2606.05259v1/x2.png",
+        "takeaway_zh": "构建首个知识与推理密集型视频训练集VideoKR，通过人机协同生成高质量示例，显著提升模型专业视频推理能力。",
+        "why_it_matters_zh": "证明高质量数据设计是突破视频推理瓶颈的关键，为多模态大模型在专业领域的深度理解提供可扩展训练范式。",
+        "tags": [
+          "视频理解",
+          "多模态数据",
+          "逻辑推理"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2606.06428",
+        "title": "Reinforcement Learning Elicits Contextual Learning of Unseen Language Translation",
+        "title_zh": "强化学习激发未见语言翻译的上下文学习",
+        "daily_rank": 6,
+        "url": "https://huggingface.co/papers/2606.06428",
+        "source_url": "https://arxiv.org/html/2606.06428",
+        "thumbnail_url": "https://arxiv.org/html/2606.06428v1/x1.png",
+        "takeaway_zh": "提出基于chrF奖励的强化学习方法，使大模型学会利用上下文语言知识翻译未见语言，效果优于基线方法。",
+        "why_it_matters_zh": "证明强化学习可拓展至语言学习领域，为低资源语言翻译提供不依赖特定语言记忆的新范式。",
+        "tags": [
+          "强化学习",
+          "机器翻译",
+          "上下文学习"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      }
+    ]
+  },
+  "items": [
+    {
+      "event_id": "87913e84bcaa85",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "OpenAI：OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks",
+      "brief": "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "OpenAI",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 70,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks"
+      ],
+      "evidence_titles": [
+        "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks"
+      ],
+      "evidence_summaries": [
+        "Even with Lockdown Mode, ChatGPT could be still vulnerable to prompt injections, but the goal is to reduce the likelihood that sensitive data gets shared in the process."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "TechCrunch AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "判断：这是 OpenAI 从“能力扩张”转向“企业安全基建”的关键信号，但本质是功能降级而非架构突破。关注点：需警惕其以“安全”名义掩盖底层对齐缺陷；重点观察第三方红队测试结果、企业客户在断网/关Agent后的真实工作流替代方案，以及该模式是否会演变为 API 层的强制安全基线。",
+      "reading_questions": [
+        "牺牲联网与 Agent 能力换取安全，是否意味着当前 LLM 架构在开放环境交互与数据隔离之间存在不可调和的权衡？",
+        "对于开发者与企业而言，该模式是应对合规的临时补丁，还是未来 API 调用的默认安全基线？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "openai",
+          "label": "OpenAI"
+        }
+      ],
+      "expert_review": {
+        "importance": "标志着大模型产品从追求能力上限转向企业级安全与可控性基建，直接回应 Agent 与联网场景下的数据泄露痛点。",
+        "skepticism": "官方已承认该模式无法根除注入攻击，需验证其安全收益是否仅依赖功能阉割（断网/禁用Agent），而非底层对齐或推理隔离机制的实质改进。",
+        "watch_points": [
+          "第三方安全团队对 Lockdown Mode 的绕过测试（Red Teaming）与漏洞披露情况。",
+          "企业客户在牺牲联网与 Agent 能力后，对 ChatGPT 核心工作流的替代方案或付费留存率变化。",
+          "OpenAI 后续是否会推出基于系统提示词隔离或沙箱执行的底层安全方案，而非仅依赖前端功能开关。"
+        ],
+        "related_sources": [
+          {
+            "title": "OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks | TechCrunch",
+            "url": "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks"
+          }
+        ],
+        "method": "llm_expert_review"
+      }
+    },
+    {
+      "event_id": "c45b6d7f69676e",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露",
+      "brief": "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Anthropic",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 66,
+      "evidence_urls": [
+        "https://www.ithome.com/0/960/994.htm"
+      ],
+      "evidence_titles": [
+        "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露"
+      ],
+      "evidence_summaries": [
+        "IT之家 6 月 7 日消息，微软研究人员发现，Anthropic 旗下 Claude Code 的 GitHub 自动化流程存在一处漏洞，该漏洞可能导致持续集成 / 持续部署（CI / CD）工作流中的机密信息泄露，攻击者或可通过提示词注入攻击窃取敏感凭证。 微软威胁情报团队在监测到公开代码库中出现针对人工智能辅助型 GitHub 工作流的提示词注入尝试后，启动了本次研究。 据IT之家了解，提示词注入是一类人工智能安全漏洞。攻击者会在大模型处理的内容中嵌入误导性指令，以此操控模型行为。大型语言模型的常规设计逻辑是遵循开发者指令、响应用户提问，而攻击者会设法诱骗模型，使其无视预设指令。 研究人员举例说明，有攻击者将注入指令藏在 HTML 注释中。这类内容在 GitHub 展示界面中不可见，但读取原始 Markdown 源码的人工智能模型却能识别。涉事代码库当时借助 GitHub 自动化流程来自动处理工单问题。 攻击者可将恶意指令伪装成普通的功能需求，无需获得项目修改权限，仅需提交一条 GitHub 工单，就能诱骗人工智能机器人代为执行修改操作。 微软证实，同类提示词注入手段同样可针对 Anthropic 的 Claude Code GitHub 自动化流程发起攻击。此前 Anthropic 已为部分工具（例如可让 Claude 在系统中执行命令的 Bash 工具）设置了沙箱防护。 但微软发现，Claude 用于读取文件的读取工具并未受到同等安全限制。 研究人员制作了提示词注入攻击载荷，对该漏洞进行验证测试。测试中，恶意提示词成功绕过两层防护，诱导这款人工智能助手读取了存放着应用程序接口密钥及其他凭证的系统文件。 微软于 4 月 29 日向 Anthropic 上报了该漏洞 。Anthropic 已于 5 月 5 日发布 Claude Code 2.1.128 版本完成修复，通过限制程序对 /proc/ 目录下敏感文件的访问，防止相关信息被非法窃取。"
+      ],
+      "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/6/30a51401-4f34-4957-a1a3-034b4e841188.png?x-bce-process=image/format,f_auto",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "IT之家",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "此事件暴露了AI编程智能体在工具权限隔离与提示词解析上的架构短板。重要性不在于单次漏洞，而在于CI/CD自动化场景下“模型即执行器”的安全范式转移。需警惕厂商仅做表面修补，应关注底层沙箱统一化与输入清洗机制。后续重点观察Anthropic是否重构工具调用安全边界，以及企业级AI工作流如何建立“零信任”执行策略。",
+      "reading_questions": [
+        "限制特定系统目录访问能否从根本上解决模型对不可信外部输入（如Issue/PR描述）的指令解析风险？",
+        "企业在引入AI编程助手自动化CI/CD时，应如何设计权限隔离与输出验证流水线以平衡效率与安全？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "anthropic",
+          "label": "Anthropic"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        },
+        {
+          "kind": "topic",
+          "key": "inference-infrastructure",
+          "label": "Inference Infrastructure"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-safety-policy",
+          "label": "AI Safety / Policy"
+        },
+        {
+          "kind": "topic",
+          "key": "enterprise-ai-workflow",
+          "label": "Enterprise AI Workflow"
+        }
+      ],
+      "expert_review": {
+        "importance": "该漏洞揭示了AI编程智能体在自动化CI/CD流程中，因工具沙箱权限不对称与提示词注入防御缺失，可能直接导致生产环境凭证泄露的系统性风险。",
+        "skepticism": "仅限制/proc/目录访问是否足以根治提示词注入？需验证该修复是否真正统一了文件读取与命令执行工具的安全边界，还是仅针对单一攻击路径的临时规避。",
+        "watch_points": [
+          "Anthropic后续版本是否引入统一的工具调用沙箱策略与严格的输入内容清洗/隔离机制",
+          "主流CI/CD平台与AI Agent集成时，是否会转向“最小权限+人工审批/结果校验”的零信任架构",
+          "行业是否将建立针对AI辅助开发工作流的标准化安全评测基准（如提示词注入鲁棒性测试）"
+        ],
+        "related_sources": [
+          {
+            "title": "微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露",
+            "url": "https://www.ithome.com/0/960/994.htm"
+          }
+        ],
+        "method": "llm_expert_review"
+      }
+    },
+    {
+      "event_id": "b2ac8d97021c0f",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Meta：Meta made its own AI-generated clickbait news feed",
+      "brief": "Meta made its own AI-generated clickbait news feed。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Meta",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 50,
+      "evidence_urls": [
+        "https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles"
+      ],
+      "evidence_titles": [
+        "Meta made its own AI-generated clickbait news feed"
+      ],
+      "evidence_summaries": [
+        "Facebook has long been filled with feeds of clickbait articles. Now, Meta is making its own clickbait articles with AI. The standalone Meta AI app now has a \"For You\" section that populates a list of clickbait-style stories for you to read. But the topics, images, and text are all AI-generated - and as questionable […]"
+      ],
+      "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/ai-label-14.png?quality=90&strip=all&crop=0,0,100,100",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "The Verge AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "该事件并非单纯的产品翻车，而是大模型从“对话助手”向“主动内容引擎”转型的典型压力测试。暴露出当前多模态管线在事实对齐、溯源机制与系统提示词控制上的短板。需关注 Meta 后续是否引入检索增强或事实校验模块，以及行业对 AI 原生信息流的治理标准。对开发者而言，重点在于如何构建可验证、低幻觉的生成架构。",
+      "reading_questions": [
+        "当 LLM 从工具变为内容源，开发者应如何设计强制引用、置信度阈值等可验证的生成架构？",
+        "此类 AI 信息流若规模化，对现有推荐系统的流量分配与内容生态将产生何种结构性冲击？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "meta",
+          "label": "Meta"
+        },
+        {
+          "kind": "topic",
+          "key": "multimodal-generation",
+          "label": "Multimodal Generation"
+        }
+      ],
+      "expert_review": {
+        "importance": "揭示了大模型从被动问答向主动内容生产与推荐演进的产品形态，暴露出当前多模态生成在事实对齐、溯源与系统提示词工程上的真实落地瓶颈。",
+        "skepticism": "该功能是否为缺乏检索增强（RAG）与事实校验的纯生成管线？其底层是刻意追求高互动性而牺牲准确性，还是对齐策略在开放域长文本中失效？",
+        "watch_points": [
+          "Meta 是否会公开该功能的系统架构与对齐策略（如是否引入实时搜索或知识图谱约束）",
+          "行业对“AI原生信息流”的内容治理标准与平台推荐算法的适配演进",
+          "多模态大模型在开放域生成中的幻觉抑制、一致性控制与可验证管线技术进展"
+        ],
+        "related_sources": [
+          {
+            "title": "Meta made its own AI-generated clickbait news feed",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles"
+          }
+        ],
+        "method": "llm_expert_review"
+      }
+    },
+    {
+      "event_id": "0737b82d468c35",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具",
+      "brief": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 59,
+      "evidence_urls": [
+        "https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf"
+      ],
+      "evidence_titles": [
+        "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具"
+      ],
+      "evidence_summaries": [
+        "点击查看原文>"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "InfoQ 中文",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "判断：此次更新是前端框架向 Agent 原生工作流的工程适配，而非底层模型或推理架构突破。关注点：需警惕“4倍提速”的基准测试偏差，重点验证 AGENTS.md 规范在复杂多步调用中的实际稳定性、流式断连的框架级兜底效果，以及全异步 API 迁移对存量项目的真实重构成本。",
+      "reading_questions": [
+        "框架内置的 Agent 工具链是优化了前端调试体验，还是实质性降低了多智能体协作的编排与状态校验成本？",
+        "在脱离 Vercel 托管环境后，这些 AI 适配特性在自建推理基础设施上的兼容性与性能损耗如何？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        }
+      ],
+      "expert_review": {
+        "importance": "Next.js 16.2 将 AI Agent 调试与上下文规范原生嵌入前端框架，标志着 Web 开发范式向“框架即智能体运行时”演进，大幅降低 AI 应用工程化门槛。",
+        "skepticism": "官方性能数据高度依赖理想化基准与 Turbopack 缓存策略，需验证在复杂业务逻辑、长链路流式输出及高并发场景下的真实性能与稳定性。",
+        "watch_points": [
+          "AGENTS.md 规范与内置 CLI 在主流 AI 编码助手中的实际调用成功率与上下文幻觉率。",
+          "框架层是否真正解决了流式响应断连重连的痛点，抑或仍需开发者手动处理。",
+          "向全异步请求 API 迁移对存量 Next.js 15 项目的重构成本与长期维护收益。"
+        ],
+        "related_sources": [
+          {
+            "title": "Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具",
+            "url": "https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf"
+          }
+        ],
+        "method": "llm_expert_review"
+      }
+    },
+    {
+      "event_id": "ae062c4557bede",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "OpenAI：The Trump administration might take an equity stake in OpenAI",
+      "brief": "The Trump administration might take an equity stake in OpenAI。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "OpenAI",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 50,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai"
+      ],
+      "evidence_titles": [
+        "The Trump administration might take an equity stake in OpenAI"
+      ],
+      "evidence_summaries": [
+        "President Donald Trump said he's discussing deals \"where the American people can benefit from the success of AI.\""
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "TechCrunch AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "判断：非单纯融资新闻，而是AI治理范式转向“国家资本深度介入”的信号。关注点：股权让渡是否附带算力采购/数据合规对赌，以及该叙事会否倒逼OpenAI调整开源节奏与API定价策略。需以实际财务披露与立法进展为准。",
+      "reading_questions": [
+        "政府持股是否会改变OpenAI在RLHF/DPO数据标注、算力集群选址上的商业决策独立性？",
+        "若股权让渡落地，开发者生态与下游企业客户应如何评估其API服务的长期稳定性与合规风险？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "openai",
+          "label": "OpenAI"
+        }
+      ],
+      "expert_review": {
+        "importance": "该事件标志着AI头部企业的资本结构与治理模式可能从纯市场化向“政商共生”转变，将直接重塑模型开源策略、算力采购合规性及未来IPO估值逻辑。",
+        "skepticism": "需警惕“公共财富基金”叙事是否仅为缓解监管压力或为高估值IPO铺路的公关话术，实际股权比例、投票权归属及资金流向尚无法律与财务细节支撑。",
+        "watch_points": [
+          "OpenAI是否调整API定价、数据使用条款或开源模型发布节奏以配合潜在政府合规要求",
+          "“公共财富基金”的具体架构设计：是优先股还是普通股，是否附带算力采购或本土化部署的强制对赌条款",
+          "跨党派立法博弈进度，是否演变为针对AI基础设施的专项税收或反垄断审查"
+        ],
+        "related_sources": [
+          {
+            "title": "The Trump administration might take an equity stake in OpenAI",
+            "url": "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai"
+          }
+        ],
+        "method": "llm_expert_review"
+      }
+    },
+    {
+      "event_id": "7d80220c93c71f",
+      "bucket": "today_focus",
+      "section": "technical_progress",
+      "title": "Sriram Krishnan is leaving his role as White House AI advisor",
+      "brief": "Sriram Krishnan is leaving his role as White House AI advisor。它说明 Agent 能力正在向工程化落地推进，真正的门槛会落在权限、评测和错误恢复上。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 61,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor"
+      ],
+      "evidence_titles": [
+        "Sriram Krishnan is leaving his role as White House AI advisor"
+      ],
+      "evidence_summaries": [
+        "Krishnan is reportedly starting a new institution to continue shaping Trump's AI policy."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "TechCrunch AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "判断：此人事变动并非单纯离职，而是美国AI治理范式向“基建优先、监管后置”的制度化延续。关注点：政策重心转向数据中心与能源配套，将直接压低算力成本并加速模型迭代，但安全与对齐研究的政策空间可能被压缩。从业者需警惕监管套利窗口期的短暂性，并评估算力红利能否转化为实际产品壁垒。",
+      "reading_questions": [
+        "算力基建红利释放后，中小团队能否真正获得低成本训练资源，还是仅进一步巩固头部云厂商的垄断地位？",
+        "在监管后置与快速迭代并存的环境下，企业应如何构建数据合规与安全对齐的底层架构以规避长期风险？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-safety-policy",
+          "label": "AI Safety / Policy"
+        }
+      ],
+      "expert_review": {
+        "importance": "标志着美国AI政策从安全合规优先彻底转向算力基建与产业扩张优先，将直接重塑大模型训练成本结构、数据获取路径及初创企业的监管环境。",
+        "skepticism": "需验证其新机构是否仅为行业利益输送的游说马甲，以及“政府持股AI企业”构想是否具备立法可行性而非短期政治叙事。",
+        "watch_points": [
+          "新机构的具体章程、资金来源及其与原白宫AI行动计划的实质承接关系",
+          "联邦层面挑战州级AI监管的行政令或法案落地进度，以及安全审查被稀释的实际程度",
+          "政府持股提案的推进节奏及其对开源生态与商业闭源模型竞争格局的潜在干预"
+        ],
+        "related_sources": [
+          {
+            "title": "Sriram Krishnan is leaving his role as White House AI advisor | TechCrunch",
+            "url": "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor"
+          }
+        ],
+        "method": "llm_expert_review"
+      }
+    },
+    {
+      "event_id": "829e84ac637f15",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn",
+      "brief": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。",
+      "social_original_text": "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn",
+      "translation_zh": "GBrain 为 OpenClaw 和 Hermes Agent 插上翅膀 https://t.co/gUt6ll33Vn",
+      "entity": "",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 51.39,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2063157328753594505"
+      ],
+      "evidence_titles": [
+        "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn"
+      ],
+      "evidence_summaries": [
+        "GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Garry Tan"
+      ],
+      "source_display": "X: Garry Tan",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "garrytan"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 6.393768004764144,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "判断：该动态反映Agent基础设施正从单点工具向多智能体协同编排演进，但当前仅为早期宣发，工程价值待验。关注点：需剥离“赋能”叙事，聚焦其是否真正降低多Agent工作流中的上下文切换、状态管理与失败重试成本，而非仅做接口拼接。",
+      "reading_questions": [
+        "该架构能否在复杂业务流中显著降低人工接线与结果校验成本？",
+        "其性能提升是否依赖特定基座模型，还是具备真正的框架无关性？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        }
+      ],
+      "expert_review": {
+        "importance": "标志着Agent开发框架开始尝试跨模型与跨任务的底层编排能力整合，可能影响企业级智能体系统的技术选型。",
+        "skepticism": "需验证其“赋能”是实质性的推理路由与状态管理优化，还是依赖简单模板拼接的营销话术。",
+        "watch_points": [
+          "长链路任务中的状态一致性与自动化失败恢复机制",
+          "多Agent权限隔离、安全沙箱与操作审计的工程实现",
+          "实际业务场景下的端到端延迟与Token成本对比数据"
+        ],
+        "related_sources": [
+          {
+            "title": "GBrain gives OpenClaw and Hermes Agent wings (Garry Tan Tweet)",
+            "url": "https://x.com/garrytan/status/2063157328753594505"
+          }
+        ],
+        "method": "llm_expert_review"
+      }
+    },
+    {
+      "event_id": "058939938185a7",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "a smarter alternative to \"always use plan mode\":",
+      "brief": "a smarter alternative to \"always use plan mode\":。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+      "social_original_text": "a smarter alternative to \"always use plan mode\":\n\nalways frame your task as a question, so that the model is invited to push back and rate the quality of the idea/suggest alternatives, rather than blindly execute what you SAID to do\n\n(which is often not precisely what you MEANT)\n\nliterally just appending \"?\" to the end of your prompt often does it",
+      "translation_zh": "比“始终使用计划模式”更聪明的替代方案： 始终将任务以提问的方式表述，引导模型提出质疑、评估想法质量或提供替代方案，而不是盲目执行你“说”要做的事（而这往往并不完全符合你的“本意”）。 实际上，只需在提示词末尾加个“？”通常就能奏效。",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 31.13,
+      "evidence_urls": [
+        "https://x.com/swyx/status/2063082950317486133"
+      ],
+      "evidence_titles": [
+        "a smarter alternative to \"always use plan mode\":"
+      ],
+      "evidence_summaries": [
+        "a smarter alternative to \"always use plan mode\":\n\nalways frame your task as a question, so that the model is invited to push back and rate the quality of the idea/suggest alternatives, rather than blindly execute what you SAID to do\n\n(which is often not precisely what you MEANT)\n\nliterally just appending \"?\" to the end of your prompt often does it"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Swyx"
+      ],
+      "source_display": "X: Swyx",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "swyx"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 11.126546408629315,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+      "reading_questions": [
+        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
+      ],
+      "memory_subjects": [],
+      "expert_review": null
+    },
+    {
+      "event_id": "6b8a3e5b5f2af9",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX",
+      "brief": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+      "social_original_text": "I hear a version of this almost daily. https://t.co/OEI3CkrtcX",
+      "translation_zh": "我几乎每天都会听到类似的说法。https://t.co/OEI3CkrtcX",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 31.24,
+      "evidence_urls": [
+        "https://x.com/amasad/status/2063089288997491063"
+      ],
+      "evidence_titles": [
+        "I hear a version of this almost daily. https://t.co/OEI3CkrtcX"
+      ],
+      "evidence_summaries": [
+        "I hear a version of this almost daily. https://t.co/OEI3CkrtcX"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Amjad Masad"
+      ],
+      "source_display": "X: Amjad Masad",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "amasad"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 11.239866331809033,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+      "reading_questions": [
+        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
+      ],
+      "memory_subjects": [],
+      "expert_review": null
+    },
+    {
+      "event_id": "cc1c3c702f1b67",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "go Knicks!!",
+      "brief": "go Knicks!。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+      "social_original_text": "go Knicks!!",
+      "translation_zh": "尼克斯加油！！",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 18.73,
+      "evidence_urls": [
+        "https://x.com/danshipper/status/2063100104274280597"
+      ],
+      "evidence_titles": [
+        "go Knicks!!"
+      ],
+      "evidence_summaries": [
+        "go Knicks!!"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Dan Shipper"
+      ],
+      "source_display": "X: Dan Shipper",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "danshipper"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 5.73064017839119,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      },
+      "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+      "reading_questions": [
+        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
+      ],
+      "memory_subjects": [],
+      "expert_review": null
+    },
+    {
+      "event_id": "bdf3b86f6cf5f8",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "Replit x Shopify! https://t.co/QgJZLu4eFK",
+      "brief": "Replit x Shopify! https://t.co/QgJZLu4eFK。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+      "social_original_text": "Replit x Shopify! https://t.co/QgJZLu4eFK",
+      "translation_zh": "Replit × Shopify！https://t.co/QgJZLu4eFK",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 22.8,
+      "evidence_urls": [
+        "https://x.com/amasad/status/2063065480878063694"
+      ],
+      "evidence_titles": [
+        "Replit x Shopify! https://t.co/QgJZLu4eFK"
+      ],
+      "evidence_summaries": [
+        "Replit x Shopify! https://t.co/QgJZLu4eFK"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Amjad Masad"
+      ],
+      "source_display": "X: Amjad Masad",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "amasad"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 9.795206961605468,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      },
+      "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+      "reading_questions": [
+        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
+      ],
+      "memory_subjects": [],
+      "expert_review": null
+    },
+    {
+      "event_id": "d16188af6f5b0c",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "You can now finally try one of those big projects I was teasing that I started working on a few months ago.",
+      "brief": "You can now finally try one of those big projects I was teasing that I started working on a few months ago。它反映的是一线 builder 对产品和工作流变化的即时反馈，价值在于捕捉正式新闻之前的使用趋势。",
+      "social_original_text": "You can now finally try one of those big projects I was teasing that I started working on a few months ago.\n\nWe want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB",
+      "translation_zh": "你现在终于可以试用我几个月前启动、此前一直预告的那个大项目了。 我们希望它能持续优化，更好地助你掌握最佳技巧，从而更快、更优地构建软件。 https://t.co/hQpYCpl9JB",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 21.62,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2063146456106795457"
+      ],
+      "evidence_titles": [
+        "You can now finally try one of those big projects I was teasing that I started working on a few months ago."
+      ],
+      "evidence_summaries": [
+        "You can now finally try one of those big projects I was teasing that I started working on a few months ago.\n\nWe want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Garry Tan"
+      ],
+      "source_display": "X: Garry Tan",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "garrytan"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 8.621379348003945,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      },
+      "memory_note": "这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。",
+      "reading_questions": [
+        "这更像短期舆论信号，还是会改变产品、组织或开发者行为？",
+        "后续应该观察哪一个可验证结果来判断它是否重要？"
+      ],
+      "memory_subjects": [],
+      "expert_review": null
+    }
+  ],
+  "trace": [
+    {
+      "event_id": "87913e84bcaa85",
+      "score": 70,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "c45b6d7f69676e",
+      "score": 66,
+      "evidence_urls": [
+        "https://www.ithome.com/0/960/994.htm"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "7d80220c93c71f",
+      "score": 61,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "b2ac8d97021c0f",
+      "score": 50,
+      "evidence_urls": [
+        "https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "0737b82d468c35",
+      "score": 59,
+      "evidence_urls": [
+        "https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "ae062c4557bede",
+      "score": 50,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "829e84ac637f15",
+      "score": 51.39,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2063157328753594505"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 6.393768004764144,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "058939938185a7",
+      "score": 31.13,
+      "evidence_urls": [
+        "https://x.com/swyx/status/2063082950317486133"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 11.126546408629315,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "6b8a3e5b5f2af9",
+      "score": 31.24,
+      "evidence_urls": [
+        "https://x.com/amasad/status/2063089288997491063"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 11.239866331809033,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "cc1c3c702f1b67",
+      "score": 18.73,
+      "evidence_urls": [
+        "https://x.com/danshipper/status/2063100104274280597"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 5.73064017839119,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    },
+    {
+      "event_id": "bdf3b86f6cf5f8",
+      "score": 22.8,
+      "evidence_urls": [
+        "https://x.com/amasad/status/2063065480878063694"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 9.795206961605468,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    },
+    {
+      "event_id": "d16188af6f5b0c",
+      "score": 21.62,
+      "evidence_urls": [
+        "https://x.com/garrytan/status/2063146456106795457"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 8.621379348003945,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    }
+  ]
+}
