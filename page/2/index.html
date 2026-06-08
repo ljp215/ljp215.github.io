@@ -120,7 +120,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -463,7 +463,7 @@
 </ul>
 <p>即平均 600ms 要处理完一条消息，如果消息的消费时间高于 600ms，则一定要调整 max.poll.records 或 max.poll.interval.ms。</p>
 <h1 id="Kafka-Javadoc-Detecting-Consumer-Failures"><a href="#Kafka-Javadoc-Detecting-Consumer-Failures" class="headerlink" title="Kafka Javadoc - Detecting Consumer Failures"></a>Kafka Javadoc - Detecting Consumer Failures</h1><p>After subscribing to a set of topics, the consumer will automatically join the group when poll(long) is invoked. The poll API is designed to ensure consumer liveness. As long as you continue to call poll, the consumer will stay in the group and continue to receive messages from the partitions it was assigned. Underneath the covers, the consumer sends periodic heartbeats to the server. If the consumer crashes or is unable to send heartbeats for a duration of session.timeout.ms, then the consumer will be considered dead and its partitions will be reassigned.<br>It is also possible that the consumer could encounter a “livelock” situation where it is continuing to send heartbeats, but no progress is being made. To prevent the consumer from holding onto its partitions indefinitely in this case, we provide a liveness detection mechanism using the max.poll.interval.ms setting. Basically if you don’t call poll at least as frequently as the configured max interval, then the client will proactively leave the group so that another consumer can take over its partitions. When this happens, you may see an offset commit failure (as indicated by a CommitFailedException thrown from a call to commitSync()). This is a safety mechanism which guarantees that only active members of the group are able to commit offsets. So to stay in the group, you must continue to call poll. </p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://www.cnblogs.com/huxi2b/p/6223228.html" target="_blank" rel="noopener">Kafka消费组(consumer group)</a><br><a href="https://kafka.apache.org/0101/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank" rel="noopener">kafka.apache.org javadoc</a><br><a href="http://blog.leanote.com/post/zfb050/Coordinator%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" target="_blank" rel="noopener">Coordinator实现原理</a><br><a href="http://debugo.com/kafka-params/" target="_blank" rel="noopener">kafka params</a><br><a href="http://blog.csdn.net/u014393917/article/details/52043185" target="_blank" rel="noopener">kafka源码分析之kafka的consumer的负载均衡管理</a><br><a href="http://www.cnblogs.com/devos/p/5656232.html" target="_blank" rel="noopener">Group Management Protocol</a><br><a href="http://matt33.com/2017/01/16/kafka-group/" target="_blank" rel="noopener">Kafka 之 Group 状态变化分析及 Rebalance 过程</a><br><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread" target="_blank" rel="noopener">KIP-62: Allow consumer to send heartbeats from a background thread</a><br><a href="https://www.safaribooksonline.com/library/view/kafka-the-definitive/9781491936153/ch04.html" target="_blank" rel="noopener">Kafka: The Definitive Guide Chapter 4 - Kafka Consumers</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.cnblogs.com/huxi2b/p/6223228.html" target="_blank" rel="noopener">Kafka消费组(consumer group)</a><br><a href="https://kafka.apache.org/0101/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank" rel="noopener">kafka.apache.org javadoc</a><br><a href="https://blog.leanote.com/post/zfb050/Coordinator%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" target="_blank" rel="noopener">Coordinator实现原理</a><br><a href="https://debugo.com/kafka-params/" target="_blank" rel="noopener">kafka params</a><br><a href="https://blog.csdn.net/u014393917/article/details/52043185" target="_blank" rel="noopener">kafka源码分析之kafka的consumer的负载均衡管理</a><br><a href="https://www.cnblogs.com/devos/p/5656232.html" target="_blank" rel="noopener">Group Management Protocol</a><br><a href="https://matt33.com/2017/01/16/kafka-group/" target="_blank" rel="noopener">Kafka 之 Group 状态变化分析及 Rebalance 过程</a><br><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread" target="_blank" rel="noopener">KIP-62: Allow consumer to send heartbeats from a background thread</a><br><a href="https://www.safaribooksonline.com/library/view/kafka-the-definitive/9781491936153/ch04.html" target="_blank" rel="noopener">Kafka: The Definitive Guide Chapter 4 - Kafka Consumers</a></p>
 
         
       
@@ -861,7 +861,7 @@ $$g'(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})</script><
 <script type="math/tex; mode=display">H_ij= \frac{\partial^2{l({\theta)}}}{\partial{\theta_i}\partial{\theta_j}}</script><h2 id="牛顿迭代法的特点"><a href="#牛顿迭代法的特点" class="headerlink" title="牛顿迭代法的特点"></a>牛顿迭代法的特点</h2><h3 id="是否收敛"><a href="#是否收敛" class="headerlink" title="是否收敛"></a>是否收敛</h3><p>通常情况下是收敛的，但是需要满足一些条件，对于逻辑回归来讲，是收敛的。</p>
 <h3 id="迭代速度"><a href="#迭代速度" class="headerlink" title="迭代速度"></a>迭代速度</h3><p>每次迭代后，有解数字的误差是成平方倍减小的，是二次收敛函数。</p>
 <h3 id="优缺点"><a href="#优缺点" class="headerlink" title="优缺点"></a>优缺点</h3><p>优点：收敛快<br>缺点：特征多(上千个)时，每次迭代成本大</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://blog.csdn.net/baimafujinji/article/details/51179381" target="_blank" rel="noopener">http://blog.csdn.net/baimafujinji/article/details/51179381</a><br><a href="http://blog.csdn.net/baimafujinji/article/details/51167852" target="_blank" rel="noopener">http://blog.csdn.net/baimafujinji/article/details/51167852</a><br><a href="https://www.jiqizhixin.com/articles/2017-08-09-3" target="_blank" rel="noopener">如何通过牛顿方法解决Logistic回归问题</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://blog.csdn.net/baimafujinji/article/details/51179381" target="_blank" rel="noopener">http://blog.csdn.net/baimafujinji/article/details/51179381</a><br><a href="https://blog.csdn.net/baimafujinji/article/details/51167852" target="_blank" rel="noopener">http://blog.csdn.net/baimafujinji/article/details/51167852</a><br><a href="https://www.jiqizhixin.com/articles/2017-08-09-3" target="_blank" rel="noopener">如何通过牛顿方法解决Logistic回归问题</a></p>
 
         
       
@@ -960,7 +960,7 @@ $$g'(z)=\frac{d}{dz}\frac{1}{1+e^{-z}}= \frac{1}{(1+e^{-z})^2}(e^{-z})</script><
 <p><img src="/img/LR_underfitting_and_overfitting.png" alt></p>
 <h1 id="线性模型的概率解释"><a href="#线性模型的概率解释" class="headerlink" title="线性模型的概率解释"></a>线性模型的概率解释</h1><p>思考：我们为什么要用最小二乘的指标作为 cost function？为什么不是绝对值或四次方？</p>
 <blockquote>
-<p>最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。<br>最小二乘是从函数形式上来看的，极大似然是从概率意义上来看的。事实上，最小二乘可以由高斯噪声假设+极大似然估计推导出来。当然极大似然估计还可以推导出其他的loss function， 比如logistic回归中，loss function是交叉熵。<br><a href="http://www.cnblogs.com/little-YTMM/p/5700226.html" target="_blank" rel="noopener">最大似然估计与最小二乘估计的区别</a></p>
+<p>最小二乘法（又称最小平方法）是一种数学优化技术。它通过最小化误差的平方和寻找数据的最佳函数匹配。<br>最小二乘是从函数形式上来看的，极大似然是从概率意义上来看的。事实上，最小二乘可以由高斯噪声假设+极大似然估计推导出来。当然极大似然估计还可以推导出其他的loss function， 比如logistic回归中，loss function是交叉熵。<br><a href="https://www.cnblogs.com/little-YTMM/p/5700226.html" target="_blank" rel="noopener">最大似然估计与最小二乘估计的区别</a></p>
 </blockquote>
 <p>一般的最小二乘法实际上是在假设误差项满足高斯分布且独立同分布的情况下，使似然性最大化。</p>
 <h2 id="推导过程"><a href="#推导过程" class="headerlink" title="推导过程"></a>推导过程</h2><p>回到预测房价的例子，假设最终的预测函数，每一次预测都有误差，用$ε^{(i)}$表示误差，则预测函数可以写为：</p>
@@ -978,7 +978,7 @@ l(\theta)=logL(\theta)
 = log\prod_{i=1}^{m}\frac{1}{\sqrt{2\pi}\sigma}exp(- \frac{(y^{(i)}-\theta^Tx^{(i)})^2}{2\sigma^2})</script><script type="math/tex; mode=display">
 = m\sum_{i=1}^{m}log\frac{1}{\sqrt{2\pi}\sigma} - \frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2</script><p>最大化 $l(\theta)$ 即是最小化 $\frac1{2\sigma^2}\sum_{i=1}^{m}(y^{(i)}-\theta^Tx^{(i)})^2$，这样就是 cost function.</p>
 <p>由于目标变量服从正态分布，但分布的均值和方差都未知，对均值和方差两个参数的合理估计是选取两个参数使得在正态分布的前提下，抽到各样本中的 y 值的概率最大，这就是最大似然估计的思想。</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://www.holehouse.org/mlclass/07_Regularization.html" target="_blank" rel="noopener">http://www.holehouse.org/mlclass/07_Regularization.html</a><br><a href="http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html" target="_blank" rel="noopener">http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html</a><br><a href="https://rpubs.com/badbye/ml03" target="_blank" rel="noopener">https://rpubs.com/badbye/ml03</a><br><a href="http://www.qiujiawei.com/linear-algebra-15/" target="_blank" rel="noopener">http://www.qiujiawei.com/linear-algebra-15/</a><br><a href="http://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="noopener">最大似然估计</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.holehouse.org/mlclass/07_Regularization.html" target="_blank" rel="noopener">http://www.holehouse.org/mlclass/07_Regularization.html</a><br><a href="https://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html" target="_blank" rel="noopener">http://rstudio-pubs-static.s3.amazonaws.com/4810_06e3d8fd26ed40eb8c31aff35eae81ae.html</a><br><a href="https://rpubs.com/badbye/ml03" target="_blank" rel="noopener">https://rpubs.com/badbye/ml03</a><br><a href="https://www.qiujiawei.com/linear-algebra-15/" target="_blank" rel="noopener">http://www.qiujiawei.com/linear-algebra-15/</a><br><a href="https://www.jianshu.com/p/f1d3906e4a3e" target="_blank" rel="noopener">最大似然估计</a></p>
 
         
       
@@ -1155,7 +1155,7 @@ $$θ = (X^TX)^{-1}X^Ty</script><h1 id="Gradient-descent-Vs-Normal-equation"><a h
 <p>对于线性回归算法，一旦拟合出适合训练数据的参数θ，保存这些参数θ，对于之后的预测，不需要再使用原始训练数据集，所以是参数学习算法。</p>
 <p>对于局部加权线性回归算法，每次进行预测都需要全部的训练数据（每次进行的预测得到不同的参数θ），没有固定的参数θ，所以是非参数算法(non-parametric algorithm)。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="noopener">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
+<p><a href="https://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html" target="_blank" rel="noopener">http://www.holehouse.org/mlclass/04_Linear_Regression_with_multiple_variables.html</a></p>
 </blockquote>
 
         
@@ -1251,7 +1251,7 @@ $$θ = (X^TX)^{-1}X^Ty</script><h1 id="Gradient-descent-Vs-Normal-equation"><a h
     <div class="post-body" itemprop="articleBody">
 
       
-          <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>本系列的课程来源是 <a href="https://see.stanford.edu/Course/CS229" target="_blank" rel="noopener">斯坦福大学公开课 CS229: 机器学习课程</a>，也可以看<a href="http://open.163.com/special/opencourse/machinelearning.html" target="_blank" rel="noopener">网易公开课的资源</a>，是带字幕的。斯坦福的 CS229 课程相比于 Course 上的 <a href="https://zh.coursera.org/learn/machine-learning" target="_blank" rel="noopener">Machine Learning</a> 课程，理论更强，讲解的也更深入，需要有一些的高数基础。两个课程都看了前半部分，更推荐前者，所以相关笔记对应的都是 CS229 课程。</p>
+          <h1 id="引言"><a href="#引言" class="headerlink" title="引言"></a>引言</h1><p>本系列的课程来源是 <a href="https://see.stanford.edu/Course/CS229" target="_blank" rel="noopener">斯坦福大学公开课 CS229: 机器学习课程</a>，也可以看<a href="https://open.163.com/special/opencourse/machinelearning.html" target="_blank" rel="noopener">网易公开课的资源</a>，是带字幕的。斯坦福的 CS229 课程相比于 Course 上的 <a href="https://zh.coursera.org/learn/machine-learning" target="_blank" rel="noopener">Machine Learning</a> 课程，理论更强，讲解的也更深入，需要有一些的高数基础。两个课程都看了前半部分，更推荐前者，所以相关笔记对应的都是 CS229 课程。</p>
 <h1 id="线性回归的定义"><a href="#线性回归的定义" class="headerlink" title="线性回归的定义"></a>线性回归的定义</h1><p>适用于监督学习，根据已有的数据集合(x, y)，来推断出将来的数据趋势。</p>
 <h1 id="单变量线性回归"><a href="#单变量线性回归" class="headerlink" title="单变量线性回归"></a>单变量线性回归</h1><p>最后的函数应该是 y = ax + b，假设 hypothesis 为：</p>
 <script type="math/tex; mode=display">h_{\theta}(x) = \theta_{0} + \theta_{1}</script><p>则问题转化为求 $\theta_{0}$ 和 $\theta_{1}$ 的值。要求这两个值需要转化上式，并根据已有的数据来求解。下面介绍损失函数，又叫代价函数的概念。</p>
@@ -1314,7 +1314,7 @@ $$ J(\theta_0, \theta_1) =  \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(
 <script type="math/tex; mode=display">f(px_1+(1-p)x_2) \le pf(x_1)+(1-p)f(x_2)</script><p>如果 f 连续，那么 p 可以改成任意（0,1）中实数。则 f 称为 I 上的凸函数，当且仅当其上境图（在函数图像上方的点集）为一个凸集。</p>
 <h1 id="梯度下降法的使用"><a href="#梯度下降法的使用" class="headerlink" title="梯度下降法的使用"></a>梯度下降法的使用</h1><p>我们首先在函数上任选一点，计算其损失（即我们上面的L(w)） ，然后按照某一规则寻找更低的一点计算新的损失，只要新损失更小（最小化问题），我们就继续下降，直到达到一个可接受的优化目标。<br>梯度下降方法分为两个部分，第一部分是整体上，我们使用某步长不断下降求损失函数，第二部分是为了防止步长太长导致最后无法收敛，每次当损失上升的时候都调整步长。<br>通常实践中使用时，都是用一些开源算法，很少需要深度改进，比如使用 libsvm 可以直接求解逻辑回归。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="http://www.cnblogs.com/yysblog/p/3268508.html" target="_blank" rel="noopener">http://www.cnblogs.com/yysblog/p/3268508.html</a><br><a href="http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression" target="_blank" rel="noopener">http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression</a><br><a href="http://www.cnblogs.com/chaoren399/p/4851658.html" target="_blank" rel="noopener">http://www.cnblogs.com/chaoren399/p/4851658.html</a></p>
+<p><a href="https://www.cnblogs.com/yysblog/p/3268508.html" target="_blank" rel="noopener">http://www.cnblogs.com/yysblog/p/3268508.html</a><br><a href="https://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression" target="_blank" rel="noopener">http://52opencourse.com/125/coursera%E5%85%AC%E5%BC%80%E8%AF%BE%E7%AC%94%E8%AE%B0-%E6%96%AF%E5%9D%A6%E7%A6%8F%E5%A4%A7%E5%AD%A6%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E7%AC%AC%E5%85%AD%E8%AF%BE-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92-logistic-regression</a><br><a href="https://www.cnblogs.com/chaoren399/p/4851658.html" target="_blank" rel="noopener">http://www.cnblogs.com/chaoren399/p/4851658.html</a></p>
 </blockquote>
 
         
@@ -1829,7 +1829,7 @@ $$ J(\theta_0, \theta_1) =  \frac1{2m}\sum_{i=1}^{m}{(h_{\theta}(x^{(i)}) - y^{(
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

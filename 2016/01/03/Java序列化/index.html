@@ -128,7 +128,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -319,7 +319,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h2 id="什么是序列化"><a href="#什么是序列化" class="headerlink" title="什么是序列化"></a>什么是序列化</h2><p>java 序列化是将对象转化为二进制流。不同的序列化框架会将对象转成不同的二进制流。通过 <a href="http://www.solinx.co/archives/377" target="_blank" rel="noopener">透过byte数组简单分析Java序列化、Kryo、ProtoBuf序列化</a> 这篇文章里可以看到，不同的序列化框架最终转成的二进制流是不一样的。</p>
+        <h2 id="什么是序列化"><a href="#什么是序列化" class="headerlink" title="什么是序列化"></a>什么是序列化</h2><p>java 序列化是将对象转化为二进制流。不同的序列化框架会将对象转成不同的二进制流。通过 <a href="https://www.solinx.co/archives/377" target="_blank" rel="noopener">透过byte数组简单分析Java序列化、Kryo、ProtoBuf序列化</a> 这篇文章里可以看到，不同的序列化框架最终转成的二进制流是不一样的。</p>
 <h2 id="Java-默认序列化"><a href="#Java-默认序列化" class="headerlink" title="Java 默认序列化"></a>Java 默认序列化</h2><h3 id="默认序列化机制"><a href="#默认序列化机制" class="headerlink" title="默认序列化机制"></a>默认序列化机制</h3><p>如果仅仅只是让某个类实现Serializable接口，而没有其它任何处理的话，则就是使用默认序列化机制。使用默认机制，在序列化对象时，不仅会序列化当前对象本身，还会对该对象引用的其它对象也进行序列化，同样地，这些其它对象引用的另外对象也将被序列化，以此类推。所以，如果一个对象包含的成员变量是容器类对象，而这些容器所含有的元素也是容器类对象，那么这个序列化的过程就会较复杂，开销也较大。</p>
 <p>整个过程都是Java虚拟机（JVM）独立的，也就是说，在一个平台上序列化的对象可以在另一个完全不同的平台上反序列化该对象。</p>
 <h3 id="serialVersionUID"><a href="#serialVersionUID" class="headerlink" title="serialVersionUID"></a>serialVersionUID</h3><p>serialVersionUID的作用<br>不仅取决于类路径和功能代码是否一致，一个非常重要的一点是两个类的序列化 ID 是否一致（就是 <code>private static final long serialVersionUID = 1L</code>）</p>
@@ -351,7 +351,7 @@
 </li>
 </ul>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-serial/" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-lo-serial/</a><br><a href="http://www.infoq.com/cn/articles/serialization-and-deserialization" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/serialization-and-deserialization</a><br><a href="http://sqtds.github.io/2015/05/13/2015/java-serizable/" target="_blank" rel="noopener">http://sqtds.github.io/2015/05/13/2015/java-serizable/</a><br><a href="http://www.solinx.co/archives/377" target="_blank" rel="noopener">http://www.solinx.co/archives/377</a></p>
+<p><a href="https://www.ibm.com/developerworks/cn/java/j-lo-serial/" target="_blank" rel="noopener">https://www.ibm.com/developerworks/cn/java/j-lo-serial/</a><br><a href="https://www.infoq.com/cn/articles/serialization-and-deserialization" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/serialization-and-deserialization</a><br><a href="https://sqtds.github.io/2015/05/13/2015/java-serizable/" target="_blank" rel="noopener">http://sqtds.github.io/2015/05/13/2015/java-serizable/</a><br><a href="https://www.solinx.co/archives/377" target="_blank" rel="noopener">http://www.solinx.co/archives/377</a></p>
 </blockquote>
 
     </div>
@@ -611,7 +611,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

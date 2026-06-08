@@ -128,7 +128,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -371,7 +371,7 @@
 </ul>
 <p>即平均 600ms 要处理完一条消息，如果消息的消费时间高于 600ms，则一定要调整 max.poll.records 或 max.poll.interval.ms。</p>
 <h1 id="Kafka-Javadoc-Detecting-Consumer-Failures"><a href="#Kafka-Javadoc-Detecting-Consumer-Failures" class="headerlink" title="Kafka Javadoc - Detecting Consumer Failures"></a>Kafka Javadoc - Detecting Consumer Failures</h1><p>After subscribing to a set of topics, the consumer will automatically join the group when poll(long) is invoked. The poll API is designed to ensure consumer liveness. As long as you continue to call poll, the consumer will stay in the group and continue to receive messages from the partitions it was assigned. Underneath the covers, the consumer sends periodic heartbeats to the server. If the consumer crashes or is unable to send heartbeats for a duration of session.timeout.ms, then the consumer will be considered dead and its partitions will be reassigned.<br>It is also possible that the consumer could encounter a “livelock” situation where it is continuing to send heartbeats, but no progress is being made. To prevent the consumer from holding onto its partitions indefinitely in this case, we provide a liveness detection mechanism using the max.poll.interval.ms setting. Basically if you don’t call poll at least as frequently as the configured max interval, then the client will proactively leave the group so that another consumer can take over its partitions. When this happens, you may see an offset commit failure (as indicated by a CommitFailedException thrown from a call to commitSync()). This is a safety mechanism which guarantees that only active members of the group are able to commit offsets. So to stay in the group, you must continue to call poll. </p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="http://www.cnblogs.com/huxi2b/p/6223228.html" target="_blank" rel="noopener">Kafka消费组(consumer group)</a><br><a href="https://kafka.apache.org/0101/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank" rel="noopener">kafka.apache.org javadoc</a><br><a href="http://blog.leanote.com/post/zfb050/Coordinator%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" target="_blank" rel="noopener">Coordinator实现原理</a><br><a href="http://debugo.com/kafka-params/" target="_blank" rel="noopener">kafka params</a><br><a href="http://blog.csdn.net/u014393917/article/details/52043185" target="_blank" rel="noopener">kafka源码分析之kafka的consumer的负载均衡管理</a><br><a href="http://www.cnblogs.com/devos/p/5656232.html" target="_blank" rel="noopener">Group Management Protocol</a><br><a href="http://matt33.com/2017/01/16/kafka-group/" target="_blank" rel="noopener">Kafka 之 Group 状态变化分析及 Rebalance 过程</a><br><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread" target="_blank" rel="noopener">KIP-62: Allow consumer to send heartbeats from a background thread</a><br><a href="https://www.safaribooksonline.com/library/view/kafka-the-definitive/9781491936153/ch04.html" target="_blank" rel="noopener">Kafka: The Definitive Guide Chapter 4 - Kafka Consumers</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p><a href="https://www.cnblogs.com/huxi2b/p/6223228.html" target="_blank" rel="noopener">Kafka消费组(consumer group)</a><br><a href="https://kafka.apache.org/0101/javadoc/index.html?org/apache/kafka/clients/consumer/KafkaConsumer.html" target="_blank" rel="noopener">kafka.apache.org javadoc</a><br><a href="https://blog.leanote.com/post/zfb050/Coordinator%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86" target="_blank" rel="noopener">Coordinator实现原理</a><br><a href="https://debugo.com/kafka-params/" target="_blank" rel="noopener">kafka params</a><br><a href="https://blog.csdn.net/u014393917/article/details/52043185" target="_blank" rel="noopener">kafka源码分析之kafka的consumer的负载均衡管理</a><br><a href="https://www.cnblogs.com/devos/p/5656232.html" target="_blank" rel="noopener">Group Management Protocol</a><br><a href="https://matt33.com/2017/01/16/kafka-group/" target="_blank" rel="noopener">Kafka 之 Group 状态变化分析及 Rebalance 过程</a><br><a href="https://cwiki.apache.org/confluence/display/KAFKA/KIP-62%3A+Allow+consumer+to+send+heartbeats+from+a+background+thread" target="_blank" rel="noopener">KIP-62: Allow consumer to send heartbeats from a background thread</a><br><a href="https://www.safaribooksonline.com/library/view/kafka-the-definitive/9781491936153/ch04.html" target="_blank" rel="noopener">Kafka: The Definitive Guide Chapter 4 - Kafka Consumers</a></p>
 
     </div>
 
@@ -630,7 +630,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

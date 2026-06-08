@@ -63,11 +63,11 @@
 <meta property="og:description" content="AQS简介AQS介绍AbstractQueuedSynchronizer提供了一个基于FIFO队列，可以用于构建锁或者其他相关同步装置的基础框架。该同步器（以下简称同步器）利用了一个int来表示状态，期望它能够成为实现大部分同步需求的基础。使用的方法是继承，子类通过继承同步器并需要实现它的方法来管理其状态，管理的方式就是通过类似acquire和release的方式来操纵状态。然而多线程环境中对状态">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:image" content="https://luojinping.com/img/AQS_uses.jpg">
-<meta property="og:image" content="http://ifeve.com/wp-content/uploads/2013/10/21.png">
-<meta property="og:image" content="http://img2.tbcdn.cn/L1/461/1/t_9683_1379328542_928191748.png">
-<meta property="og:image" content="http://img2.tbcdn.cn/L1/461/1/t_9683_1379328891_568034081.png">
-<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/t_9683_1379328959_1702388031.png">
-<meta property="og:image" content="http://img1.tbcdn.cn/L1/461/1/t_9683_1379329217_1542967524.png">
+<meta property="og:image" content="https://ifeve.com/wp-content/uploads/2013/10/21.png">
+<meta property="og:image" content="https://img2.tbcdn.cn/L1/461/1/t_9683_1379328542_928191748.png">
+<meta property="og:image" content="https://img2.tbcdn.cn/L1/461/1/t_9683_1379328891_568034081.png">
+<meta property="og:image" content="https://img1.tbcdn.cn/L1/461/1/t_9683_1379328959_1702388031.png">
+<meta property="og:image" content="https://img1.tbcdn.cn/L1/461/1/t_9683_1379329217_1542967524.png">
 <meta property="og:updated_time" content="2019-08-25T13:32:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="AbstractQueuedSynchronizer详解">
@@ -132,7 +132,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -504,7 +504,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">tryAcquire</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">tryRelease</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">tryAcquireShared</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">tryReleaseShared</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br></pre></td></tr></table></figure>
 <p>acquire方法用来获取锁，返回true说明线程获取成功继续执行，一旦返回false则线程加入到等待队列中，等待被唤醒，release方法用来释放锁。 一般来说实现的时候这两个方法被封装为lock和unlock方法。</p>
 <h1 id="refer"><a href="#refer" class="headerlink" title="refer"></a>refer</h1><blockquote>
-<p><a href="http://ifeve.com/introduce-abstractqueuedsynchronizer/" target="_blank" rel="noopener">http://ifeve.com/introduce-abstractqueuedsynchronizer/</a><br><a href="http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html</a><br><a href="http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html</a></p>
+<p><a href="https://ifeve.com/introduce-abstractqueuedsynchronizer/" target="_blank" rel="noopener">http://ifeve.com/introduce-abstractqueuedsynchronizer/</a><br><a href="https://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html</a><br><a href="https://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html</a></p>
 </blockquote>
 
     </div>
@@ -764,7 +764,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

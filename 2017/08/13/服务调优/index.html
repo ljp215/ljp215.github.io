@@ -128,7 +128,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -380,7 +380,7 @@
 <h3 id="查看-JVM-堆各个分区的内存情况"><a href="#查看-JVM-堆各个分区的内存情况" class="headerlink" title="查看 JVM 堆各个分区的内存情况"></a>查看 JVM 堆各个分区的内存情况</h3><p>jstat -gcutil [pid]<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[root@server ~]$ jstat -gcutil 837 1000 20</span><br><span class="line">  S0     S1     E      O      P     YGC     YGCT    FGC    FGCT     GCT   </span><br><span class="line">  0.00  80.43  24.62  87.44  98.29   7101  119.652    40   19.719  139.371</span><br><span class="line">  0.00  80.43  33.14  87.44  98.29   7101  119.652    40   19.719  139.371</span><br></pre></td></tr></table></figure></p>
 <h3 id="分析-JVM-堆内存中的对象"><a href="#分析-JVM-堆内存中的对象" class="headerlink" title="分析 JVM 堆内存中的对象"></a>分析 JVM 堆内存中的对象</h3><p><strong>查看存活的对象统计</strong><br>jmap -histo:live [pid]</p>
 <p><strong>dump 内存</strong><br>jmap -dump:format=b,file=heapDump [pid]</p>
-<p>然后用jhat命令可以参看<br>jhat -port 5000 heapDump<br>在浏览器中访问：<a href="http://localhost:5000/" target="_blank" rel="noopener">http://localhost:5000/</a> 查看详细信息</p>
+<p>然后用jhat命令可以参看<br>jhat -port 5000 heapDump<br>在浏览器中访问：<a href="https://localhost:5000/" target="_blank" rel="noopener">http://localhost:5000/</a> 查看详细信息</p>
 <h1 id="服务指标"><a href="#服务指标" class="headerlink" title="服务指标"></a>服务指标</h1><h2 id="响应时间-RT"><a href="#响应时间-RT" class="headerlink" title="响应时间(RT)"></a>响应时间(RT)</h2><p>响应时间是指系统对请求作出响应的时间。直观上看，这个指标与人对软件性能的主观感受是非常一致的，因为它完整地记录了整个计算机系统处理请求的时间。由于一个系统通常会提供许多功能，而不同功能的处理逻辑也千差万别，因而不同功能的响应时间也不尽相同，甚至同一功能在不同输入数据的情况下响应时间也不相同。所以，在讨论一个系统的响应时间时，人们通常是指该系统所有功能的平均时间或者所有功能的最大响应时间。当然，往往也需要对每个或每组功能讨论其平均响应时间和最大响应时间。</p>
 <p>对于单机的没有并发操作的应用系统而言，人们普遍认为响应时间是一个合理且准确的性能指标。需要指出的是，响应时间的绝对值并不能直接反映软件的性能的高低，软件性能的高低实际上取决于用户对该响应时间的接受程度。对于一个游戏软件来说，响应时间小于100毫秒应该是不错的，响应时间在1秒左右可能属于勉强可以接受，如果响应时间达到3秒就完全难以接受了。而对于编译系统来说，完整编译一个较大规模软件的源代码可能需要几十分钟甚至更长时间，但这些响应时间对于用户来说都是可以接受的。</p>
 <h2 id="吞吐量-Throughput"><a href="#吞吐量-Throughput" class="headerlink" title="吞吐量(Throughput)"></a>吞吐量(Throughput)</h2><p>吞吐量是指系统在单位时间内处理请求的数量。对于无并发的应用系统而言，吞吐量与响应时间成严格的反比关系，实际上此时吞吐量就是响应时间的倒数。前面已经说过，对于单用户的系统，响应时间（或者系统响应时间和应用延迟时间）可以很好地度量系统的性能，但对于并发系统，通常需要用吞吐量作为性能指标。</p>
@@ -407,7 +407,7 @@
 <p>tcptrace<br>数据包分析工具</p>
 <p>netperf<br>网络带宽工具</p>
 <p>dstat<br>综合工具，综合了 vmstat, iostat, ifstat, netstat 等多个信息</p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br><a href="http://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/" target="_blank" rel="noopener">http://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/</a><br><a href="https://www.ibm.com/developerworks/java/library/j-nativememory-linux/" target="_blank" rel="noopener">https://www.ibm.com/developerworks/java/library/j-nativememory-linux/</a><br><a href="http://www.oracle.com/technetwork/java/javase/index-137495.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/index-137495.html</a><br><a href="http://www.hollischuang.com/archives/303" target="_blank" rel="noopener">http://www.hollischuang.com/archives/303</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br><a href="https://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/" target="_blank" rel="noopener">http://tmq.qq.com/2016/07/it-is-necessary-to-know-the-background-performance-test/</a><br><a href="https://www.ibm.com/developerworks/java/library/j-nativememory-linux/" target="_blank" rel="noopener">https://www.ibm.com/developerworks/java/library/j-nativememory-linux/</a><br><a href="https://www.oracle.com/technetwork/java/javase/index-137495.html" target="_blank" rel="noopener">http://www.oracle.com/technetwork/java/javase/index-137495.html</a><br><a href="https://www.hollischuang.com/archives/303" target="_blank" rel="noopener">http://www.hollischuang.com/archives/303</a></p>
 
     </div>
 
@@ -666,7 +666,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

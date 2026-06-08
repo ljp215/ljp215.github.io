@@ -127,7 +127,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -407,7 +407,7 @@
 <li>hbase checkAndPut<br>hbase checkandput performance<br>When you use checkAndPut() you do one RPC-call per request. So, you can’t achieve performance more then 1 / rtt requests per second (rtt is Round Trip Time). If you have rtt 1ms between your client and region server, your theoretical maximum is 1000 rps. When using batch operations like put(List<put>) you need a lot less RPC-calls causing performance increase.</put></li>
 </ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="http://blog.linezing.com/2012/03/hbase-performance-optimization/" target="_blank" rel="noopener">http://blog.linezing.com/2012/03/hbase-performance-optimization/</a><br><a href="https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html" target="_blank" rel="noopener">https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html</a><br><a href="http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html" target="_blank" rel="noopener">http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html</a><br><a href="http://blog.chedushi.com/archives/9720" target="_blank" rel="noopener">http://blog.chedushi.com/archives/9720</a><br><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="noopener">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a><br><a href="https://cloud.google.com/bigtable/docs/schema-design" target="_blank" rel="noopener">https://cloud.google.com/bigtable/docs/schema-design</a><br><a href="http://www.slideshare.net/alexbaranau/transactions-over-hbase" target="_blank" rel="noopener">http://www.slideshare.net/alexbaranau/transactions-over-hbase</a><br><a href="https://hbase.apache.org/acid-semantics.html" target="_blank" rel="noopener">https://hbase.apache.org/acid-semantics.html</a></p>
+<p><a href="https://blog.linezing.com/2012/03/hbase-performance-optimization/" target="_blank" rel="noopener">http://blog.linezing.com/2012/03/hbase-performance-optimization/</a><br><a href="https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html" target="_blank" rel="noopener">https://www.ibm.com/support/knowledgecenter/SSPT3X_2.1.2/com.ibm.swg.im.infosphere.biginsights.analyze.doc/doc/bigsql_designhints.html</a><br><a href="https://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html" target="_blank" rel="noopener">http://blog.kissdata.com/2014/07/30/hbase-scheme-tips.html</a><br><a href="https://blog.chedushi.com/archives/9720" target="_blank" rel="noopener">http://blog.chedushi.com/archives/9720</a><br><a href="https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko" target="_blank" rel="noopener">https://www.mapr.com/blog/in-depth-look-hbase-architecture#.VdMxvWSqqko</a><br><a href="https://cloud.google.com/bigtable/docs/schema-design" target="_blank" rel="noopener">https://cloud.google.com/bigtable/docs/schema-design</a><br><a href="https://www.slideshare.net/alexbaranau/transactions-over-hbase" target="_blank" rel="noopener">http://www.slideshare.net/alexbaranau/transactions-over-hbase</a><br><a href="https://hbase.apache.org/acid-semantics.html" target="_blank" rel="noopener">https://hbase.apache.org/acid-semantics.html</a></p>
 </blockquote>
 
     </div>
@@ -667,7 +667,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

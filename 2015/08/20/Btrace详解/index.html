@@ -125,7 +125,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -340,8 +340,8 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> <span class="keyword">volatile</span> <span class="keyword">boolean</span> disabled;</span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">boolean</span> <span class="title">enter</span><span class="params">(BTraceRuntime current)</span> </span>&#123;</span><br><span class="line">     <span class="keyword">if</span> (current.disabled) <span class="keyword">return</span> <span class="keyword">false</span>;</span><br><span class="line">     <span class="keyword">return</span> map.enter(current);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>每次执行你的监控代码之前会先进行一个判断，判断当前是否处于监控中。你的客户端发起了exit指令后，该方法判断false，直接return。</p>
 <p><strong>所以btrace使用退出后会让你的代码多走了一个方法调用+一个对象属性判断，所以说影响还是非常少的。</strong></p>
-<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>Java SE 6 新特性: Instrumentation 新功能 <a href="http://www.ibm.com/developerworks/cn/java/j-lo-jse61/" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br>Btrace系列之一：Btrace的基本原理 <a href="http://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="http://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
+<h1 id="推荐阅读"><a href="#推荐阅读" class="headerlink" title="推荐阅读"></a>推荐阅读</h1><p>Btrace系列之一：Btrace的基本原理 <a href="https://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="https://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>Java SE 6 新特性: Instrumentation 新功能 <a href="https://www.ibm.com/developerworks/cn/java/j-lo-jse61/" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-lo-jse61/</a><br>Btrace系列之一：Btrace的基本原理 <a href="https://victorzhzh.iteye.com/blog/965789" target="_blank" rel="noopener">http://victorzhzh.iteye.com/blog/965789</a><br>btrace一些你不知道的事(源码入手) <a href="https://agapple.iteye.com/blog/1005918" target="_blank" rel="noopener">http://agapple.iteye.com/blog/1005918</a></p>
 
     </div>
 
@@ -600,7 +600,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

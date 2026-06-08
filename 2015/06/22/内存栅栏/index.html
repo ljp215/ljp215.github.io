@@ -127,7 +127,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -337,7 +337,7 @@
 <h1 id="Java中内存栅栏的使用"><a href="#Java中内存栅栏的使用" class="headerlink" title="Java中内存栅栏的使用"></a>Java中内存栅栏的使用</h1><p>Java内存模型中volatile变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。一个类的final字段会在初始化后插入一个store屏障，来确保final字段在构造函数初始化完成并可被使用时可见。</p>
 <h1 id="内存栅栏对性能的影响"><a href="#内存栅栏对性能的影响" class="headerlink" title="内存栅栏对性能的影响"></a>内存栅栏对性能的影响</h1><p>内存栅栏阻止了 CPU 很多隐式的内存延迟技术的执行，因此是有性能损耗的，不过在上层看来这种损耗并不大。在合适的时候使用内存栅栏，仍然是一种高效的做法。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="noopener">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="http://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="noopener">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
+<p><a href="https://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="noopener">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="https://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="noopener">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="https://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
 </blockquote>
 
     </div>
@@ -597,7 +597,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

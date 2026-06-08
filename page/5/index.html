@@ -120,7 +120,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -440,7 +440,7 @@
 <li>synchronized(o) {}<br> 这里面的o可以是一个任何Object对象或数组，并不一定是它本身对象或者类，谁拥有o这个锁，谁就能够操作该块程序代码。</li>
 </ol>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://f.dataguru.cn/thread-472518-1-1.html" target="_blank" rel="noopener">http://f.dataguru.cn/thread-472518-1-1.html</a></p>
+<p>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="https://f.dataguru.cn/thread-472518-1-1.html" target="_blank" rel="noopener">http://f.dataguru.cn/thread-472518-1-1.html</a></p>
 </blockquote>
 
         
@@ -651,7 +651,7 @@
 </table>
 </div>
 <p><br></p>
-<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="noopener">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="http://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="http://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="noopener">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="http://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="noopener">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="http://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="noopener">http://blog.csdn.net/coslay/article/details/41526635</a></p>
+<h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><p>&gt;<br>周志明的《深入理解Java虚拟机》<br><a href="https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot" target="_blank" rel="noopener">https://blogs.oracle.com/dave/entry/biased_locking_in_hotspot</a><br><a href="https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf" target="_blank" rel="noopener">https://www.usenix.org/legacy/event/jvm01/full_papers/dice/dice.pdf</a><br><a href="https://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html" target="_blank" rel="noopener">http://www.javaworld.com/article/2076971/java-concurrency/how-the-java-virtual-machine-performs-thread-synchronization.html</a><br><a href="https://www.infoq.com/cn/articles/java-se-16-synchronized" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-se-16-synchronized</a><br><a href="https://www.majin163.com/2014/03/17/synchronized2/" target="_blank" rel="noopener">http://www.majin163.com/2014/03/17/synchronized2/</a><br><a href="https://www.cnblogs.com/javaminer/p/3889023.html" target="_blank" rel="noopener">http://www.cnblogs.com/javaminer/p/3889023.html</a><br><a href="https://blog.csdn.net/coslay/article/details/41526635" target="_blank" rel="noopener">http://blog.csdn.net/coslay/article/details/41526635</a></p>
 
         
       
@@ -790,7 +790,7 @@
 <p>之所以将这种技术称之为 “开销较低的读－写锁” 是因为您使用了不同的同步机制进行读写操作。因为本例中的写操作违反了使用 volatile 的第一个条件，因此不能使用 volatile 安全地实现计数器 —— 您必须使用锁。然而，您可以在读操作中使用 volatile 确保当前值的可见性，因此可以使用锁进行所有变化的操作，使用 volatile 进行只读操作。其中，锁一次只允许一个线程访问值，volatile 允许多个线程执行读操作，因此当使用 volatile 保证读代码路径时，要比使用锁执行全部代码路径获得更高的共享度 —— 就像读－写操作一样。然而，要随时牢记这种模式的弱点：如果超越了该模式的最基本应用，结合这两个竞争的同步机制将变得非常困难。</p>
 <h1 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h1><p>与锁相比，volatile 变量是一种非常简单但同时又非常脆弱的同步机制，它在某些情况下将提供优于锁的性能和伸缩性。如果严格遵循 volatile 的使用条件 —— 即变量真正独立于其他变量和自己以前的值 —— 在某些情况下可以使用 volatile 代替 synchronized 来简化代码。然而，使用 volatile 的代码往往比使用锁的代码更加容易出错。本文介绍的模式涵盖了可以使用 volatile 代替 synchronized 的最常见的一些用例。遵循这些模式（注意使用时不要超过各自的限制）可以帮助您安全地实现大多数用例，使用 volatile 变量获得更佳性能。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="http://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-jtp06197.html</a><br><a href="http://www.infoq.com/cn/articles/java-memory-model-1" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-memory-model-1</a><br><a href="http://www.infoq.com/cn/articles/ftf-java-volatile" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/ftf-java-volatile</a><br><a href="http://zhhphappy.iteye.com/blog/2086149" target="_blank" rel="noopener">http://zhhphappy.iteye.com/blog/2086149</a></p>
+<p><a href="https://www.ibm.com/developerworks/cn/java/j-jtp06197.html" target="_blank" rel="noopener">http://www.ibm.com/developerworks/cn/java/j-jtp06197.html</a><br><a href="https://www.infoq.com/cn/articles/java-memory-model-1" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-memory-model-1</a><br><a href="https://www.infoq.com/cn/articles/ftf-java-volatile" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/ftf-java-volatile</a><br><a href="https://zhhphappy.iteye.com/blog/2086149" target="_blank" rel="noopener">http://zhhphappy.iteye.com/blog/2086149</a></p>
 </blockquote>
 
         
@@ -905,7 +905,7 @@
 <h1 id="Java中内存栅栏的使用"><a href="#Java中内存栅栏的使用" class="headerlink" title="Java中内存栅栏的使用"></a>Java中内存栅栏的使用</h1><p>Java内存模型中volatile变量在写操作之后会插入一个store屏障，在读操作之前会插入一个load屏障。一个类的final字段会在初始化后插入一个store屏障，来确保final字段在构造函数初始化完成并可被使用时可见。</p>
 <h1 id="内存栅栏对性能的影响"><a href="#内存栅栏对性能的影响" class="headerlink" title="内存栅栏对性能的影响"></a>内存栅栏对性能的影响</h1><p>内存栅栏阻止了 CPU 很多隐式的内存延迟技术的执行，因此是有性能损耗的，不过在上层看来这种损耗并不大。在合适的时候使用内存栅栏，仍然是一种高效的做法。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="noopener">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="http://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="noopener">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
+<p><a href="https://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html" target="_blank" rel="noopener">http://mechanical-sympathy.blogspot.jp/2011/07/memory-barriersfences.html</a><br><a href="https://ifeve.com/memory-barriers-or-fences/" target="_blank" rel="noopener">http://ifeve.com/memory-barriers-or-fences/</a><br><a href="https://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/memory_barriers_jvm_concurrency</a></p>
 </blockquote>
 
         
@@ -1001,7 +1001,7 @@
     <div class="post-body" itemprop="articleBody">
 
       
-          <p>转至： <a href="http://news.dbanotes.net/item?id=23383" target="_blank" rel="noopener">http://news.dbanotes.net/item?id=23383</a></p>
+          <p>转至： <a href="https://news.dbanotes.net/item?id=23383" target="_blank" rel="noopener">http://news.dbanotes.net/item?id=23383</a></p>
 <p>写这篇文章，缘自于前几天部门内部成员们进行了一次部门内部现有涉及的一些算法的review以及整理。不过比较囧的就是，由于Boss不在，我们讨论讨论着就成了吐槽大会，倒是有一半时间在吐槽产品以及业务部门了。<br>不过这也算是一件可喜可贺的事情了，这也可以看做是我们数据部门，已经由开轻型挖掘机向深挖阶段迈步了。</p>
 <p>因此，借此机会，也对自己接触过的，了解过的，或者做过的一些勉强称得上算法的东西做一个梳理。其实，就个人来说，本身就不是做算法出身的，在大学时代，学习的反倒是网络方面多一些，更不知数据挖掘算法为何物。</p>
 <p>其实，就所谓算法而言，个人认为，我有个同事说的很对：所谓算法，并不是说那些复杂的数学模型才是算法，哪怕是你写的一个简单的计算公式，只要能够解决现有业务的痛点，有了自己的模型思路，它就是一个算法，只是它可能不够通用，只能解决特定业务需求而已。</p>
@@ -1403,7 +1403,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">tryAcquire</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">tryRelease</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">int</span> <span class="title">tryAcquireShared</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br><span class="line"><span class="function"><span class="keyword">protected</span> <span class="keyword">boolean</span> <span class="title">tryReleaseShared</span><span class="params">(<span class="keyword">int</span> arg)</span></span></span><br></pre></td></tr></table></figure>
 <p>acquire方法用来获取锁，返回true说明线程获取成功继续执行，一旦返回false则线程加入到等待队列中，等待被唤醒，release方法用来释放锁。 一般来说实现的时候这两个方法被封装为lock和unlock方法。</p>
 <h1 id="refer"><a href="#refer" class="headerlink" title="refer"></a>refer</h1><blockquote>
-<p><a href="http://ifeve.com/introduce-abstractqueuedsynchronizer/" target="_blank" rel="noopener">http://ifeve.com/introduce-abstractqueuedsynchronizer/</a><br><a href="http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html</a><br><a href="http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html</a></p>
+<p><a href="https://ifeve.com/introduce-abstractqueuedsynchronizer/" target="_blank" rel="noopener">http://ifeve.com/introduce-abstractqueuedsynchronizer/</a><br><a href="https://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-AbstractQueuedSynchronizer.html</a><br><a href="https://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html" target="_blank" rel="noopener">http://www.cnblogs.com/zhanjindong/p/java-concurrent-package-aqs-overview.html</a></p>
 </blockquote>
 
         
@@ -1658,7 +1658,7 @@
 <p>中断是一种协作机制。一个线程不能强制其它线程停止正在执行的操作而去执行其它的操作。当线程A中断B时，A仅仅是要求B在执行到某个可以暂停的地方停止正在执行的操作——前提是如果线程B愿意停下来。—— 『Java并发编程实战』 第5章 基础构建模块 p77</p>
 <p>总之，中断只是一种协作机制，需要被中断的线程自己处理中断。停止一个线程最佳实践是 中断 + 条件变量。</p>
 <h1 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h1><blockquote>
-<p><a href="http://www.infoq.com/cn/articles/java-interrupt-mechanism" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-interrupt-mechanism</a><br>《Java Concurrency in Practice》<br>《Concurrent Programming in Java Design principles and patterns》<br><a href="http://docs.oracle.com/javase/1.4.2/docs/guide/misc/threadPrimitiveDeprecation.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/1.4.2/docs/guide/misc/threadPrimitiveDeprecation.html</a><br><a href="http://ibruce.info/2013/12/19/how-to-stop-a-java-thread/" target="_blank" rel="noopener">http://ibruce.info/2013/12/19/how-to-stop-a-java-thread/</a></p>
+<p><a href="https://www.infoq.com/cn/articles/java-interrupt-mechanism" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/java-interrupt-mechanism</a><br>《Java Concurrency in Practice》<br>《Concurrent Programming in Java Design principles and patterns》<br><a href="https://docs.oracle.com/javase/1.4.2/docs/guide/misc/threadPrimitiveDeprecation.html" target="_blank" rel="noopener">http://docs.oracle.com/javase/1.4.2/docs/guide/misc/threadPrimitiveDeprecation.html</a><br><a href="https://ibruce.info/2013/12/19/how-to-stop-a-java-thread/" target="_blank" rel="noopener">http://ibruce.info/2013/12/19/how-to-stop-a-java-thread/</a></p>
 </blockquote>
 
         
@@ -1782,7 +1782,7 @@
 <h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>  我们经常会在访问数据库的时候用到锁，怎么实现乐观锁和悲观锁呢？以Hibernate为例，可以通过为记录添加版本或时间戳字段来实现乐观锁。可以用session.Lock()锁定对象来实现悲观锁（本质上就是执行了SELECT * FROM t FOR UPDATE语句）。 </p>
 <p><br></p>
 <h6 id="转至："><a href="#转至：" class="headerlink" title="转至："></a>转至：</h6><blockquote>
-<p><a href="http://www.cnblogs.com/chenlulouis/archive/2010/08/17/1801358.html" target="_blank" rel="noopener">http://www.cnblogs.com/chenlulouis/archive/2010/08/17/1801358.html</a></p>
+<p><a href="https://www.cnblogs.com/chenlulouis/archive/2010/08/17/1801358.html" target="_blank" rel="noopener">http://www.cnblogs.com/chenlulouis/archive/2010/08/17/1801358.html</a></p>
 </blockquote>
 
         
@@ -2011,7 +2011,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

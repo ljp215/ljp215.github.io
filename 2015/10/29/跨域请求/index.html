@@ -54,18 +54,18 @@
   };
 </script>
 
-  <meta name="description" content="碰到的问题今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问http://ttt.company.com/api/xxv/abc/feature但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样">
+  <meta name="description" content="碰到的问题今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问https://ttt.company.com/api/xxv/abc/feature但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样">
 <meta name="keywords" content="Distributed System">
 <meta property="og:type" content="article">
 <meta property="og:title" content="跨域请求">
 <meta property="og:url" content="https://luojinping.com/2015/10/29/跨域请求/index.html">
 <meta property="og:site_name" content="Zane Blog">
-<meta property="og:description" content="碰到的问题今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问http://ttt.company.com/api/xxv/abc/feature但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样">
+<meta property="og:description" content="碰到的问题今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问https://ttt.company.com/api/xxv/abc/feature但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样">
 <meta property="og:locale" content="zh-CN">
 <meta property="og:updated_time" content="2019-08-25T13:32:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="跨域请求">
-<meta name="twitter:description" content="碰到的问题今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问http://ttt.company.com/api/xxv/abc/feature但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样">
+<meta name="twitter:description" content="碰到的问题今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问https://ttt.company.com/api/xxv/abc/feature但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样">
   <link rel="alternate" href="/atom.xml" title="Zane Blog" type="application/atom+xml">
   <link rel="canonical" href="https://luojinping.com/2015/10/29/跨域请求/">
 
@@ -125,7 +125,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -316,10 +316,10 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><p>今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="noopener">http://ttt.company.com/api/xxv/abc/feature</a><br>但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样就导致了前端跨域传cookie会有问题。</p>
-<h1 id="解决的方案"><a href="#解决的方案" class="headerlink" title="解决的方案"></a>解决的方案</h1><h2 id="nginx-做请求转发"><a href="#nginx-做请求转发" class="headerlink" title="nginx 做请求转发"></a>nginx 做请求转发</h2><p>目前的做法是在服务端之前做一个反向代理，admin请求同域名的<br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="noopener">http://admin-test.company.com/api/abc/feature</a><br>然后在nginx层将请求转发到<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="noopener">http://ttt.company.com/api/xxv/abc/feature</a></p>
+        <h1 id="碰到的问题"><a href="#碰到的问题" class="headerlink" title="碰到的问题"></a>碰到的问题</h1><p>今天做了一个feature的admin的接口api/xxv/abc/feature，便于ops在admin上直接管理配置信息。但是我们的域名是 ttt.company.com，所以admin应该访问<br><a href="https://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="noopener">http://ttt.company.com/api/xxv/abc/feature</a><br>但是admin的域名是admin(-test).company.com，而且admin后台是需要登录的。这样就导致了前端跨域传cookie会有问题。</p>
+<h1 id="解决的方案"><a href="#解决的方案" class="headerlink" title="解决的方案"></a>解决的方案</h1><h2 id="nginx-做请求转发"><a href="#nginx-做请求转发" class="headerlink" title="nginx 做请求转发"></a>nginx 做请求转发</h2><p>目前的做法是在服务端之前做一个反向代理，admin请求同域名的<br><a href="https://admin-test.company.com/api/abc/feature" target="_blank" rel="noopener">http://admin-test.company.com/api/abc/feature</a><br>然后在nginx层将请求转发到<br><a href="https://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="noopener">http://ttt.company.com/api/xxv/abc/feature</a></p>
 <p>对于staging和online不同的环境，将请求转发到不同的server即可。</p>
-<p><strong><em>请求转发</em></strong><br><a href="http://admin-test.company.com/api/abc/feature" target="_blank" rel="noopener">http://admin-test.company.com/api/abc/feature</a><br>-&gt;<br><a href="http://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="noopener">http://ttt.company.com/api/xxv/abc/feature</a></p>
+<p><strong><em>请求转发</em></strong><br><a href="https://admin-test.company.com/api/abc/feature" target="_blank" rel="noopener">http://admin-test.company.com/api/abc/feature</a><br>-&gt;<br><a href="https://ttt.company.com/api/xxv/abc/feature" target="_blank" rel="noopener">http://ttt.company.com/api/xxv/abc/feature</a></p>
 <p><strong><em>ngin配置</em></strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name admin-test.company.com;</span><br><span class="line"></span><br><span class="line">    location /api/abc &#123;</span><br><span class="line">        rewrite /api/abc/(.*) /api/xxv/$1 break;</span><br><span class="line">        proxy_set_header Host $http_host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_pass http://staging.server.hostname:8080;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">server &#123;</span><br><span class="line">    listen 80;</span><br><span class="line">    server_name admin.company.com;</span><br><span class="line"></span><br><span class="line">    location /api/abc &#123;</span><br><span class="line">        rewrite /api/abc/(.*) /api/xxv/$1 break;</span><br><span class="line">        proxy_set_header Host $http_host;</span><br><span class="line">        proxy_set_header X-Real-IP $remote_addr;</span><br><span class="line">        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;</span><br><span class="line">        proxy_pass http://myserver-write-nodes;</span><br><span class="line">     &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
@@ -584,7 +584,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

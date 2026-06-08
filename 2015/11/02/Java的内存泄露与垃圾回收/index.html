@@ -125,7 +125,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -364,7 +364,7 @@
 <p>例如：</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">processObj</span><span class="params">()</span> </span>&#123;</span><br><span class="line">     BigObject obj = … <span class="comment">// 声明大对象obj</span></span><br><span class="line">     doSomethingWith(obj); <span class="comment">// 使用obj</span></span><br><span class="line">     obj = <span class="keyword">null</span>;    <span class="comment">// explicitly set to null</span></span><br><span class="line">     doSomethingElse(); <span class="comment">//非常耗时的操作</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>此时显示的设置无用的对象obj为null才有效。</p>
-<h2 id="How-to-avoid-Memory-Leak-in-Java"><a href="#How-to-avoid-Memory-Leak-in-Java" class="headerlink" title="How to avoid Memory Leak in Java"></a>How to avoid Memory Leak in Java</h2><p>贴出 <a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
+<h2 id="How-to-avoid-Memory-Leak-in-Java"><a href="#How-to-avoid-Memory-Leak-in-Java" class="headerlink" title="How to avoid Memory Leak in Java"></a>How to avoid Memory Leak in Java</h2><p>贴出 <a href="https://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener"> How to avoid Memory leak issue in Java</a> 一文中提到的防止java内存泄露的一些建议。</p>
 <p>How  to avoid Memory Leak in Java?</p>
 <p>While coding if we take care of a few points we can avoid memory leak issue.</p>
 <ol>
@@ -390,12 +390,12 @@
 </ol>
 <h2 id="Reference"><a href="#Reference" class="headerlink" title="Reference"></a>Reference</h2><p>&gt;</p>
 <ul>
-<li><a href="http://wwsun.me/posts/jvm-gc.html" target="_blank" rel="noopener">http://wwsun.me/posts/jvm-gc.html</a></li>
-<li><a href="http://java.dzone.com/articles/jvm-and-garbage-collection" target="_blank" rel="noopener">http://java.dzone.com/articles/jvm-and-garbage-collection</a></li>
-<li><a href="http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="noopener">http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html</a></li>
-<li><a href="http://chenjingbo.iteye.com/blog/1980908" target="_blank" rel="noopener">http://chenjingbo.iteye.com/blog/1980908</a></li>
-<li><a href="http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener">http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php</a></li>
-<li><a href="http://www.infoq.com/cn/articles/cf-java-garbage-references" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/cf-java-garbage-references</a></li>
+<li><a href="https://wwsun.me/posts/jvm-gc.html" target="_blank" rel="noopener">http://wwsun.me/posts/jvm-gc.html</a></li>
+<li><a href="https://java.dzone.com/articles/jvm-and-garbage-collection" target="_blank" rel="noopener">http://java.dzone.com/articles/jvm-and-garbage-collection</a></li>
+<li><a href="https://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html" target="_blank" rel="noopener">http://www.oracle.com/webfolder/technetwork/tutorials/obe/java/gc01/index.html</a></li>
+<li><a href="https://chenjingbo.iteye.com/blog/1980908" target="_blank" rel="noopener">http://chenjingbo.iteye.com/blog/1980908</a></li>
+<li><a href="https://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php" target="_blank" rel="noopener">http://www.mindfiresolutions.com/How-to-avoid-Memory-leak-issue-in-Java-1001.php</a></li>
+<li><a href="https://www.infoq.com/cn/articles/cf-java-garbage-references" target="_blank" rel="noopener">http://www.infoq.com/cn/articles/cf-java-garbage-references</a></li>
 </ul>
 
     </div>
@@ -655,7 +655,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {

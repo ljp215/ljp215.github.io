@@ -125,7 +125,7 @@
   </style>
 </noscript>
 
-    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
 </head>
 
 <body itemscope itemtype="https://schema.org/WebPage" lang="zh-CN">
@@ -318,7 +318,7 @@
       
         <h1 id="调试过程"><a href="#调试过程" class="headerlink" title="调试过程"></a>调试过程</h1><p>本地运行代码，输出如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">15/11/12 12:09:51 INFO SparkContext: Running Spark version 1.5.1</span><br><span class="line">Exception in thread "main" java.lang.NoClassDefFoundError: scala/collection/GenTraversableOnce$class</span><br><span class="line">    at org.apache.spark.util.TimeStampedWeakValueHashMap.&lt;init&gt;(TimeStampedWeakValueHashMap.scala:42)</span><br><span class="line">    at org.apache.spark.SparkContext.&lt;init&gt;(SparkContext.scala:287)</span><br><span class="line">Caused by: java.lang.ClassNotFoundException: scala.collection.GenTraversableOnce$class</span><br></pre></td></tr></table></figure>
-<p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="http://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="noopener">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
+<p>查了半天没有任何结果，大家分析的原因各式各样。后来看到了一位仁兄总结的帖子：<a href="https://zhangyi.farbox.com/post/wen-ti-jie-jue/solve-spark-issue-of-all-masters-are-unresponsive" target="_blank" rel="noopener">solve spark issue of all masters are unresponsive</a>，跑去spark机器看了一下log，果然有收获。</p>
 <p>spark日志：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ReliableDeliverySupervisor: Association with remote system [akka.tcp://sparkDriver@100.64.80.93:57108] has failed, address is now gated for [5000] ms. Reason is: [scala.Option; local class incompatible: stream classdesc serialVersionUID = -114498752079829388, local class serialVersionUID = -2062608324514658839].</span><br></pre></td></tr></table></figure>
 <p>根据 scala.Option; local class incompatible 可以发现是 scala 的版本不对，spark 默认的是 scala-2.10，需要改变依赖的scala版本。</p>
@@ -611,7 +611,7 @@
 
 
 <script>
-NexT.utils.getScript('//unpkg.com/valine/dist/Valine.min.js', () => {
+NexT.utils.getScript('https://unpkg.com/valine/dist/Valine.min.js', () => {
   var GUEST = ['nick', 'mail', 'link'];
   var guest = 'nick,mail,link';
   guest = guest.split(',').filter(item => {
