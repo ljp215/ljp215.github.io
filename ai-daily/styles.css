@@ -963,7 +963,6 @@ time {
   border-left: 3px solid #cf6337;
   color: inherit;
   background: rgba(255, 255, 255, 0.08);
-  text-decoration: none;
 }
 
 .paper-digest-item.has-thumbnail {
@@ -978,7 +977,12 @@ time {
   background: rgba(255, 255, 255, 0.08);
 }
 
-.paper-digest-item:hover h4 {
+.paper-digest-item h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.paper-digest-item h4 a:hover {
   text-decoration: underline;
   text-decoration-thickness: 2px;
 }
@@ -1000,6 +1004,15 @@ time {
   color: #d9cfbe;
   font-size: 13px;
   line-height: 1.55;
+}
+
+.paper-digest-item .ai-summary {
+  margin-top: 8px;
+  padding: 9px 10px;
+  border: 1px solid rgba(217, 207, 190, 0.32);
+  border-left: 4px solid #d9cfbe;
+  color: #fff6e6;
+  background: rgba(247, 239, 225, 0.12);
 }
 
 .paper-digest-item .ai-summary span {
@@ -1052,21 +1065,6 @@ time {
 
 .report-item.has-thumbnail > div {
   grid-column: 1 / -1;
-}
-
-.report-item.is-clickable {
-  cursor: pointer;
-}
-
-.report-item.is-clickable:focus-visible {
-  outline: 3px solid var(--accent);
-  outline-offset: 3px;
-}
-
-.report-item.is-clickable:hover h3 a {
-  color: var(--accent-strong);
-  text-decoration: underline;
-  text-decoration-thickness: 2px;
 }
 
 #company-updates .report-item:first-child {
@@ -1257,20 +1255,27 @@ time {
 
 .report-item .ai-summary {
   max-width: 940px;
+  margin-top: 10px;
+  padding: 12px 14px;
+  border: 1px solid rgba(142, 50, 24, 0.24);
+  border-left: 5px solid var(--accent);
+  color: #2f2b25;
+  background: rgba(255, 255, 255, 0.74);
+  font-weight: 650;
 }
 
 .report-item .ai-summary span {
   display: inline-flex;
   align-items: center;
   min-height: 20px;
-  margin-right: 8px;
+  margin-right: 9px;
   padding: 0 6px;
   color: #f7efe1;
-  background: #1b1a17;
+  background: var(--accent);
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 11px;
   font-weight: 900;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.06em;
 }
 
 .report-item .social-translation {
