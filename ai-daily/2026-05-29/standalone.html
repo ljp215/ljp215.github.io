@@ -969,6 +969,143 @@ time {
   text-transform: uppercase;
 }
 
+.market-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.market-chart-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(27, 26, 23, 0.45);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.market-chart-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: start;
+  min-width: 0;
+}
+
+.market-chart-card strong,
+.market-chart-card span,
+.market-chart-card em,
+.market-chart-card p,
+.private-timeline strong,
+.private-timeline span,
+.private-timeline p {
+  min-width: 0;
+}
+
+.market-chart-card strong {
+  display: block;
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-chart-card strong a {
+  color: inherit;
+}
+
+.market-chart-card-head span {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-chart-card em {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 950;
+  text-align: right;
+}
+
+.market-chart-card em.is-up {
+  color: #1f7a4c;
+}
+
+.market-chart-card em.is-down {
+  color: #a12d1f;
+}
+
+.market-sparkline {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 220 / 76;
+}
+
+.market-sparkline-grid {
+  fill: none;
+  stroke: rgba(27, 26, 23, 0.16);
+  stroke-width: 1;
+}
+
+.market-sparkline-line {
+  fill: none;
+  stroke: var(--muted);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 4;
+}
+
+.market-sparkline.is-up .market-sparkline-line {
+  stroke: #1f7a4c;
+}
+
+.market-sparkline.is-down .market-sparkline-line {
+  stroke: #a12d1f;
+}
+
+.market-sparkline-empty {
+  display: grid;
+  min-height: 76px;
+  place-items: center;
+  border: 1px dashed rgba(27, 26, 23, 0.32);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.market-chart-card p {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: baseline;
+  margin-bottom: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.market-chart-card p b {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.market-chart-card p span {
+  overflow: hidden;
+  color: var(--muted);
+  font-weight: 800;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .market-table {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1088,6 +1225,70 @@ time {
   font-size: 16px;
   font-weight: 800;
   line-height: 1.55;
+}
+
+.private-timeline-list {
+  display: grid;
+  gap: 10px;
+}
+
+.private-timeline {
+  display: grid;
+  gap: 9px;
+  padding: 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.private-timeline strong {
+  display: block;
+  font-size: 16px;
+}
+
+.private-timeline > div > span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.private-timeline > p {
+  margin-bottom: 0;
+  font-size: 15px;
+  font-weight: 760;
+  line-height: 1.65;
+}
+
+.private-timeline ol {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.private-timeline li {
+  padding-left: 2px;
+}
+
+.private-timeline li span {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.private-timeline li p {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.55;
+}
+
+.private-timeline a {
+  color: inherit;
 }
 
 .paper-digest {
@@ -1534,6 +1735,7 @@ time {
   .report-list,
   #company-updates .report-list,
   .paper-digest-list,
+  .market-chart-grid,
   .market-table {
     grid-template-columns: minmax(0, 1fr);
   }
@@ -1825,8 +2027,10 @@ time {
 
   .market-note,
   .market-card,
+  .market-chart-card,
   .market-row,
-  .private-signal {
+  .private-signal,
+  .private-timeline {
     border-width: 1px;
   }
 
@@ -1860,9 +2064,30 @@ time {
     text-align: left;
   }
 
+  .market-chart-card {
+    gap: 8px;
+    padding: 11px;
+  }
+
+  .market-chart-card p {
+    align-items: start;
+    flex-direction: column;
+    gap: 3px;
+  }
+
+  .market-chart-card p span {
+    text-align: left;
+    white-space: normal;
+  }
+
   .private-signal {
     grid-template-columns: 1fr;
     gap: 7px;
+  }
+
+  .private-timeline {
+    border-left-width: 4px;
+    padding: 12px;
   }
 }
 
@@ -2253,7 +2478,7 @@ time {
       </div>
       <p>PUBLIC MARKET · PRIVATE VALUATION · FUNDING SIGNALS</p>
     </div>
-    <div class="report-empty">今天没有抓到足够明确的股价或估值变化信号。</div>
+    <div class="report-empty">今天没有抓到足够明确的股价历史或估值故事线。</div>
   </section>
         </div>
       </main>
