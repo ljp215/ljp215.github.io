@@ -1046,7 +1046,7 @@ time {
 .market-sparkline {
   width: 100%;
   height: auto;
-  aspect-ratio: 304 / 150;
+  aspect-ratio: 304 / 162;
   overflow: visible;
 }
 
@@ -1079,6 +1079,14 @@ time {
 
 .market-axis-x-end {
   text-anchor: end;
+}
+
+.market-axis-x-mid {
+  text-anchor: middle;
+}
+
+.market-axis-unit {
+  text-anchor: start;
 }
 
 .market-sparkline-line {
@@ -1121,6 +1129,10 @@ time {
   min-width: 0;
 }
 
+.market-chart-stats .market-stat-wide {
+  grid-column: 1 / -1;
+}
+
 .market-chart-stats dt {
   color: var(--muted);
   font-size: 11px;
@@ -1133,6 +1145,11 @@ time {
   color: var(--ink);
   font-size: 13px;
   font-weight: 900;
+}
+
+.market-chart-stats dd.market-period {
+  overflow-wrap: normal;
+  white-space: nowrap;
 }
 
 .market-chart-stats dd.is-up {
@@ -1306,11 +1323,19 @@ time {
 }
 
 .private-timeline li {
-  padding-left: 2px;
+  display: grid;
+  grid-template-columns: minmax(80px, 0.75fr) minmax(110px, 1fr) minmax(130px, 1.4fr);
+  gap: 8px;
+  padding: 8px 0 8px 2px;
+  border-top: 1px solid rgba(27, 26, 23, 0.12);
 }
 
-.private-timeline li span {
+.private-timeline li span,
+.private-timeline li strong {
   display: block;
+}
+
+.private-timeline li strong {
   color: var(--muted);
   font-size: 12px;
   font-weight: 850;
@@ -1322,6 +1347,13 @@ time {
   font-size: 14px;
   font-weight: 760;
   line-height: 1.55;
+}
+
+.private-timeline li p span {
+  margin-top: 2px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 820;
 }
 
 .private-timeline a {
@@ -2119,6 +2151,11 @@ time {
   .private-timeline {
     border-left-width: 4px;
     padding: 12px;
+  }
+
+  .private-timeline li {
+    grid-template-columns: 1fr;
+    gap: 5px;
   }
 }
 
