@@ -995,7 +995,7 @@ time {
 .market-chart-card strong,
 .market-chart-card span,
 .market-chart-card em,
-.market-chart-card p,
+.market-chart-stats,
 .private-timeline strong,
 .private-timeline span,
 .private-timeline p {
@@ -1046,7 +1046,8 @@ time {
 .market-sparkline {
   width: 100%;
   height: auto;
-  aspect-ratio: 220 / 76;
+  aspect-ratio: 304 / 150;
+  overflow: visible;
 }
 
 .market-sparkline-grid {
@@ -1055,12 +1056,37 @@ time {
   stroke-width: 1;
 }
 
+.market-axis {
+  fill: none;
+  stroke: rgba(27, 26, 23, 0.46);
+  stroke-width: 1.4;
+}
+
+.market-axis-label {
+  fill: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.market-axis-y {
+  text-anchor: end;
+}
+
+.market-axis-x {
+  text-anchor: start;
+}
+
+.market-axis-x-end {
+  text-anchor: end;
+}
+
 .market-sparkline-line {
   fill: none;
   stroke: var(--muted);
   stroke-linecap: round;
   stroke-linejoin: round;
-  stroke-width: 4;
+  stroke-width: 3.5;
 }
 
 .market-sparkline.is-up .market-sparkline-line {
@@ -1081,29 +1107,40 @@ time {
   font-weight: 800;
 }
 
-.market-chart-card p {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  align-items: baseline;
-  margin-bottom: 0;
+.market-chart-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin: 0;
   font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
   font-size: 12px;
   line-height: 1.45;
 }
 
-.market-chart-card p b {
-  color: var(--ink);
-  font-size: 14px;
+.market-chart-stats div {
+  min-width: 0;
 }
 
-.market-chart-card p span {
-  overflow: hidden;
+.market-chart-stats dt {
   color: var(--muted);
+  font-size: 11px;
   font-weight: 800;
-  text-align: right;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+}
+
+.market-chart-stats dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.market-chart-stats dd.is-up {
+  color: #1f7a4c;
+}
+
+.market-chart-stats dd.is-down {
+  color: #a12d1f;
 }
 
 .market-table {
@@ -2069,15 +2106,9 @@ time {
     padding: 11px;
   }
 
-  .market-chart-card p {
-    align-items: start;
-    flex-direction: column;
-    gap: 3px;
-  }
-
-  .market-chart-card p span {
-    text-align: left;
-    white-space: normal;
+  .market-chart-stats {
+    grid-template-columns: 1fr;
+    gap: 6px;
   }
 
   .private-signal {
