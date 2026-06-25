@@ -777,7 +777,7 @@ time {
 
 .report-tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin: 0 0 24px;
 }
@@ -910,6 +910,184 @@ time {
 
 #industry-views .report-list {
   grid-template-columns: 1fr;
+}
+
+.market-digest {
+  display: grid;
+  gap: 12px;
+}
+
+.market-note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.34);
+  color: #3f3b34;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.market-note strong {
+  padding: 3px 8px;
+  color: #f7efe1;
+  background: var(--ink);
+  font-size: 13px;
+}
+
+.market-card {
+  padding: 16px;
+  border: 2px solid var(--line);
+  background: var(--surface);
+}
+
+.market-card-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+}
+
+.market-card-heading h3 {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.market-card-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.market-table {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.market-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(110px, auto);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(27, 26, 23, 0.45);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.market-row strong,
+.market-row span,
+.market-row em,
+.market-row p,
+.private-signal strong,
+.private-signal span,
+.private-signal p {
+  min-width: 0;
+}
+
+.market-row strong {
+  display: block;
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-row strong a,
+.private-signal p a {
+  color: inherit;
+}
+
+.market-row span {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-row em {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 950;
+  text-align: right;
+}
+
+.market-row em.is-up {
+  color: #1f7a4c;
+}
+
+.market-row em.is-down {
+  color: #a12d1f;
+}
+
+.market-row p {
+  margin-bottom: 0;
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.market-row small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.private-signal-list {
+  display: grid;
+  gap: 8px;
+}
+
+.private-signal {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.34fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 13px 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.private-signal strong {
+  display: block;
+  font-size: 15px;
+}
+
+.private-signal span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.private-signal p {
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.55;
 }
 
 .paper-digest {
@@ -1355,7 +1533,8 @@ time {
 
   .report-list,
   #company-updates .report-list,
-  .paper-digest-list {
+  .paper-digest-list,
+  .market-table {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1491,7 +1670,7 @@ time {
     position: sticky;
     z-index: 5;
     top: 0;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 4px;
     margin: 0 -12px 16px;
     padding: 8px 12px;
@@ -1514,7 +1693,7 @@ time {
   }
 
   .report-tabs strong {
-    font-size: 13px;
+    font-size: 12px;
     white-space: normal;
   }
 
@@ -1642,6 +1821,48 @@ time {
   .paper-digest-item h4 {
     font-size: 15px;
     line-height: 1.42;
+  }
+
+  .market-note,
+  .market-card,
+  .market-row,
+  .private-signal {
+    border-width: 1px;
+  }
+
+  .market-note {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 11px 12px;
+    font-size: 13px;
+  }
+
+  .market-card {
+    padding: 12px;
+  }
+
+  .market-card-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .market-card-heading p {
+    text-align: left;
+  }
+
+  .market-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .market-row p {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .private-signal {
+    grid-template-columns: 1fr;
+    gap: 7px;
   }
 }
 
@@ -1781,6 +2002,11 @@ time {
     <span>C</span>
     <strong>行业观点</strong>
     <em>6</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="value-changes" data-tab-target="value-changes">
+    <span>D</span>
+    <strong>价值变化</strong>
+    <em>0</em>
   </button>
         </nav>
         <div class="report-tab-panels">
@@ -2132,6 +2358,16 @@ Codex needs to fix this imo it&#039;s often a novice&#039;s first impression of 
         </div>
       </article>
     </div>
+  </section>
+          <section id="value-changes" class="report-section report-tab-panel" role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>D</span>
+        <h2>价值变化</h2>
+      </div>
+      <p>PUBLIC MARKET · PRIVATE VALUATION · FUNDING SIGNALS</p>
+    </div>
+    <div class="report-empty">今天没有抓到足够明确的股价或估值变化信号。</div>
   </section>
         </div>
       </main>

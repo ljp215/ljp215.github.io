@@ -777,7 +777,7 @@ time {
 
 .report-tabs {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 8px;
   margin: 0 0 24px;
 }
@@ -910,6 +910,184 @@ time {
 
 #industry-views .report-list {
   grid-template-columns: 1fr;
+}
+
+.market-digest {
+  display: grid;
+  gap: 12px;
+}
+
+.market-note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.34);
+  color: #3f3b34;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.market-note strong {
+  padding: 3px 8px;
+  color: #f7efe1;
+  background: var(--ink);
+  font-size: 13px;
+}
+
+.market-card {
+  padding: 16px;
+  border: 2px solid var(--line);
+  background: var(--surface);
+}
+
+.market-card-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+}
+
+.market-card-heading h3 {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.market-card-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.market-table {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.market-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(110px, auto);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(27, 26, 23, 0.45);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.market-row strong,
+.market-row span,
+.market-row em,
+.market-row p,
+.private-signal strong,
+.private-signal span,
+.private-signal p {
+  min-width: 0;
+}
+
+.market-row strong {
+  display: block;
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-row strong a,
+.private-signal p a {
+  color: inherit;
+}
+
+.market-row span {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-row em {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 950;
+  text-align: right;
+}
+
+.market-row em.is-up {
+  color: #1f7a4c;
+}
+
+.market-row em.is-down {
+  color: #a12d1f;
+}
+
+.market-row p {
+  margin-bottom: 0;
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.market-row small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.private-signal-list {
+  display: grid;
+  gap: 8px;
+}
+
+.private-signal {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.34fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 13px 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.private-signal strong {
+  display: block;
+  font-size: 15px;
+}
+
+.private-signal span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.private-signal p {
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.55;
 }
 
 .paper-digest {
@@ -1355,7 +1533,8 @@ time {
 
   .report-list,
   #company-updates .report-list,
-  .paper-digest-list {
+  .paper-digest-list,
+  .market-table {
     grid-template-columns: minmax(0, 1fr);
   }
 
@@ -1491,7 +1670,7 @@ time {
     position: sticky;
     z-index: 5;
     top: 0;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
     gap: 4px;
     margin: 0 -12px 16px;
     padding: 8px 12px;
@@ -1514,7 +1693,7 @@ time {
   }
 
   .report-tabs strong {
-    font-size: 13px;
+    font-size: 12px;
     white-space: normal;
   }
 
@@ -1643,6 +1822,48 @@ time {
     font-size: 15px;
     line-height: 1.42;
   }
+
+  .market-note,
+  .market-card,
+  .market-row,
+  .private-signal {
+    border-width: 1px;
+  }
+
+  .market-note {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 11px 12px;
+    font-size: 13px;
+  }
+
+  .market-card {
+    padding: 12px;
+  }
+
+  .market-card-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .market-card-heading p {
+    text-align: left;
+  }
+
+  .market-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .market-row p {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .private-signal {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
 }
 
 </style>
@@ -1763,7 +1984,7 @@ time {
           <div class="report-hero-main">
             <p class="eyebrow">EDITORIAL BRIEF</p>
             <h1>AI 行业简报 2026-06-25</h1>
-            <p>今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。</p>
+            <p>今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇，并跟踪 AI 公司价值变化 1 条。</p>
           </div>
         </header>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
@@ -1781,6 +2002,11 @@ time {
     <span>C</span>
     <strong>行业观点</strong>
     <em>6</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="value-changes" data-tab-target="value-changes">
+    <span>D</span>
+    <strong>价值变化</strong>
+    <em>1</em>
   </button>
         </nav>
         <div class="report-tab-panels">
@@ -1804,12 +2030,12 @@ time {
             <b>Google Gemini Blog</b>
           </div>
           <h3><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/introducing-computer-use-gemini-3-5-flash" target="_blank" rel="noreferrer">Google DeepMind：Introducing computer use in Gemini 3.5 Flash</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Google DeepMind 将 computer use 作为内置工具集成到 Gemini 3.5 Flash 中，开发者可通过 API 构建跨浏览器、移动和桌面的智能体，并提供了对抗训练和企业级安全防护。</p>
+          <p class="ai-summary"><span>AI Summary</span>Google DeepMind 将 computer use 作为内置工具集成到 Gemini 3.5 Flash 中，开发者可通过 API 构建跨浏览器、移动和桌面的代理，并提供了对抗训练和企业级安全防护。</p>
           <div class="memory-note">
-    <p><span>AI 解读</span>从独立模型到内置工具，降低了 agent 开发门槛，但实际效果取决于任务复杂度和安全机制的有效性。</p>
+    <p><span>AI 解读</span>将 computer use 从独立模型下沉为 Flash 内置能力，降低代理开发门槛，但实际效果取决于安全防护和任务可靠性。</p>
   </div>
           <div class="report-actions">
-            <span class="reading-time">预计阅读 30 秒</span>
+            <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
       </article><article class="report-item ">
@@ -1822,27 +2048,27 @@ time {
             <b>OpenAI</b>
           </div>
           <h3><a href="https://openai.com/index/openai-broadcom-jalapeno-inference-chip" target="_blank" rel="noreferrer">OpenAI：OpenAI and Broadcom unveil LLM-optimized inference chip</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI与Broadcom联合发布名为Jalapeño的定制AI芯片，专为LLM推理优化，旨在提升性能、效率和系统规模。</p>
+          <p class="ai-summary"><span>AI Summary</span>OpenAI与Broadcom联合推出Jalapeño芯片，专为LLM推理优化，旨在提升性能、效率和系统规模。</p>
           <div class="memory-note">
-    <p><span>AI 解读</span>OpenAI从模型层向基础设施垂直整合，类似Google TPU策略，但采用合作模式，降低自研风险。</p>
+    <p><span>AI 解读</span>OpenAI从模型层向基础设施层垂直整合的关键一步，但芯片实际效果和部署规模仍需验证。</p>
   </div>
           <div class="report-actions">
-            <span class="reading-time">预计阅读 25 秒</span>
+            <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
-      </article><article class="report-item has-thumbnail">
+      </article><article class="report-item ">
         <span>03</span>
-        <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/6/00cccf46-da90-40ee-9f45-9db7325f395b.jpg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
+        
         <div>
           <div class="report-item-meta">
-            <strong>DeepSeek</strong>
+            <strong>OpenAI</strong>
             <em>模型/产品发布</em>
-            <b>IT之家</b>
+            <b>TechCrunch AI</b>
           </div>
-          <h3><a href="https://www.ithome.com/0/968/211.htm" target="_blank" rel="noreferrer">DeepSeek：华为鸿蒙“龙虾”小艺 Claw 全机型开放，HarmonyOS 5.0 及以上设备可用</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>华为宣布鸿蒙小艺Claw全机型开放，HarmonyOS 5.0及以上可用；套餐更新支持用户自主选择四种大模型（含DeepSeek V4等），Skills市场超500个。</p>
+          <h3><a href="https://techcrunch.com/2026/06/24/openai-unveils-its-first-custom-chip-built-by-broadcom" target="_blank" rel="noreferrer">OpenAI：OpenAI unveils its first custom chip, built by Broadcom</a></h3>
+          <p class="ai-summary"><span>AI Summary</span>OpenAI 发布首款自研推理芯片 Jalapeño，与 Broadcom 合作设计制造，专为推理优化，早期结果显示每瓦性能显著优于当前替代方案，但仍处于测试阶段。</p>
           <div class="memory-note">
-    <p><span>AI 解读</span>华为将小艺Claw从封闭助手转向开放模型市场，用户可自选基座模型，但实际体验取决于模型切换的流畅度和成本。</p>
+    <p><span>AI 解读</span>OpenAI 从依赖 Nvidia GPU 转向自研推理芯片，是垂直整合的关键一步，但实际效果需量产验证。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
@@ -1850,38 +2076,36 @@ time {
         </div>
       </article><article class="report-item has-thumbnail">
         <span>04</span>
-        <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/6/87cdf444-4233-45bf-8440-1828fd4e68fa.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
+        <div class="report-thumb"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/openai-broadcom-jalapeno-inference-chip-image.webp?quality=90&amp;strip=all&amp;crop=0,0,100,100" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>模型/产品发布</em>
+            <b>The Verge AI</b>
+          </div>
+          <h3><a href="https://www.theverge.com/ai-artificial-intelligence/955939/openai-reveals-its-first-ai-processor-jalapeno" target="_blank" rel="noreferrer">OpenAI：OpenAI reveals its first AI processor: Jalapeño</a></h3>
+          <p class="ai-summary"><span>AI Summary</span>OpenAI与Broadcom合作推出首款AI推理芯片Jalapeño，ASIC设计，声称性能与Nvidia Blackwell和Google TPU相当，计划2026年底部署。</p>
+          <div class="memory-note">
+    <p><span>AI 解读</span>本质是OpenAI自研推理芯片，降低对Nvidia GPU依赖，但量产和实际性能仍需验证。</p>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 25 秒</span>
+          </div>
+        </div>
+      </article><article class="report-item ">
+        <span>05</span>
+        
         <div>
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>模型/产品发布</em>
-            <b>IT之家</b>
+            <b>TechCrunch AI</b>
           </div>
-          <h3><a href="https://www.ithome.com/0/968/225.htm" target="_blank" rel="noreferrer">CounterPoint 报告 2026Q1 中国智能眼镜出货量：小米 28%、阿里 21%、理想 3%</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>CounterPoint报告显示2026Q1全球智能眼镜市场同比增长83%，AR眼镜增长136%，波导方案份额升至42%；中国市场由小米和阿里巴巴引领。</p>
-          <div class="memory-note">
-    <p><span>AI 解读</span>智能眼镜增长由无显示眼镜和AR波导方案驱动，技术路线从Birdbath向波导迁移，中国厂商在波导AR领域有突破。</p>
-  </div>
+          <h3><a href="https://techcrunch.com/2026/06/24/facebook-rolls-out-an-ai-companion-app-for-creators" target="_blank" rel="noreferrer">Facebook rolls out an AI companion app for creators</a></h3>
+          
+          
           <div class="report-actions">
-            <span class="reading-time">预计阅读 30 秒</span>
-          </div>
-        </div>
-      </article><article class="report-item has-thumbnail">
-        <span>05</span>
-        <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2025/9/2d16eb63-477a-41a8-9dd4-bfe3df5771fa.png?x-bce-process=image/format,f_auto" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
-        <div>
-          <div class="report-item-meta">
-            <strong>Google DeepMind</strong>
-            <em>关键人才流动</em>
-            <b>IT之家</b>
-          </div>
-          <h3><a href="https://www.ithome.com/0/968/224.htm" target="_blank" rel="noreferrer">Google DeepMind：谷歌再失 AI 人才，两名 Gemini 核心骨干转投 Anthropic</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>谷歌Gemini两名核心骨干阿德勒与普里策尔被曝将离职加入Anthropic，延续近期AI人才向OpenAI和Anthropic流失的趋势。</p>
-          <div class="memory-note">
-    <p><span>AI 解读</span>谷歌AI人才持续流向Anthropic和OpenAI，股权期权成为关键杠杆，大模型竞争进入人才锁定阶段。</p>
-  </div>
-          <div class="report-actions">
-            <span class="reading-time">预计阅读 25 秒</span>
+            <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
       </article>
@@ -1906,45 +2130,45 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-flash-260425 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article class="paper-digest-item ">
+      <article class="paper-digest-item has-thumbnail">
         <span>01</span>
-        
+        <img src="https://arxiv.org/html/2606.15932v2/x2.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.24597" target="_blank" rel="noreferrer">语言世界模型用于通用智能体</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出Qwen-AgentWorld系列语言世界模型，通过三阶段训练模拟7个领域的智能体环境，并构建AgentWorldBench基准。</p>
-          <div><em>世界模型</em><em>智能体</em><em>语言模型</em></div>
+          <h4><a href="https://huggingface.co/papers/2606.15932" target="_blank" rel="noreferrer">Beyond NL2Code: 多模态代码智能结构化综述</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>综述多模态代码智能，涵盖GUI、科学可视化等领域的代码生成与推理。</p>
+          <div><em>多模态代码智能</em><em>代码生成</em><em>综述</em></div>
         </div>
       </article><article class="paper-digest-item has-thumbnail">
         <span>02</span>
-        <img src="https://arxiv.org/html/2606.24530v1/x2.png" alt="" loading="lazy" onerror="this.remove()">
+        <img src="https://arxiv.org/html/2606.25041v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.24530" target="_blank" rel="noreferrer">NatureBench: 编码智能体能匹配Nature系列论文的SOTA吗？</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出NatureBench基准，评估编码智能体在6个任务域上复现Nature系列论文SOTA的能力。</p>
-          <div><em>编码智能体</em><em>基准测试</em><em>科研复现</em></div>
+          <h4><a href="https://huggingface.co/papers/2606.25041" target="_blank" rel="noreferrer">Wan-Streamer v0.1: 端到端实时交互基础模型</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出统一Transformer模型，实现低延迟全双工音视频交互。</p>
+          <div><em>实时交互</em><em>多模态</em><em>基础模型</em></div>
         </div>
       </article><article class="paper-digest-item has-thumbnail">
         <span>03</span>
-        <img src="https://arxiv.org/html/2606.19930v1/images/teaser/mobileforge-teaser-latex.png" alt="" loading="lazy" onerror="this.remove()">
+        <img src="https://arxiv.org/html/2606.24849v1/figure/fig1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.19930" target="_blank" rel="noreferrer">MobileForge: 无标注适应的移动GUI代理</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出MobileForge，通过分层反馈引导策略优化，无需人工标注即可将移动GUI代理适配到真实应用。</p>
-          <div><em>移动GUI代理</em><em>无标注适应</em><em>强化学习</em></div>
+          <h4><a href="https://huggingface.co/papers/2606.24849" target="_blank" rel="noreferrer">IV-CoT: 隐式视觉思维链用于结构感知文本到图像生成</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出隐式视觉思维链框架，将结构规划与外观渲染解耦，提升结构感知生成能力。</p>
+          <div><em>文本到图像生成</em><em>思维链</em><em>多模态大模型</em></div>
         </div>
       </article><article class="paper-digest-item has-thumbnail">
         <span>04</span>
-        <img src="https://arxiv.org/html/2606.24855v1/figures/figure1_option8_8b.png" alt="" loading="lazy" onerror="this.remove()">
+        <img src="https://arxiv.org/html/2606.26058v1/figures/teaser.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.24855" target="_blank" rel="noreferrer">智能体模型的数据配方</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>通过100+消融实验系统研究智能体模型训练数据策划，构建10万样本数据集，微调Qwen3-32B在多个基准上取得领先。</p>
-          <div><em>智能体模型</em><em>数据策划</em><em>开源</em></div>
+          <h4><a href="https://huggingface.co/papers/2606.26058" target="_blank" rel="noreferrer">DomainShuttle: 自由开放域主体驱动文本到视频生成</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出域穿梭框架，通过域感知建模和双RoPE方案，实现高保真与跨域编辑性。</p>
+          <div><em>文本到视频生成</em><em>主体驱动</em><em>域适应</em></div>
         </div>
       </article><article class="paper-digest-item has-thumbnail">
         <span>05</span>
-        <img src="https://arxiv.org/html/2602.09379v3/x1.png" alt="" loading="lazy" onerror="this.remove()">
+        <img src="https://arxiv.org/html/2606.25996v1/figs/main2.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2602.09379" target="_blank" rel="noreferrer">LingxiDiagBench：用于评估LLM中文精神科咨询与诊断的多智能体框架</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出包含16,000个合成对话的多智能体基准，评估LLM在中文精神科静态诊断和动态咨询中的表现。</p>
-          <div><em>多智能体</em><em>精神科诊断</em><em>LLM评估</em></div>
+          <h4><a href="https://huggingface.co/papers/2606.25996" target="_blank" rel="noreferrer">Autodata：让AI智能体扮演数据科学家，自动生成高质量合成数据</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出Autodata方法，通过元优化训练数据科学家智能体，迭代生成并改进训练/评估数据。</p>
+          <div><em>合成数据</em><em>智能体</em><em>数据科学</em></div>
         </div>
       </article>
     </div>
@@ -1959,12 +2183,12 @@ time {
             <b>Claude Blog</b>
           </div>
           <h3><a href="https://claude.com/blog/building-effective-human-agent-teams" target="_blank" rel="noreferrer">Building effective human-agent teams</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Anthropic 发布博客，介绍“多人智能体”概念：AI 模型与多个人类同时在协作工具（如 Slack）中工作，需要持久记忆、独立凭证和广泛信息访问，并分享了内部实践中的经验。</p>
+          <p class="ai-summary"><span>AI Summary</span>Anthropic 分享构建人-智能体团队的经验，提出 multiplayer agents 概念，强调公开工作、广泛上下文和安全边界。</p>
           <div class="memory-note">
-    <p><span>AI 解读</span>Anthropic 将人机协作从单玩家模式推向多玩家团队模式，核心是让智能体拥有独立身份和团队级上下文。</p>
+    <p><span>AI 解读</span>Agent 从单用户工具转向团队协作基础设施，关键在于信息透明度和权限设计。</p>
   </div>
           <div class="report-actions">
-            <span class="reading-time">预计阅读 30 秒</span>
+            <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
       </article><article class="report-item ">
@@ -1977,32 +2201,16 @@ time {
             <b>TechCrunch AI</b>
           </div>
           <h3><a href="https://techcrunch.com/2026/06/24/ai-researchers-continue-to-leave-google-for-its-rivals" target="_blank" rel="noreferrer">Anthropic：AI researchers continue to leave Google for its rivals</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>据TechCrunch报道，Google顶级AI研究员Jonas Adler和Alexander Pritzel离职加入Anthropic，此前Noam Shazeer和John Jumper也已分别离开Google。</p>
+          <p class="ai-summary"><span>AI Summary</span>TechCrunch报道，Google顶级AI研究员Jonas Adler和Alexander Pritzel离职加入Anthropic，此前Noam Shazeer去OpenAI、John Jumper去Anthr。</p>
           <div class="memory-note">
-    <p><span>AI 解读</span>核心人才持续从Google流向Anthropic和OpenAI，反映头部AI公司在IPO前的人才争夺加剧。</p>
+    <p><span>AI 解读</span>人才持续从Google流向Anthropic和OpenAI，反映头部AI公司对核心研究者的争夺加剧。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
-        <span>03</span>
-        
-        <div>
-          <div class="report-item-meta">
-            <strong>Hugging Face</strong>
-            <em>公司/行业动态</em>
-            <b>Hugging Face</b>
-          </div>
-          <h3><a href="https://huggingface.co/blog/nvidia/accelerating-fine-tuning-nvidia-nemo-automodel" target="_blank" rel="noreferrer">Hugging Face：Accelerating Transformers Fine-Tuning with NVIDIA NeMo AutoModel</a></h3>
-          
-          
-          <div class="report-actions">
-            <span class="reading-time">预计阅读 20 秒</span>
-          </div>
-        </div>
       </article><article class="report-item has-thumbnail">
-        <span>04</span>
+        <span>03</span>
         <div class="report-thumb"><img src="https://wp.technologyreview.com/wp-content/uploads/2026/06/iStock-1714934690.jpg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
           <div class="report-item-meta">
@@ -2011,8 +2219,28 @@ time {
             <b>MIT Technology Review AI</b>
           </div>
           <h3><a href="https://www.technologyreview.com/2026/06/24/1139202/the-emergence-of-the-web-data-infrastructure-layer-for-ai" target="_blank" rel="noreferrer">The emergence of the web data infrastructure layer for AI</a></h3>
-          
-          
+          <p class="ai-summary"><span>AI Summary</span>MIT Technology Review 赞助文章指出，AI 应用需要实时、结构化的 web 数据，现有基础设施不足，需构建新的 web 数据基础设施层。</p>
+          <div class="memory-note">
+    <p><span>AI 解读</span>本质是数据获取从静态快照转向实时管道，但文章由数据平台公司赞助，需区分技术趋势与商业叙事。</p>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 30 秒</span>
+          </div>
+        </div>
+      </article><article class="report-item ">
+        <span>04</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Hugging Face</strong>
+            <em>公司/行业动态</em>
+            <b>Hugging Face</b>
+          </div>
+          <h3><a href="https://huggingface.co/blog/nvidia/accelerating-fine-tuning-nvidia-nemo-automodel" target="_blank" rel="noreferrer">Hugging Face：Accelerating Transformers Fine-Tuning with NVIDIA NeMo AutoModel</a></h3>
+          <p class="ai-summary"><span>AI Summary</span>NVIDIA 在 Hugging Face 博客发布文章，介绍 NeMo AutoModel 如何加速 Transformer 模型的微调流程。</p>
+          <div class="memory-note">
+    <p><span>AI 解读</span>NVIDIA 将微调能力封装为 AutoModel，降低用户门槛，但实际效果需看社区验证。</p>
+  </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 20 秒</span>
           </div>
@@ -2040,7 +2268,7 @@ time {
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2069596515560267891" target="_blank" rel="noreferrer">Another example of the power of headless software with agents. With Claude Tag, you can give Claude access to any corporate files in Box that you can interact with from Slack. Now all of your enterprise content becomes a portable knowledge base. https://t.co/m7UPdmqnn8 https://t.co/qrHqoZKHG4</a></h3><p class="social-translation"><span>译文</span>这是无头软件与智能体结合力量的又一个例子。通过Claude Tag，你可以让Claude访问Box中的任何企业文件，并且可以从Slack与之交互。现在，你所有的企业内容都变成了一个可移植的知识库。https://t.co/m7UPdmqnn8 https://t.co/qrHqoZKHG4</p><div class="memory-note">
-    <p><span>AI 解读</span>本质是将企业内容通过 Slack 接口暴露给 LLM agent，实现无头软件模式，但实际可用性和安全性待验证。</p>
+    <p><span>AI 解读</span>将 Claude 嵌入企业协作流程，通过无头软件+Agent 实现文件即知识库，降低知识检索门槛。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 2 分钟</span>
@@ -2048,24 +2276,6 @@ time {
         </div>
       </article><article class="report-item ">
         <span>02</span>
-        
-        <div>
-          <div class="report-item-meta">
-            <strong>OpenAI</strong>
-            <em>Agent/开发者基础设施</em>
-            <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
-          </div>
-          <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2069579993588625574" target="_blank" rel="noreferrer">Codex **had** a bug. Fixed.
-
-More feedback. Better product. Keep it coming. https://t.co/hopJLfcDxd</a></h3><p class="social-translation"><span>译文</span>Codex 曾有一个 bug。已修复。更多反馈，更好产品。继续来。https://t.co/hopJLfcDxd</p><div class="memory-note">
-    <p><span>AI 解读</span>一次快速 bug 修复，体现 Codex 仍在迭代，但缺乏具体影响范围。</p>
-  </div>
-          <div class="report-actions">
-            <span class="reading-time">预计阅读 30 秒</span>
-          </div>
-        </div>
-      </article><article class="report-item ">
-        <span>03</span>
         
         <div>
           <div class="report-item-meta">
@@ -2078,10 +2288,28 @@ More feedback. Better product. Keep it coming. https://t.co/hopJLfcDxd</a></h3><
 now they have beat deepseek with the world&#039;s undisputed top open model and in some respects (see @ml_angelopoulos) say top model period, and are returning to SF @aidotengineer on top of the world and open for business!
 
 excited for @Thom_Wolf and @ZixuanLi_ to chat onstage!</a></h3><p class="social-translation"><span>译文</span>顺便说一句，Zai 在1月以每股120港元上市。我第一次见到@louszbd时，几乎没人知道有人在用GLM。现在他们以世界公认的顶级开源模型击败了DeepSeek，在某些方面（见@ml_angelopoulos）甚至可以说是目前最好的模型，他们即将回到旧金山@aidotengineer，处于世界之巅并开放业务！期待@Thom_Wolf和@ZixuanLi_在台上对话！</p><div class="memory-note">
-    <p><span>AI 解读</span>推文为个人观点，模型能力需第三方评测验证，不宜直接采信。</p>
+    <p><span>AI 解读</span>推文内容高度宣传化，缺乏独立验证，不宜作为确定性结论。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article class="report-item ">
+        <span>03</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>Agent/开发者基础设施</em>
+            <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
+          </div>
+          <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2069579993588625574" target="_blank" rel="noreferrer">Codex **had** a bug. Fixed.
+
+More feedback. Better product. Keep it coming. https://t.co/hopJLfcDxd</a></h3><p class="social-translation"><span>译文</span>Codex 曾有一个 bug。已修复。更多反馈，更好产品。继续来。https://t.co/hopJLfcDxd</p><div class="memory-note">
+    <p><span>AI 解读</span>一次常规的 bug 修复，体现 Codex 仍在快速迭代，用户反馈驱动改进。</p>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
       </article><article class="report-item ">
@@ -2094,7 +2322,7 @@ excited for @Thom_Wolf and @ZixuanLi_ to chat onstage!</a></h3><p class="social-
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2069592160966733853" target="_blank" rel="noreferrer">Codex loves slurping up bugs https://t.co/2REc24J0VO</a></h3><p class="social-translation"><span>译文</span>Codex 喜欢吸食 bug https://t.co/2REc24J0VO</p><div class="memory-note">
-    <p><span>AI 解读</span>暗示Codex可能主动处理或引入bug，但缺乏证据，更像个人观察。</p>
+    <p><span>AI 解读</span>单一用户反馈，缺乏复现细节，不宜过度解读为产品缺陷。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
@@ -2136,6 +2364,37 @@ That’s all about understanding the workflows, domain specific FDEs, evals by c
         </div>
       </article>
     </div>
+  </section>
+          <section id="value-changes" class="report-section report-tab-panel" role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>D</span>
+        <h2>价值变化</h2>
+      </div>
+      <p>PUBLIC MARKET · PRIVATE VALUATION · FUNDING SIGNALS</p>
+    </div>
+    <div class="market-digest">
+    <div class="market-note">
+      <strong>说明</strong>
+      <span>股价为行情接口最新可得数据；私有公司只纳入当天公开新闻里的融资、估值、IPO、股权或并购信号。不构成投资建议。</span>
+    </div>
+    
+    <section class="market-card">
+      <div class="market-card-heading">
+        <h3>私有公司估值 / 融资信号</h3>
+        <p>来自当日公开新闻事件扫描</p>
+      </div>
+      <div class="private-signal-list">
+        <article class="private-signal">
+    <div>
+      <strong>智谱 / GLM</strong>
+      <span>IPO / 上市</span>
+    </div>
+    <p><a href="https://x.com/swyx/status/2069598378191941835" target="_blank" rel="noreferrer">btw Zai IPO&#039;ed in Jan at HK$120 a share. when I first met @louszbd nobody really knew anyone using GLM&#039;s.</a></p>
+  </article>
+      </div>
+    </section>
+  </div>
   </section>
         </div>
       </main>
