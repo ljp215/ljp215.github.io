@@ -927,6 +927,48 @@ time {
   grid-template-columns: 1fr;
 }
 
+.archive-list {
+  grid-template-columns: 1fr;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.archive-entry {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.archive-entry:hover {
+  border-color: var(--accent);
+}
+
+.archive-entry time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.archive-entry strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.archive-entry em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 .market-digest {
   display: grid;
   gap: 12px;
@@ -982,6 +1024,37 @@ time {
   letter-spacing: 0.08em;
   text-align: right;
   text-transform: uppercase;
+}
+
+.market-range-switch {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 6px;
+}
+
+.market-range-switch button {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.market-range-switch button.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fbf8ee;
+}
+
+.market-digest[data-active-range="30d"] .market-range-1y {
+  display: none;
+}
+
+.market-digest[data-active-range="1y"] .market-range-30d {
+  display: none;
 }
 
 .market-chart-grid {
@@ -1173,6 +1246,27 @@ time {
 
 .market-chart-stats dd.is-down {
   color: #a12d1f;
+}
+
+.market-confidence-badge {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: default;
+}
+
+.market-confidence-badge.is-confidence-ok {
+  color: #1f7a4c;
+}
+
+.market-confidence-badge.is-confidence-warn {
+  color: #a12d1f;
+}
+
+.market-confidence-badge.is-confidence-muted {
+  color: var(--muted);
 }
 
 .market-table {

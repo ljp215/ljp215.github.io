@@ -5,8 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
     <title>AI 行业简报 2026-05-28</title>
+    <meta name="description" content="今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。">
+    <link rel="canonical" href="https://luojinping.com/ai-daily/2026-05-28">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="AI 聚合日报">
+    <meta property="og:title" content="AI 行业简报 2026-05-28">
+    <meta property="og:description" content="今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。">
+    <meta property="og:url" content="https://luojinping.com/ai-daily/2026-05-28">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AI 行业简报 2026-05-28">
+    <meta name="twitter:description" content="今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。">
     <link rel="icon" href="/ai-daily/icon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="/ai-daily/icon.svg">
+    <link rel="alternate" type="application/atom+xml" title="AI 聚合日报" href="/ai-daily/feed.xml">
     <meta name="theme-color" content="#1f6f73">
     <style>
 :root {
@@ -938,6 +949,48 @@ time {
   grid-template-columns: 1fr;
 }
 
+.archive-list {
+  grid-template-columns: 1fr;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.archive-entry {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.archive-entry:hover {
+  border-color: var(--accent);
+}
+
+.archive-entry time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.archive-entry strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.archive-entry em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--muted);
+}
+
 .market-digest {
   display: grid;
   gap: 12px;
@@ -993,6 +1046,37 @@ time {
   letter-spacing: 0.08em;
   text-align: right;
   text-transform: uppercase;
+}
+
+.market-range-switch {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 6px;
+}
+
+.market-range-switch button {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.market-range-switch button.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fbf8ee;
+}
+
+.market-digest[data-active-range="30d"] .market-range-1y {
+  display: none;
+}
+
+.market-digest[data-active-range="1y"] .market-range-30d {
+  display: none;
 }
 
 .market-chart-grid {
@@ -1184,6 +1268,27 @@ time {
 
 .market-chart-stats dd.is-down {
   color: #a12d1f;
+}
+
+.market-confidence-badge {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: default;
+}
+
+.market-confidence-badge.is-confidence-ok {
+  color: #1f7a4c;
+}
+
+.market-confidence-badge.is-confidence-warn {
+  color: #a12d1f;
+}
+
+.market-confidence-badge.is-confidence-muted {
+  color: var(--muted);
 }
 
 .market-table {
@@ -2204,7 +2309,7 @@ time {
     <nav aria-label="历史日报">
       <a href="/ai-daily/2026-07-03" class="">
         <time>2026-07-03</time>
-        <em>12 条</em>
+        <em>13 条</em>
       </a><a href="/ai-daily/2026-07-02" class="">
         <time>2026-07-02</time>
         <em>11 条</em>
@@ -2292,38 +2397,17 @@ time {
       </a><a href="/ai-daily/2026-06-03" class="">
         <time>2026-06-03</time>
         <em>16 条</em>
-      </a><a href="/ai-daily/2026-06-02" class="">
-        <time>2026-06-02</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-06-01" class="">
-        <time>2026-06-01</time>
-        <em>11 条</em>
-      </a><a href="/ai-daily/2026-05-31" class="">
-        <time>2026-05-31</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-05-30" class="">
-        <time>2026-05-30</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-05-29" class="">
-        <time>2026-05-29</time>
-        <em>9 条</em>
       </a><a href="/ai-daily/2026-05-28" class="is-active">
         <time>2026-05-28</time>
         <em>15 条</em>
-      </a><a href="/ai-daily/2026-05-27" class="">
-        <time>2026-05-27</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-05-26" class="">
-        <time>2026-05-26</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-05-25" class="">
-        <time>2026-05-25</time>
-        <em>10 条</em>
-      </a><a href="/ai-daily/2026-05-22" class="">
-        <time>2026-05-22</time>
-        <em>8 条</em>
       </a>
     </nav>
+    <div class="report-nav-entry">
+      <a href="/ai-daily/archive/" class="">
+        <span>ARCHIVE</span>
+        <strong>查看全部 40 期 →</strong>
+      </a>
+    </div>
   </aside>
       <main class="report-page">
         <div class="report-topline">
