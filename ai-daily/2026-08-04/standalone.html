@@ -5,16 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
     <title>AI 行业简报 2026-08-04</title>
-    <meta name="description" content="今天筛出 13 个事件：大厂动态 5 条，技术进展 1 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。">
+    <meta name="description" content="今天筛出 14 个事件：大厂动态 4 条，技术进展 2 条，行业观点 8 条；另读 Hugging Face Papers 5 篇。">
     <link rel="canonical" href="https://luojinping.com/ai-daily/2026-08-04">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="AI 聚合日报">
     <meta property="og:title" content="AI 行业简报 2026-08-04">
-    <meta property="og:description" content="今天筛出 13 个事件：大厂动态 5 条，技术进展 1 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。">
+    <meta property="og:description" content="今天筛出 14 个事件：大厂动态 4 条，技术进展 2 条，行业观点 8 条；另读 Hugging Face Papers 5 篇。">
     <meta property="og:url" content="https://luojinping.com/ai-daily/2026-08-04">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="AI 行业简报 2026-08-04">
-    <meta name="twitter:description" content="今天筛出 13 个事件：大厂动态 5 条，技术进展 1 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。">
+    <meta name="twitter:description" content="今天筛出 14 个事件：大厂动态 4 条，技术进展 2 条，行业观点 8 条；另读 Hugging Face Papers 5 篇。">
     <link rel="icon" href="/ai-daily/icon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="/ai-daily/icon.svg">
     <link rel="alternate" type="application/atom+xml" title="AI 聚合日报" href="/ai-daily/feed.xml">
@@ -619,7 +619,9 @@ time {
 .report-history {
   position: sticky;
   top: 18px;
+  max-height: calc(100vh - 36px);
   padding-top: 28px;
+  overflow-y: auto;
 }
 
 .report-history-title,
@@ -643,9 +645,109 @@ time {
   font-size: 18px;
 }
 
-.report-history nav {
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.report-search-quick {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 12px;
+  border: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.report-search-quick:focus-within,
+.report-search-quick.is-active {
+  border-color: var(--accent);
+}
+
+.report-search-quick input {
+  min-width: 0;
+  height: 38px;
+  padding: 0 8px;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 12px;
+}
+
+.report-search-quick button {
+  min-width: 50px;
+  border: 0;
+  border-left: 2px solid var(--line);
+  color: #f7efe1;
+  background: var(--ink);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.report-history-months {
   display: grid;
   gap: 8px;
+}
+
+.report-history-month {
+  min-width: 0;
+}
+
+.report-history-month summary {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  gap: 7px;
+  align-items: center;
+  padding: 9px 8px;
+  border-left: 4px solid rgba(27, 26, 23, 0.72);
+  background: rgba(255, 255, 255, 0.24);
+  cursor: pointer;
+  list-style: none;
+}
+
+.report-history-month summary::-webkit-details-marker {
+  display: none;
+}
+
+.report-history-month summary::before {
+  content: "+";
+  color: var(--accent-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.report-history-month[open] summary {
+  border-left-color: var(--accent);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.report-history-month[open] summary::before {
+  content: "−";
+}
+
+.report-history-month summary span {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.report-history-month summary em {
+  white-space: nowrap;
+}
+
+.report-history-month-items {
+  display: grid;
+  gap: 6px;
+  padding: 7px 0 2px 10px;
 }
 
 .report-history a {
@@ -989,6 +1091,157 @@ time {
   font-style: normal;
   font-size: 12px;
   color: var(--muted);
+}
+
+.search-hero {
+  margin-bottom: 18px;
+}
+
+.search-workspace {
+  min-width: 0;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border: 3px solid var(--line);
+  background: var(--surface);
+}
+
+.search-form:focus-within {
+  border-color: var(--accent);
+}
+
+.search-form input {
+  min-width: 0;
+  height: 58px;
+  padding: 0 18px;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 18px;
+  font-weight: 720;
+}
+
+.search-form button {
+  min-width: 92px;
+  border: 0;
+  border-left: 3px solid var(--line);
+  color: #f7efe1;
+  background: var(--ink);
+  font-weight: 900;
+}
+
+.search-filters {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.search-filters[hidden] {
+  display: none;
+}
+
+.search-filters button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.34);
+  font-size: 12px;
+  font-weight: 820;
+}
+
+.search-filters button.is-active {
+  border-color: var(--accent);
+  color: #f7efe1;
+  background: var(--accent);
+}
+
+.search-status {
+  min-height: 24px;
+  margin: 16px 0 8px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.search-results {
+  display: grid;
+  gap: 10px;
+}
+
+.search-result {
+  padding: 16px 18px;
+  border: 2px solid rgba(27, 26, 23, 0.76);
+  border-left: 6px solid var(--accent);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.search-result-meta,
+.search-result-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  align-items: center;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 820;
+}
+
+.search-result-meta span,
+.search-result-meta strong {
+  color: var(--accent-strong);
+}
+
+.search-result h2 {
+  margin: 9px 0 8px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.search-result h2 a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.search-result p {
+  margin-bottom: 12px;
+  color: #3f3b34;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.search-result-footer {
+  justify-content: space-between;
+}
+
+.search-result-footer em {
+  font-style: normal;
+}
+
+.search-result mark {
+  padding: 0 2px;
+  color: inherit;
+  background: #f5d88b;
+}
+
+.report-item,
+.paper-digest-item {
+  scroll-margin-top: 96px;
+}
+
+.report-item.is-search-target,
+.paper-digest-item.is-search-target {
+  outline: 4px solid #d9a51f;
+  outline-offset: 3px;
 }
 
 .market-digest {
@@ -1942,17 +2195,31 @@ time {
 
   .report-history {
     position: static;
+    max-height: none;
     padding-top: 18px;
+    overflow: visible;
   }
 
-  .report-history nav {
+  .report-history-months {
     display: flex;
+    align-items: flex-start;
     gap: 8px;
     overflow-x: auto;
     padding-bottom: 4px;
   }
 
-  .report-history a {
+  .report-history-month {
+    flex: 0 0 min(340px, calc(100vw - 60px));
+  }
+
+  .report-history-month-items {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 7px 0 3px 10px;
+  }
+
+  .report-history-month-items a {
     min-width: 146px;
   }
 
@@ -1997,17 +2264,22 @@ time {
     font-size: 15px;
   }
 
-  .report-history nav {
+  .report-search-quick {
+    margin-bottom: 9px;
+  }
+
+  .report-history-months {
     margin: 0 -12px;
     padding: 0 12px 6px;
     scrollbar-width: none;
   }
 
-  .report-history nav::-webkit-scrollbar {
+  .report-history-months::-webkit-scrollbar,
+  .report-history-month-items::-webkit-scrollbar {
     display: none;
   }
 
-  .report-history a {
+  .report-history-month-items a {
     min-width: 118px;
     padding: 8px 8px;
     border-left-width: 3px;
@@ -2039,6 +2311,48 @@ time {
 
   .report-topline span:last-child {
     display: none;
+  }
+
+  .search-hero {
+    margin-bottom: 12px;
+  }
+
+  .search-form {
+    border-width: 2px;
+  }
+
+  .search-form input {
+    height: 50px;
+    padding: 0 12px;
+    font-size: 16px;
+  }
+
+  .search-form button {
+    min-width: 70px;
+    border-left-width: 2px;
+  }
+
+  .search-filters {
+    margin-right: -12px;
+    padding-right: 12px;
+    scrollbar-width: none;
+  }
+
+  .search-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .search-result {
+    padding: 13px 12px;
+    border-left-width: 4px;
+  }
+
+  .search-result h2 {
+    font-size: 18px;
+  }
+
+  .search-result p {
+    font-size: 14px;
   }
 
   .report-hero {
@@ -2300,98 +2614,264 @@ time {
       <span>ARCHIVE</span>
       <strong>历史日报</strong>
     </div>
-    <nav aria-label="历史日报">
-      <a href="/ai-daily/2026-08-05" class="">
-        <time>2026-08-05</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-08-04" class="is-active">
-        <time>2026-08-04</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-08-03" class="">
-        <time>2026-08-03</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-08-02" class="">
-        <time>2026-08-02</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-08-01" class="">
-        <time>2026-08-01</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-31" class="">
-        <time>2026-07-31</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-30" class="">
-        <time>2026-07-30</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-29" class="">
-        <time>2026-07-29</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-28" class="">
-        <time>2026-07-28</time>
-        <em>16 条</em>
-      </a><a href="/ai-daily/2026-07-27" class="">
-        <time>2026-07-27</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-26" class="">
-        <time>2026-07-26</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-25" class="">
-        <time>2026-07-25</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-24" class="">
-        <time>2026-07-24</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-23" class="">
-        <time>2026-07-23</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-22" class="">
-        <time>2026-07-22</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-21" class="">
-        <time>2026-07-21</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-20" class="">
-        <time>2026-07-20</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-19" class="">
-        <time>2026-07-19</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-18" class="">
-        <time>2026-07-18</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-17" class="">
-        <time>2026-07-17</time>
-        <em>10 条</em>
-      </a><a href="/ai-daily/2026-07-16" class="">
-        <time>2026-07-16</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-15" class="">
-        <time>2026-07-15</time>
-        <em>16 条</em>
-      </a><a href="/ai-daily/2026-07-14" class="">
-        <time>2026-07-14</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-13" class="">
-        <time>2026-07-13</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-12" class="">
-        <time>2026-07-12</time>
-        <em>9 条</em>
-      </a><a href="/ai-daily/2026-07-11" class="">
-        <time>2026-07-11</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-10" class="">
-        <time>2026-07-10</time>
-        <em>11 条</em>
-      </a><a href="/ai-daily/2026-07-09" class="">
-        <time>2026-07-09</time>
-        <em>16 条</em>
-      </a><a href="/ai-daily/2026-07-08" class="">
-        <time>2026-07-08</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-07" class="">
-        <time>2026-07-07</time>
-        <em>18 条</em>
-      </a>
+    <form class="report-search-quick " action="/ai-daily/search/" method="get" role="search">
+      <label class="visually-hidden" for="report-search-quick-input">搜索历史日报</label>
+      <input id="report-search-quick-input" type="search" name="q" placeholder="公司、模型或技术" autocomplete="off">
+      <button type="submit">搜索</button>
+    </form>
+    <nav class="report-history-months" aria-label="按月份归类的历史日报">
+      <details class="report-history-month" open>
+        <summary>
+          <span>2026 年 8 月</span>
+          <em>5 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-08-05" class="" aria-label="2026-08-05，13 条">
+            <time datetime="2026-08-05">5 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-04" class="is-active" aria-label="2026-08-04，14 条">
+            <time datetime="2026-08-04">4 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-03" class="" aria-label="2026-08-03，14 条">
+            <time datetime="2026-08-03">3 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-02" class="" aria-label="2026-08-02，14 条">
+            <time datetime="2026-08-02">2 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-01" class="" aria-label="2026-08-01，13 条">
+            <time datetime="2026-08-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 7 月</span>
+          <em>31 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-07-31" class="" aria-label="2026-07-31，15 条">
+            <time datetime="2026-07-31">31 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-30" class="" aria-label="2026-07-30，14 条">
+            <time datetime="2026-07-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-29" class="" aria-label="2026-07-29，15 条">
+            <time datetime="2026-07-29">29 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-28" class="" aria-label="2026-07-28，16 条">
+            <time datetime="2026-07-28">28 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-27" class="" aria-label="2026-07-27，13 条">
+            <time datetime="2026-07-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-26" class="" aria-label="2026-07-26，15 条">
+            <time datetime="2026-07-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-25" class="" aria-label="2026-07-25，15 条">
+            <time datetime="2026-07-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-24" class="" aria-label="2026-07-24，14 条">
+            <time datetime="2026-07-24">24 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-23" class="" aria-label="2026-07-23，13 条">
+            <time datetime="2026-07-23">23 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-22" class="" aria-label="2026-07-22，13 条">
+            <time datetime="2026-07-22">22 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-21" class="" aria-label="2026-07-21，14 条">
+            <time datetime="2026-07-21">21 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-20" class="" aria-label="2026-07-20，13 条">
+            <time datetime="2026-07-20">20 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-19" class="" aria-label="2026-07-19，13 条">
+            <time datetime="2026-07-19">19 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-18" class="" aria-label="2026-07-18，15 条">
+            <time datetime="2026-07-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-17" class="" aria-label="2026-07-17，10 条">
+            <time datetime="2026-07-17">17 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-07-16" class="" aria-label="2026-07-16，15 条">
+            <time datetime="2026-07-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-15" class="" aria-label="2026-07-15，16 条">
+            <time datetime="2026-07-15">15 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-14" class="" aria-label="2026-07-14，15 条">
+            <time datetime="2026-07-14">14 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-13" class="" aria-label="2026-07-13，14 条">
+            <time datetime="2026-07-13">13 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-12" class="" aria-label="2026-07-12，9 条">
+            <time datetime="2026-07-12">12 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-07-11" class="" aria-label="2026-07-11，15 条">
+            <time datetime="2026-07-11">11 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-10" class="" aria-label="2026-07-10，11 条">
+            <time datetime="2026-07-10">10 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-09" class="" aria-label="2026-07-09，16 条">
+            <time datetime="2026-07-09">9 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-08" class="" aria-label="2026-07-08，14 条">
+            <time datetime="2026-07-08">8 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-07" class="" aria-label="2026-07-07，18 条">
+            <time datetime="2026-07-07">7 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-07-06" class="" aria-label="2026-07-06，13 条">
+            <time datetime="2026-07-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-05" class="" aria-label="2026-07-05，15 条">
+            <time datetime="2026-07-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-04" class="" aria-label="2026-07-04，16 条">
+            <time datetime="2026-07-04">4 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-03" class="" aria-label="2026-07-03，15 条">
+            <time datetime="2026-07-03">3 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-02" class="" aria-label="2026-07-02，11 条">
+            <time datetime="2026-07-02">2 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-01" class="" aria-label="2026-07-01，13 条">
+            <time datetime="2026-07-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 6 月</span>
+          <em>29 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-06-30" class="" aria-label="2026-06-30，14 条">
+            <time datetime="2026-06-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-29" class="" aria-label="2026-06-29，12 条">
+            <time datetime="2026-06-29">29 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-28" class="" aria-label="2026-06-28，13 条">
+            <time datetime="2026-06-28">28 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-27" class="" aria-label="2026-06-27，13 条">
+            <time datetime="2026-06-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-26" class="" aria-label="2026-06-26，11 条">
+            <time datetime="2026-06-26">26 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-25" class="" aria-label="2026-06-25，15 条">
+            <time datetime="2026-06-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-24" class="" aria-label="2026-06-24，15 条">
+            <time datetime="2026-06-24">24 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-23" class="" aria-label="2026-06-23，15 条">
+            <time datetime="2026-06-23">23 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-22" class="" aria-label="2026-06-22，11 条">
+            <time datetime="2026-06-22">22 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-21" class="" aria-label="2026-06-21，11 条">
+            <time datetime="2026-06-21">21 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-20" class="" aria-label="2026-06-20，14 条">
+            <time datetime="2026-06-20">20 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-19" class="" aria-label="2026-06-19，15 条">
+            <time datetime="2026-06-19">19 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-18" class="" aria-label="2026-06-18，15 条">
+            <time datetime="2026-06-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-17" class="" aria-label="2026-06-17，15 条">
+            <time datetime="2026-06-17">17 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-16" class="" aria-label="2026-06-16，15 条">
+            <time datetime="2026-06-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-15" class="" aria-label="2026-06-15，12 条">
+            <time datetime="2026-06-15">15 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-14" class="" aria-label="2026-06-14，14 条">
+            <time datetime="2026-06-14">14 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-13" class="" aria-label="2026-06-13，15 条">
+            <time datetime="2026-06-13">13 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-12" class="" aria-label="2026-06-12，15 条">
+            <time datetime="2026-06-12">12 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-10" class="" aria-label="2026-06-10，15 条">
+            <time datetime="2026-06-10">10 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-09" class="" aria-label="2026-06-09，15 条">
+            <time datetime="2026-06-09">9 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-08" class="" aria-label="2026-06-08，15 条">
+            <time datetime="2026-06-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-07" class="" aria-label="2026-06-07，12 条">
+            <time datetime="2026-06-07">7 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-06" class="" aria-label="2026-06-06，13 条">
+            <time datetime="2026-06-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-05" class="" aria-label="2026-06-05，15 条">
+            <time datetime="2026-06-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-04" class="" aria-label="2026-06-04，15 条">
+            <time datetime="2026-06-04">4 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-03" class="" aria-label="2026-06-03，16 条">
+            <time datetime="2026-06-03">3 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-06-02" class="" aria-label="2026-06-02，15 条">
+            <time datetime="2026-06-02">2 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-01" class="" aria-label="2026-06-01，11 条">
+            <time datetime="2026-06-01">1 日</time>
+            <em>11 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 5 月</span>
+          <em>8 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-05-31" class="" aria-label="2026-05-31，14 条">
+            <time datetime="2026-05-31">31 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-05-30" class="" aria-label="2026-05-30，15 条">
+            <time datetime="2026-05-30">30 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-29" class="" aria-label="2026-05-29，9 条">
+            <time datetime="2026-05-29">29 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-05-28" class="" aria-label="2026-05-28，15 条">
+            <time datetime="2026-05-28">28 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-27" class="" aria-label="2026-05-27，15 条">
+            <time datetime="2026-05-27">27 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-26" class="" aria-label="2026-05-26，15 条">
+            <time datetime="2026-05-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-25" class="" aria-label="2026-05-25，10 条">
+            <time datetime="2026-05-25">25 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-05-22" class="" aria-label="2026-05-22，8 条">
+            <time datetime="2026-05-22">22 日</time>
+            <em>8 条</em>
+          </a>
+        </div>
+      </details>
     </nav>
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
@@ -2409,24 +2889,24 @@ time {
           <div class="report-hero-main">
             <p class="eyebrow">EDITORIAL BRIEF</p>
             <h1>AI 行业简报 2026-08-04</h1>
-            <p>今天筛出 13 个事件：大厂动态 5 条，技术进展 1 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。</p>
+            <p>今天筛出 14 个事件：大厂动态 4 条，技术进展 2 条，行业观点 8 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
     <strong>大厂动态</strong>
-    <em>5</em>
+    <em>4</em>
   </button>
           <button class="" type="button" role="tab" aria-selected="false" aria-controls="technical-progress" data-tab-target="technical-progress">
     <span>B</span>
     <strong>技术进展</strong>
-    <em>2</em>
+    <em>3</em>
   </button>
           <button class="" type="button" role="tab" aria-selected="false" aria-controls="industry-views" data-tab-target="industry-views">
     <span>C</span>
     <strong>行业观点</strong>
-    <em>7</em>
+    <em>8</em>
   </button>
         </nav>
         <div class="report-tab-panels">
@@ -2440,26 +2920,8 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item has-thumbnail">
+      <article id="event-53dfce13711ebb" class="report-item ">
         <span>01</span>
-        <div class="report-thumb"><img src="https://static.leiphone.com/uploads/new/images/20260803/6a7004618ee1e.jpg?imageView2/2/w/740" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
-        <div>
-          <div class="report-item-meta">
-            <strong>阿里</strong>
-            <em>Agent/开发者基础设施</em>
-            <b>雷峰网</b>
-          </div>
-          <h3><a href="https://www.leiphone.com/category/industrynews/RRdMRyI267uY6noU.html" target="_blank" rel="noreferrer">阿里：阿里“千问办公”开启公测</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>阿里巴巴旗下企业级Agent产品“千问办公”（QwenWork）开启公测，支持网页和PC客户端，集成最新旗舰模型Qwen3.8。</p>
-          <div class="memory-note">
-    <p><span>解读</span>阿里将旗舰模型包装成企业级Agent产品，直接面向办公场景，是模型能力商业化的关键一步。</p>
-  </div>
-          <div class="report-actions">
-            <span class="reading-time">预计阅读 25 秒</span>
-          </div>
-        </div>
-      </article><article class="report-item ">
-        <span>02</span>
         
         <div>
           <div class="report-item-meta">
@@ -2468,34 +2930,34 @@ time {
             <b>OpenAI</b>
           </div>
           <h3><a href="https://openai.com/index/learn-teach-chatgpt-work-codex" target="_blank" rel="noreferrer">OpenAI：New ways to learn and teach with ChatGPT Work and Codex</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI 为 ChatGPT Work 和 Codex 推出教育插件，帮助 K-12 教师、大学教育者和学生学习与教学。</p>
+          <p class="ai-summary"><span>AI Summary</span>OpenAI发布了面向教育场景的ChatGPT Work和Codex插件，帮助K-12教师、大学教育者和学生进行学习、教学、研究和构建。</p>
           <div class="memory-note">
-    <p><span>解读</span>垂直场景插件化是 OpenAI 教育落地的尝试，实际效果取决于师生采纳率，而非功能丰富度。</p>
+    <p><span>解读</span>将ChatGPT和Codex插件化切入教育，但核心价值取决于能否真正融入教学流程而非简单工具堆砌。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article class="report-item has-thumbnail">
-        <span>03</span>
-        <div class="report-thumb"><img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/28/ML-21186-1-1.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
+      </article><article id="event-341d0b21282b97" class="report-item ">
+        <span>02</span>
+        
         <div>
           <div class="report-item-meta">
-            <strong>Formula 1</strong>
+            <strong>Circles</strong>
             <em>Agent/开发者基础设施</em>
-            <b>AWS Machine Learning Blog</b>
+            <b>OpenAI</b>
           </div>
-          <h3><a href="https://aws.amazon.com/blogs/machine-learning/from-weeks-to-minutes-how-formula-1-uses-agentic-ai-on-aws-to-accelerate-data-operations" target="_blank" rel="noreferrer">Formula 1：From weeks to minutes: How Formula 1® uses agentic AI on AWS to accelerate data operations</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>F1与AWS合作构建Data Accelerator，使用Amazon Bedrock AgentCore的agentic AI，将MarTech数据源接入时间从6-8周缩短至约40分钟代码生成，并自动处理schem。</p>
+          <h3><a href="https://openai.com/index/circles" target="_blank" rel="noreferrer">Circles：Circles powers telco personalization with OpenAI technology</a></h3>
+          <p class="ai-summary"><span>AI Summary</span>Circles 使用 OpenAI API 和 Codex 构建 AI 原生电信体验，ARPU 提升 22%，流失率降低 9%，开发效率大幅提高。</p>
           <div class="memory-note">
-    <p><span>解读</span>一个典型的agentic AI降本案例，核心价值在于将重复性数据工程任务自动化，但实际效果依赖于业务场景的标准化程度。</p>
+    <p><span>解读</span>电信场景的 AI 落地往往卡在合规与数据，Circles 用 OpenAI API 走通了一条可量产的路径，但需警惕指标归因是否排除了其他业务变量。</p>
   </div>
           <div class="report-actions">
-            <span class="reading-time">预计阅读 35 秒</span>
+            <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article class="report-item has-thumbnail">
-        <span>04</span>
+      </article><article id="event-4e8fd49316a397" class="report-item has-thumbnail">
+        <span>03</span>
         <div class="report-thumb"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/gettyimages-2266883826.jpg?quality=90&amp;strip=all&amp;crop=0%2C0.0062492188476426%2C100%2C99.987501562305&amp;w=2400" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
           <div class="report-item-meta">
@@ -2504,16 +2966,16 @@ time {
             <b>The Verge AI</b>
           </div>
           <h3><a href="https://www.theverge.com/ai-artificial-intelligence/974342/alibaba-qwen-max-open-weight-ai" target="_blank" rel="noreferrer">Alibaba：China’s Alibaba takes another swipe at America’s AI supremacy</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>阿里巴巴发布Qwen3.8-Max，声称性能媲美Anthropic的Claude Fable 5等顶尖美国模型，并将于下周开放模型权重。</p>
+          <p class="ai-summary"><span>AI Summary</span>阿里巴巴发布Qwen3.8-Max，声称性能比肩Anthropic的Claude Fable 5，并计划下周开源权重。</p>
           <div class="memory-note">
-    <p><span>解读</span>阿里开放权重策略持续强化，参数规模逼近美国前沿，但实际能力仍需独立验证。</p>
+    <p><span>解读</span>阿里巴巴再次用开源策略冲击美国AI前沿，但性能对标Fable 5的说法还需第三方验证。</p>
   </div>
           <div class="report-actions">
-            <span class="reading-time">预计阅读 25 秒</span>
+            <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
-        <span>05</span>
+      </article><article id="event-ecd7892676821f" class="report-item ">
+        <span>04</span>
         
         <div>
           <div class="report-item-meta">
@@ -2522,9 +2984,9 @@ time {
             <b>OpenAI</b>
           </div>
           <h3><a href="https://openai.com/index/apple-is-getting-this-wrong" target="_blank" rel="noreferrer">OpenAI：Apple is getting this wrong</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI 发文回应苹果的诉讼，称其指控毫无根据，纠正了关于员工的不实说法，并公开了相关沟通记录。</p>
+          <p class="ai-summary"><span>AI Summary</span>OpenAI 发布博客，回应苹果的诉讼，称其指控无根据，纠正关于员工的错误说法，并公开相关通信记录。</p>
           <div class="memory-note">
-    <p><span>解读</span>OpenAI 选择公开反驳而非私下和解，说明其法律立场强硬且可能持有有利证据。</p>
+    <p><span>解读</span>OpenAI 对苹果诉讼的公开反驳，属于法律与公关层面的交锋，不涉及技术进展。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 20 秒</span>
@@ -2552,51 +3014,69 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-flash-260425 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article class="paper-digest-item has-thumbnail">
+      <article id="paper-1" class="paper-digest-item has-thumbnail">
         <span>01</span>
         <img src="https://arxiv.org/html/2608.02023v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.02023" target="_blank" rel="noreferrer">SwanTale：统一多说话者语音与音频生成，支持指令和零样本任务</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出SwanTale模型，通过数据增强、多模态VAE、MoE与后训练，统一实现多说话者语音和音频的指令与零样本生成。</p>
-          <div><em>语音生成</em><em>多说话者</em><em>多模态</em></div>
+          <h4><a href="https://huggingface.co/papers/2608.02023" target="_blank" rel="noreferrer">SwanTale：统一多说话人语音与音频生成，支持指令与零样本任务</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出一个统一的多说话人语音音频生成模型，可从文本指令或参考音频生成包含环境、风格和效果的可控输出。</p>
+          <div><em>语音生成</em><em>多说话人</em><em>零样本生成</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-2" class="paper-digest-item has-thumbnail">
         <span>02</span>
         <img src="https://arxiv.org/html/2608.01964v1/pic/benchmark_figure.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.01964" target="_blank" rel="noreferrer">LongHorizon-Harness：推进面向真实世界的长时任务Agent</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出管理-执行-审计循环，将任务状态显式维护在上下文之外，使多个模型在长时任务基准上提升20%以上。</p>
-          <div><em>Agent框架</em><em>长时任务</em><em>状态管理</em></div>
+          <h4><a href="https://huggingface.co/papers/2608.01964" target="_blank" rel="noreferrer">LongHorizon-Harness：面向真实世界任务的长程Agent框架</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出一种外部任务状态管理加审计循环的框架，改进LLM Agent在长程、多步任务中的执行准确率。</p>
+          <div><em>LLM Agent</em><em>长程任务</em><em>任务管理</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-3" class="paper-digest-item has-thumbnail">
         <span>03</span>
         <img src="https://arxiv.org/html/2608.01735v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
           <h4><a href="https://huggingface.co/papers/2608.01735" target="_blank" rel="noreferrer">DAPD: 双锚定策略蒸馏</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出DAPD框架，通过双路径锚定和双源锚定解决在线策略蒸馏中的特权幻觉问题，在Qwen3-4B上平均提升2.00分。</p>
-          <div><em>模型蒸馏</em><em>语言模型后训练</em><em>特权幻觉</em></div>
+          <p class="ai-summary"><span>AI Summary</span>提出DAPD框架，通过双路径和双源锚定解决在线自蒸馏中的特权幻觉问题，提升模型性能。</p>
+          <div><em>策略蒸馏</em><em>特权幻觉</em><em>语言模型后训练</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-4" class="paper-digest-item has-thumbnail">
         <span>04</span>
         <img src="https://arxiv.org/html/2608.01678v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.01678" target="_blank" rel="noreferrer">通过强化学习渐进式生成智能体技能</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出Skill-强化学习方法，将技能生成建模为顺序编辑过程，引入回滚奖励，在CL-Bench上提升3.3个百分点。</p>
-          <div><em>智能体技能</em><em>强化学习</em><em>渐进生成</em></div>
+          <h4><a href="https://huggingface.co/papers/2608.01678" target="_blank" rel="noreferrer">通过强化学习渐进式生成Agent技能</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出Skill-方法，将技能生成建模为序列编辑过程，用强化学习优化技能质量，提升下游任务成功率。</p>
+          <div><em>Agent技能生成</em><em>强化学习</em><em>程序编辑</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-5" class="paper-digest-item has-thumbnail">
         <span>05</span>
         <img src="https://arxiv.org/html/2608.02583v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.02583" target="_blank" rel="noreferrer">UEmbed：统一稀疏和稠密的多模态嵌入</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出仅解码器的多模态嵌入模型，一次前向传播生成稀疏和稠密表示，在检索任务上取得领先性能。</p>
-          <div><em>多模态嵌入</em><em>稀疏检索</em><em>稠密检索</em></div>
+          <h4><a href="https://huggingface.co/papers/2608.02583" target="_blank" rel="noreferrer">UEmbed: 统一稀疏与密集多模态嵌入</a></h4>
+          <p class="ai-summary"><span>AI Summary</span>提出一个decoder-only多模态嵌入模型，单次前向传播同时生成稀疏词汇和密集表示，在公共数据上训练并达到SOTA。</p>
+          <div><em>多模态嵌入</em><em>稀疏检索</em><em>密集检索</em></div>
         </div>
       </article>
     </div>
   </article>
-      <article class="report-item has-thumbnail">
+      <article id="event-9b405b3fd221f0" class="report-item has-thumbnail">
         <span>01</span>
+        <div class="report-thumb"><img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/28/ML-21186-1-1.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
+        <div>
+          <div class="report-item-meta">
+            <strong>Formula 1</strong>
+            <em>Agent/开发者基础设施</em>
+            <b>AWS Machine Learning Blog</b>
+          </div>
+          <h3><a href="https://aws.amazon.com/blogs/machine-learning/from-weeks-to-minutes-how-formula-1-uses-agentic-ai-on-aws-to-accelerate-data-operations" target="_blank" rel="noreferrer">Formula 1：From weeks to minutes: How Formula 1® uses agentic AI on AWS to accelerate data operations</a></h3>
+          <p class="ai-summary"><span>AI Summary</span>F1与AWS合作，利用Amazon Bedrock AgentCore构建Data Accelerator，将数据源上线时间从8周缩短至40分钟，并实现自动模式演化与端到端可观测性。</p>
+          <div class="memory-note">
+    <p><span>解读</span>Agentic AI在数据工程场景的典型落地案例，核心价值在于将手工流程自动化，但依赖AWS生态，通用性待验证。</p>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 35 秒</span>
+          </div>
+        </div>
+      </article><article id="event-7a5dddf90eea98" class="report-item has-thumbnail">
+        <span>02</span>
         <div class="report-thumb"><img src="https://www.microsoft.com/en-us/research/wp-content/uploads/2026/08/Orchard-BlogHeroFeature-1400x788_NEW.jpg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
           <div class="report-item-meta">
@@ -2605,9 +3085,9 @@ time {
             <b>Microsoft Research Blog</b>
           </div>
           <h3><a href="https://www.microsoft.com/en-us/research/blog/orchard-an-open-framework-for-scalable-agentic-ai" target="_blank" rel="noreferrer">Microsoft Research：Orchard: An open framework for scalable agentic AI</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>微软发布开源框架 Orchard，提供可复用环境服务 Orchard Env，支持软件工程、网页导航、个人助理等 agent 任务，小模型在 SWE-bench 上达到 69.7%。</p>
+          <p class="ai-summary"><span>AI Summary</span>微软研究院发布开源框架Orchard，提供可复用环境服务，支持软件工程、网页导航等agent任务，小模型在SWE-bench达69.7%，接近10倍大模型水平。</p>
           <div class="memory-note">
-    <p><span>解读</span>环境层复用比模型大小更关键，小模型通过高质量训练流程可逼近大模型。</p>
+    <p><span>解读</span>Orchard核心贡献是环境层可复用架构，而非模型；小模型性能接近前沿，说明基础设施标准化比模型规模更关键。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
@@ -2626,80 +3106,62 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item ">
+      <article id="event-8a9aec70fd756a" class="report-item ">
         <span>01</span>
         
         <div>
           <div class="report-item-meta">
             <strong>Simon Willison</strong>
-            <em>Agent/开发者基础设施</em>
+            <em>行业动态</em>
             <b>Simon Willison&#039;s Weblog</b>
           </div>
           <h3><a href="https://simonwillison.net/2026/Aug/3/devtools-must-be-open-source-exedev" target="_blank" rel="noreferrer">Simon Willison：Devtools must be open source (exe.dev)</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Simon Willison 评论认为，LLM 让开源软件的修改梦想更可行，现在可用 Claude 或 Codex 快速克隆和构建代码，大幅降低以往的时间投入障碍。</p>
+          <p class="ai-summary"><span>AI Summary</span>Simon Willison评论认为，LLM使开源软件代码的可检查与可修改自由从理论变为日常可行，他常用Claude和Codex快速克隆仓库并理解代码。</p>
           <div class="memory-note">
-    <p><span>解读</span>LLM 让开源修改从理想变为低摩擦实践，但作者尚未形成习惯，路径仍待验证。</p>
+    <p><span>解读</span>LLM降低了开源参与的认知摩擦，但用户尚未形成习惯性修改行为，实际影响仍需观察。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-ed909a558be056" class="report-item ">
         <span>02</span>
         
         <div>
           <div class="report-item-meta">
             <strong>Hugging Face</strong>
-            <em>行业动态</em>
+            <em>公司/行业动态</em>
             <b>YouTube / Podcast</b>
           </div>
           <h3><a href="https://www.youtube.com/watch?v=_GlSkJjRDMM" target="_blank" rel="noreferrer">Hugging Face：AI Vibe Check: Chinese Open Models, Distillation &amp; The Hugging Face Breach</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>播客讨论OpenAI代理入侵Hugging Face事件，分析中国开源模型威胁与蒸馏技术的作用，表达对AI基础设施依赖中国的担忧。</p>
+          <p class="ai-summary"><span>AI Summary</span>播客讨论中国开源模型、蒸馏技术争议及Hugging Face安全漏洞事件，强调开源模型重要性但担忧依赖中国模型的地缘风险。</p>
           <div class="memory-note">
-    <p><span>解读</span>一场观点碰撞：开源模型重要但蒸馏不能解释一切，对中国依赖的担忧是地缘政治而非技术判断。</p>
+    <p><span>解读</span>本质是媒体对开源模型供应链安全的一次情绪化讨论，蒸馏技术被低估，实际工程价值需更多数据验证。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article class="report-item has-thumbnail">
+      </article><article id="event-009dc133fa96fd" class="report-item has-thumbnail">
         <span>03</span>
-        <div class="report-thumb"><img src="https://substackcdn.com/image/fetch/$s_!4Bnk!,f_auto,q_auto:good,fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F81555a6b-b75b-43a1-bbcf-22d9dbc06c8c_900x639.webp" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
-        <div>
-          <div class="report-item-meta">
-            <strong>OpenAI</strong>
-            <em>行业动态</em>
-            <b>Don&#039;t Worry About the Vase (Zvi Mowshowitz)</b>
-          </div>
-          <h3><a href="https://thezvi.substack.com/p/openais-unreleased-model-astra-solves" target="_blank" rel="noreferrer">OpenAI：OpenAI&#039;s Unreleased Model Astra Solves Ten Major Open Mathematics Problems</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI 内部未发布模型 Astra 解决了 10 个主要开放数学难题，包括高维球体堆积和非sofic群构造，结果已用 Lean 形式化验证。</p>
-          <div class="memory-note">
-    <p><span>解读</span>Astra 的科学推理能力有实质跃升，但部分结果已被 Fable 模型复现，表明存在“数学证明积压”效应。</p>
-  </div>
-          <div class="report-actions">
-            <span class="reading-time">预计阅读 30 秒</span>
-          </div>
-        </div>
-      </article><article class="report-item has-thumbnail">
-        <span>04</span>
         <div class="report-thumb"><img src="https://i.guim.co.uk/img/media/e249e074dc29d4d995b7d4e8f221974266d05c76/271_0_1622_1299/master/1622.jpg?width=140&amp;quality=85&amp;auto=format&amp;fit=max&amp;s=cc097095b2285ad8281d5c1f32f62731" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
           <div class="report-item-meta">
-            <strong>Bayreuth festival / Marcus Lobbes team</strong>
+            <strong>Bayreuth Festival</strong>
             <em>行业动态</em>
             <b>The Guardian AI</b>
           </div>
-          <h3><a href="https://www.theguardian.com/music/2026/aug/03/wagner-bayreuth-ring-cycle-review-ai-staging-dispenses-with-drama-to-create-banal-bric-a-brac" target="_blank" rel="noreferrer">Bayreuth festival / Marcus Lobbes team：Ring Cycle review – AI staging dispenses with drama to create banal bric-a-brac</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Bayreuth音乐节150周年用AI生成瓦格纳《指环》视觉，评论称其混乱、无意义、缺乏戏剧性，歌手被投影屏幕遮挡。</p>
+          <h3><a href="https://www.theguardian.com/music/2026/aug/03/wagner-bayreuth-ring-cycle-review-ai-staging-dispenses-with-drama-to-create-banal-bric-a-brac" target="_blank" rel="noreferrer">Bayreuth Festival：Ring Cycle review – AI staging dispenses with drama to create banal bric-a-brac</a></h3>
+          <p class="ai-summary"><span>AI Summary</span>《卫报》乐评称Bayreuth音乐节150周年纪念版《指环》使用AI生成视觉，结果缺乏戏剧性，沦为混乱的视觉碎片。</p>
           <div class="memory-note">
-    <p><span>解读</span>AI生成内容缺乏艺术灵魂，沦为无意义的视觉碎片，人类表演被压缩，是一次失败的实验。</p>
+    <p><span>解读</span>AI生成视觉在歌剧中的尝试仍难替代人类导演的戏剧调度，目前更像技术噱头而非艺术创新。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
-        <span>05</span>
+      </article><article id="event-a9b6cc375e9d01" class="report-item ">
+        <span>04</span>
         
         <div>
           <div class="report-item-meta">
@@ -2708,14 +3170,57 @@ time {
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2084196918071357707" target="_blank" rel="noreferrer">Crazy thing about OpenAI is you just open your laptop, codex a PR into existence and ship an improvement to 1B users. Just like that. https://t.co/YwjkNCN0Oa</a></h3><p class="social-translation"><span>译文</span>OpenAI 的疯狂之处在于，你只需打开笔记本电脑，用 Codex 创建一个 PR，就能向 10 亿用户推送一项改进。就这么简单。https://t.co/YwjkNCN0Oa</p><div class="memory-note">
-    <p><span>解读</span>个人观点，非官方发布，反映 Codex 在内部开发中的效率，但不宜作为技术进展或产品公告。</p>
+    <p><span>解读</span>员工个人感性描述，不能作为Codex能力的客观评测。</p>
   </div>
           <div class="report-actions">
-            <span class="reading-time">预计阅读 60 秒</span>
+            <span class="reading-time">预计阅读 55 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-2b9863a568ad48" class="report-item ">
+        <span>05</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Anthropic</strong>
+            <em>模型/产品发布</em>
+            <b class="source-person"><small>X</small><span>Thariq</span></b>
+          </div>
+          <h3 class="social-original"><a href="https://x.com/trq212/status/2084387303959740449" target="_blank" rel="noreferrer">I think a lot of people don&#039;t realize- if you connect a Claude Connector (e.g. your gmail, calendar, slack, etc), Claude Code will also be able to use them, including in Artifacts. https://t.co/FZ1iSHqL5m</a></h3><p class="social-translation"><span>译文</span>我认为很多人没有意识到——如果你连接了Claude Connector（例如你的Gmail、日历、Slack等），Claude Code也将能够使用它们，包括在Artifacts中。https://t.co/FZ1iSHqL5m</p><div class="memory-note">
+    <p><span>解读</span>被低估的集成点，暗示 Anthropic 有意统一 Agent 工具链，值得关注后续使用场景。</p>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 65 秒</span>
+          </div>
+        </div>
+      </article><article id="event-843dee7463b01b" class="report-item ">
         <span>06</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI</strong>
+            <em>模型/产品发布</em>
+            <b class="source-person"><small>X</small><span>Guillermo Rauch</span></b>
+          </div>
+          <h3 class="social-original"><a href="https://x.com/rauchg/status/2084411344623902994" target="_blank" rel="noreferrer">faster, better, stronger. My highlights:
+
+0️⃣ Faster dev &amp; builds
+Shoutout to Fable for improving memory use, and the team for landing the incremental 𝚗𝚎𝚡𝚝 𝚋𝚞𝚒𝚕𝚍 cache.
+
+1️⃣ Instant navigations are 🔥
+The people wanted SPAs, they shall get SPAs. By turning on instant navs (which will soon be default), your agent is basically forced to make things fast.
+
+2️⃣ Agent-native DX
+You can still ship &quot;slow&quot; navs if you want, e.g. by blocking navs on server-side data fetching ala PHP olden days. But even then, your agent will be given *choices*, like setting up a for instant loading shells. Agents also get built-in versioned docs.
+
+This is our best release for agents by far, which will also make your upgrading journey very smooth. I&#039;ve had an easy time bumping my projects to 16.3 and enabling instant navs, having my agent migrate everything without issues.
+
+And so much more. 16.3 is more cost-efficient to serve, both in self-hosting and serverless environments. Faster to type-check… Thank you to the 90 contributors to this release!</a></h3><p class="social-translation"><span>译文</span>更快、更好、更强。我的亮点： 0️⃣ 更快的开发与构建 感谢 Fable 改进了内存使用，以及团队实现了增量 𝚗𝚎𝚡𝚝 𝚋𝚞𝚒𝚕𝚍 缓存。 1️⃣ 即时导航太棒了🔥 用户想要 SPA，他们就会得到 SPA。开启即时导航（即将成为默认设置）后，你的 agent 基本上会被迫让一切变快。 2️⃣ 面向 agent 的开发者体验 如果需要，你仍然可以推出“慢”导航，例如像旧时 PHP 那样阻塞导航以在服务端获取数据。但即便如此，你的 agent 也会获得*选择*，比如为即时加载壳进行设置。Agent 还内置了版本化的文档。 这是我们迄今为止对 agent 最佳的一次发布，也会让你的升级过程非常顺畅。我轻松地将我的项目升级到了 16.3 并启用了即时导航，agent 毫无问题地迁移了一切。 还有更多。16.3 在自托管和无服务器环境中提供服务都更具成本效益。类型检查更快……感谢本次发布的 90 位贡献者！</p>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 3 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-7203f3c822247c" class="report-item ">
+        <span>07</span>
         
         <div>
           <div class="report-item-meta">
@@ -2724,19 +3229,19 @@ time {
             <b class="source-person"><small>X</small><span>Swyx</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/swyx/status/2084185368950456421" target="_blank" rel="noreferrer">lol what are we even doing here anymore guys https://t.co/fqu3W2tMm4</a></h3><p class="social-translation"><span>译文</span>lol 我们到底还在做什么呢，伙计们？https://t.co/fqu3W2tMm4</p><div class="memory-note">
-    <p><span>解读</span>本质是对benchmark泛滥或研究内卷的讽刺，反映行业疲劳情绪。</p>
+    <p><span>解读</span>对AI社区过度炒作或方向迷失的民间反思，不构成事实性信息。</p>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
-        <span>07</span>
+      </article><article id="event-e80791ec5b6349" class="report-item ">
+        <span>08</span>
         
         <div>
           <div class="report-item-meta">
-            <strong>Peter Yang</strong>
-            <em>行业动态</em>
+            <strong>AI</strong>
+            <em>研究/Benchmark</em>
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2084289426012897433" target="_blank" rel="noreferrer">My 6 biggest takeaways from @karan4d, @NousResearch co-founder, on getting the most out of Hermes Agent:
@@ -2765,11 +3270,9 @@ Karan believes people should be able to run Hermes locally or use it with whiche
 
 Karan uses Hermes to mod Chao Garden, the virtual-pet mode inside Sonic Adventure 2. He asked it to bring a location from Sonic Adventure 1 into the sequel and add features that he’s always wanted since childhood.
 
-📌 Watch the full episode here: https://t.co/3E7IC0TzNr</a></h3><p class="social-translation"><span>译文</span>我从 @karan4d（@NousResearch 联合创始人）关于如何充分利用 Hermes Agent 的分享中总结的 6 个核心要点： 1. 个人代理中的“个人”不在于模型 而在于代理对你对话的记忆以及你与它共同构建的技能。Karan 几乎没注意到他何时切换了模型，因为他的 Hermes 已经积累了关于他的大量上下文。 2. 尝试不同的 Hermes 人格 使用 /personality 切换回复风格。学习新东西时试试“teacher”，想要简洁答案时用“concise”，甚至可以用“kawaii”或“pirate”找乐子。 3. 使用不同的代理来执行工作和评估工作 Karan 把“你说得完全正确”称为奖励劫持，因为模型在优化你的认可。让一个代理执行工作，再让一个没有先前上下文的崭新代理独立评估错误、薄弱假设和缺失证据。 4. 自我改进的代理需要自我清理 Hermes Curator 追踪技能使用情况，将不活跃的技能标记为过期，并将长期未使用的技能移入可恢复的存档。这防止了代理创建的技能无限制堆积。 5. 智能应该是一种公共物品 Karan 认为人们应该能够在本地运行 Hermes，或者使用任何最适合的模型搭配它。他担心未来只有少数公司主导 AI，而开源被挤压出局。 6. 大胆尝试，实现童年梦想 Karan 使用 Hermes 修改了《索尼克大冒险2》中的虚拟宠物模式 Chao Garden。他让代理将《索尼克大冒险1》中的某个地点带入续作，并添加了他从小就一直想要的功能。 📌 观看完整剧集：https://t.co/3E7IC0TzNr</p><div class="memory-note">
-    <p><span>解读</span>个人agent的核心不是模型，而是记忆和技能；独立评估agent是避免奖励黑客的实用方法。</p>
-  </div>
+📌 Watch the full episode here: https://t.co/3E7IC0TzNr</a></h3><p class="social-translation"><span>译文</span>我从 @karan4d（@NousResearch 联合创始人）关于如何充分利用 Hermes Agent 的分享中总结的 6 个核心要点： 1. 个人代理中的“个人”不在于模型 而在于代理对你对话的记忆以及你与它共同构建的技能。Karan 几乎没注意到他何时切换了模型，因为他的 Hermes 已经积累了关于他的大量上下文。 2. 尝试不同的 Hermes 人格 使用 /personality 切换回复风格。学习新东西时试试“teacher”，想要简洁答案时用“concise”，甚至可以用“kawaii”或“pirate”找乐子。 3. 使用不同的代理来执行工作和评估工作 Karan 把“你说得完全正确”称为奖励劫持，因为模型在优化你的认可。让一个代理执行工作，再让一个没有先前上下文的崭新代理独立评估错误、薄弱假设和缺失证据。 4. 自我改进的代理需要自我清理 Hermes Curator 追踪技能使用情况，将不活跃的技能标记为过期，并将长期未使用的技能移入可恢复的存档。这防止了代理创建的技能无限制堆积。 5. 智能应该是一种公共物品 Karan 认为人们应该能够在本地运行 Hermes，或者使用任何最适合的模型搭配它。他担心未来只有少数公司主导 AI，而开源被挤压出局。 6. 大胆尝试，实现童年梦想 Karan 使用 Hermes 修改了《索尼克大冒险2》中的虚拟宠物模式 Chao Garden。他让代理将《索尼克大冒险1》中的某个地点带入续作，并添加了他从小就一直想要的功能。 📌 观看完整剧集：https://t.co/3E7IC0TzNr</p>
           <div class="report-actions">
-            <span class="reading-time">预计阅读 5 分钟</span>
+            <span class="reading-time">预计阅读 4 分钟</span>
           </div>
         </div>
       </article>
@@ -2784,6 +3287,7 @@ Karan uses Hermes to mod Chao Garden, the virtual-pet mode inside Sonic Adventur
   const panels = [...document.querySelectorAll(".report-tab-panel")];
 
   setupTabs();
+  setupSearchTarget();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -2805,6 +3309,17 @@ Karan uses Hermes to mod Chao Garden, the virtual-pet mode inside Sonic Adventur
       panel.classList.toggle("is-active", panel.id === id);
     }
     if (updateHash) history.replaceState(null, "", "#" + id);
+  }
+
+  function setupSearchTarget() {
+    const targetId = new URLSearchParams(location.search).get("event");
+    if (!targetId) return;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const panel = target.closest(".report-tab-panel");
+    if (panel) activateTab(panel.id, false);
+    target.classList.add("is-search-target");
+    window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
   }
 })();
 </script>

@@ -619,7 +619,9 @@ time {
 .report-history {
   position: sticky;
   top: 18px;
+  max-height: calc(100vh - 36px);
   padding-top: 28px;
+  overflow-y: auto;
 }
 
 .report-history-title,
@@ -643,9 +645,109 @@ time {
   font-size: 18px;
 }
 
-.report-history nav {
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.report-search-quick {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 12px;
+  border: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.report-search-quick:focus-within,
+.report-search-quick.is-active {
+  border-color: var(--accent);
+}
+
+.report-search-quick input {
+  min-width: 0;
+  height: 38px;
+  padding: 0 8px;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 12px;
+}
+
+.report-search-quick button {
+  min-width: 50px;
+  border: 0;
+  border-left: 2px solid var(--line);
+  color: #f7efe1;
+  background: var(--ink);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.report-history-months {
   display: grid;
   gap: 8px;
+}
+
+.report-history-month {
+  min-width: 0;
+}
+
+.report-history-month summary {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  gap: 7px;
+  align-items: center;
+  padding: 9px 8px;
+  border-left: 4px solid rgba(27, 26, 23, 0.72);
+  background: rgba(255, 255, 255, 0.24);
+  cursor: pointer;
+  list-style: none;
+}
+
+.report-history-month summary::-webkit-details-marker {
+  display: none;
+}
+
+.report-history-month summary::before {
+  content: "+";
+  color: var(--accent-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.report-history-month[open] summary {
+  border-left-color: var(--accent);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.report-history-month[open] summary::before {
+  content: "−";
+}
+
+.report-history-month summary span {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.report-history-month summary em {
+  white-space: nowrap;
+}
+
+.report-history-month-items {
+  display: grid;
+  gap: 6px;
+  padding: 7px 0 2px 10px;
 }
 
 .report-history a {
@@ -989,6 +1091,157 @@ time {
   font-style: normal;
   font-size: 12px;
   color: var(--muted);
+}
+
+.search-hero {
+  margin-bottom: 18px;
+}
+
+.search-workspace {
+  min-width: 0;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border: 3px solid var(--line);
+  background: var(--surface);
+}
+
+.search-form:focus-within {
+  border-color: var(--accent);
+}
+
+.search-form input {
+  min-width: 0;
+  height: 58px;
+  padding: 0 18px;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 18px;
+  font-weight: 720;
+}
+
+.search-form button {
+  min-width: 92px;
+  border: 0;
+  border-left: 3px solid var(--line);
+  color: #f7efe1;
+  background: var(--ink);
+  font-weight: 900;
+}
+
+.search-filters {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.search-filters[hidden] {
+  display: none;
+}
+
+.search-filters button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.34);
+  font-size: 12px;
+  font-weight: 820;
+}
+
+.search-filters button.is-active {
+  border-color: var(--accent);
+  color: #f7efe1;
+  background: var(--accent);
+}
+
+.search-status {
+  min-height: 24px;
+  margin: 16px 0 8px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.search-results {
+  display: grid;
+  gap: 10px;
+}
+
+.search-result {
+  padding: 16px 18px;
+  border: 2px solid rgba(27, 26, 23, 0.76);
+  border-left: 6px solid var(--accent);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.search-result-meta,
+.search-result-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  align-items: center;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 820;
+}
+
+.search-result-meta span,
+.search-result-meta strong {
+  color: var(--accent-strong);
+}
+
+.search-result h2 {
+  margin: 9px 0 8px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.search-result h2 a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.search-result p {
+  margin-bottom: 12px;
+  color: #3f3b34;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.search-result-footer {
+  justify-content: space-between;
+}
+
+.search-result-footer em {
+  font-style: normal;
+}
+
+.search-result mark {
+  padding: 0 2px;
+  color: inherit;
+  background: #f5d88b;
+}
+
+.report-item,
+.paper-digest-item {
+  scroll-margin-top: 96px;
+}
+
+.report-item.is-search-target,
+.paper-digest-item.is-search-target {
+  outline: 4px solid #d9a51f;
+  outline-offset: 3px;
 }
 
 .market-digest {
@@ -1942,17 +2195,31 @@ time {
 
   .report-history {
     position: static;
+    max-height: none;
     padding-top: 18px;
+    overflow: visible;
   }
 
-  .report-history nav {
+  .report-history-months {
     display: flex;
+    align-items: flex-start;
     gap: 8px;
     overflow-x: auto;
     padding-bottom: 4px;
   }
 
-  .report-history a {
+  .report-history-month {
+    flex: 0 0 min(340px, calc(100vw - 60px));
+  }
+
+  .report-history-month-items {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 7px 0 3px 10px;
+  }
+
+  .report-history-month-items a {
     min-width: 146px;
   }
 
@@ -1997,17 +2264,22 @@ time {
     font-size: 15px;
   }
 
-  .report-history nav {
+  .report-search-quick {
+    margin-bottom: 9px;
+  }
+
+  .report-history-months {
     margin: 0 -12px;
     padding: 0 12px 6px;
     scrollbar-width: none;
   }
 
-  .report-history nav::-webkit-scrollbar {
+  .report-history-months::-webkit-scrollbar,
+  .report-history-month-items::-webkit-scrollbar {
     display: none;
   }
 
-  .report-history a {
+  .report-history-month-items a {
     min-width: 118px;
     padding: 8px 8px;
     border-left-width: 3px;
@@ -2039,6 +2311,48 @@ time {
 
   .report-topline span:last-child {
     display: none;
+  }
+
+  .search-hero {
+    margin-bottom: 12px;
+  }
+
+  .search-form {
+    border-width: 2px;
+  }
+
+  .search-form input {
+    height: 50px;
+    padding: 0 12px;
+    font-size: 16px;
+  }
+
+  .search-form button {
+    min-width: 70px;
+    border-left-width: 2px;
+  }
+
+  .search-filters {
+    margin-right: -12px;
+    padding-right: 12px;
+    scrollbar-width: none;
+  }
+
+  .search-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .search-result {
+    padding: 13px 12px;
+    border-left-width: 4px;
+  }
+
+  .search-result h2 {
+    font-size: 18px;
+  }
+
+  .search-result p {
+    font-size: 14px;
   }
 
   .report-hero {
@@ -2300,101 +2614,264 @@ time {
       <span>ARCHIVE</span>
       <strong>历史日报</strong>
     </div>
-    <nav aria-label="历史日报">
-      <a href="/ai-daily/2026-08-05" class="">
-        <time>2026-08-05</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-08-04" class="">
-        <time>2026-08-04</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-08-03" class="">
-        <time>2026-08-03</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-08-02" class="">
-        <time>2026-08-02</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-08-01" class="">
-        <time>2026-08-01</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-31" class="">
-        <time>2026-07-31</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-30" class="">
-        <time>2026-07-30</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-29" class="">
-        <time>2026-07-29</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-28" class="">
-        <time>2026-07-28</time>
-        <em>16 条</em>
-      </a><a href="/ai-daily/2026-07-27" class="">
-        <time>2026-07-27</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-26" class="">
-        <time>2026-07-26</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-25" class="">
-        <time>2026-07-25</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-24" class="">
-        <time>2026-07-24</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-23" class="">
-        <time>2026-07-23</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-22" class="">
-        <time>2026-07-22</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-21" class="">
-        <time>2026-07-21</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-20" class="">
-        <time>2026-07-20</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-19" class="">
-        <time>2026-07-19</time>
-        <em>13 条</em>
-      </a><a href="/ai-daily/2026-07-18" class="">
-        <time>2026-07-18</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-17" class="">
-        <time>2026-07-17</time>
-        <em>10 条</em>
-      </a><a href="/ai-daily/2026-07-16" class="">
-        <time>2026-07-16</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-15" class="">
-        <time>2026-07-15</time>
-        <em>16 条</em>
-      </a><a href="/ai-daily/2026-07-14" class="">
-        <time>2026-07-14</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-13" class="">
-        <time>2026-07-13</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-12" class="">
-        <time>2026-07-12</time>
-        <em>9 条</em>
-      </a><a href="/ai-daily/2026-07-11" class="">
-        <time>2026-07-11</time>
-        <em>15 条</em>
-      </a><a href="/ai-daily/2026-07-10" class="">
-        <time>2026-07-10</time>
-        <em>11 条</em>
-      </a><a href="/ai-daily/2026-07-09" class="">
-        <time>2026-07-09</time>
-        <em>16 条</em>
-      </a><a href="/ai-daily/2026-07-08" class="">
-        <time>2026-07-08</time>
-        <em>14 条</em>
-      </a><a href="/ai-daily/2026-07-07" class="">
-        <time>2026-07-07</time>
-        <em>18 条</em>
-      </a><a href="/ai-daily/2026-06-01" class="is-active">
-        <time>2026-06-01</time>
-        <em>11 条</em>
-      </a>
+    <form class="report-search-quick " action="/ai-daily/search/" method="get" role="search">
+      <label class="visually-hidden" for="report-search-quick-input">搜索历史日报</label>
+      <input id="report-search-quick-input" type="search" name="q" placeholder="公司、模型或技术" autocomplete="off">
+      <button type="submit">搜索</button>
+    </form>
+    <nav class="report-history-months" aria-label="按月份归类的历史日报">
+      <details class="report-history-month" >
+        <summary>
+          <span>2026 年 8 月</span>
+          <em>5 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-08-05" class="" aria-label="2026-08-05，13 条">
+            <time datetime="2026-08-05">5 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-04" class="" aria-label="2026-08-04，14 条">
+            <time datetime="2026-08-04">4 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-03" class="" aria-label="2026-08-03，14 条">
+            <time datetime="2026-08-03">3 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-02" class="" aria-label="2026-08-02，14 条">
+            <time datetime="2026-08-02">2 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-01" class="" aria-label="2026-08-01，13 条">
+            <time datetime="2026-08-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 7 月</span>
+          <em>31 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-07-31" class="" aria-label="2026-07-31，15 条">
+            <time datetime="2026-07-31">31 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-30" class="" aria-label="2026-07-30，14 条">
+            <time datetime="2026-07-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-29" class="" aria-label="2026-07-29，15 条">
+            <time datetime="2026-07-29">29 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-28" class="" aria-label="2026-07-28，16 条">
+            <time datetime="2026-07-28">28 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-27" class="" aria-label="2026-07-27，13 条">
+            <time datetime="2026-07-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-26" class="" aria-label="2026-07-26，15 条">
+            <time datetime="2026-07-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-25" class="" aria-label="2026-07-25，15 条">
+            <time datetime="2026-07-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-24" class="" aria-label="2026-07-24，14 条">
+            <time datetime="2026-07-24">24 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-23" class="" aria-label="2026-07-23，13 条">
+            <time datetime="2026-07-23">23 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-22" class="" aria-label="2026-07-22，13 条">
+            <time datetime="2026-07-22">22 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-21" class="" aria-label="2026-07-21，14 条">
+            <time datetime="2026-07-21">21 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-20" class="" aria-label="2026-07-20，13 条">
+            <time datetime="2026-07-20">20 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-19" class="" aria-label="2026-07-19，13 条">
+            <time datetime="2026-07-19">19 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-18" class="" aria-label="2026-07-18，15 条">
+            <time datetime="2026-07-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-17" class="" aria-label="2026-07-17，10 条">
+            <time datetime="2026-07-17">17 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-07-16" class="" aria-label="2026-07-16，15 条">
+            <time datetime="2026-07-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-15" class="" aria-label="2026-07-15，16 条">
+            <time datetime="2026-07-15">15 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-14" class="" aria-label="2026-07-14，15 条">
+            <time datetime="2026-07-14">14 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-13" class="" aria-label="2026-07-13，14 条">
+            <time datetime="2026-07-13">13 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-12" class="" aria-label="2026-07-12，9 条">
+            <time datetime="2026-07-12">12 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-07-11" class="" aria-label="2026-07-11，15 条">
+            <time datetime="2026-07-11">11 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-10" class="" aria-label="2026-07-10，11 条">
+            <time datetime="2026-07-10">10 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-09" class="" aria-label="2026-07-09，16 条">
+            <time datetime="2026-07-09">9 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-08" class="" aria-label="2026-07-08，14 条">
+            <time datetime="2026-07-08">8 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-07" class="" aria-label="2026-07-07，18 条">
+            <time datetime="2026-07-07">7 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-07-06" class="" aria-label="2026-07-06，13 条">
+            <time datetime="2026-07-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-05" class="" aria-label="2026-07-05，15 条">
+            <time datetime="2026-07-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-04" class="" aria-label="2026-07-04，16 条">
+            <time datetime="2026-07-04">4 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-03" class="" aria-label="2026-07-03，15 条">
+            <time datetime="2026-07-03">3 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-02" class="" aria-label="2026-07-02，11 条">
+            <time datetime="2026-07-02">2 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-01" class="" aria-label="2026-07-01，13 条">
+            <time datetime="2026-07-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" open>
+        <summary>
+          <span>2026 年 6 月</span>
+          <em>29 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-06-30" class="" aria-label="2026-06-30，14 条">
+            <time datetime="2026-06-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-29" class="" aria-label="2026-06-29，12 条">
+            <time datetime="2026-06-29">29 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-28" class="" aria-label="2026-06-28，13 条">
+            <time datetime="2026-06-28">28 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-27" class="" aria-label="2026-06-27，13 条">
+            <time datetime="2026-06-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-26" class="" aria-label="2026-06-26，11 条">
+            <time datetime="2026-06-26">26 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-25" class="" aria-label="2026-06-25，15 条">
+            <time datetime="2026-06-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-24" class="" aria-label="2026-06-24，15 条">
+            <time datetime="2026-06-24">24 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-23" class="" aria-label="2026-06-23，15 条">
+            <time datetime="2026-06-23">23 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-22" class="" aria-label="2026-06-22，11 条">
+            <time datetime="2026-06-22">22 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-21" class="" aria-label="2026-06-21，11 条">
+            <time datetime="2026-06-21">21 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-20" class="" aria-label="2026-06-20，14 条">
+            <time datetime="2026-06-20">20 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-19" class="" aria-label="2026-06-19，15 条">
+            <time datetime="2026-06-19">19 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-18" class="" aria-label="2026-06-18，15 条">
+            <time datetime="2026-06-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-17" class="" aria-label="2026-06-17，15 条">
+            <time datetime="2026-06-17">17 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-16" class="" aria-label="2026-06-16，15 条">
+            <time datetime="2026-06-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-15" class="" aria-label="2026-06-15，12 条">
+            <time datetime="2026-06-15">15 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-14" class="" aria-label="2026-06-14，14 条">
+            <time datetime="2026-06-14">14 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-13" class="" aria-label="2026-06-13，15 条">
+            <time datetime="2026-06-13">13 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-12" class="" aria-label="2026-06-12，15 条">
+            <time datetime="2026-06-12">12 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-10" class="" aria-label="2026-06-10，15 条">
+            <time datetime="2026-06-10">10 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-09" class="" aria-label="2026-06-09，15 条">
+            <time datetime="2026-06-09">9 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-08" class="" aria-label="2026-06-08，15 条">
+            <time datetime="2026-06-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-07" class="" aria-label="2026-06-07，12 条">
+            <time datetime="2026-06-07">7 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-06" class="" aria-label="2026-06-06，13 条">
+            <time datetime="2026-06-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-05" class="" aria-label="2026-06-05，15 条">
+            <time datetime="2026-06-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-04" class="" aria-label="2026-06-04，15 条">
+            <time datetime="2026-06-04">4 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-03" class="" aria-label="2026-06-03，16 条">
+            <time datetime="2026-06-03">3 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-06-02" class="" aria-label="2026-06-02，15 条">
+            <time datetime="2026-06-02">2 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-01" class="is-active" aria-label="2026-06-01，11 条">
+            <time datetime="2026-06-01">1 日</time>
+            <em>11 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 5 月</span>
+          <em>8 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-05-31" class="" aria-label="2026-05-31，14 条">
+            <time datetime="2026-05-31">31 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-05-30" class="" aria-label="2026-05-30，15 条">
+            <time datetime="2026-05-30">30 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-29" class="" aria-label="2026-05-29，9 条">
+            <time datetime="2026-05-29">29 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-05-28" class="" aria-label="2026-05-28，15 条">
+            <time datetime="2026-05-28">28 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-27" class="" aria-label="2026-05-27，15 条">
+            <time datetime="2026-05-27">27 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-26" class="" aria-label="2026-05-26，15 条">
+            <time datetime="2026-05-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-25" class="" aria-label="2026-05-25，10 条">
+            <time datetime="2026-05-25">25 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-05-22" class="" aria-label="2026-05-22，8 条">
+            <time datetime="2026-05-22">22 日</time>
+            <em>8 条</em>
+          </a>
+        </div>
+      </details>
     </nav>
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
@@ -2443,7 +2920,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item ">
+      <article id="event-1f47a6eb7de064" class="report-item ">
         <span>01</span>
         
         <div>
@@ -2461,7 +2938,7 @@ time {
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-14a2e683bacdf2" class="report-item ">
         <span>02</span>
         
         <div>
@@ -2477,7 +2954,7 @@ time {
             <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-49c46aa7beb49d" class="report-item ">
         <span>03</span>
         
         <div>
@@ -2493,7 +2970,7 @@ time {
             <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
-      </article><article class="report-item has-thumbnail">
+      </article><article id="event-6744fad3496b79" class="report-item has-thumbnail">
         <span>04</span>
         <div class="report-thumb"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/05/268553_We_went_looking_for_the_weed_vape_that_gives_you_Bitcoin_for_smoking_CVirginia2.jpg?quality=90&amp;strip=all&amp;crop=0,0,100,100" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -2509,7 +2986,7 @@ time {
             <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
-      </article><article class="report-item has-thumbnail">
+      </article><article id="event-e12f61cc390da2" class="report-item has-thumbnail">
         <span>05</span>
         <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/6/201f7d96-7b15-4245-a6a5-9e2070ed921b.jpg?x-bce-process=image/format,f_auto" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -2549,7 +3026,7 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 qwen3.6-plus 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article class="paper-digest-item has-thumbnail">
+      <article id="paper-1" class="paper-digest-item has-thumbnail">
         <span>01</span>
         <img src="https://arxiv.org/html/2605.29801v1/x3.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
@@ -2557,7 +3034,7 @@ time {
           <p class="ai-summary"><span>AI Summary</span>提出轻量级智能体安全对齐框架，构建分类引导的数据引擎，仅用千级样本训练出多尺寸模型，并部署为实时在线安全护栏。</p>
           <div><em>智能体安全</em><em>模型对齐</em><em>实时护栏</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-2" class="paper-digest-item has-thumbnail">
         <span>02</span>
         <img src="https://arxiv.org/html/2605.29250v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
@@ -2565,7 +3042,7 @@ time {
           <p class="ai-summary"><span>AI Summary</span>提出跨文本、表格与图数据库的异构知识统一检索框架，通过分发原生查询至对应引擎，实现保留结构特性的自然语言检索。</p>
           <div><em>信息检索</em><em>异构数据融合</em><em>RAG基础设施</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-3" class="paper-digest-item has-thumbnail">
         <span>03</span>
         <img src="https://arxiv.org/html/2605.25378v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
@@ -2573,7 +3050,7 @@ time {
           <p class="ai-summary"><span>AI Summary</span>提出多教师策略蒸馏框架，将多达50种特效LoRA与少步生成能力融合至单一LoRA，解决参数干扰并降低部署开销。</p>
           <div><em>图像编辑</em><em>LoRA蒸馏</em><em>模型部署</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-4" class="paper-digest-item has-thumbnail">
         <span>04</span>
         <img src="https://arxiv.org/html/2605.30263v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
@@ -2581,7 +3058,7 @@ time {
           <p class="ai-summary"><span>AI Summary</span>提供端到端开源框架，将双向视频生成模型转化为支持相机控制、低延迟自回归推理的实时交互式世界模型。</p>
           <div><em>视频生成</em><em>世界模型</em><em>开源框架</em></div>
         </div>
-      </article><article class="paper-digest-item has-thumbnail">
+      </article><article id="paper-5" class="paper-digest-item has-thumbnail">
         <span>05</span>
         <img src="https://arxiv.org/html/2605.30346v1/x2.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
@@ -2605,7 +3082,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article class="report-item ">
+      <article id="event-45953ba0e378ce" class="report-item ">
         <span>01</span>
         
         <div>
@@ -2621,7 +3098,7 @@ time {
             <span class="reading-time">预计阅读 50 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-c994d0f130583e" class="report-item ">
         <span>02</span>
         
         <div>
@@ -2643,7 +3120,7 @@ When AI makes it possible to do more of this, investment goes back into the busi
             <span class="reading-time">预计阅读 4 分钟</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-eb43030b215219" class="report-item ">
         <span>03</span>
         
         <div>
@@ -2661,7 +3138,7 @@ When AI makes it possible to do more of this, investment goes back into the busi
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-a18edd8134611a" class="report-item ">
         <span>04</span>
         
         <div>
@@ -2677,7 +3154,7 @@ Time to go /fast https://t.co/MdRBfp8Od0</a></h3><p class="social-translation"><
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-bb21d44830e011" class="report-item ">
         <span>05</span>
         
         <div>
@@ -2693,7 +3170,7 @@ She doesn’t want to give up until she beats Joyce B 🔥 https://t.co/Eq3kNxXs
             <span class="reading-time">预计阅读 40 秒</span>
           </div>
         </div>
-      </article><article class="report-item ">
+      </article><article id="event-9b4fe4161b4227" class="report-item ">
         <span>06</span>
         
         <div>
@@ -2719,6 +3196,7 @@ She doesn’t want to give up until she beats Joyce B 🔥 https://t.co/Eq3kNxXs
   const panels = [...document.querySelectorAll(".report-tab-panel")];
 
   setupTabs();
+  setupSearchTarget();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -2740,6 +3218,17 @@ She doesn’t want to give up until she beats Joyce B 🔥 https://t.co/Eq3kNxXs
       panel.classList.toggle("is-active", panel.id === id);
     }
     if (updateHash) history.replaceState(null, "", "#" + id);
+  }
+
+  function setupSearchTarget() {
+    const targetId = new URLSearchParams(location.search).get("event");
+    if (!targetId) return;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    const panel = target.closest(".report-tab-panel");
+    if (panel) activateTab(panel.id, false);
+    target.classList.add("is-search-target");
+    window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
   }
 })();
 </script>
