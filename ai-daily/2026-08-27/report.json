@@ -1,0 +1,4382 @@
+{
+  "date": "2026-08-27",
+  "version": "V4",
+  "title": "AI 行业简报 2026-08-27",
+  "generated_at": "2026-08-27T00:40:59.995Z",
+  "event_count": 186,
+  "item_count": 13,
+  "summary": "今天筛出 13 个事件：大厂动态 5 条，技术进展 2 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。",
+  "sections": {
+    "today_focus": [
+      {
+        "event_id": "2358d9d8949c8b",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Warp：How Warp builds self-improving agents on Claude",
+        "ai_summary": "Warp 在 Claude 平台上用 Agent Skills 构建自我改进 agent：内层技能执行任务，外层 improver 技能定期汇总人类反馈，提出对技能文件的小幅修改，经 PR 审查合并后持续优化 age。",
+        "brief": "Warp 在 Claude 平台上用 Agent Skills 构建自我改进 agent：内层技能执行任务，外层 improver 技能定期汇总人类反馈，提出对技能文件的小幅修改，经 PR 审查合并后持续优化 age。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Warp",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 87,
+        "evidence_urls": [
+          "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude"
+        ],
+        "evidence_titles": [
+          "How Warp builds self-improving agents on Claude"
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8f1a9a1b33f40618a9d59a_selfimprove-loop.jpg",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "Claude Blog",
+        "source_kinds": [
+          "claude_blog"
+        ],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 9,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是把人类反馈沉淀为可版本控制的技能文件，由 improver agent 定期改写 base skill，形成可审查的自我改进闭环。",
+        "reading_questions": [
+          "这个模式在非代码审查场景（如客服、数据分析）是否同样有效？",
+          "低质量或恶意的人类反馈如何过滤，会不会让技能越改越差？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "为 agent 长期自我改进提供了一种低门槛、可落地的工程范式，且由 Anthropic 官方博客背书，可能影响 agent 开发实践。",
+          "skepticism": "这是 Anthropic 官方案例文章，效果数据来自 Warp 自述，自我改进相对人工调优的实际增益缺乏独立评测。",
+          "watch_points": [
+            "Warp 是否公开可复现的自我改进效果数据（如代码审查准确率、误报率变化）",
+            "该模式能否被其他 Claude 生态开发者复用，形成通用实践",
+            "improver 自动生成的技能修改在复杂任务中是否会出现错误累积或反馈污染"
+          ],
+          "related_sources": [
+            {
+              "title": "How Warp builds self-improving agents on Claude",
+              "url": "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Warp",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "partner",
+              "evidence": "文章发布在 Claude Blog，Warp 基于 Claude Platform 构建，Anthropic 是平台提供方和文章发布方"
+            },
+            {
+              "name": "Claude",
+              "role": "model",
+              "evidence": "Warp 的 agent 基于 Claude 模型构建，文章标题即 'on Claude'"
+            },
+            {
+              "name": "Claude Code",
+              "role": "product",
+              "evidence": "Warp 中已运行 1000 万次 Claude Code 会话，是 agent 的执行环境"
+            },
+            {
+              "name": "Agent Skills",
+              "role": "tool",
+              "evidence": "自我改进框架的核心机制，技能文件是知识编码方式"
+            },
+            {
+              "name": "Oz",
+              "role": "tool",
+              "evidence": "Warp 的内部 agent 编排平台，improver 技能以定时任务运行其中"
+            },
+            {
+              "name": "Zach Lloyd",
+              "role": "source_author",
+              "evidence": "Warp CEO，文章多次引用其关于技能设计和反馈机制的观点"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 Warp 而非 Anthropic，内容是其基于 Claude 的工程实践分享，属于公司案例更新，不是模型发布或基准评测。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "2e7d82acd9ec04",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "MiniMax：MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限",
+        "ai_summary": "MiniMax 公告修订与阿里云的主 API 服务协议及云计算服务协议项下 2026-2028 年度持续关连交易上限，涉及向阿里提供 API 服务及采购云产品。",
+        "brief": "MiniMax 公告修订与阿里云的主 API 服务协议及云计算服务协议项下 2026-2028 年度持续关连交易上限，涉及向阿里提供 API 服务及采购云产品。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "MiniMax",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 86,
+        "evidence_urls": [
+          "https://36kr.com/newsflashes/3957030026116232?f=rss"
+        ],
+        "evidence_titles": [
+          "MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限"
+        ],
+        "evidence_summaries": [
+          "MINIMAX于8月26日公告，根据主API服务协议，公司同意向阿里巴巴集团运营的业务提供API服务，期限自上市日期起至2028年12月31日止。根据阿里云计算服务协议，公司同意向阿里云计算有限公司购买若干云产品及服务，期限自上市日期起至2028年12月31日止。于8月26日（交易时段后），公司与阿里云计算有限公司订立主API服务协议补充协议及阿里云计算服务协议补充协议，以修订主API服务协议及阿里云计算服务协议项下截至2026年、2027年及2028年12月31日止年度的持续关连交易的现有年度上限。（财联社）"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "36Kr AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "这是上市公司对关联交易额度的例行调整，反映 MiniMax 对阿里云资源采购和 API 业务规模的预期变化，本身不构成技术或产品进展。",
+        "reading_questions": [
+          "这次上限调整是上调还是下调？",
+          "对 MiniMax 的云成本结构意味着什么？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "minimax",
+            "label": "MiniMax"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "作为港股上市公司，MiniMax 调整与阿里云的持续关连交易上限，可能反映其云资源采购和 API 业务规模预期变化，属于公司治理层面的常规动作。",
+          "skepticism": "公告未披露修订后上限的具体金额和调整方向，不能据此推断 MiniMax 实际业务增长或成本变化。",
+          "watch_points": [
+            "修订后年度上限的具体金额及调整方向",
+            "MiniMax 对阿里云采购规模变化是否反映其训练/推理成本结构",
+            "后续财报中关联交易实际发生额与上限的差距"
+          ],
+          "related_sources": [
+            {
+              "title": "MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限",
+              "url": "https://36kr.com/newsflashes/3957030026116232?f=rss"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "MiniMax",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "阿里巴巴集团",
+              "role": "partner",
+              "evidence": "MiniMax 根据主 API 服务协议向阿里巴巴集团运营的业务提供 API 服务，阿里是协议对手方。"
+            },
+            {
+              "name": "阿里云计算有限公司",
+              "role": "partner",
+              "evidence": "MiniMax 根据阿里云计算服务协议向阿里云购买云产品及服务，阿里云是供应商。"
+            }
+          ],
+          "event_type": "company_or_industry_update",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 MiniMax 发布的关联交易公告，阿里只是协议对手方，因此 primary_entity 是 MiniMax；事件属于公司财务/治理调整，不是产品发布、研究或行业观点。"
+        }
+      },
+      {
+        "event_id": "bdce26c905605e",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Amazon Bedrock AgentCore：Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations",
+        "ai_summary": "AWS发布Bedrock AgentCore Evaluations，通过OpenTelemetry遥测统一评估不同agent框架，支持LangGraph、LlamaIndex、OpenAI Agents SDK等。",
+        "brief": "AWS发布Bedrock AgentCore Evaluations，通过OpenTelemetry遥测统一评估不同agent框架，支持LangGraph、LlamaIndex、OpenAI Agents SDK等。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Amazon Bedrock AgentCore",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 85,
+        "evidence_urls": [
+          "https://aws.amazon.com/blogs/machine-learning/evaluate-any-agent-framework-with-amazon-bedrock-agentcore-evaluations"
+        ],
+        "evidence_titles": [
+          "Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations"
+        ],
+        "evidence_summaries": [
+          "Amazon Bedrock AgentCore Evaluations decouples agent evaluation from the framework you build on. As long as your agent emits OpenTelemetry telemetry, the service can score it, whether you use LangGraph, LlamaIndex, the OpenAI Agents SDK, Google ADK, the Claude Agent SDK, or Strands Agents. This post explains how the framework-agnostic contract works."
+        ],
+        "thumbnail_url": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/24/ML-21721-1.png",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "AWS Machine Learning Blog",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "把评估从框架绑定中解耦，用OpenTelemetry作为通用语言，是agent工程化的务实一步。",
+        "reading_questions": [
+          "这个方案能否真正替代人工评估？",
+          "对现有agent工作流迁移成本多高？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "为多框架agent提供统一评估标准，降低评估工具碎片化成本。",
+          "skepticism": "实际效果取决于各框架OpenTelemetry instrumentation的成熟度和数据完整性。",
+          "watch_points": [
+            "其他框架是否跟进OpenInference规范",
+            "评估结果与人工评估的一致性",
+            "是否支持自定义评估器"
+          ],
+          "related_sources": [
+            {
+              "title": "Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations",
+              "url": "https://aws.amazon.com/blogs/machine-learning/evaluate-any-agent-framework-with-amazon-bedrock-agentcore-evaluations"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Amazon Bedrock AgentCore",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "OpenAI",
+              "role": "product",
+              "evidence": "其Agents SDK作为被支持的框架之一被提及"
+            },
+            {
+              "name": "LangGraph",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "LlamaIndex",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "Google ADK",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "Claude Agent SDK",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "Strands Agents",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "OpenTelemetry",
+              "role": "tool",
+              "evidence": "作为评估所依赖的遥测标准被提及"
+            },
+            {
+              "name": "Arize AI",
+              "role": "other",
+              "evidence": "作为OpenInference规范的维护者被提及"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章是AWS官方博客介绍其AgentCore Evaluations产品，主语是AWS而非OpenAI，OpenAI仅作为被支持的SDK之一被提及。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "83fe0ea49437a1",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Z.ai（智谱）：Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model",
+        "ai_summary": "Z.ai 确认是匿名开源模型 Ox Alpha 的幕后实验室，该模型在 OpenRouter 匿名发布并登顶基准测试，权重将于周三发布，是 GLM 系列最新迭代，定位编码与 agentic 工作负载。",
+        "brief": "Z.ai 确认是匿名开源模型 Ox Alpha 的幕后实验室，该模型在 OpenRouter 匿名发布并登顶基准测试，权重将于周三发布，是 GLM 系列最新迭代，定位编码与 agentic 工作负载。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Z.ai（智谱）",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 85,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/08/26/surprise-z-ai-is-the-ai-lab-behind-the-mysterious-ox-alpha-model"
+        ],
+        "evidence_titles": [
+          "Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model"
+        ],
+        "evidence_summaries": [
+          "Z.ai confirms it is behind Ox Alpha, the mysterious open AI model topping benchmarks and leaderboards, and its weights are set to be released soon."
+        ],
+        "thumbnail_url": "https://techcrunch.com/wp-content/uploads/2026/08/runable-co-founders-umesh-saksham.jpg",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 12,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 9,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "匿名登顶再自曝，本质是智谱以开源推理模型向闭源前沿厂商发起正面冲击，营销与实力兼备。",
+        "reading_questions": [
+          "Ox Alpha 的评测提升来自架构创新，还是训练数据与推理预算？",
+          "匿名发布策略是否将成为中国模型厂商冲击海外市场的新常态？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "智谱",
+            "label": "智谱"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "这标志着中国开源模型以匿名方式冲击前沿基准，直接威胁 OpenAI、Anthropic 等闭源厂商的市场份额。",
+          "skepticism": "Ox Alpha 的基准成绩是否在公平条件下取得，实际能力是否与榜单匹配，需权重发布后独立验证。",
+          "watch_points": [
+            "权重发布后社区复现与第三方评测结果",
+            "Ox Alpha 在长时程 agentic 任务上的实际表现",
+            "对 OpenAI、Anthropic 定价与市场份额的潜在影响"
+          ],
+          "related_sources": [
+            {
+              "title": "Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model",
+              "url": "https://techcrunch.com/2026/08/26/surprise-z-ai-is-the-ai-lab-behind-the-mysterious-ox-alpha-model"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Z.ai（智谱）",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "Ox Alpha",
+              "role": "product",
+              "evidence": "Z.ai 确认其为 GLM 系列最新迭代，是文章讨论的核心模型"
+            },
+            {
+              "name": "OpenRouter",
+              "role": "other",
+              "evidence": "Ox Alpha 匿名发布并登顶基准测试的平台"
+            },
+            {
+              "name": "Hugging Face",
+              "role": "customer",
+              "evidence": "文章提到 Hugging Face 最近使用 Ox Alpha 防御 OpenAI agents 攻击"
+            },
+            {
+              "name": "OpenAI",
+              "role": "competitor",
+              "evidence": "文章将其列为 Ox Alpha 可能抢占市场份额的闭源前沿公司"
+            },
+            {
+              "name": "Anthropic",
+              "role": "competitor",
+              "evidence": "文章将其列为 Ox Alpha 可能抢占市场份额的闭源前沿公司，且 GLM-5.3 与 Fable 5 竞争"
+            },
+            {
+              "name": "GLM-5.3",
+              "role": "product",
+              "evidence": "Z.ai 本月早些时候发布的上一代模型，与 Anthropic Fable 5 竞争"
+            },
+            {
+              "name": "Fable 5",
+              "role": "competitor",
+              "evidence": "Anthropic 的模型，用于与 GLM-5.3 对比"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 Z.ai，核心动作是确认 Ox Alpha 身份并宣布发布权重，属于公司产品发布；容易误判为以 Ox Alpha 为主体的基准评测，但实际是公司确认信息。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "607abd196d804f",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "豆包：深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案",
+        "ai_summary": "量子位实测豆包工作：与飞书深度打通，可自动完成品牌物料制作、采购比选、群聊信息梳理等任务，并支持企业账号直接登录，强调企业上下文是Agent竞争分水岭。",
+        "brief": "量子位实测豆包工作：与飞书深度打通，可自动完成品牌物料制作、采购比选、群聊信息梳理等任务，并支持企业账号直接登录，强调企业上下文是Agent竞争分水岭。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "豆包",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 84,
+        "evidence_urls": [
+          "https://www.qbitai.com/2026/08/479348.html"
+        ],
+        "evidence_titles": [
+          "深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案"
+        ],
+        "evidence_summaries": [
+          "shui jiang shuai xian sha"
+        ],
+        "thumbnail_url": "https://i.qbitai.com/wp-content/uploads/2026/08/ef388c19d717f96a15081885aa54b0fa.webp",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "量子位",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 14,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "办公Agent基础能力趋同后，真正的壁垒在于对企业上下文的理解和权限体系的原生集成。豆包工作借飞书生态抢跑，但终局未定。",
+        "reading_questions": [
+          "企业上下文集成是否真的构成长期壁垒，还是会被标准化接口快速抹平？",
+          "豆包工作对飞书数据的读取权限边界如何界定，企业是否愿意开放核心数据？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "豆包",
+            "label": "豆包"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": {
+          "importance": "豆包工作与飞书原生打通，标志着办公Agent从通用工具竞争转向企业上下文与组织权限体系的竞争。",
+          "skepticism": "文章为量子位实测，结论偏正面，缺乏与竞品在同等条件下的量化对比；'最接近终局'是媒体判断而非可验证事实。",
+          "watch_points": [
+            "豆包工作能否在企业真实环境中稳定处理复杂权限与数据安全场景。",
+            "飞书之外，豆包工作是否支持其他企业协作平台（如钉钉、Teams）。",
+            "竞品（如Claude+Slack、WorkBuddy）在企业上下文集成上的跟进速度。"
+          ],
+          "related_sources": [
+            {
+              "title": "深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案 – 量子位",
+              "url": "https://www.qbitai.com/2026/08/479348.html"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "豆包",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "飞书",
+              "role": "partner",
+              "evidence": "豆包工作与飞书深度打通，支持企业账号直接登录，飞书提供消息、文档、多维表格等企业上下文。"
+            },
+            {
+              "name": "OpenClaw",
+              "role": "competitor",
+              "evidence": "文章对比OpenClaw等CLI Agent需要安装插件、配置权限，而豆包工作原生打通飞书。"
+            },
+            {
+              "name": "Claude Tag",
+              "role": "competitor",
+              "evidence": "文章提到Claude Tag选择Slack，与豆包工作接入飞书形成头部Agent路线对比。"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主语是豆包工作（豆包），飞书是合作方，OpenClaw等是竞品对比；内容为第三方产品实测，故归为technical_progress而非company_updates。"
+        },
+        "thumbnail_source": "article img"
+      }
+    ],
+    "worth_tracking": [
+      {
+        "event_id": "7f789b73e51eb7",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "Google DeepMind：Intelligent transcription with Gemini 3.5 Transcribe",
+        "ai_summary": "Google发布Gemini 3.5 Transcribe语音转文字模型，支持85+语言、自动去除填充词、自定义词汇和多说话人识别，已通过Gemini API开放，并在macOS应用和Android Rambler上线。",
+        "brief": "Google发布Gemini 3.5 Transcribe语音转文字模型，支持85+语言、自动去除填充词、自定义词汇和多说话人识别，已通过Gemini API开放，并在macOS应用和Android Rambler上线。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Google DeepMind",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 82,
+        "evidence_urls": [
+          "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe",
+          "https://www.theverge.com/tech/985186/google-gemini-3-5-transcribe-audio-ai"
+        ],
+        "evidence_titles": [
+          "Intelligent transcription with Gemini 3.5 Transcribe",
+          "Google’s new AI transcription edits out your ‘ums’ and ‘ahs’"
+        ],
+        "evidence_summaries": [
+          "Now you can get more intelligent speech-to-text transcription with Gemini 3.5 Transcribe.",
+          "Google has updated Gemini Audio with new transcription capabilities that automatically detect specialized jargon and more than 85 languages. Gemini 3.5 Transcribe is a new addition to the Gemini family that follows the launch of 3.5 Live Translate, and comes as we're still waiting for Google to release the Gemini 3.5 Pro model that it […]"
+        ],
+        "thumbnail_url": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-5_transcribe.width-2200.format-webp.webp",
+        "source_layers": [
+          "L1",
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "Google Gemini Blog · The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 8,
+          "ResonanceScore": 9,
+          "FreshnessScore": 12,
+          "UserInterestScore": 5,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是语音转录从“转文字”升级为“语音代理入口”，通过函数调用和屏幕上下文扩展能力；但3.5 Pro未发，说明Google在分模块推进。",
+        "reading_questions": [
+          "语音转录模型与屏幕上下文结合，是否会成为语音代理的标准范式？",
+          "Google 分模块发布 Gemini 3.5，是否意味着整体旗舰模型仍在追赶？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "google-deepmind",
+            "label": "Google DeepMind"
+          },
+          {
+            "kind": "topic",
+            "key": "multimodal-generation",
+            "label": "Multimodal Generation"
+          }
+        ],
+        "expert_review": {
+          "importance": "这是Google在语音转录赛道对Chirp 3的升级，并将转录能力与函数调用、屏幕上下文结合，推动语音成为代理交互入口。",
+          "skepticism": "官方引用的WER来自Artificial Analysis，且3.5 Live和3.5 Live Experimental被提及后又澄清未发布，宣传口径与实际发布范围存在差异。",
+          "watch_points": [
+            "Gemini 3.5 Pro 何时发布，以及是否整合 Transcribe 能力",
+            "3.5 Transcribe 在真实嘈杂环境和长音频中的 WER 表现",
+            "开发者生态（如 LiveKit、Pipecat）对实时语音代理的采用情况"
+          ],
+          "related_sources": [
+            {
+              "title": "Introducing Gemini 3.5 Transcribe",
+              "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe"
+            },
+            {
+              "title": "Google’s new AI transcription edits out your ‘ums’ and ‘ahs’ | The Verge",
+              "url": "https://www.theverge.com/tech/985186/google-gemini-3-5-transcribe-audio-ai"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Google DeepMind",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Chirp 3",
+              "role": "model",
+              "evidence": "Google称3.5 Transcribe相比Chirp 3有重大进步，是上一代转录模型。"
+            },
+            {
+              "name": "Gemini 3.5 Pro",
+              "role": "product",
+              "evidence": "The Verge提到仍在等待其发布，是未发布的旗舰模型。"
+            },
+            {
+              "name": "Artificial Analysis",
+              "role": "source_author",
+              "evidence": "官方引用的WER数据来自Artificial Analysis的评测。"
+            },
+            {
+              "name": "FLEURS",
+              "role": "tool",
+              "evidence": "用于评估多语言性能的基准。"
+            },
+            {
+              "name": "Agora, Fishjam, LangChain, LiveKit, Pipecat, Vercel, Vision Agents",
+              "role": "partner",
+              "evidence": "作为开发者平台，支持基于Gemini Live API构建语音界面。"
+            },
+            {
+              "name": "Vivo, Intellitek Health, Lingopal",
+              "role": "customer",
+              "evidence": "作为反馈者，分享了正面评价。"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主体是Google DeepMind发布Gemini 3.5 Transcribe产品，属于公司产品发布，而非技术论文或基准评测；虽然涉及WER和FLEURS，但核心是产品上线和API开放。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "c8fabcdd981b8e",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "NVIDIA：英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU",
+        "ai_summary": "英伟达在Hot Chips 2026披露，Vera Rubin NVL72在DeepSeek V4-Pro Agent负载下每兆瓦吞吐较GB300最高提升30倍，但关键不在GPU，而是GPU、Groq LPX、CPU。",
+        "brief": "英伟达在Hot Chips 2026披露，Vera Rubin NVL72在DeepSeek V4-Pro Agent负载下每兆瓦吞吐较GB300最高提升30倍，但关键不在GPU，而是GPU、Groq LPX、CPU。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "NVIDIA",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 80,
+        "evidence_urls": [
+          "https://www.leiphone.com/category/chips/LIUBrHLsZcZlyHwv.html"
+        ],
+        "evidence_titles": [
+          "英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU | Hot Chips 2026"
+        ],
+        "evidence_summaries": [
+          "在Agent推理上，英伟达又把性能往前推了一大步。 Hot Chips 2026期间，英伟达披露了Vera Rubin NVL72最新Agent工作负载测试结果：在DeepSeek V4-Pro、单用户每秒160 Token的测试条件下，相比GB300 NVL72，每兆瓦吞吐最高提升30倍。 但比30倍更值得关注的是，英伟达这次提升Agent推理效率，已经不再只依赖一颗更快的GPU。 面对长上下文、低延迟Token生成、工具调用和数据交互同时出现的Agent工作负载，英伟达正在把一次推理拆成不同类型的计算任务：Vera Rubin NVL72承担大规模模型计算，Groq 3 LPX专攻低延迟Token生成，Vera CPU处理工具编排、代码执行和数据处理，Spectrum-X则负责把这些计算、数据和存储资源连接起来。 换句话说，Agent工作负载让性能问题不再停留在一次模型计算内部，而是沿着上下文、生成、工具执行和基础设施访问继续向外扩展。 从GPU、CPU到专用推理芯片和网络，英伟达在Hot Chips展示的已经不只是一代芯片的性能提升，而是一套针对Agent工作负载重新划分计算边界的系统架构。 超长上下文实测，Rubin把Agent推理拉进真实长任务 这次Hot Chips上，英伟达给出了一组更贴近Agent工作流的Rubin实测数据。英伟达此次测试采用SemiAnalysis AgentX工作负载。 AgentX基于真实Agent编程会话的流量轨迹，在去除原始 prompt、代码、工具参数和结果后，保留请求长度、上下文增长、工具暂停、子任务依赖和时序等负载特征。此次测试的中位输入上下文超过 14 万 Token。 按照英伟达测得、目前仍待SemiAnalysis审核的结果，在DeepSeek V4-Pro工作负载、单用户每秒160 Token的交互速度下，Vera Rubin NVL72相较GB300 NVL72最高实现30倍的每兆瓦吞吐。 Vera Rubin 在 160 交互性下，每兆瓦的吞吐量提高了 30 倍。（图源：英伟达技术博客） 英伟达HPC与AI超大规模基础设施解决方案高级总监Dion Harris指出，传统推理基准通常围绕“单一、可预测的请求”设计：输入和输出相对确定，因此可以比较Token生成速度、吞吐量等指标。但Agent任务会跨越多轮操作，而且每一步的工作负载都可能变化。 Harris续指，传统推理负载可以使用8K甚至32K的输入序列进行测试，但到了递归式、多轮Agent任务中，Prefill需要处理的上下文会随着每一次迭代持续增长，因此平台评估需要开始考虑数十万Token级别的输入。 原因在于，Agent完成一项任务时，模型可能不断读取文件、调用工具、执行代码，再把新的结果写回上下文，进入下一轮推理。AgentX 测的是推理服务基础设施面对 Agent 流量形态时的表现，不是测 Agent 任务完成质量。 这也是此次Rubin测试采用超过14万Token上下文的意义。换言之，14万Token的意义并不只是“输入更长”，而是测试对象开始从静态prompt转向动态任务轨迹。 它试图回答的不再只是“一次模型推理能够跑多快”，而是在更接近Agent实际运行轨迹的长链路负载下，系统还能维持怎样的性能。 与此同时，英伟达把两个指标放在了同一张性能曲线上：横轴是单个用户每秒获得的Token数量，即交互速度；纵轴则是固定电力预算下整套系统能够处理的Token数量，即每兆瓦吞吐。 在多轮代理会话中，每轮对话所包含的上下文信息稳步增加。（图源：英伟达技术博客） 这两个指标对应着Agent推理中两个不同的性能目标：一边是提高单个用户在 Token 生成阶段的交互速度，另一边则是在有限电力条件下承载更多推理负载。 因此，这组数据更值得关注的是，当Agent进入硬件实测之后，长上下文、总体吞吐和交互速度开始被放到同一个性能问题中讨论。 而当同一套推理系统需要同时优化这些目标时，下一个问题也随之出现：这些任务，是否仍然适合全部交给同一种处理器完成？ 加入LPX，GPU不再是AI推理环节的最佳架构？ 这种性能目标的分化，正在直接反映到推理芯片的架构上。 英伟达透露，Groq 3 LPX已经进入全面生产。按照Artificial Analysis的测试，在Gemma 4 31B、10万Token上下文这一特定负载下，Groq 3 LPX输出速度达到每秒3400个Token，英伟达称其响应速度达到最接近替代方案的4倍。 LPX瞄准的并不是“大模型推理”这个笼统的问题，而是其中一个更具体的瓶颈：低延迟Token生成。 Prefill需要并行处理大量输入Token，通常更偏计算密集型；Decode则需要一个Token接一个Token生成，并持续读取模型权重和KV Cache，因此通常更受内存带宽和单步延迟限制。 英伟达也把Agentic AI面对的计算挑战拆成了两个方向：一边是高效处理越来越大的上下文，另一边是以极低延迟生成Token。 Groq 3 LPX针对的是后一个方向，但需要注意，这并不意味着英伟达正在用LPX替代GPU。 GPU与LPX之间并不存在一种固定的任务切分方式 。 在最直接的 Prefill-Decode 拆分中，Vera Rubin NVL72 处理输入上下文并生成 KV Cache，LPX 则参与后续 Decode 阶段的低延迟生成；另一种方案则把Decode内部继续拆开，由Rubin负责Attention计算并持有KV Cache，LPX负责FFN计算；此外，还可以让LPX运行一个较小的draft model提前生成候选Token，再由Rubin上的大模型进行验证，即推测解码。 这三种方案的数据流和计算分工不同，但背后的逻辑是一致的：并不是先决定一次推理应该由GPU还是LPU完成，而是 把推理内部进一步拆成性质不同的计算任务，再交给更适合的处理器执行 。 英伟达称，Groq 3 LPX 扩展了 Vera Rubin 平台的功能，使其能够支持具有高交互性的智能体 AI 工作负载。（图源：英伟达技术博客） 这也产生了一个问题，将Groq 3 LPX加入Vera Rubin，是否意味着GPU已经不再是所有AI推理环节的最佳架构？ Harris给出的解释是， “为工作负载的不同部分选择合适的处理器”。 他认为，Rubin GPU仍然提供最灵活的吞吐和交互能力，覆盖更广泛的工作负载；LPX则进一步把系统推向对极低延迟要求更高的场景。 因此，LPX真正值得关注的并不是英伟达又多了一颗芯片，它反映的是，在Vera Rubin这套系统里，原本由通用GPU统一承接的不同性能目标正在被进一步拆开：GPU继续承担覆盖范围更广的模型计算，而专用加速器则围绕Token生成延迟等具体瓶颈补位。 这也解释了为什么Agent工作负载下更细的异构分工，并不意味着GPU的重要性下降。恰恰相反，GPU仍然位于计算中心，只是围绕它，不同处理器的任务边界正在变得更加明确。 从GPU到CPU和网络，英伟达开始优化整条Agent链路 如果说GPU与LPX的分工仍然发生在模型推理内部，那么Agent带来的下一层变化，是性能瓶颈继续延伸到模型调用之外。 传统大模型服务中，一次模型输出往往就是任务的终点。Agent并不是这样。模型完成一轮推理后，还可能继续调用搜索、数据库或其他软件工具，执行代码、处理返回结果，再把新的信息送回模型，进入下一轮推理。 这意味着，决定一次Agent任务速度的，已经不只是GPU完成模型计算需要多少时间。Harris提到，Agent正在增加模型调用之间的CPU负载：工具编排、代码执行、数据处理和模拟，都需要CPU参与。 这也是英伟达此次强调Vera CPU的原因。Vera在这里承担的并不是模型计算本身，而是两次模型调用之间那些仍然需要CPU完成的任务。 类似的变化也发生在网络层，当Agent不断访问工具、数据和存储时，网络面对的不再只有GPU之间的数据交换。用户、Agent、应用、数据源和存储服务需要持续发生交互，计算系统与这些基础设施之间的连接同样可能进入任务的关键路径。 在这样的背景下，这英伟达此次提出了Scale-In。与通过NVLink连接机架内GPU的Scale-Up，以及通过Spectrum-X连接更大规模GPU集群的Scale-Out不同， Scale-In针对的是传统数据中心中的南北向基础设施流量 ，由BlueField-4和DOCA承担网络、存储访问、安全、控制平面和可观测等任务，再通过Spectrum-X接入整套计算基础设施。 与 Scale-In 处理模型调用之外的基础设施访问不同，Spectrum-X Multiplane 解决的是另一类更普遍的问题：随着 GPU 集群规模扩大，网络本身的扩展能力和故障恢复开始直接影响计算资源能否持续被利用。 Spectrum-X Multiplane通过多个独立网络平面扩大两层网络的规模，并在单一路径出现故障时进行硬件级重新路由。按照英伟达给出的数据，该架构最高可扩展至51.2万张GPU；在八平面拓扑中，一个平面失效后仍可维持约90%的总带宽，故障恢复速度较软件方案提高11倍。 Scale-In和Spectrum-X Multiplane解决的并不是同一个网络问题。Scale-In处理计算系统与数据、存储和基础设施服务之间的连接与管理需求；Multiplane则解决更大规模GPU集群的网络扩展和故障恢复问题。 但放回完整的Agent任务链中，两者指向同一个变化： 决定任务效率的环节正在从一次模型计算不断向外延伸 。 GPU可以更快地完成模型计算，LPX可以进一步压低Token生成延迟；但如果Agent随后卡在工具执行、数据读取或者通信上，前面获得的计算性能仍然会被等待时间消耗掉。Agent改变的不只是推理芯片内部的分工，也在扩大AI基础设施需要优化的范围。 这并非意味着未来每一个Agent系统都会配置LPX、Vera这样的CPU和如此大规模的网络基础设施。英伟达此次展示的明显是面向高并发、长上下文和大规模部署的上限设计，它最终能够形成多大的实际市场， 仍然取决于Agent应用能够产生怎样的真实负载，以及更复杂的异构系统能否换来足够的性能收益 。 从Hot Chips此次英伟达展示出的架构逻辑来看，一个趋势已经比较清楚：GPU仍然是AI计算的核心。只是当一次Agent任务横跨上下文处理、Token生成、工具执行和数据通信，下一代推理基础设施要优化的对象，已经不再是一颗芯片，而是整条任务链。 雷 峰网雷峰网雷峰网 【封面图片来源：网站名 英伟达官网 ，所有者：英伟达】"
+        ],
+        "thumbnail_url": "https://static.leiphone.com/uploads/new/banner/6a3a22b4dadf8.jpeg",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "雷峰网",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "Agent推理的优化对象已从单颗GPU转向整条任务链，英伟达在重新划分GPU、LPX、CPU与网络的边界。",
+        "reading_questions": [
+          "这种异构分工是否会改变GPU在推理中的主导地位？",
+          "AgentX负载能否代表真实Agent生产流量？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "deepseek",
+            "label": "DeepSeek"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": {
+          "importance": "这标志着推理基础设施从单芯片性能竞争转向异构系统级优化，Agent负载成为下一代架构设计的核心场景。",
+          "skepticism": "30倍数据来自英伟达自测，尚待SemiAnalysis审核，且为特定负载下的峰值，需独立验证。",
+          "watch_points": [
+            "SemiAnalysis对AgentX测试结果的独立审核结论",
+            "Prefill-Decode拆分、推测解码等异构方案在实际部署中的收益",
+            "其他芯片厂商是否跟进类似异构推理架构"
+          ],
+          "related_sources": [
+            {
+              "title": "英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU | Hot Chips 2026 | 雷峰网",
+              "url": "https://www.leiphone.com/category/chips/LIUBrHLsZcZlyHwv.html"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "NVIDIA",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "DeepSeek",
+              "role": "tested_model",
+              "evidence": "DeepSeek V4-Pro作为测试模型出现在AgentX工作负载中，是测试对象而非文章主体"
+            },
+            {
+              "name": "Groq",
+              "role": "partner",
+              "evidence": "Groq 3 LPX作为低延迟Token生成芯片被整合进Vera Rubin平台，是英伟达的合作伙伴"
+            },
+            {
+              "name": "SemiAnalysis",
+              "role": "source_author",
+              "evidence": "SemiAnalysis创建了AgentX工作负载，并将审核英伟达的测试结果"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主体是英伟达在Hot Chips披露的Vera Rubin系统测试结果，DeepSeek仅作为被测模型出现，因此主实体为英伟达，事件属于基准测试类技术进展。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "00df2f01677c45",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "OpenAI：PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.",
+        "ai_summary": "开发者 swyx 在 X 上警告：暂时不要使用 Codex 的 locked use 功能，它依赖不稳定的 Mac 特性，已导致他本周两次被锁出 macOS 钥匙串；Apple 开发者论坛已确认这是已知 bug。",
+        "brief": "开发者 swyx 在 X 上警告：暂时不要使用 Codex 的 locked use 功能，它依赖不稳定的 Mac 特性，已导致他本周两次被锁出 macOS 钥匙串；Apple 开发者论坛已确认这是已知 bug。",
+        "social_original_text": "do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.\n\nthx @_chenglou for linking to apple developer forums acknowledging this is a \"known bug\". just avoid. ofc, would be nice to do everything in cloud, but cloud isn't there yet.",
+        "translation_zh": "现在不要使用Codex的“锁定使用”功能。它目前依赖不稳定的Mac功能，本周已经两次让我完全无法访问我的macOS钥匙串。感谢@_chenglou提供了苹果开发者论坛的链接，确认这是一个“已知错误”。还是避免使用吧。当然，如果能全部在云端完成就好了，但云端还做不到。",
+        "entity": "OpenAI",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 65.28,
+        "evidence_urls": [
+          "https://x.com/swyx/status/2092492963435946494"
+        ],
+        "evidence_titles": [
+          "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week."
+        ],
+        "evidence_summaries": [
+          "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.\n\nthx @_chenglou for linking to apple developer forums acknowledging this is a \"known bug\". just avoid. ofc, would be nice to do everything in cloud, but cloud isn't there yet."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Swyx"
+        ],
+        "source_display": "X: Swyx",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "swyx"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 6.2763625255165305,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "本地 Agent 权限越深，系统集成不稳的代价越大；Codex 锁定模式连钥匙串都能锁死，说明本地执行路径的工程成熟度还撑不起关键工作流。",
+        "reading_questions": [
+          "本地锁定模式与云端执行，哪种更适合关键开发工作流？",
+          "这个 bug 会影响你使用 Codex 的方式吗？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "直接警告 Codex 本地锁定模式存在凭据安全风险，可能影响开发者对 OpenAI 本地 Agent 功能的信任。",
+          "skepticism": "单一用户报告，虽引用 Apple 论坛已知 bug，但缺少复现细节与影响范围，普遍性仍需验证。",
+          "watch_points": [
+            "OpenAI 是否回应并修复 Codex locked use 功能",
+            "Apple 是否发布针对该已知 bug 的修复",
+            "其他开发者是否报告类似 keychain 锁定问题"
+          ],
+          "related_sources": [
+            {
+              "title": "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.",
+              "url": "https://x.com/swyx/status/2092492963435946494"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "swyx",
+              "role": "source_author",
+              "evidence": "发布 PSA 的开发者，报告了 Codex 问题"
+            },
+            {
+              "name": "@_chenglou",
+              "role": "source_author",
+              "evidence": "提供了 Apple 开发者论坛链接，佐证这是已知 bug"
+            },
+            {
+              "name": "Apple",
+              "role": "other",
+              "evidence": "其开发者论坛被引用，确认这是已知 bug"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "被警告不要使用的 OpenAI 编程代理功能"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "industry_views",
+          "confidence": "中",
+          "reasoning": "这是开发者个人在社交媒体发布的 PSA，属于行业观点而非 OpenAI 官方公告，因此归入 industry_views；虽然涉及 OpenAI 产品，但 OpenAI 是被报道方而非主动发布方，容易误判为 company_updates。"
+        }
+      },
+      {
+        "event_id": "3b2bcf5e332ff9",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI comp",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI companies.\n\n“The world doesn’t just want raw models and agents; it wants problems resolved and outcomes achieved. The premium will sit with the companies that can diffuse this intelligence through every aspect of civilization, converting raw tokens into real world outcomes, transforming industries, and creating economies in the process.”\n\nThis requires understanding the context, driving the change management, having a harness that can route to various models, connecting to the critical business systems in that vertical, solving the UX challenges of connecting users to agents in the right way in a workflow, understanding the evals in the space, and so on.\n\nThat’s a ton of value that goes beyond just the model intelligence itself. And there’s a window of opportunity right now to build the defining companies that can bring intelligence to the critical domains in an enterprise.",
+        "translation_zh": "关于规模化应用AI战略的好文章。很明显，AI模型与企业底层工作流之间存在巨大差距，这为应用型AI公司留下了大量机会。 “世界不仅仅想要原始的模型和智能体；它想要问题得到解决、成果得以实现。溢价将属于那些能够将这种智能渗透到文明各个方面的公司，将原始token转化为现实世界的成果，改变行业，并在此过程中创造经济。” 这需要理解上下文、推动变革管理、拥有能够路由到各种模型的框架、连接到该垂直领域的关键业务系统、解决在工作流中以正确方式将用户与智能体连接的UX挑战、理解该领域的评估等等。 这带来了远超模型智能本身的大量价值。而现在正是一个机会窗口，可以打造那些能够将智能带入企业关键领域的定义性公司。",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 59.02,
+        "evidence_urls": [
+          "https://x.com/levie/status/2092466424694649066"
+        ],
+        "evidence_titles": [
+          "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI comp"
+        ],
+        "evidence_summaries": [
+          "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI companies.\n\n“The world doesn’t just want raw models and agents; it wants problems resolved and outcomes achieved. The premium will sit with the companies that can diffuse this intelligence through every aspect of civilization, converting raw tokens into real world outcomes, transforming industries, and creating economies in the process.”\n\nThis requires understanding the context, driving the change management, having a harness that can route to various models, connecting to the critical business systems in that vertical, solving the UX challenges of connecting users to agents in the right way in a workflow, understanding the evals in the space, and so on.\n\nThat’s a ton of value that goes beyond just the model intelligence itself. And there’s a window of opportunity right now to build the defining companies that can bring intelligence to the critical domains in an enterprise."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Aaron Levie"
+        ],
+        "source_display": "X: Aaron Levie",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "levie"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 14,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 11.020599913279625,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "055995d743ca1c",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Good products take time. At least 34 days.",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Good products take time. At least 34 days.",
+        "translation_zh": "好的产品需要时间。至少34天。",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 39,
+        "evidence_urls": [
+          "https://x.com/thsottiaux/status/2092487667426738179"
+        ],
+        "evidence_titles": [
+          "Good products take time. At least 34 days."
+        ],
+        "evidence_summaries": [
+          "Good products take time. At least 34 days."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Thibault Sottiaux"
+        ],
+        "source_display": "X: Thibault Sottiaux",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "thsottiaux"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 3,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 16,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "cf74b13a14467a",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "How to build great evals — Part 9",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "How to build great evals — Part 9\n\nThe Eval Roadmap Problem\n\nMost evals fail because teams treat them as static artifacts while their users expectations and behaviors have evolved.\n\nYour evals need a roadmap that evolves with your product and actual usage patterns.\n\nTake a financial research agent. Here is how use cases will evolve over time.\n\nEarly user: Summarize this 5-page earnings report.\n\n3 weeks later: review the last 5 earnings reports and explain their growth story.\n\n2 months later: Here are 15 filings, earnings transcripts and research reports. Build an investment thesis.\n\nEventually: Monitor my stock portfolio and tell send me alerts when something materially changes my thesis.\n\nEach stage requires different capabilities and hence different evals.\n\nYour evals should change with usage patterns:\n\nshort-context -> long-context\nsingle-turn QA -> multi-turn\npassage citations -> doc and line citations\nSimple QA -> complex synthesis\nreactive chat -> proactive agent\n\nIf your evals are stuck in week 1 while users are in week 3, it will show in your product and churn metrics.\n\nHere’s a practical way to build the roadmap:\n1/ Map the dimensions along which usage will evolve (eg # turns, document size, tool use, autonomy, journey coverage).\n2/ Prioritize the use cases and dimensions that matter most for your product.\n3/ Talk to your users, mine production traces to look for shifts.\n4/ Build P0 evals for the next stage of usage.\n5/ Run the evals, find failure modes (remember the taxonomy from Part 3), and hill-climb (from part 6).\n\nThe goal is to stay ahead of usage patterns. PM 101.\n\nDrop your questions and I will address in future posts.\n\nShare this with your teammates who think your evals are perfect.",
+        "translation_zh": "如何构建出色的评估——第9部分 评估路线图问题 大多数评估失败是因为团队把它们当作静态工件，而用户的期望和行为已经发生了变化。 你的评估需要一个与产品和实际使用模式同步演进的路线图。 以金融研究智能体为例。用例会如何随时间演变： 早期用户：总结这份5页的财报。 3周后：回顾最近5份财报，解释它们的增长故事。 2个月后：这里有15份文件、财报电话会议记录和研究报告。构建一个投资论点。 最终：监控我的股票投资组合，当有重大变化影响我的论点时，给我发送提醒。 每个阶段都需要不同的能力，因此也需要不同的评估。 你的评估应该随着使用模式而变化： 短上下文 -> 长上下文 单轮问答 -> 多轮 段落引用 -> 文档和行级引用 简单问答 -> 复杂综合 被动聊天 -> 主动智能体 如果你的评估停留在第1周，而用户已经进入第3周，这会在你的产品和流失指标中体现出来。 以下是构建路线图的实用方法： 1/ 映射使用将演进的维度（例如轮数、文档大小、工具使用、自主性、旅程覆盖）。 2/ 优先考虑对你的产品最重要的用例和维度。 3/ 与用户交谈，挖掘生产痕迹以寻找变化。 4/ 为下一阶段的使用构建P0评估。 5/ 运行评估，找出失败模式（记住第3部分的分类法），并进行爬山优化（来自第6部分）。 目标是领先于使用模式。产品经理基础。 有问题尽管提，我会在后续帖子中解答。 把这分享给那些认为你的评估完美无缺的队友吧。",
+        "entity": "",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 30.09,
+        "evidence_urls": [
+          "https://x.com/realmadhuguru/status/2092426017118028266"
+        ],
+        "evidence_titles": [
+          "How to build great evals — Part 9"
+        ],
+        "evidence_summaries": [
+          "How to build great evals — Part 9\n\nThe Eval Roadmap Problem\n\nMost evals fail because teams treat them as static artifacts while their users expectations and behaviors have evolved.\n\nYour evals need a roadmap that evolves with your product and actual usage patterns.\n\nTake a financial research agent. Here is how use cases will evolve over time.\n\nEarly user: Summarize this 5-page earnings report.\n\n3 weeks later: review the last 5 earnings reports and explain their growth story.\n\n2 months later: Here are 15 filings, earnings transcripts and research reports. Build an investment thesis.\n\nEventually: Monitor my stock portfolio and tell send me alerts when something materially changes my thesis.\n\nEach stage requires different capabilities and hence different evals.\n\nYour evals should change with usage patterns:\n\nshort-context -> long-context\nsingle-turn QA -> multi-turn\npassage citations -> doc and line citations\nSimple QA -> complex synthesis\nreactive chat -> proactive agent\n\nIf your evals are stuck in week 1 while users are in week 3, it will show in your product and churn metrics.\n\nHere’s a practical way to build the roadmap:\n1/ Map the dimensions along which usage will evolve (eg # turns, document size, tool use, autonomy, journey coverage).\n2/ Prioritize the use cases and dimensions that matter most for your product.\n3/ Talk to your users, mine production traces to look for shifts.\n4/ Build P0 evals for the next stage of usage.\n5/ Run the evals, find failure modes (remember the taxonomy from Part 3), and hill-climb (from part 6).\n\nThe goal is to stay ahead of usage patterns. PM 101.\n\nDrop your questions and I will address in future posts.\n\nShare this with your teammates who think your evals are perfect."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Madhu Guru"
+        ],
+        "source_display": "X: Madhu Guru",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "realmadhuguru"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 4,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 10.085166696493902,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": -12,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "93dfd121d3fbce",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈",
+        "translation_zh": "找一个像那个爱晒“独家”晚餐照片的VC一样爱你的人 🙈",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 19.15,
+        "evidence_urls": [
+          "https://x.com/nikunj/status/2092476274312933634"
+        ],
+        "evidence_titles": [
+          "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈"
+        ],
+        "evidence_summaries": [
+          "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Nikunj Kothari"
+        ],
+        "source_display": "X: Nikunj Kothari",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "nikunj"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 6.15224460689137,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "0f9d9b3a1b2758",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Full eval series so far:",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Full eval series so far:\n\n1/ Getting started with evals\nhttps://t.co/fh4yQR64Ta\n\n2/ Quality first, then cost\nhttps://t.co/hqNaE2ykTQ\n\n3/ Failure modes taxonomy\nhttps://t.co/MM2wgiAnoF\n\n4/ Laddered eval strategy\nhttps://t.co/2ioAe4hvqb\n\n5/ Tyranny of the average\nhttps://t.co/QPiGbxxb72\n\n6/ Hill climbing on evals\nhttps://t.co/EtxbF1kqgD\n\n7/ The Goldilocks principle\nhttps://t.co/PXSX3jsLtk\n\n8/ Discriminatory power of evals\nhttps://t.co/epINGK6dGV\n\n9/ The Eval Roadmap Problem\nhttps://t.co/nw2U3R6U1Y",
+        "translation_zh": "目前完整的评估系列： 1/ 评估入门 https://t.co/fh4yQR64Ta 2/ 质量优先，成本其次 https://t.co/hqNaE2ykTQ 3/ 失败模式分类 https://t.co/MM2wgiAnoF 4/ 阶梯式评估策略 https://t.co/2ioAe4hvqb 5/ 平均值的暴政 https://t.co/QPiGbxxb72 6/ 评估上的爬山法 https://t.co/EtxbF1kqgD 7/ 金发姑娘原则 https://t.co/PXSX3jsLtk 8/ 评估的区分能力 https://t.co/epINGK6dGV 9/ 评估路线图问题 https://t.co/nw2U3R6U1Y",
+        "entity": "",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 25,
+        "evidence_urls": [
+          "https://x.com/realmadhuguru/status/2092461206783373758"
+        ],
+        "evidence_titles": [
+          "Full eval series so far:"
+        ],
+        "evidence_summaries": [
+          "Full eval series so far:\n\n1/ Getting started with evals\nhttps://t.co/fh4yQR64Ta\n\n2/ Quality first, then cost\nhttps://t.co/hqNaE2ykTQ\n\n3/ Failure modes taxonomy\nhttps://t.co/MM2wgiAnoF\n\n4/ Laddered eval strategy\nhttps://t.co/2ioAe4hvqb\n\n5/ Tyranny of the average\nhttps://t.co/QPiGbxxb72\n\n6/ Hill climbing on evals\nhttps://t.co/EtxbF1kqgD\n\n7/ The Goldilocks principle\nhttps://t.co/PXSX3jsLtk\n\n8/ Discriminatory power of evals\nhttps://t.co/epINGK6dGV\n\n9/ The Eval Roadmap Problem\nhttps://t.co/nw2U3R6U1Y"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Madhu Guru"
+        ],
+        "source_display": "X: Madhu Guru",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "realmadhuguru"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 4,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": null,
+        "llm_classification": null
+      }
+    ],
+    "company_updates": [
+      {
+        "event_id": "2358d9d8949c8b",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Warp：How Warp builds self-improving agents on Claude",
+        "ai_summary": "Warp 在 Claude 平台上用 Agent Skills 构建自我改进 agent：内层技能执行任务，外层 improver 技能定期汇总人类反馈，提出对技能文件的小幅修改，经 PR 审查合并后持续优化 age。",
+        "brief": "Warp 在 Claude 平台上用 Agent Skills 构建自我改进 agent：内层技能执行任务，外层 improver 技能定期汇总人类反馈，提出对技能文件的小幅修改，经 PR 审查合并后持续优化 age。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Warp",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 87,
+        "evidence_urls": [
+          "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude"
+        ],
+        "evidence_titles": [
+          "How Warp builds self-improving agents on Claude"
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8f1a9a1b33f40618a9d59a_selfimprove-loop.jpg",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "Claude Blog",
+        "source_kinds": [
+          "claude_blog"
+        ],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 9,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是把人类反馈沉淀为可版本控制的技能文件，由 improver agent 定期改写 base skill，形成可审查的自我改进闭环。",
+        "reading_questions": [
+          "这个模式在非代码审查场景（如客服、数据分析）是否同样有效？",
+          "低质量或恶意的人类反馈如何过滤，会不会让技能越改越差？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "为 agent 长期自我改进提供了一种低门槛、可落地的工程范式，且由 Anthropic 官方博客背书，可能影响 agent 开发实践。",
+          "skepticism": "这是 Anthropic 官方案例文章，效果数据来自 Warp 自述，自我改进相对人工调优的实际增益缺乏独立评测。",
+          "watch_points": [
+            "Warp 是否公开可复现的自我改进效果数据（如代码审查准确率、误报率变化）",
+            "该模式能否被其他 Claude 生态开发者复用，形成通用实践",
+            "improver 自动生成的技能修改在复杂任务中是否会出现错误累积或反馈污染"
+          ],
+          "related_sources": [
+            {
+              "title": "How Warp builds self-improving agents on Claude",
+              "url": "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Warp",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "partner",
+              "evidence": "文章发布在 Claude Blog，Warp 基于 Claude Platform 构建，Anthropic 是平台提供方和文章发布方"
+            },
+            {
+              "name": "Claude",
+              "role": "model",
+              "evidence": "Warp 的 agent 基于 Claude 模型构建，文章标题即 'on Claude'"
+            },
+            {
+              "name": "Claude Code",
+              "role": "product",
+              "evidence": "Warp 中已运行 1000 万次 Claude Code 会话，是 agent 的执行环境"
+            },
+            {
+              "name": "Agent Skills",
+              "role": "tool",
+              "evidence": "自我改进框架的核心机制，技能文件是知识编码方式"
+            },
+            {
+              "name": "Oz",
+              "role": "tool",
+              "evidence": "Warp 的内部 agent 编排平台，improver 技能以定时任务运行其中"
+            },
+            {
+              "name": "Zach Lloyd",
+              "role": "source_author",
+              "evidence": "Warp CEO，文章多次引用其关于技能设计和反馈机制的观点"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 Warp 而非 Anthropic，内容是其基于 Claude 的工程实践分享，属于公司案例更新，不是模型发布或基准评测。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "2e7d82acd9ec04",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "MiniMax：MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限",
+        "ai_summary": "MiniMax 公告修订与阿里云的主 API 服务协议及云计算服务协议项下 2026-2028 年度持续关连交易上限，涉及向阿里提供 API 服务及采购云产品。",
+        "brief": "MiniMax 公告修订与阿里云的主 API 服务协议及云计算服务协议项下 2026-2028 年度持续关连交易上限，涉及向阿里提供 API 服务及采购云产品。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "MiniMax",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 86,
+        "evidence_urls": [
+          "https://36kr.com/newsflashes/3957030026116232?f=rss"
+        ],
+        "evidence_titles": [
+          "MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限"
+        ],
+        "evidence_summaries": [
+          "MINIMAX于8月26日公告，根据主API服务协议，公司同意向阿里巴巴集团运营的业务提供API服务，期限自上市日期起至2028年12月31日止。根据阿里云计算服务协议，公司同意向阿里云计算有限公司购买若干云产品及服务，期限自上市日期起至2028年12月31日止。于8月26日（交易时段后），公司与阿里云计算有限公司订立主API服务协议补充协议及阿里云计算服务协议补充协议，以修订主API服务协议及阿里云计算服务协议项下截至2026年、2027年及2028年12月31日止年度的持续关连交易的现有年度上限。（财联社）"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "36Kr AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "这是上市公司对关联交易额度的例行调整，反映 MiniMax 对阿里云资源采购和 API 业务规模的预期变化，本身不构成技术或产品进展。",
+        "reading_questions": [
+          "这次上限调整是上调还是下调？",
+          "对 MiniMax 的云成本结构意味着什么？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "minimax",
+            "label": "MiniMax"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "作为港股上市公司，MiniMax 调整与阿里云的持续关连交易上限，可能反映其云资源采购和 API 业务规模预期变化，属于公司治理层面的常规动作。",
+          "skepticism": "公告未披露修订后上限的具体金额和调整方向，不能据此推断 MiniMax 实际业务增长或成本变化。",
+          "watch_points": [
+            "修订后年度上限的具体金额及调整方向",
+            "MiniMax 对阿里云采购规模变化是否反映其训练/推理成本结构",
+            "后续财报中关联交易实际发生额与上限的差距"
+          ],
+          "related_sources": [
+            {
+              "title": "MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限",
+              "url": "https://36kr.com/newsflashes/3957030026116232?f=rss"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "MiniMax",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "阿里巴巴集团",
+              "role": "partner",
+              "evidence": "MiniMax 根据主 API 服务协议向阿里巴巴集团运营的业务提供 API 服务，阿里是协议对手方。"
+            },
+            {
+              "name": "阿里云计算有限公司",
+              "role": "partner",
+              "evidence": "MiniMax 根据阿里云计算服务协议向阿里云购买云产品及服务，阿里云是供应商。"
+            }
+          ],
+          "event_type": "company_or_industry_update",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 MiniMax 发布的关联交易公告，阿里只是协议对手方，因此 primary_entity 是 MiniMax；事件属于公司财务/治理调整，不是产品发布、研究或行业观点。"
+        }
+      },
+      {
+        "event_id": "bdce26c905605e",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Amazon Bedrock AgentCore：Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations",
+        "ai_summary": "AWS发布Bedrock AgentCore Evaluations，通过OpenTelemetry遥测统一评估不同agent框架，支持LangGraph、LlamaIndex、OpenAI Agents SDK等。",
+        "brief": "AWS发布Bedrock AgentCore Evaluations，通过OpenTelemetry遥测统一评估不同agent框架，支持LangGraph、LlamaIndex、OpenAI Agents SDK等。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Amazon Bedrock AgentCore",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 85,
+        "evidence_urls": [
+          "https://aws.amazon.com/blogs/machine-learning/evaluate-any-agent-framework-with-amazon-bedrock-agentcore-evaluations"
+        ],
+        "evidence_titles": [
+          "Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations"
+        ],
+        "evidence_summaries": [
+          "Amazon Bedrock AgentCore Evaluations decouples agent evaluation from the framework you build on. As long as your agent emits OpenTelemetry telemetry, the service can score it, whether you use LangGraph, LlamaIndex, the OpenAI Agents SDK, Google ADK, the Claude Agent SDK, or Strands Agents. This post explains how the framework-agnostic contract works."
+        ],
+        "thumbnail_url": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/24/ML-21721-1.png",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "AWS Machine Learning Blog",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "把评估从框架绑定中解耦，用OpenTelemetry作为通用语言，是agent工程化的务实一步。",
+        "reading_questions": [
+          "这个方案能否真正替代人工评估？",
+          "对现有agent工作流迁移成本多高？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "为多框架agent提供统一评估标准，降低评估工具碎片化成本。",
+          "skepticism": "实际效果取决于各框架OpenTelemetry instrumentation的成熟度和数据完整性。",
+          "watch_points": [
+            "其他框架是否跟进OpenInference规范",
+            "评估结果与人工评估的一致性",
+            "是否支持自定义评估器"
+          ],
+          "related_sources": [
+            {
+              "title": "Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations",
+              "url": "https://aws.amazon.com/blogs/machine-learning/evaluate-any-agent-framework-with-amazon-bedrock-agentcore-evaluations"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Amazon Bedrock AgentCore",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "OpenAI",
+              "role": "product",
+              "evidence": "其Agents SDK作为被支持的框架之一被提及"
+            },
+            {
+              "name": "LangGraph",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "LlamaIndex",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "Google ADK",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "Claude Agent SDK",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "Strands Agents",
+              "role": "product",
+              "evidence": "作为被支持的框架之一被提及"
+            },
+            {
+              "name": "OpenTelemetry",
+              "role": "tool",
+              "evidence": "作为评估所依赖的遥测标准被提及"
+            },
+            {
+              "name": "Arize AI",
+              "role": "other",
+              "evidence": "作为OpenInference规范的维护者被提及"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章是AWS官方博客介绍其AgentCore Evaluations产品，主语是AWS而非OpenAI，OpenAI仅作为被支持的SDK之一被提及。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "83fe0ea49437a1",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Z.ai（智谱）：Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model",
+        "ai_summary": "Z.ai 确认是匿名开源模型 Ox Alpha 的幕后实验室，该模型在 OpenRouter 匿名发布并登顶基准测试，权重将于周三发布，是 GLM 系列最新迭代，定位编码与 agentic 工作负载。",
+        "brief": "Z.ai 确认是匿名开源模型 Ox Alpha 的幕后实验室，该模型在 OpenRouter 匿名发布并登顶基准测试，权重将于周三发布，是 GLM 系列最新迭代，定位编码与 agentic 工作负载。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Z.ai（智谱）",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 85,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/08/26/surprise-z-ai-is-the-ai-lab-behind-the-mysterious-ox-alpha-model"
+        ],
+        "evidence_titles": [
+          "Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model"
+        ],
+        "evidence_summaries": [
+          "Z.ai confirms it is behind Ox Alpha, the mysterious open AI model topping benchmarks and leaderboards, and its weights are set to be released soon."
+        ],
+        "thumbnail_url": "https://techcrunch.com/wp-content/uploads/2026/08/runable-co-founders-umesh-saksham.jpg",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 12,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 9,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "匿名登顶再自曝，本质是智谱以开源推理模型向闭源前沿厂商发起正面冲击，营销与实力兼备。",
+        "reading_questions": [
+          "Ox Alpha 的评测提升来自架构创新，还是训练数据与推理预算？",
+          "匿名发布策略是否将成为中国模型厂商冲击海外市场的新常态？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "智谱",
+            "label": "智谱"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "这标志着中国开源模型以匿名方式冲击前沿基准，直接威胁 OpenAI、Anthropic 等闭源厂商的市场份额。",
+          "skepticism": "Ox Alpha 的基准成绩是否在公平条件下取得，实际能力是否与榜单匹配，需权重发布后独立验证。",
+          "watch_points": [
+            "权重发布后社区复现与第三方评测结果",
+            "Ox Alpha 在长时程 agentic 任务上的实际表现",
+            "对 OpenAI、Anthropic 定价与市场份额的潜在影响"
+          ],
+          "related_sources": [
+            {
+              "title": "Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model",
+              "url": "https://techcrunch.com/2026/08/26/surprise-z-ai-is-the-ai-lab-behind-the-mysterious-ox-alpha-model"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Z.ai（智谱）",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "Ox Alpha",
+              "role": "product",
+              "evidence": "Z.ai 确认其为 GLM 系列最新迭代，是文章讨论的核心模型"
+            },
+            {
+              "name": "OpenRouter",
+              "role": "other",
+              "evidence": "Ox Alpha 匿名发布并登顶基准测试的平台"
+            },
+            {
+              "name": "Hugging Face",
+              "role": "customer",
+              "evidence": "文章提到 Hugging Face 最近使用 Ox Alpha 防御 OpenAI agents 攻击"
+            },
+            {
+              "name": "OpenAI",
+              "role": "competitor",
+              "evidence": "文章将其列为 Ox Alpha 可能抢占市场份额的闭源前沿公司"
+            },
+            {
+              "name": "Anthropic",
+              "role": "competitor",
+              "evidence": "文章将其列为 Ox Alpha 可能抢占市场份额的闭源前沿公司，且 GLM-5.3 与 Fable 5 竞争"
+            },
+            {
+              "name": "GLM-5.3",
+              "role": "product",
+              "evidence": "Z.ai 本月早些时候发布的上一代模型，与 Anthropic Fable 5 竞争"
+            },
+            {
+              "name": "Fable 5",
+              "role": "competitor",
+              "evidence": "Anthropic 的模型，用于与 GLM-5.3 对比"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 Z.ai，核心动作是确认 Ox Alpha 身份并宣布发布权重，属于公司产品发布；容易误判为以 Ox Alpha 为主体的基准评测，但实际是公司确认信息。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "7f789b73e51eb7",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "Google DeepMind：Intelligent transcription with Gemini 3.5 Transcribe",
+        "ai_summary": "Google发布Gemini 3.5 Transcribe语音转文字模型，支持85+语言、自动去除填充词、自定义词汇和多说话人识别，已通过Gemini API开放，并在macOS应用和Android Rambler上线。",
+        "brief": "Google发布Gemini 3.5 Transcribe语音转文字模型，支持85+语言、自动去除填充词、自定义词汇和多说话人识别，已通过Gemini API开放，并在macOS应用和Android Rambler上线。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Google DeepMind",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 82,
+        "evidence_urls": [
+          "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe",
+          "https://www.theverge.com/tech/985186/google-gemini-3-5-transcribe-audio-ai"
+        ],
+        "evidence_titles": [
+          "Intelligent transcription with Gemini 3.5 Transcribe",
+          "Google’s new AI transcription edits out your ‘ums’ and ‘ahs’"
+        ],
+        "evidence_summaries": [
+          "Now you can get more intelligent speech-to-text transcription with Gemini 3.5 Transcribe.",
+          "Google has updated Gemini Audio with new transcription capabilities that automatically detect specialized jargon and more than 85 languages. Gemini 3.5 Transcribe is a new addition to the Gemini family that follows the launch of 3.5 Live Translate, and comes as we're still waiting for Google to release the Gemini 3.5 Pro model that it […]"
+        ],
+        "thumbnail_url": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-5_transcribe.width-2200.format-webp.webp",
+        "source_layers": [
+          "L1",
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "Google Gemini Blog · The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 6,
+          "SpecificityScore": 8,
+          "ResonanceScore": 9,
+          "FreshnessScore": 12,
+          "UserInterestScore": 5,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是语音转录从“转文字”升级为“语音代理入口”，通过函数调用和屏幕上下文扩展能力；但3.5 Pro未发，说明Google在分模块推进。",
+        "reading_questions": [
+          "语音转录模型与屏幕上下文结合，是否会成为语音代理的标准范式？",
+          "Google 分模块发布 Gemini 3.5，是否意味着整体旗舰模型仍在追赶？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "google-deepmind",
+            "label": "Google DeepMind"
+          },
+          {
+            "kind": "topic",
+            "key": "multimodal-generation",
+            "label": "Multimodal Generation"
+          }
+        ],
+        "expert_review": {
+          "importance": "这是Google在语音转录赛道对Chirp 3的升级，并将转录能力与函数调用、屏幕上下文结合，推动语音成为代理交互入口。",
+          "skepticism": "官方引用的WER来自Artificial Analysis，且3.5 Live和3.5 Live Experimental被提及后又澄清未发布，宣传口径与实际发布范围存在差异。",
+          "watch_points": [
+            "Gemini 3.5 Pro 何时发布，以及是否整合 Transcribe 能力",
+            "3.5 Transcribe 在真实嘈杂环境和长音频中的 WER 表现",
+            "开发者生态（如 LiveKit、Pipecat）对实时语音代理的采用情况"
+          ],
+          "related_sources": [
+            {
+              "title": "Introducing Gemini 3.5 Transcribe",
+              "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe"
+            },
+            {
+              "title": "Google’s new AI transcription edits out your ‘ums’ and ‘ahs’ | The Verge",
+              "url": "https://www.theverge.com/tech/985186/google-gemini-3-5-transcribe-audio-ai"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Google DeepMind",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Chirp 3",
+              "role": "model",
+              "evidence": "Google称3.5 Transcribe相比Chirp 3有重大进步，是上一代转录模型。"
+            },
+            {
+              "name": "Gemini 3.5 Pro",
+              "role": "product",
+              "evidence": "The Verge提到仍在等待其发布，是未发布的旗舰模型。"
+            },
+            {
+              "name": "Artificial Analysis",
+              "role": "source_author",
+              "evidence": "官方引用的WER数据来自Artificial Analysis的评测。"
+            },
+            {
+              "name": "FLEURS",
+              "role": "tool",
+              "evidence": "用于评估多语言性能的基准。"
+            },
+            {
+              "name": "Agora, Fishjam, LangChain, LiveKit, Pipecat, Vercel, Vision Agents",
+              "role": "partner",
+              "evidence": "作为开发者平台，支持基于Gemini Live API构建语音界面。"
+            },
+            {
+              "name": "Vivo, Intellitek Health, Lingopal",
+              "role": "customer",
+              "evidence": "作为反馈者，分享了正面评价。"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主体是Google DeepMind发布Gemini 3.5 Transcribe产品，属于公司产品发布，而非技术论文或基准评测；虽然涉及WER和FLEURS，但核心是产品上线和API开放。"
+        },
+        "thumbnail_source": "article img"
+      }
+    ],
+    "technical_progress": [
+      {
+        "event_id": "607abd196d804f",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "豆包：深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案",
+        "ai_summary": "量子位实测豆包工作：与飞书深度打通，可自动完成品牌物料制作、采购比选、群聊信息梳理等任务，并支持企业账号直接登录，强调企业上下文是Agent竞争分水岭。",
+        "brief": "量子位实测豆包工作：与飞书深度打通，可自动完成品牌物料制作、采购比选、群聊信息梳理等任务，并支持企业账号直接登录，强调企业上下文是Agent竞争分水岭。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "豆包",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 84,
+        "evidence_urls": [
+          "https://www.qbitai.com/2026/08/479348.html"
+        ],
+        "evidence_titles": [
+          "深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案"
+        ],
+        "evidence_summaries": [
+          "shui jiang shuai xian sha"
+        ],
+        "thumbnail_url": "https://i.qbitai.com/wp-content/uploads/2026/08/ef388c19d717f96a15081885aa54b0fa.webp",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "量子位",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 14,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "办公Agent基础能力趋同后，真正的壁垒在于对企业上下文的理解和权限体系的原生集成。豆包工作借飞书生态抢跑，但终局未定。",
+        "reading_questions": [
+          "企业上下文集成是否真的构成长期壁垒，还是会被标准化接口快速抹平？",
+          "豆包工作对飞书数据的读取权限边界如何界定，企业是否愿意开放核心数据？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "豆包",
+            "label": "豆包"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": {
+          "importance": "豆包工作与飞书原生打通，标志着办公Agent从通用工具竞争转向企业上下文与组织权限体系的竞争。",
+          "skepticism": "文章为量子位实测，结论偏正面，缺乏与竞品在同等条件下的量化对比；'最接近终局'是媒体判断而非可验证事实。",
+          "watch_points": [
+            "豆包工作能否在企业真实环境中稳定处理复杂权限与数据安全场景。",
+            "飞书之外，豆包工作是否支持其他企业协作平台（如钉钉、Teams）。",
+            "竞品（如Claude+Slack、WorkBuddy）在企业上下文集成上的跟进速度。"
+          ],
+          "related_sources": [
+            {
+              "title": "深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案 – 量子位",
+              "url": "https://www.qbitai.com/2026/08/479348.html"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "豆包",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "飞书",
+              "role": "partner",
+              "evidence": "豆包工作与飞书深度打通，支持企业账号直接登录，飞书提供消息、文档、多维表格等企业上下文。"
+            },
+            {
+              "name": "OpenClaw",
+              "role": "competitor",
+              "evidence": "文章对比OpenClaw等CLI Agent需要安装插件、配置权限，而豆包工作原生打通飞书。"
+            },
+            {
+              "name": "Claude Tag",
+              "role": "competitor",
+              "evidence": "文章提到Claude Tag选择Slack，与豆包工作接入飞书形成头部Agent路线对比。"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主语是豆包工作（豆包），飞书是合作方，OpenClaw等是竞品对比；内容为第三方产品实测，故归为technical_progress而非company_updates。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "c8fabcdd981b8e",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "NVIDIA：英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU",
+        "ai_summary": "英伟达在Hot Chips 2026披露，Vera Rubin NVL72在DeepSeek V4-Pro Agent负载下每兆瓦吞吐较GB300最高提升30倍，但关键不在GPU，而是GPU、Groq LPX、CPU。",
+        "brief": "英伟达在Hot Chips 2026披露，Vera Rubin NVL72在DeepSeek V4-Pro Agent负载下每兆瓦吞吐较GB300最高提升30倍，但关键不在GPU，而是GPU、Groq LPX、CPU。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "NVIDIA",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 80,
+        "evidence_urls": [
+          "https://www.leiphone.com/category/chips/LIUBrHLsZcZlyHwv.html"
+        ],
+        "evidence_titles": [
+          "英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU | Hot Chips 2026"
+        ],
+        "evidence_summaries": [
+          "在Agent推理上，英伟达又把性能往前推了一大步。 Hot Chips 2026期间，英伟达披露了Vera Rubin NVL72最新Agent工作负载测试结果：在DeepSeek V4-Pro、单用户每秒160 Token的测试条件下，相比GB300 NVL72，每兆瓦吞吐最高提升30倍。 但比30倍更值得关注的是，英伟达这次提升Agent推理效率，已经不再只依赖一颗更快的GPU。 面对长上下文、低延迟Token生成、工具调用和数据交互同时出现的Agent工作负载，英伟达正在把一次推理拆成不同类型的计算任务：Vera Rubin NVL72承担大规模模型计算，Groq 3 LPX专攻低延迟Token生成，Vera CPU处理工具编排、代码执行和数据处理，Spectrum-X则负责把这些计算、数据和存储资源连接起来。 换句话说，Agent工作负载让性能问题不再停留在一次模型计算内部，而是沿着上下文、生成、工具执行和基础设施访问继续向外扩展。 从GPU、CPU到专用推理芯片和网络，英伟达在Hot Chips展示的已经不只是一代芯片的性能提升，而是一套针对Agent工作负载重新划分计算边界的系统架构。 超长上下文实测，Rubin把Agent推理拉进真实长任务 这次Hot Chips上，英伟达给出了一组更贴近Agent工作流的Rubin实测数据。英伟达此次测试采用SemiAnalysis AgentX工作负载。 AgentX基于真实Agent编程会话的流量轨迹，在去除原始 prompt、代码、工具参数和结果后，保留请求长度、上下文增长、工具暂停、子任务依赖和时序等负载特征。此次测试的中位输入上下文超过 14 万 Token。 按照英伟达测得、目前仍待SemiAnalysis审核的结果，在DeepSeek V4-Pro工作负载、单用户每秒160 Token的交互速度下，Vera Rubin NVL72相较GB300 NVL72最高实现30倍的每兆瓦吞吐。 Vera Rubin 在 160 交互性下，每兆瓦的吞吐量提高了 30 倍。（图源：英伟达技术博客） 英伟达HPC与AI超大规模基础设施解决方案高级总监Dion Harris指出，传统推理基准通常围绕“单一、可预测的请求”设计：输入和输出相对确定，因此可以比较Token生成速度、吞吐量等指标。但Agent任务会跨越多轮操作，而且每一步的工作负载都可能变化。 Harris续指，传统推理负载可以使用8K甚至32K的输入序列进行测试，但到了递归式、多轮Agent任务中，Prefill需要处理的上下文会随着每一次迭代持续增长，因此平台评估需要开始考虑数十万Token级别的输入。 原因在于，Agent完成一项任务时，模型可能不断读取文件、调用工具、执行代码，再把新的结果写回上下文，进入下一轮推理。AgentX 测的是推理服务基础设施面对 Agent 流量形态时的表现，不是测 Agent 任务完成质量。 这也是此次Rubin测试采用超过14万Token上下文的意义。换言之，14万Token的意义并不只是“输入更长”，而是测试对象开始从静态prompt转向动态任务轨迹。 它试图回答的不再只是“一次模型推理能够跑多快”，而是在更接近Agent实际运行轨迹的长链路负载下，系统还能维持怎样的性能。 与此同时，英伟达把两个指标放在了同一张性能曲线上：横轴是单个用户每秒获得的Token数量，即交互速度；纵轴则是固定电力预算下整套系统能够处理的Token数量，即每兆瓦吞吐。 在多轮代理会话中，每轮对话所包含的上下文信息稳步增加。（图源：英伟达技术博客） 这两个指标对应着Agent推理中两个不同的性能目标：一边是提高单个用户在 Token 生成阶段的交互速度，另一边则是在有限电力条件下承载更多推理负载。 因此，这组数据更值得关注的是，当Agent进入硬件实测之后，长上下文、总体吞吐和交互速度开始被放到同一个性能问题中讨论。 而当同一套推理系统需要同时优化这些目标时，下一个问题也随之出现：这些任务，是否仍然适合全部交给同一种处理器完成？ 加入LPX，GPU不再是AI推理环节的最佳架构？ 这种性能目标的分化，正在直接反映到推理芯片的架构上。 英伟达透露，Groq 3 LPX已经进入全面生产。按照Artificial Analysis的测试，在Gemma 4 31B、10万Token上下文这一特定负载下，Groq 3 LPX输出速度达到每秒3400个Token，英伟达称其响应速度达到最接近替代方案的4倍。 LPX瞄准的并不是“大模型推理”这个笼统的问题，而是其中一个更具体的瓶颈：低延迟Token生成。 Prefill需要并行处理大量输入Token，通常更偏计算密集型；Decode则需要一个Token接一个Token生成，并持续读取模型权重和KV Cache，因此通常更受内存带宽和单步延迟限制。 英伟达也把Agentic AI面对的计算挑战拆成了两个方向：一边是高效处理越来越大的上下文，另一边是以极低延迟生成Token。 Groq 3 LPX针对的是后一个方向，但需要注意，这并不意味着英伟达正在用LPX替代GPU。 GPU与LPX之间并不存在一种固定的任务切分方式 。 在最直接的 Prefill-Decode 拆分中，Vera Rubin NVL72 处理输入上下文并生成 KV Cache，LPX 则参与后续 Decode 阶段的低延迟生成；另一种方案则把Decode内部继续拆开，由Rubin负责Attention计算并持有KV Cache，LPX负责FFN计算；此外，还可以让LPX运行一个较小的draft model提前生成候选Token，再由Rubin上的大模型进行验证，即推测解码。 这三种方案的数据流和计算分工不同，但背后的逻辑是一致的：并不是先决定一次推理应该由GPU还是LPU完成，而是 把推理内部进一步拆成性质不同的计算任务，再交给更适合的处理器执行 。 英伟达称，Groq 3 LPX 扩展了 Vera Rubin 平台的功能，使其能够支持具有高交互性的智能体 AI 工作负载。（图源：英伟达技术博客） 这也产生了一个问题，将Groq 3 LPX加入Vera Rubin，是否意味着GPU已经不再是所有AI推理环节的最佳架构？ Harris给出的解释是， “为工作负载的不同部分选择合适的处理器”。 他认为，Rubin GPU仍然提供最灵活的吞吐和交互能力，覆盖更广泛的工作负载；LPX则进一步把系统推向对极低延迟要求更高的场景。 因此，LPX真正值得关注的并不是英伟达又多了一颗芯片，它反映的是，在Vera Rubin这套系统里，原本由通用GPU统一承接的不同性能目标正在被进一步拆开：GPU继续承担覆盖范围更广的模型计算，而专用加速器则围绕Token生成延迟等具体瓶颈补位。 这也解释了为什么Agent工作负载下更细的异构分工，并不意味着GPU的重要性下降。恰恰相反，GPU仍然位于计算中心，只是围绕它，不同处理器的任务边界正在变得更加明确。 从GPU到CPU和网络，英伟达开始优化整条Agent链路 如果说GPU与LPX的分工仍然发生在模型推理内部，那么Agent带来的下一层变化，是性能瓶颈继续延伸到模型调用之外。 传统大模型服务中，一次模型输出往往就是任务的终点。Agent并不是这样。模型完成一轮推理后，还可能继续调用搜索、数据库或其他软件工具，执行代码、处理返回结果，再把新的信息送回模型，进入下一轮推理。 这意味着，决定一次Agent任务速度的，已经不只是GPU完成模型计算需要多少时间。Harris提到，Agent正在增加模型调用之间的CPU负载：工具编排、代码执行、数据处理和模拟，都需要CPU参与。 这也是英伟达此次强调Vera CPU的原因。Vera在这里承担的并不是模型计算本身，而是两次模型调用之间那些仍然需要CPU完成的任务。 类似的变化也发生在网络层，当Agent不断访问工具、数据和存储时，网络面对的不再只有GPU之间的数据交换。用户、Agent、应用、数据源和存储服务需要持续发生交互，计算系统与这些基础设施之间的连接同样可能进入任务的关键路径。 在这样的背景下，这英伟达此次提出了Scale-In。与通过NVLink连接机架内GPU的Scale-Up，以及通过Spectrum-X连接更大规模GPU集群的Scale-Out不同， Scale-In针对的是传统数据中心中的南北向基础设施流量 ，由BlueField-4和DOCA承担网络、存储访问、安全、控制平面和可观测等任务，再通过Spectrum-X接入整套计算基础设施。 与 Scale-In 处理模型调用之外的基础设施访问不同，Spectrum-X Multiplane 解决的是另一类更普遍的问题：随着 GPU 集群规模扩大，网络本身的扩展能力和故障恢复开始直接影响计算资源能否持续被利用。 Spectrum-X Multiplane通过多个独立网络平面扩大两层网络的规模，并在单一路径出现故障时进行硬件级重新路由。按照英伟达给出的数据，该架构最高可扩展至51.2万张GPU；在八平面拓扑中，一个平面失效后仍可维持约90%的总带宽，故障恢复速度较软件方案提高11倍。 Scale-In和Spectrum-X Multiplane解决的并不是同一个网络问题。Scale-In处理计算系统与数据、存储和基础设施服务之间的连接与管理需求；Multiplane则解决更大规模GPU集群的网络扩展和故障恢复问题。 但放回完整的Agent任务链中，两者指向同一个变化： 决定任务效率的环节正在从一次模型计算不断向外延伸 。 GPU可以更快地完成模型计算，LPX可以进一步压低Token生成延迟；但如果Agent随后卡在工具执行、数据读取或者通信上，前面获得的计算性能仍然会被等待时间消耗掉。Agent改变的不只是推理芯片内部的分工，也在扩大AI基础设施需要优化的范围。 这并非意味着未来每一个Agent系统都会配置LPX、Vera这样的CPU和如此大规模的网络基础设施。英伟达此次展示的明显是面向高并发、长上下文和大规模部署的上限设计，它最终能够形成多大的实际市场， 仍然取决于Agent应用能够产生怎样的真实负载，以及更复杂的异构系统能否换来足够的性能收益 。 从Hot Chips此次英伟达展示出的架构逻辑来看，一个趋势已经比较清楚：GPU仍然是AI计算的核心。只是当一次Agent任务横跨上下文处理、Token生成、工具执行和数据通信，下一代推理基础设施要优化的对象，已经不再是一颗芯片，而是整条任务链。 雷 峰网雷峰网雷峰网 【封面图片来源：网站名 英伟达官网 ，所有者：英伟达】"
+        ],
+        "thumbnail_url": "https://static.leiphone.com/uploads/new/banner/6a3a22b4dadf8.jpeg",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "雷峰网",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "Agent推理的优化对象已从单颗GPU转向整条任务链，英伟达在重新划分GPU、LPX、CPU与网络的边界。",
+        "reading_questions": [
+          "这种异构分工是否会改变GPU在推理中的主导地位？",
+          "AgentX负载能否代表真实Agent生产流量？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "deepseek",
+            "label": "DeepSeek"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": {
+          "importance": "这标志着推理基础设施从单芯片性能竞争转向异构系统级优化，Agent负载成为下一代架构设计的核心场景。",
+          "skepticism": "30倍数据来自英伟达自测，尚待SemiAnalysis审核，且为特定负载下的峰值，需独立验证。",
+          "watch_points": [
+            "SemiAnalysis对AgentX测试结果的独立审核结论",
+            "Prefill-Decode拆分、推测解码等异构方案在实际部署中的收益",
+            "其他芯片厂商是否跟进类似异构推理架构"
+          ],
+          "related_sources": [
+            {
+              "title": "英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU | Hot Chips 2026 | 雷峰网",
+              "url": "https://www.leiphone.com/category/chips/LIUBrHLsZcZlyHwv.html"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "NVIDIA",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "DeepSeek",
+              "role": "tested_model",
+              "evidence": "DeepSeek V4-Pro作为测试模型出现在AgentX工作负载中，是测试对象而非文章主体"
+            },
+            {
+              "name": "Groq",
+              "role": "partner",
+              "evidence": "Groq 3 LPX作为低延迟Token生成芯片被整合进Vera Rubin平台，是英伟达的合作伙伴"
+            },
+            {
+              "name": "SemiAnalysis",
+              "role": "source_author",
+              "evidence": "SemiAnalysis创建了AgentX工作负载，并将审核英伟达的测试结果"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主体是英伟达在Hot Chips披露的Vera Rubin系统测试结果，DeepSeek仅作为被测模型出现，因此主实体为英伟达，事件属于基准测试类技术进展。"
+        },
+        "thumbnail_source": "article img"
+      }
+    ],
+    "industry_views": [
+      {
+        "event_id": "00df2f01677c45",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "OpenAI：PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.",
+        "ai_summary": "开发者 swyx 在 X 上警告：暂时不要使用 Codex 的 locked use 功能，它依赖不稳定的 Mac 特性，已导致他本周两次被锁出 macOS 钥匙串；Apple 开发者论坛已确认这是已知 bug。",
+        "brief": "开发者 swyx 在 X 上警告：暂时不要使用 Codex 的 locked use 功能，它依赖不稳定的 Mac 特性，已导致他本周两次被锁出 macOS 钥匙串；Apple 开发者论坛已确认这是已知 bug。",
+        "social_original_text": "do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.\n\nthx @_chenglou for linking to apple developer forums acknowledging this is a \"known bug\". just avoid. ofc, would be nice to do everything in cloud, but cloud isn't there yet.",
+        "translation_zh": "现在不要使用Codex的“锁定使用”功能。它目前依赖不稳定的Mac功能，本周已经两次让我完全无法访问我的macOS钥匙串。感谢@_chenglou提供了苹果开发者论坛的链接，确认这是一个“已知错误”。还是避免使用吧。当然，如果能全部在云端完成就好了，但云端还做不到。",
+        "entity": "OpenAI",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 65.28,
+        "evidence_urls": [
+          "https://x.com/swyx/status/2092492963435946494"
+        ],
+        "evidence_titles": [
+          "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week."
+        ],
+        "evidence_summaries": [
+          "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.\n\nthx @_chenglou for linking to apple developer forums acknowledging this is a \"known bug\". just avoid. ofc, would be nice to do everything in cloud, but cloud isn't there yet."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Swyx"
+        ],
+        "source_display": "X: Swyx",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "swyx"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 6.2763625255165305,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "本地 Agent 权限越深，系统集成不稳的代价越大；Codex 锁定模式连钥匙串都能锁死，说明本地执行路径的工程成熟度还撑不起关键工作流。",
+        "reading_questions": [
+          "本地锁定模式与云端执行，哪种更适合关键开发工作流？",
+          "这个 bug 会影响你使用 Codex 的方式吗？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "直接警告 Codex 本地锁定模式存在凭据安全风险，可能影响开发者对 OpenAI 本地 Agent 功能的信任。",
+          "skepticism": "单一用户报告，虽引用 Apple 论坛已知 bug，但缺少复现细节与影响范围，普遍性仍需验证。",
+          "watch_points": [
+            "OpenAI 是否回应并修复 Codex locked use 功能",
+            "Apple 是否发布针对该已知 bug 的修复",
+            "其他开发者是否报告类似 keychain 锁定问题"
+          ],
+          "related_sources": [
+            {
+              "title": "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.",
+              "url": "https://x.com/swyx/status/2092492963435946494"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "swyx",
+              "role": "source_author",
+              "evidence": "发布 PSA 的开发者，报告了 Codex 问题"
+            },
+            {
+              "name": "@_chenglou",
+              "role": "source_author",
+              "evidence": "提供了 Apple 开发者论坛链接，佐证这是已知 bug"
+            },
+            {
+              "name": "Apple",
+              "role": "other",
+              "evidence": "其开发者论坛被引用，确认这是已知 bug"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "被警告不要使用的 OpenAI 编程代理功能"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "industry_views",
+          "confidence": "中",
+          "reasoning": "这是开发者个人在社交媒体发布的 PSA，属于行业观点而非 OpenAI 官方公告，因此归入 industry_views；虽然涉及 OpenAI 产品，但 OpenAI 是被报道方而非主动发布方，容易误判为 company_updates。"
+        }
+      },
+      {
+        "event_id": "3b2bcf5e332ff9",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI comp",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI companies.\n\n“The world doesn’t just want raw models and agents; it wants problems resolved and outcomes achieved. The premium will sit with the companies that can diffuse this intelligence through every aspect of civilization, converting raw tokens into real world outcomes, transforming industries, and creating economies in the process.”\n\nThis requires understanding the context, driving the change management, having a harness that can route to various models, connecting to the critical business systems in that vertical, solving the UX challenges of connecting users to agents in the right way in a workflow, understanding the evals in the space, and so on.\n\nThat’s a ton of value that goes beyond just the model intelligence itself. And there’s a window of opportunity right now to build the defining companies that can bring intelligence to the critical domains in an enterprise.",
+        "translation_zh": "关于规模化应用AI战略的好文章。很明显，AI模型与企业底层工作流之间存在巨大差距，这为应用型AI公司留下了大量机会。 “世界不仅仅想要原始的模型和智能体；它想要问题得到解决、成果得以实现。溢价将属于那些能够将这种智能渗透到文明各个方面的公司，将原始token转化为现实世界的成果，改变行业，并在此过程中创造经济。” 这需要理解上下文、推动变革管理、拥有能够路由到各种模型的框架、连接到该垂直领域的关键业务系统、解决在工作流中以正确方式将用户与智能体连接的UX挑战、理解该领域的评估等等。 这带来了远超模型智能本身的大量价值。而现在正是一个机会窗口，可以打造那些能够将智能带入企业关键领域的定义性公司。",
+        "entity": "",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 59.02,
+        "evidence_urls": [
+          "https://x.com/levie/status/2092466424694649066"
+        ],
+        "evidence_titles": [
+          "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI comp"
+        ],
+        "evidence_summaries": [
+          "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI companies.\n\n“The world doesn’t just want raw models and agents; it wants problems resolved and outcomes achieved. The premium will sit with the companies that can diffuse this intelligence through every aspect of civilization, converting raw tokens into real world outcomes, transforming industries, and creating economies in the process.”\n\nThis requires understanding the context, driving the change management, having a harness that can route to various models, connecting to the critical business systems in that vertical, solving the UX challenges of connecting users to agents in the right way in a workflow, understanding the evals in the space, and so on.\n\nThat’s a ton of value that goes beyond just the model intelligence itself. And there’s a window of opportunity right now to build the defining companies that can bring intelligence to the critical domains in an enterprise."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Aaron Levie"
+        ],
+        "source_display": "X: Aaron Levie",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "levie"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 14,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 11.020599913279625,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "055995d743ca1c",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Good products take time. At least 34 days.",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Good products take time. At least 34 days.",
+        "translation_zh": "好的产品需要时间。至少34天。",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 39,
+        "evidence_urls": [
+          "https://x.com/thsottiaux/status/2092487667426738179"
+        ],
+        "evidence_titles": [
+          "Good products take time. At least 34 days."
+        ],
+        "evidence_summaries": [
+          "Good products take time. At least 34 days."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Thibault Sottiaux"
+        ],
+        "source_display": "X: Thibault Sottiaux",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "thsottiaux"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 3,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 16,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "cf74b13a14467a",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "How to build great evals — Part 9",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "How to build great evals — Part 9\n\nThe Eval Roadmap Problem\n\nMost evals fail because teams treat them as static artifacts while their users expectations and behaviors have evolved.\n\nYour evals need a roadmap that evolves with your product and actual usage patterns.\n\nTake a financial research agent. Here is how use cases will evolve over time.\n\nEarly user: Summarize this 5-page earnings report.\n\n3 weeks later: review the last 5 earnings reports and explain their growth story.\n\n2 months later: Here are 15 filings, earnings transcripts and research reports. Build an investment thesis.\n\nEventually: Monitor my stock portfolio and tell send me alerts when something materially changes my thesis.\n\nEach stage requires different capabilities and hence different evals.\n\nYour evals should change with usage patterns:\n\nshort-context -> long-context\nsingle-turn QA -> multi-turn\npassage citations -> doc and line citations\nSimple QA -> complex synthesis\nreactive chat -> proactive agent\n\nIf your evals are stuck in week 1 while users are in week 3, it will show in your product and churn metrics.\n\nHere’s a practical way to build the roadmap:\n1/ Map the dimensions along which usage will evolve (eg # turns, document size, tool use, autonomy, journey coverage).\n2/ Prioritize the use cases and dimensions that matter most for your product.\n3/ Talk to your users, mine production traces to look for shifts.\n4/ Build P0 evals for the next stage of usage.\n5/ Run the evals, find failure modes (remember the taxonomy from Part 3), and hill-climb (from part 6).\n\nThe goal is to stay ahead of usage patterns. PM 101.\n\nDrop your questions and I will address in future posts.\n\nShare this with your teammates who think your evals are perfect.",
+        "translation_zh": "如何构建出色的评估——第9部分 评估路线图问题 大多数评估失败是因为团队把它们当作静态工件，而用户的期望和行为已经发生了变化。 你的评估需要一个与产品和实际使用模式同步演进的路线图。 以金融研究智能体为例。用例会如何随时间演变： 早期用户：总结这份5页的财报。 3周后：回顾最近5份财报，解释它们的增长故事。 2个月后：这里有15份文件、财报电话会议记录和研究报告。构建一个投资论点。 最终：监控我的股票投资组合，当有重大变化影响我的论点时，给我发送提醒。 每个阶段都需要不同的能力，因此也需要不同的评估。 你的评估应该随着使用模式而变化： 短上下文 -> 长上下文 单轮问答 -> 多轮 段落引用 -> 文档和行级引用 简单问答 -> 复杂综合 被动聊天 -> 主动智能体 如果你的评估停留在第1周，而用户已经进入第3周，这会在你的产品和流失指标中体现出来。 以下是构建路线图的实用方法： 1/ 映射使用将演进的维度（例如轮数、文档大小、工具使用、自主性、旅程覆盖）。 2/ 优先考虑对你的产品最重要的用例和维度。 3/ 与用户交谈，挖掘生产痕迹以寻找变化。 4/ 为下一阶段的使用构建P0评估。 5/ 运行评估，找出失败模式（记住第3部分的分类法），并进行爬山优化（来自第6部分）。 目标是领先于使用模式。产品经理基础。 有问题尽管提，我会在后续帖子中解答。 把这分享给那些认为你的评估完美无缺的队友吧。",
+        "entity": "",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 30.09,
+        "evidence_urls": [
+          "https://x.com/realmadhuguru/status/2092426017118028266"
+        ],
+        "evidence_titles": [
+          "How to build great evals — Part 9"
+        ],
+        "evidence_summaries": [
+          "How to build great evals — Part 9\n\nThe Eval Roadmap Problem\n\nMost evals fail because teams treat them as static artifacts while their users expectations and behaviors have evolved.\n\nYour evals need a roadmap that evolves with your product and actual usage patterns.\n\nTake a financial research agent. Here is how use cases will evolve over time.\n\nEarly user: Summarize this 5-page earnings report.\n\n3 weeks later: review the last 5 earnings reports and explain their growth story.\n\n2 months later: Here are 15 filings, earnings transcripts and research reports. Build an investment thesis.\n\nEventually: Monitor my stock portfolio and tell send me alerts when something materially changes my thesis.\n\nEach stage requires different capabilities and hence different evals.\n\nYour evals should change with usage patterns:\n\nshort-context -> long-context\nsingle-turn QA -> multi-turn\npassage citations -> doc and line citations\nSimple QA -> complex synthesis\nreactive chat -> proactive agent\n\nIf your evals are stuck in week 1 while users are in week 3, it will show in your product and churn metrics.\n\nHere’s a practical way to build the roadmap:\n1/ Map the dimensions along which usage will evolve (eg # turns, document size, tool use, autonomy, journey coverage).\n2/ Prioritize the use cases and dimensions that matter most for your product.\n3/ Talk to your users, mine production traces to look for shifts.\n4/ Build P0 evals for the next stage of usage.\n5/ Run the evals, find failure modes (remember the taxonomy from Part 3), and hill-climb (from part 6).\n\nThe goal is to stay ahead of usage patterns. PM 101.\n\nDrop your questions and I will address in future posts.\n\nShare this with your teammates who think your evals are perfect."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Madhu Guru"
+        ],
+        "source_display": "X: Madhu Guru",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "realmadhuguru"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 4,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 10.085166696493902,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": -12,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "93dfd121d3fbce",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈",
+        "translation_zh": "找一个像那个爱晒“独家”晚餐照片的VC一样爱你的人 🙈",
+        "entity": "",
+        "event_type": "company_or_industry_update",
+        "event_type_label": "公司/行业动态",
+        "score": 19.15,
+        "evidence_urls": [
+          "https://x.com/nikunj/status/2092476274312933634"
+        ],
+        "evidence_titles": [
+          "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈"
+        ],
+        "evidence_summaries": [
+          "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Nikunj Kothari"
+        ],
+        "source_display": "X: Nikunj Kothari",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "nikunj"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 6,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 0,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 6.15224460689137,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [],
+        "expert_review": null,
+        "llm_classification": null
+      },
+      {
+        "event_id": "0f9d9b3a1b2758",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Full eval series so far:",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Full eval series so far:\n\n1/ Getting started with evals\nhttps://t.co/fh4yQR64Ta\n\n2/ Quality first, then cost\nhttps://t.co/hqNaE2ykTQ\n\n3/ Failure modes taxonomy\nhttps://t.co/MM2wgiAnoF\n\n4/ Laddered eval strategy\nhttps://t.co/2ioAe4hvqb\n\n5/ Tyranny of the average\nhttps://t.co/QPiGbxxb72\n\n6/ Hill climbing on evals\nhttps://t.co/EtxbF1kqgD\n\n7/ The Goldilocks principle\nhttps://t.co/PXSX3jsLtk\n\n8/ Discriminatory power of evals\nhttps://t.co/epINGK6dGV\n\n9/ The Eval Roadmap Problem\nhttps://t.co/nw2U3R6U1Y",
+        "translation_zh": "目前完整的评估系列： 1/ 评估入门 https://t.co/fh4yQR64Ta 2/ 质量优先，成本其次 https://t.co/hqNaE2ykTQ 3/ 失败模式分类 https://t.co/MM2wgiAnoF 4/ 阶梯式评估策略 https://t.co/2ioAe4hvqb 5/ 平均值的暴政 https://t.co/QPiGbxxb72 6/ 评估上的爬山法 https://t.co/EtxbF1kqgD 7/ 金发姑娘原则 https://t.co/PXSX3jsLtk 8/ 评估的区分能力 https://t.co/epINGK6dGV 9/ 评估路线图问题 https://t.co/nw2U3R6U1Y",
+        "entity": "",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 25,
+        "evidence_urls": [
+          "https://x.com/realmadhuguru/status/2092461206783373758"
+        ],
+        "evidence_titles": [
+          "Full eval series so far:"
+        ],
+        "evidence_summaries": [
+          "Full eval series so far:\n\n1/ Getting started with evals\nhttps://t.co/fh4yQR64Ta\n\n2/ Quality first, then cost\nhttps://t.co/hqNaE2ykTQ\n\n3/ Failure modes taxonomy\nhttps://t.co/MM2wgiAnoF\n\n4/ Laddered eval strategy\nhttps://t.co/2ioAe4hvqb\n\n5/ Tyranny of the average\nhttps://t.co/QPiGbxxb72\n\n6/ Hill climbing on evals\nhttps://t.co/EtxbF1kqgD\n\n7/ The Goldilocks principle\nhttps://t.co/PXSX3jsLtk\n\n8/ Discriminatory power of evals\nhttps://t.co/epINGK6dGV\n\n9/ The Eval Roadmap Problem\nhttps://t.co/nw2U3R6U1Y"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Madhu Guru"
+        ],
+        "source_display": "X: Madhu Guru",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "realmadhuguru"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 4,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -13
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": null,
+        "llm_classification": null
+      }
+    ]
+  },
+  "paper_digest": {
+    "source": "Hugging Face Daily Papers",
+    "source_url": "https://huggingface.co/papers/date/2026-08-27",
+    "generated_at": "2026-08-27T00:34:21.585Z",
+    "llm_provider": "openai_compatible_chat",
+    "llm_model": "deepseek-v4-flash-ga-260731",
+    "count": 5,
+    "total_count": 25,
+    "items": [
+      {
+        "paper_id": "2608.15875",
+        "title": "data_scaling_loss.svg",
+        "title_zh": "data_scaling_loss.svg",
+        "daily_rank": 1,
+        "url": "https://huggingface.co/papers/2608.15875",
+        "source_url": "https://arxiv.org/html/2608.15875",
+        "thumbnail_url": "",
+        "takeaway_zh": "论文展示分布式学习环境中扩展性能的测量图表，摘要未提供具体细节。",
+        "why_it_matters_zh": "信息不足，无法判断其对模型或基础设施的实际意义。",
+        "tags": [
+          "扩展性",
+          "分布式学习"
+        ],
+        "importance": 1,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2608.20492",
+        "title": "Annotations as Rollouts: Efficient and Scalable Reinforcement Learning for Video MLLMs",
+        "title_zh": "Annotations as Rollouts: 视频多模态大模型的高效可扩展强化学习",
+        "daily_rank": 2,
+        "url": "https://huggingface.co/papers/2608.20492",
+        "source_url": "https://arxiv.org/html/2608.20492",
+        "thumbnail_url": "https://arxiv.org/html/2608.20492v1/advantage_inversion.png",
+        "takeaway_zh": "提出 OraRL，将注释作为 oracle rollout 引入视频多模态大模型的强化学习后训练，通过解耦优势估计器避免优势反转，提升采样效率与性能。",
+        "why_it_matters_zh": "显著降低视频 MLLM 后训练成本，无需思维链即可快速解码，并在多项时空理解基准上超越此前最佳模型。",
+        "tags": [
+          "强化学习",
+          "视频多模态",
+          "后训练"
+        ],
+        "importance": 5,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2608.24053",
+        "title": "performance-overview.svg",
+        "title_zh": "performance-overview.svg",
+        "daily_rank": 3,
+        "url": "https://huggingface.co/papers/2608.24053",
+        "source_url": "https://arxiv.org/html/2608.24053",
+        "thumbnail_url": "",
+        "takeaway_zh": "该图表明，带有REs标签的信息量越大，SSIM指标上的准确性往往越高。",
+        "why_it_matters_zh": "提示标注数据规模与特定评估指标之间的关联，但具体机制需进一步验证。",
+        "tags": [
+          "数据标注",
+          "评估指标"
+        ],
+        "importance": 2,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2608.23041",
+        "title": "gaia2_traces_vs_dev_accuracy.svg",
+        "title_zh": "gaia2_traces_vs_dev_accuracy.svg",
+        "daily_rank": 4,
+        "url": "https://huggingface.co/papers/2608.23041",
+        "source_url": "https://arxiv.org/html/2608.23041",
+        "thumbnail_url": "",
+        "takeaway_zh": "该图对比了多个软件系统在精度与运行时间上的最佳权衡曲线，涉及Microsoft C++编译器、AutoSaddler、Meta-Harness和GEPAPI。",
+        "why_it_matters_zh": "为系统性能优化提供直观对比，但具体结论需结合实验细节判断。",
+        "tags": [
+          "性能对比",
+          "系统优化"
+        ],
+        "importance": 3,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2608.24646",
+        "title": "Paper page - On-Policy Self-Distillation in Diffusion Models",
+        "title_zh": "扩散模型中的在线策略自蒸馏",
+        "daily_rank": 5,
+        "url": "https://huggingface.co/papers/2608.24646",
+        "source_url": "https://huggingface.co/papers/2608.24646",
+        "thumbnail_url": "https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2608.24646/gradient.png",
+        "takeaway_zh": "论文提出在扩散模型训练中引入在线策略自蒸馏方法，具体细节待公开摘要确认。",
+        "why_it_matters_zh": "若方法有效，可能提升扩散模型的样本效率或生成质量，但当前信息不足以评估实际影响。",
+        "tags": [
+          "扩散模型",
+          "自蒸馏",
+          "生成模型"
+        ],
+        "importance": 3,
+        "summary_method": "llm"
+      }
+    ]
+  },
+  "items": [
+    {
+      "event_id": "2358d9d8949c8b",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Warp：How Warp builds self-improving agents on Claude",
+      "ai_summary": "Warp 在 Claude 平台上用 Agent Skills 构建自我改进 agent：内层技能执行任务，外层 improver 技能定期汇总人类反馈，提出对技能文件的小幅修改，经 PR 审查合并后持续优化 age。",
+      "brief": "Warp 在 Claude 平台上用 Agent Skills 构建自我改进 agent：内层技能执行任务，外层 improver 技能定期汇总人类反馈，提出对技能文件的小幅修改，经 PR 审查合并后持续优化 age。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Warp",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 87,
+      "evidence_urls": [
+        "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude"
+      ],
+      "evidence_titles": [
+        "How Warp builds self-improving agents on Claude"
+      ],
+      "evidence_summaries": [],
+      "thumbnail_url": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6a8f1a9a1b33f40618a9d59a_selfimprove-loop.jpg",
+      "source_layers": [
+        "L1"
+      ],
+      "social_sources": [],
+      "source_display": "Claude Blog",
+      "source_kinds": [
+        "claude_blog"
+      ],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "本质是把人类反馈沉淀为可版本控制的技能文件，由 improver agent 定期改写 base skill，形成可审查的自我改进闭环。",
+      "reading_questions": [
+        "这个模式在非代码审查场景（如客服、数据分析）是否同样有效？",
+        "低质量或恶意的人类反馈如何过滤，会不会让技能越改越差？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "anthropic",
+          "label": "Anthropic"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        }
+      ],
+      "expert_review": {
+        "importance": "为 agent 长期自我改进提供了一种低门槛、可落地的工程范式，且由 Anthropic 官方博客背书，可能影响 agent 开发实践。",
+        "skepticism": "这是 Anthropic 官方案例文章，效果数据来自 Warp 自述，自我改进相对人工调优的实际增益缺乏独立评测。",
+        "watch_points": [
+          "Warp 是否公开可复现的自我改进效果数据（如代码审查准确率、误报率变化）",
+          "该模式能否被其他 Claude 生态开发者复用，形成通用实践",
+          "improver 自动生成的技能修改在复杂任务中是否会出现错误累积或反馈污染"
+        ],
+        "related_sources": [
+          {
+            "title": "How Warp builds self-improving agents on Claude",
+            "url": "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "Warp",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Anthropic",
+            "role": "partner",
+            "evidence": "文章发布在 Claude Blog，Warp 基于 Claude Platform 构建，Anthropic 是平台提供方和文章发布方"
+          },
+          {
+            "name": "Claude",
+            "role": "model",
+            "evidence": "Warp 的 agent 基于 Claude 模型构建，文章标题即 'on Claude'"
+          },
+          {
+            "name": "Claude Code",
+            "role": "product",
+            "evidence": "Warp 中已运行 1000 万次 Claude Code 会话，是 agent 的执行环境"
+          },
+          {
+            "name": "Agent Skills",
+            "role": "tool",
+            "evidence": "自我改进框架的核心机制，技能文件是知识编码方式"
+          },
+          {
+            "name": "Oz",
+            "role": "tool",
+            "evidence": "Warp 的内部 agent 编排平台，improver 技能以定时任务运行其中"
+          },
+          {
+            "name": "Zach Lloyd",
+            "role": "source_author",
+            "evidence": "Warp CEO，文章多次引用其关于技能设计和反馈机制的观点"
+          }
+        ],
+        "event_type": "agent_or_developer_infra",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章主语是 Warp 而非 Anthropic，内容是其基于 Claude 的工程实践分享，属于公司案例更新，不是模型发布或基准评测。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "2e7d82acd9ec04",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "MiniMax：MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限",
+      "ai_summary": "MiniMax 公告修订与阿里云的主 API 服务协议及云计算服务协议项下 2026-2028 年度持续关连交易上限，涉及向阿里提供 API 服务及采购云产品。",
+      "brief": "MiniMax 公告修订与阿里云的主 API 服务协议及云计算服务协议项下 2026-2028 年度持续关连交易上限，涉及向阿里提供 API 服务及采购云产品。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "MiniMax",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 86,
+      "evidence_urls": [
+        "https://36kr.com/newsflashes/3957030026116232?f=rss"
+      ],
+      "evidence_titles": [
+        "MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限"
+      ],
+      "evidence_summaries": [
+        "MINIMAX于8月26日公告，根据主API服务协议，公司同意向阿里巴巴集团运营的业务提供API服务，期限自上市日期起至2028年12月31日止。根据阿里云计算服务协议，公司同意向阿里云计算有限公司购买若干云产品及服务，期限自上市日期起至2028年12月31日止。于8月26日（交易时段后），公司与阿里云计算有限公司订立主API服务协议补充协议及阿里云计算服务协议补充协议，以修订主API服务协议及阿里云计算服务协议项下截至2026年、2027年及2028年12月31日止年度的持续关连交易的现有年度上限。（财联社）"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "36Kr AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "这是上市公司对关联交易额度的例行调整，反映 MiniMax 对阿里云资源采购和 API 业务规模的预期变化，本身不构成技术或产品进展。",
+      "reading_questions": [
+        "这次上限调整是上调还是下调？",
+        "对 MiniMax 的云成本结构意味着什么？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "minimax",
+          "label": "MiniMax"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        }
+      ],
+      "expert_review": {
+        "importance": "作为港股上市公司，MiniMax 调整与阿里云的持续关连交易上限，可能反映其云资源采购和 API 业务规模预期变化，属于公司治理层面的常规动作。",
+        "skepticism": "公告未披露修订后上限的具体金额和调整方向，不能据此推断 MiniMax 实际业务增长或成本变化。",
+        "watch_points": [
+          "修订后年度上限的具体金额及调整方向",
+          "MiniMax 对阿里云采购规模变化是否反映其训练/推理成本结构",
+          "后续财报中关联交易实际发生额与上限的差距"
+        ],
+        "related_sources": [
+          {
+            "title": "MINIMAX：修订阿里云计算服务协议项下持续关连交易的年度上限",
+            "url": "https://36kr.com/newsflashes/3957030026116232?f=rss"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "MiniMax",
+        "primary_entity_role": "company_actor",
+        "mentioned_entities": [
+          {
+            "name": "阿里巴巴集团",
+            "role": "partner",
+            "evidence": "MiniMax 根据主 API 服务协议向阿里巴巴集团运营的业务提供 API 服务，阿里是协议对手方。"
+          },
+          {
+            "name": "阿里云计算有限公司",
+            "role": "partner",
+            "evidence": "MiniMax 根据阿里云计算服务协议向阿里云购买云产品及服务，阿里云是供应商。"
+          }
+        ],
+        "event_type": "company_or_industry_update",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章主语是 MiniMax 发布的关联交易公告，阿里只是协议对手方，因此 primary_entity 是 MiniMax；事件属于公司财务/治理调整，不是产品发布、研究或行业观点。"
+      }
+    },
+    {
+      "event_id": "bdce26c905605e",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Amazon Bedrock AgentCore：Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations",
+      "ai_summary": "AWS发布Bedrock AgentCore Evaluations，通过OpenTelemetry遥测统一评估不同agent框架，支持LangGraph、LlamaIndex、OpenAI Agents SDK等。",
+      "brief": "AWS发布Bedrock AgentCore Evaluations，通过OpenTelemetry遥测统一评估不同agent框架，支持LangGraph、LlamaIndex、OpenAI Agents SDK等。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Amazon Bedrock AgentCore",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 85,
+      "evidence_urls": [
+        "https://aws.amazon.com/blogs/machine-learning/evaluate-any-agent-framework-with-amazon-bedrock-agentcore-evaluations"
+      ],
+      "evidence_titles": [
+        "Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations"
+      ],
+      "evidence_summaries": [
+        "Amazon Bedrock AgentCore Evaluations decouples agent evaluation from the framework you build on. As long as your agent emits OpenTelemetry telemetry, the service can score it, whether you use LangGraph, LlamaIndex, the OpenAI Agents SDK, Google ADK, the Claude Agent SDK, or Strands Agents. This post explains how the framework-agnostic contract works."
+      ],
+      "thumbnail_url": "https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/08/24/ML-21721-1.png",
+      "source_layers": [
+        "L1"
+      ],
+      "social_sources": [],
+      "source_display": "AWS Machine Learning Blog",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "把评估从框架绑定中解耦，用OpenTelemetry作为通用语言，是agent工程化的务实一步。",
+      "reading_questions": [
+        "这个方案能否真正替代人工评估？",
+        "对现有agent工作流迁移成本多高？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "openai",
+          "label": "OpenAI"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        }
+      ],
+      "expert_review": {
+        "importance": "为多框架agent提供统一评估标准，降低评估工具碎片化成本。",
+        "skepticism": "实际效果取决于各框架OpenTelemetry instrumentation的成熟度和数据完整性。",
+        "watch_points": [
+          "其他框架是否跟进OpenInference规范",
+          "评估结果与人工评估的一致性",
+          "是否支持自定义评估器"
+        ],
+        "related_sources": [
+          {
+            "title": "Evaluate any agent framework with Amazon Bedrock AgentCore Evaluations",
+            "url": "https://aws.amazon.com/blogs/machine-learning/evaluate-any-agent-framework-with-amazon-bedrock-agentcore-evaluations"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "Amazon Bedrock AgentCore",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "OpenAI",
+            "role": "product",
+            "evidence": "其Agents SDK作为被支持的框架之一被提及"
+          },
+          {
+            "name": "LangGraph",
+            "role": "product",
+            "evidence": "作为被支持的框架之一被提及"
+          },
+          {
+            "name": "LlamaIndex",
+            "role": "product",
+            "evidence": "作为被支持的框架之一被提及"
+          },
+          {
+            "name": "Google ADK",
+            "role": "product",
+            "evidence": "作为被支持的框架之一被提及"
+          },
+          {
+            "name": "Claude Agent SDK",
+            "role": "product",
+            "evidence": "作为被支持的框架之一被提及"
+          },
+          {
+            "name": "Strands Agents",
+            "role": "product",
+            "evidence": "作为被支持的框架之一被提及"
+          },
+          {
+            "name": "OpenTelemetry",
+            "role": "tool",
+            "evidence": "作为评估所依赖的遥测标准被提及"
+          },
+          {
+            "name": "Arize AI",
+            "role": "other",
+            "evidence": "作为OpenInference规范的维护者被提及"
+          }
+        ],
+        "event_type": "agent_or_developer_infra",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章是AWS官方博客介绍其AgentCore Evaluations产品，主语是AWS而非OpenAI，OpenAI仅作为被支持的SDK之一被提及。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "83fe0ea49437a1",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Z.ai（智谱）：Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model",
+      "ai_summary": "Z.ai 确认是匿名开源模型 Ox Alpha 的幕后实验室，该模型在 OpenRouter 匿名发布并登顶基准测试，权重将于周三发布，是 GLM 系列最新迭代，定位编码与 agentic 工作负载。",
+      "brief": "Z.ai 确认是匿名开源模型 Ox Alpha 的幕后实验室，该模型在 OpenRouter 匿名发布并登顶基准测试，权重将于周三发布，是 GLM 系列最新迭代，定位编码与 agentic 工作负载。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Z.ai（智谱）",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 85,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/08/26/surprise-z-ai-is-the-ai-lab-behind-the-mysterious-ox-alpha-model"
+      ],
+      "evidence_titles": [
+        "Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model"
+      ],
+      "evidence_summaries": [
+        "Z.ai confirms it is behind Ox Alpha, the mysterious open AI model topping benchmarks and leaderboards, and its weights are set to be released soon."
+      ],
+      "thumbnail_url": "https://techcrunch.com/wp-content/uploads/2026/08/runable-co-founders-umesh-saksham.jpg",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "TechCrunch AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 12,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 9,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "匿名登顶再自曝，本质是智谱以开源推理模型向闭源前沿厂商发起正面冲击，营销与实力兼备。",
+      "reading_questions": [
+        "Ox Alpha 的评测提升来自架构创新，还是训练数据与推理预算？",
+        "匿名发布策略是否将成为中国模型厂商冲击海外市场的新常态？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "智谱",
+          "label": "智谱"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        }
+      ],
+      "expert_review": {
+        "importance": "这标志着中国开源模型以匿名方式冲击前沿基准，直接威胁 OpenAI、Anthropic 等闭源厂商的市场份额。",
+        "skepticism": "Ox Alpha 的基准成绩是否在公平条件下取得，实际能力是否与榜单匹配，需权重发布后独立验证。",
+        "watch_points": [
+          "权重发布后社区复现与第三方评测结果",
+          "Ox Alpha 在长时程 agentic 任务上的实际表现",
+          "对 OpenAI、Anthropic 定价与市场份额的潜在影响"
+        ],
+        "related_sources": [
+          {
+            "title": "Surprise: Z.ai is the AI lab behind the mysterious Ox Alpha model",
+            "url": "https://techcrunch.com/2026/08/26/surprise-z-ai-is-the-ai-lab-behind-the-mysterious-ox-alpha-model"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "Z.ai（智谱）",
+        "primary_entity_role": "company_actor",
+        "mentioned_entities": [
+          {
+            "name": "Ox Alpha",
+            "role": "product",
+            "evidence": "Z.ai 确认其为 GLM 系列最新迭代，是文章讨论的核心模型"
+          },
+          {
+            "name": "OpenRouter",
+            "role": "other",
+            "evidence": "Ox Alpha 匿名发布并登顶基准测试的平台"
+          },
+          {
+            "name": "Hugging Face",
+            "role": "customer",
+            "evidence": "文章提到 Hugging Face 最近使用 Ox Alpha 防御 OpenAI agents 攻击"
+          },
+          {
+            "name": "OpenAI",
+            "role": "competitor",
+            "evidence": "文章将其列为 Ox Alpha 可能抢占市场份额的闭源前沿公司"
+          },
+          {
+            "name": "Anthropic",
+            "role": "competitor",
+            "evidence": "文章将其列为 Ox Alpha 可能抢占市场份额的闭源前沿公司，且 GLM-5.3 与 Fable 5 竞争"
+          },
+          {
+            "name": "GLM-5.3",
+            "role": "product",
+            "evidence": "Z.ai 本月早些时候发布的上一代模型，与 Anthropic Fable 5 竞争"
+          },
+          {
+            "name": "Fable 5",
+            "role": "competitor",
+            "evidence": "Anthropic 的模型，用于与 GLM-5.3 对比"
+          }
+        ],
+        "event_type": "product_or_model_release",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章主语是 Z.ai，核心动作是确认 Ox Alpha 身份并宣布发布权重，属于公司产品发布；容易误判为以 Ox Alpha 为主体的基准评测，但实际是公司确认信息。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "7f789b73e51eb7",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "Google DeepMind：Intelligent transcription with Gemini 3.5 Transcribe",
+      "ai_summary": "Google发布Gemini 3.5 Transcribe语音转文字模型，支持85+语言、自动去除填充词、自定义词汇和多说话人识别，已通过Gemini API开放，并在macOS应用和Android Rambler上线。",
+      "brief": "Google发布Gemini 3.5 Transcribe语音转文字模型，支持85+语言、自动去除填充词、自定义词汇和多说话人识别，已通过Gemini API开放，并在macOS应用和Android Rambler上线。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Google DeepMind",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 82,
+      "evidence_urls": [
+        "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe",
+        "https://www.theverge.com/tech/985186/google-gemini-3-5-transcribe-audio-ai"
+      ],
+      "evidence_titles": [
+        "Intelligent transcription with Gemini 3.5 Transcribe",
+        "Google’s new AI transcription edits out your ‘ums’ and ‘ahs’"
+      ],
+      "evidence_summaries": [
+        "Now you can get more intelligent speech-to-text transcription with Gemini 3.5 Transcribe.",
+        "Google has updated Gemini Audio with new transcription capabilities that automatically detect specialized jargon and more than 85 languages. Gemini 3.5 Transcribe is a new addition to the Gemini family that follows the launch of 3.5 Live Translate, and comes as we're still waiting for Google to release the Gemini 3.5 Pro model that it […]"
+      ],
+      "thumbnail_url": "https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini_3-5_transcribe.width-2200.format-webp.webp",
+      "source_layers": [
+        "L1",
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "Google Gemini Blog · The Verge AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 8,
+        "ResonanceScore": 9,
+        "FreshnessScore": 12,
+        "UserInterestScore": 5,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "本质是语音转录从“转文字”升级为“语音代理入口”，通过函数调用和屏幕上下文扩展能力；但3.5 Pro未发，说明Google在分模块推进。",
+      "reading_questions": [
+        "语音转录模型与屏幕上下文结合，是否会成为语音代理的标准范式？",
+        "Google 分模块发布 Gemini 3.5，是否意味着整体旗舰模型仍在追赶？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "google-deepmind",
+          "label": "Google DeepMind"
+        },
+        {
+          "kind": "topic",
+          "key": "multimodal-generation",
+          "label": "Multimodal Generation"
+        }
+      ],
+      "expert_review": {
+        "importance": "这是Google在语音转录赛道对Chirp 3的升级，并将转录能力与函数调用、屏幕上下文结合，推动语音成为代理交互入口。",
+        "skepticism": "官方引用的WER来自Artificial Analysis，且3.5 Live和3.5 Live Experimental被提及后又澄清未发布，宣传口径与实际发布范围存在差异。",
+        "watch_points": [
+          "Gemini 3.5 Pro 何时发布，以及是否整合 Transcribe 能力",
+          "3.5 Transcribe 在真实嘈杂环境和长音频中的 WER 表现",
+          "开发者生态（如 LiveKit、Pipecat）对实时语音代理的采用情况"
+        ],
+        "related_sources": [
+          {
+            "title": "Introducing Gemini 3.5 Transcribe",
+            "url": "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe"
+          },
+          {
+            "title": "Google’s new AI transcription edits out your ‘ums’ and ‘ahs’ | The Verge",
+            "url": "https://www.theverge.com/tech/985186/google-gemini-3-5-transcribe-audio-ai"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "Google DeepMind",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Chirp 3",
+            "role": "model",
+            "evidence": "Google称3.5 Transcribe相比Chirp 3有重大进步，是上一代转录模型。"
+          },
+          {
+            "name": "Gemini 3.5 Pro",
+            "role": "product",
+            "evidence": "The Verge提到仍在等待其发布，是未发布的旗舰模型。"
+          },
+          {
+            "name": "Artificial Analysis",
+            "role": "source_author",
+            "evidence": "官方引用的WER数据来自Artificial Analysis的评测。"
+          },
+          {
+            "name": "FLEURS",
+            "role": "tool",
+            "evidence": "用于评估多语言性能的基准。"
+          },
+          {
+            "name": "Agora, Fishjam, LangChain, LiveKit, Pipecat, Vercel, Vision Agents",
+            "role": "partner",
+            "evidence": "作为开发者平台，支持基于Gemini Live API构建语音界面。"
+          },
+          {
+            "name": "Vivo, Intellitek Health, Lingopal",
+            "role": "customer",
+            "evidence": "作为反馈者，分享了正面评价。"
+          }
+        ],
+        "event_type": "product_or_model_release",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章主体是Google DeepMind发布Gemini 3.5 Transcribe产品，属于公司产品发布，而非技术论文或基准评测；虽然涉及WER和FLEURS，但核心是产品上线和API开放。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "607abd196d804f",
+      "bucket": "today_focus",
+      "section": "technical_progress",
+      "title": "豆包：深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案",
+      "ai_summary": "量子位实测豆包工作：与飞书深度打通，可自动完成品牌物料制作、采购比选、群聊信息梳理等任务，并支持企业账号直接登录，强调企业上下文是Agent竞争分水岭。",
+      "brief": "量子位实测豆包工作：与飞书深度打通，可自动完成品牌物料制作、采购比选、群聊信息梳理等任务，并支持企业账号直接登录，强调企业上下文是Agent竞争分水岭。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "豆包",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 84,
+      "evidence_urls": [
+        "https://www.qbitai.com/2026/08/479348.html"
+      ],
+      "evidence_titles": [
+        "深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案"
+      ],
+      "evidence_summaries": [
+        "shui jiang shuai xian sha"
+      ],
+      "thumbnail_url": "https://i.qbitai.com/wp-content/uploads/2026/08/ef388c19d717f96a15081885aa54b0fa.webp",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "量子位",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 14,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "办公Agent基础能力趋同后，真正的壁垒在于对企业上下文的理解和权限体系的原生集成。豆包工作借飞书生态抢跑，但终局未定。",
+      "reading_questions": [
+        "企业上下文集成是否真的构成长期壁垒，还是会被标准化接口快速抹平？",
+        "豆包工作对飞书数据的读取权限边界如何界定，企业是否愿意开放核心数据？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "豆包",
+          "label": "豆包"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "enterprise-ai-workflow",
+          "label": "Enterprise AI Workflow"
+        }
+      ],
+      "expert_review": {
+        "importance": "豆包工作与飞书原生打通，标志着办公Agent从通用工具竞争转向企业上下文与组织权限体系的竞争。",
+        "skepticism": "文章为量子位实测，结论偏正面，缺乏与竞品在同等条件下的量化对比；'最接近终局'是媒体判断而非可验证事实。",
+        "watch_points": [
+          "豆包工作能否在企业真实环境中稳定处理复杂权限与数据安全场景。",
+          "飞书之外，豆包工作是否支持其他企业协作平台（如钉钉、Teams）。",
+          "竞品（如Claude+Slack、WorkBuddy）在企业上下文集成上的跟进速度。"
+        ],
+        "related_sources": [
+          {
+            "title": "深度实测「豆包工作」+飞书：目前最接近企业Agent终局的答案 – 量子位",
+            "url": "https://www.qbitai.com/2026/08/479348.html"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "豆包",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "飞书",
+            "role": "partner",
+            "evidence": "豆包工作与飞书深度打通，支持企业账号直接登录，飞书提供消息、文档、多维表格等企业上下文。"
+          },
+          {
+            "name": "OpenClaw",
+            "role": "competitor",
+            "evidence": "文章对比OpenClaw等CLI Agent需要安装插件、配置权限，而豆包工作原生打通飞书。"
+          },
+          {
+            "name": "Claude Tag",
+            "role": "competitor",
+            "evidence": "文章提到Claude Tag选择Slack，与豆包工作接入飞书形成头部Agent路线对比。"
+          }
+        ],
+        "event_type": "agent_or_developer_infra",
+        "section": "technical_progress",
+        "confidence": "高",
+        "reasoning": "文章主语是豆包工作（豆包），飞书是合作方，OpenClaw等是竞品对比；内容为第三方产品实测，故归为technical_progress而非company_updates。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "c8fabcdd981b8e",
+      "bucket": "worth_tracking",
+      "section": "technical_progress",
+      "title": "NVIDIA：英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU",
+      "ai_summary": "英伟达在Hot Chips 2026披露，Vera Rubin NVL72在DeepSeek V4-Pro Agent负载下每兆瓦吞吐较GB300最高提升30倍，但关键不在GPU，而是GPU、Groq LPX、CPU。",
+      "brief": "英伟达在Hot Chips 2026披露，Vera Rubin NVL72在DeepSeek V4-Pro Agent负载下每兆瓦吞吐较GB300最高提升30倍，但关键不在GPU，而是GPU、Groq LPX、CPU。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "NVIDIA",
+      "event_type": "research_or_benchmark",
+      "event_type_label": "研究/Benchmark",
+      "score": 80,
+      "evidence_urls": [
+        "https://www.leiphone.com/category/chips/LIUBrHLsZcZlyHwv.html"
+      ],
+      "evidence_titles": [
+        "英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU | Hot Chips 2026"
+      ],
+      "evidence_summaries": [
+        "在Agent推理上，英伟达又把性能往前推了一大步。 Hot Chips 2026期间，英伟达披露了Vera Rubin NVL72最新Agent工作负载测试结果：在DeepSeek V4-Pro、单用户每秒160 Token的测试条件下，相比GB300 NVL72，每兆瓦吞吐最高提升30倍。 但比30倍更值得关注的是，英伟达这次提升Agent推理效率，已经不再只依赖一颗更快的GPU。 面对长上下文、低延迟Token生成、工具调用和数据交互同时出现的Agent工作负载，英伟达正在把一次推理拆成不同类型的计算任务：Vera Rubin NVL72承担大规模模型计算，Groq 3 LPX专攻低延迟Token生成，Vera CPU处理工具编排、代码执行和数据处理，Spectrum-X则负责把这些计算、数据和存储资源连接起来。 换句话说，Agent工作负载让性能问题不再停留在一次模型计算内部，而是沿着上下文、生成、工具执行和基础设施访问继续向外扩展。 从GPU、CPU到专用推理芯片和网络，英伟达在Hot Chips展示的已经不只是一代芯片的性能提升，而是一套针对Agent工作负载重新划分计算边界的系统架构。 超长上下文实测，Rubin把Agent推理拉进真实长任务 这次Hot Chips上，英伟达给出了一组更贴近Agent工作流的Rubin实测数据。英伟达此次测试采用SemiAnalysis AgentX工作负载。 AgentX基于真实Agent编程会话的流量轨迹，在去除原始 prompt、代码、工具参数和结果后，保留请求长度、上下文增长、工具暂停、子任务依赖和时序等负载特征。此次测试的中位输入上下文超过 14 万 Token。 按照英伟达测得、目前仍待SemiAnalysis审核的结果，在DeepSeek V4-Pro工作负载、单用户每秒160 Token的交互速度下，Vera Rubin NVL72相较GB300 NVL72最高实现30倍的每兆瓦吞吐。 Vera Rubin 在 160 交互性下，每兆瓦的吞吐量提高了 30 倍。（图源：英伟达技术博客） 英伟达HPC与AI超大规模基础设施解决方案高级总监Dion Harris指出，传统推理基准通常围绕“单一、可预测的请求”设计：输入和输出相对确定，因此可以比较Token生成速度、吞吐量等指标。但Agent任务会跨越多轮操作，而且每一步的工作负载都可能变化。 Harris续指，传统推理负载可以使用8K甚至32K的输入序列进行测试，但到了递归式、多轮Agent任务中，Prefill需要处理的上下文会随着每一次迭代持续增长，因此平台评估需要开始考虑数十万Token级别的输入。 原因在于，Agent完成一项任务时，模型可能不断读取文件、调用工具、执行代码，再把新的结果写回上下文，进入下一轮推理。AgentX 测的是推理服务基础设施面对 Agent 流量形态时的表现，不是测 Agent 任务完成质量。 这也是此次Rubin测试采用超过14万Token上下文的意义。换言之，14万Token的意义并不只是“输入更长”，而是测试对象开始从静态prompt转向动态任务轨迹。 它试图回答的不再只是“一次模型推理能够跑多快”，而是在更接近Agent实际运行轨迹的长链路负载下，系统还能维持怎样的性能。 与此同时，英伟达把两个指标放在了同一张性能曲线上：横轴是单个用户每秒获得的Token数量，即交互速度；纵轴则是固定电力预算下整套系统能够处理的Token数量，即每兆瓦吞吐。 在多轮代理会话中，每轮对话所包含的上下文信息稳步增加。（图源：英伟达技术博客） 这两个指标对应着Agent推理中两个不同的性能目标：一边是提高单个用户在 Token 生成阶段的交互速度，另一边则是在有限电力条件下承载更多推理负载。 因此，这组数据更值得关注的是，当Agent进入硬件实测之后，长上下文、总体吞吐和交互速度开始被放到同一个性能问题中讨论。 而当同一套推理系统需要同时优化这些目标时，下一个问题也随之出现：这些任务，是否仍然适合全部交给同一种处理器完成？ 加入LPX，GPU不再是AI推理环节的最佳架构？ 这种性能目标的分化，正在直接反映到推理芯片的架构上。 英伟达透露，Groq 3 LPX已经进入全面生产。按照Artificial Analysis的测试，在Gemma 4 31B、10万Token上下文这一特定负载下，Groq 3 LPX输出速度达到每秒3400个Token，英伟达称其响应速度达到最接近替代方案的4倍。 LPX瞄准的并不是“大模型推理”这个笼统的问题，而是其中一个更具体的瓶颈：低延迟Token生成。 Prefill需要并行处理大量输入Token，通常更偏计算密集型；Decode则需要一个Token接一个Token生成，并持续读取模型权重和KV Cache，因此通常更受内存带宽和单步延迟限制。 英伟达也把Agentic AI面对的计算挑战拆成了两个方向：一边是高效处理越来越大的上下文，另一边是以极低延迟生成Token。 Groq 3 LPX针对的是后一个方向，但需要注意，这并不意味着英伟达正在用LPX替代GPU。 GPU与LPX之间并不存在一种固定的任务切分方式 。 在最直接的 Prefill-Decode 拆分中，Vera Rubin NVL72 处理输入上下文并生成 KV Cache，LPX 则参与后续 Decode 阶段的低延迟生成；另一种方案则把Decode内部继续拆开，由Rubin负责Attention计算并持有KV Cache，LPX负责FFN计算；此外，还可以让LPX运行一个较小的draft model提前生成候选Token，再由Rubin上的大模型进行验证，即推测解码。 这三种方案的数据流和计算分工不同，但背后的逻辑是一致的：并不是先决定一次推理应该由GPU还是LPU完成，而是 把推理内部进一步拆成性质不同的计算任务，再交给更适合的处理器执行 。 英伟达称，Groq 3 LPX 扩展了 Vera Rubin 平台的功能，使其能够支持具有高交互性的智能体 AI 工作负载。（图源：英伟达技术博客） 这也产生了一个问题，将Groq 3 LPX加入Vera Rubin，是否意味着GPU已经不再是所有AI推理环节的最佳架构？ Harris给出的解释是， “为工作负载的不同部分选择合适的处理器”。 他认为，Rubin GPU仍然提供最灵活的吞吐和交互能力，覆盖更广泛的工作负载；LPX则进一步把系统推向对极低延迟要求更高的场景。 因此，LPX真正值得关注的并不是英伟达又多了一颗芯片，它反映的是，在Vera Rubin这套系统里，原本由通用GPU统一承接的不同性能目标正在被进一步拆开：GPU继续承担覆盖范围更广的模型计算，而专用加速器则围绕Token生成延迟等具体瓶颈补位。 这也解释了为什么Agent工作负载下更细的异构分工，并不意味着GPU的重要性下降。恰恰相反，GPU仍然位于计算中心，只是围绕它，不同处理器的任务边界正在变得更加明确。 从GPU到CPU和网络，英伟达开始优化整条Agent链路 如果说GPU与LPX的分工仍然发生在模型推理内部，那么Agent带来的下一层变化，是性能瓶颈继续延伸到模型调用之外。 传统大模型服务中，一次模型输出往往就是任务的终点。Agent并不是这样。模型完成一轮推理后，还可能继续调用搜索、数据库或其他软件工具，执行代码、处理返回结果，再把新的信息送回模型，进入下一轮推理。 这意味着，决定一次Agent任务速度的，已经不只是GPU完成模型计算需要多少时间。Harris提到，Agent正在增加模型调用之间的CPU负载：工具编排、代码执行、数据处理和模拟，都需要CPU参与。 这也是英伟达此次强调Vera CPU的原因。Vera在这里承担的并不是模型计算本身，而是两次模型调用之间那些仍然需要CPU完成的任务。 类似的变化也发生在网络层，当Agent不断访问工具、数据和存储时，网络面对的不再只有GPU之间的数据交换。用户、Agent、应用、数据源和存储服务需要持续发生交互，计算系统与这些基础设施之间的连接同样可能进入任务的关键路径。 在这样的背景下，这英伟达此次提出了Scale-In。与通过NVLink连接机架内GPU的Scale-Up，以及通过Spectrum-X连接更大规模GPU集群的Scale-Out不同， Scale-In针对的是传统数据中心中的南北向基础设施流量 ，由BlueField-4和DOCA承担网络、存储访问、安全、控制平面和可观测等任务，再通过Spectrum-X接入整套计算基础设施。 与 Scale-In 处理模型调用之外的基础设施访问不同，Spectrum-X Multiplane 解决的是另一类更普遍的问题：随着 GPU 集群规模扩大，网络本身的扩展能力和故障恢复开始直接影响计算资源能否持续被利用。 Spectrum-X Multiplane通过多个独立网络平面扩大两层网络的规模，并在单一路径出现故障时进行硬件级重新路由。按照英伟达给出的数据，该架构最高可扩展至51.2万张GPU；在八平面拓扑中，一个平面失效后仍可维持约90%的总带宽，故障恢复速度较软件方案提高11倍。 Scale-In和Spectrum-X Multiplane解决的并不是同一个网络问题。Scale-In处理计算系统与数据、存储和基础设施服务之间的连接与管理需求；Multiplane则解决更大规模GPU集群的网络扩展和故障恢复问题。 但放回完整的Agent任务链中，两者指向同一个变化： 决定任务效率的环节正在从一次模型计算不断向外延伸 。 GPU可以更快地完成模型计算，LPX可以进一步压低Token生成延迟；但如果Agent随后卡在工具执行、数据读取或者通信上，前面获得的计算性能仍然会被等待时间消耗掉。Agent改变的不只是推理芯片内部的分工，也在扩大AI基础设施需要优化的范围。 这并非意味着未来每一个Agent系统都会配置LPX、Vera这样的CPU和如此大规模的网络基础设施。英伟达此次展示的明显是面向高并发、长上下文和大规模部署的上限设计，它最终能够形成多大的实际市场， 仍然取决于Agent应用能够产生怎样的真实负载，以及更复杂的异构系统能否换来足够的性能收益 。 从Hot Chips此次英伟达展示出的架构逻辑来看，一个趋势已经比较清楚：GPU仍然是AI计算的核心。只是当一次Agent任务横跨上下文处理、Token生成、工具执行和数据通信，下一代推理基础设施要优化的对象，已经不再是一颗芯片，而是整条任务链。 雷 峰网雷峰网雷峰网 【封面图片来源：网站名 英伟达官网 ，所有者：英伟达】"
+      ],
+      "thumbnail_url": "https://static.leiphone.com/uploads/new/banner/6a3a22b4dadf8.jpeg",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "雷峰网",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "Agent推理的优化对象已从单颗GPU转向整条任务链，英伟达在重新划分GPU、LPX、CPU与网络的边界。",
+      "reading_questions": [
+        "这种异构分工是否会改变GPU在推理中的主导地位？",
+        "AgentX负载能否代表真实Agent生产流量？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "deepseek",
+          "label": "DeepSeek"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        },
+        {
+          "kind": "topic",
+          "key": "inference-infrastructure",
+          "label": "Inference Infrastructure"
+        }
+      ],
+      "expert_review": {
+        "importance": "这标志着推理基础设施从单芯片性能竞争转向异构系统级优化，Agent负载成为下一代架构设计的核心场景。",
+        "skepticism": "30倍数据来自英伟达自测，尚待SemiAnalysis审核，且为特定负载下的峰值，需独立验证。",
+        "watch_points": [
+          "SemiAnalysis对AgentX测试结果的独立审核结论",
+          "Prefill-Decode拆分、推测解码等异构方案在实际部署中的收益",
+          "其他芯片厂商是否跟进类似异构推理架构"
+        ],
+        "related_sources": [
+          {
+            "title": "英伟达Vera Rubin的Agent吞吐暴涨最高提升30倍，却不只靠GPU | Hot Chips 2026 | 雷峰网",
+            "url": "https://www.leiphone.com/category/chips/LIUBrHLsZcZlyHwv.html"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "NVIDIA",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "DeepSeek",
+            "role": "tested_model",
+            "evidence": "DeepSeek V4-Pro作为测试模型出现在AgentX工作负载中，是测试对象而非文章主体"
+          },
+          {
+            "name": "Groq",
+            "role": "partner",
+            "evidence": "Groq 3 LPX作为低延迟Token生成芯片被整合进Vera Rubin平台，是英伟达的合作伙伴"
+          },
+          {
+            "name": "SemiAnalysis",
+            "role": "source_author",
+            "evidence": "SemiAnalysis创建了AgentX工作负载，并将审核英伟达的测试结果"
+          }
+        ],
+        "event_type": "research_or_benchmark",
+        "section": "technical_progress",
+        "confidence": "高",
+        "reasoning": "文章主体是英伟达在Hot Chips披露的Vera Rubin系统测试结果，DeepSeek仅作为被测模型出现，因此主实体为英伟达，事件属于基准测试类技术进展。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "00df2f01677c45",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "OpenAI：PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.",
+      "ai_summary": "开发者 swyx 在 X 上警告：暂时不要使用 Codex 的 locked use 功能，它依赖不稳定的 Mac 特性，已导致他本周两次被锁出 macOS 钥匙串；Apple 开发者论坛已确认这是已知 bug。",
+      "brief": "开发者 swyx 在 X 上警告：暂时不要使用 Codex 的 locked use 功能，它依赖不稳定的 Mac 特性，已导致他本周两次被锁出 macOS 钥匙串；Apple 开发者论坛已确认这是已知 bug。",
+      "social_original_text": "do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.\n\nthx @_chenglou for linking to apple developer forums acknowledging this is a \"known bug\". just avoid. ofc, would be nice to do everything in cloud, but cloud isn't there yet.",
+      "translation_zh": "现在不要使用Codex的“锁定使用”功能。它目前依赖不稳定的Mac功能，本周已经两次让我完全无法访问我的macOS钥匙串。感谢@_chenglou提供了苹果开发者论坛的链接，确认这是一个“已知错误”。还是避免使用吧。当然，如果能全部在云端完成就好了，但云端还做不到。",
+      "entity": "OpenAI",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 65.28,
+      "evidence_urls": [
+        "https://x.com/swyx/status/2092492963435946494"
+      ],
+      "evidence_titles": [
+        "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week."
+      ],
+      "evidence_summaries": [
+        "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.\n\nthx @_chenglou for linking to apple developer forums acknowledging this is a \"known bug\". just avoid. ofc, would be nice to do everything in cloud, but cloud isn't there yet."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Swyx"
+      ],
+      "source_display": "X: Swyx",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "swyx"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 6.2763625255165305,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "本地 Agent 权限越深，系统集成不稳的代价越大；Codex 锁定模式连钥匙串都能锁死，说明本地执行路径的工程成熟度还撑不起关键工作流。",
+      "reading_questions": [
+        "本地锁定模式与云端执行，哪种更适合关键开发工作流？",
+        "这个 bug 会影响你使用 Codex 的方式吗？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "openai",
+          "label": "OpenAI"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        }
+      ],
+      "expert_review": {
+        "importance": "直接警告 Codex 本地锁定模式存在凭据安全风险，可能影响开发者对 OpenAI 本地 Agent 功能的信任。",
+        "skepticism": "单一用户报告，虽引用 Apple 论坛已知 bug，但缺少复现细节与影响范围，普遍性仍需验证。",
+        "watch_points": [
+          "OpenAI 是否回应并修复 Codex locked use 功能",
+          "Apple 是否发布针对该已知 bug 的修复",
+          "其他开发者是否报告类似 keychain 锁定问题"
+        ],
+        "related_sources": [
+          {
+            "title": "PSA: do not use codex \"locked use\" capabilities right now. it is currently relying on unstable mac features and has completely locked me out of my macos keychain twice this week.",
+            "url": "https://x.com/swyx/status/2092492963435946494"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "OpenAI",
+        "primary_entity_role": "company_actor",
+        "mentioned_entities": [
+          {
+            "name": "swyx",
+            "role": "source_author",
+            "evidence": "发布 PSA 的开发者，报告了 Codex 问题"
+          },
+          {
+            "name": "@_chenglou",
+            "role": "source_author",
+            "evidence": "提供了 Apple 开发者论坛链接，佐证这是已知 bug"
+          },
+          {
+            "name": "Apple",
+            "role": "other",
+            "evidence": "其开发者论坛被引用，确认这是已知 bug"
+          },
+          {
+            "name": "Codex",
+            "role": "product",
+            "evidence": "被警告不要使用的 OpenAI 编程代理功能"
+          }
+        ],
+        "event_type": "agent_or_developer_infra",
+        "section": "industry_views",
+        "confidence": "中",
+        "reasoning": "这是开发者个人在社交媒体发布的 PSA，属于行业观点而非 OpenAI 官方公告，因此归入 industry_views；虽然涉及 OpenAI 产品，但 OpenAI 是被报道方而非主动发布方，容易误判为 company_updates。"
+      }
+    },
+    {
+      "event_id": "3b2bcf5e332ff9",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI comp",
+      "ai_summary": "",
+      "brief": "",
+      "social_original_text": "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI companies.\n\n“The world doesn’t just want raw models and agents; it wants problems resolved and outcomes achieved. The premium will sit with the companies that can diffuse this intelligence through every aspect of civilization, converting raw tokens into real world outcomes, transforming industries, and creating economies in the process.”\n\nThis requires understanding the context, driving the change management, having a harness that can route to various models, connecting to the critical business systems in that vertical, solving the UX challenges of connecting users to agents in the right way in a workflow, understanding the evals in the space, and so on.\n\nThat’s a ton of value that goes beyond just the model intelligence itself. And there’s a window of opportunity right now to build the defining companies that can bring intelligence to the critical domains in an enterprise.",
+      "translation_zh": "关于规模化应用AI战略的好文章。很明显，AI模型与企业底层工作流之间存在巨大差距，这为应用型AI公司留下了大量机会。 “世界不仅仅想要原始的模型和智能体；它想要问题得到解决、成果得以实现。溢价将属于那些能够将这种智能渗透到文明各个方面的公司，将原始token转化为现实世界的成果，改变行业，并在此过程中创造经济。” 这需要理解上下文、推动变革管理、拥有能够路由到各种模型的框架、连接到该垂直领域的关键业务系统、解决在工作流中以正确方式将用户与智能体连接的UX挑战、理解该领域的评估等等。 这带来了远超模型智能本身的大量价值。而现在正是一个机会窗口，可以打造那些能够将智能带入企业关键领域的定义性公司。",
+      "entity": "",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 59.02,
+      "evidence_urls": [
+        "https://x.com/levie/status/2092466424694649066"
+      ],
+      "evidence_titles": [
+        "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI comp"
+      ],
+      "evidence_summaries": [
+        "Good post on what the applied AI strategy looks like at scale. It’s clear that there’s a wide gap between the AI models and the underlying workflows of an enterprise, which leaves a ton of opportunity for applied AI companies.\n\n“The world doesn’t just want raw models and agents; it wants problems resolved and outcomes achieved. The premium will sit with the companies that can diffuse this intelligence through every aspect of civilization, converting raw tokens into real world outcomes, transforming industries, and creating economies in the process.”\n\nThis requires understanding the context, driving the change management, having a harness that can route to various models, connecting to the critical business systems in that vertical, solving the UX challenges of connecting users to agents in the right way in a workflow, understanding the evals in the space, and so on.\n\nThat’s a ton of value that goes beyond just the model intelligence itself. And there’s a window of opportunity right now to build the defining companies that can bring intelligence to the critical domains in an enterprise."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Aaron Levie"
+      ],
+      "source_display": "X: Aaron Levie",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "levie"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 14,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 11.020599913279625,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "",
+      "reading_questions": [],
+      "memory_subjects": [
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        },
+        {
+          "kind": "topic",
+          "key": "enterprise-ai-workflow",
+          "label": "Enterprise AI Workflow"
+        }
+      ],
+      "expert_review": null,
+      "llm_classification": null
+    },
+    {
+      "event_id": "055995d743ca1c",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "Good products take time. At least 34 days.",
+      "ai_summary": "",
+      "brief": "",
+      "social_original_text": "Good products take time. At least 34 days.",
+      "translation_zh": "好的产品需要时间。至少34天。",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 39,
+      "evidence_urls": [
+        "https://x.com/thsottiaux/status/2092487667426738179"
+      ],
+      "evidence_titles": [
+        "Good products take time. At least 34 days."
+      ],
+      "evidence_summaries": [
+        "Good products take time. At least 34 days."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Thibault Sottiaux"
+      ],
+      "source_display": "X: Thibault Sottiaux",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "thsottiaux"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 3,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 16,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "",
+      "reading_questions": [],
+      "memory_subjects": [],
+      "expert_review": null,
+      "llm_classification": null
+    },
+    {
+      "event_id": "cf74b13a14467a",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "How to build great evals — Part 9",
+      "ai_summary": "",
+      "brief": "",
+      "social_original_text": "How to build great evals — Part 9\n\nThe Eval Roadmap Problem\n\nMost evals fail because teams treat them as static artifacts while their users expectations and behaviors have evolved.\n\nYour evals need a roadmap that evolves with your product and actual usage patterns.\n\nTake a financial research agent. Here is how use cases will evolve over time.\n\nEarly user: Summarize this 5-page earnings report.\n\n3 weeks later: review the last 5 earnings reports and explain their growth story.\n\n2 months later: Here are 15 filings, earnings transcripts and research reports. Build an investment thesis.\n\nEventually: Monitor my stock portfolio and tell send me alerts when something materially changes my thesis.\n\nEach stage requires different capabilities and hence different evals.\n\nYour evals should change with usage patterns:\n\nshort-context -> long-context\nsingle-turn QA -> multi-turn\npassage citations -> doc and line citations\nSimple QA -> complex synthesis\nreactive chat -> proactive agent\n\nIf your evals are stuck in week 1 while users are in week 3, it will show in your product and churn metrics.\n\nHere’s a practical way to build the roadmap:\n1/ Map the dimensions along which usage will evolve (eg # turns, document size, tool use, autonomy, journey coverage).\n2/ Prioritize the use cases and dimensions that matter most for your product.\n3/ Talk to your users, mine production traces to look for shifts.\n4/ Build P0 evals for the next stage of usage.\n5/ Run the evals, find failure modes (remember the taxonomy from Part 3), and hill-climb (from part 6).\n\nThe goal is to stay ahead of usage patterns. PM 101.\n\nDrop your questions and I will address in future posts.\n\nShare this with your teammates who think your evals are perfect.",
+      "translation_zh": "如何构建出色的评估——第9部分 评估路线图问题 大多数评估失败是因为团队把它们当作静态工件，而用户的期望和行为已经发生了变化。 你的评估需要一个与产品和实际使用模式同步演进的路线图。 以金融研究智能体为例。用例会如何随时间演变： 早期用户：总结这份5页的财报。 3周后：回顾最近5份财报，解释它们的增长故事。 2个月后：这里有15份文件、财报电话会议记录和研究报告。构建一个投资论点。 最终：监控我的股票投资组合，当有重大变化影响我的论点时，给我发送提醒。 每个阶段都需要不同的能力，因此也需要不同的评估。 你的评估应该随着使用模式而变化： 短上下文 -> 长上下文 单轮问答 -> 多轮 段落引用 -> 文档和行级引用 简单问答 -> 复杂综合 被动聊天 -> 主动智能体 如果你的评估停留在第1周，而用户已经进入第3周，这会在你的产品和流失指标中体现出来。 以下是构建路线图的实用方法： 1/ 映射使用将演进的维度（例如轮数、文档大小、工具使用、自主性、旅程覆盖）。 2/ 优先考虑对你的产品最重要的用例和维度。 3/ 与用户交谈，挖掘生产痕迹以寻找变化。 4/ 为下一阶段的使用构建P0评估。 5/ 运行评估，找出失败模式（记住第3部分的分类法），并进行爬山优化（来自第6部分）。 目标是领先于使用模式。产品经理基础。 有问题尽管提，我会在后续帖子中解答。 把这分享给那些认为你的评估完美无缺的队友吧。",
+      "entity": "",
+      "event_type": "research_or_benchmark",
+      "event_type_label": "研究/Benchmark",
+      "score": 30.09,
+      "evidence_urls": [
+        "https://x.com/realmadhuguru/status/2092426017118028266"
+      ],
+      "evidence_titles": [
+        "How to build great evals — Part 9"
+      ],
+      "evidence_summaries": [
+        "How to build great evals — Part 9\n\nThe Eval Roadmap Problem\n\nMost evals fail because teams treat them as static artifacts while their users expectations and behaviors have evolved.\n\nYour evals need a roadmap that evolves with your product and actual usage patterns.\n\nTake a financial research agent. Here is how use cases will evolve over time.\n\nEarly user: Summarize this 5-page earnings report.\n\n3 weeks later: review the last 5 earnings reports and explain their growth story.\n\n2 months later: Here are 15 filings, earnings transcripts and research reports. Build an investment thesis.\n\nEventually: Monitor my stock portfolio and tell send me alerts when something materially changes my thesis.\n\nEach stage requires different capabilities and hence different evals.\n\nYour evals should change with usage patterns:\n\nshort-context -> long-context\nsingle-turn QA -> multi-turn\npassage citations -> doc and line citations\nSimple QA -> complex synthesis\nreactive chat -> proactive agent\n\nIf your evals are stuck in week 1 while users are in week 3, it will show in your product and churn metrics.\n\nHere’s a practical way to build the roadmap:\n1/ Map the dimensions along which usage will evolve (eg # turns, document size, tool use, autonomy, journey coverage).\n2/ Prioritize the use cases and dimensions that matter most for your product.\n3/ Talk to your users, mine production traces to look for shifts.\n4/ Build P0 evals for the next stage of usage.\n5/ Run the evals, find failure modes (remember the taxonomy from Part 3), and hill-climb (from part 6).\n\nThe goal is to stay ahead of usage patterns. PM 101.\n\nDrop your questions and I will address in future posts.\n\nShare this with your teammates who think your evals are perfect."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Madhu Guru"
+      ],
+      "source_display": "X: Madhu Guru",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "realmadhuguru"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 4,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 10.085166696493902,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": -12,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "",
+      "reading_questions": [],
+      "memory_subjects": [
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        }
+      ],
+      "expert_review": null,
+      "llm_classification": null
+    },
+    {
+      "event_id": "93dfd121d3fbce",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈",
+      "ai_summary": "",
+      "brief": "",
+      "social_original_text": "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈",
+      "translation_zh": "找一个像那个爱晒“独家”晚餐照片的VC一样爱你的人 🙈",
+      "entity": "",
+      "event_type": "company_or_industry_update",
+      "event_type_label": "公司/行业动态",
+      "score": 19.15,
+      "evidence_urls": [
+        "https://x.com/nikunj/status/2092476274312933634"
+      ],
+      "evidence_titles": [
+        "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈"
+      ],
+      "evidence_summaries": [
+        "find someone who loves you as much as the VC who loves posting photos of an “exclusive” dinner 🙈"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Nikunj Kothari"
+      ],
+      "source_display": "X: Nikunj Kothari",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "nikunj"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 6.15224460689137,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      },
+      "memory_note": "",
+      "reading_questions": [],
+      "memory_subjects": [],
+      "expert_review": null,
+      "llm_classification": null
+    },
+    {
+      "event_id": "0f9d9b3a1b2758",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "Full eval series so far:",
+      "ai_summary": "",
+      "brief": "",
+      "social_original_text": "Full eval series so far:\n\n1/ Getting started with evals\nhttps://t.co/fh4yQR64Ta\n\n2/ Quality first, then cost\nhttps://t.co/hqNaE2ykTQ\n\n3/ Failure modes taxonomy\nhttps://t.co/MM2wgiAnoF\n\n4/ Laddered eval strategy\nhttps://t.co/2ioAe4hvqb\n\n5/ Tyranny of the average\nhttps://t.co/QPiGbxxb72\n\n6/ Hill climbing on evals\nhttps://t.co/EtxbF1kqgD\n\n7/ The Goldilocks principle\nhttps://t.co/PXSX3jsLtk\n\n8/ Discriminatory power of evals\nhttps://t.co/epINGK6dGV\n\n9/ The Eval Roadmap Problem\nhttps://t.co/nw2U3R6U1Y",
+      "translation_zh": "目前完整的评估系列： 1/ 评估入门 https://t.co/fh4yQR64Ta 2/ 质量优先，成本其次 https://t.co/hqNaE2ykTQ 3/ 失败模式分类 https://t.co/MM2wgiAnoF 4/ 阶梯式评估策略 https://t.co/2ioAe4hvqb 5/ 平均值的暴政 https://t.co/QPiGbxxb72 6/ 评估上的爬山法 https://t.co/EtxbF1kqgD 7/ 金发姑娘原则 https://t.co/PXSX3jsLtk 8/ 评估的区分能力 https://t.co/epINGK6dGV 9/ 评估路线图问题 https://t.co/nw2U3R6U1Y",
+      "entity": "",
+      "event_type": "research_or_benchmark",
+      "event_type_label": "研究/Benchmark",
+      "score": 25,
+      "evidence_urls": [
+        "https://x.com/realmadhuguru/status/2092461206783373758"
+      ],
+      "evidence_titles": [
+        "Full eval series so far:"
+      ],
+      "evidence_summaries": [
+        "Full eval series so far:\n\n1/ Getting started with evals\nhttps://t.co/fh4yQR64Ta\n\n2/ Quality first, then cost\nhttps://t.co/hqNaE2ykTQ\n\n3/ Failure modes taxonomy\nhttps://t.co/MM2wgiAnoF\n\n4/ Laddered eval strategy\nhttps://t.co/2ioAe4hvqb\n\n5/ Tyranny of the average\nhttps://t.co/QPiGbxxb72\n\n6/ Hill climbing on evals\nhttps://t.co/EtxbF1kqgD\n\n7/ The Goldilocks principle\nhttps://t.co/PXSX3jsLtk\n\n8/ Discriminatory power of evals\nhttps://t.co/epINGK6dGV\n\n9/ The Eval Roadmap Problem\nhttps://t.co/nw2U3R6U1Y"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Madhu Guru"
+      ],
+      "source_display": "X: Madhu Guru",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "realmadhuguru"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 4,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      },
+      "memory_note": "",
+      "reading_questions": [],
+      "memory_subjects": [
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        },
+        {
+          "kind": "topic",
+          "key": "inference-infrastructure",
+          "label": "Inference Infrastructure"
+        }
+      ],
+      "expert_review": null,
+      "llm_classification": null
+    }
+  ],
+  "trace": [
+    {
+      "event_id": "2358d9d8949c8b",
+      "score": 87,
+      "evidence_urls": [
+        "https://claude.com/blog/how-warp-builds-self-improving-agents-on-claude"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "2e7d82acd9ec04",
+      "score": 86,
+      "evidence_urls": [
+        "https://36kr.com/newsflashes/3957030026116232?f=rss"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "bdce26c905605e",
+      "score": 85,
+      "evidence_urls": [
+        "https://aws.amazon.com/blogs/machine-learning/evaluate-any-agent-framework-with-amazon-bedrock-agentcore-evaluations"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "83fe0ea49437a1",
+      "score": 85,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/08/26/surprise-z-ai-is-the-ai-lab-behind-the-mysterious-ox-alpha-model"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 12,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 9,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "607abd196d804f",
+      "score": 84,
+      "evidence_urls": [
+        "https://www.qbitai.com/2026/08/479348.html"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 14,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "7f789b73e51eb7",
+      "score": 82,
+      "evidence_urls": [
+        "https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-5-transcribe",
+        "https://www.theverge.com/tech/985186/google-gemini-3-5-transcribe-audio-ai"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 8,
+        "ResonanceScore": 9,
+        "FreshnessScore": 12,
+        "UserInterestScore": 5,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "b040d50fbfde08",
+      "score": 81,
+      "evidence_urls": [
+        "https://36kr.com/newsflashes/3957035106598017?f=rss"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 12,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 9,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "919b9985245ccf",
+      "score": 81,
+      "evidence_urls": [
+        "https://www.cnbc.com/2026/08/26/open-ai-hugging-face-hack.html"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "c8fabcdd981b8e",
+      "score": 80,
+      "evidence_urls": [
+        "https://www.leiphone.com/category/chips/LIUBrHLsZcZlyHwv.html"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "96fe65fba02dfb",
+      "score": 77,
+      "evidence_urls": [
+        "https://claude.com/blog/claude-in-chrome-generally-available"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "0fa822b54b7b16",
+      "score": 82,
+      "evidence_urls": [
+        "https://openai.com/index/loveholidays"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "2a25014f078307",
+      "score": 77,
+      "evidence_urls": [
+        "https://claude.com/blog/cowork-built-in-browser"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "4d2f07846cfb6e",
+      "score": 68,
+      "evidence_urls": [
+        "https://blog.google/innovation-and-ai/products/gemini-app/productivity-features-gemini-live"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "00df2f01677c45",
+      "score": 65.28,
+      "evidence_urls": [
+        "https://x.com/swyx/status/2092492963435946494"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 6.2763625255165305,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "3b2bcf5e332ff9",
+      "score": 59.02,
+      "evidence_urls": [
+        "https://x.com/levie/status/2092466424694649066"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 14,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 11.020599913279625,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "055995d743ca1c",
+      "score": 39,
+      "evidence_urls": [
+        "https://x.com/thsottiaux/status/2092487667426738179"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 3,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 16,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "cf74b13a14467a",
+      "score": 30.09,
+      "evidence_urls": [
+        "https://x.com/realmadhuguru/status/2092426017118028266"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 4,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 10.085166696493902,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": -12,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "93dfd121d3fbce",
+      "score": 19.15,
+      "evidence_urls": [
+        "https://x.com/nikunj/status/2092476274312933634"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 6,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 0,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 6.15224460689137,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    },
+    {
+      "event_id": "0f9d9b3a1b2758",
+      "score": 25,
+      "evidence_urls": [
+        "https://x.com/realmadhuguru/status/2092461206783373758"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 4,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -13
+      }
+    }
+  ]
+}
