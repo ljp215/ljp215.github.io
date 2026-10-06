@@ -1,0 +1,3914 @@
+{
+  "date": "2026-10-06",
+  "version": "V4",
+  "title": "AI 行业简报 2026-10-06",
+  "generated_at": "2026-10-06T00:47:43.872Z",
+  "event_count": 130,
+  "item_count": 11,
+  "summary": "今天筛出 11 个事件：大厂动态 5 条，技术进展 4 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。",
+  "sections": {
+    "today_focus": [
+      {
+        "event_id": "ab8d32921cd96b",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Cresta：How Cresta turned CX expertise into an agent builder on the Claude Agent SDK",
+        "ai_summary": "Cresta基于Claude Agent SDK构建Conductor，一个自然语言agent构建器，可生成、评估和优化客服agent，称可将初期部署时间缩短约一半。",
+        "brief": "Cresta基于Claude Agent SDK构建Conductor，一个自然语言agent构建器，可生成、评估和优化客服agent，称可将初期部署时间缩短约一半。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Cresta",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 87,
+        "evidence_urls": [
+          "https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk"
+        ],
+        "evidence_titles": [
+          "How Cresta turned CX expertise into an agent builder on the Claude Agent SDK"
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6ac3a966e07da0d8501b6945_cresta-conductor-architecture-original-style.png",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "Claude Blog",
+        "source_kinds": [
+          "claude_blog"
+        ],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 9,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是Anthropic官方博客的生态案例，核心是“用agent造agent”；部署时间减半来自Cresta自述，需独立验证。",
+        "reading_questions": [
+          "这种以元agent方式维护agent，能否解决长期生产维护中积累的技术债？",
+          "Cresta的知识飞轮依赖其专有对话数据，这是护城河还是局限？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "展示了Claude Agent SDK在垂直场景（客服）的可复用性，以及元agent产品化的具体路径。",
+          "skepticism": "效果数据来自Cresta自述和Anthropic案例宣传，缺乏第三方独立基准，且“roughly half”的样本范围和定义未披露。",
+          "watch_points": [
+            "Conductor的评估任务（构建agent、写测试、改agent、根因分析）是否会被业界采纳为meta-agent评测方式",
+            "是否有更多公司基于Agent SDK构建类似控制平面，而非直接使用原生代码代理",
+            "Cresta对“确定性/灵活性”边界的处理能否复制到客服之外的高监管行业"
+          ],
+          "related_sources": [
+            {
+              "title": "How Cresta turned CX expertise into an agent builder on the Claude Agent SDK",
+              "url": "https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Cresta",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "partner",
+              "evidence": "文章发布在Anthropic官方博客，Anthropic是Claude Agent SDK提供方，Cresta是其生态合作案例"
+            },
+            {
+              "name": "Claude Agent SDK",
+              "role": "tool",
+              "evidence": "Cresta使用该SDK作为Conductor的通用执行框架，是Conductor的技术底座"
+            },
+            {
+              "name": "United Airlines",
+              "role": "customer",
+              "evidence": "文章列举其为Cresta服务的客户组织之一"
+            },
+            {
+              "name": "CVS Health",
+              "role": "customer",
+              "evidence": "文章列举其为Cresta服务的客户组织之一"
+            },
+            {
+              "name": "Marriott",
+              "role": "customer",
+              "evidence": "文章列举其为Cresta服务的客户组织之一"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是Cresta及其Conductor产品，Anthropic和Claude Agent SDK是技术与发布平台，United Airlines等是客户；事件属于产品化agent构建工具，而非纯技术论文或基准测试，故归入company_updates。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "93343398eed503",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "OpenAI：OpenAI is adding text watermarking in ChatGPT and Codex",
+        "ai_summary": "OpenAI将在欧盟向ChatGPT和Codex用户推出基于textGrain的不可见文本水印，非全球默认；API客户可选择启用，并有条件向研究人员开放检测器。",
+        "brief": "OpenAI将在欧盟向ChatGPT和Codex用户推出基于textGrain的不可见文本水印，非全球默认；API客户可选择启用，并有条件向研究人员开放检测器。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 81,
+        "evidence_urls": [
+          "https://www.theverge.com/ai-artificial-intelligence/1004880/openai-chatgpt-text-watermarks-eu-ai-act"
+        ],
+        "evidence_titles": [
+          "OpenAI is adding text watermarking in ChatGPT and Codex"
+        ],
+        "evidence_summaries": [
+          "An invisible, machine-readable watermark in text output is rolling out to ChatGPT and Codex, but only for users in the European Union at first. OpenAI says its textGrain watermarking \"matched or exceeded\" other approaches like Google DeepMind's SynthID for text, which is also the basis for the watermarking Anthropic announced in August. Like OpenAI, Anthropic […]"
+        ],
+        "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/10/STK155_OPEN_AI_CVirginia__C.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=2400",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "这更多是EU AI Act合规动作，而非能力升级；OpenAI也承认水印检测不保证可靠，且不公开检测器，实际约束有限。",
+        "reading_questions": [
+          "水印对长文本生成质量和推理成本影响有多大？",
+          "检测器按个案开放，实际能覆盖多少滥用场景？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "这是主流LLM服务首次将文本水印作为区域合规功能落地，为AI Act下的内容溯源提供了现实参照。",
+          "skepticism": "textGrain与SynthID的对比来自OpenAI自述，水印抗删除能力与误报率仍需独立验证。",
+          "watch_points": [
+            "API客户对可选水印的实际采用率与反馈",
+            "文本水印对改写、翻译等攻击的稳健性第三方测试",
+            "欧盟之外地区是否会跟进成为默认"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI is adding text watermarking in ChatGPT and Codex",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/1004880/openai-chatgpt-text-watermarks-eu-ai-act"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "Google DeepMind",
+              "role": "other",
+              "evidence": "OpenAI声称textGrain匹配或超过其SynthID for text，SynthID被用作对比基准"
+            },
+            {
+              "name": "Anthropic",
+              "role": "other",
+              "evidence": "同样为了EU AI Act宣布基于SynthID的文本水印，被文章作为同行业动作提及"
+            },
+            {
+              "name": "textGrain",
+              "role": "product/tool",
+              "evidence": "OpenAI新推出的水印工具，是本次发布的核心组件"
+            },
+            {
+              "name": "ChatGPT",
+              "role": "product",
+              "evidence": "水印首批应用的产品之一"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "与ChatGPT并列首批应用水印的产品"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章核心是OpenAI宣布在ChatGPT与Codex中上线文本水印功能，动作主体是OpenAI；虽涉及EU AI Act和DeepMind技术，但只是背景与参照，故归为OpenAI的公司产品更新，而非政策或研究报道。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "2f09f110ca2c43",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "llama.cpp：llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more",
+        "ai_summary": "llama.cpp 发布 v0.6.0，为 Qwen4Exp 加入 MTP 投机解码支持，并包含多项其他更新。消息来自 Reddit 帖子，完整改动清单尚未见于公开信息。",
+        "brief": "llama.cpp 发布 v0.6.0，为 Qwen4Exp 加入 MTP 投机解码支持，并包含多项其他更新。消息来自 Reddit 帖子，完整改动清单尚未见于公开信息。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "llama.cpp",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 83,
+        "evidence_urls": [
+          "https://www.reddit.com/r/LocalLLaMA/comments/1wyh03u/llamacpp_v060_released_with_mtp_speculative"
+        ],
+        "evidence_titles": [
+          "llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more"
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://external-preview.redd.it/sXortq9SmiGkKiqesAx6SF1Br0SNlxLcK4r52mN4DmM.png?width=640&crop=smart&auto=webp&s=aa429645c5b299ccebd057c4f6a06952a08da9fb",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [],
+        "source_display": "Reddit r/LocalLLaMA",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 12,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "开源推理引擎对新模型的适配越来越快，投机解码正成为本地推理默认优化方向。但单一版本更新的实质收益还要看官方基准。",
+        "reading_questions": [
+          "MTP 投机解码相比普通投机解码能带来多少端侧加速？",
+          "这次更新是否意味着 Qwen4Exp 已进入本地部署成熟期？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "meta",
+            "label": "Meta"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "llama.cpp 是本地推理基础设施的事实标准，这次更新直接影响大量开发者运行 Qwen4Exp 的效率与落地方式。",
+          "skepticism": "当前仅有一则 Reddit 标题，无官方 changelog 或基准数据，MTP 投机的实际加速幅度仍需验证。",
+          "watch_points": [
+            "llama.cpp 官方仓库的 v0.6.0 release notes",
+            "MTP 投机解码在 Qwen4Exp 上的实测吞吐与显存占用",
+            "社区后续对其他新模型的适配速度与默认开启情况"
+          ],
+          "related_sources": [
+            {
+              "title": "llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more",
+              "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wyh03u/llamacpp_v060_released_with_mtp_speculative"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "llama.cpp",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Qwen4Exp",
+              "role": "tested_model",
+              "evidence": "MTP 投机解码是为 Qwen4Exp 提供的推理优化，Qwen4Exp 是被运行的目标模型"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "technical_progress",
+          "confidence": "中",
+          "reasoning": "文章主语是开源推理引擎 llama.cpp 的 v0.6.0 发布，重点在 MTP 投机解码这一推理工程特性，因此归为工程发布；易误判为 Meta 的公司动作，但 Meta 只是项目名称来源，文章并未报道 Meta 本身的动态。"
+        },
+        "thumbnail_source": "thumbnail_url"
+      },
+      {
+        "event_id": "c28e673fcd6cbb",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "智谱：A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well.",
+        "ai_summary": "Reddit用户发布了一套测试LLM玩《文明V》的基准，结果显示GLM-5.3领先于Opus-5.5，而体积更小的Qwen-3.8-27B表现意外出色。",
+        "brief": "Reddit用户发布了一套测试LLM玩《文明V》的基准，结果显示GLM-5.3领先于Opus-5.5，而体积更小的Qwen-3.8-27B表现意外出色。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "智谱",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 69,
+        "evidence_urls": [
+          "https://www.reddit.com/r/LocalLLaMA/comments/1wynbvq/a_benchmark_for_llms_playing_civilization_v_glm53"
+        ],
+        "evidence_titles": [
+          "A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well."
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://preview.redd.it/vc33j8lrfqth1.png?width=140&height=48&auto=webp&s=4a3b1e23b3e240630d2372eb579858f650518dc0",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [],
+        "source_display": "Reddit r/LocalLLaMA",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 12,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 9,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "单一游戏基准的偶然性很高，但小模型在长程决策任务中能与更大模型同场竞争，这个信号值得观察。",
+        "reading_questions": [
+          "这个基准对真实agent任务的预测力有多强？",
+          "27B模型表现好的原因是什么：策略空间、推理预算还是奖励设计？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "智谱",
+            "label": "智谱"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "提供了游戏决策场景下不同规模模型的横向对比，补充了常规基准之外的能力样本。",
+          "skepticism": "评测的玩法设定、重复次数、采样温度和实现细节均未公开，结果可能受随机性影响。",
+          "watch_points": [
+            "评测方法是否开源或提供可复现细节",
+            "后续是否有更多模型在同一基准上的成绩",
+            "该结果能否在其他长程任务中复现"
+          ],
+          "related_sources": [
+            {
+              "title": "A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well.",
+              "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wynbvq/a_benchmark_for_llms_playing_civilization_v_glm53"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity_role": "none",
+          "mentioned_entities": [
+            {
+              "name": "GLM-5.3",
+              "role": "tested_model",
+              "evidence": "基准中排名领先的被测模型"
+            },
+            {
+              "name": "Opus-5.5",
+              "role": "tested_model",
+              "evidence": "基准中被对比的被测模型"
+            },
+            {
+              "name": "Qwen-3.8-27B",
+              "role": "tested_model",
+              "evidence": "基准中表现意外的被测模型"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主体是第三方发布的游戏场景基准测试，属于技术评测而非公司官方动态，因此归为technical_progress而非company_updates。"
+        },
+        "thumbnail_source": "thumbnail_url"
+      }
+    ],
+    "worth_tracking": [
+      {
+        "event_id": "49c5d5224e85ed",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "OpenAI：OpenAI will start watermarking ChatGPT’s text in the EU",
+        "ai_summary": "OpenAI 宣布为遵守欧盟 AI 法案，未来几周将对欧盟区 ChatGPT 与 Codex 生成文本添加不可见水印，同时发布技术报告 textGrain；检测器限研究机构使用，编辑可显著降低检测率。",
+        "brief": "OpenAI 宣布为遵守欧盟 AI 法案，未来几周将对欧盟区 ChatGPT 与 Codex 生成文本添加不可见水印，同时发布技术报告 textGrain；检测器限研究机构使用，编辑可显著降低检测率。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "policy_safety",
+        "event_type_label": "监管/安全/隐私",
+        "score": 80,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/10/05/openai-will-start-watermarking-chatgpts-text-in-the-eu"
+        ],
+        "evidence_titles": [
+          "OpenAI will start watermarking ChatGPT’s text in the EU"
+        ],
+        "evidence_summaries": [
+          "OpenAI will watermark ChatGPT and Codex text in the EU to comply with the AI Act. Editing can make the invisible marks harder to detect, it says."
+        ],
+        "thumbnail_url": "https://techcrunch.com/wp-content/uploads/2026/10/Screenshot-2026-10-05-at-1.22.49-PM.png",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "水印是通过扰动词选择嵌入的合规痕迹，编辑即可绕过；OpenAI 仅限欧盟且默认关闭，显示合规与用户留存之间仍在妥协。",
+        "reading_questions": [
+          "不可见水印在真实传播场景（改写、翻译、拼接）下的残留可检测性还有多少？",
+          "欧盟之外 OpenAI 不做默认水印，是否意味着全球 AI 治理标准会持续碎片化？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "继 Anthropic 后 OpenAI 也在欧盟默认部署水印，标志大型模型厂商的 AI 内容标识承诺进入落地阶段，检测与规避的攻防将成常态。",
+          "skepticism": "该水印在替换 10% 同义词后检测率从 92% 降至 66%，且短文本、数学和翻译难以检测，鲁棒性可能不足以作为执法依据。",
+          "watch_points": [
+            "水印检测器向研究人员开放后，第三方评测的检测率与编辑鲁棒性。",
+            "Anthropic 与 Google 等是否会在欧盟外将水印设为默认。",
+            "OpenAI 用户是否因水印转向不带水印的替代模型。"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI will start watermarking ChatGPT's text in the EU",
+              "url": "https://techcrunch.com/2026/10/05/openai-will-start-watermarking-chatgpts-text-in-the-eu"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "competitor",
+              "evidence": "Anthropic 两个月前宣布全球为 Claude 加水印，文中作为对照案例出现。"
+            },
+            {
+              "name": "EU AI Act",
+              "role": "other",
+              "evidence": "欧盟 AI 法案透明度规则是 OpenAI 推出水印的直接原因，作为监管背景。"
+            },
+            {
+              "name": "ChatGPT",
+              "role": "product",
+              "evidence": "被添加水印的 OpenAI 产品之一。"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "被添加水印的 OpenAI 产品之一。"
+            },
+            {
+              "name": "textGrain",
+              "role": "tool",
+              "evidence": "OpenAI 随公告发布的水印技术报告与方法名。"
+            },
+            {
+              "name": "University of Pennsylvania and Yale",
+              "role": "partner",
+              "evidence": "textGrain 报告与这两所高校研究人员合著。"
+            },
+            {
+              "name": "Google, Meta, Microsoft",
+              "role": "other",
+              "evidence": "与 OpenAI 一同承诺遵循欧盟实践规范的公司。"
+            }
+          ],
+          "event_type": "policy_safety",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 OpenAI，报道其在欧盟为遵守 AI 法案部署不可见水印的公司合规动作，故归入 company_updates 与 policy_safety；容易误判为 technical_progress，但其实技术报告只是配套说明。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "3d1917378da26b",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "AWS：New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent",
+        "ai_summary": "AWS 为 SageMaker 推理发布 aws-ai-ml skill，编码 agent 通过 Agent Toolkit 安装后可自动生成代码，完成端点基准测试、实例推荐与性能对比。",
+        "brief": "AWS 为 SageMaker 推理发布 aws-ai-ml skill，编码 agent 通过 Agent Toolkit 安装后可自动生成代码，完成端点基准测试、实例推荐与性能对比。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "AWS",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 79,
+        "evidence_urls": [
+          "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent"
+        ],
+        "evidence_titles": [
+          "New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent"
+        ],
+        "evidence_summaries": [
+          "Amazon SageMaker optimized generative AI inference introduces the aws-ai-ml skill through the Agent Toolkit for AWS, giving coding agents like Kiro, Claude Code, and Codex deep expertise in inference optimization and benchmarking. Describe what you want, and your agent generates executable SageMaker Python SDK v3 code to benchmark, recommend, and compare deployments."
+        ],
+        "thumbnail_url": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/homepage/global-nav/reinvent-register.3822079bac49f139ae46016a9a99c3eed71fad4a.png",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "AWS Machine Learning Blog",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是把推理优化经验固化成 agent 技能，产出可读可跑的代码，目标是让工具链与生态绑定在 SageMaker 上。",
+        "reading_questions": [
+          "这个 skill 是解决真实痛点，还是 AWS 生态的获客入口？",
+          "开发者如何验证 agent 生成的压测代码与推荐是否可信？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": {
+          "importance": "推理优化从人工咨询转向可编码的 agent 技能，可能重塑开发者选型与压测的工作流入口。",
+          "skepticism": "示例对比中 Qwen3-8B 快约 44% 主要靠 4 倍 GPU 算力，skill 宣称的专家能力仍需在真实工作流中验证。",
+          "watch_points": [
+            "该 skill 在真实团队中的采用率，以及生成的推荐是否真正被采纳",
+            "是否会继续支持 SageMaker 之外的推理栈，还是以锁定生态为目的",
+            "后续公开的 benchmark 是否包含不同硬件/模型的均衡对比，以避免片面结论"
+          ],
+          "related_sources": [
+            {
+              "title": "New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent",
+              "url": "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "AWS",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "tool",
+              "evidence": "文章提到 aws-ai-ml skill 支持 Claude Code，Anthropic 是被提及的工具提供方，不是文章主角"
+            },
+            {
+              "name": "OpenAI",
+              "role": "tool",
+              "evidence": "Codex 作为被支持的 coding agent 之一被提及，OpenAI 不是主要报道对象"
+            },
+            {
+              "name": "Qwen3",
+              "role": "tested_model",
+              "evidence": "在示例 benchmark 中作为被压测模型出现，仅用于说明技能效果"
+            },
+            {
+              "name": "Hugging Face",
+              "role": "other",
+              "evidence": "作为模型来源平台被提及，并非主要实体"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "原文是 AWS 官方博客宣布新版 agent skill，行动主体是 AWS；Anthropic 只是其 agent 兼容列表中的一员，Qwen3 只出现于示例 benchmark，因此归类为公司产品更新而非模型发布或研究测试。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "8ebe2276c68479",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "Google DeepMind：谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话",
+        "ai_summary": "IT之家援引Android Authority的发现称，谷歌“代我通话”功能可能从商户通话扩展至亲友私人电话，由Gemini转达信息或简单问询，并允许用户拒接AI来电，但该功能仍在开发，上线时间未定。",
+        "brief": "IT之家援引Android Authority的发现称，谷歌“代我通话”功能可能从商户通话扩展至亲友私人电话，由Gemini转达信息或简单问询，并允许用户拒接AI来电，但该功能仍在开发，上线时间未定。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Google DeepMind",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 66,
+        "evidence_urls": [
+          "https://www.ithome.com/1/009/921.htm"
+        ],
+        "evidence_titles": [
+          "谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话"
+        ],
+        "evidence_summaries": [
+          "IT之家 10 月 6 日消息，有多少通电话，仅仅因为要跟其他人沟通实在太过麻烦，你就一拖再拖？人工智能早已承诺，会帮我们把生活里大量费力不讨好的杂事实现自动化。对于一部分人来说，其中最有吸引力的设想或许就是由 AI 替我们打电话。谷歌刚刚在 Pixel 11 系列手机上推出了“代我通话（Call for Me）”功能，而现在有迹象表明，这项功能可能将迎来一次重大功能拓展。 据IT之家了解，目前的代我通话专门设计用于拨打各类商户电话，它可以耐心听着等待接通的背景音乐，协助完成预约之类的事务。 听上去很不错，不过这项功能的适用范围还相当有限。既然 Gemini 属于通用大语言模型，何不进一步放开能力，把代我通话拓展，支持拨打亲友的私人电话呢？在查看部分新版更新内容时，Android Authority 找到了早期线索，显示谷歌似乎正打算实现这一点。 从介绍界面上“妈妈”和“约翰”这两个示例就能够看出，这一版本的代我通话显然不再仅限于和商户沟通。Gemini 在这类通话当中可以执行的任务看起来仍会受到一定约束，大多只负责转达信息或是开展简单问询。但不难想象，遇到有些人很不爱回复短信的时候，这项功能就会十分好用。 当然，并不是所有人都愿意和一台机器通话。Gemini 看上去也会提供相应选项，允许用户拒绝接收这类由 AI 代为打出的电话。 除了代我通话的能力升级之外，外媒还发现了应用操作的细化权限设置，也就是上面第三张截图里可以看到的新增写入与删除板块。目前该模块显然仍处在开发阶段，各项选项还无法正常运行。 至于升级后的代我通话功能，尚且无法确定谷歌究竟会在何时正式上线该功能（甚至不能确定谷歌是否真的会推出）。"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/10/47d00fdc-a7cc-4fe3-bbbf-a20dd78235c6.jpg",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "把AI通话从工具场景拓展到社交场景，仍是受限任务的试探，关键在权限与拒接设计。",
+        "reading_questions": [
+          "该功能解决的是用户痛点，还是谷歌的入口野心？",
+          "后续有什么可验证结果能证明它被用户真正使用？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "google-deepmind",
+            "label": "Google DeepMind"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": {
+          "importance": "若落地，AI语音代理将首次进入个人社交关系场景，涉及自主拨号、隐私与社交边界，值得跟踪。",
+          "skepticism": "仅来自代码线索，谷歌未确认，且原文明确“甚至不能确定是否推出”，不宜过度解读。",
+          "watch_points": [
+            "官方发布会或Pixel更新是否正式提供该功能",
+            "用户拒接AI来电和通话披露机制如何设计",
+            "Gemini在亲友通话中的任务边界与实际成功率"
+          ],
+          "related_sources": [
+            {
+              "title": "谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话 - IT之家",
+              "url": "https://www.ithome.com/1/009/921.htm"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Google DeepMind",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Gemini",
+              "role": "model",
+              "evidence": "代我通话功能由Gemini大语言模型驱动，是核心能力来源"
+            },
+            {
+              "name": "Pixel 11",
+              "role": "product",
+              "evidence": "该功能刚刚在Pixel 11系列手机上推出，是功能载体"
+            },
+            {
+              "name": "Android Authority",
+              "role": "source_author",
+              "evidence": "发现代码线索并率先报道的外媒，是本文信息来源"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "中",
+          "reasoning": "文章核心是谷歌正在开发中的“代我通话”功能扩展，属于公司产品动态而非研究或基准；易误判为Gemini模型发布，但实际是产品功能演进。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "a2264d8cf511e9",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "论文作者（Zhixu Du 等）：What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute",
+        "ai_summary": "该论文提出用MoA面板逐token复现参考序列，测量每个token的充分计算量：0.5B模型可复现92-95%的token，最贵10%的token占64-80%FLOPs，并将其用于路由和草稿生成以降低延迟。",
+        "brief": "该论文提出用MoA面板逐token复现参考序列，测量每个token的充分计算量：0.5B模型可复现92-95%的token，最贵10%的token占64-80%FLOPs，并将其用于路由和草稿生成以降低延迟。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "论文作者（Zhixu Du 等）",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 68,
+        "evidence_urls": [
+          "https://arxiv.org/abs/2610.02491"
+        ],
+        "evidence_titles": [
+          "What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute"
+        ],
+        "evidence_summaries": [
+          "arXiv:2610.02491v1 Announce Type: new Abstract: Large language models spend the same amount of computation on every token they generate, regardless of how difficult each token is to produce. Methods such as speculative decoding and model routing are built on the premise that much of this computation is unnecessary, yet the computation an individual token actually requires has not been measured. We measure it through a Mixture-of-Agents (MoA) lens: a panel of fifteen language models of increasing capacity, drawn from three families, in which every agent attempts to reproduce a reference sequence token by token, conditioned on the correct preceding tokens. We define the inference cost of the smallest agent that succeeds as the token's sufficient compute, which upper-bounds what the token requires. On three core benchmarks, a 0.5B agent reproduces 92--95\\% of reference tokens. Across Qwen, OLMo, and R1-distilled panels, the most expensive 10\\% account for 64--80\\% of estimated FLOPs. On all 500 MATH-500 problems, the MoA-derived map helps model routing reduce projected latency from 7.59 to 5.12 seconds while slightly improving accuracy, relative to the best confidence-routing baseline. The MoA-map helps drafting use 32.6\\% fewer draft tokens and approximately 20\\% lower projected latency than fixed-window drafting at similar accuracy. These comparisons reveal remaining allocation headroom, motivating controllers that exploit sufficient-compute structure."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [],
+        "source_display": "arXiv cs.AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "Token难度并不均匀，给每个token定出“够用”的计算量后，路由和投机解码就能省算力；但测得的是充分上界，不是真实必需。",
+        "reading_questions": [
+          "作者如何避免“最小成功agent”定义中的偶然成功（如随机命中）？",
+          "MoA map的构建和推理成本是否被计入端到端收益？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "qwen",
+            "label": "Qwen"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": {
+          "importance": "为推理算力分配提供了首个token级测量工具，直接指向路由与投机解码的优化空间。",
+          "skepticism": "MoA复现任务与真实生成分布存在距离，“足够计算”是上界而非实际需求，端到端收益仍需独立复现。",
+          "watch_points": [
+            "是否有后续工作将MoA-map扩展到更大模型和更多任务类型",
+            "该映射在在线路由中能否稳定复现延迟收益",
+            "与投机解码结合时实际吞吐提升是否与论文估计一致"
+          ],
+          "related_sources": [
+            {
+              "title": "What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute",
+              "url": "https://arxiv.org/abs/2610.02491"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "论文作者（Zhixu Du 等）",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Qwen",
+              "role": "tested_model",
+              "evidence": "论文使用Qwen模型家族作为被测面板之一，用于测量token的充分计算量"
+            },
+            {
+              "name": "OLMo",
+              "role": "tested_model",
+              "evidence": "论文使用OLMo模型家族作为被测面板之一"
+            },
+            {
+              "name": "R1-distilled",
+              "role": "tested_model",
+              "evidence": "论文使用R1-distilled模型家族作为被测面板之一"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主体是论文提出的测量方法与应用，主语是研究团队；Qwen仅作为被测模型之一出现，不能抢主语。"
+        }
+      },
+      {
+        "event_id": "4a783caca289c8",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "Apple：Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems",
+        "ai_summary": "苹果机器学习研究团队与斯坦福合作发表 HCI 论文：用 Wizard of Oz 探针让用户定义并训练个性化感知系统，识别出现象边界、关系中主体、信号与噪声、数据客观性四类本体论边界协商。",
+        "brief": "苹果机器学习研究团队与斯坦福合作发表 HCI 论文：用 Wizard of Oz 探针让用户定义并训练个性化感知系统，识别出现象边界、关系中主体、信号与噪声、数据客观性四类本体论边界协商。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Apple",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 68,
+        "evidence_urls": [
+          "https://machinelearning.apple.com/research/ontological-boundary-negotiation"
+        ],
+        "evidence_titles": [
+          "Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems"
+        ],
+        "evidence_summaries": [
+          "Designed artifacts are ontological, shaping, and at times limiting, what becomes possible or imaginable. One path toward mitigating such foreclosures is giving people power over how systems are designed and built. Despite decades of scholarship around systems that enable such authorship, these systems are often evaluated on whether or not they are usable, useful, or technically feasible, leaving questions of ontological boundary negotiation, unexamined. We design two open-ended probes that utilize a Wizard of Oz technique to enable the experience of training a personalized machine learning…"
+        ],
+        "thumbnail_url": "https://mlr.cdn-apple.com/media/Discover_1440x420_2x_9c465d585e.jpg",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "Apple Machine Learning Research",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 9,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "这是 HCI 设计研究而非模型能力突破，核心贡献是提出本体论边界协商框架。",
+        "reading_questions": [
+          "用户自定义训练在真实设备上如何平衡数据隐私与个性化？",
+          "四个边界范畴能否转化为可操作的工程接口？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "该研究为个人化感知系统提供一个经过实证的设计分析框架，可作为后续 HCI 与 Agent 交互设计的参考。",
+          "skepticism": "一周的 Wizard of Oz 探索性研究，样本和方法规模有限；四个边界范畴是否适用于真实训练流程仍需更多验证。",
+          "watch_points": [
+            "该框架能否转化为真实产品中的用户可配置训练能力",
+            "Apple 设备上是否出现相关交互设计实践",
+            "后续是否有更大规模或真实系统研究引用该框架"
+          ],
+          "related_sources": [
+            {
+              "title": "Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems - Apple Machine Learning Research",
+              "url": "https://machinelearning.apple.com/research/ontological-boundary-negotiation"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Apple",
+          "primary_entity_role": "research_lab",
+          "mentioned_entities": [
+            {
+              "name": "Stanford University",
+              "role": "partner",
+              "evidence": "论文作者标注 † Stanford University，属于合作作者单位"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章是 Apple ML 研究团队与 Stanford 合作发表的 HCI 研究论文，核心是用户自定义传感系统的设计研究，既不是 Agent/开发者基础设施（原事件类型误判），也不是公司产品/商业更新，故归为研究类技术进展。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "3d5f2c9ef7b95d",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "OpenAI：I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).",
+        "ai_summary": "Peter Yang 发文称，OpenAI 着手简化 ChatGPT 令他高兴，并认为当前产品线过于混乱，Work 发布是错误，建议合并或简化 Work、Codex、Spaces、Pages 等入口。",
+        "brief": "Peter Yang 发文称，OpenAI 着手简化 ChatGPT 令他高兴，并认为当前产品线过于混乱，Work 发布是错误，建议合并或简化 Work、Codex、Spaces、Pages 等入口。",
+        "social_original_text": "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).\n\nHere's a clip from my dots review about this. What I'd simplify:\n\n1. Work vs. Codex\n2. Spaces vs. Pages vs. Sites\n3. The model and effort picker\nProbably alot more\n\nMy hot take is that the whole Work launch was a mistake. Just like Claude folded Cowork back into Chat, I don't think Work needs its own brand.\n\nAnyway, excited to see my primary harness get much better.\n\n📌 See my full dots review here: https://t.co/kUtg3RPk7l",
+        "translation_zh": "我很高兴 OpenAI 正专注于简化 ChatGPT，因为它已变得一团糟（抱歉）。 以下是我 dots 评测中关于此问题的一段内容。我会简化什么： 1. Work vs. Codex 2. Spaces vs. Pages vs. Sites 3. 模型和精力选择器 可能还有更多 我的大胆观点是，整个 Work 发布是个错误。就像 Claude 把 Cowork 并回 Chat 一样，我认为 Work 不需要自己的品牌。 总之，很高兴看到我的主要工具变得更好。 📌 在此查看我的完整 dots 评测：https://t.co/kUtg3RPk7l",
+        "entity": "OpenAI",
+        "event_type": "industry_view",
+        "event_type_label": "行业动态",
+        "score": 60.91,
+        "evidence_urls": [
+          "https://x.com/petergyang/status/2106926956554195018"
+        ],
+        "evidence_titles": [
+          "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry)."
+        ],
+        "evidence_summaries": [
+          "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).\n\nHere's a clip from my dots review about this. What I'd simplify:\n\n1. Work vs. Codex\n2. Spaces vs. Pages vs. Sites\n3. The model and effort picker\nProbably alot more\n\nMy hot take is that the whole Work launch was a mistake. Just like Claude folded Cowork back into Chat, I don't think Work needs its own brand.\n\nAnyway, excited to see my primary harness get much better.\n\n📌 See my full dots review here: https://t.co/kUtg3RPk7l"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Peter Yang"
+        ],
+        "source_display": "X: Peter Yang",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "petergyang"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 9,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 9.911356165197843,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "用户视角的界面复杂度批评，核心是产品品牌碎片化，Work 独立品牌被视为失败设计，简化是头部产品从扩张转向收敛的信号。",
+        "reading_questions": [
+          "ChatGPT 的产品复杂度是否已成为用户迁移到其他工具的实际原因？",
+          "OpenAI 会否因这类公开批评而调整产品架构，还是继续按内部路线推进？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "反映头部 AI 产品正从功能堆叠转向体验重整，可能预示 ChatGPT 界面和品牌结构即将迎来一轮简化调整。",
+          "skepticism": "该看法仅来自单一博主的个人意见，不代表 OpenAI 官方路线，也缺乏内部产品决策的直接证据，需谨慎看待其判断权重。",
+          "watch_points": [
+            "OpenAI 是否在近期推出简化版界面或合并 Work/Codex 入口",
+            "官方是否对 Work、Spaces、Pages 等品牌定位做出调整",
+            "Claude 将 Cowork 合并回 Chat 后用户接受度如何，形成对比参照"
+          ],
+          "related_sources": [
+            {
+              "title": "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).",
+              "url": "https://x.com/petergyang/status/2106926956554195018"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Peter Yang",
+              "role": "source_author",
+              "evidence": "该推文由 Peter Yang 发布，内容是作者个人观点，属于评论者而非动作主体。"
+            },
+            {
+              "name": "Claude",
+              "role": "competitor",
+              "evidence": "作者用 Claude 将 Cowork 合并回 Chat 作为对比案例，说明同类产品也在收敛品牌。"
+            },
+            {
+              "name": "Work",
+              "role": "product",
+              "evidence": "作者认为 OpenAI 的 Work 品牌发布是错误，是其批评的核心对象。"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "作者建议区分并简化 Work 与 Codex 的关系，属于被讨论的产品入口。"
+            }
+          ],
+          "event_type": "industry_view",
+          "section": "industry_views",
+          "confidence": "高",
+          "reasoning": "内容为博主个人对 OpenAI 产品的评论，非论文、基准或公司动作，因此归为行业观点，而不是原先标记的 research_or_benchmark。"
+        }
+      },
+      {
+        "event_id": "c14743ecda143e",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.\n\nThere’s so much alpha in meeting founders at their own office.\n\nBesides “vibes”, you get to see what the energy of the office is like, how the coworkers react and work with each other, how the cofounders answer and complement each other, what the beta product releases look like, how they collaborate etc etc.\n\nYes, I get it there’s time pressure, and you often have to move fast. But even then I always ask to meet at offices for final meetings and founders often tell me I’m the only one that has ever asked.\n\nWhat’s the point of calling them into your own conference room and parrot the same deck??",
+        "translation_zh": "也许我只是老派，但我就是无法相信人们能通过一个 Zoom 通话做出投资决定……有时甚至只是见 CEO 一面就投了。 在创始人自己的办公室见他们，能获得很多 alpha。 除了“氛围”，你还能看到办公室的能量如何，同事们如何互动协作，联合创始人如何回答和互补，beta 产品发布是什么样，他们如何合作等等等等。 是的，我明白有时间压力，你往往得快速行动。但即便如此，我总是要求在办公室进行最终会议，而且创始人常告诉我，我是唯一提出过这个要求的人。 把他们叫进你的会议室，让他们复述同一套演示文稿，到底有什么意义？",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 50.47,
+        "evidence_urls": [
+          "https://x.com/nikunj/status/2106957269212742135"
+        ],
+        "evidence_titles": [
+          "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO."
+        ],
+        "evidence_summaries": [
+          "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.\n\nThere’s so much alpha in meeting founders at their own office.\n\nBesides “vibes”, you get to see what the energy of the office is like, how the coworkers react and work with each other, how the cofounders answer and complement each other, what the beta product releases look like, how they collaborate etc etc.\n\nYes, I get it there’s time pressure, and you often have to move fast. But even then I always ask to meet at offices for final meetings and founders often tell me I’m the only one that has ever asked.\n\nWhat’s the point of calling them into your own conference room and parrot the same deck??"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Nikunj Kothari"
+        ],
+        "source_display": "X: Nikunj Kothari",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "nikunj"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 10.467108425811176,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [],
+        "expert_review": null,
+        "llm_classification": null
+      }
+    ],
+    "company_updates": [
+      {
+        "event_id": "ab8d32921cd96b",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "Cresta：How Cresta turned CX expertise into an agent builder on the Claude Agent SDK",
+        "ai_summary": "Cresta基于Claude Agent SDK构建Conductor，一个自然语言agent构建器，可生成、评估和优化客服agent，称可将初期部署时间缩短约一半。",
+        "brief": "Cresta基于Claude Agent SDK构建Conductor，一个自然语言agent构建器，可生成、评估和优化客服agent，称可将初期部署时间缩短约一半。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Cresta",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 87,
+        "evidence_urls": [
+          "https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk"
+        ],
+        "evidence_titles": [
+          "How Cresta turned CX expertise into an agent builder on the Claude Agent SDK"
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6ac3a966e07da0d8501b6945_cresta-conductor-architecture-original-style.png",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "Claude Blog",
+        "source_kinds": [
+          "claude_blog"
+        ],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 9,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是Anthropic官方博客的生态案例，核心是“用agent造agent”；部署时间减半来自Cresta自述，需独立验证。",
+        "reading_questions": [
+          "这种以元agent方式维护agent，能否解决长期生产维护中积累的技术债？",
+          "Cresta的知识飞轮依赖其专有对话数据，这是护城河还是局限？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          }
+        ],
+        "expert_review": {
+          "importance": "展示了Claude Agent SDK在垂直场景（客服）的可复用性，以及元agent产品化的具体路径。",
+          "skepticism": "效果数据来自Cresta自述和Anthropic案例宣传，缺乏第三方独立基准，且“roughly half”的样本范围和定义未披露。",
+          "watch_points": [
+            "Conductor的评估任务（构建agent、写测试、改agent、根因分析）是否会被业界采纳为meta-agent评测方式",
+            "是否有更多公司基于Agent SDK构建类似控制平面，而非直接使用原生代码代理",
+            "Cresta对“确定性/灵活性”边界的处理能否复制到客服之外的高监管行业"
+          ],
+          "related_sources": [
+            {
+              "title": "How Cresta turned CX expertise into an agent builder on the Claude Agent SDK",
+              "url": "https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Cresta",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "partner",
+              "evidence": "文章发布在Anthropic官方博客，Anthropic是Claude Agent SDK提供方，Cresta是其生态合作案例"
+            },
+            {
+              "name": "Claude Agent SDK",
+              "role": "tool",
+              "evidence": "Cresta使用该SDK作为Conductor的通用执行框架，是Conductor的技术底座"
+            },
+            {
+              "name": "United Airlines",
+              "role": "customer",
+              "evidence": "文章列举其为Cresta服务的客户组织之一"
+            },
+            {
+              "name": "CVS Health",
+              "role": "customer",
+              "evidence": "文章列举其为Cresta服务的客户组织之一"
+            },
+            {
+              "name": "Marriott",
+              "role": "customer",
+              "evidence": "文章列举其为Cresta服务的客户组织之一"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是Cresta及其Conductor产品，Anthropic和Claude Agent SDK是技术与发布平台，United Airlines等是客户；事件属于产品化agent构建工具，而非纯技术论文或基准测试，故归入company_updates。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "93343398eed503",
+        "bucket": "today_focus",
+        "section": "company_updates",
+        "title": "OpenAI：OpenAI is adding text watermarking in ChatGPT and Codex",
+        "ai_summary": "OpenAI将在欧盟向ChatGPT和Codex用户推出基于textGrain的不可见文本水印，非全球默认；API客户可选择启用，并有条件向研究人员开放检测器。",
+        "brief": "OpenAI将在欧盟向ChatGPT和Codex用户推出基于textGrain的不可见文本水印，非全球默认；API客户可选择启用，并有条件向研究人员开放检测器。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 81,
+        "evidence_urls": [
+          "https://www.theverge.com/ai-artificial-intelligence/1004880/openai-chatgpt-text-watermarks-eu-ai-act"
+        ],
+        "evidence_titles": [
+          "OpenAI is adding text watermarking in ChatGPT and Codex"
+        ],
+        "evidence_summaries": [
+          "An invisible, machine-readable watermark in text output is rolling out to ChatGPT and Codex, but only for users in the European Union at first. OpenAI says its textGrain watermarking \"matched or exceeded\" other approaches like Google DeepMind's SynthID for text, which is also the basis for the watermarking Anthropic announced in August. Like OpenAI, Anthropic […]"
+        ],
+        "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/10/STK155_OPEN_AI_CVirginia__C.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=2400",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "The Verge AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "这更多是EU AI Act合规动作，而非能力升级；OpenAI也承认水印检测不保证可靠，且不公开检测器，实际约束有限。",
+        "reading_questions": [
+          "水印对长文本生成质量和推理成本影响有多大？",
+          "检测器按个案开放，实际能覆盖多少滥用场景？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "这是主流LLM服务首次将文本水印作为区域合规功能落地，为AI Act下的内容溯源提供了现实参照。",
+          "skepticism": "textGrain与SynthID的对比来自OpenAI自述，水印抗删除能力与误报率仍需独立验证。",
+          "watch_points": [
+            "API客户对可选水印的实际采用率与反馈",
+            "文本水印对改写、翻译等攻击的稳健性第三方测试",
+            "欧盟之外地区是否会跟进成为默认"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI is adding text watermarking in ChatGPT and Codex",
+              "url": "https://www.theverge.com/ai-artificial-intelligence/1004880/openai-chatgpt-text-watermarks-eu-ai-act"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "Google DeepMind",
+              "role": "other",
+              "evidence": "OpenAI声称textGrain匹配或超过其SynthID for text，SynthID被用作对比基准"
+            },
+            {
+              "name": "Anthropic",
+              "role": "other",
+              "evidence": "同样为了EU AI Act宣布基于SynthID的文本水印，被文章作为同行业动作提及"
+            },
+            {
+              "name": "textGrain",
+              "role": "product/tool",
+              "evidence": "OpenAI新推出的水印工具，是本次发布的核心组件"
+            },
+            {
+              "name": "ChatGPT",
+              "role": "product",
+              "evidence": "水印首批应用的产品之一"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "与ChatGPT并列首批应用水印的产品"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章核心是OpenAI宣布在ChatGPT与Codex中上线文本水印功能，动作主体是OpenAI；虽涉及EU AI Act和DeepMind技术，但只是背景与参照，故归为OpenAI的公司产品更新，而非政策或研究报道。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "49c5d5224e85ed",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "OpenAI：OpenAI will start watermarking ChatGPT’s text in the EU",
+        "ai_summary": "OpenAI 宣布为遵守欧盟 AI 法案，未来几周将对欧盟区 ChatGPT 与 Codex 生成文本添加不可见水印，同时发布技术报告 textGrain；检测器限研究机构使用，编辑可显著降低检测率。",
+        "brief": "OpenAI 宣布为遵守欧盟 AI 法案，未来几周将对欧盟区 ChatGPT 与 Codex 生成文本添加不可见水印，同时发布技术报告 textGrain；检测器限研究机构使用，编辑可显著降低检测率。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "OpenAI",
+        "event_type": "policy_safety",
+        "event_type_label": "监管/安全/隐私",
+        "score": 80,
+        "evidence_urls": [
+          "https://techcrunch.com/2026/10/05/openai-will-start-watermarking-chatgpts-text-in-the-eu"
+        ],
+        "evidence_titles": [
+          "OpenAI will start watermarking ChatGPT’s text in the EU"
+        ],
+        "evidence_summaries": [
+          "OpenAI will watermark ChatGPT and Codex text in the EU to comply with the AI Act. Editing can make the invisible marks harder to detect, it says."
+        ],
+        "thumbnail_url": "https://techcrunch.com/wp-content/uploads/2026/10/Screenshot-2026-10-05-at-1.22.49-PM.png",
+        "source_layers": [
+          "L2"
+        ],
+        "social_sources": [],
+        "source_display": "TechCrunch AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 22,
+          "EntityScore": 14,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "水印是通过扰动词选择嵌入的合规痕迹，编辑即可绕过；OpenAI 仅限欧盟且默认关闭，显示合规与用户留存之间仍在妥协。",
+        "reading_questions": [
+          "不可见水印在真实传播场景（改写、翻译、拼接）下的残留可检测性还有多少？",
+          "欧盟之外 OpenAI 不做默认水印，是否意味着全球 AI 治理标准会持续碎片化？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "继 Anthropic 后 OpenAI 也在欧盟默认部署水印，标志大型模型厂商的 AI 内容标识承诺进入落地阶段，检测与规避的攻防将成常态。",
+          "skepticism": "该水印在替换 10% 同义词后检测率从 92% 降至 66%，且短文本、数学和翻译难以检测，鲁棒性可能不足以作为执法依据。",
+          "watch_points": [
+            "水印检测器向研究人员开放后，第三方评测的检测率与编辑鲁棒性。",
+            "Anthropic 与 Google 等是否会在欧盟外将水印设为默认。",
+            "OpenAI 用户是否因水印转向不带水印的替代模型。"
+          ],
+          "related_sources": [
+            {
+              "title": "OpenAI will start watermarking ChatGPT's text in the EU",
+              "url": "https://techcrunch.com/2026/10/05/openai-will-start-watermarking-chatgpts-text-in-the-eu"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "competitor",
+              "evidence": "Anthropic 两个月前宣布全球为 Claude 加水印，文中作为对照案例出现。"
+            },
+            {
+              "name": "EU AI Act",
+              "role": "other",
+              "evidence": "欧盟 AI 法案透明度规则是 OpenAI 推出水印的直接原因，作为监管背景。"
+            },
+            {
+              "name": "ChatGPT",
+              "role": "product",
+              "evidence": "被添加水印的 OpenAI 产品之一。"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "被添加水印的 OpenAI 产品之一。"
+            },
+            {
+              "name": "textGrain",
+              "role": "tool",
+              "evidence": "OpenAI 随公告发布的水印技术报告与方法名。"
+            },
+            {
+              "name": "University of Pennsylvania and Yale",
+              "role": "partner",
+              "evidence": "textGrain 报告与这两所高校研究人员合著。"
+            },
+            {
+              "name": "Google, Meta, Microsoft",
+              "role": "other",
+              "evidence": "与 OpenAI 一同承诺遵循欧盟实践规范的公司。"
+            }
+          ],
+          "event_type": "policy_safety",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "文章主语是 OpenAI，报道其在欧盟为遵守 AI 法案部署不可见水印的公司合规动作，故归入 company_updates 与 policy_safety；容易误判为 technical_progress，但其实技术报告只是配套说明。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "3d1917378da26b",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "AWS：New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent",
+        "ai_summary": "AWS 为 SageMaker 推理发布 aws-ai-ml skill，编码 agent 通过 Agent Toolkit 安装后可自动生成代码，完成端点基准测试、实例推荐与性能对比。",
+        "brief": "AWS 为 SageMaker 推理发布 aws-ai-ml skill，编码 agent 通过 Agent Toolkit 安装后可自动生成代码，完成端点基准测试、实例推荐与性能对比。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "AWS",
+        "event_type": "agent_or_developer_infra",
+        "event_type_label": "Agent/开发者基础设施",
+        "score": 79,
+        "evidence_urls": [
+          "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent"
+        ],
+        "evidence_titles": [
+          "New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent"
+        ],
+        "evidence_summaries": [
+          "Amazon SageMaker optimized generative AI inference introduces the aws-ai-ml skill through the Agent Toolkit for AWS, giving coding agents like Kiro, Claude Code, and Codex deep expertise in inference optimization and benchmarking. Describe what you want, and your agent generates executable SageMaker Python SDK v3 code to benchmark, recommend, and compare deployments."
+        ],
+        "thumbnail_url": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/homepage/global-nav/reinvent-register.3822079bac49f139ae46016a9a99c3eed71fad4a.png",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "AWS Machine Learning Blog",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "本质是把推理优化经验固化成 agent 技能，产出可读可跑的代码，目标是让工具链与生态绑定在 SageMaker 上。",
+        "reading_questions": [
+          "这个 skill 是解决真实痛点，还是 AWS 生态的获客入口？",
+          "开发者如何验证 agent 生成的压测代码与推荐是否可信？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "anthropic",
+            "label": "Anthropic"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": {
+          "importance": "推理优化从人工咨询转向可编码的 agent 技能，可能重塑开发者选型与压测的工作流入口。",
+          "skepticism": "示例对比中 Qwen3-8B 快约 44% 主要靠 4 倍 GPU 算力，skill 宣称的专家能力仍需在真实工作流中验证。",
+          "watch_points": [
+            "该 skill 在真实团队中的采用率，以及生成的推荐是否真正被采纳",
+            "是否会继续支持 SageMaker 之外的推理栈，还是以锁定生态为目的",
+            "后续公开的 benchmark 是否包含不同硬件/模型的均衡对比，以避免片面结论"
+          ],
+          "related_sources": [
+            {
+              "title": "New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent",
+              "url": "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "AWS",
+          "primary_entity_role": "company_actor",
+          "mentioned_entities": [
+            {
+              "name": "Anthropic",
+              "role": "tool",
+              "evidence": "文章提到 aws-ai-ml skill 支持 Claude Code，Anthropic 是被提及的工具提供方，不是文章主角"
+            },
+            {
+              "name": "OpenAI",
+              "role": "tool",
+              "evidence": "Codex 作为被支持的 coding agent 之一被提及，OpenAI 不是主要报道对象"
+            },
+            {
+              "name": "Qwen3",
+              "role": "tested_model",
+              "evidence": "在示例 benchmark 中作为被压测模型出现，仅用于说明技能效果"
+            },
+            {
+              "name": "Hugging Face",
+              "role": "other",
+              "evidence": "作为模型来源平台被提及，并非主要实体"
+            }
+          ],
+          "event_type": "agent_or_developer_infra",
+          "section": "company_updates",
+          "confidence": "高",
+          "reasoning": "原文是 AWS 官方博客宣布新版 agent skill，行动主体是 AWS；Anthropic 只是其 agent 兼容列表中的一员，Qwen3 只出现于示例 benchmark，因此归类为公司产品更新而非模型发布或研究测试。"
+        },
+        "thumbnail_source": "article img"
+      },
+      {
+        "event_id": "8ebe2276c68479",
+        "bucket": "worth_tracking",
+        "section": "company_updates",
+        "title": "Google DeepMind：谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话",
+        "ai_summary": "IT之家援引Android Authority的发现称，谷歌“代我通话”功能可能从商户通话扩展至亲友私人电话，由Gemini转达信息或简单问询，并允许用户拒接AI来电，但该功能仍在开发，上线时间未定。",
+        "brief": "IT之家援引Android Authority的发现称，谷歌“代我通话”功能可能从商户通话扩展至亲友私人电话，由Gemini转达信息或简单问询，并允许用户拒接AI来电，但该功能仍在开发，上线时间未定。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Google DeepMind",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 66,
+        "evidence_urls": [
+          "https://www.ithome.com/1/009/921.htm"
+        ],
+        "evidence_titles": [
+          "谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话"
+        ],
+        "evidence_summaries": [
+          "IT之家 10 月 6 日消息，有多少通电话，仅仅因为要跟其他人沟通实在太过麻烦，你就一拖再拖？人工智能早已承诺，会帮我们把生活里大量费力不讨好的杂事实现自动化。对于一部分人来说，其中最有吸引力的设想或许就是由 AI 替我们打电话。谷歌刚刚在 Pixel 11 系列手机上推出了“代我通话（Call for Me）”功能，而现在有迹象表明，这项功能可能将迎来一次重大功能拓展。 据IT之家了解，目前的代我通话专门设计用于拨打各类商户电话，它可以耐心听着等待接通的背景音乐，协助完成预约之类的事务。 听上去很不错，不过这项功能的适用范围还相当有限。既然 Gemini 属于通用大语言模型，何不进一步放开能力，把代我通话拓展，支持拨打亲友的私人电话呢？在查看部分新版更新内容时，Android Authority 找到了早期线索，显示谷歌似乎正打算实现这一点。 从介绍界面上“妈妈”和“约翰”这两个示例就能够看出，这一版本的代我通话显然不再仅限于和商户沟通。Gemini 在这类通话当中可以执行的任务看起来仍会受到一定约束，大多只负责转达信息或是开展简单问询。但不难想象，遇到有些人很不爱回复短信的时候，这项功能就会十分好用。 当然，并不是所有人都愿意和一台机器通话。Gemini 看上去也会提供相应选项，允许用户拒绝接收这类由 AI 代为打出的电话。 除了代我通话的能力升级之外，外媒还发现了应用操作的细化权限设置，也就是上面第三张截图里可以看到的新增写入与删除板块。目前该模块显然仍处在开发阶段，各项选项还无法正常运行。 至于升级后的代我通话功能，尚且无法确定谷歌究竟会在何时正式上线该功能（甚至不能确定谷歌是否真的会推出）。"
+        ],
+        "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/10/47d00fdc-a7cc-4fe3-bbbf-a20dd78235c6.jpg",
+        "source_layers": [
+          "L3"
+        ],
+        "social_sources": [],
+        "source_display": "IT之家",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 18,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "把AI通话从工具场景拓展到社交场景，仍是受限任务的试探，关键在权限与拒接设计。",
+        "reading_questions": [
+          "该功能解决的是用户痛点，还是谷歌的入口野心？",
+          "后续有什么可验证结果能证明它被用户真正使用？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "google-deepmind",
+            "label": "Google DeepMind"
+          },
+          {
+            "kind": "topic",
+            "key": "enterprise-ai-workflow",
+            "label": "Enterprise AI Workflow"
+          }
+        ],
+        "expert_review": {
+          "importance": "若落地，AI语音代理将首次进入个人社交关系场景，涉及自主拨号、隐私与社交边界，值得跟踪。",
+          "skepticism": "仅来自代码线索，谷歌未确认，且原文明确“甚至不能确定是否推出”，不宜过度解读。",
+          "watch_points": [
+            "官方发布会或Pixel更新是否正式提供该功能",
+            "用户拒接AI来电和通话披露机制如何设计",
+            "Gemini在亲友通话中的任务边界与实际成功率"
+          ],
+          "related_sources": [
+            {
+              "title": "谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话 - IT之家",
+              "url": "https://www.ithome.com/1/009/921.htm"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Google DeepMind",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Gemini",
+              "role": "model",
+              "evidence": "代我通话功能由Gemini大语言模型驱动，是核心能力来源"
+            },
+            {
+              "name": "Pixel 11",
+              "role": "product",
+              "evidence": "该功能刚刚在Pixel 11系列手机上推出，是功能载体"
+            },
+            {
+              "name": "Android Authority",
+              "role": "source_author",
+              "evidence": "发现代码线索并率先报道的外媒，是本文信息来源"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "company_updates",
+          "confidence": "中",
+          "reasoning": "文章核心是谷歌正在开发中的“代我通话”功能扩展，属于公司产品动态而非研究或基准；易误判为Gemini模型发布，但实际是产品功能演进。"
+        },
+        "thumbnail_source": "article img"
+      }
+    ],
+    "technical_progress": [
+      {
+        "event_id": "2f09f110ca2c43",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "llama.cpp：llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more",
+        "ai_summary": "llama.cpp 发布 v0.6.0，为 Qwen4Exp 加入 MTP 投机解码支持，并包含多项其他更新。消息来自 Reddit 帖子，完整改动清单尚未见于公开信息。",
+        "brief": "llama.cpp 发布 v0.6.0，为 Qwen4Exp 加入 MTP 投机解码支持，并包含多项其他更新。消息来自 Reddit 帖子，完整改动清单尚未见于公开信息。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "llama.cpp",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 83,
+        "evidence_urls": [
+          "https://www.reddit.com/r/LocalLLaMA/comments/1wyh03u/llamacpp_v060_released_with_mtp_speculative"
+        ],
+        "evidence_titles": [
+          "llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more"
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://external-preview.redd.it/sXortq9SmiGkKiqesAx6SF1Br0SNlxLcK4r52mN4DmM.png?width=640&crop=smart&auto=webp&s=aa429645c5b299ccebd057c4f6a06952a08da9fb",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [],
+        "source_display": "Reddit r/LocalLLaMA",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 18,
+          "SpecificityScore": 12,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 15,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "开源推理引擎对新模型的适配越来越快，投机解码正成为本地推理默认优化方向。但单一版本更新的实质收益还要看官方基准。",
+        "reading_questions": [
+          "MTP 投机解码相比普通投机解码能带来多少端侧加速？",
+          "这次更新是否意味着 Qwen4Exp 已进入本地部署成熟期？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "meta",
+            "label": "Meta"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          }
+        ],
+        "expert_review": {
+          "importance": "llama.cpp 是本地推理基础设施的事实标准，这次更新直接影响大量开发者运行 Qwen4Exp 的效率与落地方式。",
+          "skepticism": "当前仅有一则 Reddit 标题，无官方 changelog 或基准数据，MTP 投机的实际加速幅度仍需验证。",
+          "watch_points": [
+            "llama.cpp 官方仓库的 v0.6.0 release notes",
+            "MTP 投机解码在 Qwen4Exp 上的实测吞吐与显存占用",
+            "社区后续对其他新模型的适配速度与默认开启情况"
+          ],
+          "related_sources": [
+            {
+              "title": "llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more",
+              "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wyh03u/llamacpp_v060_released_with_mtp_speculative"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "llama.cpp",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Qwen4Exp",
+              "role": "tested_model",
+              "evidence": "MTP 投机解码是为 Qwen4Exp 提供的推理优化，Qwen4Exp 是被运行的目标模型"
+            }
+          ],
+          "event_type": "product_or_model_release",
+          "section": "technical_progress",
+          "confidence": "中",
+          "reasoning": "文章主语是开源推理引擎 llama.cpp 的 v0.6.0 发布，重点在 MTP 投机解码这一推理工程特性，因此归为工程发布；易误判为 Meta 的公司动作，但 Meta 只是项目名称来源，文章并未报道 Meta 本身的动态。"
+        },
+        "thumbnail_source": "thumbnail_url"
+      },
+      {
+        "event_id": "c28e673fcd6cbb",
+        "bucket": "today_focus",
+        "section": "technical_progress",
+        "title": "智谱：A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well.",
+        "ai_summary": "Reddit用户发布了一套测试LLM玩《文明V》的基准，结果显示GLM-5.3领先于Opus-5.5，而体积更小的Qwen-3.8-27B表现意外出色。",
+        "brief": "Reddit用户发布了一套测试LLM玩《文明V》的基准，结果显示GLM-5.3领先于Opus-5.5，而体积更小的Qwen-3.8-27B表现意外出色。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "智谱",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 69,
+        "evidence_urls": [
+          "https://www.reddit.com/r/LocalLLaMA/comments/1wynbvq/a_benchmark_for_llms_playing_civilization_v_glm53"
+        ],
+        "evidence_titles": [
+          "A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well."
+        ],
+        "evidence_summaries": [],
+        "thumbnail_url": "https://preview.redd.it/vc33j8lrfqth1.png?width=140&height=48&auto=webp&s=4a3b1e23b3e240630d2372eb579858f650518dc0",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [],
+        "source_display": "Reddit r/LocalLLaMA",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 12,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 9,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "单一游戏基准的偶然性很高，但小模型在长程决策任务中能与更大模型同场竞争，这个信号值得观察。",
+        "reading_questions": [
+          "这个基准对真实agent任务的预测力有多强？",
+          "27B模型表现好的原因是什么：策略空间、推理预算还是奖励设计？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "智谱",
+            "label": "智谱"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "提供了游戏决策场景下不同规模模型的横向对比，补充了常规基准之外的能力样本。",
+          "skepticism": "评测的玩法设定、重复次数、采样温度和实现细节均未公开，结果可能受随机性影响。",
+          "watch_points": [
+            "评测方法是否开源或提供可复现细节",
+            "后续是否有更多模型在同一基准上的成绩",
+            "该结果能否在其他长程任务中复现"
+          ],
+          "related_sources": [
+            {
+              "title": "A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well.",
+              "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wynbvq/a_benchmark_for_llms_playing_civilization_v_glm53"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity_role": "none",
+          "mentioned_entities": [
+            {
+              "name": "GLM-5.3",
+              "role": "tested_model",
+              "evidence": "基准中排名领先的被测模型"
+            },
+            {
+              "name": "Opus-5.5",
+              "role": "tested_model",
+              "evidence": "基准中被对比的被测模型"
+            },
+            {
+              "name": "Qwen-3.8-27B",
+              "role": "tested_model",
+              "evidence": "基准中表现意外的被测模型"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主体是第三方发布的游戏场景基准测试，属于技术评测而非公司官方动态，因此归为technical_progress而非company_updates。"
+        },
+        "thumbnail_source": "thumbnail_url"
+      },
+      {
+        "event_id": "a2264d8cf511e9",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "论文作者（Zhixu Du 等）：What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute",
+        "ai_summary": "该论文提出用MoA面板逐token复现参考序列，测量每个token的充分计算量：0.5B模型可复现92-95%的token，最贵10%的token占64-80%FLOPs，并将其用于路由和草稿生成以降低延迟。",
+        "brief": "该论文提出用MoA面板逐token复现参考序列，测量每个token的充分计算量：0.5B模型可复现92-95%的token，最贵10%的token占64-80%FLOPs，并将其用于路由和草稿生成以降低延迟。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "论文作者（Zhixu Du 等）",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 68,
+        "evidence_urls": [
+          "https://arxiv.org/abs/2610.02491"
+        ],
+        "evidence_titles": [
+          "What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute"
+        ],
+        "evidence_summaries": [
+          "arXiv:2610.02491v1 Announce Type: new Abstract: Large language models spend the same amount of computation on every token they generate, regardless of how difficult each token is to produce. Methods such as speculative decoding and model routing are built on the premise that much of this computation is unnecessary, yet the computation an individual token actually requires has not been measured. We measure it through a Mixture-of-Agents (MoA) lens: a panel of fifteen language models of increasing capacity, drawn from three families, in which every agent attempts to reproduce a reference sequence token by token, conditioned on the correct preceding tokens. We define the inference cost of the smallest agent that succeeds as the token's sufficient compute, which upper-bounds what the token requires. On three core benchmarks, a 0.5B agent reproduces 92--95\\% of reference tokens. Across Qwen, OLMo, and R1-distilled panels, the most expensive 10\\% account for 64--80\\% of estimated FLOPs. On all 500 MATH-500 problems, the MoA-derived map helps model routing reduce projected latency from 7.59 to 5.12 seconds while slightly improving accuracy, relative to the best confidence-routing baseline. The MoA-map helps drafting use 32.6\\% fewer draft tokens and approximately 20\\% lower projected latency than fixed-window drafting at similar accuracy. These comparisons reveal remaining allocation headroom, motivating controllers that exploit sufficient-compute structure."
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [],
+        "source_display": "arXiv cs.AI",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 16,
+          "ChinaRelevanceScore": 10,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "Token难度并不均匀，给每个token定出“够用”的计算量后，路由和投机解码就能省算力；但测得的是充分上界，不是真实必需。",
+        "reading_questions": [
+          "作者如何避免“最小成功agent”定义中的偶然成功（如随机命中）？",
+          "MoA map的构建和推理成本是否被计入端到端收益？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "qwen",
+            "label": "Qwen"
+          },
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          },
+          {
+            "kind": "topic",
+            "key": "inference-infrastructure",
+            "label": "Inference Infrastructure"
+          }
+        ],
+        "expert_review": {
+          "importance": "为推理算力分配提供了首个token级测量工具，直接指向路由与投机解码的优化空间。",
+          "skepticism": "MoA复现任务与真实生成分布存在距离，“足够计算”是上界而非实际需求，端到端收益仍需独立复现。",
+          "watch_points": [
+            "是否有后续工作将MoA-map扩展到更大模型和更多任务类型",
+            "该映射在在线路由中能否稳定复现延迟收益",
+            "与投机解码结合时实际吞吐提升是否与论文估计一致"
+          ],
+          "related_sources": [
+            {
+              "title": "What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute",
+              "url": "https://arxiv.org/abs/2610.02491"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "论文作者（Zhixu Du 等）",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Qwen",
+              "role": "tested_model",
+              "evidence": "论文使用Qwen模型家族作为被测面板之一，用于测量token的充分计算量"
+            },
+            {
+              "name": "OLMo",
+              "role": "tested_model",
+              "evidence": "论文使用OLMo模型家族作为被测面板之一"
+            },
+            {
+              "name": "R1-distilled",
+              "role": "tested_model",
+              "evidence": "论文使用R1-distilled模型家族作为被测面板之一"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章主体是论文提出的测量方法与应用，主语是研究团队；Qwen仅作为被测模型之一出现，不能抢主语。"
+        }
+      },
+      {
+        "event_id": "4a783caca289c8",
+        "bucket": "worth_tracking",
+        "section": "technical_progress",
+        "title": "Apple：Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems",
+        "ai_summary": "苹果机器学习研究团队与斯坦福合作发表 HCI 论文：用 Wizard of Oz 探针让用户定义并训练个性化感知系统，识别出现象边界、关系中主体、信号与噪声、数据客观性四类本体论边界协商。",
+        "brief": "苹果机器学习研究团队与斯坦福合作发表 HCI 论文：用 Wizard of Oz 探针让用户定义并训练个性化感知系统，识别出现象边界、关系中主体、信号与噪声、数据客观性四类本体论边界协商。",
+        "social_original_text": "",
+        "translation_zh": "",
+        "entity": "Apple",
+        "event_type": "research_or_benchmark",
+        "event_type_label": "研究/Benchmark",
+        "score": 68,
+        "evidence_urls": [
+          "https://machinelearning.apple.com/research/ontological-boundary-negotiation"
+        ],
+        "evidence_titles": [
+          "Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems"
+        ],
+        "evidence_summaries": [
+          "Designed artifacts are ontological, shaping, and at times limiting, what becomes possible or imaginable. One path toward mitigating such foreclosures is giving people power over how systems are designed and built. Despite decades of scholarship around systems that enable such authorship, these systems are often evaluated on whether or not they are usable, useful, or technically feasible, leaving questions of ontological boundary negotiation, unexamined. We design two open-ended probes that utilize a Wizard of Oz technique to enable the experience of training a personalized machine learning…"
+        ],
+        "thumbnail_url": "https://mlr.cdn-apple.com/media/Discover_1440x420_2x_9c465d585e.jpg",
+        "source_layers": [
+          "L1"
+        ],
+        "social_sources": [],
+        "source_display": "Apple Machine Learning Research",
+        "source_kinds": [],
+        "x_handles": [],
+        "score_breakdown": {
+          "AuthorityScore": 28,
+          "EntityScore": 0,
+          "EventTypeScore": 16,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 9,
+          "UserInterestScore": 11,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 0,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": 0,
+          "LowConfidencePenalty": 0
+        },
+        "memory_note": "这是 HCI 设计研究而非模型能力突破，核心贡献是提出本体论边界协商框架。",
+        "reading_questions": [
+          "用户自定义训练在真实设备上如何平衡数据隐私与个性化？",
+          "四个边界范畴能否转化为可操作的工程接口？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "topic",
+            "key": "agent-systems",
+            "label": "Agent Systems"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "该研究为个人化感知系统提供一个经过实证的设计分析框架，可作为后续 HCI 与 Agent 交互设计的参考。",
+          "skepticism": "一周的 Wizard of Oz 探索性研究，样本和方法规模有限；四个边界范畴是否适用于真实训练流程仍需更多验证。",
+          "watch_points": [
+            "该框架能否转化为真实产品中的用户可配置训练能力",
+            "Apple 设备上是否出现相关交互设计实践",
+            "后续是否有更大规模或真实系统研究引用该框架"
+          ],
+          "related_sources": [
+            {
+              "title": "Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems - Apple Machine Learning Research",
+              "url": "https://machinelearning.apple.com/research/ontological-boundary-negotiation"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "Apple",
+          "primary_entity_role": "research_lab",
+          "mentioned_entities": [
+            {
+              "name": "Stanford University",
+              "role": "partner",
+              "evidence": "论文作者标注 † Stanford University，属于合作作者单位"
+            }
+          ],
+          "event_type": "research_or_benchmark",
+          "section": "technical_progress",
+          "confidence": "高",
+          "reasoning": "文章是 Apple ML 研究团队与 Stanford 合作发表的 HCI 研究论文，核心是用户自定义传感系统的设计研究，既不是 Agent/开发者基础设施（原事件类型误判），也不是公司产品/商业更新，故归为研究类技术进展。"
+        },
+        "thumbnail_source": "article img"
+      }
+    ],
+    "industry_views": [
+      {
+        "event_id": "3d5f2c9ef7b95d",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "OpenAI：I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).",
+        "ai_summary": "Peter Yang 发文称，OpenAI 着手简化 ChatGPT 令他高兴，并认为当前产品线过于混乱，Work 发布是错误，建议合并或简化 Work、Codex、Spaces、Pages 等入口。",
+        "brief": "Peter Yang 发文称，OpenAI 着手简化 ChatGPT 令他高兴，并认为当前产品线过于混乱，Work 发布是错误，建议合并或简化 Work、Codex、Spaces、Pages 等入口。",
+        "social_original_text": "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).\n\nHere's a clip from my dots review about this. What I'd simplify:\n\n1. Work vs. Codex\n2. Spaces vs. Pages vs. Sites\n3. The model and effort picker\nProbably alot more\n\nMy hot take is that the whole Work launch was a mistake. Just like Claude folded Cowork back into Chat, I don't think Work needs its own brand.\n\nAnyway, excited to see my primary harness get much better.\n\n📌 See my full dots review here: https://t.co/kUtg3RPk7l",
+        "translation_zh": "我很高兴 OpenAI 正专注于简化 ChatGPT，因为它已变得一团糟（抱歉）。 以下是我 dots 评测中关于此问题的一段内容。我会简化什么： 1. Work vs. Codex 2. Spaces vs. Pages vs. Sites 3. 模型和精力选择器 可能还有更多 我的大胆观点是，整个 Work 发布是个错误。就像 Claude 把 Cowork 并回 Chat 一样，我认为 Work 不需要自己的品牌。 总之，很高兴看到我的主要工具变得更好。 📌 在此查看我的完整 dots 评测：https://t.co/kUtg3RPk7l",
+        "entity": "OpenAI",
+        "event_type": "industry_view",
+        "event_type_label": "行业动态",
+        "score": 60.91,
+        "evidence_urls": [
+          "https://x.com/petergyang/status/2106926956554195018"
+        ],
+        "evidence_titles": [
+          "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry)."
+        ],
+        "evidence_summaries": [
+          "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).\n\nHere's a clip from my dots review about this. What I'd simplify:\n\n1. Work vs. Codex\n2. Spaces vs. Pages vs. Sites\n3. The model and effort picker\nProbably alot more\n\nMy hot take is that the whole Work launch was a mistake. Just like Claude folded Cowork back into Chat, I don't think Work needs its own brand.\n\nAnyway, excited to see my primary harness get much better.\n\n📌 See my full dots review here: https://t.co/kUtg3RPk7l"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Peter Yang"
+        ],
+        "source_display": "X: Peter Yang",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "petergyang"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 14,
+          "EventTypeScore": 10,
+          "SpecificityScore": 4,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 9,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 9.911356165197843,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "用户视角的界面复杂度批评，核心是产品品牌碎片化，Work 独立品牌被视为失败设计，简化是头部产品从扩张转向收敛的信号。",
+        "reading_questions": [
+          "ChatGPT 的产品复杂度是否已成为用户迁移到其他工具的实际原因？",
+          "OpenAI 会否因这类公开批评而调整产品架构，还是继续按内部路线推进？"
+        ],
+        "memory_subjects": [
+          {
+            "kind": "entity",
+            "key": "openai",
+            "label": "OpenAI"
+          },
+          {
+            "kind": "topic",
+            "key": "ai-coding",
+            "label": "AI Coding"
+          },
+          {
+            "kind": "topic",
+            "key": "evaluation-benchmark",
+            "label": "Evaluation / Benchmark"
+          }
+        ],
+        "expert_review": {
+          "importance": "反映头部 AI 产品正从功能堆叠转向体验重整，可能预示 ChatGPT 界面和品牌结构即将迎来一轮简化调整。",
+          "skepticism": "该看法仅来自单一博主的个人意见，不代表 OpenAI 官方路线，也缺乏内部产品决策的直接证据，需谨慎看待其判断权重。",
+          "watch_points": [
+            "OpenAI 是否在近期推出简化版界面或合并 Work/Codex 入口",
+            "官方是否对 Work、Spaces、Pages 等品牌定位做出调整",
+            "Claude 将 Cowork 合并回 Chat 后用户接受度如何，形成对比参照"
+          ],
+          "related_sources": [
+            {
+              "title": "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).",
+              "url": "https://x.com/petergyang/status/2106926956554195018"
+            }
+          ],
+          "method": "llm_expert_review"
+        },
+        "llm_classification": {
+          "primary_entity": "OpenAI",
+          "primary_entity_role": "article_subject",
+          "mentioned_entities": [
+            {
+              "name": "Peter Yang",
+              "role": "source_author",
+              "evidence": "该推文由 Peter Yang 发布，内容是作者个人观点，属于评论者而非动作主体。"
+            },
+            {
+              "name": "Claude",
+              "role": "competitor",
+              "evidence": "作者用 Claude 将 Cowork 合并回 Chat 作为对比案例，说明同类产品也在收敛品牌。"
+            },
+            {
+              "name": "Work",
+              "role": "product",
+              "evidence": "作者认为 OpenAI 的 Work 品牌发布是错误，是其批评的核心对象。"
+            },
+            {
+              "name": "Codex",
+              "role": "product",
+              "evidence": "作者建议区分并简化 Work 与 Codex 的关系，属于被讨论的产品入口。"
+            }
+          ],
+          "event_type": "industry_view",
+          "section": "industry_views",
+          "confidence": "高",
+          "reasoning": "内容为博主个人对 OpenAI 产品的评论，非论文、基准或公司动作，因此归为行业观点，而不是原先标记的 research_or_benchmark。"
+        }
+      },
+      {
+        "event_id": "c14743ecda143e",
+        "bucket": "worth_tracking",
+        "section": "industry_views",
+        "title": "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.",
+        "ai_summary": "",
+        "brief": "",
+        "social_original_text": "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.\n\nThere’s so much alpha in meeting founders at their own office.\n\nBesides “vibes”, you get to see what the energy of the office is like, how the coworkers react and work with each other, how the cofounders answer and complement each other, what the beta product releases look like, how they collaborate etc etc.\n\nYes, I get it there’s time pressure, and you often have to move fast. But even then I always ask to meet at offices for final meetings and founders often tell me I’m the only one that has ever asked.\n\nWhat’s the point of calling them into your own conference room and parrot the same deck??",
+        "translation_zh": "也许我只是老派，但我就是无法相信人们能通过一个 Zoom 通话做出投资决定……有时甚至只是见 CEO 一面就投了。 在创始人自己的办公室见他们，能获得很多 alpha。 除了“氛围”，你还能看到办公室的能量如何，同事们如何互动协作，联合创始人如何回答和互补，beta 产品发布是什么样，他们如何合作等等等等。 是的，我明白有时间压力，你往往得快速行动。但即便如此，我总是要求在办公室进行最终会议，而且创始人常告诉我，我是唯一提出过这个要求的人。 把他们叫进你的会议室，让他们复述同一套演示文稿，到底有什么意义？",
+        "entity": "",
+        "event_type": "product_or_model_release",
+        "event_type_label": "模型/产品发布",
+        "score": 50.47,
+        "evidence_urls": [
+          "https://x.com/nikunj/status/2106957269212742135"
+        ],
+        "evidence_titles": [
+          "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO."
+        ],
+        "evidence_summaries": [
+          "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.\n\nThere’s so much alpha in meeting founders at their own office.\n\nBesides “vibes”, you get to see what the energy of the office is like, how the coworkers react and work with each other, how the cofounders answer and complement each other, what the beta product releases look like, how they collaborate etc etc.\n\nYes, I get it there’s time pressure, and you often have to move fast. But even then I always ask to meet at offices for final meetings and founders often tell me I’m the only one that has ever asked.\n\nWhat’s the point of calling them into your own conference room and parrot the same deck??"
+        ],
+        "thumbnail_url": "",
+        "source_layers": [
+          "L4"
+        ],
+        "social_sources": [
+          "X: Nikunj Kothari"
+        ],
+        "source_display": "X: Nikunj Kothari",
+        "source_kinds": [
+          "follow_builders_x"
+        ],
+        "x_handles": [
+          "nikunj"
+        ],
+        "score_breakdown": {
+          "AuthorityScore": 12,
+          "EntityScore": 0,
+          "EventTypeScore": 18,
+          "SpecificityScore": 0,
+          "ResonanceScore": 0,
+          "FreshnessScore": 12,
+          "UserInterestScore": 8,
+          "ChinaRelevanceScore": 0,
+          "SocialEngagementScore": 10.467108425811176,
+          "UserFeedbackScore": 0,
+          "NoisePenalty": 0,
+          "DuplicatePenalty": -4,
+          "LowConfidencePenalty": -6
+        },
+        "memory_note": "",
+        "reading_questions": [],
+        "memory_subjects": [],
+        "expert_review": null,
+        "llm_classification": null
+      }
+    ]
+  },
+  "paper_digest": {
+    "source": "Hugging Face Daily Papers",
+    "source_url": "https://huggingface.co/papers/date/2026-10-06",
+    "generated_at": "2026-10-06T00:36:49.673Z",
+    "llm_provider": "openai_compatible_chat",
+    "llm_model": "deepseek-v4-flash-ga-260731",
+    "count": 5,
+    "total_count": 63,
+    "items": [
+      {
+        "paper_id": "2610.01780",
+        "title": "Benchmarking HumanUnderstanding from Reasoning overLongitudinal Real-World Conversations",
+        "title_zh": "RealCompanion：基于长期真实对话的人际理解基准",
+        "daily_rank": 1,
+        "url": "https://huggingface.co/papers/2610.01780",
+        "source_url": "https://arxiv.org/html/2610.01780",
+        "thumbnail_url": "",
+        "takeaway_zh": "发布包含10段真实AI伴侣关系、27218条消息、最长120天对话的基准，并验证记忆探测、persona重建等任务。",
+        "why_it_matters_zh": "为评估长期对话中AI对人的记忆与理解提供真实数据基准，并揭示现有记忆检测方法的局限。",
+        "tags": [
+          "长期对话",
+          "记忆评测",
+          "人格建模"
+        ],
+        "importance": 4,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2609.38879",
+        "title": "foldingcorpus_bandwidth.svg",
+        "title_zh": "foldingcorpus_bandwidth.svg（蛋白质标签预测置信区间分析）",
+        "daily_rank": 2,
+        "url": "https://huggingface.co/papers/2609.38879",
+        "source_url": "https://arxiv.org/html/2609.38879",
+        "thumbnail_url": "",
+        "takeaway_zh": "研究绘制了不同分类能力与每蛋白质标签数量下结构化标签预测的置信区间，涉及多种机器学习模型。",
+        "why_it_matters_zh": "或可为蛋白质功能预测的不确定性估计提供参考，但摘要信息不完整，需进一步核验。",
+        "tags": [
+          "蛋白质预测",
+          "置信区间",
+          "机器学习"
+        ],
+        "importance": 1,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2609.38839",
+        "title": "user_study.svg",
+        "title_zh": "user_study.svg（图表文件）",
+        "daily_rank": 3,
+        "url": "https://huggingface.co/papers/2609.38839",
+        "source_url": "https://arxiv.org/html/2609.38839",
+        "thumbnail_url": "",
+        "takeaway_zh": "摘要仅说明图表包含两个独立面板，未提供任何研究细节。",
+        "why_it_matters_zh": "由于缺少有效摘要，无法判断其对技术进展的意义。",
+        "tags": [
+          "信息不足"
+        ],
+        "importance": 1,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2609.38078",
+        "title": "failure_flow.svg",
+        "title_zh": "failure_flow.svg（图表文件）",
+        "daily_rank": 4,
+        "url": "https://huggingface.co/papers/2609.38078",
+        "source_url": "https://arxiv.org/html/2609.38078",
+        "thumbnail_url": "",
+        "takeaway_zh": "摘要提到基线 SCOPC 在数据增强与信号场景下的表现，但表述不清，无法确认。",
+        "why_it_matters_zh": "内容不完整，需更多原文信息才能评估其重要性。",
+        "tags": [
+          "信息不足"
+        ],
+        "importance": 1,
+        "summary_method": "llm"
+      },
+      {
+        "paper_id": "2610.02826",
+        "title": "harness_coverage_union.svg",
+        "title_zh": "多终止位置任务设置结果比较",
+        "daily_rank": 5,
+        "url": "https://huggingface.co/papers/2610.02826",
+        "source_url": "https://arxiv.org/html/2610.02826",
+        "thumbnail_url": "",
+        "takeaway_zh": "根据有限的摘要，论文比较了多个终止位置任务场景下的实验结果，具体内容待确认。",
+        "why_it_matters_zh": "如果研究结论可靠，可能有助于理解任务终止位置对算法评估的影响。",
+        "tags": [
+          "任务设置",
+          "终止条件",
+          "结果比较"
+        ],
+        "importance": 2,
+        "summary_method": "llm"
+      }
+    ]
+  },
+  "items": [
+    {
+      "event_id": "ab8d32921cd96b",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "Cresta：How Cresta turned CX expertise into an agent builder on the Claude Agent SDK",
+      "ai_summary": "Cresta基于Claude Agent SDK构建Conductor，一个自然语言agent构建器，可生成、评估和优化客服agent，称可将初期部署时间缩短约一半。",
+      "brief": "Cresta基于Claude Agent SDK构建Conductor，一个自然语言agent构建器，可生成、评估和优化客服agent，称可将初期部署时间缩短约一半。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Cresta",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 87,
+      "evidence_urls": [
+        "https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk"
+      ],
+      "evidence_titles": [
+        "How Cresta turned CX expertise into an agent builder on the Claude Agent SDK"
+      ],
+      "evidence_summaries": [],
+      "thumbnail_url": "https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6ac3a966e07da0d8501b6945_cresta-conductor-architecture-original-style.png",
+      "source_layers": [
+        "L1"
+      ],
+      "social_sources": [],
+      "source_display": "Claude Blog",
+      "source_kinds": [
+        "claude_blog"
+      ],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "本质是Anthropic官方博客的生态案例，核心是“用agent造agent”；部署时间减半来自Cresta自述，需独立验证。",
+      "reading_questions": [
+        "这种以元agent方式维护agent，能否解决长期生产维护中积累的技术债？",
+        "Cresta的知识飞轮依赖其专有对话数据，这是护城河还是局限？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "anthropic",
+          "label": "Anthropic"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        }
+      ],
+      "expert_review": {
+        "importance": "展示了Claude Agent SDK在垂直场景（客服）的可复用性，以及元agent产品化的具体路径。",
+        "skepticism": "效果数据来自Cresta自述和Anthropic案例宣传，缺乏第三方独立基准，且“roughly half”的样本范围和定义未披露。",
+        "watch_points": [
+          "Conductor的评估任务（构建agent、写测试、改agent、根因分析）是否会被业界采纳为meta-agent评测方式",
+          "是否有更多公司基于Agent SDK构建类似控制平面，而非直接使用原生代码代理",
+          "Cresta对“确定性/灵活性”边界的处理能否复制到客服之外的高监管行业"
+        ],
+        "related_sources": [
+          {
+            "title": "How Cresta turned CX expertise into an agent builder on the Claude Agent SDK",
+            "url": "https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "Cresta",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Anthropic",
+            "role": "partner",
+            "evidence": "文章发布在Anthropic官方博客，Anthropic是Claude Agent SDK提供方，Cresta是其生态合作案例"
+          },
+          {
+            "name": "Claude Agent SDK",
+            "role": "tool",
+            "evidence": "Cresta使用该SDK作为Conductor的通用执行框架，是Conductor的技术底座"
+          },
+          {
+            "name": "United Airlines",
+            "role": "customer",
+            "evidence": "文章列举其为Cresta服务的客户组织之一"
+          },
+          {
+            "name": "CVS Health",
+            "role": "customer",
+            "evidence": "文章列举其为Cresta服务的客户组织之一"
+          },
+          {
+            "name": "Marriott",
+            "role": "customer",
+            "evidence": "文章列举其为Cresta服务的客户组织之一"
+          }
+        ],
+        "event_type": "agent_or_developer_infra",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章主语是Cresta及其Conductor产品，Anthropic和Claude Agent SDK是技术与发布平台，United Airlines等是客户；事件属于产品化agent构建工具，而非纯技术论文或基准测试，故归入company_updates。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "93343398eed503",
+      "bucket": "today_focus",
+      "section": "company_updates",
+      "title": "OpenAI：OpenAI is adding text watermarking in ChatGPT and Codex",
+      "ai_summary": "OpenAI将在欧盟向ChatGPT和Codex用户推出基于textGrain的不可见文本水印，非全球默认；API客户可选择启用，并有条件向研究人员开放检测器。",
+      "brief": "OpenAI将在欧盟向ChatGPT和Codex用户推出基于textGrain的不可见文本水印，非全球默认；API客户可选择启用，并有条件向研究人员开放检测器。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "OpenAI",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 81,
+      "evidence_urls": [
+        "https://www.theverge.com/ai-artificial-intelligence/1004880/openai-chatgpt-text-watermarks-eu-ai-act"
+      ],
+      "evidence_titles": [
+        "OpenAI is adding text watermarking in ChatGPT and Codex"
+      ],
+      "evidence_summaries": [
+        "An invisible, machine-readable watermark in text output is rolling out to ChatGPT and Codex, but only for users in the European Union at first. OpenAI says its textGrain watermarking \"matched or exceeded\" other approaches like Google DeepMind's SynthID for text, which is also the basis for the watermarking Anthropic announced in August. Like OpenAI, Anthropic […]"
+      ],
+      "thumbnail_url": "https://platform.theverge.com/wp-content/uploads/sites/2/2025/10/STK155_OPEN_AI_CVirginia__C.jpg?quality=90&strip=all&crop=0%2C0%2C100%2C100&w=2400",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "The Verge AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "这更多是EU AI Act合规动作，而非能力升级；OpenAI也承认水印检测不保证可靠，且不公开检测器，实际约束有限。",
+      "reading_questions": [
+        "水印对长文本生成质量和推理成本影响有多大？",
+        "检测器按个案开放，实际能覆盖多少滥用场景？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "openai",
+          "label": "OpenAI"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        }
+      ],
+      "expert_review": {
+        "importance": "这是主流LLM服务首次将文本水印作为区域合规功能落地，为AI Act下的内容溯源提供了现实参照。",
+        "skepticism": "textGrain与SynthID的对比来自OpenAI自述，水印抗删除能力与误报率仍需独立验证。",
+        "watch_points": [
+          "API客户对可选水印的实际采用率与反馈",
+          "文本水印对改写、翻译等攻击的稳健性第三方测试",
+          "欧盟之外地区是否会跟进成为默认"
+        ],
+        "related_sources": [
+          {
+            "title": "OpenAI is adding text watermarking in ChatGPT and Codex",
+            "url": "https://www.theverge.com/ai-artificial-intelligence/1004880/openai-chatgpt-text-watermarks-eu-ai-act"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "OpenAI",
+        "primary_entity_role": "company_actor",
+        "mentioned_entities": [
+          {
+            "name": "Google DeepMind",
+            "role": "other",
+            "evidence": "OpenAI声称textGrain匹配或超过其SynthID for text，SynthID被用作对比基准"
+          },
+          {
+            "name": "Anthropic",
+            "role": "other",
+            "evidence": "同样为了EU AI Act宣布基于SynthID的文本水印，被文章作为同行业动作提及"
+          },
+          {
+            "name": "textGrain",
+            "role": "product/tool",
+            "evidence": "OpenAI新推出的水印工具，是本次发布的核心组件"
+          },
+          {
+            "name": "ChatGPT",
+            "role": "product",
+            "evidence": "水印首批应用的产品之一"
+          },
+          {
+            "name": "Codex",
+            "role": "product",
+            "evidence": "与ChatGPT并列首批应用水印的产品"
+          }
+        ],
+        "event_type": "product_or_model_release",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章核心是OpenAI宣布在ChatGPT与Codex中上线文本水印功能，动作主体是OpenAI；虽涉及EU AI Act和DeepMind技术，但只是背景与参照，故归为OpenAI的公司产品更新，而非政策或研究报道。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "49c5d5224e85ed",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "OpenAI：OpenAI will start watermarking ChatGPT’s text in the EU",
+      "ai_summary": "OpenAI 宣布为遵守欧盟 AI 法案，未来几周将对欧盟区 ChatGPT 与 Codex 生成文本添加不可见水印，同时发布技术报告 textGrain；检测器限研究机构使用，编辑可显著降低检测率。",
+      "brief": "OpenAI 宣布为遵守欧盟 AI 法案，未来几周将对欧盟区 ChatGPT 与 Codex 生成文本添加不可见水印，同时发布技术报告 textGrain；检测器限研究机构使用，编辑可显著降低检测率。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "OpenAI",
+      "event_type": "policy_safety",
+      "event_type_label": "监管/安全/隐私",
+      "score": 80,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/10/05/openai-will-start-watermarking-chatgpts-text-in-the-eu"
+      ],
+      "evidence_titles": [
+        "OpenAI will start watermarking ChatGPT’s text in the EU"
+      ],
+      "evidence_summaries": [
+        "OpenAI will watermark ChatGPT and Codex text in the EU to comply with the AI Act. Editing can make the invisible marks harder to detect, it says."
+      ],
+      "thumbnail_url": "https://techcrunch.com/wp-content/uploads/2026/10/Screenshot-2026-10-05-at-1.22.49-PM.png",
+      "source_layers": [
+        "L2"
+      ],
+      "social_sources": [],
+      "source_display": "TechCrunch AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "水印是通过扰动词选择嵌入的合规痕迹，编辑即可绕过；OpenAI 仅限欧盟且默认关闭，显示合规与用户留存之间仍在妥协。",
+      "reading_questions": [
+        "不可见水印在真实传播场景（改写、翻译、拼接）下的残留可检测性还有多少？",
+        "欧盟之外 OpenAI 不做默认水印，是否意味着全球 AI 治理标准会持续碎片化？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "openai",
+          "label": "OpenAI"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        }
+      ],
+      "expert_review": {
+        "importance": "继 Anthropic 后 OpenAI 也在欧盟默认部署水印，标志大型模型厂商的 AI 内容标识承诺进入落地阶段，检测与规避的攻防将成常态。",
+        "skepticism": "该水印在替换 10% 同义词后检测率从 92% 降至 66%，且短文本、数学和翻译难以检测，鲁棒性可能不足以作为执法依据。",
+        "watch_points": [
+          "水印检测器向研究人员开放后，第三方评测的检测率与编辑鲁棒性。",
+          "Anthropic 与 Google 等是否会在欧盟外将水印设为默认。",
+          "OpenAI 用户是否因水印转向不带水印的替代模型。"
+        ],
+        "related_sources": [
+          {
+            "title": "OpenAI will start watermarking ChatGPT's text in the EU",
+            "url": "https://techcrunch.com/2026/10/05/openai-will-start-watermarking-chatgpts-text-in-the-eu"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "OpenAI",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Anthropic",
+            "role": "competitor",
+            "evidence": "Anthropic 两个月前宣布全球为 Claude 加水印，文中作为对照案例出现。"
+          },
+          {
+            "name": "EU AI Act",
+            "role": "other",
+            "evidence": "欧盟 AI 法案透明度规则是 OpenAI 推出水印的直接原因，作为监管背景。"
+          },
+          {
+            "name": "ChatGPT",
+            "role": "product",
+            "evidence": "被添加水印的 OpenAI 产品之一。"
+          },
+          {
+            "name": "Codex",
+            "role": "product",
+            "evidence": "被添加水印的 OpenAI 产品之一。"
+          },
+          {
+            "name": "textGrain",
+            "role": "tool",
+            "evidence": "OpenAI 随公告发布的水印技术报告与方法名。"
+          },
+          {
+            "name": "University of Pennsylvania and Yale",
+            "role": "partner",
+            "evidence": "textGrain 报告与这两所高校研究人员合著。"
+          },
+          {
+            "name": "Google, Meta, Microsoft",
+            "role": "other",
+            "evidence": "与 OpenAI 一同承诺遵循欧盟实践规范的公司。"
+          }
+        ],
+        "event_type": "policy_safety",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "文章主语是 OpenAI，报道其在欧盟为遵守 AI 法案部署不可见水印的公司合规动作，故归入 company_updates 与 policy_safety；容易误判为 technical_progress，但其实技术报告只是配套说明。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "3d1917378da26b",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "AWS：New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent",
+      "ai_summary": "AWS 为 SageMaker 推理发布 aws-ai-ml skill，编码 agent 通过 Agent Toolkit 安装后可自动生成代码，完成端点基准测试、实例推荐与性能对比。",
+      "brief": "AWS 为 SageMaker 推理发布 aws-ai-ml skill，编码 agent 通过 Agent Toolkit 安装后可自动生成代码，完成端点基准测试、实例推荐与性能对比。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "AWS",
+      "event_type": "agent_or_developer_infra",
+      "event_type_label": "Agent/开发者基础设施",
+      "score": 79,
+      "evidence_urls": [
+        "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent"
+      ],
+      "evidence_titles": [
+        "New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent"
+      ],
+      "evidence_summaries": [
+        "Amazon SageMaker optimized generative AI inference introduces the aws-ai-ml skill through the Agent Toolkit for AWS, giving coding agents like Kiro, Claude Code, and Codex deep expertise in inference optimization and benchmarking. Describe what you want, and your agent generates executable SageMaker Python SDK v3 code to benchmark, recommend, and compare deployments."
+      ],
+      "thumbnail_url": "https://d1.awsstatic.com/onedam/marketing-channels/website/aws/en_US/homepage/global-nav/reinvent-register.3822079bac49f139ae46016a9a99c3eed71fad4a.png",
+      "source_layers": [
+        "L1"
+      ],
+      "social_sources": [],
+      "source_display": "AWS Machine Learning Blog",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "本质是把推理优化经验固化成 agent 技能，产出可读可跑的代码，目标是让工具链与生态绑定在 SageMaker 上。",
+      "reading_questions": [
+        "这个 skill 是解决真实痛点，还是 AWS 生态的获客入口？",
+        "开发者如何验证 agent 生成的压测代码与推荐是否可信？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "anthropic",
+          "label": "Anthropic"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        },
+        {
+          "kind": "topic",
+          "key": "inference-infrastructure",
+          "label": "Inference Infrastructure"
+        }
+      ],
+      "expert_review": {
+        "importance": "推理优化从人工咨询转向可编码的 agent 技能，可能重塑开发者选型与压测的工作流入口。",
+        "skepticism": "示例对比中 Qwen3-8B 快约 44% 主要靠 4 倍 GPU 算力，skill 宣称的专家能力仍需在真实工作流中验证。",
+        "watch_points": [
+          "该 skill 在真实团队中的采用率，以及生成的推荐是否真正被采纳",
+          "是否会继续支持 SageMaker 之外的推理栈，还是以锁定生态为目的",
+          "后续公开的 benchmark 是否包含不同硬件/模型的均衡对比，以避免片面结论"
+        ],
+        "related_sources": [
+          {
+            "title": "New agent skill: Amazon SageMaker optimized generative AI inference for your coding agent",
+            "url": "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "AWS",
+        "primary_entity_role": "company_actor",
+        "mentioned_entities": [
+          {
+            "name": "Anthropic",
+            "role": "tool",
+            "evidence": "文章提到 aws-ai-ml skill 支持 Claude Code，Anthropic 是被提及的工具提供方，不是文章主角"
+          },
+          {
+            "name": "OpenAI",
+            "role": "tool",
+            "evidence": "Codex 作为被支持的 coding agent 之一被提及，OpenAI 不是主要报道对象"
+          },
+          {
+            "name": "Qwen3",
+            "role": "tested_model",
+            "evidence": "在示例 benchmark 中作为被压测模型出现，仅用于说明技能效果"
+          },
+          {
+            "name": "Hugging Face",
+            "role": "other",
+            "evidence": "作为模型来源平台被提及，并非主要实体"
+          }
+        ],
+        "event_type": "agent_or_developer_infra",
+        "section": "company_updates",
+        "confidence": "高",
+        "reasoning": "原文是 AWS 官方博客宣布新版 agent skill，行动主体是 AWS；Anthropic 只是其 agent 兼容列表中的一员，Qwen3 只出现于示例 benchmark，因此归类为公司产品更新而非模型发布或研究测试。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "8ebe2276c68479",
+      "bucket": "worth_tracking",
+      "section": "company_updates",
+      "title": "Google DeepMind：谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话",
+      "ai_summary": "IT之家援引Android Authority的发现称，谷歌“代我通话”功能可能从商户通话扩展至亲友私人电话，由Gemini转达信息或简单问询，并允许用户拒接AI来电，但该功能仍在开发，上线时间未定。",
+      "brief": "IT之家援引Android Authority的发现称，谷歌“代我通话”功能可能从商户通话扩展至亲友私人电话，由Gemini转达信息或简单问询，并允许用户拒接AI来电，但该功能仍在开发，上线时间未定。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Google DeepMind",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 66,
+      "evidence_urls": [
+        "https://www.ithome.com/1/009/921.htm"
+      ],
+      "evidence_titles": [
+        "谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话"
+      ],
+      "evidence_summaries": [
+        "IT之家 10 月 6 日消息，有多少通电话，仅仅因为要跟其他人沟通实在太过麻烦，你就一拖再拖？人工智能早已承诺，会帮我们把生活里大量费力不讨好的杂事实现自动化。对于一部分人来说，其中最有吸引力的设想或许就是由 AI 替我们打电话。谷歌刚刚在 Pixel 11 系列手机上推出了“代我通话（Call for Me）”功能，而现在有迹象表明，这项功能可能将迎来一次重大功能拓展。 据IT之家了解，目前的代我通话专门设计用于拨打各类商户电话，它可以耐心听着等待接通的背景音乐，协助完成预约之类的事务。 听上去很不错，不过这项功能的适用范围还相当有限。既然 Gemini 属于通用大语言模型，何不进一步放开能力，把代我通话拓展，支持拨打亲友的私人电话呢？在查看部分新版更新内容时，Android Authority 找到了早期线索，显示谷歌似乎正打算实现这一点。 从介绍界面上“妈妈”和“约翰”这两个示例就能够看出，这一版本的代我通话显然不再仅限于和商户沟通。Gemini 在这类通话当中可以执行的任务看起来仍会受到一定约束，大多只负责转达信息或是开展简单问询。但不难想象，遇到有些人很不爱回复短信的时候，这项功能就会十分好用。 当然，并不是所有人都愿意和一台机器通话。Gemini 看上去也会提供相应选项，允许用户拒绝接收这类由 AI 代为打出的电话。 除了代我通话的能力升级之外，外媒还发现了应用操作的细化权限设置，也就是上面第三张截图里可以看到的新增写入与删除板块。目前该模块显然仍处在开发阶段，各项选项还无法正常运行。 至于升级后的代我通话功能，尚且无法确定谷歌究竟会在何时正式上线该功能（甚至不能确定谷歌是否真的会推出）。"
+      ],
+      "thumbnail_url": "https://img.ithome.com/newsuploadfiles/2026/10/47d00fdc-a7cc-4fe3-bbbf-a20dd78235c6.jpg",
+      "source_layers": [
+        "L3"
+      ],
+      "social_sources": [],
+      "source_display": "IT之家",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "把AI通话从工具场景拓展到社交场景，仍是受限任务的试探，关键在权限与拒接设计。",
+      "reading_questions": [
+        "该功能解决的是用户痛点，还是谷歌的入口野心？",
+        "后续有什么可验证结果能证明它被用户真正使用？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "google-deepmind",
+          "label": "Google DeepMind"
+        },
+        {
+          "kind": "topic",
+          "key": "enterprise-ai-workflow",
+          "label": "Enterprise AI Workflow"
+        }
+      ],
+      "expert_review": {
+        "importance": "若落地，AI语音代理将首次进入个人社交关系场景，涉及自主拨号、隐私与社交边界，值得跟踪。",
+        "skepticism": "仅来自代码线索，谷歌未确认，且原文明确“甚至不能确定是否推出”，不宜过度解读。",
+        "watch_points": [
+          "官方发布会或Pixel更新是否正式提供该功能",
+          "用户拒接AI来电和通话披露机制如何设计",
+          "Gemini在亲友通话中的任务边界与实际成功率"
+        ],
+        "related_sources": [
+          {
+            "title": "谷歌有望升级 Call for Me 功能：Gemini 将支持代用户拨打私人亲友电话 - IT之家",
+            "url": "https://www.ithome.com/1/009/921.htm"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "Google DeepMind",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Gemini",
+            "role": "model",
+            "evidence": "代我通话功能由Gemini大语言模型驱动，是核心能力来源"
+          },
+          {
+            "name": "Pixel 11",
+            "role": "product",
+            "evidence": "该功能刚刚在Pixel 11系列手机上推出，是功能载体"
+          },
+          {
+            "name": "Android Authority",
+            "role": "source_author",
+            "evidence": "发现代码线索并率先报道的外媒，是本文信息来源"
+          }
+        ],
+        "event_type": "product_or_model_release",
+        "section": "company_updates",
+        "confidence": "中",
+        "reasoning": "文章核心是谷歌正在开发中的“代我通话”功能扩展，属于公司产品动态而非研究或基准；易误判为Gemini模型发布，但实际是产品功能演进。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "2f09f110ca2c43",
+      "bucket": "today_focus",
+      "section": "technical_progress",
+      "title": "llama.cpp：llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more",
+      "ai_summary": "llama.cpp 发布 v0.6.0，为 Qwen4Exp 加入 MTP 投机解码支持，并包含多项其他更新。消息来自 Reddit 帖子，完整改动清单尚未见于公开信息。",
+      "brief": "llama.cpp 发布 v0.6.0，为 Qwen4Exp 加入 MTP 投机解码支持，并包含多项其他更新。消息来自 Reddit 帖子，完整改动清单尚未见于公开信息。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "llama.cpp",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 83,
+      "evidence_urls": [
+        "https://www.reddit.com/r/LocalLLaMA/comments/1wyh03u/llamacpp_v060_released_with_mtp_speculative"
+      ],
+      "evidence_titles": [
+        "llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more"
+      ],
+      "evidence_summaries": [],
+      "thumbnail_url": "https://external-preview.redd.it/sXortq9SmiGkKiqesAx6SF1Br0SNlxLcK4r52mN4DmM.png?width=640&crop=smart&auto=webp&s=aa429645c5b299ccebd057c4f6a06952a08da9fb",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [],
+      "source_display": "Reddit r/LocalLLaMA",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 12,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "开源推理引擎对新模型的适配越来越快，投机解码正成为本地推理默认优化方向。但单一版本更新的实质收益还要看官方基准。",
+      "reading_questions": [
+        "MTP 投机解码相比普通投机解码能带来多少端侧加速？",
+        "这次更新是否意味着 Qwen4Exp 已进入本地部署成熟期？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "meta",
+          "label": "Meta"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        }
+      ],
+      "expert_review": {
+        "importance": "llama.cpp 是本地推理基础设施的事实标准，这次更新直接影响大量开发者运行 Qwen4Exp 的效率与落地方式。",
+        "skepticism": "当前仅有一则 Reddit 标题，无官方 changelog 或基准数据，MTP 投机的实际加速幅度仍需验证。",
+        "watch_points": [
+          "llama.cpp 官方仓库的 v0.6.0 release notes",
+          "MTP 投机解码在 Qwen4Exp 上的实测吞吐与显存占用",
+          "社区后续对其他新模型的适配速度与默认开启情况"
+        ],
+        "related_sources": [
+          {
+            "title": "llama.cpp v0.6.0 released with MTP speculative decoding for Qwen4Exp and lots more",
+            "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wyh03u/llamacpp_v060_released_with_mtp_speculative"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "llama.cpp",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Qwen4Exp",
+            "role": "tested_model",
+            "evidence": "MTP 投机解码是为 Qwen4Exp 提供的推理优化，Qwen4Exp 是被运行的目标模型"
+          }
+        ],
+        "event_type": "product_or_model_release",
+        "section": "technical_progress",
+        "confidence": "中",
+        "reasoning": "文章主语是开源推理引擎 llama.cpp 的 v0.6.0 发布，重点在 MTP 投机解码这一推理工程特性，因此归为工程发布；易误判为 Meta 的公司动作，但 Meta 只是项目名称来源，文章并未报道 Meta 本身的动态。"
+      },
+      "thumbnail_source": "thumbnail_url"
+    },
+    {
+      "event_id": "c28e673fcd6cbb",
+      "bucket": "today_focus",
+      "section": "technical_progress",
+      "title": "智谱：A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well.",
+      "ai_summary": "Reddit用户发布了一套测试LLM玩《文明V》的基准，结果显示GLM-5.3领先于Opus-5.5，而体积更小的Qwen-3.8-27B表现意外出色。",
+      "brief": "Reddit用户发布了一套测试LLM玩《文明V》的基准，结果显示GLM-5.3领先于Opus-5.5，而体积更小的Qwen-3.8-27B表现意外出色。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "智谱",
+      "event_type": "research_or_benchmark",
+      "event_type_label": "研究/Benchmark",
+      "score": 69,
+      "evidence_urls": [
+        "https://www.reddit.com/r/LocalLLaMA/comments/1wynbvq/a_benchmark_for_llms_playing_civilization_v_glm53"
+      ],
+      "evidence_titles": [
+        "A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well."
+      ],
+      "evidence_summaries": [],
+      "thumbnail_url": "https://preview.redd.it/vc33j8lrfqth1.png?width=140&height=48&auto=webp&s=4a3b1e23b3e240630d2372eb579858f650518dc0",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [],
+      "source_display": "Reddit r/LocalLLaMA",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 12,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 9,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "单一游戏基准的偶然性很高，但小模型在长程决策任务中能与更大模型同场竞争，这个信号值得观察。",
+      "reading_questions": [
+        "这个基准对真实agent任务的预测力有多强？",
+        "27B模型表现好的原因是什么：策略空间、推理预算还是奖励设计？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "智谱",
+          "label": "智谱"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        }
+      ],
+      "expert_review": {
+        "importance": "提供了游戏决策场景下不同规模模型的横向对比，补充了常规基准之外的能力样本。",
+        "skepticism": "评测的玩法设定、重复次数、采样温度和实现细节均未公开，结果可能受随机性影响。",
+        "watch_points": [
+          "评测方法是否开源或提供可复现细节",
+          "后续是否有更多模型在同一基准上的成绩",
+          "该结果能否在其他长程任务中复现"
+        ],
+        "related_sources": [
+          {
+            "title": "A benchmark for LLMs playing Civilization V. GLM-5.3 is ahead of Opus-5.5, and Qwen-3.8-27B holds up surprisingly well.",
+            "url": "https://www.reddit.com/r/LocalLLaMA/comments/1wynbvq/a_benchmark_for_llms_playing_civilization_v_glm53"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity_role": "none",
+        "mentioned_entities": [
+          {
+            "name": "GLM-5.3",
+            "role": "tested_model",
+            "evidence": "基准中排名领先的被测模型"
+          },
+          {
+            "name": "Opus-5.5",
+            "role": "tested_model",
+            "evidence": "基准中被对比的被测模型"
+          },
+          {
+            "name": "Qwen-3.8-27B",
+            "role": "tested_model",
+            "evidence": "基准中表现意外的被测模型"
+          }
+        ],
+        "event_type": "research_or_benchmark",
+        "section": "technical_progress",
+        "confidence": "高",
+        "reasoning": "文章主体是第三方发布的游戏场景基准测试，属于技术评测而非公司官方动态，因此归为technical_progress而非company_updates。"
+      },
+      "thumbnail_source": "thumbnail_url"
+    },
+    {
+      "event_id": "a2264d8cf511e9",
+      "bucket": "worth_tracking",
+      "section": "technical_progress",
+      "title": "论文作者（Zhixu Du 等）：What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute",
+      "ai_summary": "该论文提出用MoA面板逐token复现参考序列，测量每个token的充分计算量：0.5B模型可复现92-95%的token，最贵10%的token占64-80%FLOPs，并将其用于路由和草稿生成以降低延迟。",
+      "brief": "该论文提出用MoA面板逐token复现参考序列，测量每个token的充分计算量：0.5B模型可复现92-95%的token，最贵10%的token占64-80%FLOPs，并将其用于路由和草稿生成以降低延迟。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "论文作者（Zhixu Du 等）",
+      "event_type": "research_or_benchmark",
+      "event_type_label": "研究/Benchmark",
+      "score": 68,
+      "evidence_urls": [
+        "https://arxiv.org/abs/2610.02491"
+      ],
+      "evidence_titles": [
+        "What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute"
+      ],
+      "evidence_summaries": [
+        "arXiv:2610.02491v1 Announce Type: new Abstract: Large language models spend the same amount of computation on every token they generate, regardless of how difficult each token is to produce. Methods such as speculative decoding and model routing are built on the premise that much of this computation is unnecessary, yet the computation an individual token actually requires has not been measured. We measure it through a Mixture-of-Agents (MoA) lens: a panel of fifteen language models of increasing capacity, drawn from three families, in which every agent attempts to reproduce a reference sequence token by token, conditioned on the correct preceding tokens. We define the inference cost of the smallest agent that succeeds as the token's sufficient compute, which upper-bounds what the token requires. On three core benchmarks, a 0.5B agent reproduces 92--95\\% of reference tokens. Across Qwen, OLMo, and R1-distilled panels, the most expensive 10\\% account for 64--80\\% of estimated FLOPs. On all 500 MATH-500 problems, the MoA-derived map helps model routing reduce projected latency from 7.59 to 5.12 seconds while slightly improving accuracy, relative to the best confidence-routing baseline. The MoA-map helps drafting use 32.6\\% fewer draft tokens and approximately 20\\% lower projected latency than fixed-window drafting at similar accuracy. These comparisons reveal remaining allocation headroom, motivating controllers that exploit sufficient-compute structure."
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [],
+      "source_display": "arXiv cs.AI",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "Token难度并不均匀，给每个token定出“够用”的计算量后，路由和投机解码就能省算力；但测得的是充分上界，不是真实必需。",
+      "reading_questions": [
+        "作者如何避免“最小成功agent”定义中的偶然成功（如随机命中）？",
+        "MoA map的构建和推理成本是否被计入端到端收益？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "qwen",
+          "label": "Qwen"
+        },
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        },
+        {
+          "kind": "topic",
+          "key": "inference-infrastructure",
+          "label": "Inference Infrastructure"
+        }
+      ],
+      "expert_review": {
+        "importance": "为推理算力分配提供了首个token级测量工具，直接指向路由与投机解码的优化空间。",
+        "skepticism": "MoA复现任务与真实生成分布存在距离，“足够计算”是上界而非实际需求，端到端收益仍需独立复现。",
+        "watch_points": [
+          "是否有后续工作将MoA-map扩展到更大模型和更多任务类型",
+          "该映射在在线路由中能否稳定复现延迟收益",
+          "与投机解码结合时实际吞吐提升是否与论文估计一致"
+        ],
+        "related_sources": [
+          {
+            "title": "What Does a Token Cost? A Mixture-of-Agents Measurement of Sufficient Per-Token Compute",
+            "url": "https://arxiv.org/abs/2610.02491"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "论文作者（Zhixu Du 等）",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Qwen",
+            "role": "tested_model",
+            "evidence": "论文使用Qwen模型家族作为被测面板之一，用于测量token的充分计算量"
+          },
+          {
+            "name": "OLMo",
+            "role": "tested_model",
+            "evidence": "论文使用OLMo模型家族作为被测面板之一"
+          },
+          {
+            "name": "R1-distilled",
+            "role": "tested_model",
+            "evidence": "论文使用R1-distilled模型家族作为被测面板之一"
+          }
+        ],
+        "event_type": "research_or_benchmark",
+        "section": "technical_progress",
+        "confidence": "高",
+        "reasoning": "文章主体是论文提出的测量方法与应用，主语是研究团队；Qwen仅作为被测模型之一出现，不能抢主语。"
+      }
+    },
+    {
+      "event_id": "4a783caca289c8",
+      "bucket": "worth_tracking",
+      "section": "technical_progress",
+      "title": "Apple：Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems",
+      "ai_summary": "苹果机器学习研究团队与斯坦福合作发表 HCI 论文：用 Wizard of Oz 探针让用户定义并训练个性化感知系统，识别出现象边界、关系中主体、信号与噪声、数据客观性四类本体论边界协商。",
+      "brief": "苹果机器学习研究团队与斯坦福合作发表 HCI 论文：用 Wizard of Oz 探针让用户定义并训练个性化感知系统，识别出现象边界、关系中主体、信号与噪声、数据客观性四类本体论边界协商。",
+      "social_original_text": "",
+      "translation_zh": "",
+      "entity": "Apple",
+      "event_type": "research_or_benchmark",
+      "event_type_label": "研究/Benchmark",
+      "score": 68,
+      "evidence_urls": [
+        "https://machinelearning.apple.com/research/ontological-boundary-negotiation"
+      ],
+      "evidence_titles": [
+        "Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems"
+      ],
+      "evidence_summaries": [
+        "Designed artifacts are ontological, shaping, and at times limiting, what becomes possible or imaginable. One path toward mitigating such foreclosures is giving people power over how systems are designed and built. Despite decades of scholarship around systems that enable such authorship, these systems are often evaluated on whether or not they are usable, useful, or technically feasible, leaving questions of ontological boundary negotiation, unexamined. We design two open-ended probes that utilize a Wizard of Oz technique to enable the experience of training a personalized machine learning…"
+      ],
+      "thumbnail_url": "https://mlr.cdn-apple.com/media/Discover_1440x420_2x_9c465d585e.jpg",
+      "source_layers": [
+        "L1"
+      ],
+      "social_sources": [],
+      "source_display": "Apple Machine Learning Research",
+      "source_kinds": [],
+      "x_handles": [],
+      "score_breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      },
+      "memory_note": "这是 HCI 设计研究而非模型能力突破，核心贡献是提出本体论边界协商框架。",
+      "reading_questions": [
+        "用户自定义训练在真实设备上如何平衡数据隐私与个性化？",
+        "四个边界范畴能否转化为可操作的工程接口？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "topic",
+          "key": "agent-systems",
+          "label": "Agent Systems"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        }
+      ],
+      "expert_review": {
+        "importance": "该研究为个人化感知系统提供一个经过实证的设计分析框架，可作为后续 HCI 与 Agent 交互设计的参考。",
+        "skepticism": "一周的 Wizard of Oz 探索性研究，样本和方法规模有限；四个边界范畴是否适用于真实训练流程仍需更多验证。",
+        "watch_points": [
+          "该框架能否转化为真实产品中的用户可配置训练能力",
+          "Apple 设备上是否出现相关交互设计实践",
+          "后续是否有更大规模或真实系统研究引用该框架"
+        ],
+        "related_sources": [
+          {
+            "title": "Negotiating Ontological Boundaries in User-Authored Personal Sensing Systems - Apple Machine Learning Research",
+            "url": "https://machinelearning.apple.com/research/ontological-boundary-negotiation"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "Apple",
+        "primary_entity_role": "research_lab",
+        "mentioned_entities": [
+          {
+            "name": "Stanford University",
+            "role": "partner",
+            "evidence": "论文作者标注 † Stanford University，属于合作作者单位"
+          }
+        ],
+        "event_type": "research_or_benchmark",
+        "section": "technical_progress",
+        "confidence": "高",
+        "reasoning": "文章是 Apple ML 研究团队与 Stanford 合作发表的 HCI 研究论文，核心是用户自定义传感系统的设计研究，既不是 Agent/开发者基础设施（原事件类型误判），也不是公司产品/商业更新，故归为研究类技术进展。"
+      },
+      "thumbnail_source": "article img"
+    },
+    {
+      "event_id": "3d5f2c9ef7b95d",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "OpenAI：I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).",
+      "ai_summary": "Peter Yang 发文称，OpenAI 着手简化 ChatGPT 令他高兴，并认为当前产品线过于混乱，Work 发布是错误，建议合并或简化 Work、Codex、Spaces、Pages 等入口。",
+      "brief": "Peter Yang 发文称，OpenAI 着手简化 ChatGPT 令他高兴，并认为当前产品线过于混乱，Work 发布是错误，建议合并或简化 Work、Codex、Spaces、Pages 等入口。",
+      "social_original_text": "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).\n\nHere's a clip from my dots review about this. What I'd simplify:\n\n1. Work vs. Codex\n2. Spaces vs. Pages vs. Sites\n3. The model and effort picker\nProbably alot more\n\nMy hot take is that the whole Work launch was a mistake. Just like Claude folded Cowork back into Chat, I don't think Work needs its own brand.\n\nAnyway, excited to see my primary harness get much better.\n\n📌 See my full dots review here: https://t.co/kUtg3RPk7l",
+      "translation_zh": "我很高兴 OpenAI 正专注于简化 ChatGPT，因为它已变得一团糟（抱歉）。 以下是我 dots 评测中关于此问题的一段内容。我会简化什么： 1. Work vs. Codex 2. Spaces vs. Pages vs. Sites 3. 模型和精力选择器 可能还有更多 我的大胆观点是，整个 Work 发布是个错误。就像 Claude 把 Cowork 并回 Chat 一样，我认为 Work 不需要自己的品牌。 总之，很高兴看到我的主要工具变得更好。 📌 在此查看我的完整 dots 评测：https://t.co/kUtg3RPk7l",
+      "entity": "OpenAI",
+      "event_type": "industry_view",
+      "event_type_label": "行业动态",
+      "score": 60.91,
+      "evidence_urls": [
+        "https://x.com/petergyang/status/2106926956554195018"
+      ],
+      "evidence_titles": [
+        "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry)."
+      ],
+      "evidence_summaries": [
+        "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).\n\nHere's a clip from my dots review about this. What I'd simplify:\n\n1. Work vs. Codex\n2. Spaces vs. Pages vs. Sites\n3. The model and effort picker\nProbably alot more\n\nMy hot take is that the whole Work launch was a mistake. Just like Claude folded Cowork back into Chat, I don't think Work needs its own brand.\n\nAnyway, excited to see my primary harness get much better.\n\n📌 See my full dots review here: https://t.co/kUtg3RPk7l"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Peter Yang"
+      ],
+      "source_display": "X: Peter Yang",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "petergyang"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 9,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 9.911356165197843,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "用户视角的界面复杂度批评，核心是产品品牌碎片化，Work 独立品牌被视为失败设计，简化是头部产品从扩张转向收敛的信号。",
+      "reading_questions": [
+        "ChatGPT 的产品复杂度是否已成为用户迁移到其他工具的实际原因？",
+        "OpenAI 会否因这类公开批评而调整产品架构，还是继续按内部路线推进？"
+      ],
+      "memory_subjects": [
+        {
+          "kind": "entity",
+          "key": "openai",
+          "label": "OpenAI"
+        },
+        {
+          "kind": "topic",
+          "key": "ai-coding",
+          "label": "AI Coding"
+        },
+        {
+          "kind": "topic",
+          "key": "evaluation-benchmark",
+          "label": "Evaluation / Benchmark"
+        }
+      ],
+      "expert_review": {
+        "importance": "反映头部 AI 产品正从功能堆叠转向体验重整，可能预示 ChatGPT 界面和品牌结构即将迎来一轮简化调整。",
+        "skepticism": "该看法仅来自单一博主的个人意见，不代表 OpenAI 官方路线，也缺乏内部产品决策的直接证据，需谨慎看待其判断权重。",
+        "watch_points": [
+          "OpenAI 是否在近期推出简化版界面或合并 Work/Codex 入口",
+          "官方是否对 Work、Spaces、Pages 等品牌定位做出调整",
+          "Claude 将 Cowork 合并回 Chat 后用户接受度如何，形成对比参照"
+        ],
+        "related_sources": [
+          {
+            "title": "I'm glad OpenAI is focusing on simplifying ChatGPT because it has become a mess (sorry).",
+            "url": "https://x.com/petergyang/status/2106926956554195018"
+          }
+        ],
+        "method": "llm_expert_review"
+      },
+      "llm_classification": {
+        "primary_entity": "OpenAI",
+        "primary_entity_role": "article_subject",
+        "mentioned_entities": [
+          {
+            "name": "Peter Yang",
+            "role": "source_author",
+            "evidence": "该推文由 Peter Yang 发布，内容是作者个人观点，属于评论者而非动作主体。"
+          },
+          {
+            "name": "Claude",
+            "role": "competitor",
+            "evidence": "作者用 Claude 将 Cowork 合并回 Chat 作为对比案例，说明同类产品也在收敛品牌。"
+          },
+          {
+            "name": "Work",
+            "role": "product",
+            "evidence": "作者认为 OpenAI 的 Work 品牌发布是错误，是其批评的核心对象。"
+          },
+          {
+            "name": "Codex",
+            "role": "product",
+            "evidence": "作者建议区分并简化 Work 与 Codex 的关系，属于被讨论的产品入口。"
+          }
+        ],
+        "event_type": "industry_view",
+        "section": "industry_views",
+        "confidence": "高",
+        "reasoning": "内容为博主个人对 OpenAI 产品的评论，非论文、基准或公司动作，因此归为行业观点，而不是原先标记的 research_or_benchmark。"
+      }
+    },
+    {
+      "event_id": "c14743ecda143e",
+      "bucket": "worth_tracking",
+      "section": "industry_views",
+      "title": "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.",
+      "ai_summary": "",
+      "brief": "",
+      "social_original_text": "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.\n\nThere’s so much alpha in meeting founders at their own office.\n\nBesides “vibes”, you get to see what the energy of the office is like, how the coworkers react and work with each other, how the cofounders answer and complement each other, what the beta product releases look like, how they collaborate etc etc.\n\nYes, I get it there’s time pressure, and you often have to move fast. But even then I always ask to meet at offices for final meetings and founders often tell me I’m the only one that has ever asked.\n\nWhat’s the point of calling them into your own conference room and parrot the same deck??",
+      "translation_zh": "也许我只是老派，但我就是无法相信人们能通过一个 Zoom 通话做出投资决定……有时甚至只是见 CEO 一面就投了。 在创始人自己的办公室见他们，能获得很多 alpha。 除了“氛围”，你还能看到办公室的能量如何，同事们如何互动协作，联合创始人如何回答和互补，beta 产品发布是什么样，他们如何合作等等等等。 是的，我明白有时间压力，你往往得快速行动。但即便如此，我总是要求在办公室进行最终会议，而且创始人常告诉我，我是唯一提出过这个要求的人。 把他们叫进你的会议室，让他们复述同一套演示文稿，到底有什么意义？",
+      "entity": "",
+      "event_type": "product_or_model_release",
+      "event_type_label": "模型/产品发布",
+      "score": 50.47,
+      "evidence_urls": [
+        "https://x.com/nikunj/status/2106957269212742135"
+      ],
+      "evidence_titles": [
+        "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO."
+      ],
+      "evidence_summaries": [
+        "Maybe I’m just old school, but I just can’t believe how people make investments over a Zoom call.. and sometimes by just meeting the CEO.\n\nThere’s so much alpha in meeting founders at their own office.\n\nBesides “vibes”, you get to see what the energy of the office is like, how the coworkers react and work with each other, how the cofounders answer and complement each other, what the beta product releases look like, how they collaborate etc etc.\n\nYes, I get it there’s time pressure, and you often have to move fast. But even then I always ask to meet at offices for final meetings and founders often tell me I’m the only one that has ever asked.\n\nWhat’s the point of calling them into your own conference room and parrot the same deck??"
+      ],
+      "thumbnail_url": "",
+      "source_layers": [
+        "L4"
+      ],
+      "social_sources": [
+        "X: Nikunj Kothari"
+      ],
+      "source_display": "X: Nikunj Kothari",
+      "source_kinds": [
+        "follow_builders_x"
+      ],
+      "x_handles": [
+        "nikunj"
+      ],
+      "score_breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 10.467108425811176,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      },
+      "memory_note": "",
+      "reading_questions": [],
+      "memory_subjects": [],
+      "expert_review": null,
+      "llm_classification": null
+    }
+  ],
+  "trace": [
+    {
+      "event_id": "b9b4c339d23d67",
+      "score": 87,
+      "evidence_urls": [
+        "https://36kr.com/p/4012726523957380?f=rss"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "ab8d32921cd96b",
+      "score": 87,
+      "evidence_urls": [
+        "https://claude.com/blog/how-cresta-turned-cx-expertise-into-an-agent-builder-on-the-claude-agent-sdk"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "2f09f110ca2c43",
+      "score": 83,
+      "evidence_urls": [
+        "https://www.reddit.com/r/LocalLLaMA/comments/1wyh03u/llamacpp_v060_released_with_mtp_speculative"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 12,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "93343398eed503",
+      "score": 81,
+      "evidence_urls": [
+        "https://www.theverge.com/ai-artificial-intelligence/1004880/openai-chatgpt-text-watermarks-eu-ai-act"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 15,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "c28e673fcd6cbb",
+      "score": 69,
+      "evidence_urls": [
+        "https://www.reddit.com/r/LocalLLaMA/comments/1wynbvq/a_benchmark_for_llms_playing_civilization_v_glm53"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 12,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 9,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "49c5d5224e85ed",
+      "score": 80,
+      "evidence_urls": [
+        "https://techcrunch.com/2026/10/05/openai-will-start-watermarking-chatgpts-text-in-the-eu"
+      ],
+      "breakdown": {
+        "AuthorityScore": 22,
+        "EntityScore": 14,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "3d1917378da26b",
+      "score": 79,
+      "evidence_urls": [
+        "https://aws.amazon.com/blogs/machine-learning/new-agent-skill-amazon-sagemaker-optimized-generative-ai-inference-for-your-coding-agent"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "a2264d8cf511e9",
+      "score": 68,
+      "evidence_urls": [
+        "https://arxiv.org/abs/2610.02491"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 16,
+        "ChinaRelevanceScore": 10,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "4a783caca289c8",
+      "score": 68,
+      "evidence_urls": [
+        "https://machinelearning.apple.com/research/ontological-boundary-negotiation"
+      ],
+      "breakdown": {
+        "AuthorityScore": 28,
+        "EntityScore": 0,
+        "EventTypeScore": 16,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 9,
+        "UserInterestScore": 11,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": 0,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "8ebe2276c68479",
+      "score": 66,
+      "evidence_urls": [
+        "https://www.ithome.com/1/009/921.htm"
+      ],
+      "breakdown": {
+        "AuthorityScore": 18,
+        "EntityScore": 14,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 0,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": 0
+      }
+    },
+    {
+      "event_id": "3d5f2c9ef7b95d",
+      "score": 60.91,
+      "evidence_urls": [
+        "https://x.com/petergyang/status/2106926956554195018"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 14,
+        "EventTypeScore": 10,
+        "SpecificityScore": 4,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 9,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 9.911356165197843,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    },
+    {
+      "event_id": "c14743ecda143e",
+      "score": 50.47,
+      "evidence_urls": [
+        "https://x.com/nikunj/status/2106957269212742135"
+      ],
+      "breakdown": {
+        "AuthorityScore": 12,
+        "EntityScore": 0,
+        "EventTypeScore": 18,
+        "SpecificityScore": 0,
+        "ResonanceScore": 0,
+        "FreshnessScore": 12,
+        "UserInterestScore": 8,
+        "ChinaRelevanceScore": 0,
+        "SocialEngagementScore": 10.467108425811176,
+        "UserFeedbackScore": 0,
+        "NoisePenalty": 0,
+        "DuplicatePenalty": -4,
+        "LowConfidencePenalty": -6
+      }
+    }
+  ]
+}
