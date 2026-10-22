@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 17 个事件：大厂动态 10 条，技术进展 6 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-2c92b37b001572" href="?event=event-2c92b37b001572#company-updates">阶跃 Step 5 Preview 登顶 OpenRouter Trending 榜，官方预告 10 月 15 日开源</a></h3>
+      <p>10 月 10 日消息，阶跃星辰旗舰基座模型 Step 5 Preview 登顶 OpenRouter Trending 榜，日榜（按每日处理 Token 总量排名）列第二。据官方消息，该模型将于 10 月 15 日开源。模型采用稀疏 MoE 架构，总参数量 6000 亿，每 Token 激活约 270 亿参数，重点优化 AI 编程、软件工程、金融等场景。</p>
+      <a class="focus-more" data-report-target="event-2c92b37b001572" href="?event=event-2c92b37b001572#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-a7cea33bc6940f" href="?event=event-a7cea33bc6940f#company-updates">Underdog AI 发布 Saluki 27B：2-bit 量化版 Qwen3.8-27B，仅 7.89GB</a></h3>
+      <p>IT之家 10 月 10 日报道，人工智能实验室 Underdog AI 发布 Saluki 27B 模型。该模型是 Qwen3.8-27B 的 2-bit 量化调优版本，仅保留文本输入输出能力，文件大小约 7.89GB。官方称其针对智能体应用设计，擅长日常推理和工具使用，数学表现相对较弱；工具选择和多工具并行调用表现优于全尺寸 Qwen3.8-27B。</p>
+      <a class="focus-more" data-report-target="event-a7cea33bc6940f" href="?event=event-a7cea33bc6940f#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">AI 产品与工具</p>
+      <h3><a data-report-target="event-22666e57733dc6" href="?event=event-22666e57733dc6#company-updates">Cloudflare 发布开放权重多模态决策模型 Clef-omni，新增音频/视频输入并下调 Clef-flash 价格</a></h3>
+      <p>Cloudflare 于 10 月 9 日推出开放权重决策模型 Clef-omni，支持单次 API 调用处理文本、图像、音频和完整视频，新增 wav、mp3、mp4、webm 格式，权重已在 Hugging Face 开放。该模型基于 Qwen3-Omni-30B-A3B-Instruct 构建，面向结构化决策任务而非常规文本生成。公司公布的中位响应时间：纯文本约 130 毫秒，图像约 150 毫秒，带声音的 21 秒视频约 1.5 秒完成评分。</p>
+      <a class="focus-more" data-report-target="event-22666e57733dc6" href="?event=event-22666e57733dc6#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-83fa8b31be8432" href="?event=event-83fa8b31be8432#company-updates">Anthropic 为 Claude Managed Agents 新增动态工作流：单次最多并行调度 1000 个智能体</a></li><li><a data-report-target="event-a4ab688ce7df43" href="?event=event-a4ab688ce7df43#technical-progress">WorldArena 2.0 挑战赛终榜揭晓：视启未来 WorldIncept 夺 Track 1 冠军，小米 ViTacX 真机综合第一</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-339e5e5df06b83" href="?event=event-339e5e5df06b83#company-updates">零跑技术日发布第二品牌新架构与智驾路线：朱江明称要做汽车行业的苹果</a></li><li><a data-report-target="event-c66ce00088d3db" href="?event=event-c66ce00088d3db#company-updates">蔚来李斌内部讲话：未来三年聚焦主业与高端，具身智能仅以战略投资方式参与</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-22666e57733dc6" href="?event=event-22666e57733dc6#company-updates">Cloudflare 发布开放权重多模态决策模型 Clef-omni，新增音频/视频输入并下调 Clef-flash 价格</a></li><li><a data-report-target="event-068da35817a3ec" href="?event=event-068da35817a3ec#company-updates">Google 将 SynthID Detector 扩展为面向全球的独立 AI 内容检测平台</a></li><li><a data-report-target="event-8641c7310fc22d" href="?event=event-8641c7310fc22d#company-updates">阿里 Qoder 上线 Fast 模式：首次响应降至 3 秒，Credits 消耗降为 0.8x</a></li><li><a data-report-target="event-4c2c5df8f63f79" href="?event=event-4c2c5df8f63f79#technical-progress">腾讯云开源内部自用 TeamAI：基于 Git 管理 Skill 与工具配置，已适配 16 种 Agent</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-2c92b37b001572" href="?event=event-2c92b37b001572#company-updates">阶跃 Step 5 Preview 登顶 OpenRouter Trending 榜，官方预告 10 月 15 日开源</a></li><li><a data-report-target="event-a7cea33bc6940f" href="?event=event-a7cea33bc6940f#company-updates">Underdog AI 发布 Saluki 27B：2-bit 量化版 Qwen3.8-27B，仅 7.89GB</a></li><li><a data-report-target="event-ab128c8d34e5eb" href="?event=event-ab128c8d34e5eb#company-updates">Anthropic 向白宫通报智能体越界事件：测试模型擅自访问美国政府网站并提交表格</a></li><li><a data-report-target="event-088905bf66c0f9" href="?event=event-088905bf66c0f9#technical-progress">GMIF 2026存储峰会：日均140万亿Token调用，SSD/NAND向AI推理负载主动分层</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-b54eb911de2151" href="?event=event-b54eb911de2151#technical-progress">字节论文揭示 DeepSeek V4 分块 KV-Cache 压缩存在周期性相位盲区</a></li><li><a data-report-target="event-212e399ce1a289" href="?event=event-212e399ce1a289#technical-progress">Python 3.15.0 稳定版发布：默认 UTF-8、显式延迟导入上线，JIT 在部分平台提速 7%-12%</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-aea19e22da7539" href="?event=event-aea19e22da7539#company-updates">觅蜂科技发布物理 AI 数据众包平台“觅蜂派”，同步推机器人训练师计划与亿元补贴</a></li><li><a data-report-target="event-516738b4e55bd9" href="?event=event-516738b4e55bd9#technical-progress">IROS 2026 具身智能趋势综述：物理建模、大小脑分层与低成本数据采集成主线</a></li></ul>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>阶跃星辰</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/industrynews/7iRgmb0q4JgVbmU8.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/industrynews/7iRgmb0q4JgVbmU8.html" target="_blank" rel="noreferrer">阶跃 Step 5 Preview 登顶 OpenRouter Trending 榜，官方预告 10 月 15 日开源</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Underdog AI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/219.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/219.htm" target="_blank" rel="noreferrer">Underdog AI 发布 Saluki 27B：2-bit 量化版 Qwen3.8-27B，仅 7.89GB</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>Cloudflare</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/347.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/347.htm" target="_blank" rel="noreferrer">Cloudflare 发布开放权重多模态决策模型 Clef-omni，新增音频/视频输入并下调 Clef-flash 价格</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>零跑</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/transportation/2mlyhW6adiiiwwoy.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/transportation/2mlyhW6adiiiwwoy.html" target="_blank" rel="noreferrer">零跑技术日发布第二品牌新架构与智驾路线：朱江明称要做汽车行业的苹果</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>蔚来</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/transportation/aPoeP4p5SiG0Rian.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/transportation/aPoeP4p5SiG0Rian.html" target="_blank" rel="noreferrer">蔚来李斌内部讲话：未来三年聚焦主业与高端，具身智能仅以战略投资方式参与</a></h3>
@@ -3239,6 +3318,8 @@ time {
           <div class="report-item-meta">
             <strong>Google DeepMind</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synth-id-ai-content" target="_blank" rel="noopener noreferrer"><b>Google</b></a>
           </div>
           <h3><a href="https://blog.google/innovation-and-ai/models-and-research/google-deepmind/synth-id-ai-content" target="_blank" rel="noreferrer">Google 将 SynthID Detector 扩展为面向全球的独立 AI 内容检测平台</a></h3>
@@ -3257,6 +3338,8 @@ time {
           <div class="report-item-meta">
             <strong>觅蜂科技</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/robot/2uBaE3bBBq55g8mM.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/robot/2uBaE3bBBq55g8mM.html" target="_blank" rel="noreferrer">觅蜂科技发布物理 AI 数据众包平台“觅蜂派”，同步推机器人训练师计划与亿元补贴</a></h3>
@@ -3275,6 +3358,8 @@ time {
           <div class="report-item-meta">
             <strong>阿里</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/332.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/332.htm" target="_blank" rel="noreferrer">阿里 Qoder 上线 Fast 模式：首次响应降至 3 秒，Credits 消耗降为 0.8x</a></h3>
@@ -3293,6 +3378,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/329.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/329.htm" target="_blank" rel="noreferrer">Anthropic 为 Claude Managed Agents 新增动态工作流：单次最多并行调度 1000 个智能体</a></h3>
@@ -3311,6 +3398,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>监管/安全/隐私</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/194.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/194.htm" target="_blank" rel="noreferrer">Anthropic 向白宫通报智能体越界事件：测试模型擅自访问美国政府网站并提交表格</a></h3>
@@ -3394,6 +3483,8 @@ time {
           <div class="report-item-meta">
             <strong>ByteDance</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/yanxishe/zm33Zeu88CNbEPMx.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/yanxishe/zm33Zeu88CNbEPMx.html" target="_blank" rel="noreferrer">字节论文揭示 DeepSeek V4 分块 KV-Cache 压缩存在周期性相位盲区</a></h3>
@@ -3412,6 +3503,8 @@ time {
           <div class="report-item-meta">
             <strong>腾讯云</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/432.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/432.htm" target="_blank" rel="noreferrer">腾讯云开源内部自用 TeamAI：基于 Git 管理 Skill 与工具配置，已适配 16 种 Agent</a></h3>
@@ -3430,6 +3523,8 @@ time {
           <div class="report-item-meta">
             <strong>Python（CPython 核心团队 / PSF）</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/316.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/316.htm" target="_blank" rel="noreferrer">Python 3.15.0 稳定版发布：默认 UTF-8、显式延迟导入上线，JIT 在部分平台提速 7%-12%</a></h3>
@@ -3448,6 +3543,8 @@ time {
           <div class="report-item-meta">
             <strong>WorldArena 2.0 Challenge</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/private/A0uKolgD2esWoUfT.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/private/A0uKolgD2esWoUfT.html" target="_blank" rel="noreferrer">WorldArena 2.0 挑战赛终榜揭晓：视启未来 WorldIncept 夺 Track 1 冠军，小米 ViTacX 真机综合第一</a></h3>
@@ -3466,6 +3563,8 @@ time {
           <div class="report-item-meta">
             <strong>GMIF 2026全球存储器行业创新峰会</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/chips/OteTEIc4In9VoZg4.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/chips/OteTEIc4In9VoZg4.html" target="_blank" rel="noreferrer">GMIF 2026存储峰会：日均140万亿Token调用，SSD/NAND向AI推理负载主动分层</a></h3>
@@ -3484,6 +3583,8 @@ time {
           <div class="report-item-meta">
             <strong>IROS 2026</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/ai/4I8YKksz9V10Ih1R.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/ai/4I8YKksz9V10Ih1R.html" target="_blank" rel="noreferrer">IROS 2026 具身智能趋势综述：物理建模、大小脑分层与低成本数据采集成主线</a></h3>
@@ -3515,6 +3616,8 @@ time {
           <div class="report-item-meta">
             <strong>Vercel</strong>
             <em>行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Guillermo Rauch</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/rauchg/status/2108733051283050964" target="_blank" rel="noreferrer">Some interesting machine &amp; agent Vercel traffic stats.
@@ -3545,6 +3648,7 @@ I expect &#039;direct&#039; human internet traffic to basically become a roundin
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3573,10 +3677,28 @@ I expect &#039;direct&#039; human internet traffic to basically become a roundin
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

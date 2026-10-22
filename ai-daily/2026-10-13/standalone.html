@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="is-active" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 17 个事件：大厂动态 8 条，技术进展 8 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-cc8693da332e8b" href="?event=event-cc8693da332e8b#technical-progress">Arena 第 41 周榜：Claude Opus 5.5 Max 首登智能体榜首，国产多模型稳居中上游</a></h3>
+      <p>Arena（arena.ai）发布 2026 年第 41 周（10.05-10.11）大模型榜：Anthropic Claude Opus 5.5 Max 首次入榜即登顶智能体榜，净提升度 15.53%、任务确认成功率 17.29%、工具幻觉率 0.37%；综合榜 gemini-4-argon-high 以 ELO 1525 蝉联第一，claude-opus-5.5-high（1507）升至第二；代码榜 claude-opus-5.5-high 升至第五（1550），与第二名 1551 统计并列。国产模型中 kimi-k3-max 综合榜第 16（1488）、qwen3.8-max 第 22（1483），整体稳定中上游。榜单基于匿名盲测投票反映用户偏好而非能力测试，误差范围内视为并列，新模型需积累票数才入榜。</p>
+      <a class="focus-more" data-report-target="event-cc8693da332e8b" href="?event=event-cc8693da332e8b#technical-progress">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">工程实践</p>
+      <h3><a data-report-target="event-f5f5244a39e239" href="?event=event-f5f5244a39e239#technical-progress">vLLM 博客：双向 KV 传输将 P-D 分离部署下多轮 Agent 工作负载 TTFT 最高降低 3.3 倍</a></h3>
+      <p>vLLM 官方博客发布双向 KV 缓存传输：Prefill-Decode 分离部署中，decode 节点生成后按 TTL（默认 480 秒）保留 KV，经响应流把元数据交给 KV-cache-aware 路由器缓存；下一轮 prefill 节点本地前缀缓存未命中时，经扩展的 NIXL 连接器异步执行 D→P NIXL READ 复用 KV，默认 64 tokens 的 kv_recompute_threshold 决定重算或拉取。1P1D 部署（EC2 P5en + EFA，禁用 prefill prefix caching）实测：Qwen3-32B 在 24k 上下文 TTFT 从 778ms 降至 460ms（约 1.6x），GLM-5-FP8 在 20k 从 2334ms 降至 702ms（约 3.3x）。该功能最初在 AWS Trainium 上构建，已贡献给 vLLM 开源。</p>
+      <a class="focus-more" data-report-target="event-f5f5244a39e239" href="?event=event-f5f5244a39e239#technical-progress">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-d93816d2b5ebaa" href="?event=event-d93816d2b5ebaa#technical-progress">阿里千问发布 QwenGyre：面向超长程智能体任务的在线强化学习框架</a></h3>
+      <p>阿里千问今日发布QwenGyre，面向超长程智能体任务的在线强化学习框架。它将GPU分成若干计算单元，任务批次完成后空出单元动态转入训练，仍在运行的任务保留进度与缓存；并以Token-in Token-out记录生成上下文、按共享前缀组织轨迹树，只展开被选中路径，超时部分完成的任务用Partial Scoring提供反馈。官方在NL2RepoBench在线RL实验中，以每次rollout约70万token训练48步，通过率从52.5%升至58.5%；相同GPU预算下相对Async实现1.78×端到端加速，训练分数与Async、Colocate接近。</p>
+      <a class="focus-more" data-report-target="event-d93816d2b5ebaa" href="?event=event-d93816d2b5ebaa#technical-progress">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-cbd1fe22e520cb" href="?event=event-cbd1fe22e520cb#company-updates">Meta 发布 Muse Wonder 系列旗舰模型，Full 版仅限 Muse Code 订阅用户</a></li><li><a data-report-target="event-cc8693da332e8b" href="?event=event-cc8693da332e8b#technical-progress">Arena 第 41 周榜：Claude Opus 5.5 Max 首登智能体榜首，国产多模型稳居中上游</a></li><li><a data-report-target="event-d93816d2b5ebaa" href="?event=event-d93816d2b5ebaa#technical-progress">阿里千问发布 QwenGyre：面向超长程智能体任务的在线强化学习框架</a></li><li><a data-report-target="event-2ce1c7b35aeaa0" href="?event=event-2ce1c7b35aeaa0#technical-progress">开源排行榜 whatmodel.sh 发布：输入 RAM/GPU 即可查本机能跑的模型，称 Qwen3.8 27B 本地得分与 GPT-5 相当</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-6fdbad72da8ec4" href="?event=event-6fdbad72da8ec4#company-updates">AI游戏Mod平台ModCraft获数千万人民币种子轮融资，用玩家Mod数据训练游戏AI</a></li><li><a data-report-target="event-127fef2603faa2" href="?event=event-127fef2603faa2#company-updates">无问芯穹完成23亿元C轮融资，累计融资43亿元创AI Infra赛道纪录</a></li><li><a data-report-target="event-a17b8235f389dd" href="?event=event-a17b8235f389dd#company-updates">Pico Space Pro 头显实机外观照现身日本监管文件：外置计算模块设计，暂定 2026 年第四季度发布</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-1054f9232fc487" href="?event=event-1054f9232fc487#company-updates">微软发布基于阿里 Qwen3.5-9B 后训练的决策模型 Microsoft-Decision-1</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-cc2ecf950c494c" href="?event=event-cc2ecf950c494c#company-updates">广东省委书记调研腾讯总部，马化腾携首席 AI 科学家姚顺雨出席座谈</a></li><li><a data-report-target="event-12f51a9199a1d5" href="?event=event-12f51a9199a1d5#company-updates">阶跃 Step 5 Preview 上线腾讯 WorkBuddy，2026年10月12日至25日独家限免</a></li><li><a data-report-target="event-622ff2ea1e33c7" href="?event=event-622ff2ea1e33c7#company-updates">英伟达与微软联合发布 RTX Spark Windows PC 与 AI Agent 基础设施：预购开启、MXC 正式可用</a></li><li><a data-report-target="event-11db760e047ae9" href="?event=event-11db760e047ae9#technical-progress">开发者用AI智能体将《使命召唤：黑色行动2》移植为网页游戏，遭动视DMCA下架</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-f5f5244a39e239" href="?event=event-f5f5244a39e239#technical-progress">vLLM 博客：双向 KV 传输将 P-D 分离部署下多轮 Agent 工作负载 TTFT 最高降低 3.3 倍</a></li><li><a data-report-target="event-b3a9b3d04030db" href="?event=event-b3a9b3d04030db#technical-progress">AWS 发布 Ray LLM 多节点推理容器指南：EKS 上 prefill/decode 分离部署 Qwen3.5-9B</a></li><li><a data-report-target="event-1f1eaba406bedb" href="?event=event-1f1eaba406bedb#technical-progress">Meta 于 OCP 2026 公布液冷 102.4T 交换机、FPF 多平面网络与以太网 Scale-Up 方案</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-dbfc7dec6e7ea0" href="?event=event-dbfc7dec6e7ea0#technical-progress">安踏×火山引擎落地电商 Agent：海外订货决策缩至10-20分钟、TikTok退货月均自动建单超1000张</a></li></ul>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>腾讯</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/765.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/765.htm" target="_blank" rel="noreferrer">广东省委书记调研腾讯总部，马化腾携首席 AI 科学家姚顺雨出席座谈</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>ModCraft</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://36kr.com/p/4022737676259464?f=rss" target="_blank" rel="noopener noreferrer"><b>36kr.com</b></a>
           </div>
           <h3><a href="https://36kr.com/p/4022737676259464?f=rss" target="_blank" rel="noreferrer">AI游戏Mod平台ModCraft获数千万人民币种子轮融资，用玩家Mod数据训练游戏AI</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>Microsoft</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://36kr.com/newsflashes/4022459116736393?f=rss" target="_blank" rel="noopener noreferrer"><b>36kr.com</b></a>
           </div>
           <h3><a href="https://36kr.com/newsflashes/4022459116736393?f=rss" target="_blank" rel="noreferrer">微软发布基于阿里 Qwen3.5-9B 后训练的决策模型 Microsoft-Decision-1</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>无问芯穹</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/849.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/849.htm" target="_blank" rel="noreferrer">无问芯穹完成23亿元C轮融资，累计融资43亿元创AI Infra赛道纪录</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>Pico（字节跳动旗下）</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/012/083.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/012/083.htm" target="_blank" rel="noreferrer">Pico Space Pro 头显实机外观照现身日本监管文件：外置计算模块设计，暂定 2026 年第四季度发布</a></h3>
@@ -3239,6 +3318,8 @@ time {
           <div class="report-item-meta">
             <strong>阶跃星辰（StepFun）</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/852.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/852.htm" target="_blank" rel="noreferrer">阶跃 Step 5 Preview 上线腾讯 WorkBuddy，2026年10月12日至25日独家限免</a></h3>
@@ -3257,6 +3338,8 @@ time {
           <div class="report-item-meta">
             <strong>NVIDIA</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event" target="_blank" rel="noopener noreferrer"><b>NVIDIA</b></a>
           </div>
           <h3><a href="https://blogs.nvidia.com/blog/local-ai-rtx-spark-microsoft-windows-event" target="_blank" rel="noreferrer">英伟达与微软联合发布 RTX Spark Windows PC 与 AI Agent 基础设施：预购开启、MXC 正式可用</a></h3>
@@ -3275,6 +3358,8 @@ time {
           <div class="report-item-meta">
             <strong>Meta</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://about.fb.com/news/2026/10/introducing-muse-wonder-models/" target="_blank" rel="noopener noreferrer"><b>Meta Newsroom</b></a>
           </div>
           <h3><a href="https://about.fb.com/news/2026/10/introducing-muse-wonder-models/" target="_blank" rel="noreferrer">Meta 发布 Muse Wonder 系列旗舰模型，Full 版仅限 Muse Code 订阅用户</a></h3>
@@ -3358,6 +3443,8 @@ time {
           <div class="report-item-meta">
             <strong>Arena（arena.ai）</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/011/948.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/011/948.htm" target="_blank" rel="noreferrer">Arena 第 41 周榜：Claude Opus 5.5 Max 首登智能体榜首，国产多模型稳居中上游</a></h3>
@@ -3376,6 +3463,8 @@ time {
           <div class="report-item-meta">
             <strong>vLLM</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://vllm.ai/blog/2026-10-12-bidirectional-kvxfer-multiturn-agentic-workload" target="_blank" rel="noopener noreferrer"><b>vllm</b></a>
           </div>
           <h3><a href="https://vllm.ai/blog/2026-10-12-bidirectional-kvxfer-multiturn-agentic-workload" target="_blank" rel="noreferrer">vLLM 博客：双向 KV 传输将 P-D 分离部署下多轮 Agent 工作负载 TTFT 最高降低 3.3 倍</a></h3>
@@ -3394,6 +3483,8 @@ time {
           <div class="report-item-meta">
             <strong>Qwen</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/012/066.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/012/066.htm" target="_blank" rel="noreferrer">阿里千问发布 QwenGyre：面向超长程智能体任务的在线强化学习框架</a></h3>
@@ -3412,6 +3503,8 @@ time {
           <div class="report-item-meta">
             <strong>安踏集团</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/industrynews/LYPLgiUOHfVfcFBv.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/industrynews/LYPLgiUOHfVfcFBv.html" target="_blank" rel="noreferrer">安踏×火山引擎落地电商 Agent：海外订货决策缩至10-20分钟、TikTok退货月均自动建单超1000张</a></h3>
@@ -3430,6 +3523,8 @@ time {
           <div class="report-item-meta">
             <strong>whatmodel.sh</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://whatmodel.sh" target="_blank" rel="noopener noreferrer"><b>whatmodel.sh</b></a> · <a class="source-link" href="https://www.reddit.com/r/LocalLLaMA/comments/1x3wp8c/i_made_an_opensource_ai_leaderboard_that_shows" target="_blank" rel="noopener noreferrer"><b>reddit.com</b></a>
           </div>
           <h3><a href="https://whatmodel.sh" target="_blank" rel="noreferrer">开源排行榜 whatmodel.sh 发布：输入 RAM/GPU 即可查本机能跑的模型，称 Qwen3.8 27B 本地得分与 GPT-5 相当</a></h3>
@@ -3448,6 +3543,8 @@ time {
           <div class="report-item-meta">
             <strong>AWS</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/run-multi-node-inference-workloads-using-ray-llm-deep-learning-containers" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/run-multi-node-inference-workloads-using-ray-llm-deep-learning-containers" target="_blank" rel="noreferrer">AWS 发布 Ray LLM 多节点推理容器指南：EKS 上 prefill/decode 分离部署 Qwen3.5-9B</a></h3>
@@ -3466,6 +3563,8 @@ time {
           <div class="report-item-meta">
             <strong>Luckey Faraday</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/012/048.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/012/048.htm" target="_blank" rel="noreferrer">开发者用AI智能体将《使命召唤：黑色行动2》移植为网页游戏，遭动视DMCA下架</a></h3>
@@ -3484,6 +3583,8 @@ time {
           <div class="report-item-meta">
             <strong>Meta</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://engineering.fb.com/2026/10/12/open-source/ocp-summit-2026-powering-ai-with-open-innovations-in-scale-up-scale-out-and-scale-across-networks" target="_blank" rel="noopener noreferrer"><b>Meta</b></a>
           </div>
           <h3><a href="https://engineering.fb.com/2026/10/12/open-source/ocp-summit-2026-powering-ai-with-open-innovations-in-scale-up-scale-out-and-scale-across-networks" target="_blank" rel="noreferrer">Meta 于 OCP 2026 公布液冷 102.4T 交换机、FPF 多平面网络与以太网 Scale-Up 方案</a></h3>
@@ -3515,6 +3616,8 @@ time {
           <div class="report-item-meta">
             <strong>levie</strong>
             <em>行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2109467575025578330" target="_blank" rel="noreferrer">This is a good way to understand how early we actually are in AI diffusion right now. The vast majority of people are using AI as a chatbot for simple interactions that approximate next-generation search. This is super useful but dramatically underrepresents the full capability of AI.
@@ -3545,6 +3648,7 @@ But this all represents opportunity right now. A lot of this is where the applie
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3573,10 +3677,28 @@ But this all represents opportunity right now. A lot of this is where the applie
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

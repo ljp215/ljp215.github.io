@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 14 个事件：大厂动态 5 条，技术进展 2 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-becd7251b9d259" href="?event=event-becd7251b9d259#company-updates">OpenAI：OpenAI claims to have solved the 90-year-old Navier-Stokes math problem in 88 hours</a></h3>
+      <p>OpenAI称其1万个协调智能体耗时88小时解决90年未解的Navier-Stokes千禧年难题；纽约大学数学家Buckmaster公开质疑该方案路径及是否使用了其未公开工作数据。</p>
+      <a class="focus-more" data-report-target="event-becd7251b9d259" href="?event=event-becd7251b9d259#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-report-target="event-9a4778877d2dcc" href="?event=event-9a4778877d2dcc#company-updates">DeepSeek：【钛晨报】北京印发重磅发展规划，事关人工智能、芯片、商业航天等；知情人士证实DeepSeek备战科创板IPO，中信已入场尽调；燧原科技将于9月11日上市</a></h3>
+      <p>钛媒体晨报综合：北京印发“十五五”高精尖产业规划，布局商业航天、芯片与AI；知情人士称DeepSeek已委托中信证券筹备科创板IPO并进入尽调阶段；燧原科技定于9月11日科创板上市。</p>
+      <a class="focus-more" data-report-target="event-9a4778877d2dcc" href="?event=event-9a4778877d2dcc#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">AI 产品与工具</p>
+      <h3><a data-report-target="event-6915cb8c84da03" href="?event=event-6915cb8c84da03#company-updates">苹果：苹果官网暗示 iPhone 18 Pro 系列提高至 60W 有线充电功率，最快 15 分钟补能 50%</a></h3>
+      <p>苹果官网信息显示，iPhone 18 Pro系列支持60W有线快充，约15分钟可充至50%电量，较上一代40W有所提升。</p>
+      <a class="focus-more" data-report-target="event-6915cb8c84da03" href="?event=event-6915cb8c84da03#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-fa8d89de38efac" href="?event=event-fa8d89de38efac#company-updates">Google：4 ways Gemini makes administrative chores quick and easy</a></li><li><a data-report-target="event-b12a053b72baee" href="?event=event-b12a053b72baee#technical-progress">智谱：GLM 5.3 Flash Q4 @ 60tps / 550tps on M3 Ultra</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-9a4778877d2dcc" href="?event=event-9a4778877d2dcc#company-updates">DeepSeek：【钛晨报】北京印发重磅发展规划，事关人工智能、芯片、商业航天等；知情人士证实DeepSeek备战科创板IPO，中信已入场尽调；燧原科技将于9月11日上市</a></li><li><a data-report-target="event-d9efb92db784ef" href="?event=event-d9efb92db784ef#technical-progress">Heurist Finance：How Heurist Finance built an AI-native investment workbench on Amazon Bedrock AgentCore</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-6915cb8c84da03" href="?event=event-6915cb8c84da03#company-updates">苹果：苹果官网暗示 iPhone 18 Pro 系列提高至 60W 有线充电功率，最快 15 分钟补能 50%</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-becd7251b9d259" href="?event=event-becd7251b9d259#company-updates">OpenAI：OpenAI claims to have solved the 90-year-old Navier-Stokes math problem in 88 hours</a></li><li><a data-report-target="event-297fac97992c57" href="?event=event-297fac97992c57#company-updates">OpenAI：[AINews] OpenAI reports Navier-Stokes singularity find in 88 hours using Astra-next, roughly 10,000 agents and 130B tokens (&gt;$40M), a contender for second ever Millennium Prize awarded</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.cnbc.com/2026/09/09/openai-navier-stokes-math-problem-solved.html" target="_blank" rel="noopener noreferrer"><b>cnbc.com</b></a>
           </div>
           <h3><a href="https://www.cnbc.com/2026/09/09/openai-navier-stokes-math-problem-solved.html" target="_blank" rel="noreferrer">OpenAI：OpenAI claims to have solved the 90-year-old Navier-Stokes math problem in 88 hours</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://www.tmtpost.com/8134558.html" target="_blank" rel="noopener noreferrer"><b>tmtpost.com</b></a>
           </div>
           <h3><a href="https://www.tmtpost.com/8134558.html" target="_blank" rel="noreferrer">DeepSeek：【钛晨报】北京印发重磅发展规划，事关人工智能、芯片、商业航天等；知情人士证实DeepSeek备战科创板IPO，中信已入场尽调；燧原科技将于9月11日上市</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>苹果</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/1/000/539.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/1/000/539.htm" target="_blank" rel="noreferrer">苹果：苹果官网暗示 iPhone 18 Pro 系列提高至 60W 有线充电功率，最快 15 分钟补能 50%</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.latent.space/p/ainews-openai-reports-navier-stokes" target="_blank" rel="noopener noreferrer"><b>latent.space</b></a>
           </div>
           <h3><a href="https://www.latent.space/p/ainews-openai-reports-navier-stokes" target="_blank" rel="noreferrer">OpenAI：[AINews] OpenAI reports Navier-Stokes singularity find in 88 hours using Astra-next, roughly 10,000 agents and 130B tokens (&gt;$40M), a contender for second ever Millennium Prize awarded</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>Google</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://blog.google/products-and-platforms/products/gemini/ai-navigate-bureaucracy" target="_blank" rel="noopener noreferrer"><b>Google</b></a>
           </div>
           <h3><a href="https://blog.google/products-and-platforms/products/gemini/ai-navigate-bureaucracy" target="_blank" rel="noreferrer">Google：4 ways Gemini makes administrative chores quick and easy</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>Heurist Finance</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/how-heurist-finance-built-an-ai-native-investment-workbench-on-amazon-bedrock-agentcore" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/how-heurist-finance-built-an-ai-native-investment-workbench-on-amazon-bedrock-agentcore" target="_blank" rel="noreferrer">Heurist Finance：How Heurist Finance built an AI-native investment workbench on Amazon Bedrock AgentCore</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>智谱</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.reddit.com/r/LocalLLaMA/comments/1wbkpnw/glm_53_flash_q4_60tps_550tps_on_m3_ultra" target="_blank" rel="noopener noreferrer"><b>reddit.com</b></a>
           </div>
           <h3><a href="https://www.reddit.com/r/LocalLLaMA/comments/1wbkpnw/glm_53_flash_q4_60tps_550tps_on_m3_ultra" target="_blank" rel="noreferrer">智谱：GLM 5.3 Flash Q4 @ 60tps / 550tps on M3 Ultra</a></h3>
@@ -3353,6 +3436,8 @@ time {
           <div class="report-item-meta">
             <strong>腾讯云数据库</strong>
             <em>行业动态</em>
+            
+            
             <b>InfoQ 中文</b>
           </div>
           <h3><a href="https://www.infoq.cn/video/xXRz8UJAdS3S51AqOchf" target="_blank" rel="noreferrer">腾讯云数据库：面向 Agent 开发的数据库新范式</a></h3>
@@ -3371,6 +3456,8 @@ time {
           <div class="report-item-meta">
             <strong>Zara Zhang</strong>
             <em>行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Zara Zhang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/zarazhangrui/status/2097489234500390929" target="_blank" rel="noreferrer">Just realized you can ask Codex to fire a confetti in the chat 🎉 https://t.co/PMCbBqH2Ci</a></h3><p class="social-translation"><span>译文</span>刚发现你可以让 Codex 在聊天里放彩纸屑 🎉 https://t.co/PMCbBqH2Ci</p><div class="memory-note">
@@ -3387,6 +3474,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thariq</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/trq212/status/2097522305916395786" target="_blank" rel="noreferrer">I didn’t understand what was happening with the agent wikis until reading this, chilling
@@ -3403,6 +3492,8 @@ to bypass sandbox restrictions, an agent found an exempt domain, edited /etc/hos
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2097492424474165293" target="_blank" rel="noreferrer">See you at the Astra party. Excited to meet some of you https://t.co/WOICELwSrQ</a></h3><p class="social-translation"><span>译文</span>Astra 派对上见。很期待与你们中的一些人见面。 https://t.co/WOICELwSrQ</p>
@@ -3417,6 +3508,8 @@ to bypass sandbox restrictions, an agent found an exempt domain, edited /etc/hos
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thariq</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/trq212/status/2097522316125372570" target="_blank" rel="noreferrer">OpenAI wrote up more here but wish this was disclosed much sooner https://t.co/wljaLILldU</a></h3><p class="social-translation"><span>译文</span>OpenAI 在这里写了更多详情，但希望此事能更早公开。https://t.co/wljaLILldU</p>
@@ -3431,6 +3524,8 @@ to bypass sandbox restrictions, an agent found an exempt domain, edited /etc/hos
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Garry Tan</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/garrytan/status/2097540189430415785" target="_blank" rel="noreferrer">Run your own game
@@ -3447,6 +3542,8 @@ It&#039;s going to work out https://t.co/fdy2X1GkYa</a></h3><p class="social-tra
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Guillermo Rauch</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/rauchg/status/2097525477900685468" target="_blank" rel="noreferrer">/goal understand the universe</a></h3><p class="social-translation"><span>译文</span>/goal 理解宇宙</p>
@@ -3467,6 +3564,7 @@ It&#039;s going to work out https://t.co/fdy2X1GkYa</a></h3><p class="social-tra
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3495,10 +3593,28 @@ It&#039;s going to work out https://t.co/fdy2X1GkYa</a></h3><p class="social-tra
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

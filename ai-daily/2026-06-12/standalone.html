@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-a1c834c0de7113" href="?event=event-a1c834c0de7113#technical-progress">Google DeepMind：Google DeepMind is worried about what happens when millions of agents start to interact</a></h3>
+      <p>Google DeepMind联合多方设立千万美元基金，资助学术界研究海量智能体大规模交互引发的安全风险，推动建立多智能体安全研究体系。</p>
+      <a class="focus-more" data-report-target="event-a1c834c0de7113" href="?event=event-a1c834c0de7113#technical-progress">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">行业观点</p>
+      <h3><a data-report-target="event-03ee728c9993c4" href="?event=event-03ee728c9993c4#industry-views">OpenAI：Can confirm we saw a strong spike in growth of token consumption for Codex over last 48 hours. Unusual when we don&#039;t launch something. https://t.co/UG7hB1URMC</a></h3>
+      <p>报道指出，在未发布新产品的情况下，OpenAI 的 Codex 在过去 48 小时内出现了异常的 Token 消耗量激增。</p>
+      <a class="focus-more" data-report-target="event-03ee728c9993c4" href="?event=event-03ee728c9993c4#industry-views">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">行业观点</p>
+      <h3><a data-report-target="event-16f86c97e6014c" href="?event=event-16f86c97e6014c#industry-views">Lots of evidence of huge jumps in capability for Fable across coding (and related) tasks. It’s also a major jump in accuracy and success in complex knowledge work tasks.</a></h3>
+      <p>Box发布内部评测称其Fable模型在编程与复杂知识工作场景中表现显著优于Opus 4.8，在跨行业多步计算、逻辑推理与结果一致性上取得大幅跃升，并即将上线Box AI Studio。</p>
+      <a class="focus-more" data-report-target="event-16f86c97e6014c" href="?event=event-16f86c97e6014c#industry-views">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-2c30a2c68187c5" href="?event=event-2c30a2c68187c5#technical-progress">构建 Coding Agent 的飞轮：Feedback Loop、Benchmark、Agent Engineers</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-5940b482dbb144" href="?event=event-5940b482dbb144#company-updates">Anthropic：Anthropic’s Dario Amodei has just one direct report</a></li><li><a data-report-target="event-17a5c61414e1a8" href="?event=event-17a5c61414e1a8#company-updates">OpenAI：OpenAI 收购初创公司 Ona，强化编程助手 Codex</a></li><li><a data-report-target="event-bd6bfb9097b588" href="?event=event-bd6bfb9097b588#company-updates">OpenAI：OpenAI秘密递表！三巨头一起“抢钱”：AI史上最贵一轮融资要来了</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-348607879e6393" href="?event=event-348607879e6393#company-updates">Deezer’s new tool can identify AI music from Spotify, Apple Music, and others</a></li><li><a data-report-target="event-d09c159e7e896d" href="?event=event-d09c159e7e896d#company-updates">Deezer launches an AI music detector for other streaming services</a></li><li><a data-report-target="event-77a420baef5d99" href="?event=event-77a420baef5d99#technical-progress">微软 Foundry 新增生产级智能体运行时、工具链与管控能力</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-a1c834c0de7113" href="?event=event-a1c834c0de7113#technical-progress">Google DeepMind：Google DeepMind is worried about what happens when millions of agents start to interact</a></li><li><a data-report-target="event-4d141dd56957e1" href="?event=event-4d141dd56957e1#technical-progress">打破“人月神话”，Agent 重塑风控场景产运研职能</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/06/10/anthropics-dario-amodei-has-just-one-direct-report" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/06/10/anthropics-dario-amodei-has-just-one-direct-report" target="_blank" rel="noreferrer">Anthropic：Anthropic’s Dario Amodei has just one direct report</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>关键人才流动</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/0/963/239.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/0/963/239.htm" target="_blank" rel="noreferrer">OpenAI：OpenAI 收购初创公司 Ona，强化编程助手 Codex</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/06/11/deezers-new-tool-can-identify-ai-music-from-spotify-apple-music-and-others" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/06/11/deezers-new-tool-can-identify-ai-music-from-spotify-apple-music-and-others" target="_blank" rel="noreferrer">Deezer’s new tool can identify AI music from Spotify, Apple Music, and others</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.theverge.com/ai-artificial-intelligence/948153/deezer-ai-music-detector-spotify-apple" target="_blank" rel="noopener noreferrer"><b>theverge</b></a>
           </div>
           <h3><a href="https://www.theverge.com/ai-artificial-intelligence/948153/deezer-ai-music-detector-spotify-apple" target="_blank" rel="noreferrer">Deezer launches an AI music detector for other streaming services</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/wNJsVd21BshslzNoUXqr" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/wNJsVd21BshslzNoUXqr" target="_blank" rel="noreferrer">OpenAI：OpenAI秘密递表！三巨头一起“抢钱”：AI史上最贵一轮融资要来了</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>Google DeepMind</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.technologyreview.com/2026/06/11/1138794/google-deepmind-is-worried-about-what-happens-when-millions-of-agents-start-to-interact" target="_blank" rel="noopener noreferrer"><b>mit-techreview</b></a>
           </div>
           <h3><a href="https://www.technologyreview.com/2026/06/11/1138794/google-deepmind-is-worried-about-what-happens-when-millions-of-agents-start-to-interact" target="_blank" rel="noreferrer">Google DeepMind：Google DeepMind is worried about what happens when millions of agents start to interact</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/FoxOEsYuLGTKgu8wbhdY" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/FoxOEsYuLGTKgu8wbhdY" target="_blank" rel="noreferrer">微软 Foundry 新增生产级智能体运行时、工具链与管控能力</a></h3>
@@ -3340,6 +3423,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/VbPxMjRexUufus9dbxRq" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/VbPxMjRexUufus9dbxRq" target="_blank" rel="noreferrer">打破“人月神话”，Agent 重塑风控场景产运研职能</a></h3>
@@ -3358,6 +3443,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/l7BXlstUWDOBwI30miJU" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/l7BXlstUWDOBwI30miJU" target="_blank" rel="noreferrer">构建 Coding Agent 的飞轮：Feedback Loop、Benchmark、Agent Engineers</a></h3>
@@ -3389,6 +3476,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>模型/产品发布</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2064911328087810308" target="_blank" rel="noreferrer">Can confirm we saw a strong spike in growth of token consumption for Codex over last 48 hours. Unusual when we don&#039;t launch something. https://t.co/UG7hB1URMC</a></h3><p class="social-translation"><span>译文</span>可以确认，过去48小时内Codex的token消耗量激增。在我们未发布新产品的情况下，这一现象很不寻常。https://t.co/UG7hB1URMC</p><div class="memory-note">
@@ -3405,6 +3494,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2064922814688481678" target="_blank" rel="noreferrer">Lots of evidence of huge jumps in capability for Fable across coding (and related) tasks. It’s also a major jump in accuracy and success in complex knowledge work tasks.
@@ -3441,6 +3532,8 @@ Overall, huge step change in complex analysis, work that requires analytical rea
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Boris Cherny</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/bcherny/status/2064885111477219664" target="_blank" rel="noreferrer">Hello from Code with Claude Tokyo!! https://t.co/OGzffa1w58</a></h3><p class="social-translation"><span>译文</span>来自Code with Claude东京的问候！！ https://t.co/OGzffa1w58</p><div class="memory-note">
@@ -3457,6 +3550,8 @@ Overall, huge step change in complex analysis, work that requires analytical rea
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Garry Tan</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/garrytan/status/2064947145652994510" target="_blank" rel="noreferrer">Nessie just became the best way to get all your existing context, memory and history from ChatGPT, Perplexity, and Gemini into all the other places you have memory, and also get it into OpenClaw/Hermes Agent. Their OpenClaw and MCP servers are ace.
@@ -3475,6 +3570,8 @@ https://t.co/0L1JaBlTvg</a></h3><p class="social-translation"><span>译文</span
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Josh Woodward</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/joshwoodward/status/2064869366290841716" target="_blank" rel="noreferrer">Everything is back up and running, sorry again!</a></h3><p class="social-translation"><span>译文</span>一切已恢复正常运行，再次致歉！</p><div class="memory-note">
@@ -3491,6 +3588,8 @@ https://t.co/0L1JaBlTvg</a></h3><p class="social-translation"><span>译文</span
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2064869401359417799" target="_blank" rel="noreferrer">Welcome Clint and Michael! Incredibly excited to see what we do together to contribute to the cybersecurity field and accelerate defenders across the globe.
@@ -3515,6 +3614,7 @@ It&#039;s time to build. https://t.co/wu9CtJk38u</a></h3><p class="social-transl
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3543,10 +3643,28 @@ It&#039;s time to build. https://t.co/wu9CtJk38u</a></h3><p class="social-transl
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

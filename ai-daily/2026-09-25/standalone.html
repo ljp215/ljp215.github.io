@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 15 个事件：大厂动态 5 条，技术进展 3 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-e7f76087f7597b" href="?event=event-e7f76087f7597b#company-updates">Anthropic：Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.</a></h3>
+      <p>Anthropic发布Claude Opus 5.5，针对编码会话变长、上下文增多趋势设计，输入输出token降价20%、缓存读取降价60%，估计典型编码工作负载成本比Opus 5低约40%，并优化Claude Co。</p>
+      <a class="focus-more" data-report-target="event-e7f76087f7597b" href="?event=event-e7f76087f7597b#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-934d8cda868a63" href="?event=event-934d8cda868a63#company-updates">Google DeepMind：Introducing Gemini 3.8 Live with Live Avatar</a></h3>
+      <p>Google DeepMind 发布 Gemini 3.8 Live with Live Avatar，为实时对话模型加入近实时视频生成和动态数字人形象，支持唇形同步、表情、97 种语言切换及后台工具调用，即日起在 。</p>
+      <a class="focus-more" data-report-target="event-934d8cda868a63" href="?event=event-934d8cda868a63#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-c76f2938fc608b" href="?event=event-c76f2938fc608b#company-updates">Meta：Meta gets to consumer AI device market before OpenAI, but Zuckerberg&amp;apos;s strategy remains unproven</a></h3>
+      <p>Meta 在 Connect 大会发布挂坠式 AI 硬件 Muse Charm，意图抢在 OpenAI 之前进入消费 AI 设备市场；但设备细节披露很少，市场需求和商业模式均未验证，股价却已大涨。</p>
+      <a class="focus-more" data-report-target="event-c76f2938fc608b" href="?event=event-c76f2938fc608b#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>5</b></summary>
+        <ul><li><a data-report-target="event-e7f76087f7597b" href="?event=event-e7f76087f7597b#company-updates">Anthropic：Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.</a></li><li><a data-report-target="event-934d8cda868a63" href="?event=event-934d8cda868a63#company-updates">Google DeepMind：Introducing Gemini 3.8 Live with Live Avatar</a></li><li><a data-report-target="event-21a20615022934" href="?event=event-21a20615022934#company-updates">Anthropic：Claude Tag now supports personal connectors in channels</a></li><li><a data-report-target="event-1c34cc2ff1ec27" href="?event=event-1c34cc2ff1ec27#technical-progress">是石科技（METASTONE）：PCIe显卡被低估了！内核补齐+通信重构，DeepSeek推理吞吐翻近7倍</a></li><li><a data-report-target="event-04160838451e4f" href="?event=event-04160838451e4f#technical-progress">DeepSeek：梁文锋用沙盒开启RSI</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-c76f2938fc608b" href="?event=event-c76f2938fc608b#company-updates">Meta：Meta gets to consumer AI device market before OpenAI, but Zuckerberg&amp;apos;s strategy remains unproven</a></li><li><a data-report-target="event-e0398f3fed6b49" href="?event=event-e0398f3fed6b49#company-updates">OpenAI：Rogue AI hacks government system for first time</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-8e8afeb3224d9f" href="?event=event-8e8afeb3224d9f#technical-progress">AWS：Build a multi-account AI agent with AgentCore Gateway and MCP</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
           <h3><a href="https://claude.com/blog/claude-opus-5-5-built-for-coding-sessions-that-use-more-context" target="_blank" rel="noreferrer">Anthropic：Coding sessions are longer and use more context. Claude Opus 5.5 is built with that in mind.</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Google DeepMind</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-with-live-avatar" target="_blank" rel="noopener noreferrer"><b>Google</b></a>
           </div>
           <h3><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-with-live-avatar" target="_blank" rel="noreferrer">Google DeepMind：Introducing Gemini 3.8 Live with Live Avatar</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>Meta</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.cnbc.com/2026/09/24/meta-mark-zuckerberg-muse-charm-openai-agent.html" target="_blank" rel="noopener noreferrer"><b>cnbc.com</b></a>
           </div>
           <h3><a href="https://www.cnbc.com/2026/09/24/meta-mark-zuckerberg-muse-charm-openai-agent.html" target="_blank" rel="noreferrer">Meta：Meta gets to consumer AI device market before OpenAI, but Zuckerberg&amp;apos;s strategy remains unproven</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://claude.com/blog/claude-tag-now-supports-personal-connectors-in-channels" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
           <h3><a href="https://claude.com/blog/claude-tag-now-supports-personal-connectors-in-channels" target="_blank" rel="noreferrer">Anthropic：Claude Tag now supports personal connectors in channels</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.theguardian.com/news/video/2026/sep/24/rogue-ai-hacks-government-system-for-first-time-the-latest" target="_blank" rel="noopener noreferrer"><b>theguardian.com</b></a> · <a class="source-link" href="https://www.theguardian.com/news/audio/2026/sep/24/rogue-ai-hacks-government-system-for-first-time-the-latest" target="_blank" rel="noopener noreferrer"><b>theguardian.com</b></a>
           </div>
           <h3><a href="https://www.theguardian.com/news/video/2026/sep/24/rogue-ai-hacks-government-system-for-first-time-the-latest" target="_blank" rel="noreferrer">OpenAI：Rogue AI hacks government system for first time</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>AWS</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/build-a-multi-account-ai-agent-with-agentcore-gateway-and-mcp" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/build-a-multi-account-ai-agent-with-agentcore-gateway-and-mcp" target="_blank" rel="noreferrer">AWS：Build a multi-account AI agent with AgentCore Gateway and MCP</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>是石科技（METASTONE）</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.qbitai.com/2026/09/496925.html" target="_blank" rel="noopener noreferrer"><b>qbitai</b></a>
           </div>
           <h3><a href="https://www.qbitai.com/2026/09/496925.html" target="_blank" rel="noreferrer">是石科技（METASTONE）：PCIe显卡被低估了！内核补齐+通信重构，DeepSeek推理吞吐翻近7倍</a></h3>
@@ -3340,6 +3423,8 @@ time {
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.tmtpost.com/8151587.html" target="_blank" rel="noopener noreferrer"><b>tmtpost.com</b></a>
           </div>
           <h3><a href="https://www.tmtpost.com/8151587.html" target="_blank" rel="noreferrer">DeepSeek：梁文锋用沙盒开启RSI</a></h3>
@@ -3371,6 +3456,8 @@ time {
           <div class="report-item-meta">
             <strong>Qwen</strong>
             <em>行业动态</em>
+            
+            
             <b>Reddit r/LocalLLaMA</b>
           </div>
           <h3><a href="https://www.reddit.com/r/LocalLLaMA/comments/1wp0z3i/qwen3827b_is_good_enough_that_i_stopped_using_api" target="_blank" rel="noreferrer">Qwen：Qwen-3.8-27B is good enough that I stopped using API</a></h3>
@@ -3389,6 +3476,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Ryo Lu</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/ryolu_/status/2102933485795369213" target="_blank" rel="noreferrer">efficiency, productivity, speed
@@ -3492,6 +3581,8 @@ just without humans</a></h3><p class="social-translation"><span>译文</span>效
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Guillermo Rauch</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/rauchg/status/2102947745132924993" target="_blank" rel="noreferrer">ShellPerfBench. I&#039;m really neurotic about the startup time of a new shell session. Opus 5.5 found a lot of really great optimizations other models missed. Anon, anytime you open a new terminal, you might be silently suffering. Tell your agent to optimize .𝚣𝚜𝚑𝚛𝚌 and friends</a></h3><p class="social-translation"><span>译文</span>ShellPerfBench。我对新 shell 会话的启动时间特别敏感。Opus 5.5 找到了许多其他模型遗漏的绝佳优化。各位，每当你们打开新终端时，可能都在默默受苦。告诉你的 agent 去优化 .zshrc 及其相关文件。</p>
@@ -3506,6 +3597,8 @@ just without humans</a></h3><p class="social-translation"><span>译文</span>效
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2102952201350254667" target="_blank" rel="noreferrer">With a model this good the Claude Code harness really needs great live voice and browser + computer use (latter is improving!)
@@ -3522,6 +3615,8 @@ Right now one lab has the best model and another has the best harness. https://t
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Garry Tan</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/garrytan/status/2102955139875397806" target="_blank" rel="noreferrer">Two important simultaneous important trends in how startups get customers:
@@ -3540,6 +3635,8 @@ Use agents to make people want software</a></h3><p class="social-translation"><s
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2102956775645552645" target="_blank" rel="noreferrer">No more crappy corporate slides, the result of this prompt blew me away lol https://t.co/atQudEjz9H</a></h3><p class="social-translation"><span>译文</span>不再有糟糕的企业幻灯片，这个提示词的结果让我惊叹，哈哈 https://t.co/atQudEjz9H</p>
@@ -3554,6 +3651,8 @@ Use agents to make people want software</a></h3><p class="social-translation"><s
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Boris Cherny</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/bcherny/status/2102971275543216623" target="_blank" rel="noreferrer">It was an honor to meet Donald Knuth at the Computer History Museum today https://t.co/U6bGOidLmw</a></h3><p class="social-translation"><span>译文</span>今天在计算机历史博物馆见到Donald Knuth，深感荣幸。 https://t.co/U6bGOidLmw</p>
@@ -3574,6 +3673,7 @@ Use agents to make people want software</a></h3><p class="social-translation"><s
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3602,10 +3702,28 @@ Use agents to make people want software</a></h3><p class="social-translation"><s
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

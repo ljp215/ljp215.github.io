@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 10 个事件：大厂动态 5 条，技术进展 0 条，行业观点 5 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-b538980a7bea9f" href="?event=event-b538980a7bea9f#company-updates">OpenAI：On file deletions. We’ve investigated a handful of reports where GPT-5.6 unexpectedly deleted files.</a></h3>
+      <p>OpenAI 调查了 GPT-5.6 在 Codex 全访问模式下意外删除文件的报告，发现常见原因是无沙箱保护且模型误删 $HOME 目录，正采取措施缓解。</p>
+      <a class="focus-more" data-report-target="event-b538980a7bea9f" href="?event=event-b538980a7bea9f#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-63d715448c7512" href="?event=event-63d715448c7512#company-updates">Anthropic：How Anthropic runs large-scale code migrations with Claude Code</a></h3>
+      <p>Anthropic 发布博客，详述使用 Claude Code（Fable 5/Opus 4.8）完成 Bun 的 Zig-to-Rust 迁移（百万行，两周）和 Python-to-TypeScript 迁移（16。</p>
+      <a class="focus-more" data-report-target="event-63d715448c7512" href="?event=event-63d715448c7512#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-report-target="event-5f79e3cc0ed757" href="?event=event-5f79e3cc0ed757#company-updates">DeepSeek：【钛晨报】教育部增设27个职业教育新专业，2027年开始招生；日本拟采购2.75万颗英伟达Rubin芯片，开发本土机器人AI模型；DeepSeek估值超3500亿元</a></h3>
+      <p>开润股份公告披露DeepSeek最新估值约3510亿元，接近DeepSeek人士确认已启动第二轮融资。</p>
+      <a class="focus-more" data-report-target="event-5f79e3cc0ed757" href="?event=event-5f79e3cc0ed757#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-b538980a7bea9f" href="?event=event-b538980a7bea9f#company-updates">OpenAI：On file deletions. We’ve investigated a handful of reports where GPT-5.6 unexpectedly deleted files.</a></li><li><a data-report-target="event-63d715448c7512" href="?event=event-63d715448c7512#company-updates">Anthropic：How Anthropic runs large-scale code migrations with Claude Code</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-5f79e3cc0ed757" href="?event=event-5f79e3cc0ed757#company-updates">DeepSeek：【钛晨报】教育部增设27个职业教育新专业，2027年开始招生；日本拟采购2.75万颗英伟达Rubin芯片，开发本土机器人AI模型；DeepSeek估值超3500亿元</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-1f3772791bdb1f" href="?event=event-1f3772791bdb1f#company-updates">Amazon Bedrock：Build enterprise search for agents with Amazon Bedrock Managed Knowledge Base</a></li><li><a data-report-target="event-e3531ce0bbe39c" href="?event=event-e3531ce0bbe39c#company-updates">Cars24：How Cars24 scales conversations and builds faster with OpenAI</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://x.com/thsottiaux/status/2077630111499882637" target="_blank" rel="noopener noreferrer"><b>@thsottiaux</b></a>
           </div>
           <h3><a href="https://x.com/thsottiaux/status/2077630111499882637" target="_blank" rel="noreferrer">OpenAI：On file deletions. We’ve investigated a handful of reports where GPT-5.6 unexpectedly deleted files.</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://claude.com/blog/ai-code-migration" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
           <h3><a href="https://claude.com/blog/ai-code-migration" target="_blank" rel="noreferrer">Anthropic：How Anthropic runs large-scale code migrations with Claude Code</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://www.tmtpost.com/8067923.html" target="_blank" rel="noopener noreferrer"><b>tmtpost.com</b></a>
           </div>
           <h3><a href="https://www.tmtpost.com/8067923.html" target="_blank" rel="noreferrer">DeepSeek：【钛晨报】教育部增设27个职业教育新专业，2027年开始招生；日本拟采购2.75万颗英伟达Rubin芯片，开发本土机器人AI模型；DeepSeek估值超3500亿元</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>Amazon Bedrock</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/build-enterprise-search-for-agents-with-amazon-bedrock-managed-knowledge-base" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/build-enterprise-search-for-agents-with-amazon-bedrock-managed-knowledge-base" target="_blank" rel="noreferrer">Amazon Bedrock：Build enterprise search for agents with Amazon Bedrock Managed Knowledge Base</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>Cars24</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://openai.com/index/cars24" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
           <h3><a href="https://openai.com/index/cars24" target="_blank" rel="noreferrer">Cars24：How Cars24 scales conversations and builds faster with OpenAI</a></h3>
@@ -3317,6 +3396,8 @@ time {
           <div class="report-item-meta">
             <strong>Moonshot AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b>Simon Willison&#039;s Weblog</b>
           </div>
           <h3><a href="https://simonwillison.net/2026/Jul/16/kimi-k3" target="_blank" rel="noreferrer">Moonshot AI：Kimi K3, and what we can still learn from the pelican benchmark</a></h3>
@@ -3335,6 +3416,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2077572198655754583" target="_blank" rel="noreferrer">ChatGPT Live and Codex are two incredible products that don’t talk to each other.
@@ -3363,6 +3446,8 @@ Why build such a great voice assistant but have it not be able to do anything?</
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2077627035418239230" target="_blank" rel="noreferrer">Now that we merged ChatGPT and Codex, what should we merge next? What&#039;s the double or nothing move.</a></h3><p class="social-translation"><span>译文</span>既然我们已经合并了ChatGPT和Codex，接下来应该合并什么？这是要么加倍要么一无所有的举动。</p><div class="memory-note">
@@ -3379,6 +3464,8 @@ Why build such a great voice assistant but have it not be able to do anything?</
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Guillermo Rauch</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/rauchg/status/2077559189015335019" target="_blank" rel="noreferrer">Vercel Sandbox:
@@ -3399,6 +3486,8 @@ My DMs are open for migration help or if missing anything with: https://t.co/U9b
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Swyx</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/swyx/status/2077563850824790200" target="_blank" rel="noreferrer">you can just tweet things into existence https://t.co/4TnqEDoQsg</a></h3><p class="social-translation"><span>译文</span>你发个推就能让事情成真 https://t.co/4TnqEDoQsg</p>
@@ -3419,6 +3508,7 @@ My DMs are open for migration help or if missing anything with: https://t.co/U9b
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3447,10 +3537,28 @@ My DMs are open for migration help or if missing anything with: https://t.co/U9b
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

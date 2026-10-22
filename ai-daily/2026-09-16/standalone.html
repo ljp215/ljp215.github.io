@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 14 个事件：大厂动态 5 条，技术进展 3 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-815160f5123ae6" href="?event=event-815160f5123ae6#company-updates">比亚迪：超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级</a></h3>
+      <p>比亚迪发布超级智能体“迪迪虾”，携手阿里云将千问大模型接入座舱体系，用于意图理解、任务编排和生态服务连接，让车机从听懂一句话走向主动办成一件事。</p>
+      <a class="focus-more" data-report-target="event-815160f5123ae6" href="?event=event-815160f5123ae6#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-fe12394f4be3cb" href="?event=event-fe12394f4be3cb#company-updates">Google DeepMind：Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking</a></h3>
+      <p>Google DeepMind 发布 Gemini 3.8 Live 与 3.8 Live Extended Thinking，主打自然语音对话、实时视觉、多语言切换与后台任务处理，即日面向开发者、企业及消费端上线。</p>
+      <a class="focus-more" data-report-target="event-fe12394f4be3cb" href="?event=event-fe12394f4be3cb#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-09a64f4d00ab9d" href="?event=event-09a64f4d00ab9d#company-updates">Meta：Meta now lets AI agents handle the boring parts of WhatsApp Business setup</a></h3>
+      <p>TechCrunch 报道，Meta 发布 WhatsApp Business Tools MCP server，允许开发者用 Claude、Cursor、Codex、ChatGPT 等 AI 编码代理自动完成 Wh。</p>
+      <a class="focus-more" data-report-target="event-09a64f4d00ab9d" href="?event=event-09a64f4d00ab9d#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-fe12394f4be3cb" href="?event=event-fe12394f4be3cb#company-updates">Google DeepMind：Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking</a></li><li><a data-report-target="event-20657bbe06072f" href="?event=event-20657bbe06072f#company-updates">Anthropic：Claude for Small Business launches new workflows, integrations, and training programs</a></li><li><a data-report-target="event-6c8b30029c4cdf" href="?event=event-6c8b30029c4cdf#technical-progress">DeepSeek：Where are you running DeepSeek V4.1 Flash reliably? I can&#039;t get it to finish a single 2-hour benchmark run</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-be8cb61cdf8a96" href="?event=event-be8cb61cdf8a96#technical-progress">OpenAI：OpenAI故意欠技术债，等Codex来还：仅2名工程师，把核心存储从Python重写成Rust</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-42773a8048ff10" href="?event=event-42773a8048ff10#company-updates">OpenAI：OpenAI 发布适用于编程和计算机应用的 GPT-6 Astra</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-815160f5123ae6" href="?event=event-815160f5123ae6#company-updates">比亚迪：超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级</a></li><li><a data-report-target="event-09a64f4d00ab9d" href="?event=event-09a64f4d00ab9d#company-updates">Meta：Meta now lets AI agents handle the boring parts of WhatsApp Business setup</a></li><li><a data-report-target="event-3efbcf5cf7af64" href="?event=event-3efbcf5cf7af64#technical-progress">IBM Research：Your Agent Aced the Task. Will It Do It Again?</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>比亚迪</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/industrynews/8XZ8Ji8sV6zGMGu0.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/industrynews/8XZ8Ji8sV6zGMGu0.html" target="_blank" rel="noreferrer">比亚迪：超级智能体“迪迪虾”上车，比亚迪携手阿里云推进智能座舱升级</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Google DeepMind</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking" target="_blank" rel="noopener noreferrer"><b>Google</b></a>
           </div>
           <h3><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/gemini-3-8-live-gemini-3-8-live-extended-thinking" target="_blank" rel="noreferrer">Google DeepMind：Introducing Gemini 3.8 Live and 3.8 Live Extended Thinking</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>Meta</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/09/15/meta-now-lets-ai-agents-handle-the-boring-parts-of-whatsapp-business-setup" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/09/15/meta-now-lets-ai-agents-handle-the-boring-parts-of-whatsapp-business-setup" target="_blank" rel="noreferrer">Meta：Meta now lets AI agents handle the boring parts of WhatsApp Business setup</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://claude.com/blog/claude-for-small-business-launches-new-workflows-integrations-and-training-programs" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
           <h3><a href="https://claude.com/blog/claude-for-small-business-launches-new-workflows-integrations-and-training-programs" target="_blank" rel="noreferrer">Anthropic：Claude for Small Business launches new workflows, integrations, and training programs</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/IfxYoy1PPkFQUpjWVBVr" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/IfxYoy1PPkFQUpjWVBVr" target="_blank" rel="noreferrer">OpenAI：OpenAI 发布适用于编程和计算机应用的 GPT-6 Astra</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/QtIy65SxjN0Q4riY7tCo" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/QtIy65SxjN0Q4riY7tCo" target="_blank" rel="noreferrer">OpenAI：OpenAI故意欠技术债，等Codex来还：仅2名工程师，把核心存储从Python重写成Rust</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>IBM Research</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://huggingface.co/blog/ibm-research/altk-evolve-consistency" target="_blank" rel="noopener noreferrer"><b>huggingface.co</b></a>
           </div>
           <h3><a href="https://huggingface.co/blog/ibm-research/altk-evolve-consistency" target="_blank" rel="noreferrer">IBM Research：Your Agent Aced the Task. Will It Do It Again?</a></h3>
@@ -3340,6 +3423,8 @@ time {
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.reddit.com/r/LocalLLaMA/comments/1whedle/where_are_you_running_deepseek_v41_flash_reliably" target="_blank" rel="noopener noreferrer"><b>reddit.com</b></a>
           </div>
           <h3><a href="https://www.reddit.com/r/LocalLLaMA/comments/1whedle/where_are_you_running_deepseek_v41_flash_reliably" target="_blank" rel="noreferrer">DeepSeek：Where are you running DeepSeek V4.1 Flash reliably? I can&#039;t get it to finish a single 2-hour benchmark run</a></h3>
@@ -3371,6 +3456,8 @@ time {
           <div class="report-item-meta">
             <strong>Levie</strong>
             <em>行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2099739019517235618" target="_blank" rel="noreferrer">We probably need to all update our sense of what’s coming in terms of agentic workloads with the combination of agent swarms, better computer use, the next wave of APIs and MCPs coming online, and new form factors like Muse or Instinct, vertical enterprise agents, background workflow agents, and other products that are emerging right now.
@@ -3393,6 +3480,8 @@ We’re probably 1% of the way into the shape of what all these agents look like
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2099668196651610556" target="_blank" rel="noreferrer">She sounds super cool tbh https://t.co/AcZzpD9W0H</a></h3><p class="social-translation"><span>译文</span>说实话，她听起来超酷的。 https://t.co/AcZzpD9W0H</p>
@@ -3407,6 +3496,8 @@ We’re probably 1% of the way into the shape of what all these agents look like
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2099677771408846975" target="_blank" rel="noreferrer">Voice has made me more productive going on walks in nature than staring at my screen which is an incredible feeling https://t.co/ZdswcGeOfx</a></h3><p class="social-translation"><span>译文</span>语音让我在大自然中散步比盯着屏幕更高效，这是一种不可思议的感觉。 https://t.co/ZdswcGeOfx</p>
@@ -3421,6 +3512,8 @@ We’re probably 1% of the way into the shape of what all these agents look like
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2099706366327951658" target="_blank" rel="noreferrer">Screw it I can&#039;t wait to 2030 https://t.co/CdH6t9VT7C</a></h3><p class="social-translation"><span>译文</span>管它呢，我等不及要到2030年了 https://t.co/CdH6t9VT7C</p>
@@ -3435,6 +3528,8 @@ We’re probably 1% of the way into the shape of what all these agents look like
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thariq</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/trq212/status/2099671266068496802" target="_blank" rel="noreferrer">just finished recording on latent space
@@ -3451,6 +3546,8 @@ I’m excited about this one- we get very technical about things we haven’t re
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2099744972195131850" target="_blank" rel="noreferrer">This week will also be a level of ships that you could have expected for DevDay 2025. Crazy</a></h3><p class="social-translation"><span>译文</span>本周的发布规模也将是你在DevDay 2025才能预料到的级别。太疯狂了。</p>
@@ -3471,6 +3568,7 @@ I’m excited about this one- we get very technical about things we haven’t re
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3499,10 +3597,28 @@ I’m excited about this one- we get very technical about things we haven’t re
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

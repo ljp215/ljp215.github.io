@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 15 个事件：大厂动态 5 条，技术进展 2 条，行业观点 8 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-fb8b6150ea6955" href="?event=event-fb8b6150ea6955#company-updates">OpenAI：OpenAI GPT-5.6 Sol, Terra, and Luna are now generally available on Amazon Bedrock</a></h3>
+      <p>OpenAI GPT-5.6 Sol、Terra、Luna 三款模型在 Amazon Bedrock 上正式可用，支持 prompt caching 和硬件级安全，定价与 OpenAI 直接 API 一致。</p>
+      <a class="focus-more" data-report-target="event-fb8b6150ea6955" href="?event=event-fb8b6150ea6955#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-b4b519426d49d0" href="?event=event-b4b519426d49d0#company-updates">Bluesight：Building an agentic AI solution at Bluesight with Amazon Bedrock</a></h3>
+      <p>Bluesight 使用 Amazon Bedrock AgentCore 构建了 Prism，一个覆盖六个医疗合规产品的统一 agentic AI 解决方案，ControlCheck 版本已上线并被 20 家医院使用。</p>
+      <a class="focus-more" data-report-target="event-b4b519426d49d0" href="?event=event-b4b519426d49d0#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-report-target="event-b633438f4a1f5a" href="?event=event-b633438f4a1f5a#company-updates">阶跃星辰：【钛晨报】李强主持召开经济形势专家和企业家座谈会；Meta宣布将追加400亿美元投资路易斯安那州数据中心；字节跳动回应：没有做智能驾驶业务的计划</a></h3>
+      <p>阶跃星辰发布全球首款大模型原生智能体手机，搭载Step AOS和智能体Amoo，将于WAIC首秀。</p>
+      <a class="focus-more" data-report-target="event-b633438f4a1f5a" href="?event=event-b633438f4a1f5a#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-fb8b6150ea6955" href="?event=event-fb8b6150ea6955#company-updates">OpenAI：OpenAI GPT-5.6 Sol, Terra, and Luna are now generally available on Amazon Bedrock</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-b633438f4a1f5a" href="?event=event-b633438f4a1f5a#company-updates">阶跃星辰：【钛晨报】李强主持召开经济形势专家和企业家座谈会；Meta宣布将追加400亿美元投资路易斯安那州数据中心；字节跳动回应：没有做智能驾驶业务的计划</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-d7b29085f89638" href="?event=event-d7b29085f89638#company-updates">Waze：Waze is getting a bunch of new AI-powered features</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-b4b519426d49d0" href="?event=event-b4b519426d49d0#company-updates">Bluesight：Building an agentic AI solution at Bluesight with Amazon Bedrock</a></li><li><a data-report-target="event-f3957588f51676" href="?event=event-f3957588f51676#company-updates">Meta：小扎“消失”三年后发帖，只为它：Meta最强Agent模型进军编程，从免费开源到卖“低价”模型</a></li><li><a data-report-target="event-d85d33733a9eca" href="?event=event-d85d33733a9eca#technical-progress">AutoWorldBuilder：Fictional Worldbuilding: Multi-Agent LLM Collaboration with Hierarchical Context Compression and Iterative Review</a></li><li><a data-report-target="event-4b5b2cf7668b0b" href="?event=event-4b5b2cf7668b0b#technical-progress">Google DeepMind：Scoped Verification for Reliable Long-Horizon Agentic Context Evolution under Distribution Shift</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/openai-gpt-5-6-sol-terra-and-luna-are-now-generally-available-on-amazon-bedrock" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/openai-gpt-5-6-sol-terra-and-luna-are-now-generally-available-on-amazon-bedrock" target="_blank" rel="noreferrer">OpenAI：OpenAI GPT-5.6 Sol, Terra, and Luna are now generally available on Amazon Bedrock</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Bluesight</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/building-an-agentic-ai-solution-at-bluesight-with-amazon-bedrock" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/building-an-agentic-ai-solution-at-bluesight-with-amazon-bedrock" target="_blank" rel="noreferrer">Bluesight：Building an agentic AI solution at Bluesight with Amazon Bedrock</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>阶跃星辰</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.tmtpost.com/8063498.html" target="_blank" rel="noopener noreferrer"><b>tmtpost.com</b></a>
           </div>
           <h3><a href="https://www.tmtpost.com/8063498.html" target="_blank" rel="noreferrer">阶跃星辰：【钛晨报】李强主持召开经济形势专家和企业家座谈会；Meta宣布将追加400亿美元投资路易斯安那州数据中心；字节跳动回应：没有做智能驾驶业务的计划</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>Waze</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.theverge.com/transportation/964132/waze-gemini-ai-voice-commands-less-chatty" target="_blank" rel="noopener noreferrer"><b>theverge</b></a>
           </div>
           <h3><a href="https://www.theverge.com/transportation/964132/waze-gemini-ai-voice-commands-less-chatty" target="_blank" rel="noreferrer">Waze：Waze is getting a bunch of new AI-powered features</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>Meta</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/Fg7xEo3RGENyoefojZVD" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/Fg7xEo3RGENyoefojZVD" target="_blank" rel="noreferrer">Meta：小扎“消失”三年后发帖，只为它：Meta最强Agent模型进军编程，从免费开源到卖“低价”模型</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>AutoWorldBuilder</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://arxiv.org/abs/2607.09403" target="_blank" rel="noopener noreferrer"><b>arxiv.org</b></a>
           </div>
           <h3><a href="https://arxiv.org/abs/2607.09403" target="_blank" rel="noreferrer">AutoWorldBuilder：Fictional Worldbuilding: Multi-Agent LLM Collaboration with Hierarchical Context Compression and Iterative Review</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>Google DeepMind</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://arxiv.org/abs/2607.09175" target="_blank" rel="noopener noreferrer"><b>arxiv.org</b></a>
           </div>
           <h3><a href="https://arxiv.org/abs/2607.09175" target="_blank" rel="noreferrer">Google DeepMind：Scoped Verification for Reliable Long-Horizon Agentic Context Evolution under Distribution Shift</a></h3>
@@ -3353,6 +3436,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b>ZDNet AI</b>
           </div>
           <h3><a href="https://www.zdnet.com/article/openai-gutted-chatgpt-desktop-app-for-codex-work" target="_blank" rel="noreferrer">OpenAI：I loved ChatGPT Desktop until OpenAI gutted it to make room for Codex and Work</a></h3>
@@ -3371,6 +3456,8 @@ time {
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>行业动态</em>
+            
+            
             <b>钛媒体</b>
           </div>
           <h3><a href="https://www.tmtpost.com/8063047.html" target="_blank" rel="noreferrer">DeepSeek：程序员面试背了十年的八股文，被DeepSeek废了</a></h3>
@@ -3389,6 +3476,8 @@ time {
           <div class="report-item-meta">
             <strong>Simon Willison</strong>
             <em>行业动态</em>
+            
+            
             <b>Simon Willison&#039;s Weblog</b>
           </div>
           <h3><a href="https://simonwillison.net/2026/Jul/13/datasette-code-frequency" target="_blank" rel="noreferrer">Simon Willison：datasette code-frequency chart on GitHub</a></h3>
@@ -3407,6 +3496,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2076510899490480228" target="_blank" rel="noreferrer">Anthropic makes great models too but I don&#039;t understand why they communicate like this.
@@ -3425,6 +3516,8 @@ I think they need to engage the community more directly like what OpenAI is doin
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Steinberger</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/steipete/status/2076552605262872904" target="_blank" rel="noreferrer">That&#039;s about as many sessions as my Mac Studio can take. https://t.co/4OCiZUwqHt</a></h3><p class="social-translation"><span>译文</span>这差不多是我的Mac Studio能承受的会话数量了。https://t.co/4OCiZUwqHt</p>
@@ -3439,6 +3532,8 @@ I think they need to engage the community more directly like what OpenAI is doin
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2076519927843000448" target="_blank" rel="noreferrer">Seeing this quite often today.
@@ -3455,6 +3550,8 @@ My wild guess is 90%+ of people are using GPT 5.6 Sol and &amp;lt;10% are using 
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Steinberger</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/steipete/status/2076551622227095828" target="_blank" rel="noreferrer">Spent the weekend on a little facelift. https://t.co/STWHLV5OMy</a></h3>
@@ -3469,6 +3566,8 @@ My wild guess is 90%+ of people are using GPT 5.6 Sol and &amp;lt;10% are using 
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Garry Tan</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/garrytan/status/2076534860064416115" target="_blank" rel="noreferrer">Craven politicians who disable public safety technology for virtue signal and culture war purposes will always get blood on their hands https://t.co/TPydLBqavh</a></h3><p class="social-translation"><span>译文</span>那些为了道德信号和文化战争目的而禁用公共安全技术的懦弱政客，手上总会沾满鲜血 https://t.co/TPydLBqavh</p>
@@ -3489,6 +3588,7 @@ My wild guess is 90%+ of people are using GPT 5.6 Sol and &amp;lt;10% are using 
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3517,10 +3617,28 @@ My wild guess is 90%+ of people are using GPT 5.6 Sol and &amp;lt;10% are using 
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

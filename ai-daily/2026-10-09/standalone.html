@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 17 个事件：大厂动态 10 条，技术进展 4 条，行业观点 3 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-18c9ff1dcfd6a8" href="?event=event-18c9ff1dcfd6a8#company-updates">云栖大会观察：阿里公布 Qwen 4/5 参数路线图与 RSI 实验，下一代视频模型11月发布</a></h3>
+      <p>雷峰网报道，云栖大会上阿里披露 Qwen 规划：Qwen4 系列即将到来，Qwen4.5/Qwen5 计划迈向 5T—10T 参数；当前 Qwen3.8 为 2.4T，两年前 Qwen2.5 旗舰为 72B。为控成本，Qwen3.8-Flash 以稀疏/线性注意力与外接记忆，每次推理仅激活 6B，训练成本降至九分之一、百万 Token 输入价格降至四分之一。阿里还公布 RSI 实验：Qwen3.8-Max 60 多小时自主完成 NoC 芯片设计（面积 -42%、功耗 -59.5%），56 小时适配平头哥新 GPU（吞吐 +96%），并连续自主运行 33 轮实验。</p>
+      <a class="focus-more" data-report-target="event-18c9ff1dcfd6a8" href="?event=event-18c9ff1dcfd6a8#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-811e8a1a0307e4" href="?event=event-811e8a1a0307e4#company-updates">Anthropic 发布 Claude Haiku 5.5：登上 Amazon Bedrock，官方称较 Haiku 4.5 多数任务成本降低约 75%</a></h3>
+      <p>Claude Haiku 5.5 现已上线 Amazon Bedrock 和 Claude Platform on AWS。据 Anthropic 宣称，它是 Claude 5.5 家族中速度最快、效率最高的模型，专为 subagent 和高吞吐、成本敏感型任务设计，多数任务成本比 Claude Haiku 4.5 低约 75%。这是首个支持 effort controls（按任务调节智能与成本）的 Haiku 模型，可用于编码子代理、代码审查、长文档分类、知识库快速问答、多步工具调用及高分辨率图像处理。</p>
+      <a class="focus-more" data-report-target="event-811e8a1a0307e4" href="?event=event-811e8a1a0307e4#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">AI 产品与工具</p>
+      <h3><a data-report-target="event-9ec58bfb400b38" href="?event=event-9ec58bfb400b38#company-updates">Anthropic 发布 Cyber Mission：推出关键基础设施防御计划与开源扫描服务 OSS Scanner</a></h3>
+      <p>10 月 8 日，Anthropic 启动长期网络安全计划 Cyber Mission，主打两条线：关键基础设施防御计划（CIDP），用 Claude 前沿模型、现场工程师与威胁研究支持电力、水务、交运和政府系统防护，创始合作方包括 Accenture、CrowdStrike、Deloitte、PwC、Rockwell Automation 等 11 家；开源方向推出 OSS Scanner，仿照 Google OSS-Fuzz，由最强模型免费为开源项目定期扫描，报告含 PoC、说明和修复建议，由模型生成、不经人工审核，Anthropic 预期真阳性率超过 90%。Project Glasswing 已并入 Cyber Verification Program。</p>
+      <a class="focus-more" data-report-target="event-9ec58bfb400b38" href="?event=event-9ec58bfb400b38#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-18c9ff1dcfd6a8" href="?event=event-18c9ff1dcfd6a8#company-updates">云栖大会观察：阿里公布 Qwen 4/5 参数路线图与 RSI 实验，下一代视频模型11月发布</a></li><li><a data-report-target="event-811e8a1a0307e4" href="?event=event-811e8a1a0307e4#company-updates">Anthropic 发布 Claude Haiku 5.5：登上 Amazon Bedrock，官方称较 Haiku 4.5 多数任务成本降低约 75%</a></li><li><a data-report-target="event-9915d625799ec4" href="?event=event-9915d625799ec4#company-updates">Anthropic承诺三年投入1.5亿美元支持Genesis Mission，Claude将覆盖NASA等15+联邦机构</a></li><li><a data-report-target="event-f08413755302b3" href="?event=event-f08413755302b3#company-updates">Claude Haiku 5.5 发布：OSWorld 2.1 升至 72.4%、成本降约 75%，复杂终端编程仍落后 Sonnet 5.5</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-03c6773d41a46a" href="?event=event-03c6773d41a46a#company-updates">Naive AI成立7个月融资4亿美元、估值14.2亿美元，代季峰8人团队背景与技术路线首次曝光</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-9ec58bfb400b38" href="?event=event-9ec58bfb400b38#company-updates">Anthropic 发布 Cyber Mission：推出关键基础设施防御计划与开源扫描服务 OSS Scanner</a></li><li><a data-report-target="event-0d6bab3db53229" href="?event=event-0d6bab3db53229#company-updates">Google 推出面向企业的 Gemini Agent：单一界面跨应用分配任务、云端自动执行</a></li><li><a data-report-target="event-b78b2b32584c17" href="?event=event-b78b2b32584c17#company-updates">Snyk将内部支持Agent产品化为Snyk Assist：9月进入核心产品，已处理超6万次查询</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-97a357efe3c4ee" href="?event=event-97a357efe3c4ee#technical-progress">LangChain 开源 Restock 示例：让 Agent 通过 Stripe Link 与 MPP 完成真实采购支付</a></li><li><a data-report-target="event-fab88cbf403d9b" href="?event=event-fab88cbf403d9b#technical-progress">LangChain 发布 Managed Deep Agents v0.9：Agent 可自建定时任务、按运行动态配置，并支持 Slack 表情回应</a></li><li><a data-report-target="event-7f2f174ddaa729" href="?event=event-7f2f174ddaa729#technical-progress">LangChain 重构 Deep Agents 技能系统：工具绑定技能、运行时固定与线程内热重载</a></li><li><a data-report-target="event-7e5d226e7b9af6" href="?event=event-7e5d226e7b9af6#technical-progress">Qlik 基于 Amazon Bedrock 构建 Qlik Answers：分层多智能体架构实现可溯源企业级问答</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-095e7b41a1a273" href="?event=event-095e7b41a1a273#company-updates">独家｜清华AIR首届博士李健雄创立本溯智能，五源资本领投押注动作原生具身模型</a></li><li><a data-report-target="event-f020183e81c606" href="?event=event-f020183e81c606#company-updates">北醒李远：上半年交付25万台机器人雷达、收入占比超50%，NOVA20以时分复用切入具身感知</a></li></ul>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>阿里</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/industrynews/SqijXlMpyTf0xSst.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/industrynews/SqijXlMpyTf0xSst.html" target="_blank" rel="noreferrer">云栖大会观察：阿里公布 Qwen 4/5 参数路线图与 RSI 实验，下一代视频模型11月发布</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/introducing-claude-haiku-5-5-on-aws" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/introducing-claude-haiku-5-5-on-aws" target="_blank" rel="noreferrer">Anthropic 发布 Claude Haiku 5.5：登上 Amazon Bedrock，官方称较 Haiku 4.5 多数任务成本降低约 75%</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.anthropic.com/news/anthropic-cyber-mission" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
           <h3><a href="https://www.anthropic.com/news/anthropic-cyber-mission" target="_blank" rel="noreferrer">Anthropic 发布 Cyber Mission：推出关键基础设施防御计划与开源扫描服务 OSS Scanner</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>本溯智能</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/ai/WbD0Tf6P1oA2WDdq.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/ai/WbD0Tf6P1oA2WDdq.html" target="_blank" rel="noreferrer">独家｜清华AIR首届博士李健雄创立本溯智能，五源资本领投押注动作原生具身模型</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.anthropic.com/news/genesis-mission-commitment" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
           <h3><a href="https://www.anthropic.com/news/genesis-mission-commitment" target="_blank" rel="noreferrer">Anthropic承诺三年投入1.5亿美元支持Genesis Mission，Claude将覆盖NASA等15+联邦机构</a></h3>
@@ -3239,6 +3318,8 @@ time {
           <div class="report-item-meta">
             <strong>Naive AI</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/industrynews/f0nfLFiAdLXtig24.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/industrynews/f0nfLFiAdLXtig24.html" target="_blank" rel="noreferrer">Naive AI成立7个月融资4亿美元、估值14.2亿美元，代季峰8人团队背景与技术路线首次曝光</a></h3>
@@ -3257,6 +3338,8 @@ time {
           <div class="report-item-meta">
             <strong>Google</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.theverge.com/tech/1007904/google-gemini-ai-agent-enterprise" target="_blank" rel="noopener noreferrer"><b>theverge</b></a>
           </div>
           <h3><a href="https://www.theverge.com/tech/1007904/google-gemini-ai-agent-enterprise" target="_blank" rel="noreferrer">Google 推出面向企业的 Gemini Agent：单一界面跨应用分配任务、云端自动执行</a></h3>
@@ -3275,6 +3358,8 @@ time {
           <div class="report-item-meta">
             <strong>Snyk</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.langchain.com/blog/how-snyk-turned-an-internal-support-agent-into-a-customer-feature" target="_blank" rel="noopener noreferrer"><b>langchain</b></a>
           </div>
           <h3><a href="https://www.langchain.com/blog/how-snyk-turned-an-internal-support-agent-into-a-customer-feature" target="_blank" rel="noreferrer">Snyk将内部支持Agent产品化为Snyk Assist：9月进入核心产品，已处理超6万次查询</a></h3>
@@ -3293,6 +3378,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/ai/n2GjuJRnM4utgaun.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/ai/n2GjuJRnM4utgaun.html" target="_blank" rel="noreferrer">Claude Haiku 5.5 发布：OSWorld 2.1 升至 72.4%、成本降约 75%，复杂终端编程仍落后 Sonnet 5.5</a></h3>
@@ -3311,6 +3398,8 @@ time {
           <div class="report-item-meta">
             <strong>北醒</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.leiphone.com/category/robot/xhfZWtXZLLsnbNKt.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
           <h3><a href="https://www.leiphone.com/category/robot/xhfZWtXZLLsnbNKt.html" target="_blank" rel="noreferrer">北醒李远：上半年交付25万台机器人雷达、收入占比超50%，NOVA20以时分复用切入具身感知</a></h3>
@@ -3394,6 +3483,8 @@ time {
           <div class="report-item-meta">
             <strong>LangChain</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.langchain.com/blog/agents-that-can-pay-with-stripe-link" target="_blank" rel="noopener noreferrer"><b>langchain</b></a>
           </div>
           <h3><a href="https://www.langchain.com/blog/agents-that-can-pay-with-stripe-link" target="_blank" rel="noreferrer">LangChain 开源 Restock 示例：让 Agent 通过 Stripe Link 与 MPP 完成真实采购支付</a></h3>
@@ -3412,6 +3503,8 @@ time {
           <div class="report-item-meta">
             <strong>LangChain</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.langchain.com/blog/managed-deep-agents-schedules-per-run-configuration-slack" target="_blank" rel="noopener noreferrer"><b>langchain</b></a>
           </div>
           <h3><a href="https://www.langchain.com/blog/managed-deep-agents-schedules-per-run-configuration-slack" target="_blank" rel="noreferrer">LangChain 发布 Managed Deep Agents v0.9：Agent 可自建定时任务、按运行动态配置，并支持 Slack 表情回应</a></h3>
@@ -3430,6 +3523,8 @@ time {
           <div class="report-item-meta">
             <strong>LangChain</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.langchain.com/blog/revamping-skills-in-deep-agents" target="_blank" rel="noopener noreferrer"><b>langchain</b></a>
           </div>
           <h3><a href="https://www.langchain.com/blog/revamping-skills-in-deep-agents" target="_blank" rel="noreferrer">LangChain 重构 Deep Agents 技能系统：工具绑定技能、运行时固定与线程内热重载</a></h3>
@@ -3448,6 +3543,8 @@ time {
           <div class="report-item-meta">
             <strong>Qlik</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/how-qlik-built-grounded-enterprise-scale-ai-with-amazon-bedrock" target="_blank" rel="noreferrer">Qlik 基于 Amazon Bedrock 构建 Qlik Answers：分层多智能体架构实现可溯源企业级问答</a></h3>
@@ -3479,6 +3576,8 @@ time {
           <div class="report-item-meta">
             <strong>华为</strong>
             <em>行业动态</em>
+            
+            
             <b>雷峰网</b>
           </div>
           <h3><a href="https://www.leiphone.com/category/chips/JidbQuKCNUBEEV6Z.html" target="_blank" rel="noreferrer">华为推OceanStor M900为KV Cache单独存储，行业专用SSD规格仍待定型</a></h3>
@@ -3497,6 +3596,8 @@ time {
           <div class="report-item-meta">
             <strong>IROS 2026</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b>雷峰网</b>
           </div>
           <h3><a href="https://www.leiphone.com/category/private/wEpCJ4T8v9cJFgCn.html" target="_blank" rel="noreferrer">对 1933 篇 IROS 2026 论文的统计显示：大模型未“吃掉”机器人学，研究进入系统整合阶段</a></h3>
@@ -3515,6 +3616,8 @@ time {
           <div class="report-item-meta">
             <strong>Aaron Levie</strong>
             <em>行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2108056577697882402" target="_blank" rel="noreferrer">The compute needed for the stage of AI we’re about to enter is going to be insane.
@@ -3543,6 +3646,7 @@ We’re only in the early stages of what this buildout is going to look like.</a
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3571,10 +3675,28 @@ We’re only in the early stages of what this buildout is going to look like.</a
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

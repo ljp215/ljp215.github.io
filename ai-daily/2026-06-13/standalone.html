@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-94c94a6e3a7646" href="?event=event-94c94a6e3a7646#company-updates">MCP：Build 2026：Azure API Management 推出统一模型API并新增MCP内容安全能力</a></h3>
+      <p>微软 Build 2026 宣布 Azure APIM 推出统一模型 API，实现多厂商接口自动适配，并将内容安全与词元统计扩展至 MCP 调用及智能体通信场景。</p>
+      <a class="focus-more" data-report-target="event-94c94a6e3a7646" href="?event=event-94c94a6e3a7646#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-report-target="event-60bc53a1a837d2" href="?event=event-60bc53a1a837d2#company-updates">Anthropic：SpaceX, Anthropic, and OpenAI’s hot IPO summer</a></h3>
+      <p>该播客探讨 2026 年 IPO 热潮，指出市场焦点转向 Anthropic、OpenAI 与 SpaceX 等新阵营，并分析多家公司同期上市对估值体系的压力测试。</p>
+      <a class="focus-more" data-report-target="event-60bc53a1a837d2" href="?event=event-60bc53a1a837d2#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-report-target="event-397f2454f7af50" href="?event=event-397f2454f7af50#technical-progress">36氪研究院</a></h3>
+      <p>报告指出中国工业MRO采购市场正从线上交易转向供应链协同，AI已深入商品治理、智能选型与库存优化等环节，成为平台升级的核心驱动力。</p>
+      <a class="focus-more" data-report-target="event-397f2454f7af50" href="?event=event-397f2454f7af50#technical-progress">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-94c94a6e3a7646" href="?event=event-94c94a6e3a7646#company-updates">MCP：Build 2026：Azure API Management 推出统一模型API并新增MCP内容安全能力</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-60bc53a1a837d2" href="?event=event-60bc53a1a837d2#company-updates">Anthropic：SpaceX, Anthropic, and OpenAI’s hot IPO summer</a></li><li><a data-report-target="event-fe5001d6d270a7" href="?event=event-fe5001d6d270a7#company-updates">Anthropic：It’s hot IPO summer, and the MANGOS are ripe</a></li><li><a data-report-target="event-397f2454f7af50" href="?event=event-397f2454f7af50#technical-progress">36氪研究院</a></li><li><a data-report-target="event-68a5c6d1f01c0c" href="?event=event-68a5c6d1f01c0c#technical-progress">olmo-eval: An evaluation workbench for the model development loop</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-fd064d5cdbacee" href="?event=event-fd064d5cdbacee#company-updates">宇瞻推出 GraTherX 内存条散热技术：每侧加厚 0.17mm，故障率降低 60%</a></li><li><a data-report-target="event-da6e9cba8c3132" href="?event=event-da6e9cba8c3132#company-updates">支持离线运行，苹果 iPhone 17 Pro 等升级 iOS 27 后支持 AI 高级听写功能</a></li><li><a data-report-target="event-e670d5f1cca194" href="?event=event-e670d5f1cca194#technical-progress">OpenAI：Siri won’t be your AI girlfriend</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-b2742796ff61db" href="?event=event-b2742796ff61db#technical-progress">Snowflake 迈向 Agentic Enterprise 的关键一跃</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>MCP</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/KDgV7D7aIrCVeEEuy6Wk" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/KDgV7D7aIrCVeEEuy6Wk" target="_blank" rel="noreferrer">MCP：Build 2026：Azure API Management 推出统一模型API并新增MCP内容安全能力</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/video/spacex-anthropic-and-openais-hot-ipo-summer" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/video/spacex-anthropic-and-openais-hot-ipo-summer" target="_blank" rel="noreferrer">Anthropic：SpaceX, Anthropic, and OpenAI’s hot IPO summer</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/podcast/its-hot-ipo-summer-and-the-mangos-are-ripe" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/podcast/its-hot-ipo-summer-and-the-mangos-are-ripe" target="_blank" rel="noreferrer">Anthropic：It’s hot IPO summer, and the MANGOS are ripe</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/0/963/751.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/0/963/751.htm" target="_blank" rel="noreferrer">宇瞻推出 GraTherX 内存条散热技术：每侧加厚 0.17mm，故障率降低 60%</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/0/963/743.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/0/963/743.htm" target="_blank" rel="noreferrer">支持离线运行，苹果 iPhone 17 Pro 等升级 iOS 27 后支持 AI 高级听写功能</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://36kr.com/p/3846798967818752?f=rss" target="_blank" rel="noopener noreferrer"><b>36kr.com</b></a>
           </div>
           <h3><a href="https://36kr.com/p/3846798967818752?f=rss" target="_blank" rel="noreferrer">36氪研究院</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/x99GEFjWQ8Ipb4pcDq2P" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/x99GEFjWQ8Ipb4pcDq2P" target="_blank" rel="noreferrer">Snowflake 迈向 Agentic Enterprise 的关键一跃</a></h3>
@@ -3340,6 +3423,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.theverge.com/tech/948890/siri-wont-be-your-ai-girlfriend" target="_blank" rel="noopener noreferrer"><b>theverge</b></a>
           </div>
           <h3><a href="https://www.theverge.com/tech/948890/siri-wont-be-your-ai-girlfriend" target="_blank" rel="noreferrer">OpenAI：Siri won’t be your AI girlfriend</a></h3>
@@ -3358,6 +3443,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>融资/收购/估值</em>
+            
+            
             <a class="source-link" href="https://huggingface.co/blog/allenai/olmo-eval" target="_blank" rel="noopener noreferrer"><b>huggingface.co</b></a>
           </div>
           <h3><a href="https://huggingface.co/blog/allenai/olmo-eval" target="_blank" rel="noreferrer">olmo-eval: An evaluation workbench for the model development loop</a></h3>
@@ -3389,6 +3476,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Dan Shipper</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/danshipper/status/2065269582961737957" target="_blank" rel="noreferrer">had an idea for a big fable project, set it up, and let it cook
@@ -3409,6 +3498,8 @@ back to codex 😬</a></h3><p class="social-translation"><span>译文</span>有�
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2065287110744297809" target="_blank" rel="noreferrer">At Box, we just surveyed 1,640 IT leaders across the US, Japan, and Europe about agentic AI adoption. Many standout findings, but a big one was that the companies that adopted AI the most are planning to grow headcount the most.
@@ -3429,6 +3520,8 @@ The narrative of jobs being wiped out assumes that companies will take a fixed a
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Amjad Masad</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/amasad/status/2065259509082411233" target="_blank" rel="noreferrer">Replit Agent team did a great job making Fable cost stomachable. The lack of mistakes net net makes it more affordable. https://t.co/ICkFYKxqYt</a></h3><p class="social-translation"><span>译文</span>Replit Agent 团队在控制 Fable 成本方面做得很出色，让价格变得可以接受。极低的出错率总体而言反而让它更划算。https://t.co/ICkFYKxqYt</p><div class="memory-note">
@@ -3445,6 +3538,8 @@ The narrative of jobs being wiped out assumes that companies will take a fixed a
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Amjad Masad</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/amasad/status/2065236013627351551" target="_blank" rel="noreferrer">For the first time, I&#039;m vibecoding with ZERO frustration and in a complete state of flow, so much so that I&#039;m running out of ideas.
@@ -3463,6 +3558,8 @@ Typically, I have so much backlog of things I want to add, but after Fable lande
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Swyx</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/swyx/status/2065264832056889711" target="_blank" rel="noreferrer">the #1 thing that is driving me to build my own vibecoding platform rn is that none of them - and i lov vercel, cloudflare, netlify etc - none of them really close the loop for you in terms of setting you on the right path with errors and pinging you when shit fails (shit always fails)
@@ -3481,6 +3578,8 @@ there&#039;s way too much &quot;webmaster&quot; infra to setup for every single 
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Amjad Masad</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/amasad/status/2065241626436583860" target="_blank" rel="noreferrer">This is what building a company looks like on Replit.
@@ -3507,6 +3606,7 @@ Click into any one of those and start building, changing, and generating new thi
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3535,10 +3635,28 @@ Click into any one of those and start building, changing, and generating new thi
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

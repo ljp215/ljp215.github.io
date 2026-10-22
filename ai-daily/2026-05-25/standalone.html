@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 10 个事件：大厂动态 2 条，技术进展 2 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-report-target="event-d4d07d9c2f5f12" href="?event=event-d4d07d9c2f5f12#company-updates">I tried Amazon’s Bee wearable and am both intrigued and slightly creeped out</a></h3>
+      <p>I tried Amazon’s Bee wearable and am both intrigued and slightly creeped out。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+      <a class="focus-more" data-report-target="event-d4d07d9c2f5f12" href="?event=event-d4d07d9c2f5f12#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">行业观点</p>
+      <h3><a data-report-target="event-931aec1288d996" href="?event=event-931aec1288d996#industry-views">OpenAI：&quot;We used to say build the MVP. Now you should build the system that builds the MVP first.&quot;</a></h3>
+      <p>&quot;We used to say build the MVP. Now you should build the system that builds the MVP first.&quot;。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+      <a class="focus-more" data-report-target="event-931aec1288d996" href="?event=event-931aec1288d996#industry-views">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">行业观点</p>
+      <h3><a data-report-target="event-8c84302d82226a" href="?event=event-8c84302d82226a#industry-views">CEOs are uniquely prone to AI psychosis because they’re sufficiently distant from the last mile of work that still has to happen to generate most value with AI.</a></h3>
+      <p>CEOs are uniquely prone to AI psychosis because they’re sufficiently distant from the last mile of work that still has to happen to generate most value with AI。先放在观察位，等更多证据出现后再判断它的行业分量。</p>
+      <a class="focus-more" data-report-target="event-8c84302d82226a" href="?event=event-8c84302d82226a#industry-views">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-9f8d716c9230ee" href="?event=event-9f8d716c9230ee#company-updates">DeepSeek：DeepSeek将对其旗舰AI模型实施永久性75%折扣</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-d4d07d9c2f5f12" href="?event=event-d4d07d9c2f5f12#company-updates">I tried Amazon’s Bee wearable and am both intrigued and slightly creeped out</a></li><li><a data-report-target="event-637c3ced3e86b1" href="?event=event-637c3ced3e86b1#technical-progress">Everyone is navigating AI security in real time — even Google</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-3f14f098580345" href="?event=event-3f14f098580345#technical-progress">大规模工程支撑场景下的多智能体系统设计：Grab 实践案例</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>监管/安全/隐私</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/05/24/i-tried-amazons-bee-wearable-and-am-both-intrigued-and-slightly-creeped-out" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/05/24/i-tried-amazons-bee-wearable-and-am-both-intrigued-and-slightly-creeped-out" target="_blank" rel="noreferrer">I tried Amazon’s Bee wearable and am both intrigued and slightly creeped out</a></h3>
@@ -3165,6 +3236,8 @@ time {
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.bloomberg.com/news/articles/2026-05-23/deepseek-to-make-permanent-75-discount-on-flagship-ai-model" target="_blank" rel="noopener noreferrer"><b>Bloomberg</b></a>
           </div>
           <h3><a href="https://www.bloomberg.com/news/articles/2026-05-23/deepseek-to-make-permanent-75-discount-on-flagship-ai-model" target="_blank" rel="noreferrer">DeepSeek：DeepSeek将对其旗舰AI模型实施永久性75%折扣</a></h3>
@@ -3246,6 +3319,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/05/24/everyone-is-navigating-ai-security-in-real-time-even-google" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/05/24/everyone-is-navigating-ai-security-in-real-time-even-google" target="_blank" rel="noreferrer">Everyone is navigating AI security in real time — even Google</a></h3>
@@ -3262,6 +3337,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/7DfZeiQH0zm08P88xIw9" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/7DfZeiQH0zm08P88xIw9" target="_blank" rel="noreferrer">大规模工程支撑场景下的多智能体系统设计：Grab 实践案例</a></h3>
@@ -3291,6 +3368,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2058555226479866312" target="_blank" rel="noreferrer">&quot;We used to say build the MVP. Now you should build the system that builds the MVP first.&quot;
@@ -3327,6 +3406,8 @@ Thanks to our sponsors:
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2058582370253701432" target="_blank" rel="noreferrer">CEOs are uniquely prone to AI psychosis because they’re sufficiently distant from the last mile of work that still has to happen to generate most value with AI.
@@ -3349,6 +3430,8 @@ The best thing you can do as a CEO is to use AI a *ton* to figure out the real i
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Zara Zhang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/zarazhangrui/status/2058604604422815832" target="_blank" rel="noreferrer">OpenAI being more open
@@ -3364,6 +3447,8 @@ Also I just realized recently that Codex is open source https://t.co/ngBc1lrF7c<
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thariq</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/trq212/status/2058576195000660319" target="_blank" rel="noreferrer">my main takeaway from the Bun rewrite is that legacy codebases will be incredibly valuable as a source for &quot;distilling&quot; code into new forms
@@ -3380,6 +3465,8 @@ every game should be crossplatform, all legacy software should work on the web, 
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Matt Turck</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/mattturck/status/2058659995311358332" target="_blank" rel="noreferrer">Is AGI already here?
@@ -3396,6 +3483,8 @@ every game should be crossplatform, all legacy software should work on the web, 
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thariq</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/trq212/status/2058576196481200223" target="_blank" rel="noreferrer">to be clear I don&#039;t think the models are quite there yet, Bun is extremely verifiable and has incredible test coverage
@@ -3418,6 +3507,7 @@ but I think they will get there</a></h3>
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3446,10 +3536,28 @@ but I think they will get there</a></h3>
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

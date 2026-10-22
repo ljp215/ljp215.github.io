@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 15 个事件：大厂动态 5 条，技术进展 4 条，行业观点 6 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-report-target="event-5037872096fdec" href="?event=event-5037872096fdec#company-updates">Anthropic：Notion restores access to Anthropic after service disruption</a></h3>
+      <p>Notion restores access to Anthropic after service disruption。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。</p>
+      <a class="focus-more" data-report-target="event-5037872096fdec" href="?event=event-5037872096fdec#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">工程实践</p>
+      <h3><a data-report-target="event-da606d76a05bb4" href="?event=event-da606d76a05bb4#company-updates">警惕“AI 中转站”数据安全风险，国家安全部发布安全提示</a></h3>
+      <p>警惕“AI 中转站”数据安全风险，国家安全部发布安全提示。这类变化会改写上线边界，适合放进产品发布前的风险检查。</p>
+      <a class="focus-more" data-report-target="event-da606d76a05bb4" href="?event=event-da606d76a05bb4#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">AI 产品与工具</p>
+      <h3><a data-report-target="event-47ea78cbe2a514" href="?event=event-47ea78cbe2a514#company-updates">OpenAI：OpenAI is still working on that ‘super app’</a></h3>
+      <p>OpenAI is still working on that ‘super app’。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。</p>
+      <a class="focus-more" data-report-target="event-47ea78cbe2a514" href="?event=event-47ea78cbe2a514#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-5037872096fdec" href="?event=event-5037872096fdec#company-updates">Anthropic：Notion restores access to Anthropic after service disruption</a></li><li><a data-report-target="event-b8a839553f3181" href="?event=event-b8a839553f3181#company-updates">Amazing Digital Dentures (a failed project)</a></li><li><a data-report-target="event-443ebbabec3354" href="?event=event-443ebbabec3354#technical-progress">OpenAI：“我在田里雇了一名工程师，它叫 Codex” —— 北海道一个西兰花农的 8 个真实 AI 用法</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-47ea78cbe2a514" href="?event=event-47ea78cbe2a514#company-updates">OpenAI：OpenAI is still working on that ‘super app’</a></li><li><a data-report-target="event-0dd2203bd31aa3" href="?event=event-0dd2203bd31aa3#company-updates">思必驰推出办公本 Turbo 阅读器：配 8.4 英寸面板、4500mAh 电池，4299 元</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-9d4ae1f2899a2d" href="?event=event-9d4ae1f2899a2d#technical-progress">OpenAI：ChatGPT 要变 AgentGPT 了</a></li><li><a data-report-target="event-e8cce28506d4cd" href="?event=event-e8cce28506d4cd#technical-progress">OpenAI：Harness 工程：在智能体优先的世界中运用 Codex</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-da606d76a05bb4" href="?event=event-da606d76a05bb4#company-updates">警惕“AI 中转站”数据安全风险，国家安全部发布安全提示</a></li><li><a data-report-target="event-9473fd82178e1d" href="?event=event-9473fd82178e1d#technical-progress">中信证券：分布式拓展光互联边界，DCI产业链迎系统性重构</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/06/07/notion-restores-access-to-anthropic-after-service-disruption" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/06/07/notion-restores-access-to-anthropic-after-service-disruption" target="_blank" rel="noreferrer">Anthropic：Notion restores access to Anthropic after service disruption</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/0/961/214.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/0/961/214.htm" target="_blank" rel="noreferrer">警惕“AI 中转站”数据安全风险，国家安全部发布安全提示</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/06/07/openai-is-still-working-on-that-super-app" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/06/07/openai-is-still-working-on-that-super-app" target="_blank" rel="noreferrer">OpenAI：OpenAI is still working on that ‘super app’</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://huggingface.co/blog/build-small-hackathon/amazingdigitaldentures" target="_blank" rel="noopener noreferrer"><b>huggingface.co</b></a>
           </div>
           <h3><a href="https://huggingface.co/blog/build-small-hackathon/amazingdigitaldentures" target="_blank" rel="noreferrer">Amazing Digital Dentures (a failed project)</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://www.ithome.com/0/961/207.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
           <h3><a href="https://www.ithome.com/0/961/207.htm" target="_blank" rel="noreferrer">思必驰推出办公本 Turbo 阅读器：配 8.4 英寸面板、4500mAh 电池，4299 元</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://x.com/dotey/status/2063686036895478162" target="_blank" rel="noopener noreferrer"><b>@dotey</b></a>
           </div>
           <h3><a href="https://x.com/dotey/status/2063686036895478162" target="_blank" rel="noreferrer">OpenAI：ChatGPT 要变 AgentGPT 了</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://x.com/AYi_AInotes/status/2063573709672104286" target="_blank" rel="noopener noreferrer"><b>@AYi_AInotes</b></a>
           </div>
           <h3><a href="https://x.com/AYi_AInotes/status/2063573709672104286" target="_blank" rel="noreferrer">OpenAI：“我在田里雇了一名工程师，它叫 Codex” —— 北海道一个西兰花农的 8 个真实 AI 用法</a></h3>
@@ -3340,6 +3423,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://openai.com/index/harness-engineering" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
           <h3><a href="https://openai.com/index/harness-engineering" target="_blank" rel="noreferrer">OpenAI：Harness 工程：在智能体优先的世界中运用 Codex</a></h3>
@@ -3358,6 +3443,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <a class="source-link" href="https://36kr.com/newsflashes/3843784304134403?f=rss" target="_blank" rel="noopener noreferrer"><b>36kr.com</b></a>
           </div>
           <h3><a href="https://36kr.com/newsflashes/3843784304134403?f=rss" target="_blank" rel="noreferrer">中信证券：分布式拓展光互联边界，DCI产业链迎系统性重构</a></h3>
@@ -3389,6 +3476,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2063475353335869922" target="_blank" rel="noreferrer">There should be a way to filter or sort all my Codex threads in different ways vs. only by project.
@@ -3412,6 +3501,8 @@ I&#039;m trying to keep it to 10 threads but it&#039;s already getting unwieldly
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/petergyang/status/2063486871037153558" target="_blank" rel="noreferrer">this agentic coding crack is more addictive than video games smh</a></h3><p class="social-translation"><span>译文</span>这 Agentic 编程体验比打游戏还上头，真是服了。</p><div class="memory-note">
@@ -3428,6 +3519,8 @@ I&#039;m trying to keep it to 10 threads but it&#039;s already getting unwieldly
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Swyx</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/swyx/status/2063432747432268259" target="_blank" rel="noreferrer">one popular theory is that research paper alpha* and lab publishing ~died when researchers realized that instead of fighting with marketing depts they could simply walk out the door and get &gt;$100m for their legally protected tacit knowledge gained
@@ -3448,6 +3541,8 @@ california non-noncompetes have a bigger impact on knowledge spreading than gith
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Dan Shipper</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/danshipper/status/2063426632824562167" target="_blank" rel="noreferrer">LLMs are not conscious.
@@ -3468,6 +3563,8 @@ Both true.</a></h3><p class="social-translation"><span>译文</span>LLMs 没有�
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Dan Shipper</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/danshipper/status/2063436919967522848" target="_blank" rel="noreferrer">to add two more that increase in value:
@@ -3487,6 +3584,8 @@ Dikē—the capacity to perceive what is right https://t.co/X3LsGPfZa5</a></h3><
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>公司/行业动态</em>
+            
+            
             <b class="source-person"><small>X</small><span>Dan Shipper</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/danshipper/status/2063438262841094604" target="_blank" rel="noreferrer">my absolute favorite of Plato&#039;s Dialogues is a deep discussion of the limits of techne and the necessity of aidos and dike
@@ -3512,6 +3611,7 @@ https://t.co/8pDOaMnIIa</a></h3><p class="social-translation"><span>译文</span
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3540,10 +3640,28 @@ https://t.co/8pDOaMnIIa</a></h3><p class="social-translation"><span>译文</span
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>

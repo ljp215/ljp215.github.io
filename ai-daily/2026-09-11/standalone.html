@@ -2612,6 +2612,37 @@ time {
     gap: 5px;
   }
 }
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
 
 </style>
   </head>
@@ -2631,10 +2662,13 @@ time {
       <details class="report-history-month" >
         <summary>
           <span>2026 年 10 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+          <a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
             <time datetime="2026-10-14">14 日</time>
             <em>19 条</em>
           </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
@@ -3098,7 +3132,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 139 期 →</strong>
+        <strong>查看全部 140 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3114,6 +3148,41 @@ time {
             <p>今天筛出 13 个事件：大厂动态 5 条，技术进展 3 条，行业观点 5 条；另读 Hugging Face Papers 5 篇。</p>
           </div>
         </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-report-target="event-4d81dd83ab4786" href="?event=event-4d81dd83ab4786#company-updates">OpenAI：Introducing the Agents API</a></h3>
+      <p>OpenAI 发布 Agents API，一项由 Codex harness 驱动的托管服务，负责云端 agent 的编排、长时会话与工具调用。</p>
+      <a class="focus-more" data-report-target="event-4d81dd83ab4786" href="?event=event-4d81dd83ab4786#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-report-target="event-20dff33bdaaaa1" href="?event=event-20dff33bdaaaa1#company-updates">Anthropic：Anthropic details distillation campaigns from Alibaba, Moonshot AI, and DeepSeek</a></h3>
+      <p>Anthropic新报告指控阿里巴巴、月之暗面和DeepSeek等中国AI公司持续对Claude进行模型蒸馏攻击，提取思维链等能力，观察到近2亿次交互，其中阿里巴巴被指规模最大，月之暗面被指与军方有关。</p>
+      <a class="focus-more" data-report-target="event-20dff33bdaaaa1" href="?event=event-20dff33bdaaaa1#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">AI 产品与工具</p>
+      <h3><a data-report-target="event-170989fb222113" href="?event=event-170989fb222113#company-updates">Google DeepMind：The Gemini app is now available for Windows</a></h3>
+      <p>谷歌推出 Gemini 应用 Windows 桌面版，支持 Alt+Space 快捷键唤起，可在工作流中调用 Gemini 执行多步任务、从 Google 应用提取信息，并生成图片和视频，面向 Windows 10/。</p>
+      <a class="focus-more" data-report-target="event-170989fb222113" href="?event=event-170989fb222113#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-20dff33bdaaaa1" href="?event=event-20dff33bdaaaa1#company-updates">Anthropic：Anthropic details distillation campaigns from Alibaba, Moonshot AI, and DeepSeek</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-170989fb222113" href="?event=event-170989fb222113#company-updates">Google DeepMind：The Gemini app is now available for Windows</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-4d81dd83ab4786" href="?event=event-4d81dd83ab4786#company-updates">OpenAI：Introducing the Agents API</a></li><li><a data-report-target="event-470a2dc75cbbe5" href="?event=event-470a2dc75cbbe5#company-updates">OpenAI：Now everyone can put data to work</a></li><li><a data-report-target="event-f873276cfbade7" href="?event=event-f873276cfbade7#technical-progress">AWS：Agent Evaluation Metric for multi-turn conversations</a></li><li><a data-report-target="event-1894a20f821c45" href="?event=event-1894a20f821c45#technical-progress">Anthropic：Anthropic reveals rogue AI agents hate CAPTCHAs, just like you</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-75b96506bed25a" href="?event=event-75b96506bed25a#company-updates">Amazon (AWS)：Reduce LLM latency with prefix-aware routing on Amazon SageMaker Inference</a></li><li><a data-report-target="event-093b721a79ca60" href="?event=event-093b721a79ca60#technical-progress">DeepSeek：参数几乎翻倍，推理反而更省：DeepSeek V4.1-Flash 重构 KV Cache</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div>
+  </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
@@ -3149,6 +3218,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://openai.com/index/introducing-the-agents-api" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
           <h3><a href="https://openai.com/index/introducing-the-agents-api" target="_blank" rel="noreferrer">OpenAI：Introducing the Agents API</a></h3>
@@ -3167,6 +3238,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>监管/安全/隐私</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/09/10/anthropic-details-distillation-campaigns-from-alibaba-moonshot-ai-and-deepseek" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/09/10/anthropic-details-distillation-campaigns-from-alibaba-moonshot-ai-and-deepseek" target="_blank" rel="noreferrer">Anthropic：Anthropic details distillation campaigns from Alibaba, Moonshot AI, and DeepSeek</a></h3>
@@ -3185,6 +3258,8 @@ time {
           <div class="report-item-meta">
             <strong>Google DeepMind</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows" target="_blank" rel="noopener noreferrer"><b>Google</b></a>
           </div>
           <h3><a href="https://blog.google/innovation-and-ai/products/gemini-app/gemini-app-now-on-windows" target="_blank" rel="noreferrer">Google DeepMind：The Gemini app is now available for Windows</a></h3>
@@ -3203,6 +3278,8 @@ time {
           <div class="report-item-meta">
             <strong>OpenAI</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://openai.com/index/put-data-to-work" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
           <h3><a href="https://openai.com/index/put-data-to-work" target="_blank" rel="noreferrer">OpenAI：Now everyone can put data to work</a></h3>
@@ -3221,6 +3298,8 @@ time {
           <div class="report-item-meta">
             <strong>Amazon (AWS)</strong>
             <em>模型/产品发布</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/reduce-llm-latency-with-prefix-aware-routing-on-amazon-sagemaker-inference" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/reduce-llm-latency-with-prefix-aware-routing-on-amazon-sagemaker-inference" target="_blank" rel="noreferrer">Amazon (AWS)：Reduce LLM latency with prefix-aware routing on Amazon SageMaker Inference</a></h3>
@@ -3304,6 +3383,8 @@ time {
           <div class="report-item-meta">
             <strong>DeepSeek</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://www.infoq.cn/article/sbaJrAa8VTIRKIPCpKlo" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
           <h3><a href="https://www.infoq.cn/article/sbaJrAa8VTIRKIPCpKlo" target="_blank" rel="noreferrer">DeepSeek：参数几乎翻倍，推理反而更省：DeepSeek V4.1-Flash 重构 KV Cache</a></h3>
@@ -3322,6 +3403,8 @@ time {
           <div class="report-item-meta">
             <strong>AWS</strong>
             <em>研究/Benchmark</em>
+            
+            
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/agent-evaluation-metric-for-multi-turn-conversations" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
           <h3><a href="https://aws.amazon.com/blogs/machine-learning/agent-evaluation-metric-for-multi-turn-conversations" target="_blank" rel="noreferrer">AWS：Agent Evaluation Metric for multi-turn conversations</a></h3>
@@ -3340,6 +3423,8 @@ time {
           <div class="report-item-meta">
             <strong>Anthropic</strong>
             <em>Agent/开发者基础设施</em>
+            
+            
             <a class="source-link" href="https://techcrunch.com/2026/09/10/anthropic-reveals-rogue-ai-agents-hate-captchas-just-like-you" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
           <h3><a href="https://techcrunch.com/2026/09/10/anthropic-reveals-rogue-ai-agents-hate-captchas-just-like-you" target="_blank" rel="noreferrer">Anthropic：Anthropic reveals rogue AI agents hate CAPTCHAs, just like you</a></h3>
@@ -3371,6 +3456,8 @@ time {
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/levie/status/2097920810543468551" target="_blank" rel="noreferrer">The world is going to be using coding agents for far more than anyone would have thought before.
@@ -3389,6 +3476,8 @@ In short, by lowering the cost of code, we are going to do so much more with it.
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Thibault Sottiaux</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/thsottiaux/status/2097912273264095536" target="_blank" rel="noreferrer">One of the greatest joys is debating new model names with researchers. They come up with the most hilarious stuff</a></h3><p class="social-translation"><span>译文</span>最大的乐趣之一就是与研究人员讨论新模型的命名。他们总能想出各种搞笑的名字。</p>
@@ -3403,6 +3492,8 @@ In short, by lowering the cost of code, we are going to do so much more with it.
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Steinberger</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/steipete/status/2097880507753382201" target="_blank" rel="noreferrer">Dashboards/Mini-Apps was something I pushed two months ago and now it replaced lots of custom tooling we built around OC. Everything’s a sidebar entry, a dashboard or a plugin now for our team server. https://t.co/sykNUwBqrX</a></h3><p class="social-translation"><span>译文</span>Dashboards/Mini-Apps是我两个月前推动的，现在它取代了我们围绕OC构建的大量自定义工具。对于我们的团队服务器，现在所有东西都是侧边栏条目、仪表盘或插件。https://t.co/sykNUwBqrX</p>
@@ -3417,6 +3508,8 @@ In short, by lowering the cost of code, we are going to do so much more with it.
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Nikunj Kothari</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/nikunj/status/2097870497505837478" target="_blank" rel="noreferrer">Finally https://t.co/7cyHiAyVQO</a></h3><p class="social-translation"><span>译文</span>终于 https://t.co/7cyHiAyVQO</p>
@@ -3431,6 +3524,8 @@ In short, by lowering the cost of code, we are going to do so much more with it.
           <div class="report-item-meta">
             <strong>AI</strong>
             <em>研究/Benchmark</em>
+            
+            
             <b class="source-person"><small>X</small><span>Peter Steinberger</span></b>
           </div>
           <h3 class="social-original"><a href="https://x.com/steipete/status/2097935551735423464" target="_blank" rel="noreferrer">Finally got cloud sessions working *fast* in OpenClaw.
@@ -3452,6 +3547,7 @@ Remote Terminal, WebVNC and CUA for computer use. https://t.co/VwbyGV5k2p</a></h
 
   setupTabs();
   setupSearchTarget();
+  setupOverviewNavigation();
 
   function setupTabs() {
     tabs.forEach((tab) => {
@@ -3480,10 +3576,28 @@ Remote Terminal, WebVNC and CUA for computer use. https://t.co/VwbyGV5k2p</a></h
     if (!targetId) return;
     const target = document.getElementById(targetId);
     if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
     const panel = target.closest(".report-tab-panel");
     if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
     target.classList.add("is-search-target");
     window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
   }
 })();
 </script>
