@@ -6,12 +6,12 @@
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
     <title>AI 行业简报 2026-10-13</title>
     <meta name="description" content="今天筛出 17 个事件：大厂动态 8 条，技术进展 8 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。">
-    <link rel="canonical" href="https://127.0.0.1:4321/ai-daily/2026-10-13">
+    <link rel="canonical" href="https://luojinping.com/ai-daily/2026-10-13">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="AI 聚合日报">
     <meta property="og:title" content="AI 行业简报 2026-10-13">
     <meta property="og:description" content="今天筛出 17 个事件：大厂动态 8 条，技术进展 8 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。">
-    <meta property="og:url" content="https://127.0.0.1:4321/ai-daily/2026-10-13">
+    <meta property="og:url" content="https://luojinping.com/ai-daily/2026-10-13">
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="AI 行业简报 2026-10-13">
     <meta name="twitter:description" content="今天筛出 17 个事件：大厂动态 8 条，技术进展 8 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。">
@@ -3155,18 +3155,21 @@ time {
       <p class="focus-topic">基础模型与技术</p>
       <h3><a data-report-target="event-cc8693da332e8b" href="?event=event-cc8693da332e8b#technical-progress">Arena 第 41 周榜：Claude Opus 5.5 Max 首登智能体榜首，国产多模型稳居中上游</a></h3>
       <p>Arena（arena.ai）发布 2026 年第 41 周（10.05-10.11）大模型榜：Anthropic Claude Opus 5.5 Max 首次入榜即登顶智能体榜，净提升度 15.53%、任务确认成功率 17.29%、工具幻觉率 0.37%；综合榜 gemini-4-argon-high 以 ELO 1525 蝉联第一，claude-opus-5.5-high（1507）升至第二；代码榜 claude-opus-5.5-high 升至第五（1550），与第二名 1551 统计并列。国产模型中 kimi-k3-max 综合榜第 16（1488）、qwen3.8-max 第 22（1483），整体稳定中上游。榜单基于匿名盲测投票反映用户偏好而非能力测试，误差范围内视为并列，新模型需积累票数才入榜。</p>
+      
       <a class="focus-more" data-report-target="event-cc8693da332e8b" href="?event=event-cc8693da332e8b#technical-progress">阅读解读与来源 →</a>
     </article><article class="focus-card">
       <span class="focus-number">02</span>
       <p class="focus-topic">工程实践</p>
       <h3><a data-report-target="event-f5f5244a39e239" href="?event=event-f5f5244a39e239#technical-progress">vLLM 博客：双向 KV 传输将 P-D 分离部署下多轮 Agent 工作负载 TTFT 最高降低 3.3 倍</a></h3>
       <p>vLLM 官方博客发布双向 KV 缓存传输：Prefill-Decode 分离部署中，decode 节点生成后按 TTL（默认 480 秒）保留 KV，经响应流把元数据交给 KV-cache-aware 路由器缓存；下一轮 prefill 节点本地前缀缓存未命中时，经扩展的 NIXL 连接器异步执行 D→P NIXL READ 复用 KV，默认 64 tokens 的 kv_recompute_threshold 决定重算或拉取。1P1D 部署（EC2 P5en + EFA，禁用 prefill prefix caching）实测：Qwen3-32B 在 24k 上下文 TTFT 从 778ms 降至 460ms（约 1.6x），GLM-5-FP8 在 20k 从 2334ms 降至 702ms（约 3.3x）。该功能最初在 AWS Trainium 上构建，已贡献给 vLLM 开源。</p>
+      
       <a class="focus-more" data-report-target="event-f5f5244a39e239" href="?event=event-f5f5244a39e239#technical-progress">阅读解读与来源 →</a>
     </article><article class="focus-card">
       <span class="focus-number">03</span>
       <p class="focus-topic">基础模型与技术</p>
       <h3><a data-report-target="event-d93816d2b5ebaa" href="?event=event-d93816d2b5ebaa#technical-progress">阿里千问发布 QwenGyre：面向超长程智能体任务的在线强化学习框架</a></h3>
       <p>阿里千问今日发布QwenGyre，面向超长程智能体任务的在线强化学习框架。它将GPU分成若干计算单元，任务批次完成后空出单元动态转入训练，仍在运行的任务保留进度与缓存；并以Token-in Token-out记录生成上下文、按共享前缀组织轨迹树，只展开被选中路径，超时部分完成的任务用Partial Scoring提供反馈。官方在NL2RepoBench在线RL实验中，以每次rollout约70万token训练48步，通过率从52.5%升至58.5%；相同GPU预算下相对Async实现1.78×端到端加速，训练分数与Async、Colocate接近。</p>
+      
       <a class="focus-more" data-report-target="event-d93816d2b5ebaa" href="?event=event-d93816d2b5ebaa#technical-progress">阅读解读与来源 →</a>
     </article></div>
     <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>4</b></summary>
