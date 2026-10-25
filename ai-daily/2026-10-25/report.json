@@ -2,11 +2,11 @@
   "date": "2026-10-25",
   "version": "V4",
   "title": "AI 行业简报 2026-10-25",
-  "generated_at": "2026-10-25T11:50:54.433Z",
+  "generated_at": "2026-10-25T12:00:08.916Z",
   "evidence_review_version": 1,
   "event_count": 181,
-  "item_count": 7,
-  "summary": "今天筛出 7 个事件：大厂动态 3 条，技术进展 4 条，行业观点 0 条；另读 Hugging Face Papers 5 篇。",
+  "item_count": 5,
+  "summary": "今天筛出 5 个事件：大厂动态 3 条，技术进展 2 条，行业观点 0 条；另读 Hugging Face Papers 5 篇。",
   "sections": {
     "today_focus": [
       {
@@ -36,11 +36,25 @@
         "late_arrival": false,
         "late_arrival_reason": "",
         "evidence_urls": [
-          "https://github.com/BerriAI/litellm/releases/tag/v1.105.4"
+          "https://github.com/BerriAI/litellm/releases/tag/v1.105.4",
+          "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+          "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
         ],
         "source_references": [
           {
             "url": "https://github.com/BerriAI/litellm/releases/tag/v1.105.4",
+            "name": "litellm",
+            "kind": "官方来源",
+            "priority": 0
+          },
+          {
+            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+            "name": "litellm",
+            "kind": "官方来源",
+            "priority": 0
+          },
+          {
+            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
             "name": "litellm",
             "kind": "官方来源",
             "priority": 0
@@ -193,6 +207,54 @@
           "confidence": "高",
           "reasoning": "LiteLLM 是开源 LLM 网关，v1.105.4 的核心内容是 cosign 签名密钥轮换与 eMudhra 根 CA 移除，属于有明确技术机制的开源工具发布，因此归入 technical_progress 与 agent_or_developer_infra；新闻主语是 BerriAI 的发布动作，而非任何被测模型、AI 政策或安全事件定性。"
         },
+        "merged_event_ids": [
+          "8eafde66b28df7",
+          "13abd7791c62cc"
+        ],
+        "merged_coverage": [
+          {
+            "event_id": "8eafde66b28df7",
+            "title": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
+            "evidence_urls": [
+              "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
+            ],
+            "evidence_review": {
+              "version": 1,
+              "status": "passed",
+              "mode": "full_text",
+              "dates": [
+                {
+                  "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+                  "published_at": "2026-10-24T08:45:14.000Z",
+                  "publication_date": "2026-10-24"
+                }
+              ],
+              "text_digest": "c0685d637b2e8d3007a3728cfcc8ffd4d70d857e53f69c918f546bdc02c30662",
+              "verified_claim_count": 6
+            }
+          },
+          {
+            "event_id": "13abd7791c62cc",
+            "title": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
+            "evidence_urls": [
+              "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
+            ],
+            "evidence_review": {
+              "version": 1,
+              "status": "passed",
+              "mode": "full_text",
+              "dates": [
+                {
+                  "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
+                  "published_at": "2026-10-24T08:45:16.000Z",
+                  "publication_date": "2026-10-24"
+                }
+              ],
+              "text_digest": "242b66ecb5da7c2d4ed22a0d56323c9cf58f1764826f4dea5abc8c9d9399ca38",
+              "verified_claim_count": 7
+            }
+          }
+        ],
         "focus_reason": "虽是补丁版本，但签名密钥轮换和信任库收窄会直接打断自托管 LiteLLM 的镜像验证流程，影响所有启用准入控制与 CI 校验的 LLM 网关部署团队。"
       },
       {
@@ -966,381 +1028,6 @@
           "reasoning": "文章主语是 TensorSharp 开发者及其推理引擎，MiniMax-M3.1-Flash 只是被测模型，容易误判为 MiniMax 模型发布或 llama.cpp 评测；实际是一手推理工程测试与基准报告，因此归入 technical_progress。"
         },
         "thumbnail_source": "thumbnail_url"
-      },
-      {
-        "event_id": "8eafde66b28df7",
-        "bucket": "worth_tracking",
-        "section": "technical_progress",
-        "title": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
-        "ai_summary": "LiteLLM 于 10 月 24 日发布 v1.104.6，核心变更为更换 Docker 镜像和 Helm chart 的 cosign 签名密钥，旧密钥自本版本起不再匹配，需同步更新所有 cosign verify 脚本、CI 检查和准入策略。 本版本共合并 17 个 PR，其中修复了 DeepSeek 与 Qwen3.5 在 count endpoints 上 token 计数偏低 30% 或偏高两倍的问题，以及自 v1.92.0 起模型别名流式请求计费为零、自 v1.102.0 起 openai/responses/* 非流式请求重复计费等问题。 同批变更（也在 1.103.8 中）移除了 SDK、代理及 Docker 镜像信任的 eMudhra 根 CA，涉及证书链管理的部署需一并处理。",
-        "brief": "LiteLLM 于 10 月 24 日发布 v1.104.6，核心变更为更换 Docker 镜像和 Helm chart 的 cosign 签名密钥，旧密钥自本版本起不再匹配，需同步更新所有 cosign verify 脚本、CI 检查和准入策略。 本版本共合并 17 个 PR，其中修复了 DeepSeek 与 Qwen3.5 在 count endpoints 上 token 计数偏低 30% 或偏高两倍的问题，以及自 v1.92.0 起模型别名流式请求计费为零、自 v1.102.0 起 openai/responses/* 非流式请求重复计费等问题。 同批变更（也在 1.103.8 中）移除了 SDK、代理及 Docker 镜像信任的 eMudhra 根 CA，涉及证书链管理的部署需一并处理。",
-        "social_original_text": "",
-        "translation_zh": "",
-        "entity": "LiteLLM",
-        "event_type": "agent_or_developer_infra",
-        "event_type_label": "Agent/开发者基础设施",
-        "score": 106,
-        "news_topic": "engineering",
-        "news_topic_label": "工程实践",
-        "newsworthiness": {
-          "topic": "engineering",
-          "topic_label": "工程实践",
-          "tier": "noteworthy",
-          "impact_score": 10,
-          "model_release": false
-        },
-        "first_published_at": "2026-10-24T08:45:14.000Z",
-        "latest_reported_at": "2026-10-24T08:45:14.000Z",
-        "late_arrival": false,
-        "late_arrival_reason": "",
-        "evidence_urls": [
-          "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
-        ],
-        "source_references": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-            "name": "litellm",
-            "kind": "官方来源",
-            "priority": 0
-          }
-        ],
-        "evidence_titles": [
-          "v1.104.6"
-        ],
-        "evidence_summaries": [
-          "Important The image-signing key has changed. Starting with this release, every Docker image and Helm chart is signed with the new cosign key from commit e82a3c6 . Verifying with the previous key from commit 0112e53 will fail. Update anything that pins the old cosign.pub : cosign verify scripts, CI checks, and admission policies such as Kyverno, Sigstore policy-controller or Connaisseur. New cosign.pub SHA-256: e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0 Verify this release cosign verify \\ --key https://raw.githubusercontent.com/BerriAI/litellm/e82a3c646908ba0a6ee0beddc4310d7a6cac4065/cosign.pub \\ ghcr.io/berriai/litellm:v1.104.6 Same command for litellm-database , litellm-non_root and the docker.io/litellm/* images What's new in 1.104.6 17 PRs. 11 fixed, 2 changed, 1 removed. 1 needs action Action required Deployment: Verify image signatures with the cosign.pub from commit e82a3c6 , the previous key no longer matches ( #48103 ) Also in 1.103.8 Changes Deployment: Removed the eMudhra root CA from every certificate bundle the SDK, proxy and Docker images trust ( #47670 , #47969 ) Also in 1.103.8 Deployment: Changed the cosign key that signs Docker images and Helm charts to the one from commit e82a3c6 ( #48103 ) Also in 1.103.8 Azure: Fixed Azure AI Foundry returning 400 when the client sends the dangerous-tool-use-2026-09-03 beta ( #43934 ) Chat completions: Fixed tool calls landing on choices[1] with gpt-5.4+ models, broken since v1.97.0 ( #46099 ) Messages API: Fixed /v1/messages streams holding message_start for minutes during adaptive thinking on Bedrock and Vertex, broken since v1.100.0 ( #43600 ) Token counting: Fixed DeepSeek and Qwen3.5 token counts running up to 30% low or twice too high on the count endpoints ( #47685 ) Token counting: Changed /v1/messages/count_tokens to return HTTP 400 instead of a known-wrong local estimate ( #47705 ) Caching: Fixed automatic prompt caching adding extra cache marks on /v1/messages when extra_body overrides a client mark ( #43341 ) Cost tracking and pricing: Fixed the Usage API timing out while looking up names for busy hashed keys ( #43656 ) Cost tracking and pricing: Fixed streamed requests through a model alias billing $0 instead of the deployment's price, broken since v1.92.0 ( #44341 ) Cost tracking and pricing: Fixed large non-streaming chat requests to openai/responses/* models logging and charging spend twice, broken since v1.102.0 ( #44508 ) Cost tracking and pricing: Fixed failed, timed-out, cancelled and spilled-over requests being priced wrong or not at all ( #47718 ) Cost tracking and pricing: Fixed batch cost tracking, claude-haiku-5-5 and Bedrock profile pricing, and safeguards requests on /v1/messages ( #47726 ) Also in 1.105.3 Admin UI: Fixed Usage reports showing no owner for CLI session keys when spend logs are off or purged ( #43642 , #47805 ) Backport #47802 · Backport #48076 · Full changelog"
-        ],
-        "thumbnail_url": "",
-        "source_layers": [
-          "L1"
-        ],
-        "social_sources": [],
-        "source_display": "litellm",
-        "source_kinds": [
-          "engineering_blog"
-        ],
-        "x_handles": [],
-        "score_breakdown": {
-          "AuthorityScore": 28,
-          "ImpactScore": 10,
-          "AuthorExpertiseScore": 0,
-          "EvidenceQualityScore": 11,
-          "EntityScore": 0,
-          "EventTypeScore": 13,
-          "SpecificityScore": 20,
-          "ResonanceScore": 0,
-          "FreshnessScore": 12,
-          "UserInterestScore": 12,
-          "ChinaRelevanceScore": 0,
-          "SocialEngagementScore": 0,
-          "UserFeedbackScore": 0,
-          "NoisePenalty": 0,
-          "DuplicatePenalty": 0,
-          "LowConfidencePenalty": 0
-        },
-        "quality_assessment": {
-          "evidence": {
-            "mechanism": true,
-            "measurement": true,
-            "comparison": true,
-            "artifact": true,
-            "score": 11
-          },
-          "publisher_count": 1,
-          "sources": [
-            {
-              "publisher_id": "litellm",
-              "publisher_name": "litellm",
-              "matched_scope": "https://github.com/BerriAI/litellm",
-              "layer": "L1",
-              "status": "curated_publisher",
-              "author": null,
-              "author_score": 0
-            }
-          ],
-          "note": "Publisher coverage is not independent fact verification"
-        },
-        "title_zh": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
-        "memory_note": "这是一次小版本维护发布，延续了 LiteLLM 对计费准确性和 token 计数准确性的持续修复，属于推理网关基础设施的常规迭代，而非新一代框架或重大安全事件。",
-        "reading_questions": [
-          "我的部署是否固定了旧 cosign.pub 或使用了相关准入策略？",
-          "我在用的 LiteLLM 版本是否受 token 计数和计费修复影响？"
-        ],
-        "memory_subjects": [
-          {
-            "kind": "topic",
-            "key": "inference-infrastructure",
-            "label": "Inference Infrastructure"
-          },
-          {
-            "kind": "topic",
-            "key": "ai-safety-policy",
-            "label": "AI Safety / Policy"
-          },
-          {
-            "kind": "topic",
-            "key": "multimodal-generation",
-            "label": "Multimodal Generation"
-          }
-        ],
-        "expert_review": {
-          "importance": "对自建 AI 网关的团队，签名密钥更换是需要立即执行的运维变更，token 计数与计费修复直接影响成本统计准确性。",
-          "skepticism": "发布说明中的 token 计数偏差幅度和计费修复影响均为厂商自述，未看到独立复现或第三方验证，具体改进效果需在实际部署中确认。",
-          "watch_points": [
-            "后续版本是否对 DeepSeek 与 Qwen3.5 的 token 计数提供独立验证或更精确的实现说明",
-            "签名密钥更换后官方文档和 Helm chart 是否同步更新，其他镜像是否需要额外操作",
-            "计费修复是否引入新的偏差（例如别名计费场景的回归）"
-          ],
-          "related_sources": [
-            {
-              "title": "Release v1.104.6 · BerriAI/litellm",
-              "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
-            }
-          ],
-          "method": "llm_expert_review"
-        },
-        "editorial_review": {
-          "publish": true,
-          "reason": "LiteLLM v1.104.6 是一次常规维护性发布，但包含对生产运维有直接影响的变更：cosign 镜像签名密钥更换、eMudhra 根 CA 移除，以及多项账单统计和 token 计数的修复。对使用 LiteLLM 网关的团队，这是一条需要执行的变更通知，达到日报入选标准。",
-          "evidence_strength": "strong",
-          "importance": 2
-        },
-        "article_evidence": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-            "status": "html",
-            "chars": 3775
-          }
-        ],
-        "evidence_review": {
-          "version": 1,
-          "status": "passed",
-          "mode": "full_text",
-          "dates": [
-            {
-              "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-              "published_at": "2026-10-24T08:45:14.000Z",
-              "publication_date": "2026-10-24"
-            }
-          ],
-          "text_digest": "c0685d637b2e8d3007a3728cfcc8ffd4d70d857e53f69c918f546bdc02c30662",
-          "verified_claim_count": 6
-        },
-        "llm_classification": {
-          "primary_entity": "LiteLLM",
-          "primary_entity_role": "article_subject",
-          "mentioned_entities": [
-            {
-              "name": "DeepSeek",
-              "role": "model",
-              "evidence": "发布说明中提及修复 DeepSeek 的 token 计数问题"
-            },
-            {
-              "name": "Qwen3.5",
-              "role": "model",
-              "evidence": "发布说明中提及修复 Qwen3.5 的 token 计数问题"
-            },
-            {
-              "name": "Kyverno",
-              "role": "other",
-              "evidence": "作为可能受签名密钥更换影响的准入策略工具被提及"
-            },
-            {
-              "name": "Sigstore policy-controller",
-              "role": "other",
-              "evidence": "作为可能受签名密钥更换影响的准入策略工具被提及"
-            }
-          ],
-          "event_type": "agent_or_developer_infra",
-          "section": "technical_progress",
-          "confidence": "高",
-          "reasoning": "主体是 LiteLLM 的版本发布，属于开发工具/网关基础设施的更新，而非模型发布或公司融资事件；并未涉及模型本身的能力变化或公司层面的重大战略动作。"
-        }
-      },
-      {
-        "event_id": "13abd7791c62cc",
-        "bucket": "worth_tracking",
-        "section": "technical_progress",
-        "title": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
-        "ai_summary": "LiteLLM 于 10 月 24 日发布 1.103.8，共 4 个 PR：1 修复、1 变更、1 移除、1 项需处理。 从该版本起，所有 Docker 镜像和 Helm Chart 改用来自 commit e82a3c6 的新 cosign 密钥签名，使用旧密钥（commit 0112e53）校验将失败；固定旧 cosign.pub 的 verify 脚本、CI 检查及 Kyverno、Sigstore policy-controller、Connaisseur 等准入策略需同步更新。 新 cosign.pub 的 SHA-256 为 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0，可用于校验本次发布。 同时将 eMudhra 根证书从 SDK、代理与 Docker 镜像信任的证书包中移除，并修复了 OpenTelemetry 1.44 及以上版本中 otel callback 初始化失败的问题。",
-        "brief": "LiteLLM 于 10 月 24 日发布 1.103.8，共 4 个 PR：1 修复、1 变更、1 移除、1 项需处理。 从该版本起，所有 Docker 镜像和 Helm Chart 改用来自 commit e82a3c6 的新 cosign 密钥签名，使用旧密钥（commit 0112e53）校验将失败；固定旧 cosign.pub 的 verify 脚本、CI 检查及 Kyverno、Sigstore policy-controller、Connaisseur 等准入策略需同步更新。 新 cosign.pub 的 SHA-256 为 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0，可用于校验本次发布。 同时将 eMudhra 根证书从 SDK、代理与 Docker 镜像信任的证书包中移除，并修复了 OpenTelemetry 1.44 及以上版本中 otel callback 初始化失败的问题。",
-        "social_original_text": "",
-        "translation_zh": "",
-        "entity": "LiteLLM",
-        "event_type": "agent_or_developer_infra",
-        "event_type_label": "Agent/开发者基础设施",
-        "score": 94,
-        "news_topic": "engineering",
-        "news_topic_label": "工程实践",
-        "newsworthiness": {
-          "topic": "engineering",
-          "topic_label": "工程实践",
-          "tier": "noteworthy",
-          "impact_score": 10,
-          "model_release": false
-        },
-        "first_published_at": "2026-10-24T08:45:16.000Z",
-        "latest_reported_at": "2026-10-24T08:45:16.000Z",
-        "late_arrival": false,
-        "late_arrival_reason": "",
-        "evidence_urls": [
-          "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
-        ],
-        "source_references": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-            "name": "litellm",
-            "kind": "官方来源",
-            "priority": 0
-          }
-        ],
-        "evidence_titles": [
-          "v1.103.8"
-        ],
-        "evidence_summaries": [
-          "Important The image-signing key has changed. Starting with this release, every Docker image and Helm chart is signed with the new cosign key from commit e82a3c6 . Verifying with the previous key from commit 0112e53 will fail. Update anything that pins the old cosign.pub : cosign verify scripts, CI checks, and admission policies such as Kyverno, Sigstore policy-controller or Connaisseur. New cosign.pub SHA-256: e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0 Verify this release cosign verify \\ --key https://raw.githubusercontent.com/BerriAI/litellm/e82a3c646908ba0a6ee0beddc4310d7a6cac4065/cosign.pub \\ ghcr.io/berriai/litellm:v1.103.8 Same command for litellm-database , litellm-non_root and the docker.io/litellm/* images What's new in 1.103.8 4 PRs. 1 fixed, 1 changed, 1 removed. 1 needs action Action required Deployment: Verify image signatures with the cosign.pub from commit e82a3c6 , the previous key no longer matches ( #48103 ) Changes Deployment: Removed the eMudhra root CA from every certificate bundle the SDK, proxy and Docker images trust ( #47670 , #47969 ) Deployment: Changed the cosign key that signs Docker images and Helm charts to the one from commit e82a3c6 ( #48103 ) Logging and observability: Fixed the otel callback failing to initialize with OpenTelemetry 1.44 and newer ( #42431 ) Backport #48075 · Full changelog"
-        ],
-        "thumbnail_url": "",
-        "source_layers": [
-          "L1"
-        ],
-        "social_sources": [],
-        "source_display": "litellm",
-        "source_kinds": [
-          "engineering_blog"
-        ],
-        "x_handles": [],
-        "score_breakdown": {
-          "AuthorityScore": 28,
-          "ImpactScore": 10,
-          "AuthorExpertiseScore": 0,
-          "EvidenceQualityScore": 7,
-          "EntityScore": 0,
-          "EventTypeScore": 13,
-          "SpecificityScore": 12,
-          "ResonanceScore": 0,
-          "FreshnessScore": 12,
-          "UserInterestScore": 12,
-          "ChinaRelevanceScore": 0,
-          "SocialEngagementScore": 0,
-          "UserFeedbackScore": 0,
-          "NoisePenalty": 0,
-          "DuplicatePenalty": 0,
-          "LowConfidencePenalty": 0
-        },
-        "quality_assessment": {
-          "evidence": {
-            "mechanism": true,
-            "measurement": false,
-            "comparison": false,
-            "artifact": true,
-            "score": 7
-          },
-          "publisher_count": 1,
-          "sources": [
-            {
-              "publisher_id": "litellm",
-              "publisher_name": "litellm",
-              "matched_scope": "https://github.com/BerriAI/litellm",
-              "layer": "L1",
-              "status": "curated_publisher",
-              "author": null,
-              "author_score": 0
-            }
-          ],
-          "note": "Publisher coverage is not independent fact verification"
-        },
-        "title_zh": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
-        "memory_note": "该补丁版的内容全部属于部署与可观测性变更（签名密钥轮换、根证书移除、otel 回调修复），不涉及模型能力或网关新功能，也不属于 AI 安全政策；此前标注的 AI 安全政策、多模态生成主题与内容不符，应更正为工程实践/开发者基础设施类。",
-        "reading_questions": [
-          "你在 CI 或集群准入策略中是否固定了旧 cosign.pub？升级到 1.103.8 后镜像签名校验是否还能通过？",
-          "eMudhra 根证书从 SDK 与代理的信任库移除，是否会影响你所在环境中基于该 CA 签发证书的服务访问？"
-        ],
-        "memory_subjects": [
-          {
-            "kind": "topic",
-            "key": "ai-safety-policy",
-            "label": "AI Safety / Policy"
-          },
-          {
-            "kind": "topic",
-            "key": "multimodal-generation",
-            "label": "Multimodal Generation"
-          }
-        ],
-        "expert_review": {
-          "importance": "这是面向 LiteLLM 生产部署者的补丁级工程更新：签名密钥轮换和信任库变更会影响固定旧 cosign.pub 的镜像校验与准入策略，但不对普通 API 调用者构成功能变化。",
-          "skepticism": "以上影响描述来自维护者的一手发布说明（旧密钥校验将失败、根证书移除等），目前未见社区部署环境的独立复现报告，实际影响以各自环境的校验与兼容性验证为准。",
-          "watch_points": [
-            "固定旧 cosign.pub 的 CI 与准入策略（Kyverno、Sigstore policy-controller、Connaisseur）是否出现镜像签名校验失败的部署报告。",
-            "移除 eMudhra 根证书后，依赖该 CA 的内部证书环境是否出现 TLS 校验或不兼容问题。",
-            "LiteLLM 后续是否针对签名密钥迁移提供自动化迁移脚本，或继续轮换信任组件。"
-          ],
-          "related_sources": [
-            {
-              "title": "LiteLLM Releases（GitHub）",
-              "url": "https://github.com/BerriAI/litellm/releases"
-            }
-          ],
-          "method": "llm_expert_review"
-        },
-        "editorial_review": {
-          "publish": true,
-          "reason": "来自 GitHub 一手 Release 公告，包含具体新增事实和部署影响：cosign 镜像签名密钥更换导致旧公钥校验失效、eMudhra 根证书从 SDK/代理/镜像信任库移除、OpenTelemetry 1.44+ otel 回调修复。对生产使用 LiteLLM 的运维与安全团队有直接可执行信息；属于补丁级工程更新，不涉及模型能力变化，故评分为 2。",
-          "evidence_strength": "strong",
-          "importance": 2
-        },
-        "article_evidence": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-            "status": "html",
-            "chars": 2212
-          }
-        ],
-        "evidence_review": {
-          "version": 1,
-          "status": "passed",
-          "mode": "full_text",
-          "dates": [
-            {
-              "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-              "published_at": "2026-10-24T08:45:16.000Z",
-              "publication_date": "2026-10-24"
-            }
-          ],
-          "text_digest": "242b66ecb5da7c2d4ed22a0d56323c9cf58f1764826f4dea5abc8c9d9399ca38",
-          "verified_claim_count": 7
-        },
-        "llm_classification": {
-          "primary_entity": "LiteLLM",
-          "primary_entity_role": "article_subject",
-          "mentioned_entities": [
-            {
-              "name": "BerriAI",
-              "role": "other",
-              "evidence": "LiteLLM 项目的维护组织，体现在仓库标识 BerriAI/litellm 中。"
-            },
-            {
-              "name": "eMudhra",
-              "role": "other",
-              "evidence": "被从 SDK、代理与 Docker 镜像信任的证书包中移除的根证书颁发机构。"
-            },
-            {
-              "name": "OpenTelemetry",
-              "role": "other",
-              "evidence": "本次修复的 otel callback 初始化问题所涉及的依赖项目。"
-            },
-            {
-              "name": "Kyverno",
-              "role": "other",
-              "evidence": "受 cosign 签名密钥更换影响、需要更新旧公钥固定的准入策略组件之一。"
-            }
-          ],
-          "event_type": "agent_or_developer_infra",
-          "section": "technical_progress",
-          "confidence": "高",
-          "reasoning": "LiteLLM 是开发运维使用的开源 AI 网关，本次 1.103.8 的内容全部是镜像签名、证书信任库与可观测性回调等工程运维变更，属于开发者基础设施的小版本发布，而非模型发布、融资或政策事件，因此归入 agent_or_developer_infra / technical_progress；该判断的依据是发布说明逐条列出的 Deployment 与 Logging 变更。"
-        }
       }
     ],
     "company_updates": [
@@ -1937,11 +1624,25 @@
         "late_arrival": false,
         "late_arrival_reason": "",
         "evidence_urls": [
-          "https://github.com/BerriAI/litellm/releases/tag/v1.105.4"
+          "https://github.com/BerriAI/litellm/releases/tag/v1.105.4",
+          "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+          "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
         ],
         "source_references": [
           {
             "url": "https://github.com/BerriAI/litellm/releases/tag/v1.105.4",
+            "name": "litellm",
+            "kind": "官方来源",
+            "priority": 0
+          },
+          {
+            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+            "name": "litellm",
+            "kind": "官方来源",
+            "priority": 0
+          },
+          {
+            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
             "name": "litellm",
             "kind": "官方来源",
             "priority": 0
@@ -2094,6 +1795,54 @@
           "confidence": "高",
           "reasoning": "LiteLLM 是开源 LLM 网关，v1.105.4 的核心内容是 cosign 签名密钥轮换与 eMudhra 根 CA 移除，属于有明确技术机制的开源工具发布，因此归入 technical_progress 与 agent_or_developer_infra；新闻主语是 BerriAI 的发布动作，而非任何被测模型、AI 政策或安全事件定性。"
         },
+        "merged_event_ids": [
+          "8eafde66b28df7",
+          "13abd7791c62cc"
+        ],
+        "merged_coverage": [
+          {
+            "event_id": "8eafde66b28df7",
+            "title": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
+            "evidence_urls": [
+              "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
+            ],
+            "evidence_review": {
+              "version": 1,
+              "status": "passed",
+              "mode": "full_text",
+              "dates": [
+                {
+                  "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+                  "published_at": "2026-10-24T08:45:14.000Z",
+                  "publication_date": "2026-10-24"
+                }
+              ],
+              "text_digest": "c0685d637b2e8d3007a3728cfcc8ffd4d70d857e53f69c918f546bdc02c30662",
+              "verified_claim_count": 6
+            }
+          },
+          {
+            "event_id": "13abd7791c62cc",
+            "title": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
+            "evidence_urls": [
+              "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
+            ],
+            "evidence_review": {
+              "version": 1,
+              "status": "passed",
+              "mode": "full_text",
+              "dates": [
+                {
+                  "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
+                  "published_at": "2026-10-24T08:45:16.000Z",
+                  "publication_date": "2026-10-24"
+                }
+              ],
+              "text_digest": "242b66ecb5da7c2d4ed22a0d56323c9cf58f1764826f4dea5abc8c9d9399ca38",
+              "verified_claim_count": 7
+            }
+          }
+        ],
         "focus_reason": "虽是补丁版本，但签名密钥轮换和信任库收窄会直接打断自托管 LiteLLM 的镜像验证流程，影响所有启用准入控制与 CI 校验的 LLM 网关部署团队。"
       },
       {
@@ -2301,381 +2050,6 @@
           "reasoning": "文章主语是 TensorSharp 开发者及其推理引擎，MiniMax-M3.1-Flash 只是被测模型，容易误判为 MiniMax 模型发布或 llama.cpp 评测；实际是一手推理工程测试与基准报告，因此归入 technical_progress。"
         },
         "thumbnail_source": "thumbnail_url"
-      },
-      {
-        "event_id": "8eafde66b28df7",
-        "bucket": "worth_tracking",
-        "section": "technical_progress",
-        "title": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
-        "ai_summary": "LiteLLM 于 10 月 24 日发布 v1.104.6，核心变更为更换 Docker 镜像和 Helm chart 的 cosign 签名密钥，旧密钥自本版本起不再匹配，需同步更新所有 cosign verify 脚本、CI 检查和准入策略。 本版本共合并 17 个 PR，其中修复了 DeepSeek 与 Qwen3.5 在 count endpoints 上 token 计数偏低 30% 或偏高两倍的问题，以及自 v1.92.0 起模型别名流式请求计费为零、自 v1.102.0 起 openai/responses/* 非流式请求重复计费等问题。 同批变更（也在 1.103.8 中）移除了 SDK、代理及 Docker 镜像信任的 eMudhra 根 CA，涉及证书链管理的部署需一并处理。",
-        "brief": "LiteLLM 于 10 月 24 日发布 v1.104.6，核心变更为更换 Docker 镜像和 Helm chart 的 cosign 签名密钥，旧密钥自本版本起不再匹配，需同步更新所有 cosign verify 脚本、CI 检查和准入策略。 本版本共合并 17 个 PR，其中修复了 DeepSeek 与 Qwen3.5 在 count endpoints 上 token 计数偏低 30% 或偏高两倍的问题，以及自 v1.92.0 起模型别名流式请求计费为零、自 v1.102.0 起 openai/responses/* 非流式请求重复计费等问题。 同批变更（也在 1.103.8 中）移除了 SDK、代理及 Docker 镜像信任的 eMudhra 根 CA，涉及证书链管理的部署需一并处理。",
-        "social_original_text": "",
-        "translation_zh": "",
-        "entity": "LiteLLM",
-        "event_type": "agent_or_developer_infra",
-        "event_type_label": "Agent/开发者基础设施",
-        "score": 106,
-        "news_topic": "engineering",
-        "news_topic_label": "工程实践",
-        "newsworthiness": {
-          "topic": "engineering",
-          "topic_label": "工程实践",
-          "tier": "noteworthy",
-          "impact_score": 10,
-          "model_release": false
-        },
-        "first_published_at": "2026-10-24T08:45:14.000Z",
-        "latest_reported_at": "2026-10-24T08:45:14.000Z",
-        "late_arrival": false,
-        "late_arrival_reason": "",
-        "evidence_urls": [
-          "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
-        ],
-        "source_references": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-            "name": "litellm",
-            "kind": "官方来源",
-            "priority": 0
-          }
-        ],
-        "evidence_titles": [
-          "v1.104.6"
-        ],
-        "evidence_summaries": [
-          "Important The image-signing key has changed. Starting with this release, every Docker image and Helm chart is signed with the new cosign key from commit e82a3c6 . Verifying with the previous key from commit 0112e53 will fail. Update anything that pins the old cosign.pub : cosign verify scripts, CI checks, and admission policies such as Kyverno, Sigstore policy-controller or Connaisseur. New cosign.pub SHA-256: e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0 Verify this release cosign verify \\ --key https://raw.githubusercontent.com/BerriAI/litellm/e82a3c646908ba0a6ee0beddc4310d7a6cac4065/cosign.pub \\ ghcr.io/berriai/litellm:v1.104.6 Same command for litellm-database , litellm-non_root and the docker.io/litellm/* images What's new in 1.104.6 17 PRs. 11 fixed, 2 changed, 1 removed. 1 needs action Action required Deployment: Verify image signatures with the cosign.pub from commit e82a3c6 , the previous key no longer matches ( #48103 ) Also in 1.103.8 Changes Deployment: Removed the eMudhra root CA from every certificate bundle the SDK, proxy and Docker images trust ( #47670 , #47969 ) Also in 1.103.8 Deployment: Changed the cosign key that signs Docker images and Helm charts to the one from commit e82a3c6 ( #48103 ) Also in 1.103.8 Azure: Fixed Azure AI Foundry returning 400 when the client sends the dangerous-tool-use-2026-09-03 beta ( #43934 ) Chat completions: Fixed tool calls landing on choices[1] with gpt-5.4+ models, broken since v1.97.0 ( #46099 ) Messages API: Fixed /v1/messages streams holding message_start for minutes during adaptive thinking on Bedrock and Vertex, broken since v1.100.0 ( #43600 ) Token counting: Fixed DeepSeek and Qwen3.5 token counts running up to 30% low or twice too high on the count endpoints ( #47685 ) Token counting: Changed /v1/messages/count_tokens to return HTTP 400 instead of a known-wrong local estimate ( #47705 ) Caching: Fixed automatic prompt caching adding extra cache marks on /v1/messages when extra_body overrides a client mark ( #43341 ) Cost tracking and pricing: Fixed the Usage API timing out while looking up names for busy hashed keys ( #43656 ) Cost tracking and pricing: Fixed streamed requests through a model alias billing $0 instead of the deployment's price, broken since v1.92.0 ( #44341 ) Cost tracking and pricing: Fixed large non-streaming chat requests to openai/responses/* models logging and charging spend twice, broken since v1.102.0 ( #44508 ) Cost tracking and pricing: Fixed failed, timed-out, cancelled and spilled-over requests being priced wrong or not at all ( #47718 ) Cost tracking and pricing: Fixed batch cost tracking, claude-haiku-5-5 and Bedrock profile pricing, and safeguards requests on /v1/messages ( #47726 ) Also in 1.105.3 Admin UI: Fixed Usage reports showing no owner for CLI session keys when spend logs are off or purged ( #43642 , #47805 ) Backport #47802 · Backport #48076 · Full changelog"
-        ],
-        "thumbnail_url": "",
-        "source_layers": [
-          "L1"
-        ],
-        "social_sources": [],
-        "source_display": "litellm",
-        "source_kinds": [
-          "engineering_blog"
-        ],
-        "x_handles": [],
-        "score_breakdown": {
-          "AuthorityScore": 28,
-          "ImpactScore": 10,
-          "AuthorExpertiseScore": 0,
-          "EvidenceQualityScore": 11,
-          "EntityScore": 0,
-          "EventTypeScore": 13,
-          "SpecificityScore": 20,
-          "ResonanceScore": 0,
-          "FreshnessScore": 12,
-          "UserInterestScore": 12,
-          "ChinaRelevanceScore": 0,
-          "SocialEngagementScore": 0,
-          "UserFeedbackScore": 0,
-          "NoisePenalty": 0,
-          "DuplicatePenalty": 0,
-          "LowConfidencePenalty": 0
-        },
-        "quality_assessment": {
-          "evidence": {
-            "mechanism": true,
-            "measurement": true,
-            "comparison": true,
-            "artifact": true,
-            "score": 11
-          },
-          "publisher_count": 1,
-          "sources": [
-            {
-              "publisher_id": "litellm",
-              "publisher_name": "litellm",
-              "matched_scope": "https://github.com/BerriAI/litellm",
-              "layer": "L1",
-              "status": "curated_publisher",
-              "author": null,
-              "author_score": 0
-            }
-          ],
-          "note": "Publisher coverage is not independent fact verification"
-        },
-        "title_zh": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
-        "memory_note": "这是一次小版本维护发布，延续了 LiteLLM 对计费准确性和 token 计数准确性的持续修复，属于推理网关基础设施的常规迭代，而非新一代框架或重大安全事件。",
-        "reading_questions": [
-          "我的部署是否固定了旧 cosign.pub 或使用了相关准入策略？",
-          "我在用的 LiteLLM 版本是否受 token 计数和计费修复影响？"
-        ],
-        "memory_subjects": [
-          {
-            "kind": "topic",
-            "key": "inference-infrastructure",
-            "label": "Inference Infrastructure"
-          },
-          {
-            "kind": "topic",
-            "key": "ai-safety-policy",
-            "label": "AI Safety / Policy"
-          },
-          {
-            "kind": "topic",
-            "key": "multimodal-generation",
-            "label": "Multimodal Generation"
-          }
-        ],
-        "expert_review": {
-          "importance": "对自建 AI 网关的团队，签名密钥更换是需要立即执行的运维变更，token 计数与计费修复直接影响成本统计准确性。",
-          "skepticism": "发布说明中的 token 计数偏差幅度和计费修复影响均为厂商自述，未看到独立复现或第三方验证，具体改进效果需在实际部署中确认。",
-          "watch_points": [
-            "后续版本是否对 DeepSeek 与 Qwen3.5 的 token 计数提供独立验证或更精确的实现说明",
-            "签名密钥更换后官方文档和 Helm chart 是否同步更新，其他镜像是否需要额外操作",
-            "计费修复是否引入新的偏差（例如别名计费场景的回归）"
-          ],
-          "related_sources": [
-            {
-              "title": "Release v1.104.6 · BerriAI/litellm",
-              "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
-            }
-          ],
-          "method": "llm_expert_review"
-        },
-        "editorial_review": {
-          "publish": true,
-          "reason": "LiteLLM v1.104.6 是一次常规维护性发布，但包含对生产运维有直接影响的变更：cosign 镜像签名密钥更换、eMudhra 根 CA 移除，以及多项账单统计和 token 计数的修复。对使用 LiteLLM 网关的团队，这是一条需要执行的变更通知，达到日报入选标准。",
-          "evidence_strength": "strong",
-          "importance": 2
-        },
-        "article_evidence": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-            "status": "html",
-            "chars": 3775
-          }
-        ],
-        "evidence_review": {
-          "version": 1,
-          "status": "passed",
-          "mode": "full_text",
-          "dates": [
-            {
-              "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-              "published_at": "2026-10-24T08:45:14.000Z",
-              "publication_date": "2026-10-24"
-            }
-          ],
-          "text_digest": "c0685d637b2e8d3007a3728cfcc8ffd4d70d857e53f69c918f546bdc02c30662",
-          "verified_claim_count": 6
-        },
-        "llm_classification": {
-          "primary_entity": "LiteLLM",
-          "primary_entity_role": "article_subject",
-          "mentioned_entities": [
-            {
-              "name": "DeepSeek",
-              "role": "model",
-              "evidence": "发布说明中提及修复 DeepSeek 的 token 计数问题"
-            },
-            {
-              "name": "Qwen3.5",
-              "role": "model",
-              "evidence": "发布说明中提及修复 Qwen3.5 的 token 计数问题"
-            },
-            {
-              "name": "Kyverno",
-              "role": "other",
-              "evidence": "作为可能受签名密钥更换影响的准入策略工具被提及"
-            },
-            {
-              "name": "Sigstore policy-controller",
-              "role": "other",
-              "evidence": "作为可能受签名密钥更换影响的准入策略工具被提及"
-            }
-          ],
-          "event_type": "agent_or_developer_infra",
-          "section": "technical_progress",
-          "confidence": "高",
-          "reasoning": "主体是 LiteLLM 的版本发布，属于开发工具/网关基础设施的更新，而非模型发布或公司融资事件；并未涉及模型本身的能力变化或公司层面的重大战略动作。"
-        }
-      },
-      {
-        "event_id": "13abd7791c62cc",
-        "bucket": "worth_tracking",
-        "section": "technical_progress",
-        "title": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
-        "ai_summary": "LiteLLM 于 10 月 24 日发布 1.103.8，共 4 个 PR：1 修复、1 变更、1 移除、1 项需处理。 从该版本起，所有 Docker 镜像和 Helm Chart 改用来自 commit e82a3c6 的新 cosign 密钥签名，使用旧密钥（commit 0112e53）校验将失败；固定旧 cosign.pub 的 verify 脚本、CI 检查及 Kyverno、Sigstore policy-controller、Connaisseur 等准入策略需同步更新。 新 cosign.pub 的 SHA-256 为 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0，可用于校验本次发布。 同时将 eMudhra 根证书从 SDK、代理与 Docker 镜像信任的证书包中移除，并修复了 OpenTelemetry 1.44 及以上版本中 otel callback 初始化失败的问题。",
-        "brief": "LiteLLM 于 10 月 24 日发布 1.103.8，共 4 个 PR：1 修复、1 变更、1 移除、1 项需处理。 从该版本起，所有 Docker 镜像和 Helm Chart 改用来自 commit e82a3c6 的新 cosign 密钥签名，使用旧密钥（commit 0112e53）校验将失败；固定旧 cosign.pub 的 verify 脚本、CI 检查及 Kyverno、Sigstore policy-controller、Connaisseur 等准入策略需同步更新。 新 cosign.pub 的 SHA-256 为 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0，可用于校验本次发布。 同时将 eMudhra 根证书从 SDK、代理与 Docker 镜像信任的证书包中移除，并修复了 OpenTelemetry 1.44 及以上版本中 otel callback 初始化失败的问题。",
-        "social_original_text": "",
-        "translation_zh": "",
-        "entity": "LiteLLM",
-        "event_type": "agent_or_developer_infra",
-        "event_type_label": "Agent/开发者基础设施",
-        "score": 94,
-        "news_topic": "engineering",
-        "news_topic_label": "工程实践",
-        "newsworthiness": {
-          "topic": "engineering",
-          "topic_label": "工程实践",
-          "tier": "noteworthy",
-          "impact_score": 10,
-          "model_release": false
-        },
-        "first_published_at": "2026-10-24T08:45:16.000Z",
-        "latest_reported_at": "2026-10-24T08:45:16.000Z",
-        "late_arrival": false,
-        "late_arrival_reason": "",
-        "evidence_urls": [
-          "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
-        ],
-        "source_references": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-            "name": "litellm",
-            "kind": "官方来源",
-            "priority": 0
-          }
-        ],
-        "evidence_titles": [
-          "v1.103.8"
-        ],
-        "evidence_summaries": [
-          "Important The image-signing key has changed. Starting with this release, every Docker image and Helm chart is signed with the new cosign key from commit e82a3c6 . Verifying with the previous key from commit 0112e53 will fail. Update anything that pins the old cosign.pub : cosign verify scripts, CI checks, and admission policies such as Kyverno, Sigstore policy-controller or Connaisseur. New cosign.pub SHA-256: e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0 Verify this release cosign verify \\ --key https://raw.githubusercontent.com/BerriAI/litellm/e82a3c646908ba0a6ee0beddc4310d7a6cac4065/cosign.pub \\ ghcr.io/berriai/litellm:v1.103.8 Same command for litellm-database , litellm-non_root and the docker.io/litellm/* images What's new in 1.103.8 4 PRs. 1 fixed, 1 changed, 1 removed. 1 needs action Action required Deployment: Verify image signatures with the cosign.pub from commit e82a3c6 , the previous key no longer matches ( #48103 ) Changes Deployment: Removed the eMudhra root CA from every certificate bundle the SDK, proxy and Docker images trust ( #47670 , #47969 ) Deployment: Changed the cosign key that signs Docker images and Helm charts to the one from commit e82a3c6 ( #48103 ) Logging and observability: Fixed the otel callback failing to initialize with OpenTelemetry 1.44 and newer ( #42431 ) Backport #48075 · Full changelog"
-        ],
-        "thumbnail_url": "",
-        "source_layers": [
-          "L1"
-        ],
-        "social_sources": [],
-        "source_display": "litellm",
-        "source_kinds": [
-          "engineering_blog"
-        ],
-        "x_handles": [],
-        "score_breakdown": {
-          "AuthorityScore": 28,
-          "ImpactScore": 10,
-          "AuthorExpertiseScore": 0,
-          "EvidenceQualityScore": 7,
-          "EntityScore": 0,
-          "EventTypeScore": 13,
-          "SpecificityScore": 12,
-          "ResonanceScore": 0,
-          "FreshnessScore": 12,
-          "UserInterestScore": 12,
-          "ChinaRelevanceScore": 0,
-          "SocialEngagementScore": 0,
-          "UserFeedbackScore": 0,
-          "NoisePenalty": 0,
-          "DuplicatePenalty": 0,
-          "LowConfidencePenalty": 0
-        },
-        "quality_assessment": {
-          "evidence": {
-            "mechanism": true,
-            "measurement": false,
-            "comparison": false,
-            "artifact": true,
-            "score": 7
-          },
-          "publisher_count": 1,
-          "sources": [
-            {
-              "publisher_id": "litellm",
-              "publisher_name": "litellm",
-              "matched_scope": "https://github.com/BerriAI/litellm",
-              "layer": "L1",
-              "status": "curated_publisher",
-              "author": null,
-              "author_score": 0
-            }
-          ],
-          "note": "Publisher coverage is not independent fact verification"
-        },
-        "title_zh": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
-        "memory_note": "该补丁版的内容全部属于部署与可观测性变更（签名密钥轮换、根证书移除、otel 回调修复），不涉及模型能力或网关新功能，也不属于 AI 安全政策；此前标注的 AI 安全政策、多模态生成主题与内容不符，应更正为工程实践/开发者基础设施类。",
-        "reading_questions": [
-          "你在 CI 或集群准入策略中是否固定了旧 cosign.pub？升级到 1.103.8 后镜像签名校验是否还能通过？",
-          "eMudhra 根证书从 SDK 与代理的信任库移除，是否会影响你所在环境中基于该 CA 签发证书的服务访问？"
-        ],
-        "memory_subjects": [
-          {
-            "kind": "topic",
-            "key": "ai-safety-policy",
-            "label": "AI Safety / Policy"
-          },
-          {
-            "kind": "topic",
-            "key": "multimodal-generation",
-            "label": "Multimodal Generation"
-          }
-        ],
-        "expert_review": {
-          "importance": "这是面向 LiteLLM 生产部署者的补丁级工程更新：签名密钥轮换和信任库变更会影响固定旧 cosign.pub 的镜像校验与准入策略，但不对普通 API 调用者构成功能变化。",
-          "skepticism": "以上影响描述来自维护者的一手发布说明（旧密钥校验将失败、根证书移除等），目前未见社区部署环境的独立复现报告，实际影响以各自环境的校验与兼容性验证为准。",
-          "watch_points": [
-            "固定旧 cosign.pub 的 CI 与准入策略（Kyverno、Sigstore policy-controller、Connaisseur）是否出现镜像签名校验失败的部署报告。",
-            "移除 eMudhra 根证书后，依赖该 CA 的内部证书环境是否出现 TLS 校验或不兼容问题。",
-            "LiteLLM 后续是否针对签名密钥迁移提供自动化迁移脚本，或继续轮换信任组件。"
-          ],
-          "related_sources": [
-            {
-              "title": "LiteLLM Releases（GitHub）",
-              "url": "https://github.com/BerriAI/litellm/releases"
-            }
-          ],
-          "method": "llm_expert_review"
-        },
-        "editorial_review": {
-          "publish": true,
-          "reason": "来自 GitHub 一手 Release 公告，包含具体新增事实和部署影响：cosign 镜像签名密钥更换导致旧公钥校验失效、eMudhra 根证书从 SDK/代理/镜像信任库移除、OpenTelemetry 1.44+ otel 回调修复。对生产使用 LiteLLM 的运维与安全团队有直接可执行信息；属于补丁级工程更新，不涉及模型能力变化，故评分为 2。",
-          "evidence_strength": "strong",
-          "importance": 2
-        },
-        "article_evidence": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-            "status": "html",
-            "chars": 2212
-          }
-        ],
-        "evidence_review": {
-          "version": 1,
-          "status": "passed",
-          "mode": "full_text",
-          "dates": [
-            {
-              "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-              "published_at": "2026-10-24T08:45:16.000Z",
-              "publication_date": "2026-10-24"
-            }
-          ],
-          "text_digest": "242b66ecb5da7c2d4ed22a0d56323c9cf58f1764826f4dea5abc8c9d9399ca38",
-          "verified_claim_count": 7
-        },
-        "llm_classification": {
-          "primary_entity": "LiteLLM",
-          "primary_entity_role": "article_subject",
-          "mentioned_entities": [
-            {
-              "name": "BerriAI",
-              "role": "other",
-              "evidence": "LiteLLM 项目的维护组织，体现在仓库标识 BerriAI/litellm 中。"
-            },
-            {
-              "name": "eMudhra",
-              "role": "other",
-              "evidence": "被从 SDK、代理与 Docker 镜像信任的证书包中移除的根证书颁发机构。"
-            },
-            {
-              "name": "OpenTelemetry",
-              "role": "other",
-              "evidence": "本次修复的 otel callback 初始化问题所涉及的依赖项目。"
-            },
-            {
-              "name": "Kyverno",
-              "role": "other",
-              "evidence": "受 cosign 签名密钥更换影响、需要更新旧公钥固定的准入策略组件之一。"
-            }
-          ],
-          "event_type": "agent_or_developer_infra",
-          "section": "technical_progress",
-          "confidence": "高",
-          "reasoning": "LiteLLM 是开发运维使用的开源 AI 网关，本次 1.103.8 的内容全部是镜像签名、证书信任库与可观测性回调等工程运维变更，属于开发者基础设施的小版本发布，而非模型发布、融资或政策事件，因此归入 agent_or_developer_infra / technical_progress；该判断的依据是发布说明逐条列出的 Deployment 与 Logging 变更。"
-        }
       }
     ],
     "industry_views": []
@@ -3373,11 +2747,25 @@
       "late_arrival": false,
       "late_arrival_reason": "",
       "evidence_urls": [
-        "https://github.com/BerriAI/litellm/releases/tag/v1.105.4"
+        "https://github.com/BerriAI/litellm/releases/tag/v1.105.4",
+        "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+        "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
       ],
       "source_references": [
         {
           "url": "https://github.com/BerriAI/litellm/releases/tag/v1.105.4",
+          "name": "litellm",
+          "kind": "官方来源",
+          "priority": 0
+        },
+        {
+          "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+          "name": "litellm",
+          "kind": "官方来源",
+          "priority": 0
+        },
+        {
+          "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
           "name": "litellm",
           "kind": "官方来源",
           "priority": 0
@@ -3530,6 +2918,54 @@
         "confidence": "高",
         "reasoning": "LiteLLM 是开源 LLM 网关，v1.105.4 的核心内容是 cosign 签名密钥轮换与 eMudhra 根 CA 移除，属于有明确技术机制的开源工具发布，因此归入 technical_progress 与 agent_or_developer_infra；新闻主语是 BerriAI 的发布动作，而非任何被测模型、AI 政策或安全事件定性。"
       },
+      "merged_event_ids": [
+        "8eafde66b28df7",
+        "13abd7791c62cc"
+      ],
+      "merged_coverage": [
+        {
+          "event_id": "8eafde66b28df7",
+          "title": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
+          "evidence_urls": [
+            "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
+          ],
+          "evidence_review": {
+            "version": 1,
+            "status": "passed",
+            "mode": "full_text",
+            "dates": [
+              {
+                "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
+                "published_at": "2026-10-24T08:45:14.000Z",
+                "publication_date": "2026-10-24"
+              }
+            ],
+            "text_digest": "c0685d637b2e8d3007a3728cfcc8ffd4d70d857e53f69c918f546bdc02c30662",
+            "verified_claim_count": 6
+          }
+        },
+        {
+          "event_id": "13abd7791c62cc",
+          "title": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
+          "evidence_urls": [
+            "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
+          ],
+          "evidence_review": {
+            "version": 1,
+            "status": "passed",
+            "mode": "full_text",
+            "dates": [
+              {
+                "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
+                "published_at": "2026-10-24T08:45:16.000Z",
+                "publication_date": "2026-10-24"
+              }
+            ],
+            "text_digest": "242b66ecb5da7c2d4ed22a0d56323c9cf58f1764826f4dea5abc8c9d9399ca38",
+            "verified_claim_count": 7
+          }
+        }
+      ],
       "focus_reason": "虽是补丁版本，但签名密钥轮换和信任库收窄会直接打断自托管 LiteLLM 的镜像验证流程，影响所有启用准入控制与 CI 校验的 LLM 网关部署团队。"
     },
     {
@@ -3737,381 +3173,6 @@
         "reasoning": "文章主语是 TensorSharp 开发者及其推理引擎，MiniMax-M3.1-Flash 只是被测模型，容易误判为 MiniMax 模型发布或 llama.cpp 评测；实际是一手推理工程测试与基准报告，因此归入 technical_progress。"
       },
       "thumbnail_source": "thumbnail_url"
-    },
-    {
-      "event_id": "8eafde66b28df7",
-      "bucket": "worth_tracking",
-      "section": "technical_progress",
-      "title": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
-      "ai_summary": "LiteLLM 于 10 月 24 日发布 v1.104.6，核心变更为更换 Docker 镜像和 Helm chart 的 cosign 签名密钥，旧密钥自本版本起不再匹配，需同步更新所有 cosign verify 脚本、CI 检查和准入策略。 本版本共合并 17 个 PR，其中修复了 DeepSeek 与 Qwen3.5 在 count endpoints 上 token 计数偏低 30% 或偏高两倍的问题，以及自 v1.92.0 起模型别名流式请求计费为零、自 v1.102.0 起 openai/responses/* 非流式请求重复计费等问题。 同批变更（也在 1.103.8 中）移除了 SDK、代理及 Docker 镜像信任的 eMudhra 根 CA，涉及证书链管理的部署需一并处理。",
-      "brief": "LiteLLM 于 10 月 24 日发布 v1.104.6，核心变更为更换 Docker 镜像和 Helm chart 的 cosign 签名密钥，旧密钥自本版本起不再匹配，需同步更新所有 cosign verify 脚本、CI 检查和准入策略。 本版本共合并 17 个 PR，其中修复了 DeepSeek 与 Qwen3.5 在 count endpoints 上 token 计数偏低 30% 或偏高两倍的问题，以及自 v1.92.0 起模型别名流式请求计费为零、自 v1.102.0 起 openai/responses/* 非流式请求重复计费等问题。 同批变更（也在 1.103.8 中）移除了 SDK、代理及 Docker 镜像信任的 eMudhra 根 CA，涉及证书链管理的部署需一并处理。",
-      "social_original_text": "",
-      "translation_zh": "",
-      "entity": "LiteLLM",
-      "event_type": "agent_or_developer_infra",
-      "event_type_label": "Agent/开发者基础设施",
-      "score": 106,
-      "news_topic": "engineering",
-      "news_topic_label": "工程实践",
-      "newsworthiness": {
-        "topic": "engineering",
-        "topic_label": "工程实践",
-        "tier": "noteworthy",
-        "impact_score": 10,
-        "model_release": false
-      },
-      "first_published_at": "2026-10-24T08:45:14.000Z",
-      "latest_reported_at": "2026-10-24T08:45:14.000Z",
-      "late_arrival": false,
-      "late_arrival_reason": "",
-      "evidence_urls": [
-        "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
-      ],
-      "source_references": [
-        {
-          "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-          "name": "litellm",
-          "kind": "官方来源",
-          "priority": 0
-        }
-      ],
-      "evidence_titles": [
-        "v1.104.6"
-      ],
-      "evidence_summaries": [
-        "Important The image-signing key has changed. Starting with this release, every Docker image and Helm chart is signed with the new cosign key from commit e82a3c6 . Verifying with the previous key from commit 0112e53 will fail. Update anything that pins the old cosign.pub : cosign verify scripts, CI checks, and admission policies such as Kyverno, Sigstore policy-controller or Connaisseur. New cosign.pub SHA-256: e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0 Verify this release cosign verify \\ --key https://raw.githubusercontent.com/BerriAI/litellm/e82a3c646908ba0a6ee0beddc4310d7a6cac4065/cosign.pub \\ ghcr.io/berriai/litellm:v1.104.6 Same command for litellm-database , litellm-non_root and the docker.io/litellm/* images What's new in 1.104.6 17 PRs. 11 fixed, 2 changed, 1 removed. 1 needs action Action required Deployment: Verify image signatures with the cosign.pub from commit e82a3c6 , the previous key no longer matches ( #48103 ) Also in 1.103.8 Changes Deployment: Removed the eMudhra root CA from every certificate bundle the SDK, proxy and Docker images trust ( #47670 , #47969 ) Also in 1.103.8 Deployment: Changed the cosign key that signs Docker images and Helm charts to the one from commit e82a3c6 ( #48103 ) Also in 1.103.8 Azure: Fixed Azure AI Foundry returning 400 when the client sends the dangerous-tool-use-2026-09-03 beta ( #43934 ) Chat completions: Fixed tool calls landing on choices[1] with gpt-5.4+ models, broken since v1.97.0 ( #46099 ) Messages API: Fixed /v1/messages streams holding message_start for minutes during adaptive thinking on Bedrock and Vertex, broken since v1.100.0 ( #43600 ) Token counting: Fixed DeepSeek and Qwen3.5 token counts running up to 30% low or twice too high on the count endpoints ( #47685 ) Token counting: Changed /v1/messages/count_tokens to return HTTP 400 instead of a known-wrong local estimate ( #47705 ) Caching: Fixed automatic prompt caching adding extra cache marks on /v1/messages when extra_body overrides a client mark ( #43341 ) Cost tracking and pricing: Fixed the Usage API timing out while looking up names for busy hashed keys ( #43656 ) Cost tracking and pricing: Fixed streamed requests through a model alias billing $0 instead of the deployment's price, broken since v1.92.0 ( #44341 ) Cost tracking and pricing: Fixed large non-streaming chat requests to openai/responses/* models logging and charging spend twice, broken since v1.102.0 ( #44508 ) Cost tracking and pricing: Fixed failed, timed-out, cancelled and spilled-over requests being priced wrong or not at all ( #47718 ) Cost tracking and pricing: Fixed batch cost tracking, claude-haiku-5-5 and Bedrock profile pricing, and safeguards requests on /v1/messages ( #47726 ) Also in 1.105.3 Admin UI: Fixed Usage reports showing no owner for CLI session keys when spend logs are off or purged ( #43642 , #47805 ) Backport #47802 · Backport #48076 · Full changelog"
-      ],
-      "thumbnail_url": "",
-      "source_layers": [
-        "L1"
-      ],
-      "social_sources": [],
-      "source_display": "litellm",
-      "source_kinds": [
-        "engineering_blog"
-      ],
-      "x_handles": [],
-      "score_breakdown": {
-        "AuthorityScore": 28,
-        "ImpactScore": 10,
-        "AuthorExpertiseScore": 0,
-        "EvidenceQualityScore": 11,
-        "EntityScore": 0,
-        "EventTypeScore": 13,
-        "SpecificityScore": 20,
-        "ResonanceScore": 0,
-        "FreshnessScore": 12,
-        "UserInterestScore": 12,
-        "ChinaRelevanceScore": 0,
-        "SocialEngagementScore": 0,
-        "UserFeedbackScore": 0,
-        "NoisePenalty": 0,
-        "DuplicatePenalty": 0,
-        "LowConfidencePenalty": 0
-      },
-      "quality_assessment": {
-        "evidence": {
-          "mechanism": true,
-          "measurement": true,
-          "comparison": true,
-          "artifact": true,
-          "score": 11
-        },
-        "publisher_count": 1,
-        "sources": [
-          {
-            "publisher_id": "litellm",
-            "publisher_name": "litellm",
-            "matched_scope": "https://github.com/BerriAI/litellm",
-            "layer": "L1",
-            "status": "curated_publisher",
-            "author": null,
-            "author_score": 0
-          }
-        ],
-        "note": "Publisher coverage is not independent fact verification"
-      },
-      "title_zh": "LiteLLM v1.104.6 发布：更换 cosign 镜像签名密钥，并修复多项计费与 token 计数问题。",
-      "memory_note": "这是一次小版本维护发布，延续了 LiteLLM 对计费准确性和 token 计数准确性的持续修复，属于推理网关基础设施的常规迭代，而非新一代框架或重大安全事件。",
-      "reading_questions": [
-        "我的部署是否固定了旧 cosign.pub 或使用了相关准入策略？",
-        "我在用的 LiteLLM 版本是否受 token 计数和计费修复影响？"
-      ],
-      "memory_subjects": [
-        {
-          "kind": "topic",
-          "key": "inference-infrastructure",
-          "label": "Inference Infrastructure"
-        },
-        {
-          "kind": "topic",
-          "key": "ai-safety-policy",
-          "label": "AI Safety / Policy"
-        },
-        {
-          "kind": "topic",
-          "key": "multimodal-generation",
-          "label": "Multimodal Generation"
-        }
-      ],
-      "expert_review": {
-        "importance": "对自建 AI 网关的团队，签名密钥更换是需要立即执行的运维变更，token 计数与计费修复直接影响成本统计准确性。",
-        "skepticism": "发布说明中的 token 计数偏差幅度和计费修复影响均为厂商自述，未看到独立复现或第三方验证，具体改进效果需在实际部署中确认。",
-        "watch_points": [
-          "后续版本是否对 DeepSeek 与 Qwen3.5 的 token 计数提供独立验证或更精确的实现说明",
-          "签名密钥更换后官方文档和 Helm chart 是否同步更新，其他镜像是否需要额外操作",
-          "计费修复是否引入新的偏差（例如别名计费场景的回归）"
-        ],
-        "related_sources": [
-          {
-            "title": "Release v1.104.6 · BerriAI/litellm",
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6"
-          }
-        ],
-        "method": "llm_expert_review"
-      },
-      "editorial_review": {
-        "publish": true,
-        "reason": "LiteLLM v1.104.6 是一次常规维护性发布，但包含对生产运维有直接影响的变更：cosign 镜像签名密钥更换、eMudhra 根 CA 移除，以及多项账单统计和 token 计数的修复。对使用 LiteLLM 网关的团队，这是一条需要执行的变更通知，达到日报入选标准。",
-        "evidence_strength": "strong",
-        "importance": 2
-      },
-      "article_evidence": [
-        {
-          "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-          "status": "html",
-          "chars": 3775
-        }
-      ],
-      "evidence_review": {
-        "version": 1,
-        "status": "passed",
-        "mode": "full_text",
-        "dates": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.104.6",
-            "published_at": "2026-10-24T08:45:14.000Z",
-            "publication_date": "2026-10-24"
-          }
-        ],
-        "text_digest": "c0685d637b2e8d3007a3728cfcc8ffd4d70d857e53f69c918f546bdc02c30662",
-        "verified_claim_count": 6
-      },
-      "llm_classification": {
-        "primary_entity": "LiteLLM",
-        "primary_entity_role": "article_subject",
-        "mentioned_entities": [
-          {
-            "name": "DeepSeek",
-            "role": "model",
-            "evidence": "发布说明中提及修复 DeepSeek 的 token 计数问题"
-          },
-          {
-            "name": "Qwen3.5",
-            "role": "model",
-            "evidence": "发布说明中提及修复 Qwen3.5 的 token 计数问题"
-          },
-          {
-            "name": "Kyverno",
-            "role": "other",
-            "evidence": "作为可能受签名密钥更换影响的准入策略工具被提及"
-          },
-          {
-            "name": "Sigstore policy-controller",
-            "role": "other",
-            "evidence": "作为可能受签名密钥更换影响的准入策略工具被提及"
-          }
-        ],
-        "event_type": "agent_or_developer_infra",
-        "section": "technical_progress",
-        "confidence": "高",
-        "reasoning": "主体是 LiteLLM 的版本发布，属于开发工具/网关基础设施的更新，而非模型发布或公司融资事件；并未涉及模型本身的能力变化或公司层面的重大战略动作。"
-      }
-    },
-    {
-      "event_id": "13abd7791c62cc",
-      "bucket": "worth_tracking",
-      "section": "technical_progress",
-      "title": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
-      "ai_summary": "LiteLLM 于 10 月 24 日发布 1.103.8，共 4 个 PR：1 修复、1 变更、1 移除、1 项需处理。 从该版本起，所有 Docker 镜像和 Helm Chart 改用来自 commit e82a3c6 的新 cosign 密钥签名，使用旧密钥（commit 0112e53）校验将失败；固定旧 cosign.pub 的 verify 脚本、CI 检查及 Kyverno、Sigstore policy-controller、Connaisseur 等准入策略需同步更新。 新 cosign.pub 的 SHA-256 为 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0，可用于校验本次发布。 同时将 eMudhra 根证书从 SDK、代理与 Docker 镜像信任的证书包中移除，并修复了 OpenTelemetry 1.44 及以上版本中 otel callback 初始化失败的问题。",
-      "brief": "LiteLLM 于 10 月 24 日发布 1.103.8，共 4 个 PR：1 修复、1 变更、1 移除、1 项需处理。 从该版本起，所有 Docker 镜像和 Helm Chart 改用来自 commit e82a3c6 的新 cosign 密钥签名，使用旧密钥（commit 0112e53）校验将失败；固定旧 cosign.pub 的 verify 脚本、CI 检查及 Kyverno、Sigstore policy-controller、Connaisseur 等准入策略需同步更新。 新 cosign.pub 的 SHA-256 为 e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0，可用于校验本次发布。 同时将 eMudhra 根证书从 SDK、代理与 Docker 镜像信任的证书包中移除，并修复了 OpenTelemetry 1.44 及以上版本中 otel callback 初始化失败的问题。",
-      "social_original_text": "",
-      "translation_zh": "",
-      "entity": "LiteLLM",
-      "event_type": "agent_or_developer_infra",
-      "event_type_label": "Agent/开发者基础设施",
-      "score": 94,
-      "news_topic": "engineering",
-      "news_topic_label": "工程实践",
-      "newsworthiness": {
-        "topic": "engineering",
-        "topic_label": "工程实践",
-        "tier": "noteworthy",
-        "impact_score": 10,
-        "model_release": false
-      },
-      "first_published_at": "2026-10-24T08:45:16.000Z",
-      "latest_reported_at": "2026-10-24T08:45:16.000Z",
-      "late_arrival": false,
-      "late_arrival_reason": "",
-      "evidence_urls": [
-        "https://github.com/BerriAI/litellm/releases/tag/v1.103.8"
-      ],
-      "source_references": [
-        {
-          "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-          "name": "litellm",
-          "kind": "官方来源",
-          "priority": 0
-        }
-      ],
-      "evidence_titles": [
-        "v1.103.8"
-      ],
-      "evidence_summaries": [
-        "Important The image-signing key has changed. Starting with this release, every Docker image and Helm chart is signed with the new cosign key from commit e82a3c6 . Verifying with the previous key from commit 0112e53 will fail. Update anything that pins the old cosign.pub : cosign verify scripts, CI checks, and admission policies such as Kyverno, Sigstore policy-controller or Connaisseur. New cosign.pub SHA-256: e3fe3e08c44b16407fe0b37c43b4f8b603b3a0f4ee74c29e647bc022d762c2c0 Verify this release cosign verify \\ --key https://raw.githubusercontent.com/BerriAI/litellm/e82a3c646908ba0a6ee0beddc4310d7a6cac4065/cosign.pub \\ ghcr.io/berriai/litellm:v1.103.8 Same command for litellm-database , litellm-non_root and the docker.io/litellm/* images What's new in 1.103.8 4 PRs. 1 fixed, 1 changed, 1 removed. 1 needs action Action required Deployment: Verify image signatures with the cosign.pub from commit e82a3c6 , the previous key no longer matches ( #48103 ) Changes Deployment: Removed the eMudhra root CA from every certificate bundle the SDK, proxy and Docker images trust ( #47670 , #47969 ) Deployment: Changed the cosign key that signs Docker images and Helm charts to the one from commit e82a3c6 ( #48103 ) Logging and observability: Fixed the otel callback failing to initialize with OpenTelemetry 1.44 and newer ( #42431 ) Backport #48075 · Full changelog"
-      ],
-      "thumbnail_url": "",
-      "source_layers": [
-        "L1"
-      ],
-      "social_sources": [],
-      "source_display": "litellm",
-      "source_kinds": [
-        "engineering_blog"
-      ],
-      "x_handles": [],
-      "score_breakdown": {
-        "AuthorityScore": 28,
-        "ImpactScore": 10,
-        "AuthorExpertiseScore": 0,
-        "EvidenceQualityScore": 7,
-        "EntityScore": 0,
-        "EventTypeScore": 13,
-        "SpecificityScore": 12,
-        "ResonanceScore": 0,
-        "FreshnessScore": 12,
-        "UserInterestScore": 12,
-        "ChinaRelevanceScore": 0,
-        "SocialEngagementScore": 0,
-        "UserFeedbackScore": 0,
-        "NoisePenalty": 0,
-        "DuplicatePenalty": 0,
-        "LowConfidencePenalty": 0
-      },
-      "quality_assessment": {
-        "evidence": {
-          "mechanism": true,
-          "measurement": false,
-          "comparison": false,
-          "artifact": true,
-          "score": 7
-        },
-        "publisher_count": 1,
-        "sources": [
-          {
-            "publisher_id": "litellm",
-            "publisher_name": "litellm",
-            "matched_scope": "https://github.com/BerriAI/litellm",
-            "layer": "L1",
-            "status": "curated_publisher",
-            "author": null,
-            "author_score": 0
-          }
-        ],
-        "note": "Publisher coverage is not independent fact verification"
-      },
-      "title_zh": "LiteLLM 发布 1.103.8：Docker 镜像与 Helm Chart 更换 cosign 签名密钥，旧校验配置需更新。",
-      "memory_note": "该补丁版的内容全部属于部署与可观测性变更（签名密钥轮换、根证书移除、otel 回调修复），不涉及模型能力或网关新功能，也不属于 AI 安全政策；此前标注的 AI 安全政策、多模态生成主题与内容不符，应更正为工程实践/开发者基础设施类。",
-      "reading_questions": [
-        "你在 CI 或集群准入策略中是否固定了旧 cosign.pub？升级到 1.103.8 后镜像签名校验是否还能通过？",
-        "eMudhra 根证书从 SDK 与代理的信任库移除，是否会影响你所在环境中基于该 CA 签发证书的服务访问？"
-      ],
-      "memory_subjects": [
-        {
-          "kind": "topic",
-          "key": "ai-safety-policy",
-          "label": "AI Safety / Policy"
-        },
-        {
-          "kind": "topic",
-          "key": "multimodal-generation",
-          "label": "Multimodal Generation"
-        }
-      ],
-      "expert_review": {
-        "importance": "这是面向 LiteLLM 生产部署者的补丁级工程更新：签名密钥轮换和信任库变更会影响固定旧 cosign.pub 的镜像校验与准入策略，但不对普通 API 调用者构成功能变化。",
-        "skepticism": "以上影响描述来自维护者的一手发布说明（旧密钥校验将失败、根证书移除等），目前未见社区部署环境的独立复现报告，实际影响以各自环境的校验与兼容性验证为准。",
-        "watch_points": [
-          "固定旧 cosign.pub 的 CI 与准入策略（Kyverno、Sigstore policy-controller、Connaisseur）是否出现镜像签名校验失败的部署报告。",
-          "移除 eMudhra 根证书后，依赖该 CA 的内部证书环境是否出现 TLS 校验或不兼容问题。",
-          "LiteLLM 后续是否针对签名密钥迁移提供自动化迁移脚本，或继续轮换信任组件。"
-        ],
-        "related_sources": [
-          {
-            "title": "LiteLLM Releases（GitHub）",
-            "url": "https://github.com/BerriAI/litellm/releases"
-          }
-        ],
-        "method": "llm_expert_review"
-      },
-      "editorial_review": {
-        "publish": true,
-        "reason": "来自 GitHub 一手 Release 公告，包含具体新增事实和部署影响：cosign 镜像签名密钥更换导致旧公钥校验失效、eMudhra 根证书从 SDK/代理/镜像信任库移除、OpenTelemetry 1.44+ otel 回调修复。对生产使用 LiteLLM 的运维与安全团队有直接可执行信息；属于补丁级工程更新，不涉及模型能力变化，故评分为 2。",
-        "evidence_strength": "strong",
-        "importance": 2
-      },
-      "article_evidence": [
-        {
-          "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-          "status": "html",
-          "chars": 2212
-        }
-      ],
-      "evidence_review": {
-        "version": 1,
-        "status": "passed",
-        "mode": "full_text",
-        "dates": [
-          {
-            "url": "https://github.com/BerriAI/litellm/releases/tag/v1.103.8",
-            "published_at": "2026-10-24T08:45:16.000Z",
-            "publication_date": "2026-10-24"
-          }
-        ],
-        "text_digest": "242b66ecb5da7c2d4ed22a0d56323c9cf58f1764826f4dea5abc8c9d9399ca38",
-        "verified_claim_count": 7
-      },
-      "llm_classification": {
-        "primary_entity": "LiteLLM",
-        "primary_entity_role": "article_subject",
-        "mentioned_entities": [
-          {
-            "name": "BerriAI",
-            "role": "other",
-            "evidence": "LiteLLM 项目的维护组织，体现在仓库标识 BerriAI/litellm 中。"
-          },
-          {
-            "name": "eMudhra",
-            "role": "other",
-            "evidence": "被从 SDK、代理与 Docker 镜像信任的证书包中移除的根证书颁发机构。"
-          },
-          {
-            "name": "OpenTelemetry",
-            "role": "other",
-            "evidence": "本次修复的 otel callback 初始化问题所涉及的依赖项目。"
-          },
-          {
-            "name": "Kyverno",
-            "role": "other",
-            "evidence": "受 cosign 签名密钥更换影响、需要更新旧公钥固定的准入策略组件之一。"
-          }
-        ],
-        "event_type": "agent_or_developer_infra",
-        "section": "technical_progress",
-        "confidence": "高",
-        "reasoning": "LiteLLM 是开发运维使用的开源 AI 网关，本次 1.103.8 的内容全部是镜像签名、证书信任库与可观测性回调等工程运维变更，属于开发者基础设施的小版本发布，而非模型发布、融资或政策事件，因此归入 agent_or_developer_infra / technical_progress；该判断的依据是发布说明逐条列出的 Deployment 与 Logging 变更。"
-      }
     }
   ],
   "coverage": [
@@ -4138,7 +3199,7 @@
     {
       "id": "engineering",
       "label": "工程实践",
-      "count": 3
+      "count": 1
     },
     {
       "id": "applied_ai",
@@ -4147,14 +3208,23 @@
     }
   ],
   "quality_rejections": [],
-  "deduplications": [],
+  "deduplications": [
+    {
+      "kept_event_id": "5bdc798c930950",
+      "merged_event_ids": [
+        "8eafde66b28df7",
+        "13abd7791c62cc"
+      ],
+      "reason": "same_repository_cosign_key_rotation_backport, same_repository_cosign_key_rotation_backport"
+    }
+  ],
   "quality_metrics": {
     "reviewed_candidates": 24,
     "editorially_approved_candidates": 7,
-    "selected_events": 7,
+    "selected_events": 5,
     "focus_count": 3,
     "covered_topics": 4,
-    "primary_source_events": 3,
+    "primary_source_events": 1,
     "catchup_events": 0,
     "weak_evidence_events": 0
   },
