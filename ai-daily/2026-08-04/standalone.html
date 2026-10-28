@@ -2644,9 +2644,65 @@ time {
   .report-history { order: 1; width: 100%; margin-top: 24px; }
 }
 
+/* Reader presentation: original audited text, quieter navigation and real figures. */
+[data-website-presentation="reader-v1"] .focus-card { padding: 16px 18px; border-color: #c8c5b8; border-radius: 8px; }
+[data-website-presentation="reader-v1"] .focus-card h3 { margin-bottom: 12px; font-size: 17px; line-height: 1.65; }
+[data-website-presentation="reader-v1"] .focus-number { color: #6c8073; font-size: 19px; }
+[data-website-presentation="reader-v1"] .focus-topic { color: #375; }
+[data-website-presentation="reader-v1"] .focus-more { color: #375; font-size: 13px; }
+.topic-directory-toggle { margin-top: 16px; padding: 11px 14px; border: 1px solid #c8c5b8; border-radius: 6px; }
+.topic-directory-toggle > summary { cursor: pointer; font-size: 14px; font-weight: 650; }
+.topic-directory-toggle > summary > span { float: right; color: var(--muted); font-size: 12px; font-weight: 400; }
+.topic-directory-toggle .topic-directory { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-list { gap: 20px; }
+[data-website-presentation="reader-v1"] .report-item { padding: 20px; border: 1px solid #c8c5b8; border-left: 3px solid #375; grid-template-columns: 34px minmax(0, 1fr); }
+[data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 34px minmax(0, 1fr) 112px; }
+[data-website-presentation="reader-v1"] .report-item > span { width: 32px; height: 25px; background: transparent; color: #375; }
+[data-website-presentation="reader-v1"] .report-item h3 { margin: 8px 0 16px; font-size: 21px; line-height: 1.6; }
+[data-website-presentation="reader-v1"] .report-item-meta { gap: 6px 10px; line-height: 1.7; letter-spacing: 0; font-size: 12px; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p { margin: 0; color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p + p, [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p + p { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-item .ai-summary { margin-top: 0; }
+[data-website-presentation="reader-v1"] .reader-field b[data-highlight] { font-weight: 750; }
+[data-website-presentation="reader-v1"] .ai-summary .reader-label, [data-website-presentation="reader-v1"] .memory-note .reader-label, [data-website-presentation="reader-v1"] .social-translation .reader-label { display: block; width: fit-content; min-height: 0; margin: 0 0 9px; padding: 0; background: transparent; color: #375; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+[data-website-presentation="reader-v1"] .memory-note { margin-top: 18px; padding: 14px 16px; border: 0; border-radius: 4px; background: #edf3ed; }
+[data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 15px; line-height: 1.8; }
+[data-website-presentation="reader-v1"] .report-actions { margin-top: 14px; }
+[data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
+[data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
+[data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-note { color: #62685e; }
+[data-website-presentation="reader-v1"] .paper-digest-list { grid-template-columns: 1fr; gap: 16px; }
+[data-website-presentation="reader-v1"] .paper-digest-item { border-left: 2px solid #b8c8b9; background: transparent; padding: 12px 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item > span { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-item h4 { font-size: 18px; line-height: 1.65; margin-bottom: 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item .ai-summary { display: block; border: 0; background: transparent; padding: 0; color: #333; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field { display: block; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; }
+[data-website-presentation="reader-v1"] .paper-digest-item em { color: #526150; background: #e5ebdf; font-size: 12px; font-style: normal; }
+@media (max-width: 640px) {
+  [data-website-presentation="reader-v1"] .editorial-overview { margin: 20px 0 24px; }
+  [data-website-presentation="reader-v1"] .focus-grid { gap: 10px; }
+  [data-website-presentation="reader-v1"] .focus-card { padding: 14px 16px; }
+  [data-website-presentation="reader-v1"] .focus-card h3 { font-size: 16px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item { grid-template-columns: 1fr; padding: 18px 14px; }
+  [data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 1fr; }
+  [data-website-presentation="reader-v1"] .report-item > div:not(.report-thumb) { grid-column: 1; }
+  [data-website-presentation="reader-v1"] .report-item h3 { font-size: 20px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item .reader-field p { font-size: 17px; line-height: 1.85; }
+  [data-website-presentation="reader-v1"] .memory-note { padding: 13px; }
+  [data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 16px; }
+  [data-website-presentation="reader-v1"] .paper-digest { padding: 16px 12px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 12px 8px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { font-size: 17px; }
+}
+
 </style>
   </head>
-  <body>
+  <body data-website-presentation="reader-v1">
     <div class="report-shell">
       <aside class="report-history" aria-label="AI 日报导航">
     <div class="report-history-title">
@@ -3168,29 +3224,23 @@ time {
         </header>
         <section class="editorial-overview" aria-label="今日重点与选题目录">
     <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
-    <div class="focus-grid"><article class="focus-card">
+    <div class="focus-grid"><article class="focus-card" data-focus-id="53dfce13711ebb">
       <span class="focus-number">01</span>
       <p class="focus-topic">AI 产品与工具</p>
-      <h3><a data-report-target="event-53dfce13711ebb" href="?event=event-53dfce13711ebb#company-updates">OpenAI：New ways to learn and teach with ChatGPT Work and Codex</a></h3>
-      <p>OpenAI为ChatGPT Work和Codex推出教育插件，面向K-12教师、大学教育者和学生，支持学习、教学、研究和构建。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-53dfce13711ebb" href="?event=event-53dfce13711ebb#company-updates">OpenAI：New ways to learn and teach with ChatGPT Work and Codex</a></h3>
       <a class="focus-more" data-report-target="event-53dfce13711ebb" href="?event=event-53dfce13711ebb#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="9b405b3fd221f0">
       <span class="focus-number">02</span>
       <p class="focus-topic">Agent 技术</p>
-      <h3><a data-report-target="event-9b405b3fd221f0" href="?event=event-9b405b3fd221f0#company-updates">AWS：From weeks to minutes: How Formula 1® uses agentic AI on AWS to accelerate data operations</a></h3>
-      <p>AWS博客介绍F1与AWS合作构建Data Accelerator，使用Amazon Bedrock AgentCore的agentic AI，将数据源接入时间从6-8周缩短至约40分钟，并实现自动化schema演进。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-9b405b3fd221f0" href="?event=event-9b405b3fd221f0#company-updates">AWS：From weeks to minutes: How Formula 1® uses agentic AI on AWS to accelerate data operations</a></h3>
       <a class="focus-more" data-report-target="event-9b405b3fd221f0" href="?event=event-9b405b3fd221f0#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="341d0b21282b97">
       <span class="focus-number">03</span>
       <p class="focus-topic">行业 / 商业动态</p>
-      <h3><a data-report-target="event-341d0b21282b97" href="?event=event-341d0b21282b97#company-updates">Circles：Circles powers telco personalization with OpenAI technology</a></h3>
-      <p>Circles使用OpenAI API和Codex构建AI原生电信体验，ARPU提升22%，流失率降低9%，开发效率提升。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-341d0b21282b97" href="?event=event-341d0b21282b97#company-updates">Circles：Circles powers telco personalization with OpenAI technology</a></h3>
       <a class="focus-more" data-report-target="event-341d0b21282b97" href="?event=event-341d0b21282b97#company-updates">阅读解读与来源 →</a>
     </article></div>
-    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>8 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
         <ul><li><a data-report-target="event-e37ceba78564e6" href="?event=event-e37ceba78564e6#technical-progress">OpenAI：OpenAI&#039;s Unreleased Model Astra Solves Ten Major Open Mathematics Problems</a></li></ul>
       </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>2</b></summary>
         <ul><li><a data-report-target="event-341d0b21282b97" href="?event=event-341d0b21282b97#company-updates">Circles：Circles powers telco personalization with OpenAI technology</a></li><li><a data-report-target="event-c2736e10a2ec60" href="?event=event-c2736e10a2ec60#company-updates">Amazon Bedrock：Automated Reasoning policy refinement in Amazon Bedrock</a></li></ul>
@@ -3202,7 +3252,7 @@ time {
         <p>本期暂无达到入选标准的新内容</p>
       </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
-      </details></div>
+      </details></div></details>
   </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
@@ -3232,7 +3282,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-53dfce13711ebb" class="report-item ">
+      <article id="event-53dfce13711ebb" data-item-id="53dfce13711ebb" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3243,16 +3293,17 @@ time {
             
             <a class="source-link" href="https://openai.com/index/learn-teach-chatgpt-work-codex" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
-          <h3><a href="https://openai.com/index/learn-teach-chatgpt-work-codex" target="_blank" rel="noreferrer">OpenAI：New ways to learn and teach with ChatGPT Work and Codex</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI为ChatGPT Work和Codex推出教育插件，面向K-12教师、大学教育者和学生，支持学习、教学、研究和构建。</p>
+          <h3 data-field="title"><a href="https://openai.com/index/learn-teach-chatgpt-work-codex" target="_blank" rel="noreferrer">OpenAI：New ways to learn and teach with ChatGPT Work and Codex</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>OpenAI为<b data-highlight style=color:#245b78>ChatGPT Work</b>和<b data-highlight style=color:#245b78>Codex</b>推出教育插件，面向K-12教师、大学教育者和学生，支持学习、教学、研究和构建。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>教育插件是OpenAI将Codex和ChatGPT Work推向教学场景的尝试，但具体能力与效果仍需实际使用验证。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>教育插件是OpenAI将Codex和ChatGPT Work推向教学场景的尝试，但具体能力与效果仍<b data-highlight style=color:#80511f>需实际使用验证</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article id="event-9b405b3fd221f0" class="report-item has-thumbnail">
+      </article><article id="event-9b405b3fd221f0" data-item-id="9b405b3fd221f0" class="report-item has-thumbnail">
         <span>02</span>
         <div class="report-thumb"><img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/28/ML-21186-1-1.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3263,16 +3314,17 @@ time {
             
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/from-weeks-to-minutes-how-formula-1-uses-agentic-ai-on-aws-to-accelerate-data-operations" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
-          <h3><a href="https://aws.amazon.com/blogs/machine-learning/from-weeks-to-minutes-how-formula-1-uses-agentic-ai-on-aws-to-accelerate-data-operations" target="_blank" rel="noreferrer">AWS：From weeks to minutes: How Formula 1® uses agentic AI on AWS to accelerate data operations</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>AWS博客介绍F1与AWS合作构建Data Accelerator，使用Amazon Bedrock AgentCore的agentic AI，将数据源接入时间从6-8周缩短至约40分钟，并实现自动化schema演进。</p>
+          <h3 data-field="title"><a href="https://aws.amazon.com/blogs/machine-learning/from-weeks-to-minutes-how-formula-1-uses-agentic-ai-on-aws-to-accelerate-data-operations" target="_blank" rel="noreferrer">AWS：From weeks to minutes: How Formula 1® uses agentic AI on AWS to accelerate data operations</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>AWS博客介绍F1与AWS合作构建Data Accelerator，使用Amazon Bedrock AgentCore的<b data-highlight style=color:#245b78>agentic AI</b>，将数据源接入时间从6-8周缩短至约40分钟，并实现自动化schema演进。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>这是AWS的客户案例营销，核心是agentic AI在数据工程中的落地，但40分钟仅指代码生成，实际部署审查仍需数小时。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这是AWS的客户案例营销，核心是agentic AI在数据工程中的落地，但40分钟仅指代码生成，<b data-highlight style=color:#80511f>实际部署审查仍需数小时</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-341d0b21282b97" class="report-item ">
+      </article><article id="event-341d0b21282b97" data-item-id="341d0b21282b97" class="report-item ">
         <span>03</span>
         
         <div>
@@ -3283,16 +3335,17 @@ time {
             
             <a class="source-link" href="https://openai.com/index/circles" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
-          <h3><a href="https://openai.com/index/circles" target="_blank" rel="noreferrer">Circles：Circles powers telco personalization with OpenAI technology</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Circles使用OpenAI API和Codex构建AI原生电信体验，ARPU提升22%，流失率降低9%，开发效率提升。</p>
+          <h3 data-field="title"><a href="https://openai.com/index/circles" target="_blank" rel="noreferrer">Circles：Circles powers telco personalization with OpenAI technology</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Circles使用OpenAI API和Codex构建AI原生电信体验，<b data-highlight style=color:#245b78>ARPU提升22%，</b><b data-highlight style=color:#245b78>流失率降低9%，</b>开发效率提升。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是OpenAI客户案例营销，数据来自Circles自述，需独立验证。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是OpenAI客户案例营销，数据来自Circles自述，需独立验证。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
-      </article><article id="event-c2736e10a2ec60" class="report-item has-thumbnail">
+      </article><article id="event-c2736e10a2ec60" data-item-id="c2736e10a2ec60" class="report-item has-thumbnail">
         <span>04</span>
         <div class="report-thumb"><img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/07/27/ML-21259-1.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3303,16 +3356,17 @@ time {
             
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/automated-reasoning-policy-refinement-in-amazon-bedrock" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
-          <h3><a href="https://aws.amazon.com/blogs/machine-learning/automated-reasoning-policy-refinement-in-amazon-bedrock" target="_blank" rel="noreferrer">Amazon Bedrock：Automated Reasoning policy refinement in Amazon Bedrock</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Amazon Bedrock 推出 Automated Reasoning 策略自动精炼功能，可诊断失败测试并基于形式逻辑提出规则或变量描述修复建议，用户审批后生效，支持 API 和 console 工作流。</p>
+          <h3 data-field="title"><a href="https://aws.amazon.com/blogs/machine-learning/automated-reasoning-policy-refinement-in-amazon-bedrock" target="_blank" rel="noreferrer">Amazon Bedrock：Automated Reasoning policy refinement in Amazon Bedrock</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Amazon Bedrock 推出 <b data-highlight style=color:#245b78>Automated Reasoning</b> 策略自动精炼功能，可诊断失败测试并基于形式逻辑提出规则或变量描述修复建议，用户审批后生效，支持 API 和 console 工作流。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>把人工诊断-手改-重测的循环压缩为一次审批，本质是降低策略调优的摩擦成本，但收敛质量仍依赖测试覆盖。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>把人工诊断-手改-重测的循环压缩为一次审批，本质是降低策略调优的摩擦成本，但收敛质量仍依赖测试覆盖。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-4e8fd49316a397" class="report-item has-thumbnail">
+      </article><article id="event-4e8fd49316a397" data-item-id="4e8fd49316a397" class="report-item has-thumbnail">
         <span>05</span>
         <div class="report-thumb"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/08/gettyimages-2266883826.jpg?quality=90&amp;strip=all&amp;crop=0%2C0.0062492188476426%2C100%2C99.987501562305&amp;w=2400" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3323,10 +3377,11 @@ time {
             
             <a class="source-link" href="https://www.theverge.com/ai-artificial-intelligence/974342/alibaba-qwen-max-open-weight-ai" target="_blank" rel="noopener noreferrer"><b>theverge</b></a>
           </div>
-          <h3><a href="https://www.theverge.com/ai-artificial-intelligence/974342/alibaba-qwen-max-open-weight-ai" target="_blank" rel="noreferrer">Alibaba：China’s Alibaba takes another swipe at America’s AI supremacy</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>阿里巴巴发布其最大、自称最强的模型Qwen3.8-Max，称性能对标Anthropic的Claude Fable 5和OpenAI，并计划下周开放权重。</p>
+          <h3 data-field="title"><a href="https://www.theverge.com/ai-artificial-intelligence/974342/alibaba-qwen-max-open-weight-ai" target="_blank" rel="noreferrer">Alibaba：China’s Alibaba takes another swipe at America’s AI supremacy</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>阿里巴巴发布其最大、自称最强的模型Qwen3.8-Max，称性能对标Anthropic的Claude Fable 5和OpenAI，并计划下周开放权重。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>阿里重回开放权重路线，以2.4万亿参数对标闭源前沿，但自测和Arena排名仍需独立验证。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>阿里重回开放权重路线，以2.4万亿参数对标闭源前沿，<b data-highlight style=color:#80511f>但自测和Arena排名仍需独立验证</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
@@ -3354,50 +3409,50 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-flash-ga-260731 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article id="paper-1" class="paper-digest-item has-thumbnail">
+      <article id="paper-1" data-paper-id="2608.02023" class="paper-digest-item has-thumbnail">
         <span>01</span>
         <img src="https://arxiv.org/html/2608.02023v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.02023" target="_blank" rel="noreferrer">SwanTale：面向指令与零样本任务的多说话人语音与音频生成</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出SwanTale模型，通过数据清洗、多级标注和统一MoE架构，同时支持多说话人语音与音频的指令生成和零样本生成。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2608.02023" target="_blank" rel="noreferrer">SwanTale：面向指令与零样本任务的多说话人语音与音频生成</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出<b data-highlight style=color:#245b78>SwanTale模型</b>，通过数据清洗、多级标注和统一MoE架构，同时支持多说话人语音与音频的指令生成和零样本生成。</p></div></div>
           <div><em>语音生成</em><em>多说话人</em><em>多模态</em></div>
         </div>
-      </article><article id="paper-2" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-2" data-paper-id="2608.01964" class="paper-digest-item has-thumbnail">
         <span>02</span>
         <img src="https://arxiv.org/html/2608.01964v1/pic/benchmark_figure.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.01964" target="_blank" rel="noreferrer">LongHorizon-Harness：推进真实世界长时程任务智能体</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出将长时程任务执行重构为任务状态管理问题，通过管理-执行-审计循环显式维护状态，提升多模型在多个基准上的表现。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2608.01964" target="_blank" rel="noreferrer">LongHorizon-Harness：推进真实世界长时程任务智能体</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出将长时程任务执行重构为任务状态管理问题，通过管理-执行-审计循环显式维护状态，提升多模型在多个基准上的表现。</p></div></div>
           <div><em>智能体</em><em>长时程任务</em><em>状态管理</em></div>
         </div>
-      </article><article id="paper-3" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-3" data-paper-id="2608.01755" class="paper-digest-item has-thumbnail">
         <span>03</span>
         <img src="https://arxiv.org/html/2608.01755v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.01755" target="_blank" rel="noreferrer">延迟暴露未来轨迹：自动驾驶VLM的可验证推理</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出AD-MCQ和DEFT-RLVR，将规划建模为轨迹候选选择，并在决策后验证未来轨迹，减少推理偏差和幻觉。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2608.01755" target="_blank" rel="noreferrer">延迟暴露未来轨迹：自动驾驶VLM的可验证推理</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出AD-MCQ和DEFT-RLVR，将规划建模为轨迹候选选择，并在决策后验证未来轨迹，减少推理偏差和幻觉。</p></div></div>
           <div><em>自动驾驶</em><em>视觉语言模型</em><em>可验证推理</em></div>
         </div>
-      </article><article id="paper-4" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-4" data-paper-id="2608.01735" class="paper-digest-item has-thumbnail">
         <span>04</span>
         <img src="https://arxiv.org/html/2608.01735v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.01735" target="_blank" rel="noreferrer">DAPD：双锚定策略蒸馏</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出双锚定策略蒸馏框架，通过双路径锚定和双源锚定缓解在线自蒸馏中的特权幻觉问题。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2608.01735" target="_blank" rel="noreferrer">DAPD：双锚定策略蒸馏</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出双锚定策略蒸馏框架，通过双路径锚定和双源锚定缓解在线自蒸馏中的特权幻觉问题。</p></div></div>
           <div><em>模型蒸馏</em><em>语言模型</em><em>后训练</em></div>
         </div>
-      </article><article id="paper-5" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-5" data-paper-id="2608.01678" class="paper-digest-item has-thumbnail">
         <span>05</span>
         <img src="https://arxiv.org/html/2608.01678v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2608.01678" target="_blank" rel="noreferrer">通过强化学习进行渐进式智能体技能生成</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出Skill-方法，将技能生成视为序列编辑过程，用回滚奖励评估每次编辑，生成更有效的智能体技能。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2608.01678" target="_blank" rel="noreferrer">通过强化学习进行渐进式智能体技能生成</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出Skill-方法，将技能生成视为序列编辑过程，用回滚奖励评估每次编辑，生成更有效的智能体技能。</p></div></div>
           <div><em>强化学习</em><em>技能生成</em><em>智能体</em></div>
         </div>
       </article>
     </div>
   </article>
-      <article id="event-e37ceba78564e6" class="report-item has-thumbnail">
+      <article id="event-e37ceba78564e6" data-item-id="e37ceba78564e6" class="report-item has-thumbnail">
         <span>01</span>
         <div class="report-thumb"><img src="https://thezvi.substack.com/p/fl_progressive:steep/https%3A%2F%2Fsubstack-post-media.s3.amazonaws.com%2Fpublic%2Fimages%2F2acafbf3-5774-4b52-8e03-bb7a0ec65e12_1200x1165.jpeg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3408,10 +3463,11 @@ time {
             
             <a class="source-link" href="https://thezvi.substack.com/p/openais-unreleased-model-astra-solves" target="_blank" rel="noopener noreferrer"><b>thezvi.substack.com</b></a>
           </div>
-          <h3><a href="https://thezvi.substack.com/p/openais-unreleased-model-astra-solves" target="_blank" rel="noreferrer">OpenAI：OpenAI&#039;s Unreleased Model Astra Solves Ten Major Open Mathematics Problems</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI 未发布模型 Astra 解决了十个重大开放数学问题，包括非-sofic 群存在性、Connes 刚性猜想反例等，并附 Lean 形式化证明。</p>
+          <h3 data-field="title"><a href="https://thezvi.substack.com/p/openais-unreleased-model-astra-solves" target="_blank" rel="noreferrer">OpenAI：OpenAI&#039;s Unreleased Model Astra Solves Ten Major Open Mathematics Problems</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>OpenAI 未发布模型 <b data-highlight style=color:#245b78>Astra</b> 解决了十个重大开放数学问题，包括非-sofic 群存在性、Connes 刚性猜想反例等，并附 Lean 形式化证明。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>Astra 在数学推理上显著跃升，但部分问题 Fable 也能解决，需区分模型能力与工程调度的贡献。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Astra 在数学推理上显著跃升，但部分问题 Fable 也能解决，<b data-highlight style=color:#275f45>需区分模型能力与工程调度的贡献</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
@@ -3430,7 +3486,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-8a9aec70fd756a" class="report-item ">
+      <article id="event-8a9aec70fd756a" data-item-id="8a9aec70fd756a" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3441,16 +3497,17 @@ time {
             
             <b>Simon Willison&#039;s Weblog</b>
           </div>
-          <h3><a href="https://simonwillison.net/2026/Aug/3/devtools-must-be-open-source-exedev" target="_blank" rel="noreferrer">Simon Willison：Devtools must be open source (exe.dev)</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Simon Willison评论称LLM让开源软件“可检查可修改”的理想更可行，他常用Claude或Codex克隆并构建GitHub项目，降低了参与门槛。</p>
+          <h3 data-field="title"><a href="https://simonwillison.net/2026/Aug/3/devtools-must-be-open-source-exedev" target="_blank" rel="noreferrer">Simon Willison：Devtools must be open source (exe.dev)</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Simon Willison评论称LLM让开源软件“可检查可修改”的理想更可行，他常用Claude或Codex克隆并构建GitHub项目，降低了参与门槛。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>观点文章，非产品发布。核心是LLM降低了开发者参与开源的门槛，但作者也承认尚未习惯性修改软件。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>观点文章，非产品发布。核心是LLM降低了开发者参与开源的门槛，<b data-highlight style=color:#80511f>但作者也承认尚未习惯性修改软件</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article id="event-009dc133fa96fd" class="report-item has-thumbnail">
+      </article><article id="event-009dc133fa96fd" data-item-id="009dc133fa96fd" class="report-item has-thumbnail">
         <span>02</span>
         <div class="report-thumb"><img src="https://i.guim.co.uk/img/media/e249e074dc29d4d995b7d4e8f221974266d05c76/271_0_1622_1299/master/1622.jpg?width=140&amp;quality=85&amp;auto=format&amp;fit=max&amp;s=cc097095b2285ad8281d5c1f32f62731" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3461,10 +3518,11 @@ time {
             
             <b>The Guardian AI</b>
           </div>
-          <h3><a href="https://www.theguardian.com/music/2026/aug/03/wagner-bayreuth-ring-cycle-review-ai-staging-dispenses-with-drama-to-create-banal-bric-a-brac" target="_blank" rel="noreferrer">Bayreuth Festival：Ring Cycle review – AI staging dispenses with drama to create banal bric-a-brac</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>《卫报》评论拜罗伊特音乐节150周年AI版《指环》制作：AI生成视觉与真人演唱割裂，戏剧性被消解，沦为无意义的图像滚动，评论认为这是对瓦格纳和AI创造力的双重浪费。</p>
+          <h3 data-field="title"><a href="https://www.theguardian.com/music/2026/aug/03/wagner-bayreuth-ring-cycle-review-ai-staging-dispenses-with-drama-to-create-banal-bric-a-brac" target="_blank" rel="noreferrer">Bayreuth Festival：Ring Cycle review – AI staging dispenses with drama to create banal bric-a-brac</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>《卫报》评论拜罗伊特音乐节150周年AI版《指环》制作：AI生成视觉与真人演唱割裂，戏剧性被消解，沦为无意义的图像滚动，评论认为这是对瓦格纳和AI创造力的双重浪费。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>AI用于艺术创作若缺乏导演意志，只会产出无意义的视觉堆砌。技术参与不等于艺术表达，关键仍在人的判断与叙事控制。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>AI用于艺术创作若缺乏导演意志，只会产出无意义的视觉堆砌。技术参与不等于艺术表达，关键仍在人的判断与叙事控制。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>

@@ -2644,9 +2644,65 @@ time {
   .report-history { order: 1; width: 100%; margin-top: 24px; }
 }
 
+/* Reader presentation: original audited text, quieter navigation and real figures. */
+[data-website-presentation="reader-v1"] .focus-card { padding: 16px 18px; border-color: #c8c5b8; border-radius: 8px; }
+[data-website-presentation="reader-v1"] .focus-card h3 { margin-bottom: 12px; font-size: 17px; line-height: 1.65; }
+[data-website-presentation="reader-v1"] .focus-number { color: #6c8073; font-size: 19px; }
+[data-website-presentation="reader-v1"] .focus-topic { color: #375; }
+[data-website-presentation="reader-v1"] .focus-more { color: #375; font-size: 13px; }
+.topic-directory-toggle { margin-top: 16px; padding: 11px 14px; border: 1px solid #c8c5b8; border-radius: 6px; }
+.topic-directory-toggle > summary { cursor: pointer; font-size: 14px; font-weight: 650; }
+.topic-directory-toggle > summary > span { float: right; color: var(--muted); font-size: 12px; font-weight: 400; }
+.topic-directory-toggle .topic-directory { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-list { gap: 20px; }
+[data-website-presentation="reader-v1"] .report-item { padding: 20px; border: 1px solid #c8c5b8; border-left: 3px solid #375; grid-template-columns: 34px minmax(0, 1fr); }
+[data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 34px minmax(0, 1fr) 112px; }
+[data-website-presentation="reader-v1"] .report-item > span { width: 32px; height: 25px; background: transparent; color: #375; }
+[data-website-presentation="reader-v1"] .report-item h3 { margin: 8px 0 16px; font-size: 21px; line-height: 1.6; }
+[data-website-presentation="reader-v1"] .report-item-meta { gap: 6px 10px; line-height: 1.7; letter-spacing: 0; font-size: 12px; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p { margin: 0; color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p + p, [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p + p { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-item .ai-summary { margin-top: 0; }
+[data-website-presentation="reader-v1"] .reader-field b[data-highlight] { font-weight: 750; }
+[data-website-presentation="reader-v1"] .ai-summary .reader-label, [data-website-presentation="reader-v1"] .memory-note .reader-label, [data-website-presentation="reader-v1"] .social-translation .reader-label { display: block; width: fit-content; min-height: 0; margin: 0 0 9px; padding: 0; background: transparent; color: #375; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+[data-website-presentation="reader-v1"] .memory-note { margin-top: 18px; padding: 14px 16px; border: 0; border-radius: 4px; background: #edf3ed; }
+[data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 15px; line-height: 1.8; }
+[data-website-presentation="reader-v1"] .report-actions { margin-top: 14px; }
+[data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
+[data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
+[data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-note { color: #62685e; }
+[data-website-presentation="reader-v1"] .paper-digest-list { grid-template-columns: 1fr; gap: 16px; }
+[data-website-presentation="reader-v1"] .paper-digest-item { border-left: 2px solid #b8c8b9; background: transparent; padding: 12px 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item > span { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-item h4 { font-size: 18px; line-height: 1.65; margin-bottom: 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item .ai-summary { display: block; border: 0; background: transparent; padding: 0; color: #333; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field { display: block; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; }
+[data-website-presentation="reader-v1"] .paper-digest-item em { color: #526150; background: #e5ebdf; font-size: 12px; font-style: normal; }
+@media (max-width: 640px) {
+  [data-website-presentation="reader-v1"] .editorial-overview { margin: 20px 0 24px; }
+  [data-website-presentation="reader-v1"] .focus-grid { gap: 10px; }
+  [data-website-presentation="reader-v1"] .focus-card { padding: 14px 16px; }
+  [data-website-presentation="reader-v1"] .focus-card h3 { font-size: 16px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item { grid-template-columns: 1fr; padding: 18px 14px; }
+  [data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 1fr; }
+  [data-website-presentation="reader-v1"] .report-item > div:not(.report-thumb) { grid-column: 1; }
+  [data-website-presentation="reader-v1"] .report-item h3 { font-size: 20px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item .reader-field p { font-size: 17px; line-height: 1.85; }
+  [data-website-presentation="reader-v1"] .memory-note { padding: 13px; }
+  [data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 16px; }
+  [data-website-presentation="reader-v1"] .paper-digest { padding: 16px 12px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 12px 8px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { font-size: 17px; }
+}
+
 </style>
   </head>
-  <body>
+  <body data-website-presentation="reader-v1">
     <div class="report-shell">
       <aside class="report-history" aria-label="AI 日报导航">
     <div class="report-history-title">
@@ -3168,29 +3224,23 @@ time {
         </header>
         <section class="editorial-overview" aria-label="今日重点与选题目录">
     <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
-    <div class="focus-grid"><article class="focus-card">
+    <div class="focus-grid"><article class="focus-card" data-focus-id="87913e84bcaa85">
       <span class="focus-number">01</span>
       <p class="focus-topic">AI 产品与工具</p>
-      <h3><a data-report-target="event-87913e84bcaa85" href="?event=event-87913e84bcaa85#company-updates">OpenAI：OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks</a></h3>
-      <p>OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-87913e84bcaa85" href="?event=event-87913e84bcaa85#company-updates">OpenAI：OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks</a></h3>
       <a class="focus-more" data-report-target="event-87913e84bcaa85" href="?event=event-87913e84bcaa85#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="c45b6d7f69676e">
       <span class="focus-number">02</span>
       <p class="focus-topic">行业 / 商业动态</p>
-      <h3><a data-report-target="event-c45b6d7f69676e" href="?event=event-c45b6d7f69676e#company-updates">Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露</a></h3>
-      <p>微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-c45b6d7f69676e" href="?event=event-c45b6d7f69676e#company-updates">Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露</a></h3>
       <a class="focus-more" data-report-target="event-c45b6d7f69676e" href="?event=event-c45b6d7f69676e#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="b2ac8d97021c0f">
       <span class="focus-number">03</span>
       <p class="focus-topic">行业 / 商业动态</p>
-      <h3><a data-report-target="event-b2ac8d97021c0f" href="?event=event-b2ac8d97021c0f#company-updates">Meta：Meta made its own AI-generated clickbait news feed</a></h3>
-      <p>Meta made its own AI-generated clickbait news feed。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-b2ac8d97021c0f" href="?event=event-b2ac8d97021c0f#company-updates">Meta：Meta made its own AI-generated clickbait news feed</a></h3>
       <a class="focus-more" data-report-target="event-b2ac8d97021c0f" href="?event=event-b2ac8d97021c0f#company-updates">阅读解读与来源 →</a>
     </article></div>
-    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>0</b></summary>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>12 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
       </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>4</b></summary>
         <ul><li><a data-report-target="event-c45b6d7f69676e" href="?event=event-c45b6d7f69676e#company-updates">Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露</a></li><li><a data-report-target="event-b2ac8d97021c0f" href="?event=event-b2ac8d97021c0f#company-updates">Meta：Meta made its own AI-generated clickbait news feed</a></li><li><a data-report-target="event-ae062c4557bede" href="?event=event-ae062c4557bede#company-updates">OpenAI：The Trump administration might take an equity stake in OpenAI</a></li><li><a data-report-target="event-7d80220c93c71f" href="?event=event-7d80220c93c71f#technical-progress">Sriram Krishnan is leaving his role as White House AI advisor</a></li></ul>
@@ -3202,7 +3252,7 @@ time {
         <p>本期暂无达到入选标准的新内容</p>
       </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
-      </details></div>
+      </details></div></details>
   </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
@@ -3232,7 +3282,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-87913e84bcaa85" class="report-item ">
+      <article id="event-87913e84bcaa85" data-item-id="87913e84bcaa85" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3243,16 +3293,17 @@ time {
             
             <a class="source-link" href="https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
-          <h3><a href="https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks" target="_blank" rel="noreferrer">OpenAI：OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。</p>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/06/06/openai-unveils-lockdown-mode-to-protect-sensitive-data-from-prompt-injection-attacks" target="_blank" rel="noreferrer">OpenAI：OpenAI unveils Lockdown Mode to protect sensitive data from prompt injection attacks</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>OpenAI unveils Lockdown Mode</b> to protect sensitive data from prompt injection attacks。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>判断：这是 OpenAI 从“能力扩张”转向“企业安全基建”的关键信号，但本质是功能降级而非架构突破。关注点：需警惕其以“安全”名义掩盖底层对齐缺陷；重点观察第三方红队测试结果、企业客户在断网/关Agent后的真实工作流替代方案，以及该模式是否会演变为 API 层的强制安全基线。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>判断：这是 OpenAI 从“能力扩张”转向“企业安全基建”的关键信号，<b data-highlight style=color:#80511f>但本质是功能降级而非架构突破</b>。关注点：需警惕其以“安全”名义掩盖底层对齐缺陷；</p><p>重点观察第三方红队测试结果、企业客户在断网/关Agent后的真实工作流替代方案，以及该模式是否会演变为 API 层的强制安全基线。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-c45b6d7f69676e" class="report-item has-thumbnail">
+      </article><article id="event-c45b6d7f69676e" data-item-id="c45b6d7f69676e" class="report-item has-thumbnail">
         <span>02</span>
         <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/6/30a51401-4f34-4957-a1a3-034b4e841188.png?x-bce-process=image/format,f_auto" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3263,16 +3314,17 @@ time {
             
             <a class="source-link" href="https://www.ithome.com/0/960/994.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
-          <h3><a href="https://www.ithome.com/0/960/994.htm" target="_blank" rel="noreferrer">Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。</p>
+          <h3 data-field="title"><a href="https://www.ithome.com/0/960/994.htm" target="_blank" rel="noreferrer">Anthropic：微软警告称 ClaudeCode 存在漏洞，可能导致 GitHub 账号凭证泄露</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>微软警告称 <b data-highlight style=color:#245b78>ClaudeCode</b> 存在漏洞，<b data-highlight style=color:#80511f>可能导致 GitHub 账号凭证泄露</b>。这属于产品路线信号，短期影响取决于能力提升是否明确、入口是否足够低摩擦。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>此事件暴露了AI编程智能体在工具权限隔离与提示词解析上的架构短板。重要性不在于单次漏洞，而在于CI/CD自动化场景下“模型即执行器”的安全范式转移。需警惕厂商仅做表面修补，应关注底层沙箱统一化与输入清洗机制。后续重点观察Anthropic是否重构工具调用安全边界，以及企业级AI工作流如何建立“零信任”执行策略。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>此事件暴露了AI编程智能体在工具权限隔离与提示词解析上的架构短板。重要性不在于单次漏洞，而在于CI/CD自动化场景下“模型即执行器”的安全范式转移。<b data-highlight style=color:#275f45>需警惕厂商仅做表面修补，</b>应关注底层沙箱统一化与输入清洗机制。</p><p>后续重点观察Anthropic是否重构工具调用安全边界，以及企业级AI工作流如何建立“零信任”执行策略。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-b2ac8d97021c0f" class="report-item has-thumbnail">
+      </article><article id="event-b2ac8d97021c0f" data-item-id="b2ac8d97021c0f" class="report-item has-thumbnail">
         <span>03</span>
         <div class="report-thumb"><img src="https://platform.theverge.com/wp-content/uploads/sites/2/2026/06/ai-label-14.png?quality=90&amp;strip=all&amp;crop=0,0,100,100" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3283,16 +3335,17 @@ time {
             
             <a class="source-link" href="https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles" target="_blank" rel="noopener noreferrer"><b>theverge</b></a>
           </div>
-          <h3><a href="https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles" target="_blank" rel="noreferrer">Meta：Meta made its own AI-generated clickbait news feed</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Meta made its own AI-generated clickbait news feed。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。</p>
+          <h3 data-field="title"><a href="https://www.theverge.com/ai-artificial-intelligence/944235/meta-app-ai-clickbait-articles" target="_blank" rel="noreferrer">Meta：Meta made its own AI-generated clickbait news feed</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>Meta made its own</b> AI-generated clickbait news feed。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>该事件并非单纯的产品翻车，而是大模型从“对话助手”向“主动内容引擎”转型的典型压力测试。暴露出当前多模态管线在事实对齐、溯源机制与系统提示词控制上的短板。需关注 Meta 后续是否引入检索增强或事实校验模块，以及行业对 AI 原生信息流的治理标准。对开发者而言，重点在于如何构建可验证、低幻觉的生成架构。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p><b data-highlight style=color:#80511f>该事件并非单纯的产品翻车，</b>而是大模型从“对话助手”向“主动内容引擎”转型的典型压力测试。暴露出当前多模态管线在事实对齐、溯源机制与系统提示词控制上的短板。需关注 Meta 后续是否引入检索增强或事实校验模块，以及行业对 AI 原生信息流的治理标准。</p><p>对开发者而言，重点在于如何构建可验证、低幻觉的生成架构。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-0737b82d468c35" class="report-item ">
+      </article><article id="event-0737b82d468c35" data-item-id="0737b82d468c35" class="report-item ">
         <span>04</span>
         
         <div>
@@ -3303,16 +3356,17 @@ time {
             
             <a class="source-link" href="https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
-          <h3><a href="https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf" target="_blank" rel="noreferrer">Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p>
+          <h3 data-field="title"><a href="https://www.infoq.cn/article/NWjH4oTh0j4HsxJsCRaf" target="_blank" rel="noreferrer">Next.js 16.2 发布：开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#275f45>Next.js 16.2 发布：</b>开发提速 4 倍、渲染性能优化，新增深度适配 AI 智能体的开发工具。看点在产品自动化：能不能把工具调用、权限和结果校验做成可靠闭环。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>判断：此次更新是前端框架向 Agent 原生工作流的工程适配，而非底层模型或推理架构突破。关注点：需警惕“4倍提速”的基准测试偏差，重点验证 AGENTS.md 规范在复杂多步调用中的实际稳定性、流式断连的框架级兜底效果，以及全异步 API 迁移对存量项目的真实重构成本。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>判断：此次更新是前端框架向 Agent 原生工作流的工程适配，<b data-highlight style=color:#80511f>而非底层模型或推理架构突破</b>。</p><p>关注点：需警惕“4倍提速”的基准测试偏差，重点验证 AGENTS.md 规范在复杂多步调用中的实际稳定性、流式断连的框架级兜底效果，以及全异步 API 迁移对存量项目的真实重构成本。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-ae062c4557bede" class="report-item ">
+      </article><article id="event-ae062c4557bede" data-item-id="ae062c4557bede" class="report-item ">
         <span>05</span>
         
         <div>
@@ -3323,10 +3377,11 @@ time {
             
             <a class="source-link" href="https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
-          <h3><a href="https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai" target="_blank" rel="noreferrer">OpenAI：The Trump administration might take an equity stake in OpenAI</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>The Trump administration might take an equity stake in OpenAI。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。</p>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/06/06/the-trump-administration-might-take-an-equity-stake-in-openai" target="_blank" rel="noreferrer">OpenAI：The Trump administration might take an equity stake in OpenAI</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>The Trump administration might <b data-highlight style=color:#245b78>take an equity stake</b> in OpenAI。来自高权重来源，说明它已经进入主流行业议程，后续影响主要看企业和开发者是否跟进。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>判断：非单纯融资新闻，而是AI治理范式转向“国家资本深度介入”的信号。关注点：股权让渡是否附带算力采购/数据合规对赌，以及该叙事会否倒逼OpenAI调整开源节奏与API定价策略。需以实际财务披露与立法进展为准。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>判断：非单纯融资新闻，而是AI治理范式转向“国家资本深度介入”的信号。关注点：股权<b data-highlight style=color:#275f45>让渡是否附带算力采购/数据合规对赌，</b>以及该叙事会否倒逼OpenAI调整开源节奏与API定价策略。需以实际财务披露与立法进展为准。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
@@ -3354,50 +3409,50 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 qwen3.6-plus 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article id="paper-1" class="paper-digest-item has-thumbnail">
+      <article id="paper-1" data-paper-id="2606.06492" class="paper-digest-item has-thumbnail">
         <span>01</span>
         <img src="https://arxiv.org/html/2606.06492v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.06492" target="_blank" rel="noreferrer">Code2LoRA：面向软件演进的超网络生成代码模型适配器</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出超网络框架自动生成仓库专属LoRA适配器，以零推理开销注入代码库知识，支持静态与动态演进场景。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2606.06492" target="_blank" rel="noreferrer">Code2LoRA：面向软件演进的超网络生成代码模型适配器</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出超网络框架自动生成仓库专属<b data-highlight style=color:#245b78>LoRA</b>适配器，以零推理开销注入代码库知识，支持静态与动态演进场景。</p></div></div>
           <div><em>代码大模型</em><em>参数高效微调</em><em>超网络</em></div>
         </div>
-      </article><article id="paper-2" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-2" data-paper-id="2606.04743" class="paper-digest-item has-thumbnail">
         <span>02</span>
         <img src="https://arxiv.org/html/2606.04743v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.04743" target="_blank" rel="noreferrer">TIDE：基于模板引导迭代的主动式多问题发现框架</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出模板引导的迭代发现框架，通过分轮次挖掘与可复用思维模板，主动识别上下文中隐藏的多个问题。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2606.04743" target="_blank" rel="noreferrer">TIDE：基于模板引导迭代的主动式多问题发现框架</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出模板引导的迭代发现框架，通过分轮次挖掘与可复用思维模板，主动识别上下文中隐藏的多个问题。</p></div></div>
           <div><em>智能体</em><em>问题发现</em><em>迭代推理</em></div>
         </div>
-      </article><article id="paper-3" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-3" data-paper-id="2606.05622" class="paper-digest-item has-thumbnail">
         <span>03</span>
         <img src="https://arxiv.org/html/2606.05622v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.05622" target="_blank" rel="noreferrer">AdaPlanBench：评估大模型智能体在双重约束下的自适应规划能力</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出动态交互基准AdaPlanBench，评估大模型智能体在逐步揭示的双重约束下的自适应规划能力。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2606.05622" target="_blank" rel="noreferrer">AdaPlanBench：评估大模型智能体在双重约束下的自适应规划能力</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出动态交互基准<b data-highlight style=color:#245b78>AdaPlanBench</b>，评估大模型智能体在逐步揭示的双重约束下的自适应规划能力。</p></div></div>
           <div><em>智能体评估</em><em>自适应规划</em><em>基准测试</em></div>
         </div>
-      </article><article id="paper-4" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-4" data-paper-id="2606.05259" class="paper-digest-item has-thumbnail">
         <span>04</span>
         <img src="https://arxiv.org/html/2606.05259v1/x2.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.05259" target="_blank" rel="noreferrer">VideoKR：面向知识与推理密集型视频理解的大规模训练语料库</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>构建首个知识与推理密集型视频训练集VideoKR，通过人机协同生成高质量示例，显著提升模型专业视频推理能力。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2606.05259" target="_blank" rel="noreferrer">VideoKR：面向知识与推理密集型视频理解的大规模训练语料库</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>构建首个知识与推理密集型视频训练集<b data-highlight style=color:#245b78>VideoKR</b>，通过人机协同生成高质量示例，显著提升模型专业视频推理能力。</p></div></div>
           <div><em>视频理解</em><em>多模态数据</em><em>逻辑推理</em></div>
         </div>
-      </article><article id="paper-5" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-5" data-paper-id="2606.06428" class="paper-digest-item has-thumbnail">
         <span>05</span>
         <img src="https://arxiv.org/html/2606.06428v1/x1.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2606.06428" target="_blank" rel="noreferrer">强化学习激发未见语言翻译的上下文学习</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出基于chrF奖励的强化学习方法，使大模型学会利用上下文语言知识翻译未见语言，效果优于基线方法。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2606.06428" target="_blank" rel="noreferrer">强化学习激发未见语言翻译的上下文学习</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出基于chrF奖励的强化学习方法，使大模型学会利用上下文语言知识翻译未见语言，效果优于基线方法。</p></div></div>
           <div><em>强化学习</em><em>机器翻译</em><em>上下文学习</em></div>
         </div>
       </article>
     </div>
   </article>
-      <article id="event-7d80220c93c71f" class="report-item ">
+      <article id="event-7d80220c93c71f" data-item-id="7d80220c93c71f" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3408,10 +3463,11 @@ time {
             
             <a class="source-link" href="https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
-          <h3><a href="https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor" target="_blank" rel="noreferrer">Sriram Krishnan is leaving his role as White House AI advisor</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Sriram Krishnan is leaving his role as White House AI advisor。它说明 Agent 能力正在向工程化落地推进，真正的门槛会落在权限、评测和错误恢复上。</p>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/06/06/sriram-krishnan-is-leaving-his-role-as-white-house-ai-advisor" target="_blank" rel="noreferrer">Sriram Krishnan is leaving his role as White House AI advisor</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>Sriram Krishnan is leaving</b> his role as White House AI advisor。它说明 Agent 能力正在向工程化落地推进，真正的门槛会落在权限、评测和错误恢复上。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>判断：此人事变动并非单纯离职，而是美国AI治理范式向“基建优先、监管后置”的制度化延续。关注点：政策重心转向数据中心与能源配套，将直接压低算力成本并加速模型迭代，但安全与对齐研究的政策空间可能被压缩。从业者需警惕监管套利窗口期的短暂性，并评估算力红利能否转化为实际产品壁垒。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>判断：<b data-highlight style=color:#80511f>此人事变动并非单纯离职，</b>而是美国AI治理范式向“基建优先、监管后置”的制度化延续。关注点：政策重心转向数据中心与能源配套，将直接压低算力成本并加速模型迭代，但安全与对齐研究的政策空间可能被压缩。</p><p>从业者需警惕监管套利窗口期的短暂性，并评估算力红利能否转化为实际产品壁垒。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
@@ -3430,7 +3486,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-829e84ac637f15" class="report-item ">
+      <article id="event-829e84ac637f15" data-item-id="829e84ac637f15" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3441,14 +3497,14 @@ time {
             
             <b class="source-person"><small>X</small><span>Garry Tan</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/garrytan/status/2063157328753594505" target="_blank" rel="noreferrer">GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn</a></h3><p class="social-translation"><span>译文</span>GBrain 为 OpenClaw 和 Hermes Agent 插上翅膀 https://t.co/gUt6ll33Vn</p><div class="memory-note">
-    <p><span>解读</span>判断：该动态反映Agent基础设施正从单点工具向多智能体协同编排演进，但当前仅为早期宣发，工程价值待验。关注点：需剥离“赋能”叙事，聚焦其是否真正降低多Agent工作流中的上下文切换、状态管理与失败重试成本，而非仅做接口拼接。</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/garrytan/status/2063157328753594505" target="_blank" rel="noreferrer">GBrain gives OpenClaw and Hermes Agent wings https://t.co/gUt6ll33Vn</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>GBrain 为 OpenClaw 和 Hermes Agent 插上翅膀 https://t.co/gUt6ll33Vn</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>判断：该动态反映Agent基础设施正从单点工具向多智能体协同编排演进，但当前仅为早期宣发，工程价值待验。关注点：需剥离“赋能”叙事，聚焦其是否真正降低多Agent工作流中的上下文切换、状态管理与失败重试成本，<b data-highlight style=color:#80511f>而非仅做接口拼接</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-058939938185a7" class="report-item ">
+      </article><article id="event-058939938185a7" data-item-id="058939938185a7" class="report-item ">
         <span>02</span>
         
         <div>
@@ -3459,20 +3515,20 @@ time {
             
             <b class="source-person"><small>X</small><span>Swyx</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/swyx/status/2063082950317486133" target="_blank" rel="noreferrer">a smarter alternative to &quot;always use plan mode&quot;:
+          <h3 class="social-original" data-field="original"><a href="https://x.com/swyx/status/2063082950317486133" target="_blank" rel="noreferrer">a smarter alternative to &quot;always use plan mode&quot;:
 
 always frame your task as a question, so that the model is invited to push back and rate the quality of the idea/suggest alternatives, rather than blindly execute what you SAID to do
 
 (which is often not precisely what you MEANT)
 
-literally just appending &quot;?&quot; to the end of your prompt often does it</a></h3><p class="social-translation"><span>译文</span>比“始终使用计划模式”更聪明的替代方案： 始终将任务以提问的方式表述，引导模型提出质疑、评估想法质量或提供替代方案，而不是盲目执行你“说”要做的事（而这往往并不完全符合你的“本意”）。 实际上，只需在提示词末尾加个“？”通常就能奏效。</p><div class="memory-note">
-    <p><span>解读</span>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p>
+literally just appending &quot;?&quot; to the end of your prompt often does it</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>比“始终使用计划模式”更聪明的替代方案： 始终将任务以提问的方式表述，引导模型提出质疑、评估想法质量或提供替代方案，而不是盲目执行你“说”要做的事（而这往往并不完全符合你的“本意”）。 实际上，只需在提示词末尾加个“？”通常就能奏效。</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 65 秒</span>
           </div>
         </div>
-      </article><article id="event-6b8a3e5b5f2af9" class="report-item ">
+      </article><article id="event-6b8a3e5b5f2af9" data-item-id="6b8a3e5b5f2af9" class="report-item ">
         <span>03</span>
         
         <div>
@@ -3483,14 +3539,14 @@ literally just appending &quot;?&quot; to the end of your prompt often does it</
             
             <b class="source-person"><small>X</small><span>Amjad Masad</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/amasad/status/2063089288997491063" target="_blank" rel="noreferrer">I hear a version of this almost daily. https://t.co/OEI3CkrtcX</a></h3><p class="social-translation"><span>译文</span>我几乎每天都会听到类似的说法。https://t.co/OEI3CkrtcX</p><div class="memory-note">
-    <p><span>解读</span>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/amasad/status/2063089288997491063" target="_blank" rel="noreferrer">I hear a version of this almost daily. https://t.co/OEI3CkrtcX</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>我几乎每天都会听到类似的说法。https://t.co/OEI3CkrtcX</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-cc1c3c702f1b67" class="report-item ">
+      </article><article id="event-cc1c3c702f1b67" data-item-id="cc1c3c702f1b67" class="report-item ">
         <span>04</span>
         
         <div>
@@ -3501,14 +3557,14 @@ literally just appending &quot;?&quot; to the end of your prompt often does it</
             
             <b class="source-person"><small>X</small><span>Dan Shipper</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/danshipper/status/2063100104274280597" target="_blank" rel="noreferrer">go Knicks!!</a></h3><p class="social-translation"><span>译文</span>尼克斯加油！！</p><div class="memory-note">
-    <p><span>解读</span>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/danshipper/status/2063100104274280597" target="_blank" rel="noreferrer">go Knicks!!</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>尼克斯加油！！</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 20 秒</span>
           </div>
         </div>
-      </article><article id="event-bdf3b86f6cf5f8" class="report-item ">
+      </article><article id="event-bdf3b86f6cf5f8" data-item-id="bdf3b86f6cf5f8" class="report-item ">
         <span>05</span>
         
         <div>
@@ -3519,14 +3575,14 @@ literally just appending &quot;?&quot; to the end of your prompt often does it</
             
             <b class="source-person"><small>X</small><span>Amjad Masad</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/amasad/status/2063065480878063694" target="_blank" rel="noreferrer">Replit x Shopify! https://t.co/QgJZLu4eFK</a></h3><p class="social-translation"><span>译文</span>Replit × Shopify！https://t.co/QgJZLu4eFK</p><div class="memory-note">
-    <p><span>解读</span>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/amasad/status/2063065480878063694" target="_blank" rel="noreferrer">Replit x Shopify! https://t.co/QgJZLu4eFK</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>Replit × Shopify！https://t.co/QgJZLu4eFK</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-d16188af6f5b0c" class="report-item ">
+      </article><article id="event-d16188af6f5b0c" data-item-id="d16188af6f5b0c" class="report-item ">
         <span>06</span>
         
         <div>
@@ -3537,10 +3593,10 @@ literally just appending &quot;?&quot; to the end of your prompt often does it</
             
             <b class="source-person"><small>X</small><span>Garry Tan</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/garrytan/status/2063146456106795457" target="_blank" rel="noreferrer">You can now finally try one of those big projects I was teasing that I started working on a few months ago.
+          <h3 class="social-original" data-field="original"><a href="https://x.com/garrytan/status/2063146456106795457" target="_blank" rel="noreferrer">You can now finally try one of those big projects I was teasing that I started working on a few months ago.
 
-We want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB</a></h3><p class="social-translation"><span>译文</span>你现在终于可以试用我几个月前启动、此前一直预告的那个大项目了。 我们希望它能持续优化，更好地助你掌握最佳技巧，从而更快、更优地构建软件。 https://t.co/hQpYCpl9JB</p><div class="memory-note">
-    <p><span>解读</span>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p>
+We want this to over time get better at helping you learn the best techniques to build better software, faster. https://t.co/hQpYCpl9JB</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>你现在终于可以试用我几个月前启动、此前一直预告的那个大项目了。 我们希望它能持续优化，更好地助你掌握最佳技巧，从而更快、更优地构建软件。 https://t.co/hQpYCpl9JB</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这条不是只看热闹的行业动态，关键在于它是否透露了公司资源分配、渠道策略或商业化优先级。 后续要看是否出现可验证结果，例如用户采用、收入变化、开源复现或独立评测。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 70 秒</span>

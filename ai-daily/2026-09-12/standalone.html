@@ -2644,9 +2644,65 @@ time {
   .report-history { order: 1; width: 100%; margin-top: 24px; }
 }
 
+/* Reader presentation: original audited text, quieter navigation and real figures. */
+[data-website-presentation="reader-v1"] .focus-card { padding: 16px 18px; border-color: #c8c5b8; border-radius: 8px; }
+[data-website-presentation="reader-v1"] .focus-card h3 { margin-bottom: 12px; font-size: 17px; line-height: 1.65; }
+[data-website-presentation="reader-v1"] .focus-number { color: #6c8073; font-size: 19px; }
+[data-website-presentation="reader-v1"] .focus-topic { color: #375; }
+[data-website-presentation="reader-v1"] .focus-more { color: #375; font-size: 13px; }
+.topic-directory-toggle { margin-top: 16px; padding: 11px 14px; border: 1px solid #c8c5b8; border-radius: 6px; }
+.topic-directory-toggle > summary { cursor: pointer; font-size: 14px; font-weight: 650; }
+.topic-directory-toggle > summary > span { float: right; color: var(--muted); font-size: 12px; font-weight: 400; }
+.topic-directory-toggle .topic-directory { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-list { gap: 20px; }
+[data-website-presentation="reader-v1"] .report-item { padding: 20px; border: 1px solid #c8c5b8; border-left: 3px solid #375; grid-template-columns: 34px minmax(0, 1fr); }
+[data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 34px minmax(0, 1fr) 112px; }
+[data-website-presentation="reader-v1"] .report-item > span { width: 32px; height: 25px; background: transparent; color: #375; }
+[data-website-presentation="reader-v1"] .report-item h3 { margin: 8px 0 16px; font-size: 21px; line-height: 1.6; }
+[data-website-presentation="reader-v1"] .report-item-meta { gap: 6px 10px; line-height: 1.7; letter-spacing: 0; font-size: 12px; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p { margin: 0; color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p + p, [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p + p { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-item .ai-summary { margin-top: 0; }
+[data-website-presentation="reader-v1"] .reader-field b[data-highlight] { font-weight: 750; }
+[data-website-presentation="reader-v1"] .ai-summary .reader-label, [data-website-presentation="reader-v1"] .memory-note .reader-label, [data-website-presentation="reader-v1"] .social-translation .reader-label { display: block; width: fit-content; min-height: 0; margin: 0 0 9px; padding: 0; background: transparent; color: #375; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+[data-website-presentation="reader-v1"] .memory-note { margin-top: 18px; padding: 14px 16px; border: 0; border-radius: 4px; background: #edf3ed; }
+[data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 15px; line-height: 1.8; }
+[data-website-presentation="reader-v1"] .report-actions { margin-top: 14px; }
+[data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
+[data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
+[data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-note { color: #62685e; }
+[data-website-presentation="reader-v1"] .paper-digest-list { grid-template-columns: 1fr; gap: 16px; }
+[data-website-presentation="reader-v1"] .paper-digest-item { border-left: 2px solid #b8c8b9; background: transparent; padding: 12px 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item > span { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-item h4 { font-size: 18px; line-height: 1.65; margin-bottom: 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item .ai-summary { display: block; border: 0; background: transparent; padding: 0; color: #333; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field { display: block; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; }
+[data-website-presentation="reader-v1"] .paper-digest-item em { color: #526150; background: #e5ebdf; font-size: 12px; font-style: normal; }
+@media (max-width: 640px) {
+  [data-website-presentation="reader-v1"] .editorial-overview { margin: 20px 0 24px; }
+  [data-website-presentation="reader-v1"] .focus-grid { gap: 10px; }
+  [data-website-presentation="reader-v1"] .focus-card { padding: 14px 16px; }
+  [data-website-presentation="reader-v1"] .focus-card h3 { font-size: 16px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item { grid-template-columns: 1fr; padding: 18px 14px; }
+  [data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 1fr; }
+  [data-website-presentation="reader-v1"] .report-item > div:not(.report-thumb) { grid-column: 1; }
+  [data-website-presentation="reader-v1"] .report-item h3 { font-size: 20px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item .reader-field p { font-size: 17px; line-height: 1.85; }
+  [data-website-presentation="reader-v1"] .memory-note { padding: 13px; }
+  [data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 16px; }
+  [data-website-presentation="reader-v1"] .paper-digest { padding: 16px 12px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 12px 8px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { font-size: 17px; }
+}
+
 </style>
   </head>
-  <body>
+  <body data-website-presentation="reader-v1">
     <div class="report-shell">
       <aside class="report-history" aria-label="AI 日报导航">
     <div class="report-history-title">
@@ -3168,29 +3224,23 @@ time {
         </header>
         <section class="editorial-overview" aria-label="今日重点与选题目录">
     <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
-    <div class="focus-grid"><article class="focus-card">
+    <div class="focus-grid"><article class="focus-card" data-focus-id="a6a62d89eb23f6">
       <span class="focus-number">01</span>
       <p class="focus-topic">基础模型与技术</p>
-      <h3><a data-report-target="event-a6a62d89eb23f6" href="?event=event-a6a62d89eb23f6#company-updates">DeepSeek：DeepSeek：将在9月14日后继续提供DeepSeek V4 Pro的API调用服务</a></h3>
-      <p>据36氪快讯，DeepSeek 宣布为响应广大用户需求，决定在2026年9月14日之后继续提供 V4 Pro 的 API 调用服务，计费方式保持不变，如有变动将另行通知。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-a6a62d89eb23f6" href="?event=event-a6a62d89eb23f6#company-updates">DeepSeek：DeepSeek：将在9月14日后继续提供DeepSeek V4 Pro的API调用服务</a></h3>
       <a class="focus-more" data-report-target="event-a6a62d89eb23f6" href="?event=event-a6a62d89eb23f6#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="8c319fbe2f94a7">
       <span class="focus-number">02</span>
       <p class="focus-topic">Agent 技术</p>
-      <h3><a data-report-target="event-8c319fbe2f94a7" href="?event=event-8c319fbe2f94a7#company-updates">阿里云：阿里云Token Plan个人版升级：加量不加价，新增12类Agent Harness工具</a></h3>
-      <p>阿里云Token Plan个人版升级，价格与Credit不变，Standard和Pro套餐新增搜索、网页解析、代码执行等12类Agent Harness工具，通过MCP协议开放，并新增视频生成、RAG、Memory等。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-8c319fbe2f94a7" href="?event=event-8c319fbe2f94a7#company-updates">阿里云：阿里云Token Plan个人版升级：加量不加价，新增12类Agent Harness工具</a></h3>
       <a class="focus-more" data-report-target="event-8c319fbe2f94a7" href="?event=event-8c319fbe2f94a7#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="b8bfa6635bcecb">
       <span class="focus-number">03</span>
       <p class="focus-topic">行业 / 商业动态</p>
-      <h3><a data-report-target="event-b8bfa6635bcecb" href="?event=event-b8bfa6635bcecb#company-updates">月之暗面：法国投资者以300亿美元估值入股月之暗面：Kimi IPO前获欧洲资本押注</a></h3>
-      <p>法国投资者通过SPV以300亿美元估值参与月之暗面IPO前融资，投入约1000万欧元；文章详述投资架构、估值对比、选择开放权重模型的原因及其对Mistral的看法。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-b8bfa6635bcecb" href="?event=event-b8bfa6635bcecb#company-updates">月之暗面：法国投资者以300亿美元估值入股月之暗面：Kimi IPO前获欧洲资本押注</a></h3>
       <a class="focus-more" data-report-target="event-b8bfa6635bcecb" href="?event=event-b8bfa6635bcecb#company-updates">阅读解读与来源 →</a>
     </article></div>
-    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>3</b></summary>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>14 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>3</b></summary>
         <ul><li><a data-report-target="event-a6a62d89eb23f6" href="?event=event-a6a62d89eb23f6#company-updates">DeepSeek：DeepSeek：将在9月14日后继续提供DeepSeek V4 Pro的API调用服务</a></li><li><a data-report-target="event-836f62b4db2f8e" href="?event=event-836f62b4db2f8e#company-updates">豆包工作：豆包工作新增本地Office编辑、浏览器录制与回放等功能</a></li><li><a data-report-target="event-d54025e91fbb36" href="?event=event-d54025e91fbb36#technical-progress">César de la Fuente&#039;s lab：How a researcher uses Codex and ChatGPT to search for new antimicrobial molecules</a></li></ul>
       </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>2</b></summary>
         <ul><li><a data-report-target="event-b8bfa6635bcecb" href="?event=event-b8bfa6635bcecb#company-updates">月之暗面：法国投资者以300亿美元估值入股月之暗面：Kimi IPO前获欧洲资本押注</a></li><li><a data-report-target="event-b966154948a777" href="?event=event-b966154948a777#company-updates">Cognition：Cognition helps Devin test its own work with GPT‑6 Astra</a></li></ul>
@@ -3202,7 +3252,7 @@ time {
         <ul><li><a data-report-target="event-80015e91acdd4b" href="?event=event-80015e91acdd4b#technical-progress">OpenAI：Rapidly scaling online storage to serve over 1 billion ChatGPT users</a></li></ul>
       </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
-      </details></div>
+      </details></div></details>
   </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
@@ -3232,7 +3282,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-a6a62d89eb23f6" class="report-item ">
+      <article id="event-a6a62d89eb23f6" data-item-id="a6a62d89eb23f6" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3243,16 +3293,17 @@ time {
             
             <a class="source-link" href="https://36kr.com/newsflashes/3978941735091206?f=rss" target="_blank" rel="noopener noreferrer"><b>36kr.com</b></a>
           </div>
-          <h3><a href="https://36kr.com/newsflashes/3978941735091206?f=rss" target="_blank" rel="noreferrer">DeepSeek：DeepSeek：将在9月14日后继续提供DeepSeek V4 Pro的API调用服务</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>据36氪快讯，DeepSeek 宣布为响应广大用户需求，决定在2026年9月14日之后继续提供 V4 Pro 的 API 调用服务，计费方式保持不变，如有变动将另行通知。</p>
+          <h3 data-field="title"><a href="https://36kr.com/newsflashes/3978941735091206?f=rss" target="_blank" rel="noreferrer">DeepSeek：DeepSeek：将在9月14日后继续提供DeepSeek V4 Pro的API调用服务</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据36氪快讯，DeepSeek 宣布为响应广大用户需求，决定在2026年9月14日之后继续提供 <b data-highlight style=color:#245b78>V4 Pro</b> 的 API 调用服务，计费方式保持不变，如有变动将另行通知。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>实质是官方回应此前“软退役”传闻：V4 Pro 继续服役、计费不变。这不是新发布，而是给存量 API 用户一个稳定的服务承诺。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>实质是官方回应此前“软退役”传闻：V4 Pro 继续服役、计费不变。这不是新发布，而是给存量 API 用户一个稳定的服务承诺。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-8c319fbe2f94a7" class="report-item has-thumbnail">
+      </article><article id="event-8c319fbe2f94a7" data-item-id="8c319fbe2f94a7" class="report-item has-thumbnail">
         <span>02</span>
         <div class="report-thumb"><img src="https://static.leiphone.com/uploads/new/images/20260911/6aa38331e0bce.png?imageView2/2/w/740" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3263,16 +3314,17 @@ time {
             
             <a class="source-link" href="https://www.leiphone.com/category/industrynews/IbRxUXgE35rsi98b.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
-          <h3><a href="https://www.leiphone.com/category/industrynews/IbRxUXgE35rsi98b.html" target="_blank" rel="noreferrer">阿里云：阿里云Token Plan个人版升级：加量不加价，新增12类Agent Harness工具</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>阿里云Token Plan个人版升级，价格与Credit不变，Standard和Pro套餐新增搜索、网页解析、代码执行等12类Agent Harness工具，通过MCP协议开放，并新增视频生成、RAG、Memory等。</p>
+          <h3 data-field="title"><a href="https://www.leiphone.com/category/industrynews/IbRxUXgE35rsi98b.html" target="_blank" rel="noreferrer">阿里云：阿里云Token Plan个人版升级：加量不加价，新增12类Agent Harness工具</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>阿里云Token Plan个人版升级，价格与Credit不变，Standard和Pro套餐新增搜索、网页解析、代码执行等12类<b data-highlight style=color:#245b78>Agent Harness</b>工具，通过MCP协议开放，<b data-highlight style=color:#275f45>并新增视频生成、RAG、Memory等</b>。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是把模型订阅扩展为“模型+Agent服务”的统一账单，用MCP标准化工具降低Agent开发门槛，是平台层的卡位动作。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是把模型订阅扩展为“模型+Agent服务”的统一账单，用MCP标准化工具降低Agent开发门槛，是平台层的卡位动作。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-b8bfa6635bcecb" class="report-item has-thumbnail">
+      </article><article id="event-b8bfa6635bcecb" data-item-id="b8bfa6635bcecb" class="report-item has-thumbnail">
         <span>03</span>
         <div class="report-thumb"><img src="https://acimg.tmtpost.com/uploads/event/QedOm6dcr7LMl19UxC8SkXnItAtZBIqf.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3283,16 +3335,17 @@ time {
             
             <a class="source-link" href="https://www.tmtpost.com/8136831.html" target="_blank" rel="noopener noreferrer"><b>tmtpost.com</b></a>
           </div>
-          <h3><a href="https://www.tmtpost.com/8136831.html" target="_blank" rel="noreferrer">月之暗面：法国投资者以300亿美元估值入股月之暗面：Kimi IPO前获欧洲资本押注</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>法国投资者通过SPV以300亿美元估值参与月之暗面IPO前融资，投入约1000万欧元；文章详述投资架构、估值对比、选择开放权重模型的原因及其对Mistral的看法。</p>
+          <h3 data-field="title"><a href="https://www.tmtpost.com/8136831.html" target="_blank" rel="noreferrer">月之暗面：法国投资者以300亿美元估值入股月之暗面：Kimi IPO前获欧洲资本押注</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>法国投资者通过SPV以300亿美元估值参与月之暗面IPO前融资，<b data-highlight style=color:#245b78>投入约1000万欧元</b>；文章详述投资架构、估值对比、选择开放权重模型的原因及其对Mistral的看法。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>欧洲资本以象征性金额押注中国开放权重模型，核心是自托管和合规需求；单笔10万欧元不改变估值逻辑，更多是开放权重阵营的立场表态。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>欧洲资本以象征性金额押注中国开放权重模型，核心是自托管和合规需求；<b data-highlight style=color:#245b78>单笔10万欧元不改变估值逻辑，</b>更多是开放权重阵营的立场表态。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-836f62b4db2f8e" class="report-item has-thumbnail">
+      </article><article id="event-836f62b4db2f8e" data-item-id="836f62b4db2f8e" class="report-item has-thumbnail">
         <span>04</span>
         <div class="report-thumb"><img src="https://static.leiphone.com/uploads/new/banner/6a3a22b4dadf8.jpeg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3303,16 +3356,17 @@ time {
             
             <a class="source-link" href="https://www.leiphone.com/category/industrynews/yxQfJirnLSi8BOoA.html" target="_blank" rel="noopener noreferrer"><b>leiphone.com</b></a>
           </div>
-          <h3><a href="https://www.leiphone.com/category/industrynews/yxQfJirnLSi8BOoA.html" target="_blank" rel="noreferrer">豆包工作：豆包工作新增本地Office编辑、浏览器录制与回放等功能</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>豆包工作上架本地Office编辑、浏览器录制与回放、任务执行环境自由切换等功能，支持PPT/Excel本地协同、网页操作录制成可复用Skill、本地与云电脑间切换，完善AI处理复杂办公任务的能力。</p>
+          <h3 data-field="title"><a href="https://www.leiphone.com/category/industrynews/yxQfJirnLSi8BOoA.html" target="_blank" rel="noreferrer">豆包工作：豆包工作新增本地Office编辑、浏览器录制与回放等功能</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>豆包工作上架本地<b data-highlight style=color:#245b78>Office</b>编辑、浏览器录制与回放、任务执行环境自由切换等功能，支持PPT/Excel本地协同、网页操作录制成可复用Skill、本地与云电脑间切换，完善AI处理复杂办公任务的能力。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是把AI从对话工具推向真实办公流程，用录制回放沉淀可复用Skill。价值取决于流程稳定性和实际成功率，而非功能数量。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是把AI从对话工具推向真实办公流程，用录制回放沉淀<b data-highlight style=color:#275f45>可复用Skill</b>。价值取决于流程稳定性和实际成功率，<b data-highlight style=color:#80511f>而非功能数量</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-b966154948a777" class="report-item ">
+      </article><article id="event-b966154948a777" data-item-id="b966154948a777" class="report-item ">
         <span>05</span>
         
         <div>
@@ -3323,10 +3377,11 @@ time {
             
             <a class="source-link" href="https://openai.com/index/cognition-devin-testing-with-astra" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
-          <h3><a href="https://openai.com/index/cognition-devin-testing-with-astra" target="_blank" rel="noreferrer">Cognition：Cognition helps Devin test its own work with GPT‑6 Astra</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI 发布案例：Cognition 借助 GPT-6 Astra 提升 Devin 自主测试软件的能力，目标是让工程师少审代码、多交付。</p>
+          <h3 data-field="title"><a href="https://openai.com/index/cognition-devin-testing-with-astra" target="_blank" rel="noreferrer">Cognition：Cognition helps Devin test its own work with GPT‑6 Astra</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#275f45>OpenAI 发布案例：</b>Cognition 借助 GPT-6 Astra 提升 <b data-highlight style=color:#245b78>Devin</b> 自主测试软件的能力，目标是让工程师少审代码、多交付。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>把测试和自证正确交给更强的模型，Devin 从生成代码延伸到自我验证，减少人工审查是主打价值。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>把测试和自证正确交给更强的模型，Devin 从生成代码延伸到自我验证，减少人工审查是主打价值。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
@@ -3354,50 +3409,50 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-flash-ga-260731 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article id="paper-1" class="paper-digest-item has-thumbnail">
+      <article id="paper-1" data-paper-id="2609.10715" class="paper-digest-item has-thumbnail">
         <span>01</span>
         <img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.10715/gradient.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.10715" target="_blank" rel="noreferrer">NCP-ArchPreview 技术报告：迈向潜在空间语言模型</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出通过下一概念预测（NCP）推进潜在空间语言模型的技术架构预览。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.10715" target="_blank" rel="noreferrer">NCP-ArchPreview 技术报告：迈向潜在空间语言模型</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出通过下一概念预测（NCP）推进潜在空间语言模型的技术架构预览。</p></div></div>
           <div><em>语言模型</em><em>潜在空间</em><em>概念预测</em></div>
         </div>
-      </article><article id="paper-2" class="paper-digest-item ">
+      </article><article id="paper-2" data-paper-id="2609.11929" class="paper-digest-item ">
         <span>02</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.11929" target="_blank" rel="noreferrer">SenseNova-U1.5：原生统一视觉智能</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>发布8B MoT原生统一多模态模型，无编码器/VAE，支持视觉理解、推理与生成，最高4K分辨率。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.11929" target="_blank" rel="noreferrer">SenseNova-U1.5：原生统一视觉智能</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>发布8B MoT原生统一多模态模型，无编码器/VAE，支持视觉理解、推理与生成，最高4K分辨率。</p></div></div>
           <div><em>多模态</em><em>统一模型</em><em>开源</em></div>
         </div>
-      </article><article id="paper-3" class="paper-digest-item ">
+      </article><article id="paper-3" data-paper-id="2609.07064" class="paper-digest-item ">
         <span>03</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.07064" target="_blank" rel="noreferrer">gpt_eval_prompt.svg（GPT评估提示词截图）</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>展示了一个包含gpt-eval提示词的计算机屏幕截图。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.07064" target="_blank" rel="noreferrer">gpt_eval_prompt.svg（GPT评估提示词截图）</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>展示了一个包含gpt-eval提示词的计算机屏幕截图。</p></div></div>
           <div><em>提示词</em><em>评估</em><em>截图</em></div>
         </div>
-      </article><article id="paper-4" class="paper-digest-item ">
+      </article><article id="paper-4" data-paper-id="2609.05903" class="paper-digest-item ">
         <span>04</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.05903" target="_blank" rel="noreferrer">results_row.svg（AI模型自适应配对结果图）</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>通过三张图展示了AI模型的自适应配对结果。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.05903" target="_blank" rel="noreferrer">results_row.svg（AI模型自适应配对结果图）</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>通过三张图展示了AI模型的自适应配对结果。</p></div></div>
           <div><em>模型配对</em><em>自适应</em><em>结果分析</em></div>
         </div>
-      </article><article id="paper-5" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-5" data-paper-id="2609.11317" class="paper-digest-item has-thumbnail">
         <span>05</span>
         <img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2609.11317/gradient.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.11317" target="_blank" rel="noreferrer">Mi-Ripple：恢复被迭代AI编辑退化的图像</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>针对AI反复编辑导致的图像退化问题，提出一种恢复方法。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.11317" target="_blank" rel="noreferrer">Mi-Ripple：恢复被迭代AI编辑退化的图像</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>针对AI反复编辑导致的图像退化问题，提出一种恢复方法。</p></div></div>
           <div><em>图像恢复</em><em>AI编辑</em></div>
         </div>
       </article>
     </div>
   </article>
-      <article id="event-80015e91acdd4b" class="report-item ">
+      <article id="event-80015e91acdd4b" data-item-id="80015e91acdd4b" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3408,16 +3463,17 @@ time {
             
             <a class="source-link" href="https://openai.com/index/scaling-storage-one-billion-users-part-one" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
-          <h3><a href="https://openai.com/index/scaling-storage-one-billion-users-part-one" target="_blank" rel="noreferrer">OpenAI：Rapidly scaling online storage to serve over 1 billion ChatGPT users</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI 官方博客详解其存储平台 Habitat 如何从 Python 库演进为全球分布式系统，目前支撑 10 亿 ChatGPT 用户与每秒 2200 万次请求。</p>
+          <h3 data-field="title"><a href="https://openai.com/index/scaling-storage-one-billion-users-part-one" target="_blank" rel="noreferrer">OpenAI：Rapidly scaling online storage to serve over 1 billion ChatGPT users</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>OpenAI 官方博客详解其存储平台 Habitat 如何从 Python 库演进为全球分布式系统，目前支撑 10 亿 <b data-highlight style=color:#245b78>ChatGPT</b> 用户与每秒 2200 万次请求。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是基础设施工程叙事：规模化数字抓眼球，但真正看点是超大规模在线存储的架构取舍与工程细节。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是基础设施工程叙事：规模化数字抓眼球，但真正看点是超大规模在线存储的架构取舍与工程细节。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-d54025e91fbb36" class="report-item ">
+      </article><article id="event-d54025e91fbb36" data-item-id="d54025e91fbb36" class="report-item ">
         <span>02</span>
         
         <div>
@@ -3428,10 +3484,11 @@ time {
             
             <a class="source-link" href="https://openai.com/index/using-codex-chatgpt-to-search-for-new-antimicrobials" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
-          <h3><a href="https://openai.com/index/using-codex-chatgpt-to-search-for-new-antimicrobials" target="_blank" rel="noreferrer">César de la Fuente&#039;s lab：How a researcher uses Codex and ChatGPT to search for new antimicrobial molecules</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI 官网介绍 César de la Fuente 实验室使用 Codex 和 ChatGPT，在现存与已灭绝基因组中搜索抗菌分子候选物，以对抗耐药性感染。</p>
+          <h3 data-field="title"><a href="https://openai.com/index/using-codex-chatgpt-to-search-for-new-antimicrobials" target="_blank" rel="noreferrer">César de la Fuente&#039;s lab：How a researcher uses Codex and ChatGPT to search for new antimicrobial molecules</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>OpenAI 官网介绍 Cé<b data-highlight style=color:#245b78>sar de la Fuente</b> 实验室使用 Codex 和 <b data-highlight style=color:#245b78>ChatGPT</b>，在现存与已灭绝基因组中搜索抗菌分子候选物，以对抗耐药性感染。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是 AI 编码工具被用作科研流水线加速器，而非新模型发布；真正有价值的是 Agent 在工作流中的可复用性。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是 AI 编码工具被用作科研流水线加速器，<b data-highlight style=color:#80511f>而非新模型发布</b>；真正有价值的是 Agent 在工作流中的可复用性。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
@@ -3450,7 +3507,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-a6021be1a272f3" class="report-item has-thumbnail">
+      <article id="event-a6021be1a272f3" data-item-id="a6021be1a272f3" class="report-item has-thumbnail">
         <span>01</span>
         <div class="report-thumb"><img src="https://images.tmtpost.com/uploads/images/2026/09/50368d0a2d0bcdc853ed826e020cd68b_1789131535.jpg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3461,16 +3518,17 @@ time {
             
             <b>钛媒体</b>
           </div>
-          <h3><a href="https://www.tmtpost.com/8135584.html" target="_blank" rel="noreferrer">DeepSeek：DeepSeek V4.1 Flash上线，崔添翼加入“义父之战”</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>DeepSeek发布V4.1 Flash，性能全面超越V4 Pro并降价，崔添翼宣布V4 Pro按Flash价计费。文章以此切入，梳理OpenAI等通过额度重置和国内低价策略争夺开发者的“赛博义父”现象。</p>
+          <h3 data-field="title"><a href="https://www.tmtpost.com/8135584.html" target="_blank" rel="noreferrer">DeepSeek：DeepSeek V4.1 Flash上线，崔添翼加入“义父之战”</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>DeepSeek发布<b data-highlight style=color:#245b78>V4.1 Flash</b>，性能全面超越V4 Pro并降价，崔添翼宣布V4 Pro按Flash价计费。文章以此切入，梳理OpenAI等通过额度重置和国内低价策略争夺开发者的“赛博义父”现象。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>额度重置与降价都是低成本的用户留存营销，厂商用近乎零边际成本的算力换取开发者忠诚，义父经济本质是获客竞争的柔化形态。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>额度重置与降价都是低成本的用户留存营销，厂商用近乎零边际成本的算力换取开发者忠诚，义父经济本质是获客竞争的柔化形态。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-ed00d9a7a4c11b" class="report-item ">
+      </article><article id="event-ed00d9a7a4c11b" data-item-id="ed00d9a7a4c11b" class="report-item ">
         <span>02</span>
         
         <div>
@@ -3481,16 +3539,17 @@ time {
             
             <b>Simon Willison&#039;s Weblog</b>
           </div>
-          <h3><a href="https://simonwillison.net/2026/Sep/11/boris-cherny" target="_blank" rel="noreferrer">Boris Cherny：Quoting Boris Cherny</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>在Simon Willison博客的引文中，Anthropic的Boris Cherny称Claude写的生产代码需高于人类编写标准，靠lint规则、测试、自动化审查和模糊测试等护栏维持。</p>
+          <h3 data-field="title"><a href="https://simonwillison.net/2026/Sep/11/boris-cherny" target="_blank" rel="noreferrer">Boris Cherny：Quoting Boris Cherny</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>在Simon Willison博客的引文中，Anthropic的Boris Cherny称Claude写的生产代码需高于人类编写标准，靠lint规则、测试、自动化审查和模糊测试等护栏维持。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>核心观点：AI生成的生产代码需要比人工更严格的工程护栏，否则只是转移技术债。这也是当前coding agent落地中最容易被低估的一环。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>核心观点：AI生成的生产代码<b data-highlight style=color:#275f45>需要比人工更严格的工程护栏，</b>否则只是转移技术债。这也是当前coding agent落地中最容易被低估的一环。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-1fc8b17b4083b0" class="report-item ">
+      </article><article id="event-1fc8b17b4083b0" data-item-id="1fc8b17b4083b0" class="report-item ">
         <span>03</span>
         
         <div>
@@ -3501,7 +3560,7 @@ time {
             
             <b class="source-person"><small>X</small><span>Aaron Levie</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/levie/status/2098218284139311615" target="_blank" rel="noreferrer">Some more tales from the road. Met with a couple dozen technology leaders this week across banking, media, information services, insurance, and consulting to discuss agents in the enterprise.
+          <h3 class="social-original" data-field="original"><a href="https://x.com/levie/status/2098218284139311615" target="_blank" rel="noreferrer">Some more tales from the road. Met with a couple dozen technology leaders this week across banking, media, information services, insurance, and consulting to discuss agents in the enterprise.
 
 Some of the biggest trends right now:
 
@@ -3519,14 +3578,14 @@ Some of the biggest trends right now:
 
 * Legacy systems still a hurdle. As always, legacy systems still remain a mainstay issue that holds back enterprises from rapid adoption of AI in enterprises. Data is fragmented across legacy environments that weren’t built for an agentic world. Companies spending a lot of time just cleaning up these old platforms.
 
-Many more topics, but these tend to be some of the more top of mind items at the moment in the enterprise.</a></h3><p class="social-translation"><span>译文</span>更多旅途见闻。本周，我与来自银行、媒体、信息服务、保险和咨询行业的二十多位技术领袖会面，讨论企业中的智能体。 当前一些最大的趋势： * 网络安全！每个人都对AI带来的漏洞数量不断增加感到紧张，也对OpenAI Hugging Face事件的影响感到担忧。这种讨论不像硅谷那样具有存在主义色彩，但依然高度关注，并且务实看待如何在自身环境中操作应对。AI带来了大量新发现，但仍难以跟上他们现在必须执行的所有变化。 * 模型之争持续。大多数公司正在企业内部部署多个前沿模型。很难实现标准化，团队和用例之间也呈现出不同偏好。但资金仍然集中在少数几家供应商身上。在这些组织中，开放权重的规模化应用仍处于起步阶段，通常是因为缺乏国内的“前沿”开源软件选项。对此有大量需求，但迄今为止选择很少。 * 智能体安全与身份。与Hugging Face事件有些关联，人们对智能体安全和身份管理的新挑战有了更多认识——在一个智能体试图进入所有能进入的系统的世界里。在理想情况下，企业可以为所有智能体设置身份并控制它们的行为，但当然，有时智能体也需要完全以用户的身份行事。 * 流程再造。大多数公司意识到，智能体的最大优势在于能够改变实际工作流程本身，从而从AI中获得全部收益。当公司能够调整工作流程以支持智能体改变工作方式时，投资回报率要高得多。</p><div class="memory-note">
-    <p><span>解读</span>企业Agent落地的真实瓶颈不在模型，而在安全、身份、流程再造与评估能力，且架构更换频繁——这是供给端最该重视的信号。</p>
+Many more topics, but these tend to be some of the more top of mind items at the moment in the enterprise.</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>更多旅途见闻。本周，我与来自银行、媒体、信息服务、保险和咨询行业的二十多位技术领袖会面，讨论企业中的智能体。 当前一些最大的趋势： * 网络安全！</p><p>每个人都对AI带来的漏洞数量不断增加感到紧张，也对OpenAI Hugging Face事件的影响感到担忧。这种讨论不像硅谷那样具有存在主义色彩，但依然高度关注，并且务实看待如何在自身环境中操作应对。</p><p>AI带来了大量新发现，但仍难以跟上他们现在必须执行的所有变化。 * 模型之争持续。大多数公司正在企业内部部署多个前沿模型。很难实现标准化，团队和用例之间也呈现出不同偏好。但资金仍然集中在少数几家供应商身上。</p><p>在这些组织中，开放权重的规模化应用仍处于起步阶段，通常是因为缺乏国内的“前沿”开源软件选项。对此有大量需求，但迄今为止选择很少。 * 智能体安全与身份。</p><p>与Hugging Face事件有些关联，人们对智能体安全和身份管理的新挑战有了更多认识——在一个智能体试图进入所有能进入的系统的世界里。在理想情况下，企业可以为所有智能体设置身份并控制它们的行为，但当然，有时智能体也需要完全以用户的身份行事。 </p><p>* 流程再造。大多数公司意识到，智能体的最大优势在于能够改变实际工作流程本身，从而从AI中获得全部收益。当公司能够调整工作流程以支持智能体改变工作方式时，投资回报率要高得多。</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>企业Agent落地的真实瓶颈不在模型，而在安全、身份、流程再造与评估能力，且架构更换频繁——这是供给端最该重视的信号。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 7 分钟</span>
           </div>
         </div>
-      </article><article id="event-35ec772bdd08c4" class="report-item ">
+      </article><article id="event-35ec772bdd08c4" data-item-id="35ec772bdd08c4" class="report-item ">
         <span>04</span>
         
         <div>
@@ -3537,7 +3596,7 @@ Many more topics, but these tend to be some of the more top of mind items at the
             
             <b class="source-person"><small>X</small><span>Boris Cherny</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/bcherny/status/2098217573276131577" target="_blank" rel="noreferrer">Hey ████,
+          <h3 class="social-original" data-field="original"><a href="https://x.com/bcherny/status/2098217573276131577" target="_blank" rel="noreferrer">Hey ████,
 
 I think there is room for both.
 
@@ -3552,12 +3611,12 @@ Your job is to hold the bar on code quality. If Claude’s code doesn’t meet t
 If all else fails, steer Claude more when you work with it, or have Claude fix accumulated debt and rewrite your codebase to make it easier to work with. Or, wait for the next model.
 
 Best,
-Boris</a></h3><p class="social-translation"><span>译文</span>嘿 ████， 我认为两者可以共存。 1. 原型和其他一次性代码可以完全当作黑盒处理。既然你无论如何都要丢弃它，而且它出问题的影响范围很小，就没有必要做到完美。 2. Claude 编写的生产代码应该有比人类编写时更高的标准。在 Anthropic，我们设置了许多护栏来确保这一点：大量 lint 规则、大量测试、Claude 驱动的端到端测试、Claude 驱动的模糊测试器每天运行、自动化代码审查和安全审查、自动化代码重构等等。没有这些，你最终可能会得到一团乱麻，日后难以维护。幸运的是，模型让把这些事情做好变得日益简单——运行一些每日例程，使用 Claude Code Review 等等。 你的工作就是守住代码质量这条线。如果 Claude 的代码不达标，可以尝试： - 使用最新的前沿模型（Opus 5 或 Fable 5.1） - 将 effort 提高到 high 或 xhigh - 在 CLAUDE.md 和技能上投入，简明地教会 Claude 如何在你的代码库中工作 如果以上都失败，就在与 Claude 合作时多引导它，或者让 Claude 修复累积的技术债并重写你的代码库，使其更易于使用。或者，等下一个模型。 祝好， Boris</p>
+Boris</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>嘿 ████， 我认为两者可以共存。 1. 原型和其他一次性代码可以完全当作黑盒处理。既然你无论如何都要丢弃它，而且它出问题的影响范围很小，就没有必要做到完美。 2. Claude 编写的生产代码应该有比人类编写时更高的标准。</p><p>在 Anthropic，我们设置了许多护栏来确保这一点：大量 lint 规则、大量测试、Claude 驱动的端到端测试、Claude 驱动的模糊测试器每天运行、自动化代码审查和安全审查、自动化代码重构等等。</p><p>没有这些，你最终可能会得到一团乱麻，日后难以维护。幸运的是，模型让把这些事情做好变得日益简单——运行一些每日例程，使用 Claude Code Review 等等。 你的工作就是守住代码质量这条线。</p><p>如果 Claude 的代码不达标，可以尝试： - 使用最新的前沿模型（Opus 5 或 Fable 5.1） - 将 effort 提高到 high 或 xhigh - 在 CLAUDE.md 和技能上投入，简明地教会 Claude 如何在你的代码库中工作 如果以上都失败，就在与 Claude 合作时多引导它，或者让 Claude 修复累积的技术债并重写你的代码库，使其更易于使用。</p><p>或者，等下一个模型。 祝好， Boris</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 3 分钟</span>
           </div>
         </div>
-      </article><article id="event-076c360dcfd4d3" class="report-item ">
+      </article><article id="event-076c360dcfd4d3" data-item-id="076c360dcfd4d3" class="report-item ">
         <span>05</span>
         
         <div>
@@ -3568,14 +3627,14 @@ Boris</a></h3><p class="social-translation"><span>译文</span>嘿 ████�
             
             <b class="source-person"><small>X</small><span>Boris Cherny</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/bcherny/status/2098217571153838124" target="_blank" rel="noreferrer">Every day, I get a lot of of emails and messages like this one. I try to respond to as many as I can.
+          <h3 class="social-original" data-field="original"><a href="https://x.com/bcherny/status/2098217571153838124" target="_blank" rel="noreferrer">Every day, I get a lot of of emails and messages like this one. I try to respond to as many as I can.
 
-Sharing my response below, for anyone else in a similar situation. What do you think? https://t.co/z1GtgK14RM</a></h3><p class="social-translation"><span>译文</span>每天，我都会收到大量类似这样的邮件和信息。我会尽力尽可能多地回复。 下面分享我的回复，供其他遇到类似情况的人参考。你们怎么看？https://t.co/z1GtgK14RM</p>
+Sharing my response below, for anyone else in a similar situation. What do you think? https://t.co/z1GtgK14RM</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>每天，我都会收到大量类似这样的邮件和信息。我会尽力尽可能多地回复。 下面分享我的回复，供其他遇到类似情况的人参考。你们怎么看？https://t.co/z1GtgK14RM</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 45 秒</span>
           </div>
         </div>
-      </article><article id="event-fa966794144805" class="report-item ">
+      </article><article id="event-fa966794144805" data-item-id="fa966794144805" class="report-item ">
         <span>06</span>
         
         <div>
@@ -3586,18 +3645,18 @@ Sharing my response below, for anyone else in a similar situation. What do you t
             
             <b class="source-person"><small>X</small><span>Boris Cherny</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/bcherny/status/2098281805770309686" target="_blank" rel="noreferrer">The latest Threat Intelligence report is an absolutely terrifying and important read.
+          <h3 class="social-original" data-field="original"><a href="https://x.com/bcherny/status/2098281805770309686" target="_blank" rel="noreferrer">The latest Threat Intelligence report is an absolutely terrifying and important read.
 
 As models become more intelligent, without the right safeguards and monitoring they also become more dangerous. Many capabilities are dual use: a model that codes well can be used to hack critical infrastructure; a model that assists with biology research can also be used to engineer the next pandemic.
 
 These issues are complex, thorny, and increasingly important for everyone to understand so that the world can weigh in and respond to rapidly escalating risks.
 
-https://t.co/0rnV2HjPP6</a></h3><p class="social-translation"><span>译文</span>最新的Threat Intelligence报告读起来绝对令人恐惧且重要。 随着模型变得更加智能，如果没有适当的防护和监控，它们也会变得更加危险。许多能力具有双重用途：编码能力强的模型可被用来入侵关键基础设施；辅助生物学研究的模型也能被用来设计下一次大流行病。 这些问题复杂棘手，且越来越需要每个人理解，以便全世界能够参与并应对迅速升级的风险。 https://t.co/0rnV2HjPP6</p>
+https://t.co/0rnV2HjPP6</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>最新的Threat Intelligence报告读起来绝对令人恐惧且重要。 随着模型变得更加智能，如果没有适当的防护和监控，它们也会变得更加危险。许多能力具有双重用途：编码能力强的模型可被用来入侵关键基础设施；</p><p>辅助生物学研究的模型也能被用来设计下一次大流行病。 这些问题复杂棘手，且越来越需要每个人理解，以便全世界能够参与并应对迅速升级的风险。 https://t.co/0rnV2HjPP6</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 75 秒</span>
           </div>
         </div>
-      </article><article id="event-b0821bb691c8c2" class="report-item ">
+      </article><article id="event-b0821bb691c8c2" data-item-id="b0821bb691c8c2" class="report-item ">
         <span>07</span>
         
         <div>
@@ -3608,9 +3667,9 @@ https://t.co/0rnV2HjPP6</a></h3><p class="social-translation"><span>译文</span
             
             <b class="source-person"><small>X</small><span>Nan Yu</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/thenanyu/status/2098216215525331353" target="_blank" rel="noreferrer">Yet normies use Google and Instagram and Zillow and Doordash all day every day.
+          <h3 class="social-original" data-field="original"><a href="https://x.com/thenanyu/status/2098216215525331353" target="_blank" rel="noreferrer">Yet normies use Google and Instagram and Zillow and Doordash all day every day.
 
-Still. Early. https://t.co/YO92sTMaqd</a></h3><p class="social-translation"><span>译文</span>然而，普通人整天都在使用 Google、Instagram、Zillow 和 Doordash。 仍然。为时尚早。 https://t.co/YO92sTMaqd</p>
+Still. Early. https://t.co/YO92sTMaqd</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>然而，普通人整天都在使用 Google、Instagram、Zillow 和 Doordash。 仍然。为时尚早。 https://t.co/YO92sTMaqd</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>

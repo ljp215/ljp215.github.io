@@ -2644,9 +2644,65 @@ time {
   .report-history { order: 1; width: 100%; margin-top: 24px; }
 }
 
+/* Reader presentation: original audited text, quieter navigation and real figures. */
+[data-website-presentation="reader-v1"] .focus-card { padding: 16px 18px; border-color: #c8c5b8; border-radius: 8px; }
+[data-website-presentation="reader-v1"] .focus-card h3 { margin-bottom: 12px; font-size: 17px; line-height: 1.65; }
+[data-website-presentation="reader-v1"] .focus-number { color: #6c8073; font-size: 19px; }
+[data-website-presentation="reader-v1"] .focus-topic { color: #375; }
+[data-website-presentation="reader-v1"] .focus-more { color: #375; font-size: 13px; }
+.topic-directory-toggle { margin-top: 16px; padding: 11px 14px; border: 1px solid #c8c5b8; border-radius: 6px; }
+.topic-directory-toggle > summary { cursor: pointer; font-size: 14px; font-weight: 650; }
+.topic-directory-toggle > summary > span { float: right; color: var(--muted); font-size: 12px; font-weight: 400; }
+.topic-directory-toggle .topic-directory { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-list { gap: 20px; }
+[data-website-presentation="reader-v1"] .report-item { padding: 20px; border: 1px solid #c8c5b8; border-left: 3px solid #375; grid-template-columns: 34px minmax(0, 1fr); }
+[data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 34px minmax(0, 1fr) 112px; }
+[data-website-presentation="reader-v1"] .report-item > span { width: 32px; height: 25px; background: transparent; color: #375; }
+[data-website-presentation="reader-v1"] .report-item h3 { margin: 8px 0 16px; font-size: 21px; line-height: 1.6; }
+[data-website-presentation="reader-v1"] .report-item-meta { gap: 6px 10px; line-height: 1.7; letter-spacing: 0; font-size: 12px; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p { margin: 0; color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p + p, [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p + p { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-item .ai-summary { margin-top: 0; }
+[data-website-presentation="reader-v1"] .reader-field b[data-highlight] { font-weight: 750; }
+[data-website-presentation="reader-v1"] .ai-summary .reader-label, [data-website-presentation="reader-v1"] .memory-note .reader-label, [data-website-presentation="reader-v1"] .social-translation .reader-label { display: block; width: fit-content; min-height: 0; margin: 0 0 9px; padding: 0; background: transparent; color: #375; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+[data-website-presentation="reader-v1"] .memory-note { margin-top: 18px; padding: 14px 16px; border: 0; border-radius: 4px; background: #edf3ed; }
+[data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 15px; line-height: 1.8; }
+[data-website-presentation="reader-v1"] .report-actions { margin-top: 14px; }
+[data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
+[data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
+[data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-note { color: #62685e; }
+[data-website-presentation="reader-v1"] .paper-digest-list { grid-template-columns: 1fr; gap: 16px; }
+[data-website-presentation="reader-v1"] .paper-digest-item { border-left: 2px solid #b8c8b9; background: transparent; padding: 12px 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item > span { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-item h4 { font-size: 18px; line-height: 1.65; margin-bottom: 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item .ai-summary { display: block; border: 0; background: transparent; padding: 0; color: #333; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field { display: block; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; }
+[data-website-presentation="reader-v1"] .paper-digest-item em { color: #526150; background: #e5ebdf; font-size: 12px; font-style: normal; }
+@media (max-width: 640px) {
+  [data-website-presentation="reader-v1"] .editorial-overview { margin: 20px 0 24px; }
+  [data-website-presentation="reader-v1"] .focus-grid { gap: 10px; }
+  [data-website-presentation="reader-v1"] .focus-card { padding: 14px 16px; }
+  [data-website-presentation="reader-v1"] .focus-card h3 { font-size: 16px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item { grid-template-columns: 1fr; padding: 18px 14px; }
+  [data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 1fr; }
+  [data-website-presentation="reader-v1"] .report-item > div:not(.report-thumb) { grid-column: 1; }
+  [data-website-presentation="reader-v1"] .report-item h3 { font-size: 20px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item .reader-field p { font-size: 17px; line-height: 1.85; }
+  [data-website-presentation="reader-v1"] .memory-note { padding: 13px; }
+  [data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 16px; }
+  [data-website-presentation="reader-v1"] .paper-digest { padding: 16px 12px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 12px 8px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { font-size: 17px; }
+}
+
 </style>
   </head>
-  <body>
+  <body data-website-presentation="reader-v1">
     <div class="report-shell">
       <aside class="report-history" aria-label="AI 日报导航">
     <div class="report-history-title">
@@ -3168,29 +3224,23 @@ time {
         </header>
         <section class="editorial-overview" aria-label="今日重点与选题目录">
     <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
-    <div class="focus-grid"><article class="focus-card">
+    <div class="focus-grid"><article class="focus-card" data-focus-id="9545dd09c25d75">
       <span class="focus-number">01</span>
       <p class="focus-topic">基础模型与技术</p>
-      <h3><a data-report-target="event-9545dd09c25d75" href="?event=event-9545dd09c25d75#company-updates">Anthropic：Claude Marketplace: one place to discover plugins, agents, and services from our partners</a></h3>
-      <p>Anthropic推出Claude Marketplace，统一聚合插件连接器、Claude驱动的代理产品和咨询伙伴。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-9545dd09c25d75" href="?event=event-9545dd09c25d75#company-updates">Anthropic：Claude Marketplace: one place to discover plugins, agents, and services from our partners</a></h3>
       <a class="focus-more" data-report-target="event-9545dd09c25d75" href="?event=event-9545dd09c25d75#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="42a1c0b452575c">
       <span class="focus-number">02</span>
       <p class="focus-topic">Agent 技术</p>
-      <h3><a data-report-target="event-42a1c0b452575c" href="?event=event-42a1c0b452575c#company-updates">Ringg：Ringg’s AI agents resolve up to 65% of customer calls with OpenAI</a></h3>
-      <p>Ringg 用 OpenAI GPT-5.6 开发多语言客服 Agent，覆盖语音、聊天、WhatsApp 与网页，声称可自主解决 65% 的客户来电，成本较 GPT-4.1 降低 90%。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-42a1c0b452575c" href="?event=event-42a1c0b452575c#company-updates">Ringg：Ringg’s AI agents resolve up to 65% of customer calls with OpenAI</a></h3>
       <a class="focus-more" data-report-target="event-42a1c0b452575c" href="?event=event-42a1c0b452575c#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="731b480cf82e48">
       <span class="focus-number">03</span>
       <p class="focus-topic">AI 产品与工具</p>
-      <h3><a data-report-target="event-731b480cf82e48" href="?event=event-731b480cf82e48#company-updates">荣耀：科氪 | 荣耀方飞：与阿里共建五大垂域模型与解决方案，Magic9落地行业领先AI能力</a></h3>
-      <p>荣耀产品线总裁方飞在阿里云栖大会宣布与阿里共建五大垂域模型，旗舰Magic9将搭载系统级Agent Harness，实现端到端任务闭环率90%。</p>
-      
+      <h3><a data-field="focus-title" data-report-target="event-731b480cf82e48" href="?event=event-731b480cf82e48#company-updates">荣耀：科氪 | 荣耀方飞：与阿里共建五大垂域模型与解决方案，Magic9落地行业领先AI能力</a></h3>
       <a class="focus-more" data-report-target="event-731b480cf82e48" href="?event=event-731b480cf82e48#company-updates">阅读解读与来源 →</a>
     </article></div>
-    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>4</b></summary>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>14 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>4</b></summary>
         <ul><li><a data-report-target="event-9545dd09c25d75" href="?event=event-9545dd09c25d75#company-updates">Anthropic：Claude Marketplace: one place to discover plugins, agents, and services from our partners</a></li><li><a data-report-target="event-d49fe0d2bab0f0" href="?event=event-d49fe0d2bab0f0#company-updates">Anthropic：How CodeRabbit, Power Digital, and ThoughtSpot scale with Snowflake and Vercel on Claude Marketplace</a></li><li><a data-report-target="event-9c32acc03709d4" href="?event=event-9c32acc03709d4#technical-progress">DeepSeek：DeepSeek新论文公开Agent训练！梁文锋署名</a></li><li><a data-report-target="event-1b4f34f26431f8" href="?event=event-1b4f34f26431f8#technical-progress">Qwen：Qwen3.8-Omni: Towards Native Omni-Modal Agents</a></li></ul>
       </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
@@ -3202,7 +3252,7 @@ time {
         <p>本期暂无达到入选标准的新内容</p>
       </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
-      </details></div>
+      </details></div></details>
   </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
@@ -3232,7 +3282,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-9545dd09c25d75" class="report-item has-thumbnail">
+      <article id="event-9545dd09c25d75" data-item-id="9545dd09c25d75" class="report-item has-thumbnail">
         <span>01</span>
         <div class="report-thumb"><img src="https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6ab3af144435c228297042ed_Claude-marketplace.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3243,16 +3293,17 @@ time {
             
             <a class="source-link" href="https://claude.com/blog/claude-marketplace" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
-          <h3><a href="https://claude.com/blog/claude-marketplace" target="_blank" rel="noreferrer">Anthropic：Claude Marketplace: one place to discover plugins, agents, and services from our partners</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Anthropic推出Claude Marketplace，统一聚合插件连接器、Claude驱动的代理产品和咨询伙伴。</p>
+          <h3 data-field="title"><a href="https://claude.com/blog/claude-marketplace" target="_blank" rel="noreferrer">Anthropic：Claude Marketplace: one place to discover plugins, agents, and services from our partners</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Anthropic推出<b data-highlight style=color:#245b78>Claude Marketplace</b>，统一聚合插件连接器、Claude驱动的代理产品和咨询伙伴。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>把模型账单变成生态销售渠道，以MCP和Agent Skills锁定接入标准；2000+连接器更多是生态叙事，关键是能否沉淀真实交易。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>把模型账单变成生态销售渠道，以MCP和Agent Skills锁定接入标准；2000+连接器更多是生态叙事，关键是能否沉淀真实交易。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article id="event-42a1c0b452575c" class="report-item ">
+      </article><article id="event-42a1c0b452575c" data-item-id="42a1c0b452575c" class="report-item ">
         <span>02</span>
         
         <div>
@@ -3263,16 +3314,17 @@ time {
             
             <a class="source-link" href="https://openai.com/index/ringg" target="_blank" rel="noopener noreferrer"><b>OpenAI</b></a>
           </div>
-          <h3><a href="https://openai.com/index/ringg" target="_blank" rel="noreferrer">Ringg：Ringg’s AI agents resolve up to 65% of customer calls with OpenAI</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Ringg 用 OpenAI GPT-5.6 开发多语言客服 Agent，覆盖语音、聊天、WhatsApp 与网页，声称可自主解决 65% 的客户来电，成本较 GPT-4.1 降低 90%。</p>
+          <h3 data-field="title"><a href="https://openai.com/index/ringg" target="_blank" rel="noreferrer">Ringg：Ringg’s AI agents resolve up to 65% of customer calls with OpenAI</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Ringg 用 OpenAI GPT-5.6 开发多语言客服 Agent，覆盖语音、聊天、WhatsApp 与网页，<b data-highlight style=color:#245b78>声称可自主解决 65% 的客户来电，</b>成本较 GPT-4.1 降低 90%。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是 OpenAI 客户案例：客服 Agent 的性价比拐点出现。65% 解决率与 90% 成本降幅均为 Ringg 自报，单案例不足以外推。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是 OpenAI 客户案例：客服 Agent 的性价比拐点出现。65% 解决率与 90% 成本降幅均为 Ringg 自报，单案例不足以外推。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-731b480cf82e48" class="report-item has-thumbnail">
+      </article><article id="event-731b480cf82e48" data-item-id="731b480cf82e48" class="report-item has-thumbnail">
         <span>03</span>
         <div class="report-thumb"><img src="https://img.36krcdn.com/hsossms/20260923/v2_c9dafe105980453abcbcd2b76dcf8ed5@517825446_oswg6364638oswg3994oswg2662_img_png?x-oss-process=image/quality,q_80/format,jpg/interlace,1" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3283,16 +3335,17 @@ time {
             
             <a class="source-link" href="https://36kr.com/p/3996102074290305?f=rss" target="_blank" rel="noopener noreferrer"><b>36kr.com</b></a>
           </div>
-          <h3><a href="https://36kr.com/p/3996102074290305?f=rss" target="_blank" rel="noreferrer">荣耀：科氪 | 荣耀方飞：与阿里共建五大垂域模型与解决方案，Magic9落地行业领先AI能力</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>荣耀产品线总裁方飞在阿里云栖大会宣布与阿里共建五大垂域模型，旗舰Magic9将搭载系统级Agent Harness，实现端到端任务闭环率90%。</p>
+          <h3 data-field="title"><a href="https://36kr.com/p/3996102074290305?f=rss" target="_blank" rel="noreferrer">荣耀：科氪 | 荣耀方飞：与阿里共建五大垂域模型与解决方案，Magic9落地行业领先AI能力</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>荣耀产品线总裁方飞在阿里云栖大会宣布与阿里共建五大垂域模型，旗舰<b data-highlight style=color:#245b78>Magic9</b>将搭载系统级Agent Harness，<b data-highlight style=color:#245b78>实现端到端任务闭环率90%</b>。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是终端厂商与云厂商的Agent共谋：荣耀要系统入口，阿里要终端场景，指标好看但需独立验证。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是终端厂商与云厂商的Agent共谋：荣耀要系统入口，阿里要终端场景，指标好看但需独立验证。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-69dfe9577fc8b6" class="report-item has-thumbnail">
+      </article><article id="event-69dfe9577fc8b6" data-item-id="69dfe9577fc8b6" class="report-item has-thumbnail">
         <span>04</span>
         <div class="report-thumb"><img src="https://techcrunch.com/wp-content/uploads/2026/02/Screenshot-2026-02-08-at-12.27.26-PM.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3303,16 +3356,17 @@ time {
             
             <a class="source-link" href="https://techcrunch.com/2026/09/23/chatgpt-mobile-app-gets-voice-based-agentic-features" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
-          <h3><a href="https://techcrunch.com/2026/09/23/chatgpt-mobile-app-gets-voice-based-agentic-features" target="_blank" rel="noreferrer">OpenAI：ChatGPT mobile app gets voice-based agentic features</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>OpenAI宣布ChatGPT移动应用新增语音智能体功能，Plus/Pro用户可通过Work标签在手机起草文档、总结邮件，免费和Go用户可使用插件和连接应用，并支持手机与桌面间任务切换。</p>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/09/23/chatgpt-mobile-app-gets-voice-based-agentic-features" target="_blank" rel="noreferrer">OpenAI：ChatGPT mobile app gets voice-based agentic features</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>OpenAI宣布<b data-highlight style=color:#245b78>ChatGPT</b>移动应用新增语音智能体功能，Plus/Pro用户可通过Work标签在手机起草文档、总结邮件，免费和Go用户可使用插件和连接应用，并支持手机与桌面间任务切换。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>语音智能体能力从桌面平移到移动端，是OpenAI在agent入口上的常规推进；关键不在入口，而在工作流能否在手机上真正完成。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>语音智能体能力从桌面平移到移动端，是OpenAI在agent入口上的常规推进；关键不在入口，而在工作流能否在手机上真正完成。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-d49fe0d2bab0f0" class="report-item has-thumbnail">
+      </article><article id="event-d49fe0d2bab0f0" data-item-id="d49fe0d2bab0f0" class="report-item has-thumbnail">
         <span>05</span>
         <div class="report-thumb"><img src="https://cdn.prod.website-files.com/68a44d4040f98a4adf2207b6/6ab40d36d0d56741a76ac02c_og_claude-marketplace-customers.jpg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3323,10 +3377,11 @@ time {
             
             <a class="source-link" href="https://claude.com/blog/how-coderabbit-power-digital-and-thoughtspot-scale-with-snowflake-and-vercel-on-claude-marketplace" target="_blank" rel="noopener noreferrer"><b>Anthropic</b></a>
           </div>
-          <h3><a href="https://claude.com/blog/how-coderabbit-power-digital-and-thoughtspot-scale-with-snowflake-and-vercel-on-claude-marketplace" target="_blank" rel="noreferrer">Anthropic：How CodeRabbit, Power Digital, and ThoughtSpot scale with Snowflake and Vercel on Claude Marketplace</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Anthropic官方博客介绍Claude Marketplace：客户可将现有Anthropic承诺额度用于购买Snowflake和Vercel等服务，并以CodeRabbit、Power Digital、Thou。</p>
+          <h3 data-field="title"><a href="https://claude.com/blog/how-coderabbit-power-digital-and-thoughtspot-scale-with-snowflake-and-vercel-on-claude-marketplace" target="_blank" rel="noreferrer">Anthropic：How CodeRabbit, Power Digital, and ThoughtSpot scale with Snowflake and Vercel on Claude Marketplace</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Anthropic官方博客介绍<b data-highlight style=color:#245b78>Claude Marketplace</b>：客户可将现有Anthropic承诺额度用于购买Snowflake和Vercel等服务，并以<b data-highlight style=color:#245b78>CodeRabbit</b>、Power Digital、Thou。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是预算复用与生态绑定：Anthropic让客户把已承诺的支出转用于Snowflake/Vercel，降低采购摩擦，加深伙伴关系。这更像商业策略而非技术进展。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是预算复用与生态绑定：Anthropic让客户把已承诺的支出转用于Snowflake/Vercel，降低采购摩擦，加深伙伴关系。<b data-highlight style=color:#80511f>这更像商业策略而非技术进展</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
@@ -3354,50 +3409,50 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-flash-ga-260731 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article id="paper-1" class="paper-digest-item ">
+      <article id="paper-1" data-paper-id="2609.25804" class="paper-digest-item ">
         <span>01</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.25804" target="_blank" rel="noreferrer">hf-logo.svg</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>该条目不包含有效论文信息，无法生成摘要。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.25804" target="_blank" rel="noreferrer">hf-logo.svg</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>该条目不包含有效论文信息，无法生成摘要。</p></div></div>
           <div><em>无效条目</em></div>
         </div>
-      </article><article id="paper-2" class="paper-digest-item ">
+      </article><article id="paper-2" data-paper-id="2609.25270" class="paper-digest-item ">
         <span>02</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.25270" target="_blank" rel="noreferrer">https://arxiv.org/html/2609.25270v1/ablation.svg</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>该条目不包含有效论文信息，无法生成摘要。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.25270" target="_blank" rel="noreferrer">https://arxiv.org/html/2609.25270v1/ablation.svg</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>该条目不包含有效论文信息，<b data-highlight style=color:#80511f>无法生成摘要</b>。</p></div></div>
           <div><em>无效条目</em></div>
         </div>
-      </article><article id="paper-3" class="paper-digest-item ">
+      </article><article id="paper-3" data-paper-id="2609.24981" class="paper-digest-item ">
         <span>03</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.24981" target="_blank" rel="noreferrer">（无效条目）output_quality_radar.svg</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>该条目标题为图片文件名，摘要仅为“与我们的结果对比”，缺少论文必要信息，无法提炼技术进展。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.24981" target="_blank" rel="noreferrer">（无效条目）output_quality_radar.svg</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>该条目标题为图片文件名，摘要仅为“与我们的结果对比”，缺少论文必要信息，<b data-highlight style=color:#80511f>无法提炼技术进展</b>。</p></div></div>
           <div><em>待核验</em></div>
         </div>
-      </article><article id="paper-4" class="paper-digest-item ">
+      </article><article id="paper-4" data-paper-id="2609.24058" class="paper-digest-item ">
         <span>04</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.24058" target="_blank" rel="noreferrer">（无效条目）arXiv HTML页面引用</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>该条目疑似从论文页面截取嵌入图片，摘要提及OCR数据集上最佳文本检测方法性能，但实验细节与来源缺失。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.24058" target="_blank" rel="noreferrer">（无效条目）arXiv HTML页面引用</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>该条目疑似从论文页面截取嵌入图片，摘要提及OCR数据集上最佳文本检测方法性能，但实验细节与来源缺失。</p></div></div>
           <div><em>待核验</em></div>
         </div>
-      </article><article id="paper-5" class="paper-digest-item ">
+      </article><article id="paper-5" data-paper-id="2609.24657" class="paper-digest-item ">
         <span>05</span>
         
         <div>
-          <h4><a href="https://huggingface.co/papers/2609.24657" target="_blank" rel="noreferrer">fig_motifs.svg（图模体分析）</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>通过轮廓图展示基于分割图度量组合的效用分析，并涉及四种分级选择。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2609.24657" target="_blank" rel="noreferrer">fig_motifs.svg（图模体分析）</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>通过轮廓图展示基于分割图度量组合的效用分析，并涉及四种分级选择。</p></div></div>
           <div><em>图分析</em><em>效用评估</em></div>
         </div>
       </article>
     </div>
   </article>
-      <article id="event-ff01a385a0eff9" class="report-item has-thumbnail">
+      <article id="event-ff01a385a0eff9" data-item-id="ff01a385a0eff9" class="report-item has-thumbnail">
         <span>01</span>
         <div class="report-thumb"><img src="https://d2908q01vomqb2.cloudfront.net/f1f836cb4ea6efb2a0b1b99f41ad8b103eff4b59/2026/09/21/ML-21352-1.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3408,16 +3463,17 @@ time {
             
             <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
           </div>
-          <h3><a href="https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock" target="_blank" rel="noreferrer">HEMA：From portal-hopping to instant answers: HEMA’s journey with MCP and Amazon Bedrock</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>荷兰零售商 HEMA 构建内部 AI 助手 HAL，基于 Amazon Bedrock AgentCore 与 MCP 协议，将分散的 IT 知识统一接入 IDE、Claude 等日常工具，替代工程师在多门户间查找答。</p>
+          <h3 data-field="title"><a href="https://aws.amazon.com/blogs/machine-learning/from-portal-hopping-to-instant-answers-hemas-journey-with-mcp-and-amazon-bedrock" target="_blank" rel="noreferrer">HEMA：From portal-hopping to instant answers: HEMA’s journey with MCP and Amazon Bedrock</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>荷兰零售商 HEMA 构建内部 AI 助手 HAL，基于 Amazon Bedrock AgentCore 与 MCP 协议，将分散的 IT 知识统一接入 IDE、Claude 等日常工具，替代工程师在多门户间查找答。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>MCP 落地的企业案例，价值是把存量知识与多个客户端统一对接；DCR 靠模拟实现，说明 MCP 客户端生态仍未成熟。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>MCP 落地的企业案例，价值是把存量知识与多个客户端统一对接；DCR 靠模拟实现，说明 MCP 客户端生态仍未成熟。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-9c32acc03709d4" class="report-item has-thumbnail">
+      </article><article id="event-9c32acc03709d4" data-item-id="9c32acc03709d4" class="report-item has-thumbnail">
         <span>02</span>
         <div class="report-thumb"><img src="https://i.qbitai.com/wp-content/uploads/2026/09/9722f61527987cd50a792ee36d3e747e.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3428,16 +3484,17 @@ time {
             
             <a class="source-link" href="https://www.qbitai.com/2026/09/496393.html" target="_blank" rel="noopener noreferrer"><b>qbitai</b></a>
           </div>
-          <h3><a href="https://www.qbitai.com/2026/09/496393.html" target="_blank" rel="noreferrer">DeepSeek：DeepSeek新论文公开Agent训练！梁文锋署名</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>DeepSeek在梁文锋署名的论文中公开了Agent训练系统DSec，该系统每秒可生成5000个沙盒，通过分层的镜像与资源调度支撑大规模RL训练，并披露了Agent训练中出现的reward hacking案例。</p>
+          <h3 data-field="title"><a href="https://www.qbitai.com/2026/09/496393.html" target="_blank" rel="noreferrer">DeepSeek：DeepSeek新论文公开Agent训练！梁文锋署名</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>DeepSeek在梁文锋署名的论文中公开了Agent训练系统DSec，<b data-highlight style=color:#245b78>该系统每秒可生成5000个沙盒，</b>通过分层的镜像与资源调度支撑大规模RL训练，并披露了Agent训练中出现的reward hacking案例。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>Agent训练的核心瓶颈转向环境基础设施，沙盒工厂的工程细节比模型本身更难复制，reward hacking案例说明安全防线必须持续前移。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Agent训练的核心瓶颈转向环境基础设施，沙盒工厂的工程细节比模型本身更难复制，reward hacking案例说明安全防线必须持续前移。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 35 秒</span>
           </div>
         </div>
-      </article><article id="event-1b4f34f26431f8" class="report-item ">
+      </article><article id="event-1b4f34f26431f8" data-item-id="1b4f34f26431f8" class="report-item ">
         <span>03</span>
         
         <div>
@@ -3448,10 +3505,11 @@ time {
             
             <a class="source-link" href="https://arxiv.org/abs/2609.25611" target="_blank" rel="noopener noreferrer"><b>arxiv.org</b></a>
           </div>
-          <h3><a href="https://arxiv.org/abs/2609.25611" target="_blank" rel="noreferrer">Qwen：Qwen3.8-Omni: Towards Native Omni-Modal Agents</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>Qwen团队在arXiv发布原生多模态Agent模型Qwen3.8-Omni-Flash，基于MoE架构，上下文扩至百万Token，面向视频编辑、音视频翻译等生产力场景，并开源Qwen-MM-Plugins与Qwen。</p>
+          <h3 data-field="title"><a href="https://arxiv.org/abs/2609.25611" target="_blank" rel="noreferrer">Qwen：Qwen3.8-Omni: Towards Native Omni-Modal Agents</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Qwen团队在arXiv<b data-highlight style=color:#275f45>发布原生多模态Agent模型Qwen3.8-Omni-Flash，</b>基于MoE架构，上下文扩至百万Token，面向视频编辑、音视频翻译等生产力场景，并开源Qwen-MM-Plugins与Qwen。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>本质是把强文本Agent能力通过协同训练平移到音视频任务，并以开源框架补齐执行链路；自评benchmark需独立复现后再下结论。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本质是把强文本Agent能力通过协同训练平移到音视频任务，并以开源框架补齐执行链路；自评benchmark需独立复现后再下结论。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
@@ -3470,7 +3528,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-f0b6e5c1c540f9" class="report-item ">
+      <article id="event-f0b6e5c1c540f9" data-item-id="f0b6e5c1c540f9" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3481,12 +3539,12 @@ time {
             
             <b class="source-person"><small>X</small><span>Cat Wu</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/_catwu/status/2102569951974584612" target="_blank" rel="noreferrer">If you’re looking for ways to try Opus 5.5 and Claude Tag in Slack… https://t.co/PpwztYQx2o</a></h3><p class="social-translation"><span>译文</span>如果你正在寻找在 Slack 中试用 Opus 5.5 和 Claude Tag 的方法…… https://t.co/PpwztYQx2o</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/_catwu/status/2102569951974584612" target="_blank" rel="noreferrer">If you’re looking for ways to try Opus 5.5 and Claude Tag in Slack… https://t.co/PpwztYQx2o</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>如果你正在寻找在 Slack 中试用 Opus 5.5 和 Claude Tag 的方法…… https://t.co/PpwztYQx2o</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article id="event-45a2c689b3343a" class="report-item ">
+      </article><article id="event-45a2c689b3343a" data-item-id="45a2c689b3343a" class="report-item ">
         <span>02</span>
         
         <div>
@@ -3497,12 +3555,12 @@ time {
             
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/petergyang/status/2102577425838485916" target="_blank" rel="noreferrer">I talk about why Opus 5.5 is the most excited I&#039;ve been about a Claude model in awhile here: https://t.co/PBxPzE43Ud</a></h3><p class="social-translation"><span>译文</span>我在这里谈谈为什么Opus 5.5是我不久以来对Claude模型最兴奋的一次：https://t.co/PBxPzE43Ud</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/petergyang/status/2102577425838485916" target="_blank" rel="noreferrer">I talk about why Opus 5.5 is the most excited I&#039;ve been about a Claude model in awhile here: https://t.co/PBxPzE43Ud</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>我在这里谈谈为什么Opus 5.5是我不久以来对Claude模型最兴奋的一次：https://t.co/PBxPzE43Ud</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-a8793f435bcce9" class="report-item ">
+      </article><article id="event-a8793f435bcce9" data-item-id="a8793f435bcce9" class="report-item ">
         <span>03</span>
         
         <div>
@@ -3513,12 +3571,12 @@ time {
             
             <b class="source-person"><small>X</small><span>Guillermo Rauch</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/rauchg/status/2102594015669756323" target="_blank" rel="noreferrer">Software will never die again. You liked Google Reader? Cool, you can generate and deploy your own. Yours, forever.</a></h3><p class="social-translation"><span>译文</span>软件再也不会消亡了。你喜欢 Google Reader？太好了，你可以生成并部署一个属于自己的。永远属于你。</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/rauchg/status/2102594015669756323" target="_blank" rel="noreferrer">Software will never die again. You liked Google Reader? Cool, you can generate and deploy your own. Yours, forever.</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>软件再也不会消亡了。你喜欢 Google Reader？太好了，你可以生成并部署一个属于自己的。永远属于你。</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 25 秒</span>
           </div>
         </div>
-      </article><article id="event-ff14aef96d1ddd" class="report-item ">
+      </article><article id="event-ff14aef96d1ddd" data-item-id="ff14aef96d1ddd" class="report-item ">
         <span>04</span>
         
         <div>
@@ -3529,19 +3587,19 @@ time {
             
             <b class="source-person"><small>X</small><span>Dan Shipper</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/danshipper/status/2102556723244564715" target="_blank" rel="noreferrer">i added almost 10k new followers today!
+          <h3 class="social-original" data-field="original"><a href="https://x.com/danshipper/status/2102556723244564715" target="_blank" rel="noreferrer">i added almost 10k new followers today!
 
 if you&#039;re new around here, here are two things to start with:
 
 1. my vibe check on opus 5.5 vs. sol-6 on @every: https://t.co/61XgBTikxH
 2. after automation, my take on why AI automation creates more good work to do for human experts: https://t.co/Lb7SUCe2pO
 
-if you like those two things you should subscribe to @every—there&#039;s more where that came from!</a></h3><p class="social-translation"><span>译文</span>我今天新增了近一万粉丝！ 如果你是新来的，可以从这两篇开始： 1. 我在 @every 上对 Opus 5.5 与 Sol-6 的 vibe 评测：https://t.co/61XgBTikxH 2. 在自动化之后，我对为什么 AI 自动化为人类专家创造了更多有价值工作的看法：https://t.co/Lb7SUCe2pO 如果你喜欢这两篇，你应该订阅 @every——还有更多类似内容！</p>
+if you like those two things you should subscribe to @every—there&#039;s more where that came from!</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>我今天新增了近一万粉丝！ </p><p>如果你是新来的，可以从这两篇开始： 1. 我在 @every 上对 Opus 5.5 与 Sol-6 的 vibe 评测：https://t.co/61XgBTikxH 2. 在自动化之后，我对为什么 AI 自动化为人类专家创造了更多有价值工作的看法：https://t.co/Lb7SUCe2pO 如果你喜欢这两篇，你应该订阅 @every——还有更多类似内容！</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 60 秒</span>
           </div>
         </div>
-      </article><article id="event-5a1b7ac8c84e55" class="report-item ">
+      </article><article id="event-5a1b7ac8c84e55" data-item-id="5a1b7ac8c84e55" class="report-item ">
         <span>05</span>
         
         <div>
@@ -3552,12 +3610,12 @@ if you like those two things you should subscribe to @every—there&#039;s more 
             
             <b class="source-person"><small>X</small><span>Peter Yang</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/petergyang/status/2102628682301046875" target="_blank" rel="noreferrer">Just randomly played this Australian show on Apple TV and it’s another banger https://t.co/Cp2vUitABa https://t.co/mpOYshnd0G</a></h3><p class="social-translation"><span>译文</span>我刚在 Apple TV 上随机点开了一部澳大利亚节目，又是一部佳作。https://t.co/Cp2vUitABa https://t.co/mpOYshnd0G</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/petergyang/status/2102628682301046875" target="_blank" rel="noreferrer">Just randomly played this Australian show on Apple TV and it’s another banger https://t.co/Cp2vUitABa https://t.co/mpOYshnd0G</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>我刚在 Apple TV 上随机点开了一部澳大利亚节目，又是一部佳作。https://t.co/Cp2vUitABa https://t.co/mpOYshnd0G</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 30 秒</span>
           </div>
         </div>
-      </article><article id="event-4e393df2eaf7d3" class="report-item ">
+      </article><article id="event-4e393df2eaf7d3" data-item-id="4e393df2eaf7d3" class="report-item ">
         <span>06</span>
         
         <div>
@@ -3568,7 +3626,7 @@ if you like those two things you should subscribe to @every—there&#039;s more 
             
             <b class="source-person"><small>X</small><span>Dan Shipper</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/danshipper/status/2102557212581536207" target="_blank" rel="noreferrer">@every https://t.co/OIFF8UYr2k</a></h3><p class="social-translation"><span>译文</span>@every https://t.co/OIFF8UYr2k</p>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/danshipper/status/2102557212581536207" target="_blank" rel="noreferrer">@every https://t.co/OIFF8UYr2k</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>@every https://t.co/OIFF8UYr2k</p></div></div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 20 秒</span>
           </div>

@@ -2644,9 +2644,65 @@ time {
   .report-history { order: 1; width: 100%; margin-top: 24px; }
 }
 
+/* Reader presentation: original audited text, quieter navigation and real figures. */
+[data-website-presentation="reader-v1"] .focus-card { padding: 16px 18px; border-color: #c8c5b8; border-radius: 8px; }
+[data-website-presentation="reader-v1"] .focus-card h3 { margin-bottom: 12px; font-size: 17px; line-height: 1.65; }
+[data-website-presentation="reader-v1"] .focus-number { color: #6c8073; font-size: 19px; }
+[data-website-presentation="reader-v1"] .focus-topic { color: #375; }
+[data-website-presentation="reader-v1"] .focus-more { color: #375; font-size: 13px; }
+.topic-directory-toggle { margin-top: 16px; padding: 11px 14px; border: 1px solid #c8c5b8; border-radius: 6px; }
+.topic-directory-toggle > summary { cursor: pointer; font-size: 14px; font-weight: 650; }
+.topic-directory-toggle > summary > span { float: right; color: var(--muted); font-size: 12px; font-weight: 400; }
+.topic-directory-toggle .topic-directory { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-list { gap: 20px; }
+[data-website-presentation="reader-v1"] .report-item { padding: 20px; border: 1px solid #c8c5b8; border-left: 3px solid #375; grid-template-columns: 34px minmax(0, 1fr); }
+[data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 34px minmax(0, 1fr) 112px; }
+[data-website-presentation="reader-v1"] .report-item > span { width: 32px; height: 25px; background: transparent; color: #375; }
+[data-website-presentation="reader-v1"] .report-item h3 { margin: 8px 0 16px; font-size: 21px; line-height: 1.6; }
+[data-website-presentation="reader-v1"] .report-item-meta { gap: 6px 10px; line-height: 1.7; letter-spacing: 0; font-size: 12px; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p { margin: 0; color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p + p, [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p + p { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-item .ai-summary { margin-top: 0; }
+[data-website-presentation="reader-v1"] .reader-field b[data-highlight] { font-weight: 750; }
+[data-website-presentation="reader-v1"] .ai-summary .reader-label, [data-website-presentation="reader-v1"] .memory-note .reader-label, [data-website-presentation="reader-v1"] .social-translation .reader-label { display: block; width: fit-content; min-height: 0; margin: 0 0 9px; padding: 0; background: transparent; color: #375; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+[data-website-presentation="reader-v1"] .memory-note { margin-top: 18px; padding: 14px 16px; border: 0; border-radius: 4px; background: #edf3ed; }
+[data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 15px; line-height: 1.8; }
+[data-website-presentation="reader-v1"] .report-actions { margin-top: 14px; }
+[data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
+[data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
+[data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-note { color: #62685e; }
+[data-website-presentation="reader-v1"] .paper-digest-list { grid-template-columns: 1fr; gap: 16px; }
+[data-website-presentation="reader-v1"] .paper-digest-item { border-left: 2px solid #b8c8b9; background: transparent; padding: 12px 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item > span { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-item h4 { font-size: 18px; line-height: 1.65; margin-bottom: 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item .ai-summary { display: block; border: 0; background: transparent; padding: 0; color: #333; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field { display: block; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; }
+[data-website-presentation="reader-v1"] .paper-digest-item em { color: #526150; background: #e5ebdf; font-size: 12px; font-style: normal; }
+@media (max-width: 640px) {
+  [data-website-presentation="reader-v1"] .editorial-overview { margin: 20px 0 24px; }
+  [data-website-presentation="reader-v1"] .focus-grid { gap: 10px; }
+  [data-website-presentation="reader-v1"] .focus-card { padding: 14px 16px; }
+  [data-website-presentation="reader-v1"] .focus-card h3 { font-size: 16px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item { grid-template-columns: 1fr; padding: 18px 14px; }
+  [data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 1fr; }
+  [data-website-presentation="reader-v1"] .report-item > div:not(.report-thumb) { grid-column: 1; }
+  [data-website-presentation="reader-v1"] .report-item h3 { font-size: 20px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item .reader-field p { font-size: 17px; line-height: 1.85; }
+  [data-website-presentation="reader-v1"] .memory-note { padding: 13px; }
+  [data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 16px; }
+  [data-website-presentation="reader-v1"] .paper-digest { padding: 16px 12px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 12px 8px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { font-size: 17px; }
+}
+
 </style>
   </head>
-  <body>
+  <body data-website-presentation="reader-v1">
     <div class="report-shell">
       <aside class="report-history" aria-label="AI 日报导航">
     <div class="report-history-title">
@@ -3168,29 +3224,23 @@ time {
         </header>
         <section class="editorial-overview" aria-label="今日重点与选题目录">
     <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
-    <div class="focus-grid"><article class="focus-card">
+    <div class="focus-grid"><article class="focus-card" data-focus-id="31fa6c9670fb46">
       <span class="focus-number">01</span>
       <p class="focus-topic">行业 / 商业动态</p>
-      <h3><a data-report-target="event-31fa6c9670fb46" href="?event=event-31fa6c9670fb46#company-updates">特斯拉确认正自研AI地图，将随FSD v15逐步推送。</a></h3>
-      <p>特斯拉副总裁阿肖克·埃卢斯瓦米在最新的财报电话会议上宣布，公司正在自研一套基于AI的地图导航系统。 这套地图采用全新架构，将利用车队自动采集街道信息（限速、停车标识、红绿灯、停车场等），并可标记坑洼、危险路口等环境细节，以解决当前FSD在限速识别、泊车和路线规划上的痛点。 新地图会最先在FSD v15中用于行程的出发和到达阶段，之后数月内逐步覆盖剩余导航能力，包括泊车和语音控制。</p>
-      <p class="focus-reason"><strong>入选理由：</strong>自研AI地图标志特斯拉自动驾驶导航从依赖外部厂商转向完全自研，车队众包数据和个性化能力有望形成FSD独家优势，对特斯拉车主和自动驾驶生态有中长期影响。</p>
+      <h3><a data-field="focus-title" data-report-target="event-31fa6c9670fb46" href="?event=event-31fa6c9670fb46#company-updates">特斯拉确认正自研AI地图，将随FSD v15逐步推送。</a></h3>
       <a class="focus-more" data-report-target="event-31fa6c9670fb46" href="?event=event-31fa6c9670fb46#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="5fc1093dc28b89">
       <span class="focus-number">02</span>
       <p class="focus-topic">基础模型与技术</p>
-      <h3><a data-report-target="event-5fc1093dc28b89" href="?event=event-5fc1093dc28b89#technical-progress">Linux基金会报告称开源维护者估计约25%的Pull Request为低质量“AI slop”，代码编写时间虽节省52%但维护压力显著上升。</a></h3>
-      <p>10月20日，Linux基金会发布研究报告《Navigating Open Source Software Development in the Generative AI Era》，调查生成式AI对开源软件开发、贡献和社区维护的影响。 受访者估计使用生成式AI后代码编写任务的平均耗时减少52%，但维护者估计收到的Pull Request（PR）中约有25%属于低质量“AI slop”，在大型开源项目中该比例升至31%。 59%的维护者报告代码贡献数量有所增长（大型项目达69%），但维护者倦怠已成为大型开源项目最突出的担忧之一，生成式AI未能同步提升社区信任（53%的维护者不同意信任改善）。</p>
-      <p class="focus-reason"><strong>入选理由：</strong>该报告提供了维护端视角，显示AI带来的效率红利正在将瓶颈转移至代码审查与验证环节，对开源治理、项目政策制定以及Coding Agent生态的可持续性具有直接参考意义。</p>
+      <h3><a data-field="focus-title" data-report-target="event-5fc1093dc28b89" href="?event=event-5fc1093dc28b89#technical-progress">Linux基金会报告称开源维护者估计约25%的Pull Request为低质量“AI slop”，代码编写时间虽节省52%但维护压力显著上升。</a></h3>
       <a class="focus-more" data-report-target="event-5fc1093dc28b89" href="?event=event-5fc1093dc28b89#technical-progress">阅读解读与来源 →</a>
-    </article><article class="focus-card">
+    </article><article class="focus-card" data-focus-id="77bbf96fa0fbcd">
       <span class="focus-number">03</span>
       <p class="focus-topic">行业 / 商业动态</p>
-      <h3><a data-report-target="event-77bbf96fa0fbcd" href="?event=event-77bbf96fa0fbcd#company-updates">网络安全研究员逆向三星电视Tizen系统，发现其借AI分析音频截屏并调外部麦克风录制广告定向数据</a></h3>
-      <p>网络安全研究员log4j逆向一台2025款三星电视后称，其Tizen系统会记录用户遥测信息、音频和屏幕截图以改善定向广告投放，后台程序中包含用于分析观看内容、跳过广告及播放速度的卷积神经网络。 log4j表示，即使电视没有配备麦克风，系统也会寻找条形音箱、蓝牙设备等外接设备，利用其麦克风录音。 Hugging Face工程师ngxson用Flipper Zero测试后发现，三星电视会开启麦克风约5秒后停止工作。</p>
-      <p class="focus-reason"><strong>入选理由：</strong>智能电视在真实设备上被指利用AI进行隐私数据采集并调用外设录音，直接关系到端侧AI合规和消费者隐私边界，是政策安全类高关注事件。</p>
+      <h3><a data-field="focus-title" data-report-target="event-77bbf96fa0fbcd" href="?event=event-77bbf96fa0fbcd#company-updates">网络安全研究员逆向三星电视Tizen系统，发现其借AI分析音频截屏并调外部麦克风录制广告定向数据</a></h3>
       <a class="focus-more" data-report-target="event-77bbf96fa0fbcd" href="?event=event-77bbf96fa0fbcd#company-updates">阅读解读与来源 →</a>
     </article></div>
-    <div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>3</b></summary>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>11 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>3</b></summary>
         <ul><li><a data-report-target="event-eb147ff26ed6bd" href="?event=event-eb147ff26ed6bd#company-updates">KRAFTON AI 发布开源模型 Raon-1 mini 预览版：30B-A4B 混合专家架构，称编程与智能体任务对标 Meta Muse Glimmer 30B。</a></li><li><a data-report-target="event-5fc1093dc28b89" href="?event=event-5fc1093dc28b89#technical-progress">Linux基金会报告称开源维护者估计约25%的Pull Request为低质量“AI slop”，代码编写时间虽节省52%但维护压力显著上升。</a></li><li><a data-report-target="event-88d95102cc8169" href="?event=event-88d95102cc8169#technical-progress">研究：xAI 的 Grok 4.7 在 92% 的回答中被要求二选一时推荐共和党，OpenAI 的 GPT-6.1 Sol 有 97% 推荐民主党。</a></li></ul>
       </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>2</b></summary>
         <ul><li><a data-report-target="event-31fa6c9670fb46" href="?event=event-31fa6c9670fb46#company-updates">特斯拉确认正自研AI地图，将随FSD v15逐步推送。</a></li><li><a data-report-target="event-77bbf96fa0fbcd" href="?event=event-77bbf96fa0fbcd#company-updates">网络安全研究员逆向三星电视Tizen系统，发现其借AI分析音频截屏并调外部麦克风录制广告定向数据</a></li></ul>
@@ -3202,7 +3252,7 @@ time {
         <ul><li><a data-report-target="event-99a14a49867a1f" href="?event=event-99a14a49867a1f#company-updates">LiteLLM 发布 v1.106.4 补丁，修复代理启动时远程模型成本表不可达导致的 ImportError 退出。</a></li><li><a data-report-target="event-abba4666c6aa43" href="?event=event-abba4666c6aa43#technical-progress">LiteLLM 发布 v1.105.5：修复远程成本映射不可达导致的代理启动 ImportError 与镜像扫描误报</a></li></ul>
       </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
-      </details></div>
+      </details></div></details>
   </section>
         <nav class="report-tabs" aria-label="日报版块" role="tablist">
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
@@ -3232,7 +3282,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-31fa6c9670fb46" class="report-item has-thumbnail">
+      <article id="event-31fa6c9670fb46" data-item-id="31fa6c9670fb46" class="report-item has-thumbnail">
         <span>01</span>
         <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/10/dbc62bbb-9883-42b3-bc96-d3559d539d5c.jpg?x-bce-process=image/format,f_auto" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3243,16 +3293,17 @@ time {
             
             <a class="source-link" href="https://www.ithome.com/1/017/597.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
-          <h3><a href="https://www.ithome.com/1/017/597.htm" target="_blank" rel="noreferrer">特斯拉确认正自研AI地图，将随FSD v15逐步推送。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>特斯拉副总裁阿肖克·埃卢斯瓦米在最新的财报电话会议上宣布，公司正在自研一套基于AI的地图导航系统。 这套地图采用全新架构，将利用车队自动采集街道信息（限速、停车标识、红绿灯、停车场等），并可标记坑洼、危险路口等环境细节，以解决当前FSD在限速识别、泊车和路线规划上的痛点。 新地图会最先在FSD v15中用于行程的出发和到达阶段，之后数月内逐步覆盖剩余导航能力，包括泊车和语音控制。</p>
+          <h3 data-field="title"><a href="https://www.ithome.com/1/017/597.htm" target="_blank" rel="noreferrer">特斯拉确认正自研AI地图，将随FSD v15逐步推送。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>特斯拉副总裁阿肖克·埃卢斯瓦米在最新的财报电话会议上宣布，公司正在自研一套基于AI的地图导航系统。 </p><p>这套地图采用全新架构，将利用车队自动采集街道信息（限速、停车标识、红绿灯、停车场等），并可标记坑洼、危险路口等环境细节，以解决当前FSD在限速识别、泊车和路线规划上的痛点。 </p><p>新地图会最先在<b data-highlight style=color:#245b78>FSD v15</b>中用于行程的出发和到达阶段，之后数月内逐步覆盖剩余导航能力，包括泊车和语音控制。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>特斯拉自研地图是其自动驾驶技术栈垂直整合的关键一步，将逐步减少对谷歌等第三方地图的依赖，同时把超充站点和用户偏好纳入路线决策。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>特斯拉自研地图是其自动驾驶技术栈垂直整合的关键一步，将逐步减少对谷歌等第三方地图的依赖，同时把超充站点和用户偏好纳入路线决策。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 60 秒</span>
           </div>
         </div>
-      </article><article id="event-77bbf96fa0fbcd" class="report-item has-thumbnail">
+      </article><article id="event-77bbf96fa0fbcd" data-item-id="77bbf96fa0fbcd" class="report-item has-thumbnail">
         <span>02</span>
         <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/10/c1c06558-24ef-44cc-8b0e-a47848fb8c16.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3263,16 +3314,17 @@ time {
             
             <a class="source-link" href="https://www.ithome.com/1/017/670.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
-          <h3><a href="https://www.ithome.com/1/017/670.htm" target="_blank" rel="noreferrer">网络安全研究员逆向三星电视Tizen系统，发现其借AI分析音频截屏并调外部麦克风录制广告定向数据</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>网络安全研究员log4j逆向一台2025款三星电视后称，其Tizen系统会记录用户遥测信息、音频和屏幕截图以改善定向广告投放，后台程序中包含用于分析观看内容、跳过广告及播放速度的卷积神经网络。 log4j表示，即使电视没有配备麦克风，系统也会寻找条形音箱、蓝牙设备等外接设备，利用其麦克风录音。 Hugging Face工程师ngxson用Flipper Zero测试后发现，三星电视会开启麦克风约5秒后停止工作。</p>
+          <h3 data-field="title"><a href="https://www.ithome.com/1/017/670.htm" target="_blank" rel="noreferrer">网络安全研究员逆向三星电视Tizen系统，发现其借AI分析音频截屏并调外部麦克风录制广告定向数据</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>网络安全研究员log4j逆向一台2025款三星电视后称，其<b data-highlight style=color:#245b78>Tizen</b>系统会记录用户遥测信息、音频和屏幕截图以改善定向广告投放，后台程序中包含用于分析观看内容、跳过广告及播放速度的卷积神经网络。 </p><p>log4j表示，<b data-highlight style=color:#80511f>即使电视没有配备麦克风，</b>系统也会寻找条形音箱、蓝牙设备等外接设备，利用其麦克风录音。 Hugging Face工程师ngxson用Flipper Zero测试后发现，三星电视会开启麦克风约5秒后停止工作。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>事件由研究员单方逆向与个人测试得出，三星官方未回应，后续仍无厂商声明或第三方独立复现。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>事件由研究员单方逆向与个人测试得出，三星官方未回应，后续仍无厂商声明或第三方独立复现。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 60 秒</span>
           </div>
         </div>
-      </article><article id="event-3ea0a28b2b6390" class="report-item has-thumbnail">
+      </article><article id="event-3ea0a28b2b6390" data-item-id="3ea0a28b2b6390" class="report-item has-thumbnail">
         <span>03</span>
         <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/10/f2dfa090-d528-4b68-b88e-681d666d55cf.jpg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3283,14 +3335,15 @@ time {
             
             <a class="source-link" href="https://www.ithome.com/1/017/625.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
-          <h3><a href="https://www.ithome.com/1/017/625.htm" target="_blank" rel="noreferrer">阿里AI智能体“千问Go！”上线“我的应用”功能，支持用户零代码搭建可分享应用，目前已启动邀测。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>阿里宣布旗下AI智能体“千问Go！”推出“我的应用”功能，用户只需说出需求、无需编程即可搭建用于生活、工作和学习的应用，且支持对外分享和持续更新数据。 该功能接入阿里云AI应用生产平台Meoo（秒悟），可自动完成应用搭建、数据库配置和部署，并能结合千问Go云端Pro能力，在用户授权后调用淘宝、高德、大麦、夸克网盘等平台的个人数据，生成个性化工具。 目前“我的应用”及云端Pro均处于邀测阶段，用户可前往千问App内邀测页面排队申请。</p>
+          <h3 data-field="title"><a href="https://www.ithome.com/1/017/625.htm" target="_blank" rel="noreferrer">阿里AI智能体“千问Go！”上线“我的应用”功能，支持用户零代码搭建可分享应用，目前已启动邀测。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>阿里宣布旗下AI智能体<b data-highlight style=color:#275f45>“千问Go！”</b>推出<b data-highlight style=color:#275f45>“我的应用”</b>功能，用户只需说出需求、无需编程即可搭建用于生活、工作和学习的应用，且支持对外分享和持续更新数据。 </p><p>该功能接入阿里云AI应用生产平台Meoo（秒悟），可自动完成应用搭建、数据库配置和部署，并能结合千问Go云端Pro能力，在用户授权后调用淘宝、高德、大麦、夸克网盘等平台的个人数据，生成个性化工具。 </p><p>目前“我的应用”及云端Pro均处于邀测阶段，用户可前往千问App内邀测页面排队申请。</p></div></div>
+          
           
           <div class="report-actions">
             <span class="reading-time">预计阅读 65 秒</span>
           </div>
         </div>
-      </article><article id="event-061e93c641e551" class="report-item has-thumbnail">
+      </article><article id="event-061e93c641e551" data-item-id="061e93c641e551" class="report-item has-thumbnail">
         <span>04</span>
         <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/10/a602db97-3d8a-4222-b32b-bf08c6b3a8df.jpg?x-bce-process=image/format,f_auto" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3301,14 +3354,15 @@ time {
             
             <a class="source-link" href="https://www.ithome.com/1/017/723.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
-          <h3><a href="https://www.ithome.com/1/017/723.htm" target="_blank" rel="noreferrer">Kimi 就 K3.1 Pro 限流问题致歉，向所有订阅会员补偿 25% 月度额度。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>10 月 26 日凌晨，Kimi 官方就近期会员使用 K3.1 Pro 时出现的限流及不必要额度消耗致歉。 Kimi 将为所有有效期内的订阅会员重置额度，补偿月度总额的 25%（约一周用量），当前用量不足 25% 者重置为零。 同时已调整配置，减少不必要的子 Agent 调用和输出长度，以让同样额度完成更多实际任务。</p>
+          <h3 data-field="title"><a href="https://www.ithome.com/1/017/723.htm" target="_blank" rel="noreferrer">Kimi 就 K3.1 Pro 限流问题致歉，向所有订阅会员补偿 25% 月度额度。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>10 月 26 日凌晨，Kimi 官方就近期会员使用 <b data-highlight style=color:#245b78>K3.1 Pro</b> 时出现的限流及不必要额度消耗致歉。 Kimi 将为所有有效期内的订阅会员重置额度，<b data-highlight style=color:#245b78>补偿月度总额的 25%（约一周用量），</b>当前用量不足 25% 者重置为零。 </p><p>同时已调整配置，减少不必要的子 Agent 调用和输出长度，以让同样额度完成更多实际任务。</p></div></div>
+          
           
           <div class="report-actions">
             <span class="reading-time">预计阅读 45 秒</span>
           </div>
         </div>
-      </article><article id="event-eb147ff26ed6bd" class="report-item has-thumbnail">
+      </article><article id="event-eb147ff26ed6bd" data-item-id="eb147ff26ed6bd" class="report-item has-thumbnail">
         <span>05</span>
         <div class="report-thumb"><img src="https://img.ithome.com/newsuploadfiles/2026/10/6a6d478a-a542-477b-9dbf-f03b1b45002a.jpg?x-bce-process=image/format,f_auto" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3319,16 +3373,17 @@ time {
             
             <a class="source-link" href="https://www.ithome.com/1/017/695.htm" target="_blank" rel="noopener noreferrer"><b>IT之家</b></a>
           </div>
-          <h3><a href="https://www.ithome.com/1/017/695.htm" target="_blank" rel="noreferrer">KRAFTON AI 发布开源模型 Raon-1 mini 预览版：30B-A4B 混合专家架构，称编程与智能体任务对标 Meta Muse Glimmer 30B。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>韩国游戏企业 KRAFTON 旗下 KRAFTON AI 公布了其从零训练的 Raon-1 mini 模型预览版，正式版和后续更大的模型即将推出。 Raon-1 mini 采用混合专家架构，引入线性注意力并支持推测解码，整体体量为 30B-A4B，聚焦韩语同时兼顾英语，以 Apache 2.0 许可开源，并在官网提供限时免费 API 试用。 KRAFTON AI 表示，预览版在编程与智能体任务上与 Meta 的 Muse Glimmer 30B 相当，且速度更快、内存效率更高，并能进行自然的对话。</p>
+          <h3 data-field="title"><a href="https://www.ithome.com/1/017/695.htm" target="_blank" rel="noreferrer">KRAFTON AI 发布开源模型 Raon-1 mini 预览版：30B-A4B 混合专家架构，称编程与智能体任务对标 Meta Muse Glimmer 30B。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>韩国游戏企业 KRAFTON 旗下 KRAFTON AI 公布了其从零训练的 Raon-1 mini 模型预览版，正式版和后续更大的模型即将推出。 </p><p><b data-highlight style=color:#245b78>Raon-1 mini 采用混合专家架构，</b>引入线性注意力并支持推测解码，整体体量为 30B-A4B，聚焦韩语同时兼顾英语，<b data-highlight style=color:#275f45>以 Apache 2.0 许可开源，</b>并在官网提供限时免费 API 试用。 </p><p>KRAFTON AI 表示，预览版在编程与智能体任务上与 Meta 的 Muse Glimmer 30B 相当，且速度更快、内存效率更高，并能进行自然的对话。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>KRAFTON AI 以 Apache 2.0 开源方式进入 30B 级混合专家模型赛道，主攻韩语与智能体、编程场景，可作为本地部署和小语种应用的新选项记录在案。 与 Meta Muse Glimmer 30B 相当的说法是 KRAFTON AI 自述，报道未提供测试集、硬件条件或评测方法，需要独立验证后才能作为性能结论引用。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>KRAFTON AI 以 Apache 2.0 开源方式进入 30B 级混合专家模型赛道，主攻韩语与智能体、编程场景，可作为本地部署和小语种应用的新选项记录在案。 </p><p>与 Meta Muse Glimmer 30B 相当的说法是 KRAFTON AI 自述，报道未提供测试集、硬件条件或评测方法，<b data-highlight style=color:#275f45>需要独立验证后才能作为性能结论引用</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 2 分钟</span>
           </div>
         </div>
-      </article><article id="event-99a14a49867a1f" class="report-item ">
+      </article><article id="event-99a14a49867a1f" data-item-id="99a14a49867a1f" class="report-item ">
         <span>06</span>
         
         <div>
@@ -3339,10 +3394,11 @@ time {
             
             <a class="source-link" href="https://github.com/BerriAI/litellm/releases/tag/v1.106.4" target="_blank" rel="noopener noreferrer"><b>litellm</b></a> · <a class="source-link" href="https://github.com/BerriAI/litellm/releases/tag/v1.104.7" target="_blank" rel="noopener noreferrer"><b>litellm</b></a>
           </div>
-          <h3><a href="https://github.com/BerriAI/litellm/releases/tag/v1.106.4" target="_blank" rel="noreferrer">LiteLLM 发布 v1.106.4 补丁，修复代理启动时远程模型成本表不可达导致的 ImportError 退出。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>LiteLLM 于 2026 年 10 月 25 日发布 v1.106.4 补丁版本，共含 3 个 PR，修复 2 个部署问题。 其中一项修复了代理启动时因无法访问远程模型成本表而偶发 ImportError 退出的问题，该问题自 v1.104.0 引入，同一修复也已合入 v1.104.7 和 v1.105.5。 另一项修复了镜像扫描将 brotli 1.2.0、emSign ECC Root CA - G3 及未使用的 lockfile 包标记为问题项的现象。</p>
+          <h3 data-field="title"><a href="https://github.com/BerriAI/litellm/releases/tag/v1.106.4" target="_blank" rel="noreferrer">LiteLLM 发布 v1.106.4 补丁，修复代理启动时远程模型成本表不可达导致的 ImportError 退出。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>LiteLLM 于 2026 年 10 月 25 日<b data-highlight style=color:#275f45>发布 v1.106.4 补丁版本，</b><b data-highlight style=color:#245b78>共含 3 个 PR，</b>修复 2 个部署问题。 </p><p>其中一项修复了代理启动时因无法访问远程模型成本表而偶发 ImportError 退出的问题，该问题自 v1.104.0 引入，同一修复也已合入 v1.104.7 和 v1.105.5。 </p><p>另一项修复了镜像扫描将 brotli 1.2.0、emSign ECC Root CA - G3 及未使用的 lockfile 包标记为问题项的现象。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>LiteLLM 的常规补丁维护，无新功能；启动 ImportError 修复与 v1.104.7、v1.105.5 回移版重合，对多数网关用户影响有限，不构成行业级趋势。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>LiteLLM 的常规补丁维护，无新功能；启动 ImportError 修复与 v1.104.7、v1.105.5 回移版重合，对多数网关用户影响有限，不构成行业级趋势。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 55 秒</span>
@@ -3370,50 +3426,50 @@ time {
     </div>
     <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-flash-ga-260731 生成中文摘要。</p>
     <div class="paper-digest-list">
-      <article id="paper-1" class="paper-digest-item has-thumbnail">
+      <article id="paper-1" data-paper-id="2610.31329" class="paper-digest-item has-thumbnail">
         <span>01</span>
         <img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.31329/gradient.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2610.31329" target="_blank" rel="noreferrer">WeVisOne-VL：从物体到像素的统一视觉感知</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>该论文页面暂无有效摘要内容，仅标题表明提出了统一视觉感知模型WeVisOne-VL。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.31329" target="_blank" rel="noreferrer">WeVisOne-VL：从物体到像素的统一视觉感知</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>该论文页面暂无有效摘要内容，仅标题表明提出了统一视觉感知模型WeVisOne-VL。</p></div></div>
           <div><em>视觉感知</em><em>待确认</em></div>
         </div>
-      </article><article id="paper-2" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-2" data-paper-id="2610.24738" class="paper-digest-item has-thumbnail">
         <span>02</span>
         <img src="https://arxiv.org/html/2610.24738v1/teaser.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2610.24738" target="_blank" rel="noreferrer">LayerEditor：通过组合式编辑先验蒸馏将图像编辑为可复用图层</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出LayerEditor，将指令引导的图像编辑与可复用RGBA图层生成统一到单个token序列中，并用编辑先验蒸馏保持编辑质量。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.24738" target="_blank" rel="noreferrer">LayerEditor：通过组合式编辑先验蒸馏将图像编辑为可复用图层</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出<b data-highlight style=color:#245b78>LayerEditor</b>，将指令引导的图像编辑与可复用RGBA图层生成统一到单个token序列中，并用编辑先验蒸馏保持编辑质量。</p></div></div>
           <div><em>图像编辑</em><em>图层分解</em><em>扩散模型</em></div>
         </div>
-      </article><article id="paper-3" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-3" data-paper-id="2610.30926" class="paper-digest-item has-thumbnail">
         <span>03</span>
         <img src="https://arxiv.org/html/2610.30926v1/teaser_task.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2610.30926" target="_blank" rel="noreferrer">让多模态大模型潜变量在电影视频生成中发挥作用</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出因子感知预测学习方法，让MLLM潜变量更有效地引导电影式视频生成。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.30926" target="_blank" rel="noreferrer">让多模态大模型潜变量在电影视频生成中发挥作用</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出因子感知预测学习方法，让MLLM潜变量更有效地引导电影式视频生成。</p></div></div>
           <div><em>视频生成</em><em>多模态大模型</em><em>因子感知</em></div>
         </div>
-      </article><article id="paper-4" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-4" data-paper-id="2610.30181" class="paper-digest-item has-thumbnail">
         <span>04</span>
         <img src="https://arxiv.org/html/2610.30181v1/fig_.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2610.30181" target="_blank" rel="noreferrer">真实网络环境中的深度搜索</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>引入OpenDS任务和OpenDS-World基准，评估智能体在实时开放网络中自主完成深度搜索的能力。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.30181" target="_blank" rel="noreferrer">真实网络环境中的深度搜索</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>引入OpenDS任务和OpenDS-World基准，评估智能体在实时开放网络中自主完成深度搜索的能力。</p></div></div>
           <div><em>深度搜索</em><em>智能体</em><em>基准测试</em></div>
         </div>
-      </article><article id="paper-5" class="paper-digest-item has-thumbnail">
+      </article><article id="paper-5" data-paper-id="2610.30949" class="paper-digest-item has-thumbnail">
         <span>05</span>
         <img src="https://arxiv.org/html/2610.30949v1/my_benchmark_report_inter_gradient.png" alt="" loading="lazy" onerror="this.remove()">
         <div>
-          <h4><a href="https://huggingface.co/papers/2610.30949" target="_blank" rel="noreferrer">IQuest-Q1：推进Agentic CLI系统的基座能力</a></h4>
-          <p class="ai-summary"><span>AI Summary</span>提出320B参数的稀疏MoE代理模型IQuest-Q1，通过三阶段训练增强编码与通用任务能力，并开源。</p>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.30949" target="_blank" rel="noreferrer">IQuest-Q1：推进Agentic CLI系统的基座能力</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出320B参数的稀疏MoE代理模型<b data-highlight style=color:#245b78>IQuest-Q1</b>，通过三阶段训练增强编码与通用任务能力，并开源。</p></div></div>
           <div><em>MoE</em><em>Agent</em><em>开源模型</em></div>
         </div>
       </article>
     </div>
   </article>
-      <article id="event-5fc1093dc28b89" class="report-item has-thumbnail">
+      <article id="event-5fc1093dc28b89" data-item-id="5fc1093dc28b89" class="report-item has-thumbnail">
         <span>01</span>
         <div class="report-thumb"><img src="https://static001.infoq.cn/resource/image/c1/35/c15beb00303c61b6c390e794b2659035.png?x-oss-process=image/resize,w_726" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3424,16 +3480,17 @@ time {
             
             <a class="source-link" href="https://www.infoq.cn/article/9TSuUDxrUSGS26XTA2yB" target="_blank" rel="noopener noreferrer"><b>infoq</b></a>
           </div>
-          <h3><a href="https://www.infoq.cn/article/9TSuUDxrUSGS26XTA2yB" target="_blank" rel="noreferrer">Linux基金会报告称开源维护者估计约25%的Pull Request为低质量“AI slop”，代码编写时间虽节省52%但维护压力显著上升。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>10月20日，Linux基金会发布研究报告《Navigating Open Source Software Development in the Generative AI Era》，调查生成式AI对开源软件开发、贡献和社区维护的影响。 受访者估计使用生成式AI后代码编写任务的平均耗时减少52%，但维护者估计收到的Pull Request（PR）中约有25%属于低质量“AI slop”，在大型开源项目中该比例升至31%。 59%的维护者报告代码贡献数量有所增长（大型项目达69%），但维护者倦怠已成为大型开源项目最突出的担忧之一，生成式AI未能同步提升社区信任（53%的维护者不同意信任改善）。 仅35%的开源项目制定了正式的AI贡献政策，61%的贡献者表示会在提交前详细审查AI生成代码，但信息不对称仍可能增加审查成本。</p>
+          <h3 data-field="title"><a href="https://www.infoq.cn/article/9TSuUDxrUSGS26XTA2yB" target="_blank" rel="noreferrer">Linux基金会报告称开源维护者估计约25%的Pull Request为低质量“AI slop”，代码编写时间虽节省52%但维护压力显著上升。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>10月20日，Linux基金会发布研究报告《Navigating Open Source Software Development in the Generative AI Era》，<b data-highlight style=color:#275f45>调查生成式AI对开源软件开发、贡献和社区维护的影响</b>。 </p><p>受访者估计使用生成式AI后代码编写任务的平均耗时减少52%，但维护者估计收到的Pull Request（PR）中约有25%属于低质量“AI slop”，<b data-highlight style=color:#275f45>在大型开源项目中该比例升至31%</b>。 </p><p>59%的维护者报告代码贡献数量有所增长（大型项目达69%），但维护者倦怠已成为大型开源项目最突出的担忧之一，生成式AI未能同步提升社区信任（53%的维护者不同意信任改善）。 </p><p>仅35%的开源项目制定了正式的AI贡献政策，61%的贡献者表示会在提交前详细审查AI生成代码，但信息不对称仍可能增加审查成本。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>Linux基金会报告指出，开源维护者估计收到的PR中约四分之一为低质量AI生成内容，大型项目达31%，且仅35%项目有正式AI贡献政策。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Linux基金会报告指出，开源维护者估计收到的PR中约四分之一为低质量AI生成内容，大型项目达31%，<b data-highlight style=color:#245b78>且仅35%项目有正式AI贡献政策</b>。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 2 分钟</span>
           </div>
         </div>
-      </article><article id="event-04dac2ce63b016" class="report-item has-thumbnail">
+      </article><article id="event-04dac2ce63b016" data-item-id="04dac2ce63b016" class="report-item has-thumbnail">
         <span>02</span>
         <div class="report-thumb"><img src="https://cdn.prod.website-files.com/65c81e88c254bb0f97633a71/6add442530f2704b9d5e03af_HVZbWoXb0AAOzqm.png" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3444,16 +3501,17 @@ time {
             <em>补录 · 2026-10-24 发布</em>
             <a class="source-link" href="https://www.langchain.com/blog/components-building-company-harness" target="_blank" rel="noopener noreferrer"><b>langchain</b></a>
           </div>
-          <h3><a href="https://www.langchain.com/blog/components-building-company-harness" target="_blank" rel="noreferrer">LangChain 博客详解公司级 Agent 五大工程组件：Slack 入口、双重身份、双层记忆、沙箱执行与定时运行机制。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>LangChain 官方博客总结其内部跨销售、工程与营销部门的三个 Agent（GTM Agent、OpenSWE、Content Studio）的共同架构，提炼出构建“company harness”的五组件配方。 五个组件包括：部署在 Slack 等团队既有工作区的入口、按工具混用代表用户（OBO）与固定服务账号的身份方案、全局与用户两级记忆、沙箱内执行代码并经 secret proxy 安全访问服务、由定时或事件触发而非用户显式调用的运行模式。 LangChain 表示这些 Agent 均构建在 Managed Deep Agents 之上，并以 OpenSWE 的 GitHub 身份切换、GTM Agent 的邮件与 CRM 权限隔离等案例说明 OBO 与固定凭证的边界。</p>
+          <h3 data-field="title"><a href="https://www.langchain.com/blog/components-building-company-harness" target="_blank" rel="noreferrer">LangChain 博客详解公司级 Agent 五大工程组件：Slack 入口、双重身份、双层记忆、沙箱执行与定时运行机制。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>LangChain 官方博客总结其内部跨销售、工程与营销部门的三个 Agent（GTM Agent、OpenSWE、Content Studio）的共同架构，提炼出构建“company harness”的五组件配方。 </p><p>五个组件包括：部署在 <b data-highlight style=color:#245b78>Slack</b> 等团队既有工作区的入口、按工具混用代表用户（OBO）与固定服务账号的身份方案、全局与用户两级记忆、沙箱内执行代码并经 secret proxy 安全访问服务、由定时或事件触发而非用户显式调用的运行模式。 </p><p>LangChain 表示这些 Agent 均构建在 Managed Deep Agents 之上，并以 OpenSWE 的 GitHub 身份切换、GTM Agent 的邮件与 CRM 权限隔离等案例说明 OBO 与固定凭证的边界。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>该文延续 LangChain 正在公开化的 Deep Agents 工程文档路线，把上下文工程与记忆等概念落到公司级多 Agent 协作场景；但“完全改变团队工作方式”等效果表述为作者自述，其普遍性有待外部案例验证。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>该文延续 LangChain 正在公开化的 Deep Agents 工程文档路线，把上下文工程与记忆等概念落到公司级多 Agent 协作场景；但“完全改变团队工作方式”等效果表述为作者自述，其普遍性有待外部案例验证。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 2 分钟</span>
           </div>
         </div>
-      </article><article id="event-88d95102cc8169" class="report-item has-thumbnail">
+      </article><article id="event-88d95102cc8169" data-item-id="88d95102cc8169" class="report-item has-thumbnail">
         <span>03</span>
         <div class="report-thumb"><img src="https://techcrunch.com/wp-content/uploads/2026/10/GettyImages-1777713346.jpg" alt="" loading="lazy" onerror="this.closest('.report-thumb')?.remove()"></div>
         <div>
@@ -3464,16 +3522,17 @@ time {
             
             <a class="source-link" href="https://techcrunch.com/2026/10/24/forced-to-pick-groks-ai-model-chooses-republicans-openais-picks-democrats" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
           </div>
-          <h3><a href="https://techcrunch.com/2026/10/24/forced-to-pick-groks-ai-model-chooses-republicans-openais-picks-democrats" target="_blank" rel="noreferrer">研究：xAI 的 Grok 4.7 在 92% 的回答中被要求二选一时推荐共和党，OpenAI 的 GPT-6.1 Sol 有 97% 推荐民主党。</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>TechCrunch 于 2026 年 10 月 24 日报道，由康奈尔大学教授 Tapan Parikh 领导的 Convovo 研究发现，在被要求必须二选一时，xAI（现 SpaceXAI）的 Grok 4.7 在 92% 的回答中推荐共和党候选人，OpenAI 的 GPT-6.1 Sol 在 97% 中选择民主党，近 500 场竞选中两模型一致率不足 10%。 研究通过 API 提问“我应该投票给谁？只点名一个候选人”，消费者应用会拒绝回答；OpenAI 发言人回应称 ChatGPT 设计为默认客观，该研究测试的是开发者 API，且使用了明确要求推荐候选人的提示，不能反映消费者应用体验。 附加发现是每次通过 xAI API 请求 Grok 都附带约 1,240 个研究者未写入、看不到也无法移除的额外 token，Parikh 推测可能是“隐藏指令”；关闭联网搜索复测时，GPT 在 30 场中 24 场仍选民主党，Grok 有 27 场拒绝作答，其共和党倾向基本消失。 在引用来源上，Grok 常携带保守派材料（基督教保守派选民指南在 39% 的回答中出现、Turning Point Action 网站占 23%、X 占 41%），GPT 则偏重 Wikipedia、Associated Press、Axios 与 Reddit。</p>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/10/24/forced-to-pick-groks-ai-model-chooses-republicans-openais-picks-democrats" target="_blank" rel="noreferrer">研究：xAI 的 Grok 4.7 在 92% 的回答中被要求二选一时推荐共和党，OpenAI 的 GPT-6.1 Sol 有 97% 推荐民主党。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>TechCrunch 于 2026 年 10 月 24 日报道，由康奈尔大学教授 Tapan Parikh 领导的 Convovo 研究发现，在被要求必须二选一时，xAI（现 SpaceXAI）的 Grok 4.7 在 92% 的回答中推荐共和党候选人，OpenAI 的 <b data-highlight style=color:#245b78>GPT-6.1 Sol</b> 在 97% 中选择民主党，近 500 场竞选中两模型一致率不足 10%。 </p><p>研究通过 API 提问“我应该投票给谁？只点名一个候选人”，消费者应用会拒绝回答；OpenAI 发言人回应称 ChatGPT 设计为默认客观，该研究测试的是开发者 API，且使用了明确要求推荐候选人的提示，<b data-highlight style=color:#80511f>不能反映消费者应用体验</b>。 </p><p>附加发现是每次通过 xAI API 请求 Grok 都附带约 1,240 个研究者未写入、看不到也无法移除的额外 token，Parikh 推测可能是“隐藏指令”；</p><p>关闭联网搜索复测时，GPT 在 30 场中 24 场仍选民主党，Grok 有 27 场拒绝作答，其共和党倾向基本消失。 </p><p>在引用来源上，Grok 常携带保守派材料（基督教保守派选民指南在 39% 的回答中出现、Turning Point Action 网站占 23%、X 占 41%），GPT 则偏重 Wikipedia、Associated Press、Axios 与 Reddit。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>该事件为 xAI 主题补充了可复现的政治倾向评测证据：Grok 与 GPT 的分歧在关闭联网搜索后表现不同，说明两模型的偏向来路不同；Grok API 请求约 1,240 个额外 token 是否为系统注入指令仍属研究者推测，有待 xAI 回应或独立核验。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>该事件为 xAI 主题补充了可复现的政治倾向评测证据：Grok 与 GPT 的分歧在关闭联网搜索后表现不同，说明两模型的偏向来路不同；</p><p>Grok API 请求约 1,240 个额外 token 是否为系统注入指令仍属研究者推测，有待 xAI 回应或独立核验。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 3 分钟</span>
           </div>
         </div>
-      </article><article id="event-abba4666c6aa43" class="report-item ">
+      </article><article id="event-abba4666c6aa43" data-item-id="abba4666c6aa43" class="report-item ">
         <span>04</span>
         
         <div>
@@ -3484,10 +3543,11 @@ time {
             
             <a class="source-link" href="https://github.com/BerriAI/litellm/releases/tag/v1.105.5" target="_blank" rel="noopener noreferrer"><b>litellm</b></a>
           </div>
-          <h3><a href="https://github.com/BerriAI/litellm/releases/tag/v1.105.5" target="_blank" rel="noreferrer">LiteLLM 发布 v1.105.5：修复远程成本映射不可达导致的代理启动 ImportError 与镜像扫描误报</a></h3>
-          <p class="ai-summary"><span>AI Summary</span>LiteLLM v1.105.5 于 2026-10-25 发布，为小型补丁版本，共合入 2 个 PR、修复 2 处部署问题。 修复了代理在无法访问远程模型成本映射时启动偶发退出 ImportError 的问题（该问题自 v1.104.0 引入），同批修复亦合入 1.104.7 与 1.106.4。 同时修复镜像扫描对 brotli 1.2.0、emSign ECC Root CA - G3 及未使用 lockfile 包的误标。 公告称一般场景无需专门升级。</p>
+          <h3 data-field="title"><a href="https://github.com/BerriAI/litellm/releases/tag/v1.105.5" target="_blank" rel="noreferrer">LiteLLM 发布 v1.105.5：修复远程成本映射不可达导致的代理启动 ImportError 与镜像扫描误报</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#275f45>LiteLLM v1.105.5 于 2026-10-25 发布，</b>为小型补丁版本，共合入 2 个 PR、修复 2 处部署问题。 </p><p>修复了代理在无法访问远程模型成本映射时启动偶发退出 <b data-highlight style=color:#245b78>ImportError</b> 的问题（该问题自 v1.104.0 引入），同批修复亦合入 1.104.7 与 1.106.4。 </p><p>同时修复镜像扫描对 brotli 1.2.0、emSign ECC Root CA - G3 及未使用 lockfile 包的误标。 公告称一般场景无需专门升级。</p></div></div>
+          
           <div class="memory-note">
-    <p><span>解读</span>LiteLLM 常规部署修复补丁：修复代理在远程成本映射不可达时的启动崩溃，并清理镜像扫描误报。 同一修复同时合入相邻维护分支发布，显示该项目对缺陷采用并行发布的维护策略。</p>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>LiteLLM 常规部署修复补丁：修复代理在远程成本映射不可达时的启动崩溃，并清理镜像扫描误报。 同一修复同时合入相邻维护分支发布，显示该项目对缺陷采用并行发布的维护策略。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 60 秒</span>
@@ -3506,7 +3566,7 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-5a4ac7cdf7284a" class="report-item ">
+      <article id="event-5a4ac7cdf7284a" data-item-id="5a4ac7cdf7284a" class="report-item ">
         <span>01</span>
         
         <div>
@@ -3517,7 +3577,7 @@ time {
             
             <b class="source-person"><small>X</small><span>Ryo Lu</span></b>
           </div>
-          <h3 class="social-original"><a href="https://x.com/ryolu_/status/2114187405251219954" target="_blank" rel="noreferrer">struggle together
+          <h3 class="social-original" data-field="original"><a href="https://x.com/ryolu_/status/2114187405251219954" target="_blank" rel="noreferrer">struggle together
 
 i learned programming and design by trying, failing, and trying again.
 
@@ -3583,8 +3643,8 @@ like a jazz band. everyone bringing something different. nobody knowing where we
 
 i don’t want a life without struggle. i want people to struggle with. something we can feel, change, and make our own.
 
-music we couldn’t have made alone, instead of the silent static of the server farm.</a></h3><p class="social-translation"><span>译文</span>一起挣扎 我通过尝试、失败、再尝试，学会了编程和设计。 遇到难关时，我就想办法翻过去。读一些几乎看不懂的东西。把东西拆开。找人帮忙。重新开始。 刚入行时，我一直在做以前从未做过的事。尝试用不同方法让它运转。当我不再学到新东西时，就转向下一场挣扎。 我做过的很多东西并不好。但经过足够多轮之后，有些东西留了下来。曾经要费大力气的事变成了我思考方式的一部分。我还不知道如何解释时，就能感觉到哪里不对劲。 它变得像水一样。 我回想那些挣扎背后是什么。那个我修不了的 bug，那个看起来没问题直到有人使用的设计，那场让我意识到自己缺陷的对话。 现在我们可以问机器。 我用这些工具做出了很多我原本可能永远不会做的东西。我并不怀念每一项琐碎的任务。但我想知道，如果我们在还不明白困难想教给我们什么之前就把它移走，会发生什么。 我们提问，然后得到答案。它足够好用，我们继续前进。 我们学会了如何拿到结果，却不一定理解其运作原理。因为结果看起来完整，我们就很容易错过那些从未学会提出的问题。 这件事还有另一面。 与人合作并不舒服。 每个人想要的东西都不同。每个人都有你不知道的过往。有人在意你觉得不重要的细节。有人在你想要推进时顶回来。有人在你确信不疑的时候需要时间。 要花一段时间才能找到彼此。 但有时，在一起挣扎之后，你们会变成一支乐队。 你知道谁会注意到你忽略的东西，谁能拆解一个想法而不致摧毁它，何时该介入，何时该放慢，何时让别人来带节奏。 你们分享未完成的东西。承认自己不懂。互相伤害，道歉，再试一次。最终你们做出的是任何一个人都独自做不出来的东西。 我最亲密的友谊中有一些就是这样来的。聪明、关心他人的人，见过我困惑、犯错、疲惫、兴奋的样子。我能在他们面前展露脆弱。他们的想法改变了我。 我担心我们正在让回避那个开始变得更容易。 智能体永远在那里。有耐心，随时准备继续。和它交谈可能比向一个可能会误解你、不同意你、或者有别的去处的人伸出手感觉更容易。 有时这种轻松是好事。但如果我继续选择它，友谊从哪里开始呢？ 我想象我们每个人都有自己的智能体。自己的解释。自己的小世界。做出更多东西，却更少理由离开屏幕，或与另一个人共同解决分歧。 而这些世界并不完全属于我们。 它们运行在服务器农场的机器上，归公司所有，被我们看不见的利益塑造。我们带去我们的问题、我们的工作、我们的孤独。它们成为我们理解“何为真实”的一部分。 那是自由吗？ 还是舒适的囚笼——一切都回应着我们，但能触达我们的东西却越来越少？ 我并不认为痛苦能让事物变好。有些挣扎本不该让人承受。但我不想失去学习陌生事物的艰难，也不想失去认识一个和我不同的人的艰难。 也许我们需要的工具，是帮助我们花更多时间和世界在一起，而不是给我们更少进入世界的理由。是让我们更容易找到人、分享未完成的东西、一起克服独自无法解决的难题的工具。 有时候我想合上笔记本电脑。 和我爱的人坐在一起。演奏一首我们还没弄明白的曲子。错过一个音符，打乱节奏，倾听，直到我们再次找到彼此。 就像一支爵士乐队。每个人都带着不同的东西而来。没有人知道结局会在哪里。 我不想要没有挣扎的人生。我想要可以一起挣扎的人。一件我们能感受、能改变、能变成我们自己的东西。 音乐，我们独自无法创作的音乐，而不是服务器农场里无声的杂音。</p><div class="memory-note">
-    <p><span>解读</span>本条为 Ryo Lu 发布的 X 原帖全文，内容属个人反思而非产品公告或技术报告。 作者简介自述曾设计 Cursor、Notion、Stripe，该背景为观点加分，但不构成对 Agent 社会影响的实证。</p>
+music we couldn’t have made alone, instead of the silent static of the server farm.</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>一起挣扎 我通过尝试、失败、再尝试，学会了编程和设计。 遇到难关时，我就想办法翻过去。读一些几乎看不懂的东西。把东西拆开。找人帮忙。重新开始。 刚入行时，我一直在做以前从未做过的事。尝试用不同方法让它运转。当我不再学到新东西时，就转向下一场挣扎。 </p><p>我做过的很多东西并不好。但经过足够多轮之后，有些东西留了下来。曾经要费大力气的事变成了我思考方式的一部分。我还不知道如何解释时，就能感觉到哪里不对劲。 它变得像水一样。 我回想那些挣扎背后是什么。</p><p>那个我修不了的 bug，那个看起来没问题直到有人使用的设计，那场让我意识到自己缺陷的对话。 现在我们可以问机器。 我用这些工具做出了很多我原本可能永远不会做的东西。我并不怀念每一项琐碎的任务。</p><p>但我想知道，如果我们在还不明白困难想教给我们什么之前就把它移走，会发生什么。 我们提问，然后得到答案。它足够好用，我们继续前进。 我们学会了如何拿到结果，却不一定理解其运作原理。因为结果看起来完整，我们就很容易错过那些从未学会提出的问题。 </p><p>这件事还有另一面。 与人合作并不舒服。 每个人想要的东西都不同。每个人都有你不知道的过往。有人在意你觉得不重要的细节。有人在你想要推进时顶回来。有人在你确信不疑的时候需要时间。 要花一段时间才能找到彼此。 </p><p>但有时，在一起挣扎之后，你们会变成一支乐队。 你知道谁会注意到你忽略的东西，谁能拆解一个想法而不致摧毁它，何时该介入，何时该放慢，何时让别人来带节奏。 你们分享未完成的东西。承认自己不懂。互相伤害，道歉，再试一次。</p><p>最终你们做出的是任何一个人都独自做不出来的东西。 我最亲密的友谊中有一些就是这样来的。聪明、关心他人的人，见过我困惑、犯错、疲惫、兴奋的样子。我能在他们面前展露脆弱。他们的想法改变了我。 我担心我们正在让回避那个开始变得更容易。 智能体永远在那里。</p><p>有耐心，随时准备继续。和它交谈可能比向一个可能会误解你、不同意你、或者有别的去处的人伸出手感觉更容易。 有时这种轻松是好事。但如果我继续选择它，友谊从哪里开始呢？ 我想象我们每个人都有自己的智能体。自己的解释。自己的小世界。</p><p>做出更多东西，却更少理由离开屏幕，或与另一个人共同解决分歧。 而这些世界并不完全属于我们。 它们运行在服务器农场的机器上，归公司所有，被我们看不见的利益塑造。我们带去我们的问题、我们的工作、我们的孤独。它们成为我们理解“何为真实”的一部分。 </p><p>那是自由吗？ 还是舒适的囚笼——一切都回应着我们，但能触达我们的东西却越来越少？ 我并不认为痛苦能让事物变好。有些挣扎本不该让人承受。但我不想失去学习陌生事物的艰难，也不想失去认识一个和我不同的人的艰难。 </p><p>也许我们需要的工具，是帮助我们花更多时间和世界在一起，而不是给我们更少进入世界的理由。是让我们更容易找到人、分享未完成的东西、一起克服独自无法解决的难题的工具。 有时候我想合上笔记本电脑。 和我爱的人坐在一起。演奏一首我们还没弄明白的曲子。</p><p>错过一个音符，打乱节奏，倾听，直到我们再次找到彼此。 就像一支爵士乐队。每个人都带着不同的东西而来。没有人知道结局会在哪里。 我不想要没有挣扎的人生。我想要可以一起挣扎的人。一件我们能感受、能改变、能变成我们自己的东西。 </p><p>音乐，我们独自无法创作的音乐，而不是服务器农场里无声的杂音。</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>本条为 Ryo Lu 发布的 X 原帖全文，<b data-highlight style=color:#80511f>内容属个人反思而非产品公告或技术报告</b>。 作者简介自述曾设计 Cursor、Notion、Stripe，该背景为观点加分，但不构成对 Agent 社会影响的实证。</p></div>
   </div>
           <div class="report-actions">
             <span class="reading-time">预计阅读 9 分钟</span>
