@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
+    <title>AI 行业简报 2026-11-01</title>
+    <meta name="description" content="今天筛出 4 个事件：大厂动态 2 条，技术进展 1 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。">
+    <link rel="canonical" href="https://luojinping.com/ai-daily/2026-11-01">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="AI 聚合日报">
+    <meta property="og:title" content="AI 行业简报 2026-11-01">
+    <meta property="og:description" content="今天筛出 4 个事件：大厂动态 2 条，技术进展 1 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。">
+    <meta property="og:url" content="https://luojinping.com/ai-daily/2026-11-01">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AI 行业简报 2026-11-01">
+    <meta name="twitter:description" content="今天筛出 4 个事件：大厂动态 2 条，技术进展 1 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。">
+    <link rel="icon" href="/ai-daily/icon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/ai-daily/icon.svg">
+    <link rel="alternate" type="application/atom+xml" title="AI 聚合日报" href="/ai-daily/feed.xml">
+    <meta name="theme-color" content="#1f6f73">
+    <link rel="stylesheet" href="/ai-daily/styles.css">
+  </head>
+  <body data-website-presentation="reader-v1">
+    <div class="report-shell">
+      <aside class="report-history" aria-label="AI 日报导航">
+    <div class="report-history-title">
+      <span>ARCHIVE</span>
+      <strong>历史日报</strong>
+    </div>
+    <form class="report-search-quick " action="/ai-daily/search/" method="get" role="search">
+      <label class="visually-hidden" for="report-search-quick-input">搜索历史日报</label>
+      <input id="report-search-quick-input" type="search" name="q" placeholder="公司、模型或技术" autocomplete="off">
+      <button type="submit">搜索</button>
+    </form>
+    <nav class="report-history-months" aria-label="按月份归类的历史日报">
+      <details class="report-history-month" open>
+        <summary>
+          <span>2026 年 11 月</span>
+          <em>1 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-11-01" class="is-active" aria-label="2026-11-01，4 条">
+            <time datetime="2026-11-01">1 日</time>
+            <em>4 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 10 月</span>
+          <em>21 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-10-31" class="" aria-label="2026-10-31，5 条">
+            <time datetime="2026-10-31">31 日</time>
+            <em>5 条</em>
+          </a><a href="/ai-daily/2026-10-30" class="" aria-label="2026-10-30，8 条">
+            <time datetime="2026-10-30">30 日</time>
+            <em>8 条</em>
+          </a><a href="/ai-daily/2026-10-29" class="" aria-label="2026-10-29，16 条">
+            <time datetime="2026-10-29">29 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-10-28" class="" aria-label="2026-10-28，16 条">
+            <time datetime="2026-10-28">28 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-10-27" class="" aria-label="2026-10-27，15 条">
+            <time datetime="2026-10-27">27 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-26" class="" aria-label="2026-10-26，11 条">
+            <time datetime="2026-10-26">26 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-10-25" class="" aria-label="2026-10-25，5 条">
+            <time datetime="2026-10-25">25 日</time>
+            <em>5 条</em>
+          </a><a href="/ai-daily/2026-10-24" class="" aria-label="2026-10-24，11 条">
+            <time datetime="2026-10-24">24 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-10-23" class="" aria-label="2026-10-23，12 条">
+            <time datetime="2026-10-23">23 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+            <time datetime="2026-10-14">14 日</time>
+            <em>19 条</em>
+          </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
+            <time datetime="2026-10-13">13 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-12" class="" aria-label="2026-10-12，14 条">
+            <time datetime="2026-10-12">12 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-10-11" class="" aria-label="2026-10-11，17 条">
+            <time datetime="2026-10-11">11 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-10" class="" aria-label="2026-10-10，15 条">
+            <time datetime="2026-10-10">10 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-09" class="" aria-label="2026-10-09，17 条">
+            <time datetime="2026-10-09">9 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-08" class="" aria-label="2026-10-08，17 条">
+            <time datetime="2026-10-08">8 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-07" class="" aria-label="2026-10-07，13 条">
+            <time datetime="2026-10-07">7 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-10-06" class="" aria-label="2026-10-06，11 条">
+            <time datetime="2026-10-06">6 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-10-05" class="" aria-label="2026-10-05，14 条">
+            <time datetime="2026-10-05">5 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-10-04" class="" aria-label="2026-10-04，16 条">
+            <time datetime="2026-10-04">4 日</time>
+            <em>16 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 9 月</span>
+          <em>29 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-09-29" class="" aria-label="2026-09-29，12 条">
+            <time datetime="2026-09-29">29 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-28" class="" aria-label="2026-09-28，13 条">
+            <time datetime="2026-09-28">28 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-27" class="" aria-label="2026-09-27，18 条">
+            <time datetime="2026-09-27">27 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-09-26" class="" aria-label="2026-09-26，14 条">
+            <time datetime="2026-09-26">26 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-25" class="" aria-label="2026-09-25，15 条">
+            <time datetime="2026-09-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-09-24" class="" aria-label="2026-09-24，14 条">
+            <time datetime="2026-09-24">24 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-23" class="" aria-label="2026-09-23，13 条">
+            <time datetime="2026-09-23">23 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-22" class="" aria-label="2026-09-22，13 条">
+            <time datetime="2026-09-22">22 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-21" class="" aria-label="2026-09-21，10 条">
+            <time datetime="2026-09-21">21 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-09-20" class="" aria-label="2026-09-20，13 条">
+            <time datetime="2026-09-20">20 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-19" class="" aria-label="2026-09-19，10 条">
+            <time datetime="2026-09-19">19 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-09-18" class="" aria-label="2026-09-18，10 条">
+            <time datetime="2026-09-18">18 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-09-17" class="" aria-label="2026-09-17，12 条">
+            <time datetime="2026-09-17">17 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-16" class="" aria-label="2026-09-16，14 条">
+            <time datetime="2026-09-16">16 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-15" class="" aria-label="2026-09-15，16 条">
+            <time datetime="2026-09-15">15 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-09-14" class="" aria-label="2026-09-14，11 条">
+            <time datetime="2026-09-14">14 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-09-13" class="" aria-label="2026-09-13，12 条">
+            <time datetime="2026-09-13">13 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-12" class="" aria-label="2026-09-12，14 条">
+            <time datetime="2026-09-12">12 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-11" class="" aria-label="2026-09-11，13 条">
+            <time datetime="2026-09-11">11 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-10" class="" aria-label="2026-09-10，14 条">
+            <time datetime="2026-09-10">10 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-09" class="" aria-label="2026-09-09，15 条">
+            <time datetime="2026-09-09">9 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-09-08" class="" aria-label="2026-09-08，15 条">
+            <time datetime="2026-09-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-09-07" class="" aria-label="2026-09-07，16 条">
+            <time datetime="2026-09-07">7 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-09-06" class="" aria-label="2026-09-06，14 条">
+            <time datetime="2026-09-06">6 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-05" class="" aria-label="2026-09-05，12 条">
+            <time datetime="2026-09-05">5 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-04" class="" aria-label="2026-09-04，13 条">
+            <time datetime="2026-09-04">4 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-03" class="" aria-label="2026-09-03，14 条">
+            <time datetime="2026-09-03">3 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-02" class="" aria-label="2026-09-02，14 条">
+            <time datetime="2026-09-02">2 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-01" class="" aria-label="2026-09-01，14 条">
+            <time datetime="2026-09-01">1 日</time>
+            <em>14 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 8 月</span>
+          <em>31 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-08-31" class="" aria-label="2026-08-31，12 条">
+            <time datetime="2026-08-31">31 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-30" class="" aria-label="2026-08-30，12 条">
+            <time datetime="2026-08-30">30 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-29" class="" aria-label="2026-08-29，14 条">
+            <time datetime="2026-08-29">29 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-28" class="" aria-label="2026-08-28，12 条">
+            <time datetime="2026-08-28">28 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-27" class="" aria-label="2026-08-27，13 条">
+            <time datetime="2026-08-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-26" class="" aria-label="2026-08-26，13 条">
+            <time datetime="2026-08-26">26 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-25" class="" aria-label="2026-08-25，12 条">
+            <time datetime="2026-08-25">25 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-24" class="" aria-label="2026-08-24，12 条">
+            <time datetime="2026-08-24">24 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-23" class="" aria-label="2026-08-23，10 条">
+            <time datetime="2026-08-23">23 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-08-22" class="" aria-label="2026-08-22，11 条">
+            <time datetime="2026-08-22">22 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-08-21" class="" aria-label="2026-08-21，13 条">
+            <time datetime="2026-08-21">21 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-20" class="" aria-label="2026-08-20，14 条">
+            <time datetime="2026-08-20">20 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-19" class="" aria-label="2026-08-19，13 条">
+            <time datetime="2026-08-19">19 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-18" class="" aria-label="2026-08-18，14 条">
+            <time datetime="2026-08-18">18 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-17" class="" aria-label="2026-08-17，13 条">
+            <time datetime="2026-08-17">17 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-16" class="" aria-label="2026-08-16，12 条">
+            <time datetime="2026-08-16">16 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-15" class="" aria-label="2026-08-15，13 条">
+            <time datetime="2026-08-15">15 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-14" class="" aria-label="2026-08-14，16 条">
+            <time datetime="2026-08-14">14 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-08-13" class="" aria-label="2026-08-13，11 条">
+            <time datetime="2026-08-13">13 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-08-12" class="" aria-label="2026-08-12，14 条">
+            <time datetime="2026-08-12">12 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-11" class="" aria-label="2026-08-11，16 条">
+            <time datetime="2026-08-11">11 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-08-10" class="" aria-label="2026-08-10，11 条">
+            <time datetime="2026-08-10">10 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-08-09" class="" aria-label="2026-08-09，14 条">
+            <time datetime="2026-08-09">9 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-08" class="" aria-label="2026-08-08，13 条">
+            <time datetime="2026-08-08">8 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-07" class="" aria-label="2026-08-07，14 条">
+            <time datetime="2026-08-07">7 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-06" class="" aria-label="2026-08-06，16 条">
+            <time datetime="2026-08-06">6 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-08-05" class="" aria-label="2026-08-05，13 条">
+            <time datetime="2026-08-05">5 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-04" class="" aria-label="2026-08-04，8 条">
+            <time datetime="2026-08-04">4 日</time>
+            <em>8 条</em>
+          </a><a href="/ai-daily/2026-08-03" class="" aria-label="2026-08-03，14 条">
+            <time datetime="2026-08-03">3 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-02" class="" aria-label="2026-08-02，14 条">
+            <time datetime="2026-08-02">2 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-01" class="" aria-label="2026-08-01，13 条">
+            <time datetime="2026-08-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 7 月</span>
+          <em>31 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-07-31" class="" aria-label="2026-07-31，15 条">
+            <time datetime="2026-07-31">31 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-30" class="" aria-label="2026-07-30，14 条">
+            <time datetime="2026-07-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-29" class="" aria-label="2026-07-29，15 条">
+            <time datetime="2026-07-29">29 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-28" class="" aria-label="2026-07-28，16 条">
+            <time datetime="2026-07-28">28 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-27" class="" aria-label="2026-07-27，13 条">
+            <time datetime="2026-07-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-26" class="" aria-label="2026-07-26，15 条">
+            <time datetime="2026-07-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-25" class="" aria-label="2026-07-25，15 条">
+            <time datetime="2026-07-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-24" class="" aria-label="2026-07-24，14 条">
+            <time datetime="2026-07-24">24 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-23" class="" aria-label="2026-07-23，13 条">
+            <time datetime="2026-07-23">23 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-22" class="" aria-label="2026-07-22，13 条">
+            <time datetime="2026-07-22">22 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-21" class="" aria-label="2026-07-21，14 条">
+            <time datetime="2026-07-21">21 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-20" class="" aria-label="2026-07-20，13 条">
+            <time datetime="2026-07-20">20 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-19" class="" aria-label="2026-07-19，13 条">
+            <time datetime="2026-07-19">19 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-18" class="" aria-label="2026-07-18，15 条">
+            <time datetime="2026-07-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-17" class="" aria-label="2026-07-17，10 条">
+            <time datetime="2026-07-17">17 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-07-16" class="" aria-label="2026-07-16，15 条">
+            <time datetime="2026-07-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-15" class="" aria-label="2026-07-15，16 条">
+            <time datetime="2026-07-15">15 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-14" class="" aria-label="2026-07-14，15 条">
+            <time datetime="2026-07-14">14 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-13" class="" aria-label="2026-07-13，14 条">
+            <time datetime="2026-07-13">13 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-12" class="" aria-label="2026-07-12，9 条">
+            <time datetime="2026-07-12">12 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-07-11" class="" aria-label="2026-07-11，15 条">
+            <time datetime="2026-07-11">11 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-10" class="" aria-label="2026-07-10，11 条">
+            <time datetime="2026-07-10">10 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-09" class="" aria-label="2026-07-09，16 条">
+            <time datetime="2026-07-09">9 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-08" class="" aria-label="2026-07-08，14 条">
+            <time datetime="2026-07-08">8 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-07" class="" aria-label="2026-07-07，18 条">
+            <time datetime="2026-07-07">7 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-07-06" class="" aria-label="2026-07-06，13 条">
+            <time datetime="2026-07-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-05" class="" aria-label="2026-07-05，15 条">
+            <time datetime="2026-07-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-04" class="" aria-label="2026-07-04，16 条">
+            <time datetime="2026-07-04">4 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-03" class="" aria-label="2026-07-03，15 条">
+            <time datetime="2026-07-03">3 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-02" class="" aria-label="2026-07-02，11 条">
+            <time datetime="2026-07-02">2 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-01" class="" aria-label="2026-07-01，13 条">
+            <time datetime="2026-07-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 6 月</span>
+          <em>29 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-06-30" class="" aria-label="2026-06-30，14 条">
+            <time datetime="2026-06-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-29" class="" aria-label="2026-06-29，12 条">
+            <time datetime="2026-06-29">29 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-28" class="" aria-label="2026-06-28，13 条">
+            <time datetime="2026-06-28">28 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-27" class="" aria-label="2026-06-27，13 条">
+            <time datetime="2026-06-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-26" class="" aria-label="2026-06-26，11 条">
+            <time datetime="2026-06-26">26 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-25" class="" aria-label="2026-06-25，15 条">
+            <time datetime="2026-06-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-24" class="" aria-label="2026-06-24，15 条">
+            <time datetime="2026-06-24">24 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-23" class="" aria-label="2026-06-23，15 条">
+            <time datetime="2026-06-23">23 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-22" class="" aria-label="2026-06-22，11 条">
+            <time datetime="2026-06-22">22 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-21" class="" aria-label="2026-06-21，11 条">
+            <time datetime="2026-06-21">21 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-20" class="" aria-label="2026-06-20，14 条">
+            <time datetime="2026-06-20">20 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-19" class="" aria-label="2026-06-19，15 条">
+            <time datetime="2026-06-19">19 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-18" class="" aria-label="2026-06-18，15 条">
+            <time datetime="2026-06-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-17" class="" aria-label="2026-06-17，15 条">
+            <time datetime="2026-06-17">17 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-16" class="" aria-label="2026-06-16，15 条">
+            <time datetime="2026-06-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-15" class="" aria-label="2026-06-15，12 条">
+            <time datetime="2026-06-15">15 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-14" class="" aria-label="2026-06-14，14 条">
+            <time datetime="2026-06-14">14 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-13" class="" aria-label="2026-06-13，15 条">
+            <time datetime="2026-06-13">13 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-12" class="" aria-label="2026-06-12，15 条">
+            <time datetime="2026-06-12">12 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-10" class="" aria-label="2026-06-10，15 条">
+            <time datetime="2026-06-10">10 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-09" class="" aria-label="2026-06-09，15 条">
+            <time datetime="2026-06-09">9 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-08" class="" aria-label="2026-06-08，15 条">
+            <time datetime="2026-06-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-07" class="" aria-label="2026-06-07，12 条">
+            <time datetime="2026-06-07">7 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-06" class="" aria-label="2026-06-06，13 条">
+            <time datetime="2026-06-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-05" class="" aria-label="2026-06-05，15 条">
+            <time datetime="2026-06-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-04" class="" aria-label="2026-06-04，15 条">
+            <time datetime="2026-06-04">4 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-03" class="" aria-label="2026-06-03，16 条">
+            <time datetime="2026-06-03">3 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-06-02" class="" aria-label="2026-06-02，15 条">
+            <time datetime="2026-06-02">2 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-01" class="" aria-label="2026-06-01，11 条">
+            <time datetime="2026-06-01">1 日</time>
+            <em>11 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 5 月</span>
+          <em>8 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-05-31" class="" aria-label="2026-05-31，14 条">
+            <time datetime="2026-05-31">31 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-05-30" class="" aria-label="2026-05-30，15 条">
+            <time datetime="2026-05-30">30 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-29" class="" aria-label="2026-05-29，9 条">
+            <time datetime="2026-05-29">29 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-05-28" class="" aria-label="2026-05-28，15 条">
+            <time datetime="2026-05-28">28 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-27" class="" aria-label="2026-05-27，15 条">
+            <time datetime="2026-05-27">27 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-26" class="" aria-label="2026-05-26，15 条">
+            <time datetime="2026-05-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-25" class="" aria-label="2026-05-25，10 条">
+            <time datetime="2026-05-25">25 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-05-22" class="" aria-label="2026-05-22，8 条">
+            <time datetime="2026-05-22">22 日</time>
+            <em>8 条</em>
+          </a>
+        </div>
+      </details>
+    </nav>
+    <div class="report-nav-entry">
+      <a href="/ai-daily/archive/" class="">
+        <span>ARCHIVE</span>
+        <strong>查看全部 150 期 →</strong>
+      </a>
+    </div>
+  </aside>
+      <main class="report-page">
+        <div class="report-topline">
+          <span>AI DAILY BRIEF · EVENT NOTES · 2026.11.01</span>
+          <span>for AI era builders</span>
+        </div>
+        <header class="report-hero">
+          <div class="report-hero-main">
+            <p class="eyebrow">EDITORIAL BRIEF</p>
+            <h1>AI 行业简报 2026-11-01</h1>
+            <p>今天筛出 4 个事件：大厂动态 2 条，技术进展 1 条，行业观点 1 条；另读 Hugging Face Papers 5 篇。</p>
+            <p data-publication-status="partial" role="note" style="border-left:3px solid #9b6a27;padding:8px 12px;font-size:14px;line-height:1.7">本期先发布已核实内容，仍有2条重要线索未完成核实，暂未收录；核实后将继续补充。</p>
+          </div>
+        </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card" data-focus-id="f34f9cc476f930">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-field="focus-title" data-report-target="event-f34f9cc476f930" href="?event=event-f34f9cc476f930#company-updates">法官驳回 xAI 撤诉动议，NAACP 指控其数据中心燃气轮机未获许可的诉讼将继续推进。</a></h3>
+      <a class="focus-more" data-report-target="event-f34f9cc476f930" href="?event=event-f34f9cc476f930#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card" data-focus-id="cb3f3a13584451">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-field="focus-title" data-report-target="event-cb3f3a13584451" href="?event=event-cb3f3a13584451#company-updates">传OpenAI下调新一轮融资目标至200亿美元，据报已获110亿美元承诺</a></h3>
+      <a class="focus-more" data-report-target="event-cb3f3a13584451" href="?event=event-cb3f3a13584451#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card" data-focus-id="395e2cabe79a67">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">基础模型与技术</p>
+      <h3><a data-field="focus-title" data-report-target="event-395e2cabe79a67" href="?event=event-395e2cabe79a67#technical-progress">Exin Therapeutics让AI agent自主完成活体小鼠脑内注射实验，过程中一度被Claude Opus拒绝执行并需人工干预。</a></h3>
+      <a class="focus-more" data-report-target="event-395e2cabe79a67" href="?event=event-395e2cabe79a67#technical-progress">阅读解读与来源 →</a>
+    </article></div>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>4 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-395e2cabe79a67" href="?event=event-395e2cabe79a67#technical-progress">Exin Therapeutics让AI agent自主完成活体小鼠脑内注射实验，过程中一度被Claude Opus拒绝执行并需人工干预。</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-f34f9cc476f930" href="?event=event-f34f9cc476f930#company-updates">法官驳回 xAI 撤诉动议，NAACP 指控其数据中心燃气轮机未获许可的诉讼将继续推进。</a></li><li><a data-report-target="event-cb3f3a13584451" href="?event=event-cb3f3a13584451#company-updates">传OpenAI下调新一轮融资目标至200亿美元，据报已获110亿美元承诺</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div></details>
+  </section>
+        <nav class="report-tabs" aria-label="日报版块" role="tablist">
+          <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
+    <span>A</span>
+    <strong>大厂动态</strong>
+    <em>2</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="technical-progress" data-tab-target="technical-progress">
+    <span>B</span>
+    <strong>技术进展</strong>
+    <em>2</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="industry-views" data-tab-target="industry-views">
+    <span>C</span>
+    <strong>行业观点</strong>
+    <em>1</em>
+  </button>
+        </nav>
+        <div class="report-tab-panels">
+          <section id="company-updates" class="report-section report-tab-panel is-active" role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>A</span>
+        <h2>大厂动态</h2>
+      </div>
+      <p>AI 公司动态 · 模型发布 · 新业务 · 融资投资 · 人员变动</p>
+    </div>
+    <div class="report-list">
+      
+      <article id="event-f34f9cc476f930" data-item-id="f34f9cc476f930" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>xAI</strong>
+            <em>监管/安全/隐私</em>
+            <em>行业 / 商业动态</em>
+            
+            <a class="source-link" href="https://techcrunch.com/2026/10/31/judge-allows-naacp-lawsuit-over-xai-data-center-pollution-to-move-forward/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/10/31/judge-allows-naacp-lawsuit-over-xai-data-center-pollution-to-move-forward/" target="_blank" rel="noreferrer">法官驳回 xAI 撤诉动议，NAACP 指控其数据中心燃气轮机未获许可的诉讼将继续推进。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>联邦法官拒绝了 xAI 请求驳回 NAACP 诉讼的动议，裁定原告根据《清洁空气法》具有法定起诉权，且涉案燃气涡轮机不属于密西西比州实施计划下的“移动源”。 </p><p>NAACP 的诉讼<b data-highlight style=color:#275f45>指控 xAI 在孟菲斯附近的数据中心安装和运行至少 35 台燃气涡轮机，</b>未取得必要的建设或运营空气许可，违反了《清洁空气法》。 </p><p>在驳回决定中，法官明确表示“因为原告根据《清洁空气法》具有法定起诉权，因为涡轮机不是‘移动源’，……原告的主张将继续进行”。</p></div></div>
+          
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 60 秒</span>
+          </div>
+        </div>
+      </article><article id="event-cb3f3a13584451" data-item-id="cb3f3a13584451" class="report-item ">
+        <span>02</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>融资/收购/估值</em>
+            <em>行业 / 商业动态</em>
+            
+            <a class="source-link" href="https://techcrunch.com/2026/10/31/openai-reportedly-lowers-funding-target-for-new-round/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/10/31/openai-reportedly-lowers-funding-target-for-new-round/" target="_blank" rel="noreferrer">传OpenAI下调新一轮融资目标至200亿美元，据报已获110亿美元承诺</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据多家媒体报道，OpenAI新一轮融资未达此前预期：<b data-highlight style=color:#275f45>此前传其将以1.4万亿美元估值融资300亿美元，</b>随后又传出1.25万亿美元估值，而英国《金融时报》称OpenAI已将融资目标下调至200亿美元，首轮关闭金额预计更低。 </p><p>《华尔街日报》补充报道称，OpenAI目前已获得110亿美元资金，部分大型投资者反应“冷淡”。 报道还称该轮融资将由一组阿联酋投资者领投，面向富裕个人的后续零售发行可能将总额推高至200亿美元目标。</p></div></div>
+          
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 55 秒</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+          <section id="technical-progress" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>B</span>
+        <h2>技术进展</h2>
+      </div>
+      <p>Hugging Face · 技术报告 · 论文 · Benchmark · RL 研究</p>
+    </div>
+    <div class="report-list">
+      <article class="paper-digest">
+    <div class="paper-digest-header">
+      <div>
+        <span>HF PAPERS</span>
+        <h3>Hugging Face Papers 速读</h3>
+      </div>
+      <a href="https://huggingface.co/papers/date/2026-11-01" target="_blank" rel="noreferrer">查看当天论文</a>
+    </div>
+    <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-flash-ga-260731 生成中文摘要。</p>
+    <div class="paper-digest-list">
+      <article id="paper-1" data-paper-id="2610.36671" class="paper-digest-item has-thumbnail">
+        <span>01</span>
+        <img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.36671/gradient.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.36671" target="_blank" rel="noreferrer">按需查看：证书引导的高效扩散视觉语言模型路由</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>标题提出按需视觉路由方法，用证书引导控制视觉计算，目标提升扩散视觉语言模型效率。</p></div></div>
+          <div><em>视觉路由</em><em>扩散VLM</em><em>高效推理</em></div>
+        </div>
+      </article><article id="paper-2" data-paper-id="2610.39301" class="paper-digest-item has-thumbnail">
+        <span>02</span>
+        <img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2610.39301/gradient.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.39301" target="_blank" rel="noreferrer">Youtu-Parsing-Omni：一个编码器、一个Schema、所有模态</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>标题提出统一编码器与统一<b data-highlight style=color:#245b78>Schema</b>的多模态解析框架，意图用一个模型覆盖所有模态。</p></div></div>
+          <div><em>多模态</em><em>统一架构</em><em>解析</em></div>
+        </div>
+      </article><article id="paper-3" data-paper-id="2610.38568" class="paper-digest-item ">
+        <span>03</span>
+        
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.38568" target="_blank" rel="noreferrer">自适应任务刷新：零数据多模态自我改进</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出A-RSI，通过训练日志监控奖励变化与准确率，在任务池学习信号下降时引入新任务，实现无需外部训练示例的多模态自我改进。</p></div></div>
+          <div><em>自我改进</em><em>多模态</em><em>任务刷新</em></div>
+        </div>
+      </article><article id="paper-4" data-paper-id="2610.39302" class="paper-digest-item has-thumbnail">
+        <span>04</span>
+        <img src="https://arxiv.org/html/2610.39302v1/phase.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.39302" target="_blank" rel="noreferrer">用JEPAs证明和改进“柏拉图表示假说”</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>论文探讨不同模型对同一世界的表示是否趋同，提出<b data-highlight style=color:#245b78>JEPAs</b>方法，为“柏拉图表示假说”提供理论支持并寻求改进。</p></div></div>
+          <div><em>表示学习</em><em>多模态对齐</em><em>理论</em></div>
+        </div>
+      </article><article id="paper-5" data-paper-id="2610.40614" class="paper-digest-item has-thumbnail">
+        <span>05</span>
+        <img src="https://arxiv.org/html/2610.40614v1/l3g_teaser.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.40614" target="_blank" rel="noreferrer">潜在3D高斯记忆的实时无限世界生成</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出L3G-World方法，用潜在3D高斯记忆表示场景，记忆随场景范围增长，实现实时空间一致的长程世界生成。</p></div></div>
+          <div><em>3D高斯</em><em>世界模型</em><em>实时生成</em></div>
+        </div>
+      </article>
+    </div>
+  </article>
+      <article id="event-395e2cabe79a67" data-item-id="395e2cabe79a67" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Exin Therapeutics</strong>
+            <em>Agent/开发者基础设施</em>
+            <em>基础模型与技术</em>
+            
+            <a class="source-link" href="https://www.wired.com/story/an-ai-agent-did-brain-surgery-on-live-mouse/" target="_blank" rel="noopener noreferrer"><b>WIRED</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://www.wired.com/story/an-ai-agent-did-brain-surgery-on-live-mouse/" target="_blank" rel="noreferrer">Exin Therapeutics让AI agent自主完成活体小鼠脑内注射实验，过程中一度被Claude Opus拒绝执行并需人工干预。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Exin Therapeutics的创始人Gabriel Ocana Santero让AI agent直接操控手术设备，在活体小鼠上完成了一次脑内基因治疗注射。 </p><p>实验由兽医先进行开颅，<b data-highlight style=color:#245b78>AI agent负责从19个选项中选择治疗方案、脑区和注射坐标，</b>并控制机械臂、注射针和注射参数。 团队最初测试的<b data-highlight style=color:#245b78>Claude Opus模型</b>拒绝执行脑内注射，后改用Claude Sonnet完成；</p><p>期间坐标系统出现故障，agent因规则限制拒绝修改代码，团队用另一个基于Opus的agent完成了修复。 实验设计了人工审批注射方案、紧急断电按钮和代码访问限制等安全机制，手术总耗时约一小时，长于常规的45分钟。</p></div></div>
+          
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 70 秒</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+          <section id="industry-views" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>C</span>
+        <h2>行业观点</h2>
+      </div>
+      <p>X 大 V · YouTube / Podcast · Builder 观察 · 开发者讨论</p>
+    </div>
+    <div class="report-list">
+      
+      <article id="event-6291c63fb4f500" data-item-id="6291c63fb4f500" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>AI Agent行业人机协作现状（Dazzle、Duckbill、Wajo）</strong>
+            <em>行业动态</em>
+            <em>行业观点</em>
+            
+            <b>CNBC</b>
+          </div>
+          <h3 data-field="title"><a href="https://www.cnbc.com/2026/10/31/ai-agents-humans-dazzle-duckbill-meta.html" target="_blank" rel="noreferrer">Dazzle、Duckbill、Wajo等AI代理公司仍依赖人工兜底电话、验证码等任务，Duckbill推出连接合同工的任务API。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>CNBC报道，<b data-highlight style=color:#245b78>Dazzle</b>、Duckbill、Wajo等AI代理创业公司仍把电话、预约、验证码等任务交给人工处理，前沿模型驱动的代理在跨网页操作上仍不可靠。 </p><p><b data-highlight style=color:#275f45>Duckbill近期推出面向个人代理公司的API，</b>把代理易搞砸的任务拆成原子小块交给1099合同工，模式被CEO类比为Uber。 </p><p>Dazzle CEO称顶级模型能较好筛选家装服务，但会把窗户玻璃与桌面玻璃搞混，几秒内由人工接单解决，并称人工在环是一种福利。 Meta的Muse内部测试曾用人工承包商接电话，引发员工隐私担忧；</p><p>Meta称这是产品开发过程的核心，目前不用人工完成用户Muse请求。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>报道显示，电话、预约类任务对AI代理仍是行业性短板，Duckbill把人工接管打包成API，Wajo与Dazzle保留人工履约环节，Meta的Muse也曾因人工介入遭到员工隐私质疑。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+        </div>
+      </main>
+    </div>
+    <script>
+(() => {
+  const tabs = [...document.querySelectorAll("[data-tab-target]")];
+  const panels = [...document.querySelectorAll(".report-tab-panel")];
+
+  setupTabs();
+  setupSearchTarget();
+  setupOverviewNavigation();
+
+  function setupTabs() {
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activateTab(tab.dataset.tabTarget, true));
+    });
+    const hashTarget = location.hash.replace("#", "");
+    if (hashTarget && panels.some((panel) => panel.id === hashTarget)) {
+      activateTab(hashTarget, false);
+    }
+  }
+
+  function activateTab(id, updateHash) {
+    for (const tab of tabs) {
+      const active = tab.dataset.tabTarget === id;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    }
+    for (const panel of panels) {
+      panel.classList.toggle("is-active", panel.id === id);
+    }
+    if (updateHash) history.replaceState(null, "", "#" + id);
+  }
+
+  function setupSearchTarget() {
+    const targetId = new URLSearchParams(location.search).get("event");
+    if (!targetId) return;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
+    const panel = target.closest(".report-tab-panel");
+    if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
+    target.classList.add("is-search-target");
+    window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
+  }
+})();
+</script>
+    <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e8b65008306a4e0da3c280747b56211c"}'></script><!-- End Cloudflare Web Analytics -->
+  </body>
+</html>
