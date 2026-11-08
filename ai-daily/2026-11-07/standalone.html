@@ -2718,10 +2718,13 @@ time {
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 11 月</span>
-          <em>6 期</em>
+          <em>7 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-11-07" class="is-active" aria-label="2026-11-07，16 条">
+          <a href="/ai-daily/2026-11-08" class="" aria-label="2026-11-08，15 条">
+            <time datetime="2026-11-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-11-07" class="is-active" aria-label="2026-11-07，16 条">
             <time datetime="2026-11-07">7 日</time>
             <em>16 条</em>
           </a><a href="/ai-daily/2026-11-06" class="" aria-label="2026-11-06，19 条">
@@ -3241,7 +3244,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 155 期 →</strong>
+        <strong>查看全部 156 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3627,7 +3630,7 @@ time {
           </div>
           <h3 data-field="title"><a href="https://vllm.ai/blog/2026-11-06-zero-mismatch-async-rl" target="_blank" rel="noreferrer">REINFORCE Zero 通过对齐 rollout 与训练内核，使异步 RL 在 lag 64 稳定训练并达到同步训练 2.40 倍吞吐。</a></h3>
           <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>REINFORCE Zero</b> 将 rollout 与训练内核逐位对齐，再用不截断的 token 级重要性采样纠正剩余权重滞后。 </p><p>论文称在 16 个 GPU、12K 次更新下训练步吞吐为同步训练的 2.40 倍，<b data-highlight style=color:#245b78>并在 Qwen3-4B 的 lag 64 下继续学习</b>。 </p><p>博客还称 DeepSeek-V4.1-Flash 与 Kimi K3.1 已达 diff 0，前者 DAPO rollout 步在快速基线 10% 以内，后者在 4 节点×4 GB300 上 100 步 LoRA 后 AIME 24/25/26 mean@8 从 0.451 升至 0.664。 </p><p>对齐内核的代价是 OSWorld 平均每步 944.25 秒，比带序列门的标准内核 IS 多 6.8%。</p></div></div>
-          <figure class="reader-figure" data-image-event-id="79c3a9ed672a24" data-image-sha256="0c4b27e457a9ab47c99cba2fb065c2b0eb28a46dbf43c434fccd9dd5d7f1ca19"><img src="https://luojinping.com/ai-daily/reading-images/0c4b27e457a9ab47c99cba2fb065c2b0eb28a46dbf43c434fccd9dd5d7f1ca19.png" alt="REINFORCE Zero at lag 64: training reward and AIME pass@1" width="2017" height="709" loading="lazy"><figcaption>原文流程图（发布方：vllm；图中标注与条件以原文为准）。</figcaption></figure>
+          
           <div class="memory-note">
     <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>REINFORCE Zero 把异步 RL 误差拆成权重滞后与内核失配，先消除后者再<b data-highlight style=color:#275f45>让不截断 IS 处理前者</b>；对 RL infra 团队，逐模型内核对齐比加拒绝门更接近根因，但要承担逐模型适配和可测的吞吐损失。</p></div>
   </div>
