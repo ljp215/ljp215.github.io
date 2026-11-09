@@ -2718,10 +2718,13 @@ time {
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 11 月</span>
-          <em>7 期</em>
+          <em>8 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-11-08" class="is-active" aria-label="2026-11-08，15 条">
+          <a href="/ai-daily/2026-11-09" class="" aria-label="2026-11-09，17 条">
+            <time datetime="2026-11-09">9 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-11-08" class="is-active" aria-label="2026-11-08，15 条">
             <time datetime="2026-11-08">8 日</time>
             <em>15 条</em>
           </a><a href="/ai-daily/2026-11-07" class="" aria-label="2026-11-07，16 条">
@@ -3244,7 +3247,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 156 期 →</strong>
+        <strong>查看全部 157 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3655,7 +3658,7 @@ time {
           </div>
           <h3 data-field="title"><a href="https://vllm.ai/blog/2026-11-06-stable-abi-cuda" target="_blank" rel="noreferrer">vLLM 自 v0.33.0 起发布 LibTorch ABI Stable CUDA wheel，PyTorch 升级无需再重建 vLLM。</a></h3>
           <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>vLLM 在博客中复盘了将 CUDA 构建迁移到 LibTorch Stable ABI 的过程：其 C++ 后端频繁调用 LibTorch，过去 PyTorch 二进制接口变化会迫使 vLLM 重建。 </p><p>迁移后可直接替换 torch wheel 并导入 vLLM 包；自 v0.33.0 起 vLLM <b data-highlight style=color:#275f45>发布 LibTorch ABI Stable CUDA wheel，</b>但兼容性仍受 Python API、最低 CUDA 版本和第三方依赖约束。 </p><p>团队称迁移未观察到明显运行时回退；<b data-highlight style=color:#245b78>完整 wheel 还要求 7 个依赖也迁移，</b>最终 torch-abi-audit 显示 ABI 为 STABLE、最低 torch 2.13.0。</p></div></div>
-          <figure class="reader-figure" data-image-event-id="5ae656f022a6cf" data-image-sha256="fa2c3834537c389d7a13b080deca2f7fd1919a654e34e85942596676c9102a3e"><img src="https://luojinping.com/ai-daily/reading-images/fa2c3834537c389d7a13b080deca2f7fd1919a654e34e85942596676c9102a3e.jpg" alt="Stable ABI diagram" width="925" height="741" loading="lazy"><figcaption>原文流程图（发布方：vllm；图中标注与条件以原文为准）。</figcaption></figure>
+          
           <div class="memory-note">
     <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>对需要同时维护多个 PyTorch 版本的推理部署团队，这项改动的实际价值是减少 vLLM 重建与分发成本，而不是提升模型能力。</p></div>
   </div>
