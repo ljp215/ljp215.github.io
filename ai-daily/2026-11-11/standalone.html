@@ -1,0 +1,3881 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
+    <title>AI 行业简报 2026-11-11</title>
+    <meta name="description" content="今天筛出 19 个事件：大厂动态 12 条，技术进展 5 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。">
+    <link rel="canonical" href="https://luojinping.com/ai-daily/2026-11-11">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="AI 聚合日报">
+    <meta property="og:title" content="AI 行业简报 2026-11-11">
+    <meta property="og:description" content="今天筛出 19 个事件：大厂动态 12 条，技术进展 5 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。">
+    <meta property="og:url" content="https://luojinping.com/ai-daily/2026-11-11">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="AI 行业简报 2026-11-11">
+    <meta name="twitter:description" content="今天筛出 19 个事件：大厂动态 12 条，技术进展 5 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。">
+    <link rel="icon" href="/ai-daily/icon.svg" type="image/svg+xml">
+    <link rel="alternate icon" href="/ai-daily/icon.svg">
+    <link rel="alternate" type="application/atom+xml" title="AI 聚合日报" href="/ai-daily/feed.xml">
+    <meta name="theme-color" content="#1f6f73">
+    <style>
+:root {
+  color-scheme: light;
+  --bg: #f3eedf;
+  --surface: #fbf8ee;
+  --surface-muted: #ebe4d3;
+  --ink: #11110f;
+  --muted: #6b675d;
+  --line: #1b1a17;
+  --accent: #8e3218;
+  --accent-strong: #672511;
+  --accent-soft: #ead3c2;
+  --warning-soft: #fff3d6;
+  --rose-soft: #fae8e8;
+  --shadow: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  color: var(--ink);
+  background: var(--bg);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+button,
+input,
+select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  min-height: 100vh;
+}
+
+.sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 24px 18px;
+  border-right: 1px solid var(--line);
+  background: #fcfdfe;
+  overflow-y: auto;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-height: 48px;
+}
+
+.brand-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 8px;
+  color: #ffffff;
+  background: var(--ink);
+  font-weight: 800;
+}
+
+.brand strong,
+.brand span {
+  display: block;
+}
+
+.brand span {
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.nav-list {
+  display: grid;
+  gap: 6px;
+  margin: 28px 0;
+}
+
+.nav-item {
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 8px;
+  color: var(--muted);
+  background: transparent;
+  text-align: left;
+}
+
+.nav-item:hover,
+.nav-item.is-active {
+  color: var(--ink);
+  background: var(--surface-muted);
+}
+
+.source-panel {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.panel-title,
+.section-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.panel-title {
+  color: var(--muted);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.source-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.source-item {
+  display: grid;
+  grid-template-columns: 18px minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  padding: 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.source-item input {
+  margin-top: 3px;
+  accent-color: var(--accent);
+}
+
+.source-name {
+  display: block;
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.source-category {
+  display: block;
+  margin-top: 2px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.workspace {
+  min-width: 0;
+  padding: 26px 30px 40px;
+}
+
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 22px;
+}
+
+.eyebrow {
+  margin: 0 0 5px;
+  color: var(--accent-strong);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+h1 {
+  margin-bottom: 0;
+  font-size: 30px;
+  line-height: 1.15;
+}
+
+h2 {
+  margin-bottom: 4px;
+  font-size: 18px;
+}
+
+.topbar-actions {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.icon-button,
+.primary-button,
+.digest-actions button,
+.card-actions button,
+.open-link {
+  min-height: 38px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.icon-button {
+  width: 40px;
+  color: var(--ink);
+  font-size: 18px;
+}
+
+.primary-button {
+  padding: 0 15px;
+  border-color: var(--accent);
+  color: #ffffff;
+  background: var(--accent);
+  font-weight: 700;
+}
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(120px, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.metric {
+  padding: 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+.metric span {
+  display: block;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.metric strong {
+  display: block;
+  margin-top: 8px;
+  font-size: 28px;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: minmax(220px, 1fr) 170px 150px auto;
+  gap: 12px;
+  align-items: end;
+  margin-bottom: 18px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+}
+
+label span {
+  display: block;
+  margin-bottom: 7px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+input[type="search"],
+select {
+  width: 100%;
+  min-height: 40px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 11px;
+  color: var(--ink);
+  background: #ffffff;
+}
+
+.toggle {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 10px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+}
+
+.toggle span {
+  margin: 0;
+  color: var(--ink);
+  font-size: 14px;
+}
+
+.toggle input {
+  accent-color: var(--accent);
+}
+
+.content-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 360px;
+  gap: 18px;
+  align-items: start;
+}
+
+.feed-section,
+.digest-panel {
+  min-width: 0;
+}
+
+.section-heading {
+  margin-bottom: 12px;
+}
+
+.section-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-size: 14px;
+}
+
+.timestamp {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.article-list {
+  display: grid;
+  gap: 12px;
+}
+
+.article-card,
+.digest-preview {
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.article-card {
+  padding: 18px;
+}
+
+.article-card.is-read {
+  box-shadow: none;
+  opacity: 0.76;
+}
+
+.article-meta,
+.card-footer,
+.card-actions,
+.tag-row,
+.digest-actions {
+  display: flex;
+  align-items: center;
+}
+
+.article-meta {
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.category,
+.tag {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.category {
+  padding: 0 9px;
+  color: var(--accent-strong);
+  background: var(--accent-soft);
+}
+
+time {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.article-card h3 {
+  margin-bottom: 9px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.summary {
+  margin-bottom: 10px;
+  color: #334250;
+  line-height: 1.6;
+}
+
+.impact {
+  margin-bottom: 12px;
+  padding: 10px 12px;
+  border-left: 3px solid var(--accent);
+  border-radius: 6px;
+  color: #334250;
+  background: #f3fbfa;
+  line-height: 1.55;
+}
+
+.tag-row {
+  flex-wrap: wrap;
+  gap: 7px;
+  min-height: 24px;
+}
+
+.tag {
+  padding: 0 8px;
+  color: #5f4a03;
+  background: var(--warning-soft);
+}
+
+.card-footer {
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line);
+}
+
+.source {
+  min-width: 0;
+  color: var(--muted);
+  font-size: 13px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.card-actions {
+  flex: 0 0 auto;
+  gap: 8px;
+}
+
+.card-actions button,
+.open-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 58px;
+  padding: 0 10px;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.save-button.is-saved {
+  border-color: #c74e4e;
+  color: #9c2727;
+  background: var(--rose-soft);
+}
+
+.digest-panel {
+  position: sticky;
+  top: 22px;
+}
+
+.digest-preview {
+  padding: 18px;
+}
+
+.digest-preview h3 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+.digest-preview p {
+  color: #334250;
+  line-height: 1.55;
+}
+
+.theme-list {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.theme-item {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fbfcfd;
+}
+
+.theme-item strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.theme-item span {
+  color: var(--muted);
+  font-size: 13px;
+}
+
+.digest-actions {
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.digest-actions button {
+  flex: 1;
+  padding: 0 10px;
+}
+
+.empty-state {
+  padding: 28px;
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  color: var(--muted);
+  background: var(--surface);
+  text-align: center;
+}
+
+@media (max-width: 1080px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar {
+    position: static;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .content-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .digest-panel {
+    position: static;
+  }
+}
+
+@media (max-width: 760px) {
+  .workspace {
+    padding: 20px 16px 30px;
+  }
+
+  .topbar {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .metrics,
+  .controls {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .search-box {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 520px) {
+  .metrics,
+  .controls {
+    grid-template-columns: 1fr;
+  }
+
+  .card-footer,
+  .card-actions {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .card-actions button,
+  .open-link {
+    width: 100%;
+  }
+}
+
+.report-shell {
+  display: grid;
+  grid-template-columns: 186px minmax(0, 1fr);
+  gap: 24px;
+  width: min(1380px, calc(100% - 36px));
+  margin: 0 auto;
+  align-items: start;
+}
+
+.report-history {
+  position: sticky;
+  top: 18px;
+  max-height: calc(100vh - 36px);
+  padding-top: 28px;
+  overflow-y: auto;
+}
+
+.report-history-title,
+.report-nav-entry {
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 3px solid var(--line);
+}
+
+.report-history span {
+  display: block;
+  margin-bottom: 4px;
+  color: var(--accent-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.report-history strong {
+  font-size: 18px;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.report-search-quick {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  margin-bottom: 12px;
+  border: 2px solid var(--line);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.report-search-quick:focus-within,
+.report-search-quick.is-active {
+  border-color: var(--accent);
+}
+
+.report-search-quick input {
+  min-width: 0;
+  height: 38px;
+  padding: 0 8px;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 12px;
+}
+
+.report-search-quick button {
+  min-width: 50px;
+  border: 0;
+  border-left: 2px solid var(--line);
+  color: #f7efe1;
+  background: var(--ink);
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.report-history-months {
+  display: grid;
+  gap: 8px;
+}
+
+.report-history-month {
+  min-width: 0;
+}
+
+.report-history-month summary {
+  display: grid;
+  grid-template-columns: 14px minmax(0, 1fr) auto;
+  gap: 7px;
+  align-items: center;
+  padding: 9px 8px;
+  border-left: 4px solid rgba(27, 26, 23, 0.72);
+  background: rgba(255, 255, 255, 0.24);
+  cursor: pointer;
+  list-style: none;
+}
+
+.report-history-month summary::-webkit-details-marker {
+  display: none;
+}
+
+.report-history-month summary::before {
+  content: "+";
+  color: var(--accent-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 14px;
+  font-weight: 900;
+}
+
+.report-history-month[open] summary {
+  border-left-color: var(--accent);
+  background: rgba(255, 255, 255, 0.5);
+}
+
+.report-history-month[open] summary::before {
+  content: "−";
+}
+
+.report-history-month summary span {
+  margin: 0;
+  color: var(--ink);
+  font-size: 12px;
+  letter-spacing: 0;
+}
+
+.report-history-month summary em {
+  white-space: nowrap;
+}
+
+.report-history-month-items {
+  display: grid;
+  gap: 6px;
+  padding: 7px 0 2px 10px;
+}
+
+.report-history a {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 8px;
+  align-items: center;
+  min-width: 0;
+  padding: 10px 9px;
+  border-left: 4px solid rgba(27, 26, 23, 0.72);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.24);
+  text-decoration: none;
+}
+
+.report-history a:hover,
+.report-history a.is-active {
+  border-left-color: var(--accent);
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+.report-history time,
+.report-history em {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 850;
+}
+
+.report-history em {
+  color: var(--muted);
+}
+
+.report-history a:hover em,
+.report-history a.is-active em {
+  color: #d9cfbe;
+}
+
+.report-nav-entry a {
+  display: block;
+  padding: 12px 10px;
+  border-left: 4px solid rgba(27, 26, 23, 0.72);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.24);
+  text-decoration: none;
+}
+
+.report-nav-entry a:hover,
+.report-nav-entry a.is-active {
+  border-left-color: var(--accent);
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+.report-nav-entry a:hover span,
+.report-nav-entry a.is-active span {
+  color: var(--accent);
+}
+
+.report-nav-entry strong {
+  display: block;
+}
+
+.report-page {
+  width: 100%;
+  padding: 26px 0 58px;
+}
+
+.report-topline {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  padding-bottom: 12px;
+  border-bottom: 3px solid var(--line);
+  color: var(--accent-strong);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+.report-topline span:last-child {
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-align: right;
+}
+
+.report-hero {
+  margin: 18px 0 24px;
+  padding: 0 0 24px;
+  border-bottom: 6px solid var(--line);
+}
+
+.report-hero-main {
+  min-width: 0;
+  padding-top: 12px;
+}
+
+.report-hero-main::before {
+  display: block;
+  width: 112px;
+  height: 6px;
+  margin-bottom: 14px;
+  background: var(--accent);
+  content: "";
+}
+
+.report-hero h1 {
+  max-width: 760px;
+  margin-bottom: 12px;
+  color: var(--ink);
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: 0;
+}
+
+.report-hero p:last-child {
+  max-width: 760px;
+  margin-bottom: 0;
+  color: #3f3b34;
+  font-size: 17px;
+  font-weight: 650;
+  line-height: 1.75;
+}
+
+.report-hero-panel {
+  align-self: start;
+  min-height: 250px;
+  padding: 24px 24px 22px;
+  border-top: 7px solid var(--accent);
+  color: #f8f2e4;
+  background: #090908;
+}
+
+.report-hero-panel p {
+  margin-bottom: 14px;
+  color: #cf6337;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.report-hero-panel strong,
+.report-hero-panel span {
+  display: block;
+}
+
+.report-hero-panel strong {
+  max-width: 430px;
+  margin-bottom: 18px;
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 25px;
+  line-height: 1.25;
+}
+
+.report-hero-panel span {
+  border-top: 2px solid var(--accent);
+  padding-top: 12px;
+  color: #d8d0c0;
+  line-height: 1.65;
+}
+
+.report-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+  margin: 0 0 24px;
+}
+
+.report-tabs button {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  min-height: 58px;
+  padding: 12px 14px;
+  border-left: 4px solid var(--line);
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 0;
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.28);
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 850;
+  text-align: left;
+}
+
+.report-tabs button:hover,
+.report-tabs button.is-active {
+  border-left-color: var(--accent);
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+.report-tabs span {
+  color: var(--accent);
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 26px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.report-tabs strong {
+  min-width: 0;
+  overflow: hidden;
+  font-size: 16px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.report-tabs em {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 900;
+}
+
+.report-tabs button:hover em,
+.report-tabs button.is-active em {
+  color: #d9cfbe;
+}
+
+.report-tabs button:hover span,
+.report-tabs button.is-active span {
+  color: var(--accent-strong);
+}
+
+.report-section {
+  margin-top: 28px;
+}
+
+.report-tab-panel {
+  display: none;
+}
+
+.report-tab-panel.is-active {
+  display: block;
+}
+
+.report-section-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 18px;
+  align-items: end;
+  margin-bottom: 12px;
+  padding-bottom: 7px;
+  border-bottom: 3px solid var(--line);
+}
+
+.report-section-heading div {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  min-width: 0;
+}
+
+.report-section-heading span {
+  color: var(--accent);
+  font-family: Georgia, "Times New Roman", "Noto Serif SC", serif;
+  font-size: 34px;
+  font-weight: 900;
+  line-height: 1;
+}
+
+.report-section-heading h2 {
+  margin-bottom: 0;
+  font-size: 24px;
+  line-height: 1.1;
+}
+
+.report-section-heading p {
+  margin-bottom: 2px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.report-list {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+}
+
+#company-updates .report-list {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+#industry-views .report-list {
+  grid-template-columns: 1fr;
+}
+
+.archive-list {
+  grid-template-columns: 1fr;
+}
+
+.archive-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 10px;
+}
+
+.archive-entry {
+  display: grid;
+  gap: 4px;
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: var(--surface);
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.archive-entry:hover {
+  border-color: var(--accent);
+}
+
+.archive-entry time {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.archive-entry strong {
+  font-size: 14px;
+  line-height: 1.4;
+}
+
+.archive-entry em {
+  font-style: normal;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.search-hero {
+  margin-bottom: 18px;
+}
+
+.search-workspace {
+  min-width: 0;
+}
+
+.search-form {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  border: 3px solid var(--line);
+  background: var(--surface);
+}
+
+.search-form:focus-within {
+  border-color: var(--accent);
+}
+
+.search-form input {
+  min-width: 0;
+  height: 58px;
+  padding: 0 18px;
+  border: 0;
+  outline: 0;
+  color: var(--ink);
+  background: transparent;
+  font-size: 18px;
+  font-weight: 720;
+}
+
+.search-form button {
+  min-width: 92px;
+  border: 0;
+  border-left: 3px solid var(--line);
+  color: #f7efe1;
+  background: var(--ink);
+  font-weight: 900;
+}
+
+.search-filters {
+  display: flex;
+  gap: 7px;
+  margin-top: 12px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.search-filters[hidden] {
+  display: none;
+}
+
+.search-filters button {
+  flex: 0 0 auto;
+  min-height: 36px;
+  padding: 0 12px;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.34);
+  font-size: 12px;
+  font-weight: 820;
+}
+
+.search-filters button.is-active {
+  border-color: var(--accent);
+  color: #f7efe1;
+  background: var(--accent);
+}
+
+.search-status {
+  min-height: 24px;
+  margin: 16px 0 8px;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.search-results {
+  display: grid;
+  gap: 10px;
+}
+
+.search-result {
+  padding: 16px 18px;
+  border: 2px solid rgba(27, 26, 23, 0.76);
+  border-left: 6px solid var(--accent);
+  background: rgba(255, 255, 255, 0.34);
+}
+
+.search-result-meta,
+.search-result-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px 12px;
+  align-items: center;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 820;
+}
+
+.search-result-meta span,
+.search-result-meta strong {
+  color: var(--accent-strong);
+}
+
+.search-result h2 {
+  margin: 9px 0 8px;
+  font-size: 21px;
+  line-height: 1.35;
+}
+
+.search-result h2 a {
+  color: inherit;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.search-result p {
+  margin-bottom: 12px;
+  color: #3f3b34;
+  font-size: 15px;
+  line-height: 1.7;
+}
+
+.search-result-footer {
+  justify-content: space-between;
+}
+
+.search-result-footer em {
+  font-style: normal;
+}
+
+.search-result mark {
+  padding: 0 2px;
+  color: inherit;
+  background: #f5d88b;
+}
+
+.report-item,
+.paper-digest-item {
+  scroll-margin-top: 96px;
+}
+
+.report-item.is-search-target,
+.paper-digest-item.is-search-target {
+  outline: 4px solid #d9a51f;
+  outline-offset: 3px;
+}
+
+.market-digest {
+  display: grid;
+  gap: 12px;
+}
+
+.market-note {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+  padding: 12px 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.34);
+  color: #3f3b34;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.market-note strong {
+  padding: 3px 8px;
+  color: #f7efe1;
+  background: var(--ink);
+  font-size: 13px;
+}
+
+.market-card {
+  padding: 16px;
+  border: 2px solid var(--line);
+  background: var(--surface);
+}
+
+.market-card-heading {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--line);
+}
+
+.market-card-heading h3 {
+  margin-bottom: 0;
+  font-size: 20px;
+}
+
+.market-card-heading p {
+  margin-bottom: 0;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-align: right;
+  text-transform: uppercase;
+}
+
+.market-range-switch {
+  display: flex;
+  flex: 0 0 auto;
+  gap: 6px;
+}
+
+.market-range-switch button {
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.market-range-switch button.is-active {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: #fbf8ee;
+}
+
+.market-digest[data-active-range="30d"] .market-range-1y {
+  display: none;
+}
+
+.market-digest[data-active-range="1y"] .market-range-30d {
+  display: none;
+}
+
+.market-chart-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.market-chart-card {
+  display: grid;
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(27, 26, 23, 0.45);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.market-chart-card-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 10px;
+  align-items: start;
+  min-width: 0;
+}
+
+.market-chart-card strong,
+.market-chart-card span,
+.market-chart-card em,
+.market-chart-stats,
+.private-timeline strong,
+.private-timeline span,
+.private-timeline p {
+  min-width: 0;
+}
+
+.market-chart-card strong {
+  display: block;
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-chart-card strong a {
+  color: inherit;
+}
+
+.market-chart-card-head span {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-chart-card em {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 17px;
+  font-style: normal;
+  font-weight: 950;
+  text-align: right;
+}
+
+.market-chart-card em.is-up {
+  color: #1f7a4c;
+}
+
+.market-chart-card em.is-down {
+  color: #a12d1f;
+}
+
+.market-sparkline {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 304 / 162;
+  overflow: visible;
+}
+
+.market-sparkline-grid {
+  fill: none;
+  stroke: rgba(27, 26, 23, 0.16);
+  stroke-width: 1;
+}
+
+.market-axis {
+  fill: none;
+  stroke: rgba(27, 26, 23, 0.46);
+  stroke-width: 1.4;
+}
+
+.market-axis-label {
+  fill: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 10px;
+  font-weight: 850;
+}
+
+.market-axis-y {
+  text-anchor: end;
+}
+
+.market-axis-x {
+  text-anchor: start;
+}
+
+.market-axis-x-end {
+  text-anchor: end;
+}
+
+.market-axis-x-mid {
+  text-anchor: middle;
+}
+
+.market-axis-unit {
+  text-anchor: start;
+}
+
+.market-sparkline-line {
+  fill: none;
+  stroke: var(--muted);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 3.5;
+}
+
+.market-sparkline.is-up .market-sparkline-line {
+  stroke: #1f7a4c;
+}
+
+.market-sparkline.is-down .market-sparkline-line {
+  stroke: #a12d1f;
+}
+
+.market-sparkline-empty {
+  display: grid;
+  min-height: 76px;
+  place-items: center;
+  border: 1px dashed rgba(27, 26, 23, 0.32);
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.market-chart-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px 12px;
+  margin: 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.market-chart-stats div {
+  min-width: 0;
+}
+
+.market-chart-stats .market-stat-wide {
+  grid-column: 1 / -1;
+}
+
+.market-chart-stats dt {
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.market-chart-stats dd {
+  margin: 2px 0 0;
+  overflow-wrap: anywhere;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.market-chart-stats dd.market-period {
+  overflow-wrap: normal;
+  white-space: nowrap;
+}
+
+.market-chart-stats dd.is-up {
+  color: #1f7a4c;
+}
+
+.market-chart-stats dd.is-down {
+  color: #a12d1f;
+}
+
+.market-confidence-badge {
+  display: inline-block;
+  margin-left: 2px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+  cursor: default;
+}
+
+.market-confidence-badge.is-confidence-ok {
+  color: #1f7a4c;
+}
+
+.market-confidence-badge.is-confidence-warn {
+  color: #a12d1f;
+}
+
+.market-confidence-badge.is-confidence-muted {
+  color: var(--muted);
+}
+
+.market-table {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.market-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto minmax(110px, auto);
+  gap: 10px;
+  align-items: center;
+  min-width: 0;
+  padding: 12px;
+  border: 1px solid rgba(27, 26, 23, 0.45);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.market-row strong,
+.market-row span,
+.market-row em,
+.market-row p,
+.private-signal strong,
+.private-signal span,
+.private-signal p {
+  min-width: 0;
+}
+
+.market-row strong {
+  display: block;
+  overflow: hidden;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-row strong a,
+.private-signal p a {
+  color: inherit;
+}
+
+.market-row span {
+  display: block;
+  margin-top: 3px;
+  overflow: hidden;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 750;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.market-row em {
+  color: var(--muted);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 950;
+  text-align: right;
+}
+
+.market-row em.is-up {
+  color: #1f7a4c;
+}
+
+.market-row em.is-down {
+  color: #a12d1f;
+}
+
+.market-row p {
+  margin-bottom: 0;
+  color: var(--ink);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 800;
+  text-align: right;
+}
+
+.market-row small {
+  display: block;
+  margin-top: 3px;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.private-signal-list {
+  display: grid;
+  gap: 8px;
+}
+
+.private-signal {
+  display: grid;
+  grid-template-columns: minmax(150px, 0.34fr) minmax(0, 1fr);
+  gap: 14px;
+  align-items: start;
+  padding: 13px 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.private-signal strong {
+  display: block;
+  font-size: 15px;
+}
+
+.private-signal span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+  line-height: 1.45;
+}
+
+.private-signal p {
+  margin-bottom: 0;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.55;
+}
+
+.private-timeline-list {
+  display: grid;
+  gap: 10px;
+}
+
+.private-timeline {
+  display: grid;
+  gap: 9px;
+  padding: 14px;
+  border-left: 5px solid var(--accent);
+  background: rgba(255, 255, 255, 0.32);
+}
+
+.private-timeline strong {
+  display: block;
+  font-size: 16px;
+}
+
+.private-timeline > div > span {
+  display: block;
+  margin-top: 4px;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.private-timeline > p {
+  margin-bottom: 0;
+  font-size: 15px;
+  font-weight: 760;
+  line-height: 1.65;
+}
+
+.private-timeline ol {
+  display: grid;
+  gap: 7px;
+  margin: 0;
+  padding-left: 18px;
+}
+
+.private-timeline li {
+  display: grid;
+  grid-template-columns: minmax(80px, 0.75fr) minmax(110px, 1fr) minmax(130px, 1.4fr);
+  gap: 8px;
+  padding: 8px 0 8px 2px;
+  border-top: 1px solid rgba(27, 26, 23, 0.12);
+}
+
+.private-timeline li span,
+.private-timeline li strong {
+  display: block;
+}
+
+.private-timeline li strong {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 850;
+  line-height: 1.45;
+}
+
+.private-timeline li p {
+  margin-bottom: 0;
+  font-size: 14px;
+  font-weight: 760;
+  line-height: 1.55;
+}
+
+.private-timeline li p span {
+  margin-top: 2px;
+  color: var(--ink);
+  font-size: 13px;
+  font-weight: 820;
+}
+
+.private-timeline a {
+  color: inherit;
+}
+
+.paper-digest {
+  grid-column: 1 / -1;
+  padding: 16px;
+  border: 2px solid var(--line);
+  border-top: 7px solid var(--accent);
+  background: #0b0a09;
+  color: #f7efe1;
+}
+
+.paper-digest-header {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: start;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid var(--accent);
+}
+
+.paper-digest-header span {
+  display: block;
+  margin-bottom: 5px;
+  color: #cf6337;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.18em;
+}
+
+.paper-digest-header h3 {
+  margin-bottom: 0;
+  font-size: 22px;
+}
+
+.paper-digest-header a {
+  flex: 0 0 auto;
+  color: #f7efe1;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 850;
+}
+
+.paper-digest-note {
+  margin-bottom: 14px;
+  color: #d9cfbe;
+  font-size: 14px;
+}
+
+.paper-digest-list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.paper-digest-item {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  gap: 10px;
+  min-width: 0;
+  padding: 12px;
+  border-left: 3px solid #cf6337;
+  color: inherit;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.paper-digest-item.has-thumbnail {
+  grid-template-columns: 34px 86px minmax(0, 1fr);
+}
+
+.paper-digest-item > img {
+  width: 86px;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  border: 1px solid rgba(247, 239, 225, 0.34);
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.paper-digest-item h4 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.paper-digest-item h4 a:hover {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+.paper-digest-item > span {
+  color: #cf6337;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-weight: 900;
+}
+
+.paper-digest-item h4 {
+  margin-bottom: 7px;
+  font-size: 16px;
+  line-height: 1.3;
+}
+
+.paper-digest-item p {
+  margin-bottom: 6px;
+  color: #d9cfbe;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.paper-digest-item .ai-summary {
+  margin-top: 8px;
+  padding: 9px 10px;
+  border: 1px solid rgba(217, 207, 190, 0.32);
+  border-left: 4px solid #d9cfbe;
+  color: #fff6e6;
+  background: rgba(247, 239, 225, 0.12);
+}
+
+.paper-digest-item .ai-summary span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 19px;
+  margin-right: 7px;
+  padding: 0 6px;
+  color: #0b0a09;
+  background: #d9cfbe;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 0.05em;
+}
+
+.paper-digest-item div div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.paper-digest-item em {
+  display: inline-flex;
+  min-height: 22px;
+  align-items: center;
+  padding: 0 7px;
+  color: #f7efe1;
+  background: rgba(142, 50, 24, 0.75);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 800;
+}
+
+.report-item {
+  display: grid;
+  grid-template-columns: 42px minmax(0, 1fr);
+  gap: 14px;
+  min-width: 0;
+  padding: 14px;
+  border: 2px solid rgba(27, 26, 23, 0.82);
+  border-left-width: 5px;
+  border-radius: 0;
+  background: rgba(255, 255, 255, 0.28);
+}
+
+.report-item.has-thumbnail {
+  grid-template-columns: 42px minmax(0, 1fr) 112px;
+}
+
+.report-item > div:not(.report-thumb) {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.report-item > span {
+  display: inline-grid;
+  place-items: center;
+  width: 42px;
+  height: 28px;
+  color: #fbf8ee;
+  background: var(--line);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 13px;
+  font-weight: 900;
+}
+
+.report-thumb {
+  display: block;
+  grid-column: 3;
+  grid-row: 1;
+  align-self: start;
+  width: 112px;
+  aspect-ratio: 4 / 3;
+  max-height: 84px;
+  border: 2px solid rgba(27, 26, 23, 0.82);
+  background: rgba(255, 255, 255, 0.35);
+  overflow: hidden;
+}
+
+.report-thumb img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.report-item-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.report-item-meta strong {
+  color: var(--accent-strong);
+}
+
+.report-item-meta em {
+  color: var(--muted);
+  font-style: normal;
+}
+
+.report-item-meta b {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--accent-strong);
+  font-weight: 900;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#industry-views .report-item-meta {
+  gap: 8px 10px;
+  align-items: baseline;
+}
+
+#industry-views .report-item-meta .source-person {
+  display: flex;
+  flex-basis: 100%;
+  gap: 8px;
+  align-items: center;
+  order: -1;
+  overflow: visible;
+  color: var(--ink);
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-size: 22px;
+  line-height: 1.15;
+  letter-spacing: 0;
+  text-transform: none;
+  white-space: normal;
+}
+
+#industry-views .report-item-meta .source-person small {
+  display: inline-grid;
+  place-items: center;
+  min-width: 28px;
+  height: 24px;
+  padding: 0 7px;
+  color: #f7efe1;
+  background: var(--line);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.report-item h3 {
+  margin-bottom: 8px;
+  font-size: 18px;
+  line-height: 1.35;
+}
+
+.report-item h3 a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.report-item h3 a:hover {
+  color: var(--accent-strong);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+}
+
+#industry-views .social-original {
+  max-width: 980px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  white-space: pre-wrap;
+}
+
+.social-translation {
+  max-width: 940px;
+  margin-top: 8px;
+  padding-top: 9px;
+  border-top: 1px solid rgba(27, 26, 23, 0.24);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+}
+
+.social-translation span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-right: 8px;
+  padding: 0 6px;
+  color: #f7efe1;
+  background: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.report-item p {
+  margin-bottom: 0;
+  color: #3f3b34;
+  font-size: 14px;
+  line-height: 1.65;
+}
+
+.report-item .ai-summary {
+  max-width: 940px;
+  margin-top: 8px;
+  padding: 0;
+  border: 0;
+  color: #2f2b25;
+  background: transparent;
+  font-weight: 450;
+}
+
+.report-item .ai-summary span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-right: 9px;
+  padding: 0 6px;
+  color: #f7efe1;
+  background: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+}
+
+.report-item .social-translation {
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.memory-note {
+  max-width: 960px;
+  margin-top: 8px;
+  padding: 8px 0 0;
+  border-top: 1px solid rgba(27, 26, 23, 0.16);
+  border-left: 0;
+  background: transparent;
+}
+
+.memory-note p {
+  margin: 0;
+  color: #3f3b34;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.memory-note span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  margin-right: 8px;
+  padding: 0 6px;
+  color: #f7efe1;
+  background: var(--accent);
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: 0.08em;
+}
+
+.memory-note ul {
+  display: grid;
+  gap: 4px;
+  margin: 8px 0 0;
+  padding-left: 18px;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+.report-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-top: 14px;
+}
+
+.reading-time,
+.source-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 32px;
+  padding: 0 10px;
+  border: 2px solid var(--line);
+  border-radius: 0;
+  color: var(--ink);
+  background: transparent;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  font-size: 12px;
+  font-weight: 850;
+  text-decoration: none;
+}
+
+.reading-time {
+  border-color: rgba(27, 26, 23, 0.28);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.source-link:hover {
+  border-color: var(--accent);
+  color: var(--accent-strong);
+}
+
+.report-empty {
+  grid-column: 1 / -1;
+  padding: 18px;
+  border: 2px dashed rgba(27, 26, 23, 0.45);
+  color: var(--muted);
+  background: rgba(255, 255, 255, 0.18);
+  font-weight: 700;
+}
+
+@media (max-width: 980px) {
+  .report-shell {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .report-list,
+  #company-updates .report-list,
+  .paper-digest-list,
+  .market-chart-grid,
+  .market-table {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .report-history {
+    position: static;
+    max-height: none;
+    padding-top: 18px;
+    overflow: visible;
+  }
+
+  .report-history-months {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+  }
+
+  .report-history-month {
+    flex: 0 0 min(340px, calc(100vw - 60px));
+  }
+
+  .report-history-month-items {
+    display: flex;
+    gap: 7px;
+    overflow-x: auto;
+    padding: 7px 0 3px 10px;
+  }
+
+  .report-history-month-items a {
+    min-width: 146px;
+  }
+
+  .report-tabs {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .report-shell {
+    width: 100%;
+    max-width: 100%;
+    padding: 0 12px;
+    gap: 12px;
+    overflow-x: hidden;
+  }
+
+  .report-page {
+    min-width: 0;
+    padding-top: 8px;
+    padding-bottom: 36px;
+  }
+
+  .report-history {
+    min-width: 0;
+    padding-top: 10px;
+    overflow: hidden;
+  }
+
+  .report-history-title,
+  .report-nav-entry {
+    margin-bottom: 8px;
+    padding-bottom: 7px;
+    border-bottom-width: 2px;
+  }
+
+  .report-history strong {
+    font-size: 15px;
+  }
+
+  .report-search-quick {
+    margin-bottom: 9px;
+  }
+
+  .report-history-months {
+    margin: 0 -12px;
+    padding: 0 12px 6px;
+    scrollbar-width: none;
+  }
+
+  .report-history-months::-webkit-scrollbar,
+  .report-history-month-items::-webkit-scrollbar {
+    display: none;
+  }
+
+  .report-history-month-items a {
+    min-width: 118px;
+    padding: 8px 8px;
+    border-left-width: 3px;
+  }
+
+  .report-history time,
+  .report-history em {
+    font-size: 11px;
+  }
+
+  .report-topline,
+  .report-section-heading {
+    align-items: start;
+    flex-direction: column;
+  }
+
+  .report-topline span:last-child,
+  .report-section-heading p {
+    text-align: left;
+  }
+
+  .report-topline {
+    gap: 6px;
+    padding-bottom: 9px;
+    border-bottom-width: 2px;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+  }
+
+  .report-topline span:last-child {
+    display: none;
+  }
+
+  .search-hero {
+    margin-bottom: 12px;
+  }
+
+  .search-form {
+    border-width: 2px;
+  }
+
+  .search-form input {
+    height: 50px;
+    padding: 0 12px;
+    font-size: 16px;
+  }
+
+  .search-form button {
+    min-width: 70px;
+    border-left-width: 2px;
+  }
+
+  .search-filters {
+    margin-right: -12px;
+    padding-right: 12px;
+    scrollbar-width: none;
+  }
+
+  .search-filters::-webkit-scrollbar {
+    display: none;
+  }
+
+  .search-result {
+    padding: 13px 12px;
+    border-left-width: 4px;
+  }
+
+  .search-result h2 {
+    font-size: 18px;
+  }
+
+  .search-result p {
+    font-size: 14px;
+  }
+
+  .report-hero {
+    margin: 12px 0 14px;
+    padding-bottom: 14px;
+    border-bottom-width: 3px;
+  }
+
+  .report-hero-main {
+    padding-top: 4px;
+  }
+
+  .report-hero-main::before {
+    width: 72px;
+    height: 4px;
+    margin-bottom: 10px;
+  }
+
+  .report-hero h1 {
+    max-width: 100%;
+    margin-bottom: 9px;
+    font-size: 25px;
+    line-height: 1.15;
+  }
+
+  .report-hero p:last-child {
+    font-size: 15px;
+    line-height: 1.65;
+  }
+
+  .report-tabs {
+    position: sticky;
+    z-index: 5;
+    top: 0;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 4px;
+    margin: 0 -12px 16px;
+    padding: 8px 12px;
+    border-bottom: 1px solid rgba(27, 26, 23, 0.18);
+    background: rgba(247, 239, 225, 0.96);
+    backdrop-filter: blur(10px);
+  }
+
+  .report-tabs button {
+    grid-template-columns: 1fr;
+    gap: 4px;
+    min-height: 54px;
+    padding: 8px 6px;
+    border-left-width: 3px;
+    text-align: center;
+  }
+
+  .report-tabs span {
+    font-size: 19px;
+  }
+
+  .report-tabs strong {
+    font-size: 12px;
+    white-space: normal;
+  }
+
+  .report-tabs em {
+    display: none;
+  }
+
+  .report-section {
+    margin-top: 16px;
+  }
+
+  .report-section-heading {
+    gap: 7px;
+    margin-bottom: 10px;
+    border-bottom-width: 2px;
+  }
+
+  .report-section-heading span {
+    font-size: 26px;
+  }
+
+  .report-section-heading h2 {
+    font-size: 20px;
+  }
+
+  .report-section-heading p {
+    font-size: 10px;
+    line-height: 1.55;
+    letter-spacing: 0.08em;
+  }
+
+  .report-item {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 10px;
+    padding: 13px 12px;
+    border-width: 1px;
+    border-left-width: 4px;
+  }
+
+  .report-item.has-thumbnail {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .report-item > div:not(.report-thumb) {
+    grid-column: 1;
+  }
+
+  .report-item > span {
+    display: none;
+  }
+
+  .paper-digest-item,
+  .paper-digest-item.has-thumbnail {
+    grid-template-columns: 28px minmax(0, 1fr);
+  }
+
+  .paper-digest-item > span,
+  .report-item > span {
+    width: max-content;
+    min-width: 28px;
+  }
+
+  .paper-digest-item > img,
+  .report-thumb {
+    display: none;
+  }
+
+  .report-item-meta {
+    gap: 6px 8px;
+    margin-bottom: 7px;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+  }
+
+  #industry-views .report-item-meta .source-person {
+    font-size: 18px;
+  }
+
+  .report-item h3 {
+    font-size: 17px;
+    line-height: 1.45;
+  }
+
+  .report-item p,
+  .memory-note p,
+  .memory-note ul,
+  .report-item .social-translation {
+    font-size: 14px;
+    line-height: 1.72;
+  }
+
+  #industry-views .social-original {
+    font-size: 14px;
+    line-height: 1.76;
+  }
+
+  .memory-note {
+    margin-top: 8px;
+    padding: 8px 0 0;
+  }
+
+  .report-actions {
+    justify-content: space-between;
+    margin-top: 12px;
+  }
+
+  .reading-time,
+  .source-link {
+    min-height: 34px;
+    font-size: 11px;
+  }
+
+  .paper-digest {
+    padding: 13px 12px;
+  }
+
+  .paper-digest-header {
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .paper-digest-header h3 {
+    font-size: 19px;
+  }
+
+  .paper-digest-item {
+    padding: 11px;
+  }
+
+  .paper-digest-item h4 {
+    font-size: 15px;
+    line-height: 1.42;
+  }
+
+  .market-note,
+  .market-card,
+  .market-chart-card,
+  .market-row,
+  .private-signal,
+  .private-timeline {
+    border-width: 1px;
+  }
+
+  .market-note {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    padding: 11px 12px;
+    font-size: 13px;
+  }
+
+  .market-card {
+    padding: 12px;
+  }
+
+  .market-card-heading {
+    align-items: start;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .market-card-heading p {
+    text-align: left;
+  }
+
+  .market-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .market-row p {
+    grid-column: 1 / -1;
+    text-align: left;
+  }
+
+  .market-chart-card {
+    gap: 8px;
+    padding: 11px;
+  }
+
+  .market-chart-stats {
+    grid-template-columns: 1fr;
+    gap: 6px;
+  }
+
+  .private-signal {
+    grid-template-columns: 1fr;
+    gap: 7px;
+  }
+
+  .private-timeline {
+    border-left-width: 4px;
+    padding: 12px;
+  }
+
+  .private-timeline li {
+    grid-template-columns: 1fr;
+    gap: 5px;
+  }
+}
+.editorial-overview { margin: 24px 0 32px; }
+.overview-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
+.overview-heading h2 { margin: 0; font-size: 20px; color: var(--ink, #17212b); }
+.overview-heading > span { font-size: 12px; color: var(--muted, #687581); }
+.focus-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.focus-card { position: relative; padding: 20px; border: 1px solid var(--line, #dce3e9); border-radius: 14px; background: var(--surface, #fff); }
+.focus-number { position: absolute; right: 16px; top: 14px; font-size: 26px; font-weight: 700; color: #d0dedc; }
+.focus-card .focus-topic { margin: 0 36px 10px 0; color: #0c7a75; font-size: 12px; font-weight: 700; }
+.focus-card h3 { margin: 0 0 12px; font-size: 17px; line-height: 1.6; }
+.focus-card h3 a, .topic-group a { color: inherit; text-decoration: none; }
+.focus-card > p:not(.focus-topic) { font-size: 14px; line-height: 1.9; color: var(--ink, #17212b); margin: 0 0 14px; }
+.focus-more { font-size: 12px; color: #0c7a75; text-decoration: none; }
+.topic-directory { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 16px; }
+.topic-group { border: 1px solid var(--line, #dce3e9); border-radius: 10px; padding: 12px 16px; background: var(--surface, #fff); }
+.topic-group summary { cursor: pointer; font-size: 14px; font-weight: 600; }
+.topic-group summary b { float: right; color: #0c7a75; }
+.topic-group ul { padding-left: 20px; margin: 12px 0 0; font-size: 13px; line-height: 1.8; }
+.topic-group li + li { margin-top: 8px; }
+.topic-group > p { font-size: 12px; color: var(--muted, #687581); }
+@media (max-width: 760px) {
+  .focus-grid, .topic-directory { grid-template-columns: 1fr; }
+  .overview-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+  .focus-card { padding: 18px; }
+}
+
+/* Phone reading starts with the brief; archive navigation follows the content. */
+@media (max-width: 760px) {
+  .report-shell { display: flex; flex-direction: column; }
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; margin-top: 24px; }
+}
+
+/* Reader presentation: original audited text, quieter navigation and real figures. */
+[data-website-presentation="reader-v1"] .focus-card { padding: 16px 18px; border-color: #c8c5b8; border-radius: 8px; }
+[data-website-presentation="reader-v1"] .focus-card h3 { margin-bottom: 12px; font-size: 17px; line-height: 1.65; }
+[data-website-presentation="reader-v1"] .focus-number { color: #6c8073; font-size: 19px; }
+[data-website-presentation="reader-v1"] .focus-topic { color: #375; }
+[data-website-presentation="reader-v1"] .focus-more { color: #375; font-size: 13px; }
+.topic-directory-toggle { margin-top: 16px; padding: 11px 14px; border: 1px solid #c8c5b8; border-radius: 6px; }
+.topic-directory-toggle > summary { cursor: pointer; font-size: 14px; font-weight: 650; }
+.topic-directory-toggle > summary > span { float: right; color: var(--muted); font-size: 12px; font-weight: 400; }
+.topic-directory-toggle .topic-directory { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-list { gap: 20px; }
+[data-website-presentation="reader-v1"] .report-item { padding: 20px; border: 1px solid #c8c5b8; border-left: 3px solid #375; grid-template-columns: 34px minmax(0, 1fr); }
+[data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 34px minmax(0, 1fr) 112px; }
+[data-website-presentation="reader-v1"] .report-item > span { width: 32px; height: 25px; background: transparent; color: #375; }
+[data-website-presentation="reader-v1"] .report-item h3 { margin: 8px 0 16px; font-size: 21px; line-height: 1.6; }
+[data-website-presentation="reader-v1"] .report-item-meta { gap: 6px 10px; line-height: 1.7; letter-spacing: 0; font-size: 12px; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p { margin: 0; color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; overflow-wrap: anywhere; }
+[data-website-presentation="reader-v1"] .report-item .reader-field p + p, [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p + p { margin-top: 12px; }
+[data-website-presentation="reader-v1"] .report-item .ai-summary { margin-top: 0; }
+[data-website-presentation="reader-v1"] .reader-field b[data-highlight] { font-weight: 750; }
+[data-website-presentation="reader-v1"] .ai-summary .reader-label, [data-website-presentation="reader-v1"] .memory-note .reader-label, [data-website-presentation="reader-v1"] .social-translation .reader-label { display: block; width: fit-content; min-height: 0; margin: 0 0 9px; padding: 0; background: transparent; color: #375; font-family: inherit; font-size: 12px; font-weight: 700; letter-spacing: .04em; }
+[data-website-presentation="reader-v1"] .memory-note { margin-top: 18px; padding: 14px 16px; border: 0; border-radius: 4px; background: #edf3ed; }
+[data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 15px; line-height: 1.8; }
+[data-website-presentation="reader-v1"] .report-actions { margin-top: 14px; }
+[data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
+[data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
+[data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
+[data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-note { color: #62685e; }
+[data-website-presentation="reader-v1"] .paper-digest-list { grid-template-columns: 1fr; gap: 16px; }
+[data-website-presentation="reader-v1"] .paper-digest-item { border-left: 2px solid #b8c8b9; background: transparent; padding: 12px 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item > span { color: #375; }
+[data-website-presentation="reader-v1"] .paper-digest-item h4 { font-size: 18px; line-height: 1.65; margin-bottom: 14px; }
+[data-website-presentation="reader-v1"] .paper-digest-item .ai-summary { display: block; border: 0; background: transparent; padding: 0; color: #333; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field { display: block; }
+[data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { color: #333; font-size: 16px; line-height: 1.85; white-space: pre-wrap; }
+[data-website-presentation="reader-v1"] .paper-digest-item em { color: #526150; background: #e5ebdf; font-size: 12px; font-style: normal; }
+@media (max-width: 640px) {
+  [data-website-presentation="reader-v1"] .editorial-overview { margin: 20px 0 24px; }
+  [data-website-presentation="reader-v1"] .focus-grid { gap: 10px; }
+  [data-website-presentation="reader-v1"] .focus-card { padding: 14px 16px; }
+  [data-website-presentation="reader-v1"] .focus-card h3 { font-size: 16px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item { grid-template-columns: 1fr; padding: 18px 14px; }
+  [data-website-presentation="reader-v1"] .report-item.has-thumbnail { grid-template-columns: 1fr; }
+  [data-website-presentation="reader-v1"] .report-item > div:not(.report-thumb) { grid-column: 1; }
+  [data-website-presentation="reader-v1"] .report-item h3 { font-size: 20px; line-height: 1.65; }
+  [data-website-presentation="reader-v1"] .report-item .reader-field p { font-size: 17px; line-height: 1.85; }
+  [data-website-presentation="reader-v1"] .memory-note { padding: 13px; }
+  [data-website-presentation="reader-v1"] .memory-note .reader-field p { font-size: 16px; }
+  [data-website-presentation="reader-v1"] .paper-digest { padding: 16px 12px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item { grid-template-columns: 24px minmax(0, 1fr); gap: 8px; padding: 12px 8px; }
+  [data-website-presentation="reader-v1"] .paper-digest-item .reader-field p { font-size: 17px; }
+}
+
+</style>
+  </head>
+  <body data-website-presentation="reader-v1">
+    <div class="report-shell">
+      <aside class="report-history" aria-label="AI 日报导航">
+    <div class="report-history-title">
+      <span>ARCHIVE</span>
+      <strong>历史日报</strong>
+    </div>
+    <form class="report-search-quick " action="/ai-daily/search/" method="get" role="search">
+      <label class="visually-hidden" for="report-search-quick-input">搜索历史日报</label>
+      <input id="report-search-quick-input" type="search" name="q" placeholder="公司、模型或技术" autocomplete="off">
+      <button type="submit">搜索</button>
+    </form>
+    <nav class="report-history-months" aria-label="按月份归类的历史日报">
+      <details class="report-history-month" open>
+        <summary>
+          <span>2026 年 11 月</span>
+          <em>10 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-11-11" class="is-active" aria-label="2026-11-11，19 条">
+            <time datetime="2026-11-11">11 日</time>
+            <em>19 条</em>
+          </a><a href="/ai-daily/2026-11-10" class="" aria-label="2026-11-10，18 条">
+            <time datetime="2026-11-10">10 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-11-09" class="" aria-label="2026-11-09，17 条">
+            <time datetime="2026-11-09">9 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-11-08" class="" aria-label="2026-11-08，15 条">
+            <time datetime="2026-11-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-11-07" class="" aria-label="2026-11-07，16 条">
+            <time datetime="2026-11-07">7 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-11-06" class="" aria-label="2026-11-06，19 条">
+            <time datetime="2026-11-06">6 日</time>
+            <em>19 条</em>
+          </a><a href="/ai-daily/2026-11-04" class="" aria-label="2026-11-04，18 条">
+            <time datetime="2026-11-04">4 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-11-03" class="" aria-label="2026-11-03，14 条">
+            <time datetime="2026-11-03">3 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-11-02" class="" aria-label="2026-11-02，16 条">
+            <time datetime="2026-11-02">2 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-11-01" class="" aria-label="2026-11-01，18 条">
+            <time datetime="2026-11-01">1 日</time>
+            <em>18 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 10 月</span>
+          <em>21 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-10-31" class="" aria-label="2026-10-31，2 条">
+            <time datetime="2026-10-31">31 日</time>
+            <em>2 条</em>
+          </a><a href="/ai-daily/2026-10-30" class="" aria-label="2026-10-30，8 条">
+            <time datetime="2026-10-30">30 日</time>
+            <em>8 条</em>
+          </a><a href="/ai-daily/2026-10-29" class="" aria-label="2026-10-29，16 条">
+            <time datetime="2026-10-29">29 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-10-28" class="" aria-label="2026-10-28，16 条">
+            <time datetime="2026-10-28">28 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-10-27" class="" aria-label="2026-10-27，15 条">
+            <time datetime="2026-10-27">27 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-26" class="" aria-label="2026-10-26，11 条">
+            <time datetime="2026-10-26">26 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-10-25" class="" aria-label="2026-10-25，5 条">
+            <time datetime="2026-10-25">25 日</time>
+            <em>5 条</em>
+          </a><a href="/ai-daily/2026-10-24" class="" aria-label="2026-10-24，11 条">
+            <time datetime="2026-10-24">24 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-10-23" class="" aria-label="2026-10-23，12 条">
+            <time datetime="2026-10-23">23 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-10-22" class="" aria-label="2026-10-22，15 条">
+            <time datetime="2026-10-22">22 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-14" class="" aria-label="2026-10-14，19 条">
+            <time datetime="2026-10-14">14 日</time>
+            <em>19 条</em>
+          </a><a href="/ai-daily/2026-10-13" class="" aria-label="2026-10-13，17 条">
+            <time datetime="2026-10-13">13 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-12" class="" aria-label="2026-10-12，14 条">
+            <time datetime="2026-10-12">12 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-10-11" class="" aria-label="2026-10-11，17 条">
+            <time datetime="2026-10-11">11 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-10" class="" aria-label="2026-10-10，15 条">
+            <time datetime="2026-10-10">10 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-10-09" class="" aria-label="2026-10-09，17 条">
+            <time datetime="2026-10-09">9 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-08" class="" aria-label="2026-10-08，17 条">
+            <time datetime="2026-10-08">8 日</time>
+            <em>17 条</em>
+          </a><a href="/ai-daily/2026-10-07" class="" aria-label="2026-10-07，13 条">
+            <time datetime="2026-10-07">7 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-10-06" class="" aria-label="2026-10-06，11 条">
+            <time datetime="2026-10-06">6 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-10-05" class="" aria-label="2026-10-05，14 条">
+            <time datetime="2026-10-05">5 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-10-04" class="" aria-label="2026-10-04，16 条">
+            <time datetime="2026-10-04">4 日</time>
+            <em>16 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 9 月</span>
+          <em>29 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-09-29" class="" aria-label="2026-09-29，12 条">
+            <time datetime="2026-09-29">29 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-28" class="" aria-label="2026-09-28，13 条">
+            <time datetime="2026-09-28">28 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-27" class="" aria-label="2026-09-27，18 条">
+            <time datetime="2026-09-27">27 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-09-26" class="" aria-label="2026-09-26，14 条">
+            <time datetime="2026-09-26">26 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-25" class="" aria-label="2026-09-25，15 条">
+            <time datetime="2026-09-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-09-24" class="" aria-label="2026-09-24，14 条">
+            <time datetime="2026-09-24">24 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-23" class="" aria-label="2026-09-23，13 条">
+            <time datetime="2026-09-23">23 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-22" class="" aria-label="2026-09-22，13 条">
+            <time datetime="2026-09-22">22 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-21" class="" aria-label="2026-09-21，10 条">
+            <time datetime="2026-09-21">21 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-09-20" class="" aria-label="2026-09-20，13 条">
+            <time datetime="2026-09-20">20 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-19" class="" aria-label="2026-09-19，10 条">
+            <time datetime="2026-09-19">19 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-09-18" class="" aria-label="2026-09-18，10 条">
+            <time datetime="2026-09-18">18 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-09-17" class="" aria-label="2026-09-17，12 条">
+            <time datetime="2026-09-17">17 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-16" class="" aria-label="2026-09-16，14 条">
+            <time datetime="2026-09-16">16 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-15" class="" aria-label="2026-09-15，16 条">
+            <time datetime="2026-09-15">15 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-09-14" class="" aria-label="2026-09-14，11 条">
+            <time datetime="2026-09-14">14 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-09-13" class="" aria-label="2026-09-13，12 条">
+            <time datetime="2026-09-13">13 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-12" class="" aria-label="2026-09-12，14 条">
+            <time datetime="2026-09-12">12 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-11" class="" aria-label="2026-09-11，13 条">
+            <time datetime="2026-09-11">11 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-10" class="" aria-label="2026-09-10，14 条">
+            <time datetime="2026-09-10">10 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-09" class="" aria-label="2026-09-09，15 条">
+            <time datetime="2026-09-09">9 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-09-08" class="" aria-label="2026-09-08，15 条">
+            <time datetime="2026-09-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-09-07" class="" aria-label="2026-09-07，16 条">
+            <time datetime="2026-09-07">7 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-09-06" class="" aria-label="2026-09-06，14 条">
+            <time datetime="2026-09-06">6 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-05" class="" aria-label="2026-09-05，12 条">
+            <time datetime="2026-09-05">5 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-09-04" class="" aria-label="2026-09-04，13 条">
+            <time datetime="2026-09-04">4 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-09-03" class="" aria-label="2026-09-03，14 条">
+            <time datetime="2026-09-03">3 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-02" class="" aria-label="2026-09-02，14 条">
+            <time datetime="2026-09-02">2 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-09-01" class="" aria-label="2026-09-01，14 条">
+            <time datetime="2026-09-01">1 日</time>
+            <em>14 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 8 月</span>
+          <em>31 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-08-31" class="" aria-label="2026-08-31，12 条">
+            <time datetime="2026-08-31">31 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-30" class="" aria-label="2026-08-30，12 条">
+            <time datetime="2026-08-30">30 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-29" class="" aria-label="2026-08-29，14 条">
+            <time datetime="2026-08-29">29 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-28" class="" aria-label="2026-08-28，12 条">
+            <time datetime="2026-08-28">28 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-27" class="" aria-label="2026-08-27，13 条">
+            <time datetime="2026-08-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-26" class="" aria-label="2026-08-26，13 条">
+            <time datetime="2026-08-26">26 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-25" class="" aria-label="2026-08-25，12 条">
+            <time datetime="2026-08-25">25 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-24" class="" aria-label="2026-08-24，12 条">
+            <time datetime="2026-08-24">24 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-23" class="" aria-label="2026-08-23，10 条">
+            <time datetime="2026-08-23">23 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-08-22" class="" aria-label="2026-08-22，11 条">
+            <time datetime="2026-08-22">22 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-08-21" class="" aria-label="2026-08-21，13 条">
+            <time datetime="2026-08-21">21 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-20" class="" aria-label="2026-08-20，14 条">
+            <time datetime="2026-08-20">20 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-19" class="" aria-label="2026-08-19，13 条">
+            <time datetime="2026-08-19">19 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-18" class="" aria-label="2026-08-18，14 条">
+            <time datetime="2026-08-18">18 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-17" class="" aria-label="2026-08-17，13 条">
+            <time datetime="2026-08-17">17 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-16" class="" aria-label="2026-08-16，12 条">
+            <time datetime="2026-08-16">16 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-08-15" class="" aria-label="2026-08-15，13 条">
+            <time datetime="2026-08-15">15 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-14" class="" aria-label="2026-08-14，16 条">
+            <time datetime="2026-08-14">14 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-08-13" class="" aria-label="2026-08-13，11 条">
+            <time datetime="2026-08-13">13 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-08-12" class="" aria-label="2026-08-12，14 条">
+            <time datetime="2026-08-12">12 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-11" class="" aria-label="2026-08-11，16 条">
+            <time datetime="2026-08-11">11 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-08-10" class="" aria-label="2026-08-10，11 条">
+            <time datetime="2026-08-10">10 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-08-09" class="" aria-label="2026-08-09，14 条">
+            <time datetime="2026-08-09">9 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-08" class="" aria-label="2026-08-08，13 条">
+            <time datetime="2026-08-08">8 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-07" class="" aria-label="2026-08-07，14 条">
+            <time datetime="2026-08-07">7 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-06" class="" aria-label="2026-08-06，16 条">
+            <time datetime="2026-08-06">6 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-08-05" class="" aria-label="2026-08-05，13 条">
+            <time datetime="2026-08-05">5 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-08-04" class="" aria-label="2026-08-04，8 条">
+            <time datetime="2026-08-04">4 日</time>
+            <em>8 条</em>
+          </a><a href="/ai-daily/2026-08-03" class="" aria-label="2026-08-03，14 条">
+            <time datetime="2026-08-03">3 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-02" class="" aria-label="2026-08-02，14 条">
+            <time datetime="2026-08-02">2 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-08-01" class="" aria-label="2026-08-01，13 条">
+            <time datetime="2026-08-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 7 月</span>
+          <em>31 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-07-31" class="" aria-label="2026-07-31，15 条">
+            <time datetime="2026-07-31">31 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-30" class="" aria-label="2026-07-30，14 条">
+            <time datetime="2026-07-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-29" class="" aria-label="2026-07-29，15 条">
+            <time datetime="2026-07-29">29 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-28" class="" aria-label="2026-07-28，16 条">
+            <time datetime="2026-07-28">28 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-27" class="" aria-label="2026-07-27，13 条">
+            <time datetime="2026-07-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-26" class="" aria-label="2026-07-26，15 条">
+            <time datetime="2026-07-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-25" class="" aria-label="2026-07-25，15 条">
+            <time datetime="2026-07-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-24" class="" aria-label="2026-07-24，14 条">
+            <time datetime="2026-07-24">24 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-23" class="" aria-label="2026-07-23，13 条">
+            <time datetime="2026-07-23">23 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-22" class="" aria-label="2026-07-22，13 条">
+            <time datetime="2026-07-22">22 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-21" class="" aria-label="2026-07-21，14 条">
+            <time datetime="2026-07-21">21 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-20" class="" aria-label="2026-07-20，13 条">
+            <time datetime="2026-07-20">20 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-19" class="" aria-label="2026-07-19，13 条">
+            <time datetime="2026-07-19">19 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-18" class="" aria-label="2026-07-18，15 条">
+            <time datetime="2026-07-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-17" class="" aria-label="2026-07-17，10 条">
+            <time datetime="2026-07-17">17 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-07-16" class="" aria-label="2026-07-16，15 条">
+            <time datetime="2026-07-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-15" class="" aria-label="2026-07-15，16 条">
+            <time datetime="2026-07-15">15 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-14" class="" aria-label="2026-07-14，15 条">
+            <time datetime="2026-07-14">14 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-13" class="" aria-label="2026-07-13，14 条">
+            <time datetime="2026-07-13">13 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-12" class="" aria-label="2026-07-12，9 条">
+            <time datetime="2026-07-12">12 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-07-11" class="" aria-label="2026-07-11，15 条">
+            <time datetime="2026-07-11">11 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-10" class="" aria-label="2026-07-10，11 条">
+            <time datetime="2026-07-10">10 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-09" class="" aria-label="2026-07-09，16 条">
+            <time datetime="2026-07-09">9 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-08" class="" aria-label="2026-07-08，14 条">
+            <time datetime="2026-07-08">8 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-07-07" class="" aria-label="2026-07-07，18 条">
+            <time datetime="2026-07-07">7 日</time>
+            <em>18 条</em>
+          </a><a href="/ai-daily/2026-07-06" class="" aria-label="2026-07-06，13 条">
+            <time datetime="2026-07-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-07-05" class="" aria-label="2026-07-05，15 条">
+            <time datetime="2026-07-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-04" class="" aria-label="2026-07-04，16 条">
+            <time datetime="2026-07-04">4 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-07-03" class="" aria-label="2026-07-03，15 条">
+            <time datetime="2026-07-03">3 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-07-02" class="" aria-label="2026-07-02，11 条">
+            <time datetime="2026-07-02">2 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-07-01" class="" aria-label="2026-07-01，13 条">
+            <time datetime="2026-07-01">1 日</time>
+            <em>13 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 6 月</span>
+          <em>29 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-06-30" class="" aria-label="2026-06-30，14 条">
+            <time datetime="2026-06-30">30 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-29" class="" aria-label="2026-06-29，12 条">
+            <time datetime="2026-06-29">29 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-28" class="" aria-label="2026-06-28，13 条">
+            <time datetime="2026-06-28">28 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-27" class="" aria-label="2026-06-27，13 条">
+            <time datetime="2026-06-27">27 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-26" class="" aria-label="2026-06-26，11 条">
+            <time datetime="2026-06-26">26 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-25" class="" aria-label="2026-06-25，15 条">
+            <time datetime="2026-06-25">25 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-24" class="" aria-label="2026-06-24，15 条">
+            <time datetime="2026-06-24">24 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-23" class="" aria-label="2026-06-23，15 条">
+            <time datetime="2026-06-23">23 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-22" class="" aria-label="2026-06-22，11 条">
+            <time datetime="2026-06-22">22 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-21" class="" aria-label="2026-06-21，11 条">
+            <time datetime="2026-06-21">21 日</time>
+            <em>11 条</em>
+          </a><a href="/ai-daily/2026-06-20" class="" aria-label="2026-06-20，14 条">
+            <time datetime="2026-06-20">20 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-19" class="" aria-label="2026-06-19，15 条">
+            <time datetime="2026-06-19">19 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-18" class="" aria-label="2026-06-18，15 条">
+            <time datetime="2026-06-18">18 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-17" class="" aria-label="2026-06-17，15 条">
+            <time datetime="2026-06-17">17 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-16" class="" aria-label="2026-06-16，15 条">
+            <time datetime="2026-06-16">16 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-15" class="" aria-label="2026-06-15，12 条">
+            <time datetime="2026-06-15">15 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-14" class="" aria-label="2026-06-14，14 条">
+            <time datetime="2026-06-14">14 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-06-13" class="" aria-label="2026-06-13，15 条">
+            <time datetime="2026-06-13">13 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-12" class="" aria-label="2026-06-12，15 条">
+            <time datetime="2026-06-12">12 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-10" class="" aria-label="2026-06-10，15 条">
+            <time datetime="2026-06-10">10 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-09" class="" aria-label="2026-06-09，15 条">
+            <time datetime="2026-06-09">9 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-08" class="" aria-label="2026-06-08，15 条">
+            <time datetime="2026-06-08">8 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-07" class="" aria-label="2026-06-07，12 条">
+            <time datetime="2026-06-07">7 日</time>
+            <em>12 条</em>
+          </a><a href="/ai-daily/2026-06-06" class="" aria-label="2026-06-06，13 条">
+            <time datetime="2026-06-06">6 日</time>
+            <em>13 条</em>
+          </a><a href="/ai-daily/2026-06-05" class="" aria-label="2026-06-05，15 条">
+            <time datetime="2026-06-05">5 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-04" class="" aria-label="2026-06-04，15 条">
+            <time datetime="2026-06-04">4 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-03" class="" aria-label="2026-06-03，16 条">
+            <time datetime="2026-06-03">3 日</time>
+            <em>16 条</em>
+          </a><a href="/ai-daily/2026-06-02" class="" aria-label="2026-06-02，15 条">
+            <time datetime="2026-06-02">2 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-06-01" class="" aria-label="2026-06-01，11 条">
+            <time datetime="2026-06-01">1 日</time>
+            <em>11 条</em>
+          </a>
+        </div>
+      </details><details class="report-history-month" >
+        <summary>
+          <span>2026 年 5 月</span>
+          <em>8 期</em>
+        </summary>
+        <div class="report-history-month-items">
+          <a href="/ai-daily/2026-05-31" class="" aria-label="2026-05-31，14 条">
+            <time datetime="2026-05-31">31 日</time>
+            <em>14 条</em>
+          </a><a href="/ai-daily/2026-05-30" class="" aria-label="2026-05-30，15 条">
+            <time datetime="2026-05-30">30 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-29" class="" aria-label="2026-05-29，9 条">
+            <time datetime="2026-05-29">29 日</time>
+            <em>9 条</em>
+          </a><a href="/ai-daily/2026-05-28" class="" aria-label="2026-05-28，15 条">
+            <time datetime="2026-05-28">28 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-27" class="" aria-label="2026-05-27，15 条">
+            <time datetime="2026-05-27">27 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-26" class="" aria-label="2026-05-26，15 条">
+            <time datetime="2026-05-26">26 日</time>
+            <em>15 条</em>
+          </a><a href="/ai-daily/2026-05-25" class="" aria-label="2026-05-25，10 条">
+            <time datetime="2026-05-25">25 日</time>
+            <em>10 条</em>
+          </a><a href="/ai-daily/2026-05-22" class="" aria-label="2026-05-22，8 条">
+            <time datetime="2026-05-22">22 日</time>
+            <em>8 条</em>
+          </a>
+        </div>
+      </details>
+    </nav>
+    <div class="report-nav-entry">
+      <a href="/ai-daily/archive/" class="">
+        <span>ARCHIVE</span>
+        <strong>查看全部 159 期 →</strong>
+      </a>
+    </div>
+  </aside>
+      <main class="report-page">
+        <div class="report-topline">
+          <span>AI DAILY BRIEF · EVENT NOTES · 2026.11.11</span>
+          <span>for AI era builders</span>
+        </div>
+        <header class="report-hero">
+          <div class="report-hero-main">
+            <p class="eyebrow">EDITORIAL BRIEF</p>
+            <h1>AI 行业简报 2026-11-11</h1>
+            <p>今天筛出 19 个事件：大厂动态 12 条，技术进展 5 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。</p>
+            <p data-publication-status="partial" role="note" style="border-left:3px solid #9b6a27;padding:8px 12px;font-size:14px;line-height:1.7">本期先发布已核实内容，仍有30条重要线索未完成核实，暂未收录；核实后将继续补充。</p>
+          </div>
+        </header>
+        <section class="editorial-overview" aria-label="今日重点与选题目录">
+    <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
+    <div class="focus-grid"><article class="focus-card" data-focus-id="1449029875d81b">
+      <span class="focus-number">01</span>
+      <p class="focus-topic">Agent 技术</p>
+      <h3><a data-field="focus-title" data-report-target="event-1449029875d81b" href="?event=event-1449029875d81b#technical-progress">Google DeepMind与Artificial Analysis发布MKA基准，用200项视觉任务评估Agent的知识工作能力。</a></h3>
+      <a class="focus-more" data-report-target="event-1449029875d81b" href="?event=event-1449029875d81b#technical-progress">阅读解读与来源 →</a>
+    </article><article class="focus-card" data-focus-id="3b656fadb12d98">
+      <span class="focus-number">02</span>
+      <p class="focus-topic">AI 产品与工具</p>
+      <h3><a data-field="focus-title" data-report-target="event-3b656fadb12d98" href="?event=event-3b656fadb12d98#company-updates">Adobe在MAX大会为Photoshop、Premiere、Firefly增加AI功能，并发布本地MCP向外部聊天机器人开放Creative Cloud能力。</a></h3>
+      <a class="focus-more" data-report-target="event-3b656fadb12d98" href="?event=event-3b656fadb12d98#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card" data-focus-id="63932323da97b3">
+      <span class="focus-number">03</span>
+      <p class="focus-topic">行业 / 商业动态</p>
+      <h3><a data-field="focus-title" data-report-target="event-63932323da97b3" href="?event=event-63932323da97b3#company-updates">Oura宣布以6.25亿美元收购AI原生初级医疗公司Counsel Health，交易预计2027年底前完成。</a></h3>
+      <a class="focus-more" data-report-target="event-63932323da97b3" href="?event=event-63932323da97b3#company-updates">阅读解读与来源 →</a>
+    </article></div>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>19 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-480e7e96aa03a8" href="?event=event-480e7e96aa03a8#company-updates">Meta 发布轻量模型 Muse Ember，面向 Agent 工具调用与长文档解析，短提示输入价每百万 token 0.10 美元。</a></li></ul>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-63932323da97b3" href="?event=event-63932323da97b3#company-updates">Oura宣布以6.25亿美元收购AI原生初级医疗公司Counsel Health，交易预计2027年底前完成。</a></li><li><a data-report-target="event-da18b2859102f1" href="?event=event-da18b2859102f1#company-updates">OpenAI 收购 AI 旅行代理 Odessia，创始人加入且原工具已关闭。</a></li><li><a data-report-target="event-566088679df0de" href="?event=event-566088679df0de#company-updates">OpenAI 收购 AI 旅行智能体公司 Odessia，创始人 Francis Davidson 加入，交易条款未披露且未公布旅行产品计划。</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>5</b></summary>
+        <ul><li><a data-report-target="event-3b656fadb12d98" href="?event=event-3b656fadb12d98#company-updates">Adobe在MAX大会为Photoshop、Premiere、Firefly增加AI功能，并发布本地MCP向外部聊天机器人开放Creative Cloud能力。</a></li><li><a data-report-target="event-a07d2bd991005e" href="?event=event-a07d2bd991005e#company-updates">OpenAI 推出测试版 Business Hub，企业可创建、核验并更新商业资料，符合条件者将可创建并上线商业 Agent。</a></li><li><a data-report-target="event-b9dd9fc56ba667" href="?event=event-b9dd9fc56ba667#company-updates">OpenAI 推出 Beta 版“Businesses in ChatGPT”，美国符合条件的电商和在线服务商可创建 Business Agents。</a></li><li><a data-report-target="event-839555ba368805" href="?event=event-839555ba368805#company-updates">Meta 介绍 Facebook 推荐偏好控制功能 Your algorithm，用户可用自然语言编辑 Feed 与 Reels 兴趣。</a></li><li><a data-report-target="event-a4439ff4a1c945" href="?event=event-a4439ff4a1c945#company-updates">Anthropic为Claude加入表格、白板与交互连接器，并预告会议笔记功能即将推出。</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>4</b></summary>
+        <ul><li><a data-report-target="event-029e4bc23782fe" href="?event=event-029e4bc23782fe#company-updates">Adobe在Max大会宣布第三方AI Agent可访问并修改Creative Cloud项目，并扩展Firefly AI Assistant与后台周期任务能力。</a></li><li><a data-report-target="event-1449029875d81b" href="?event=event-1449029875d81b#technical-progress">Google DeepMind与Artificial Analysis发布MKA基准，用200项视觉任务评估Agent的知识工作能力。</a></li><li><a data-report-target="event-e3223673af6c26" href="?event=event-e3223673af6c26#technical-progress">AWS 撰文梳理 Amazon Bedrock AgentCore 评估方法：内置、DeepEval 与 AutoEval 评估器按 trace 或会话分层。</a></li><li><a data-report-target="event-c174da70b876d7" href="?event=event-c174da70b876d7#technical-progress">Workday 用 LangGraph 与 LangSmith 搭建企业 Agent 平台，LangChain 博客称原型时间从 4-5 个月降至不到 1 天。</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-b9e4a772c0e6ce" href="?event=event-b9e4a772c0e6ce#technical-progress">Meta 构建 Triton 低层扩展 TLX，用显式 warp-group 编排适配新一代 GPU 执行特性。</a></li><li><a data-report-target="event-3b20cc60fa2035" href="?event=event-3b20cc60fa2035#technical-progress">Google DeepMind 用智能体AI框架 AlphaProof Code 在四周内形式化验证 Signal 协议的多项关键加密保证。</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-8660d52dccb8e0" href="?event=event-8660d52dccb8e0#industry-views">CNBC 报道称，AI 正加快部分招聘环节，Adecco 表示其六个 AI 招聘 Agent 在英国和法国运行、英国相关工具节省约15%的招聘流程时间，招聘机构收费面临压力。</a></li></ul>
+      </details><details class="topic-group"><summary><span>算力硬件与基础设施</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-df7f306706831e" href="?event=event-df7f306706831e#company-updates">Google公布TPU 8tx与TPU 8i Max两款第八代TPU变体，分别面向机密训练和大内存推理。</a></li></ul>
+      </details><details class="topic-group"><summary><span>政策、安全与社会影响</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-ead8ebd8265b25" href="?event=event-ead8ebd8265b25#company-updates">黄仁勋承认婚外情，英伟达董事会就国家安全担忧启动独立调查，股价开盘跌7.5%。</a></li></ul>
+      </details><details class="topic-group"><summary><span>人才与组织</span><b>0</b></summary>
+        <p>本期暂无达到入选标准的新内容</p>
+      </details></div></details>
+  </section>
+        <nav class="report-tabs" aria-label="日报版块" role="tablist">
+          <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
+    <span>A</span>
+    <strong>大厂动态</strong>
+    <em>12</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="technical-progress" data-tab-target="technical-progress">
+    <span>B</span>
+    <strong>技术进展</strong>
+    <em>6</em>
+  </button>
+          <button class="" type="button" role="tab" aria-selected="false" aria-controls="industry-views" data-tab-target="industry-views">
+    <span>C</span>
+    <strong>行业观点</strong>
+    <em>2</em>
+  </button>
+        </nav>
+        <div class="report-tab-panels">
+          <section id="company-updates" class="report-section report-tab-panel is-active" role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>A</span>
+        <h2>大厂动态</h2>
+      </div>
+      <p>AI 公司动态 · 模型发布 · 新业务 · 融资投资 · 人员变动</p>
+    </div>
+    <div class="report-list">
+      
+      <article id="event-3b656fadb12d98" data-item-id="3b656fadb12d98" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Adobe</strong>
+            <em>模型/产品发布</em>
+            <em>AI 产品与工具</em>
+            
+            <a class="source-link" href="https://techcrunch.com/2026/11/10/adobe-adds-more-ai-to-its-products-and-launches-an-mcp/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/10/adobe-adds-more-ai-to-its-products-and-launches-an-mcp/" target="_blank" rel="noreferrer">Adobe在MAX大会为Photoshop、Premiere、Firefly增加AI功能，并发布本地MCP向外部聊天机器人开放Creative Cloud能力。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Adobe在迈阿密MAX大会上宣布向<b data-highlight style=color:#245b78>Photoshop</b>、Premiere、Illustrator、InDesign等产品加入更多AI功能，并扩展Firefly的AI能力。 </p><p><b data-highlight style=color:#275f45>Adobe发布本地MCP，</b>让ChatGPT、Claude、Gemini等外部聊天机器人可以调用Adobe功能；其副总裁Deepa Subramaniam称公司仍在确定开放哪些能力，将依据用户反馈推进。 </p><p>Firefly新增私测中的原型设计工具Builder，以及品牌图表生成、局部图像编辑和由片段、图像、音效组装视频的AI视频工具。 </p><p>Photoshop新增重新打光功能和基于提示的生成式风格滑块，Premiere新增面向专业人员的调色系统和视频对象移除，Lightroom新增眨眼校正与瑕疵去除工具。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Adobe此前已提供Google、Runway、ElevenLabs、Black Forest Labs、OpenAI、Kling、ByteDance等第三方模型，其收购的Topaz Labs同期发布Wonder 4与ImageHDR两个图像模型。 </p><p>Adobe将Agent设为主动常驻以获取更多工作上下文，这与Agent Systems方向中强调长时任务上下文与工具接线的趋势一致。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-63932323da97b3" data-item-id="63932323da97b3" class="report-item ">
+        <span>02</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Oura</strong>
+            <em>融资/收购/估值</em>
+            <em>行业 / 商业动态</em>
+            
+            <a class="source-link" href="https://techcrunch.com/2026/11/10/oura-to-acquire-ai-native-primary-care-startup-counsel-health-for-625m/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/10/oura-to-acquire-ai-native-primary-care-startup-counsel-health-for-625m/" target="_blank" rel="noreferrer">Oura宣布以6.25亿美元收购AI原生初级医疗公司Counsel Health，交易预计2027年底前完成。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Oura宣布<b data-highlight style=color:#275f45>以6.25亿美元收购</b>AI原生初级医疗公司Counsel Health。 Counsel Health将聊天式医疗体验与持证医生接入结合，其服务自6月起已集成进Oura应用。 </p><p>交易预计在2027年底前完成，Counsel将继续服务现有及新企业客户，其CEO Muthu Alagappan将随70名员工加入Oura并出任首席临床AI官。 此前数周，Oura以IPO市场不确定性为由无限期推迟最高22亿美元IPO。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p><b data-highlight style=color:#245b78>Oura在推迟最高22亿美元IPO后，</b>以6.25亿美元收购Counsel Health，试图把戒指采集的生理数据与持证医生参与的AI医疗服务结合；<b data-highlight style=color:#80511f>交易尚待完成，</b>协同效果仍待观察。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 60 秒</span>
+          </div>
+        </div>
+      </article><article id="event-a07d2bd991005e" data-item-id="a07d2bd991005e" class="report-item ">
+        <span>03</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>模型/产品发布</em>
+            <em>AI 产品与工具</em>
+            <em>补录 · 2026-11-10 发布</em>
+            <a class="source-link" href="https://techcrunch.com/2026/11/10/openai-rolls-out-new-business-profiles-making-chatgpt-just-a-little-bit-more-like-google/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/10/openai-rolls-out-new-business-profiles-making-chatgpt-just-a-little-bit-more-like-google/" target="_blank" rel="noreferrer">OpenAI 推出测试版 Business Hub，企业可创建、核验并更新商业资料，符合条件者将可创建并上线商业 Agent。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#275f45>OpenAI 推出 Business Hub，</b>企业可在其中创建、核验并更新商业资料，该功能目前处于 beta 阶段。 符合条件的公司还将能创建并上线专门的商业 Agent，让 ChatGPT 用户就企业及其产品提问。 </p><p>Business Hub 还将提供有限的商业洞察，显示 ChatGPT 用户与其产品的互动，包括资料浏览量、企业被提及次数、网站点击及其他指标。 企业需通过正式流程核验资料，但 OpenAI 未公布该流程的具体细节。 </p><p>OpenAI 变现副总裁 Benji Shomair 表示，公司针对不同市场和不同类型企业采用多种核验方式。 OpenAI 此前曾以佣金制尝试让 ChatGPT 成为可直接购物的电商入口，该项目最终未能发展起来，并于 3 月被公司终止。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这是 OpenAI 在电商直购尝试退出后，转向企业资料与商业 Agent 入口的又一次商业化探索，<b data-highlight style=color:#80511f>效果尚待观察</b>。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-b9dd9fc56ba667" data-item-id="b9dd9fc56ba667" class="report-item ">
+        <span>04</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>模型/产品发布</em>
+            <em>AI 产品与工具</em>
+            
+            <a class="source-link" href="https://the-decoder.com/openai-turns-chatgpt-into-a-business-directory-with-ai-agents-that-handle-customer-questions/" target="_blank" rel="noopener noreferrer"><b>The Decoder</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://the-decoder.com/openai-turns-chatgpt-into-a-business-directory-with-ai-agents-that-handle-customer-questions/" target="_blank" rel="noreferrer">OpenAI 推出 Beta 版“Businesses in ChatGPT”，美国符合条件的电商和在线服务商可创建 Business Agents。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 The Decoder 报道，OpenAI <b data-highlight style=color:#275f45>推出名为“Businesses in ChatGPT”的 Beta 功能，</b>企业可通过 Business Hub 注册、更新信息、上传含价格与库存的商品 feed，并查看被提及次数与网站点击。 </p><p>符合条件的美国电商和在线服务商还可创建 <b data-highlight style=color:#245b78>Business Agents</b>，在 ChatGPT 内回答客户问题、协助产品比较，并可作为 ChatGPT 广告的投放目标；Shopify 商家可直接连接店铺。 </p><p>OpenAI 称 ChatGPT 每周触达 12 亿用户，用户对话不会共享给商家，并计划逐步扩展至更多市场和行业。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>OpenAI 把商家资料、商品 feed、客服 Agent 与广告投放目标放进 ChatGPT 会话体系，商家运营入口与广告位在同一产品内衔接。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 70 秒</span>
+          </div>
+        </div>
+      </article><article id="event-480e7e96aa03a8" data-item-id="480e7e96aa03a8" class="report-item ">
+        <span>05</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Meta Superintelligence Labs</strong>
+            <em>模型/产品发布</em>
+            <em>基础模型与技术</em>
+            <em>补录 · 2026-11-09 发布</em>
+            <a class="source-link" href="https://techcrunch.com/2026/11/09/meta-releases-muse-ember-a-new-lightweight-model-for-agent-execution/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a> · <a class="source-link" href="https://simonwillison.net/2026/Nov/10/muse-ember/" target="_blank" rel="noopener noreferrer"><b>simonwillison.net</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/09/meta-releases-muse-ember-a-new-lightweight-model-for-agent-execution/" target="_blank" rel="noreferrer">Meta 发布轻量模型 Muse Ember，面向 Agent 工具调用与长文档解析，短提示输入价每百万 token 0.10 美元。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Meta Superintelligence Lab <b data-highlight style=color:#275f45>发布其称为“最小、最高效”的模型 Muse Ember，</b>定位是 Agent 每天重复执行的任务，包括工具调用、编码子任务、路由、信息抽取和长文档解析。 </p><p>短提示下其输入与输出定价为每百万 token 0.10 美元与 0.50 美元，与 GPT-6 Luna、Claude Haiku 5.5 相同；</p><p>提示超过 20 万 token 后升至输入 0.30 美元、输出 1.50 美元，价格区间介于这两款竞品之间。 </p><p>Meta 引用 Artificial Analysis 的每任务成本曲线称 Ember 位于效率前沿，<b data-highlight style=color:#80511f>并称“没有模型能以更低成本获得更高分数”</b>；这一排名属于厂商自述，仍需第三方复现。 </p><p>Ember 提供 minimal 到 max 共六档推理级别，训练覆盖文本、图像与音频，可与更大的 Muse Wonder 搭配；Meta 的说法是“Wonder 规划、Ember 处理体量”。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>真正值得注意的变化在计价口径：Meta 把讨论从每 token 价格转到 Artificial Analysis 的每任务成本，并明确把 Ember 放进“大模型规划、小模型跑量”的 Agent 分层编排里。 </p><p>Ember 是 Muse 品牌第四款模型，此前为 4 月 Spark、8 月 Glimmer 与 10 月 Wonder，本次主打体量与成本，<b data-highlight style=color:#80511f>而非前沿能力</b>。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-839555ba368805" data-item-id="839555ba368805" class="report-item ">
+        <span>06</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Meta</strong>
+            <em>模型/产品发布</em>
+            <em>AI 产品与工具</em>
+            
+            <a class="source-link" href="https://engineering.fb.com/2026/11/10/ml-applications/your-algorithm-giving-people-more-ways-to-personalize-facebook-recommendations/" target="_blank" rel="noopener noreferrer"><b>Meta</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://engineering.fb.com/2026/11/10/ml-applications/your-algorithm-giving-people-more-ways-to-personalize-facebook-recommendations/" target="_blank" rel="noreferrer">Meta 介绍 Facebook 推荐偏好控制功能 Your algorithm，用户可用自然语言编辑 Feed 与 Reels 兴趣。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Meta 在工程博客中介绍 <b data-highlight style=color:#245b78>Your algorithm</b>：用户可用自然语言在 Facebook 上陈述想看的内容，系统据此调整 Feed 和 Reels 推荐。 </p><p>系统由一组 LLM 理解、存储和追踪用户明示偏好及行为，并通过 Profile generation、Preference management、Ranking 和 Delivery optimization 等组件把偏好用于排序。 </p><p><b data-highlight style=color:#80511f>对 Not Interested In，</b>系统在排序时用 embedding 比较、LLM reranker 复核，并在设备端做缓存失效以多层过滤。 原文称，新兴趣会获得有限期加权但不会接管推荐；</p><p>一个小模型 fine-tuned 只返回要移除的项，比通用模型逐项判断更快更可靠。</p></div></div>
+          <figure class="reader-figure" data-image-event-id="839555ba368805" data-image-sha256="3639f6af7f76efeb5d4fb31401b40a8cac39e8d7fd662157bc11259634494166"><img src="https://luojinping.com/ai-daily/reading-images/3639f6af7f76efeb5d4fb31401b40a8cac39e8d7fd662157bc11259634494166.png" alt="原新闻正文中的架构图，具体标注以原图为准。" width="1999" height="603" loading="lazy"><figcaption>原文架构图（发布方：meta；图中标注与条件以原文为准）。</figcaption></figure>
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这不是新模型发布，而是把用户显式偏好接入推荐排序闭环的产品工程。 真正难点在偏好验证、检索/排序联动和设备端缓存失效，LLM 只是其中一层。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 75 秒</span>
+          </div>
+        </div>
+      </article><article id="event-029e4bc23782fe" data-item-id="029e4bc23782fe" class="report-item ">
+        <span>07</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Adobe</strong>
+            <em>模型/产品发布</em>
+            <em>Agent 技术</em>
+            
+            <a class="source-link" href="https://www.theverge.com/tech/1030593/adobe-max-ai-agents-mcp-firefly-assistant-updates" target="_blank" rel="noopener noreferrer"><b>theverge</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://www.theverge.com/tech/1030593/adobe-max-ai-agents-mcp-firefly-assistant-updates" target="_blank" rel="noreferrer">Adobe在Max大会宣布第三方AI Agent可访问并修改Creative Cloud项目，并扩展Firefly AI Assistant与后台周期任务能力。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Adobe在Max大会宣布，将允许用户选择的第三方AI Agent访问并修改Creative Cloud项目。 <b data-highlight style=color:#275f45>Adobe同时扩展Firefly AI Assistant能力，</b>并让AI Agent能够在后台持续执行周期性工作。 </p><p>这些功能在佛罗里达州迈阿密举行的Adobe Max大会上公布。 报道将这一方向概括为Adobe全面押注Agentic AI。</p></div></div>
+          
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 45 秒</span>
+          </div>
+        </div>
+      </article><article id="event-a4439ff4a1c945" data-item-id="a4439ff4a1c945" class="report-item ">
+        <span>08</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Anthropic</strong>
+            <em>模型/产品发布</em>
+            <em>AI 产品与工具</em>
+            
+            <a class="source-link" href="https://the-decoder.com/anthropic-turns-claude-into-a-full-workspace-with-plugins-spreadsheets-whiteboards-and-soon-meeting-notes/" target="_blank" rel="noopener noreferrer"><b>The Decoder</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://the-decoder.com/anthropic-turns-claude-into-a-full-workspace-with-plugins-spreadsheets-whiteboards-and-soon-meeting-notes/" target="_blank" rel="noreferrer">Anthropic为Claude加入表格、白板与交互连接器，并预告会议笔记功能即将推出。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Anthropic为<b data-highlight style=color:#245b78>Claude</b>应用加入多项团队协作功能：Claude Sheets支持带公式和多标签页的表格，Claude Whiteboards可做头脑风暴并让Claude总结。 </p><p>Claude Data（原Dashboards）连接Snowflake和Salesforce等工具构建看板，Interactive Connectors允许Adobe、Atlassian、Salesforce等合作伙伴把应用嵌入Claude。 </p><p>文章称，Claude Meetings可加入通话并做笔记，<b data-highlight style=color:#275f45>将“很快”推出</b>；企业客户可获得审计日志、隔离虚拟机和合规API等安全控制。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Anthropic此次把表格、白板、数据连接和第三方应用连接器纳入Claude，产品形态更接近团队协作工作区。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 55 秒</span>
+          </div>
+        </div>
+      </article><article id="event-ead8ebd8265b25" data-item-id="ead8ebd8265b25" class="report-item ">
+        <span>09</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>NVIDIA</strong>
+            <em>公司/行业动态</em>
+            <em>政策、安全与社会影响</em>
+            <em>补录 · 2026-11-09 发布</em>
+            <a class="source-link" href="https://www.theguardian.com/technology/2026/nov/09/jensen-huang-image-nvidia" target="_blank" rel="noopener noreferrer"><b>The Guardian</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://www.theguardian.com/technology/2026/nov/09/jensen-huang-image-nvidia" target="_blank" rel="noreferrer">黄仁勋承认婚外情，英伟达董事会就国家安全担忧启动独立调查，股价开盘跌7.5%。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>《卫报》报道，黄仁勋在致员工信中承认婚外情；<b data-highlight style=color:#80511f>此前《纽约时报》称他可能被一名中国情报资产列为目标并与其建立了密切关系</b>。 英伟达董事会已就这段关系引发的国家安全担忧启动独立调查，黄仁勋表示支持并全力配合。 </p><p>董事会声明称，不认为国家安全或公司机密遭到泄露，并对黄仁勋及其领导团队表示有信心。 报道还称，英伟达股价开盘下跌7.5%，市值蒸发超过3300亿美元；分析师Dan Ives称，调查结果可能导致黄仁勋被免去CEO职务。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>后续需跟踪董事会独立调查的结论、美国国会问询是否正式启动，以及黄仁勋CEO职位面临的实质风险。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 65 秒</span>
+          </div>
+        </div>
+      </article><article id="event-df7f306706831e" data-item-id="df7f306706831e" class="report-item ">
+        <span>10</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Google</strong>
+            <em>模型/产品发布</em>
+            <em>算力硬件与基础设施</em>
+            
+            <a class="source-link" href="https://techcrunch.com/2026/11/10/google-broadens-its-ai-hardware-portfolio-with-two-new-specialized-chips/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/10/google-broadens-its-ai-hardware-portfolio-with-two-new-specialized-chips/" target="_blank" rel="noreferrer">Google公布TPU 8tx与TPU 8i Max两款第八代TPU变体，分别面向机密训练和大内存推理。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Google公布第八代TPU的两款新变体<b data-highlight style=color:#245b78>TPU 8tx</b>与<b data-highlight style=color:#245b78>TPU 8i Max</b>，将芯片组合扩展到机密推理、机密训练和面向大规模负载的更大内存容量。 </p><p>Google称TPU 8tx与AMD共同设计、基于TPU 8t，把安全能力放进硬件层，并配有定制推理网络，可在训练同时运行推理，用于即时蒸馏和训练小模型。 </p><p>TPU 8i Max把两颗4月推出的推理型TPU 8i合并在单一封装中，使内存容量、处理能力和带宽翻倍，让模型在查询时处理更大范围的信息。</p></div></div>
+          <figure class="reader-figure" data-image-event-id="df7f306706831e" data-image-sha256="937e6fc3a6aa574105da28d43969cdeb74ce8f43e1713d8e05ada307c5905682"><img src="https://luojinping.com/ai-daily/reading-images/937e6fc3a6aa574105da28d43969cdeb74ce8f43e1713d8e05ada307c5905682.jpg" alt="多个抽象计算芯片通过光线路径连接成云状结构的概念插图。" width="1536" height="1024" loading="lazy"><figcaption>AI生成概念插图：芯片与云端计算连接；非实际产品架构或性能结果。</figcaption></figure>
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Google此次是在已推出的第八代TPU上增加两款变体，<b data-highlight style=color:#80511f>并非发布全新一代芯片</b>。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 65 秒</span>
+          </div>
+        </div>
+      </article><article id="event-da18b2859102f1" data-item-id="da18b2859102f1" class="report-item ">
+        <span>11</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>融资/收购/估值</em>
+            <em>行业 / 商业动态</em>
+            
+            <a class="source-link" href="https://techcrunch.com/2026/11/10/openai-acquires-odessia-travel-startup-created-by-sonder-founder/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/10/openai-acquires-odessia-travel-startup-created-by-sonder-founder/" target="_blank" rel="noreferrer">OpenAI 收购 AI 旅行代理 Odessia，创始人加入且原工具已关闭。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 Odessia 创始人 Francis Davidson 公告，<b data-highlight style=color:#275f45>OpenAI 已收购其 AI 旅行代理 Odessia，</b>Davidson 加入 OpenAI 帮助探索旅行方向，交易条款未披露。 </p><p>Odessia 成立约一年，曾完成由 Sequoia 领投的 600 万美元 pre-seed 轮融资，并在约五个月前推出 AI 旅行代理，但该工具现已关闭。 </p><p>OpenAI 发言人确认 Davidson 加入，并表示旅行是 ChatGPT 用户常见请求之一，<b data-highlight style=color:#80511f>但公司尚未公布新的旅行产品计划</b>。 OpenAI 发言人称，每周有 12 亿人使用 ChatGPT 处理日常任务，包括规划旅行。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这更像一次人才收购：Odessia 的旅行代理已关闭，OpenAI 也未公布旅行产品计划，重点可能在 Davidson 的旅行行业经验及其用 AI Agent 编排复杂任务的方法。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 70 秒</span>
+          </div>
+        </div>
+      </article><article id="event-566088679df0de" data-item-id="566088679df0de" class="report-item ">
+        <span>12</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>融资/收购/估值</em>
+            <em>行业 / 商业动态</em>
+            
+            <a class="source-link" href="https://techcrunch.com/2026/11/10/openai-acquires-odessia-travel-startup-created-by-sonder-founder/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/10/openai-acquires-odessia-travel-startup-created-by-sonder-founder/" target="_blank" rel="noreferrer">OpenAI 收购 AI 旅行智能体公司 Odessia，创始人 Francis Davidson 加入，交易条款未披露且未公布旅行产品计划。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Odessia 创始人 <b data-highlight style=color:#245b78>Francis Davidson</b> 在公告中称，<b data-highlight style=color:#275f45>OpenAI 已收购其 AI 旅行智能体公司，</b>他本人加入并协助探索旅行方向；交易条款未披露。 </p><p>Odessia 成立约一年，曾获 Sequoia 领投的 600 万美元 pre-seed 融资，约五个月前上线旅行智能体，但该工具现已关闭。 </p><p>OpenAI 发言人确认 Davidson 加入，称其曾创办 Sonder，但公司未公布旅行专属产品或计划；该发言人称 ChatGPT 每周有 12 亿人为日常任务寻求帮助，旅行是高频话题之一。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>TechCrunch 提到，OpenAI 在 2025 年 7 月推出 ChatGPT agent 时曾将旅行列为潜在用途，本次收购后仍未公布旅行专属产品。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 65 秒</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+          <section id="technical-progress" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>B</span>
+        <h2>技术进展</h2>
+      </div>
+      <p>Hugging Face · 技术报告 · 论文 · Benchmark · RL 研究</p>
+    </div>
+    <div class="report-list">
+      <article class="paper-digest">
+    <div class="paper-digest-header">
+      <div>
+        <span>HF PAPERS</span>
+        <h3>Hugging Face Papers 速读</h3>
+      </div>
+      <a href="https://huggingface.co/papers/date/2026-11-11" target="_blank" rel="noreferrer">查看当天论文</a>
+    </div>
+    <p class="paper-digest-note">逐篇读取当天 paper 页面，由 deepseek-v4-1-flash-economy-261017 生成中文摘要。</p>
+    <div class="paper-digest-list">
+      <article id="paper-1" data-paper-id="2611.12806" class="paper-digest-item has-thumbnail">
+        <span>01</span>
+        <img src="https://cdn-thumbnails.huggingface.co/social-thumbnails/papers/2611.12806/gradient.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2611.12806" target="_blank" rel="noreferrer">Learning Heterogeneous Tactile Representation for General Dexterous Manipulation</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>摘要页未提供摘要内容，仅显示讨论入口，<b data-highlight style=color:#80511f>无法确认论文具体方法</b>。</p></div></div>
+          <div><em>触觉表征</em><em>灵巧操作</em><em>待核验</em></div>
+        </div>
+      </article><article id="paper-2" data-paper-id="2611.10771" class="paper-digest-item has-thumbnail">
+        <span>02</span>
+        <img src="https://arxiv.org/html/2611.10771v1/WorldFoundry_framework.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2611.10771" target="_blank" rel="noreferrer">WorldFoundry：面向世界智能的统一基础设施</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出生成式世界模型定义，并开源统一推理与评估基础设施 WorldFoundry。</p></div></div>
+          <div><em>世界模型</em><em>评估基础设施</em><em>开源</em></div>
+        </div>
+      </article><article id="paper-3" data-paper-id="2611.12762" class="paper-digest-item has-thumbnail">
+        <span>03</span>
+        <img src="https://arxiv.org/html/2611.12762v1/taiyi_bench_winrates.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2611.12762" target="_blank" rel="noreferrer">面向科学发现的元认知架构</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出一种元认知架构，试图在科学搜索中保留并复用已形成的理解，以指导后续假设与实验选择。</p></div></div>
+          <div><em>科学发现</em><em>元认知</em><em>Agent架构</em></div>
+        </div>
+      </article><article id="paper-4" data-paper-id="2611.12886" class="paper-digest-item has-thumbnail">
+        <span>04</span>
+        <img src="https://arxiv.org/html/2611.12886v1/teaser.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2611.12886" target="_blank" rel="noreferrer">观测对齐的多教师在线策略蒸馏（Reframe）</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>Reframe</b>以观测状态为对齐对象，用GD-GRPO与OG-MOPD两阶段训练视觉Agent，促使其利用工具返回的观测。</p></div></div>
+          <div><em>视觉推理</em><em>在线策略蒸馏</em><em>工具使用</em></div>
+        </div>
+      </article><article id="paper-5" data-paper-id="2610.42148" class="paper-digest-item has-thumbnail">
+        <span>05</span>
+        <img src="https://arxiv.org/html/2610.42148v1/overview.png" alt="" loading="lazy" onerror="this.remove()">
+        <div>
+          <h4 data-field="title"><a href="https://huggingface.co/papers/2610.42148" target="_blank" rel="noreferrer">用精确状态分叉加速决策推理（Flide）</a></h4>
+          <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>Flide</b> 将决策请求的逻辑树与物理执行解耦，用 ForkAttention 在 GPU 索引上精确分叉，避免前缀重算。</p></div></div>
+          <div><em>决策模型</em><em>推理引擎</em><em>Agent</em></div>
+        </div>
+      </article>
+    </div>
+  </article>
+      <article id="event-1449029875d81b" data-item-id="1449029875d81b" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Google DeepMind</strong>
+            <em>研究/Benchmark</em>
+            <em>Agent 技术</em>
+            <em>补录 · 2026-11-10 发布</em>
+            <a class="source-link" href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/multimodal-knowledge-agent-benchmark/" target="_blank" rel="noopener noreferrer"><b>Google</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://blog.google/innovation-and-ai/models-and-research/gemini-models/multimodal-knowledge-agent-benchmark/" target="_blank" rel="noreferrer">Google DeepMind与Artificial Analysis发布MKA基准，用200项视觉任务评估Agent的知识工作能力。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Google DeepMind与<b data-highlight style=color:#245b78>Artificial Analysis</b>合作推出MKA基准，用200项视觉复杂文件任务评估Agent完成真实知识工作的能力。 </p><p><b data-highlight style=color:#245b78>任务由10个垂直领域、83种职业的专家设计，</b>每项模拟3至8小时工作，按约70条检查项评分，75%看事实准确、25%看视觉设计。 200项私有集保密运行，另公开10项样例；</p><p>所有模型共用Stirrup harness，由非Google模型autorater评分，与专家一致率96%。 Google技术报告称被测模型平均用30至130轮完成任务；</p><p>Google称Gemini 4 Carbon在其测试模型中质量排名第2、平均成本比榜首低6倍，并已通过Gemini API提供。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p><b data-highlight style=color:#245b78>MKA将200项私有评测集与10项公开样例分开</b>；私有集由Artificial Analysis保密运行，以避免任务泄漏进训练数据或被模型搜索到。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 75 秒</span>
+          </div>
+        </div>
+      </article><article id="event-b9e4a772c0e6ce" data-item-id="b9e4a772c0e6ce" class="report-item ">
+        <span>02</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Meta</strong>
+            <em>研究/Benchmark</em>
+            <em>工程实践</em>
+            
+            <a class="source-link" href="https://engineering.fb.com/2026/11/10/open-source/tlx-a-hardware-native-gpu-compiler-for-production-ml/" target="_blank" rel="noopener noreferrer"><b>Meta</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://engineering.fb.com/2026/11/10/open-source/tlx-a-hardware-native-gpu-compiler-for-production-ml/" target="_blank" rel="noreferrer">Meta 构建 Triton 低层扩展 TLX，用显式 warp-group 编排适配新一代 GPU 执行特性。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#275f45>Meta 工程博客介绍其构建了 Triton 低层扩展 TLX，</b>目标是在保留 Triton 编程模型的同时优化 GPU 性能。 </p><p>TLX 在 Triton 之上增加显式的 <b data-highlight style=color:#245b78>warp-group</b> 与 cluster 级编排，让开发者可直接安排异步数据搬运、共享内存访问和同步，以利用 Hopper、Blackwell 等硬件的执行特性。 </p><p>该文称 TLX 已用于 Meta 从 AI 训练到大型 LLM 预训练的负载，并在推荐系统训练、推荐系统推理和 LLM 预训练上表现出提升，适用范围覆盖 NVIDIA 与 AMD GPU。</p></div></div>
+          <figure class="reader-figure" data-image-event-id="b9e4a772c0e6ce" data-image-sha256="e5d54f383d90747f563ab22c35014732918f0444a68cde1361adc55ee9992d34"><img src="https://luojinping.com/ai-daily/reading-images/e5d54f383d90747f563ab22c35014732918f0444a68cde1361adc55ee9992d34.png" alt="原新闻正文中的性能结果图，具体标注以原图为准。" width="1999" height="1016" loading="lazy"><figcaption>原文性能结果图（发布方：meta；图中标注与条件以原文为准）。</figcaption></figure>
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>此条的技术主语是 Triton 的执行编排扩展 TLX，Meta 的生产使用是背景而非新模型发布。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 65 秒</span>
+          </div>
+        </div>
+      </article><article id="event-3b20cc60fa2035" data-item-id="3b20cc60fa2035" class="report-item ">
+        <span>03</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Google DeepMind</strong>
+            <em>研究/Benchmark</em>
+            <em>工程实践</em>
+            
+            <a class="source-link" href="https://www.wired.com/story/a-new-ai-tool-from-google-deepmind-formally-verified-the-signal-protocol/" target="_blank" rel="noopener noreferrer"><b>WIRED</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://www.wired.com/story/a-new-ai-tool-from-google-deepmind-formally-verified-the-signal-protocol/" target="_blank" rel="noreferrer">Google DeepMind 用智能体AI框架 AlphaProof Code 在四周内形式化验证 Signal 协议的多项关键加密保证。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据《连线》报道，Google DeepMind 研究人员用智能体AI 对 Signal 协议的多项关键加密保证完成了数学证明，即形式化验证。 该工作以概念验证项目的形式在四周内完成，并使用名为 <b data-highlight style=color:#245b78>AlphaProof Code</b> 的新框架。 </p><p>验证范围有限：<b data-highlight style=color:#80511f>并未覆盖完整的 Signal 移动应用，</b>在被检查的部分也没有发现新漏洞；但把 AlphaProof Code 用于含已知且早已修复漏洞的旧版 Signal 时，它能正确识别这些漏洞并显示该协议无法通过形式化验证。 </p><p>研究团队将公开为此次分析编写的规范与证明以支持其他形式化验证工作，Google 未披露分析成本，也未回应是否计划推出商业形式化验证产品或服务。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>对开发者的意义不在于多了一个可用工具，而在于智能体开始承担形式化证明中最耗时的推演环节，目标设定与关键审核仍由人把关。 按报道说法，能否在真实代码库上以可接受成本扩展，目前既无成本数据也无第三方复现。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-e3223673af6c26" data-item-id="e3223673af6c26" class="report-item ">
+        <span>04</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Amazon Web Services (AWS)</strong>
+            <em>Agent/开发者基础设施</em>
+            <em>Agent 技术</em>
+            
+            <a class="source-link" href="https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/" target="_blank" rel="noopener noreferrer"><b>aws</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://aws.amazon.com/blogs/machine-learning/the-agent-evaluation-playbook-built-in-deepeval-and-autoeval-on-agentcore/" target="_blank" rel="noreferrer">AWS 撰文梳理 Amazon Bedrock AgentCore 评估方法：内置、DeepEval 与 AutoEval 评估器按 trace 或会话分层。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>AWS 在官方博客中给出 <b data-highlight style=color:#245b78>Amazon Bedrock AgentCore</b> 的 Agent 评估方法：先从业务结果定义成功，再拆成可观察行为，最后把每项行为映射到 trace 或 session 级评估器。 </p><p>AgentCore 的评估器来源包括 AWS 自研内置、由服务托管的 <b data-highlight style=color:#245b78>DeepEval</b> 与 AutoEval，以及可替换模型和提示或评分规则的自定义评估器；自定义多维度评估器可在单次评审中按各维度返回结果。 </p><p>评估支持按需、在线抽样与批量三种模式，在线模式按配置采样真实流量，批量模式用固定会话和黄金数据集做发布前回归；需标准答案或期望轨迹的评估器只在批量评估中运行。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>文章提醒团队不要从指标名出发选评估器，而应先定义业务成功并只选两三个最能反映结果的行为，再在发现遗漏失败模式时补充。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 75 秒</span>
+          </div>
+        </div>
+      </article><article id="event-c174da70b876d7" data-item-id="c174da70b876d7" class="report-item ">
+        <span>05</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Workday</strong>
+            <em>Agent/开发者基础设施</em>
+            <em>Agent 技术</em>
+            
+            <a class="source-link" href="https://www.langchain.com/blog/how-workday-built-an-enterprise-scale-ai-agent-platform-with-langgraph-and-langsmith" target="_blank" rel="noopener noreferrer"><b>langchain</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://www.langchain.com/blog/how-workday-built-an-enterprise-scale-ai-agent-platform-with-langgraph-and-langsmith" target="_blank" rel="noreferrer">Workday 用 LangGraph 与 LangSmith 搭建企业 Agent 平台，LangChain 博客称原型时间从 4-5 个月降至不到 1 天。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 <b data-highlight style=color:#245b78>LangChain</b> 博客，Workday 搭建了内部开发者平台，用于在其基础设施上构建、部署和运行生产环境 AI Agent，编排使用 LangGraph，追踪、可观测性和评估使用 LangSmith。 </p><p>该平台交付的首个重要产品是 Agent System of Record，作为治理层控制 Agent 可访问哪些 API；</p><p>团队还构建了封装 LangChain 原语的 Python SDK，并接入 Workday 的 LLM 网关与 RAG 检索服务。 LangChain 博客称，<b data-highlight style=color:#245b78>此前构建原型需 4-5 个月且不保证能进入生产</b>；</p><p>新平台可在不到 1 天内让原型跑在预发布环境，并内建认证与安全要求。 博客称团队由 4 人增至约 30 人，并计划继续投入。</p></div></div>
+          
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 75 秒</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+          <section id="industry-views" class="report-section report-tab-panel " role="tabpanel">
+    <div class="report-section-heading">
+      <div>
+        <span>C</span>
+        <h2>行业观点</h2>
+      </div>
+      <p>X 大 V · YouTube / Podcast · Builder 观察 · 开发者讨论</p>
+    </div>
+    <div class="report-list">
+      
+      <article id="event-8660d52dccb8e0" data-item-id="8660d52dccb8e0" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>recruitment agencies</strong>
+            <em>行业动态</em>
+            <em>AI + 行业赋能</em>
+            <em>补录 · 2026-11-08 发布</em>
+            <b>CNBC</b>
+          </div>
+          <h3 data-field="title"><a href="https://www.cnbc.com/2026/11/08/ai-recruitment-agency-fees.html" target="_blank" rel="noreferrer">CNBC 报道称，AI 正加快部分招聘环节，Adecco 表示其六个 AI 招聘 Agent 在英国和法国运行、英国相关工具节省约15%的招聘流程时间，招聘机构收费面临压力。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>CNBC 报道称，AI 正在加快部分招聘环节，<b data-highlight style=color:#80511f>并可能迫使招聘机构重新思考收费方式</b>；招聘机构通常按成功候选人首年薪资的一定比例收费。 </p><p>美国招聘软件公司 Bullhorn 对英国和爱尔兰近300名招聘从业者的2026年调查显示，37%的受访者称 AI 使候选人筛选速度提升26%至50%；</p><p>LinkedIn 的2025年英国报告称，试用或整合生成式 AI 的招聘人才平均节省18%的工作周时间。 瑞士人力资源公司 <b data-highlight style=color:#245b78>Adecco</b> 表示，其六个 AI 招聘 Agent 在英国和法国运行，英国相关工具节省约15%的招聘流程时间；</p><p>该公司还表示，集团层面 AI 已支持超过250万次候选人交互，约一半发生在正常工作时间之外。 </p><p>受访招聘机构负责人对收费走向看法不一：VIQU Group 的 Matt Collingwood 认为，若其提供的价值继续增长，费用有理由维持甚至上调，但他也预测未来五年可能仅有三分之一招聘机构存活；</p><p>Velocity Leadership 的 James Wright 则认为，大型高管搜寻机构可能面临裁减人员的压力，并判断其中大量岗位将消失。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>该报道把 AI 在招聘中的落地落在两个可核查环节：候选人筛选提速与流程时间节省，但数据为招聘软件厂商调查和受访公司自报，非独立复现。 收费模式的变化仍停留在受访者预期，报道未给出任何已完成的价格调整或合同事实。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 3 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-b87e5a8cea48ab" data-item-id="b87e5a8cea48ab" class="report-item ">
+        <span>02</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Richard Sutton</strong>
+            <em>行业动态</em>
+            <em>行业观点</em>
+            <em>补录 · 2026-11-08 发布</em>
+            <b>The Decoder</b>
+          </div>
+          <h3 data-field="title"><a href="https://the-decoder.com/the-inventor-of-the-bitter-lesson-has-a-bitter-lesson-for-llm-scaling-enthusiasts/" target="_blank" rel="noreferrer">图灵奖得主 Richard Sutton 新帖称仅有原始算力不足以产生智能，Tworek 与 Altman、Amodei 就大模型扩展路线公开分歧。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 The Decoder 11 月 8 日报道，图灵奖得主 Richard Sutton 在新帖中表示，仅有原始算力不足以产生智能，AI 科学需要聪明的新方法，且「远未完成」。 </p><p><b data-highlight style=color:#275f45>他此前曾批评单纯扩展大语言模型的局限，</b>称合成数据是「大错误」，主张采用带世界模型、能从自身经验持续学习的智能体。 前 OpenAI 研究员 Jerry Tworek 则认为苦涩教训依然成立，投入训练的算力越多算法越重要；</p><p><b data-highlight style=color:#275f45>他称 transformer 扩展的暂时成功加对该教训的误读，</b>「奖励黑客」了一代科学家的大脑。 </p><p>文章同时列出反方观点：OpenAI CEO Sam Altman 认为 LLM 扩展远未耗尽，Anthropic CEO Dario Amodei 称扩展进展像「没有尽头的彩虹」，文章并指出两人的技术路线本就押注于此。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Sutton 与 Tworek 指向的是预训练与强化学习之外的学习算法空白，文中提到 The Decoder 的 Frontier Radar #5 已追踪 45 家押注这些空白的 AI 实验室；</p><p>而 Altman、Amodei 的回应来自路线利益相关方，双方论点目前都缺少可独立复现的量化证据。</p></div>
+  </div>
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+        </div>
+      </main>
+    </div>
+    <script>
+(() => {
+  const tabs = [...document.querySelectorAll("[data-tab-target]")];
+  const panels = [...document.querySelectorAll(".report-tab-panel")];
+
+  setupTabs();
+  setupSearchTarget();
+  setupOverviewNavigation();
+
+  function setupTabs() {
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => activateTab(tab.dataset.tabTarget, true));
+    });
+    const hashTarget = location.hash.replace("#", "");
+    if (hashTarget && panels.some((panel) => panel.id === hashTarget)) {
+      activateTab(hashTarget, false);
+    }
+  }
+
+  function activateTab(id, updateHash) {
+    for (const tab of tabs) {
+      const active = tab.dataset.tabTarget === id;
+      tab.classList.toggle("is-active", active);
+      tab.setAttribute("aria-selected", active ? "true" : "false");
+    }
+    for (const panel of panels) {
+      panel.classList.toggle("is-active", panel.id === id);
+    }
+    if (updateHash) history.replaceState(null, "", "#" + id);
+  }
+
+  function setupSearchTarget() {
+    const targetId = new URLSearchParams(location.search).get("event");
+    if (!targetId) return;
+    const target = document.getElementById(targetId);
+    if (!target) return;
+    highlightTarget(target);
+  }
+
+  function highlightTarget(target) {
+    const panel = target.closest(".report-tab-panel");
+    if (panel) activateTab(panel.id, false);
+    document.querySelectorAll(".is-search-target").forEach(item => item.classList.remove("is-search-target"));
+    target.classList.add("is-search-target");
+    window.setTimeout(() => target.scrollIntoView({ behavior: "smooth", block: "center" }), 80);
+  }
+
+  function setupOverviewNavigation() {
+    document.querySelectorAll("[data-report-target]").forEach(link => {
+      link.addEventListener("click", event => {
+        if (event.button !== 0 || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+        const target = document.getElementById(link.dataset.reportTarget);
+        if (!target) return;
+        event.preventDefault();
+        history.replaceState(null, "", link.getAttribute("href"));
+        highlightTarget(target);
+      });
+    });
+  }
+})();
+</script>
+    <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "e8b65008306a4e0da3c280747b56211c"}'></script><!-- End Cloudflare Web Analytics -->
+  </body>
+</html>
