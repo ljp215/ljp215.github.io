@@ -37,10 +37,13 @@
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 11 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-11-12" class="" aria-label="2026-11-12，18 条">
+          <a href="/ai-daily/2026-11-13" class="" aria-label="2026-11-13，19 条">
+            <time datetime="2026-11-13">13 日</time>
+            <em>19 条</em>
+          </a><a href="/ai-daily/2026-11-12" class="" aria-label="2026-11-12，18 条">
             <time datetime="2026-11-12">12 日</time>
             <em>18 条</em>
           </a><a href="/ai-daily/2026-11-11" class="" aria-label="2026-11-11，19 条">
@@ -575,7 +578,7 @@
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 160 期 →</strong>
+        <strong>查看全部 161 期 →</strong>
       </a>
     </div>
   </aside>
@@ -598,16 +601,19 @@
       <span class="focus-number">01</span>
       <p class="focus-topic">政策、安全与社会影响</p>
       <h3><a data-field="focus-title" data-report-target="event-a7af14d5c1fb24" href="?event=event-a7af14d5c1fb24#company-updates">Anthropic 将于 11 月 16 日给四款旧 Claude 模型加文本水印，改动采样参数即可绕过。</a></h3>
+      
       <a class="focus-more" data-report-target="event-a7af14d5c1fb24" href="?event=event-a7af14d5c1fb24#company-updates">阅读解读与来源 →</a>
     </article><article class="focus-card" data-focus-id="79c3a9ed672a24">
       <span class="focus-number">02</span>
       <p class="focus-topic">工程实践</p>
       <h3><a data-field="focus-title" data-report-target="event-79c3a9ed672a24" href="?event=event-79c3a9ed672a24#technical-progress">REINFORCE Zero 通过对齐 rollout 与训练内核，使异步 RL 在 lag 64 稳定训练并达到同步训练 2.40 倍吞吐。</a></h3>
+      
       <a class="focus-more" data-report-target="event-79c3a9ed672a24" href="?event=event-79c3a9ed672a24#technical-progress">阅读解读与来源 →</a>
     </article><article class="focus-card" data-focus-id="8e9aec2bd59c5e">
       <span class="focus-number">03</span>
       <p class="focus-topic">Agent 技术</p>
       <h3><a data-field="focus-title" data-report-target="event-8e9aec2bd59c5e" href="?event=event-8e9aec2bd59c5e#technical-progress">SemiAnalysis发布GDPx真实工作基准：206项任务下Claude Opus 5.5以12%居首，无模型超过12%。</a></h3>
+      
       <a class="focus-more" data-report-target="event-8e9aec2bd59c5e" href="?event=event-8e9aec2bd59c5e#technical-progress">阅读解读与来源 →</a>
     </article></div>
     <details class="topic-directory-toggle"><summary>按主题查阅 <span>16 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>0</b></summary>
@@ -961,7 +967,7 @@
           </div>
           <h3 data-field="title"><a href="https://vllm.ai/blog/2026-11-06-zero-mismatch-async-rl" target="_blank" rel="noreferrer">REINFORCE Zero 通过对齐 rollout 与训练内核，使异步 RL 在 lag 64 稳定训练并达到同步训练 2.40 倍吞吐。</a></h3>
           <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>REINFORCE Zero</b> 将 rollout 与训练内核逐位对齐，再用不截断的 token 级重要性采样纠正剩余权重滞后。 </p><p>论文称在 16 个 GPU、12K 次更新下训练步吞吐为同步训练的 2.40 倍，<b data-highlight style=color:#245b78>并在 Qwen3-4B 的 lag 64 下继续学习</b>。 </p><p>博客还称 DeepSeek-V4.1-Flash 与 Kimi K3.1 已达 diff 0，前者 DAPO rollout 步在快速基线 10% 以内，后者在 4 节点×4 GB300 上 100 步 LoRA 后 AIME 24/25/26 mean@8 从 0.451 升至 0.664。 </p><p>对齐内核的代价是 OSWorld 平均每步 944.25 秒，比带序列门的标准内核 IS 多 6.8%。</p></div></div>
-          
+          <figure class="reader-figure" data-image-event-id="79c3a9ed672a24" data-image-sha256="0c4b27e457a9ab47c99cba2fb065c2b0eb28a46dbf43c434fccd9dd5d7f1ca19"><img src="https://luojinping.com/ai-daily/reading-images/0c4b27e457a9ab47c99cba2fb065c2b0eb28a46dbf43c434fccd9dd5d7f1ca19.png" alt="REINFORCE Zero at lag 64: training reward and AIME pass@1" width="2017" height="709" loading="lazy"><figcaption>原文流程图（发布方：vllm；图中标注与条件以原文为准）。 <a href="https://vllm.ai/blog/2026-11-06-zero-mismatch-async-rl" target="_blank" rel="noreferrer">查看原文</a></figcaption></figure>
           <div class="memory-note">
     <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>REINFORCE Zero 把异步 RL 误差拆成权重滞后与内核失配，先消除后者再<b data-highlight style=color:#275f45>让不截断 IS 处理前者</b>；对 RL infra 团队，逐模型内核对齐比加拒绝门更接近根因，但要承担逐模型适配和可测的吞吐损失。</p></div>
   </div>

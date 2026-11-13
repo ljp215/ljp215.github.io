@@ -2671,6 +2671,12 @@ time {
 [data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
 [data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
 [data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .focus-card .reader-figure { margin: 12px 0; }
+[data-website-presentation="reader-v1"] .focus-card .reader-figure img { border-radius: 4px; }
+@media (min-width: 641px) {
+  .focus-grid--with-headline { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .focus-grid--with-headline .focus-card:first-child { grid-row: span 2; }
+}
 [data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
 [data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
 [data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
@@ -2718,10 +2724,13 @@ time {
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 11 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-11-12" class="" aria-label="2026-11-12，18 条">
+          <a href="/ai-daily/2026-11-13" class="" aria-label="2026-11-13，19 条">
+            <time datetime="2026-11-13">13 日</time>
+            <em>19 条</em>
+          </a><a href="/ai-daily/2026-11-12" class="" aria-label="2026-11-12，18 条">
             <time datetime="2026-11-12">12 日</time>
             <em>18 条</em>
           </a><a href="/ai-daily/2026-11-11" class="" aria-label="2026-11-11，19 条">
@@ -3256,7 +3265,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 160 期 →</strong>
+        <strong>查看全部 161 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3279,16 +3288,19 @@ time {
       <span class="focus-number">01</span>
       <p class="focus-topic">Agent 技术</p>
       <h3><a data-field="focus-title" data-report-target="event-4cd08efe054461" href="?event=event-4cd08efe054461#technical-progress">LangChain 对比七种浏览器工具集后选用 Browserbase Stagehand，并公开其基于 trace 与 eval 的成本调优结果。</a></h3>
+      
       <a class="focus-more" data-report-target="event-4cd08efe054461" href="?event=event-4cd08efe054461#technical-progress">阅读解读与来源 →</a>
     </article><article class="focus-card" data-focus-id="7fc0f9f9b02073">
       <span class="focus-number">02</span>
       <p class="focus-topic">工程实践</p>
       <h3><a data-field="focus-title" data-report-target="event-7fc0f9f9b02073" href="?event=event-7fc0f9f9b02073#technical-progress">LlamaIndex 披露 OCRia-1 推理栈优化，称单张 B200 上 token 生成从约 285 提升到约 2800 tokens/秒。</a></h3>
+      
       <a class="focus-more" data-report-target="event-7fc0f9f9b02073" href="?event=event-7fc0f9f9b02073#technical-progress">阅读解读与来源 →</a>
     </article><article class="focus-card" data-focus-id="8ddabf4184ff13">
       <span class="focus-number">03</span>
       <p class="focus-topic">Agent 技术</p>
       <h3><a data-field="focus-title" data-report-target="event-8ddabf4184ff13" href="?event=event-8ddabf4184ff13#company-updates">CrowdStrike在Falcon Guardian中上线AI急停开关，称可停用失控内部Agent并切断其模型访问。</a></h3>
+      
       <a class="focus-more" data-report-target="event-8ddabf4184ff13" href="?event=event-8ddabf4184ff13#company-updates">阅读解读与来源 →</a>
     </article></div>
     <details class="topic-directory-toggle"><summary>按主题查阅 <span>18 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>0</b></summary>
@@ -3667,7 +3679,7 @@ time {
           </div>
           <h3 data-field="title"><a href="https://www.langchain.com/blog/how-we-optimized-browser-use-for-deep-agents" target="_blank" rel="noreferrer">LangChain 对比七种浏览器工具集后选用 Browserbase Stagehand，并公开其基于 trace 与 eval 的成本调优结果。</a></h3>
           <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>LangChain 在工程博客中表示，其为 Deep Agents 对比了七种浏览器工具集，最终选用 <b data-highlight style=color:#245b78>Browserbase</b> 的 Stagehand，并用 LangSmith trace 与 eval 持续迭代，相关工具以 StagehandMiddleware 形式开放给开源 Deep Agents。 </p><p>在 WebVoyager 的 100 个任务上以 Claude Sonnet 5.5 运行，<b data-highlight style=color:#245b78>Stagehand 工具集通过率最高（90%），</b>总成本 1.98 美元、中位每任务 17.4 秒；</p><p>Playwright MCP 通过 78%、成本 26.71 美元，约为前者 13 倍，每任务耗时也是三倍。 </p><p>在 HardBench 的 38 个核心任务上，Deep Agents 用 Stagehand 的 run 工具通过 30 个，用 Browserbase 命令行 browse CLI 通过 21 个，后者每任务成本为三倍。 </p><p>团队把固定 sleep 改为页面静默 500 毫秒即返回且不超过代理设定时长，一次 8 秒 sleep 实测 0.6 秒返回；</p><p>在 HardBench 上配合结构化输出和模型调用超时，中位 agent 用时从 182 秒降到 124 秒，准确率在噪声范围内。</p></div></div>
-          
+          <figure class="reader-figure" data-image-event-id="4cd08efe054461" data-image-sha256="6d3ec3215d72cecd8e15cdc2e088a16c2758f42cba3a408f598e8429f8b1741c"><img src="https://luojinping.com/ai-daily/reading-images/6d3ec3215d72cecd8e15cdc2e088a16c2758f42cba3a408f598e8429f8b1741c.png" alt="Stagehand&#039;s snapshot of the booking form from the earlier example (left) next to a screenshot of the same page (right)." width="2400" height="1350" loading="lazy"><figcaption>原文产品界面图（发布方：langchain；图中标注与条件以原文为准）。 <a href="https://www.langchain.com/blog/how-we-optimized-browser-use-for-deep-agents" target="_blank" rel="noreferrer">查看原文</a></figcaption></figure>
           <div class="memory-note">
     <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>文章的核心结论是浏览器 Agent 的收益主要来自工具返回给模型的上下文体积与调用轮数，实验时模型与任务固定、只更换工具集。 </p><p>这些数字来自厂商自行发布、条件为 Claude Sonnet 5.5 / Opus 5.5 与 WebVoyager、HardBench、WebTailBench 三个特定基准，尚无独立复现可对照。</p></div>
   </div>
@@ -3688,7 +3700,7 @@ time {
           </div>
           <h3 data-field="title"><a href="https://www.llamaindex.ai/blog/the-inference-stack-behind-ocria" target="_blank" rel="noreferrer">LlamaIndex 披露 OCRia-1 推理栈优化，称单张 B200 上 token 生成从约 285 提升到约 2800 tokens/秒。</a></h3>
           <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>LlamaIndex 发文介绍其文档解析模型 <b data-highlight style=color:#245b78>OCRia-1</b> 的推理栈优化，称单张 B200 GPU 上 token 生成从约 285 tokens/秒提升到约 2800 tokens/秒，接近 10 倍。 </p><p>做法包括混合精度量化（BF16、FP8、NVFP4 混用，activation-aware 并用分布内数据校准，视觉编码器不做量化），以及基于块扩散 drafter 的投机解码，接受长度从 DFlash 的 9 tokens 提高到 DFlash2 的 12 tokens 以上。 </p><p>针对模型中 GDN 层的固定大小循环状态，团队把 ReplaySSM 适配到投机解码场景，并用自定义 CUDA 实现把每层耗时从 Triton 版本的 72–80 µs 降到 23–24 µs，称在同一测试中约快 3.3 倍；</p><p><b data-highlight style=color:#245b78>32 并发请求下单步解码为 6.07 ms，</b>其中 ReplaySSM 校验与 flush kernel 在 24 个 GDN 层上合计占 2.10 ms。 </p><p>此外团队把 GDN 元数据构建从每步约 290 次小 GPU launch 压缩到每步 1 次，并称在 batch 8–12 下每用户生成速度超过 1400 tokens/秒，而基线模型约 200 tokens/秒。</p></div></div>
-          
+          <figure class="reader-figure" data-image-event-id="7fc0f9f9b02073" data-image-sha256="c4973aae3ec86ca42eb6a9a50e67927c8d521e8b6a1e3e89672d1ecea3d53c3e"><img src="https://luojinping.com/ai-daily/reading-images/c4973aae3ec86ca42eb6a9a50e67927c8d521e8b6a1e3e89672d1ecea3d53c3e.png" alt="原新闻正文中的性能结果图，具体标注以原图为准。" width="3200" height="2000" loading="lazy"><figcaption>原文性能结果图（发布方：llamaindex；图中标注与条件以原文为准）。 <a href="https://www.llamaindex.ai/blog/the-inference-stack-behind-ocria" target="_blank" rel="noreferrer">查看原文</a></figcaption></figure>
           <div class="memory-note">
     <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>该文属于厂商自述的自家推理栈优化，价值在具体手段与逐层测量，<b data-highlight style=color:#80511f>而非跨模型能力对比</b>。 文中提到 ReplaySSM 适配目前仍是提交给 vLLM 的一组草稿 PR，上游是否合入可作为后续跟踪点。</p></div>
   </div>

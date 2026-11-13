@@ -2671,6 +2671,12 @@ time {
 [data-website-presentation="reader-v1"] .reader-figure { display: block; width: 100%; margin: 20px 0; padding: 0; }
 [data-website-presentation="reader-v1"] .reader-figure img { display: block; width: 100%; height: auto; max-height: 520px; object-fit: contain; background: #fff; border: 1px solid #b8c8b9; }
 [data-website-presentation="reader-v1"] .reader-figure figcaption { padding-top: 8px; color: #5b6259; font-size: 12px; line-height: 1.7; }
+[data-website-presentation="reader-v1"] .focus-card .reader-figure { margin: 12px 0; }
+[data-website-presentation="reader-v1"] .focus-card .reader-figure img { border-radius: 4px; }
+@media (min-width: 641px) {
+  .focus-grid--with-headline { grid-template-columns: minmax(0, 2fr) minmax(0, 1fr); }
+  .focus-grid--with-headline .focus-card:first-child { grid-row: span 2; }
+}
 [data-website-presentation="reader-v1"] .paper-digest { background: #f5f7ef; color: #222d25; border: 1px solid #b8c8b9; border-top: 3px solid #375; padding: 20px; }
 [data-website-presentation="reader-v1"] .paper-digest-header { border-bottom: 1px solid #b8c8b9; }
 [data-website-presentation="reader-v1"] .paper-digest-header span, [data-website-presentation="reader-v1"] .paper-digest-header a { color: #375; }
@@ -2718,10 +2724,13 @@ time {
       <details class="report-history-month" open>
         <summary>
           <span>2026 年 11 月</span>
-          <em>11 期</em>
+          <em>12 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-11-12" class="" aria-label="2026-11-12，18 条">
+          <a href="/ai-daily/2026-11-13" class="" aria-label="2026-11-13，19 条">
+            <time datetime="2026-11-13">13 日</time>
+            <em>19 条</em>
+          </a><a href="/ai-daily/2026-11-12" class="" aria-label="2026-11-12，18 条">
             <time datetime="2026-11-12">12 日</time>
             <em>18 条</em>
           </a><a href="/ai-daily/2026-11-11" class="" aria-label="2026-11-11，19 条">
@@ -3256,7 +3265,7 @@ time {
     <div class="report-nav-entry">
       <a href="/ai-daily/archive/" class="">
         <span>ARCHIVE</span>
-        <strong>查看全部 160 期 →</strong>
+        <strong>查看全部 161 期 →</strong>
       </a>
     </div>
   </aside>
@@ -3279,16 +3288,19 @@ time {
       <span class="focus-number">01</span>
       <p class="focus-topic">政策、安全与社会影响</p>
       <h3><a data-field="focus-title" data-report-target="event-1f824864f71a23" href="?event=event-1f824864f71a23#company-updates">Parameter Labs 披露 ChatGPT 沙箱逃逸漏洞，可造成用户账户接管。</a></h3>
+      
       <a class="focus-more" data-report-target="event-1f824864f71a23" href="?event=event-1f824864f71a23#company-updates">阅读解读与来源 →</a>
     </article><article class="focus-card" data-focus-id="eb97bd299c6663">
       <span class="focus-number">02</span>
       <p class="focus-topic">政策、安全与社会影响</p>
       <h3><a data-field="focus-title" data-report-target="event-eb97bd299c6663" href="?event=event-eb97bd299c6663#technical-progress">Anthropic研究显示，通过看似无害的养蜂、摔跤等虚构文本微调可诱导AI模型学会欺骗和破坏监督。</a></h3>
+      
       <a class="focus-more" data-report-target="event-eb97bd299c6663" href="?event=event-eb97bd299c6663#technical-progress">阅读解读与来源 →</a>
     </article><article class="focus-card" data-focus-id="5f971886d73eed">
       <span class="focus-number">03</span>
       <p class="focus-topic">Agent 技术</p>
       <h3><a data-field="focus-title" data-report-target="event-5f971886d73eed" href="?event=event-5f971886d73eed#technical-progress">DeepSeek 发布 Super-agent 研究原型 dsh-superagent：面向单个 GitHub 仓库的主动编码 Agent。</a></h3>
+      
       <a class="focus-more" data-report-target="event-5f971886d73eed" href="?event=event-5f971886d73eed#technical-progress">阅读解读与来源 →</a>
     </article></div>
     <details class="topic-directory-toggle"><summary>按主题查阅 <span>18 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>1</b></summary>
@@ -3634,7 +3646,7 @@ time {
           </div>
           <h3 data-field="title"><a href="https://engineering.fb.com/2026/10/29/security/catching-bugs-before-they-land-jittestings-human-on-the-loop-approach-at-full-scale/" target="_blank" rel="noreferrer">Meta 公布 JiTTesting 生产级部署结果：2026 上半年在 diff 阶段捕获 74 个隐私 SEV。</a></h3>
           <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>Meta 公布 Catching JiTTests 已从研究原型投入生产，成为其基础设施的一部分，配套论文《Just-in-Time Catching Test Generation at Meta》已在 FSE 2026 报告。 </p><p>系统通过 dodgy diff 与 intent-aware 两条工作流生成可执行差异测试，用 LLM-as-Judge 集成加规则工具 RubFake 过滤弱捕获，再以 human-on-the-loop 方式按策略联系工程师，而不是逐条人工审查。 </p><p>截至写作时，<b data-highlight style=color:#245b78>589 名工程师（占触达人数的 64%）参与并报告结果，</b>真阳性率为 60%；2026 年上半年该系统在 <b data-highlight style=color:#245b78>diff</b> 阶段捕获 74 个隐私 SEV，隐私 SEV 总量同期下降 20%。</p></div></div>
-          
+          <figure class="reader-figure" data-image-event-id="dfaad88cd94369" data-image-sha256="62439f0f115d93529737f79e2a15e23e724b0dfe5a4677c457016cb006b86ead"><img src="https://luojinping.com/ai-daily/reading-images/62439f0f115d93529737f79e2a15e23e724b0dfe5a4677c457016cb006b86ead.png" alt="原新闻正文中的架构图，具体标注以原图为准。" width="1584" height="672" loading="lazy"><figcaption>原文架构图（发布方：meta；图中标注与条件以原文为准）。 <a href="https://engineering.fb.com/2026/10/29/security/catching-bugs-before-they-land-jittestings-human-on-the-loop-approach-at-full-scale/" target="_blank" rel="noreferrer">查看原文</a></figcaption></figure>
           <div class="memory-note">
     <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>该案例是 Meta 自报的 LLM 生成测试生产实践，后续若有论文数据公布或第三方复现，再更新 60% 真阳性率与隐私 SEV 下降 20% 的适用范围和对比基线。</p></div>
   </div>
