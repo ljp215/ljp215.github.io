@@ -5,16 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests; block-all-mixed-content">
     <title>AI 行业简报 2026-11-28</title>
-    <meta name="description" content="今天筛出 2 个事件：大厂动态 2 条，技术进展 0 条，行业观点 0 条；另读 Hugging Face Papers 5 篇。">
+    <meta name="description" content="今天筛出 11 个事件：大厂动态 6 条，技术进展 3 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。">
     <link rel="canonical" href="https://luojinping.com/ai-daily/2026-11-28">
     <meta property="og:type" content="article">
     <meta property="og:site_name" content="AI 聚合日报">
     <meta property="og:title" content="AI 行业简报 2026-11-28">
-    <meta property="og:description" content="今天筛出 2 个事件：大厂动态 2 条，技术进展 0 条，行业观点 0 条；另读 Hugging Face Papers 5 篇。">
+    <meta property="og:description" content="今天筛出 11 个事件：大厂动态 6 条，技术进展 3 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。">
     <meta property="og:url" content="https://luojinping.com/ai-daily/2026-11-28">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://luojinping.com/ai-daily/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="AI 聚合日报">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://luojinping.com/ai-daily/og-image.png">
+    <meta name="twitter:image:alt" content="AI 聚合日报">
     <meta name="twitter:title" content="AI 行业简报 2026-11-28">
-    <meta name="twitter:description" content="今天筛出 2 个事件：大厂动态 2 条，技术进展 0 条，行业观点 0 条；另读 Hugging Face Papers 5 篇。">
+    <meta name="twitter:description" content="今天筛出 11 个事件：大厂动态 6 条，技术进展 3 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。">
+    
     <link rel="icon" href="/ai-daily/icon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="/ai-daily/icon.svg">
     <link rel="alternate" type="application/atom+xml" title="AI 聚合日报" href="/ai-daily/feed.xml">
@@ -56,6 +64,13 @@ select {
 
 button {
   cursor: pointer;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent, #375);
+  outline-offset: 3px;
 }
 
 .app-shell {
@@ -2184,9 +2199,14 @@ time {
 }
 
 @media (max-width: 980px) {
+  /* Brief stays above the archive once the sidebar can no longer sit beside it. */
   .report-shell {
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
   }
+
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; }
 
   .report-list,
   #company-updates .report-list,
@@ -2727,9 +2747,9 @@ time {
           <em>27 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-11-28" class="is-active" aria-label="2026-11-28，2 条">
+          <a href="/ai-daily/2026-11-28" class="is-active" aria-label="2026-11-28，11 条">
             <time datetime="2026-11-28">28 日</time>
-            <em>2 条</em>
+            <em>11 条</em>
           </a><a href="/ai-daily/2026-11-27" class="" aria-label="2026-11-27，11 条">
             <time datetime="2026-11-27">27 日</time>
             <em>11 条</em>
@@ -3323,41 +3343,41 @@ time {
           <div class="report-hero-main">
             <p class="eyebrow">EDITORIAL BRIEF</p>
             <h1>AI 行业简报 2026-11-28</h1>
-            <p>今天筛出 2 个事件：大厂动态 2 条，技术进展 0 条，行业观点 0 条；另读 Hugging Face Papers 5 篇。</p>
+            <p>今天筛出 11 个事件：大厂动态 6 条，技术进展 3 条，行业观点 2 条；另读 Hugging Face Papers 5 篇。</p>
             <p data-publication-status="partial" role="note" style="border-left:3px solid #9b6a27;padding:8px 12px;font-size:14px;line-height:1.7">本期另有22条线索待核实，未收录；取得可靠原文后再参与后续选题。</p>
           </div>
         </header>
         <section class="editorial-overview" aria-label="今日重点与选题目录">
     <div class="overview-heading"><h2>TOP 3 · 今日重点</h2><span>先读重要变化，再看技术细节</span></div>
-    <div class="focus-grid focus-grid--with-headline"><article class="focus-card" data-focus-id="7f1f0993aed149">
+    <div class="focus-grid focus-grid--with-headline"><article class="focus-card" data-focus-id="784953d89aa4b1">
       <span class="focus-number">01</span>
+      <p class="focus-topic">AI 产品与工具</p>
+      <h3><a data-field="focus-title" data-report-target="event-784953d89aa4b1" href="?event=event-784953d89aa4b1#company-updates">OpenAI 向部分 Pro 用户开放 ChatGPT 聊天与 Work 合并体验，两者将共用同一用量额度。</a></h3>
+      <figure class="reader-figure" data-image-event-id="784953d89aa4b1" data-image-sha256="e1b3100cc13068694949c4668b20df54b304eb76539624c9ac0dbd51511b1455" data-headline-image><img src="https://luojinping.com/ai-daily/reading-images/e1b3100cc13068694949c4668b20df54b304eb76539624c9ac0dbd51511b1455.jpg" alt="OpenAI ChatGPT logo" width="1080" height="720" loading="eager"></figure>
+      <a class="focus-more" data-report-target="event-784953d89aa4b1" href="?event=event-784953d89aa4b1#company-updates">阅读解读与来源 →</a>
+    </article><article class="focus-card" data-focus-id="7f1f0993aed149">
+      <span class="focus-number">02</span>
       <p class="focus-topic">政策、安全与社会影响</p>
       <h3><a data-field="focus-title" data-report-target="event-7f1f0993aed149" href="?event=event-7f1f0993aed149#company-updates">彭博社调查称被禁的英伟达 Blackwell 芯片现身上海数据中心，两家中企在贷款文件中将其列为抵押物。</a></h3>
-      <figure class="reader-figure" data-image-event-id="7f1f0993aed149" data-image-sha256="6f630db74e34ae62b7d3145ce3508bdf3232aaa35f040df093b53ffa9362fda0" data-headline-image><img src="https://luojinping.com/ai-daily/reading-images/6f630db74e34ae62b7d3145ce3508bdf3232aaa35f040df093b53ffa9362fda0.jpg" alt="彭博社调查称被禁的英伟达 Blackwell 芯片现身上海数据中心，两家中企在贷款文件中将其列为抵押物。" width="1200" height="660" loading="eager"></figure>
+      
       <a class="focus-more" data-report-target="event-7f1f0993aed149" href="?event=event-7f1f0993aed149#company-updates">阅读解读与来源 →</a>
-    </article><article class="focus-card" data-focus-id="paper:2611.31619">
-      <span class="focus-number">02</span>
-      <p class="focus-topic">论文速读</p>
-      <h3><a data-field="focus-title" data-report-target="paper-4" href="?event=paper-4#technical-progress">预测榜单能确立什么：零样本时间序列模型的分辨率报告</a></h3>
-      
-      <a class="focus-more" data-report-target="paper-4" href="?event=paper-4#technical-progress">阅读解读与来源 →</a>
-    </article><article class="focus-card" data-focus-id="paper:2611.34232">
+    </article><article class="focus-card" data-focus-id="3897241e9e063a">
       <span class="focus-number">03</span>
-      <p class="focus-topic">论文速读</p>
-      <h3><a data-field="focus-title" data-report-target="paper-2" href="?event=paper-2#technical-progress">OS-Omni：跨平台长程计算机使用 Agent 基准</a></h3>
+      <p class="focus-topic">工程实践</p>
+      <h3><a data-field="focus-title" data-report-target="event-3897241e9e063a" href="?event=event-3897241e9e063a#technical-progress">Simon Willison 发布 datasette-charts 0.4a0，按 Claude Opus 5.5 试建插件暴露的摩擦点改进图表插件钩子。</a></h3>
       
-      <a class="focus-more" data-report-target="paper-2" href="?event=paper-2#technical-progress">阅读解读与来源 →</a>
+      <a class="focus-more" data-report-target="event-3897241e9e063a" href="?event=event-3897241e9e063a#technical-progress">阅读解读与来源 →</a>
     </article></div>
-    <details class="topic-directory-toggle"><summary>按主题查阅 <span>2 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>0</b></summary>
+    <details class="topic-directory-toggle"><summary>按主题查阅 <span>11 个事件</span></summary><div class="topic-directory"><details class="topic-group"><summary><span>基础模型与技术</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
-      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>0</b></summary>
-        <p>本期暂无达到入选标准的新内容</p>
-      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>0</b></summary>
-        <p>本期暂无达到入选标准的新内容</p>
-      </details><details class="topic-group"><summary><span>Agent 技术</span><b>1</b></summary>
-        <ul><li><a data-report-target="event-c3c0051aaef8e7" href="?event=event-c3c0051aaef8e7#company-updates">OpenAI 被曝开发代号“Athena”的数据平台，为 AI Agent 提供统一业务指标定义。</a></li></ul>
-      </details><details class="topic-group"><summary><span>工程实践</span><b>0</b></summary>
-        <p>本期暂无达到入选标准的新内容</p>
+      </details><details class="topic-group"><summary><span>行业 / 商业动态</span><b>1</b></summary>
+        <ul><li><a data-report-target="event-3b32b75145a260" href="?event=event-3b32b75145a260#company-updates">OpenAI 在加州法院反诉 Apple，指控其窃取商业机密并胁迫两家公司共用的供应商。</a></li></ul>
+      </details><details class="topic-group"><summary><span>AI 产品与工具</span><b>2</b></summary>
+        <ul><li><a data-report-target="event-784953d89aa4b1" href="?event=event-784953d89aa4b1#company-updates">OpenAI 向部分 Pro 用户开放 ChatGPT 聊天与 Work 合并体验，两者将共用同一用量额度。</a></li><li><a data-report-target="event-aa17b66d42c575" href="?event=event-aa17b66d42c575#company-updates">OpenAI 开始与首批企业客户试点此前公布的 Private Inference，称查询在可独立验证的隔离硬件上处理、公司无法访问客户数据。</a></li></ul>
+      </details><details class="topic-group"><summary><span>Agent 技术</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-c3c0051aaef8e7" href="?event=event-c3c0051aaef8e7#company-updates">OpenAI 被曝开发代号“Athena”的数据平台，为 AI Agent 提供统一业务指标定义。</a></li><li><a data-report-target="event-a13f6d47a4e8fb" href="?event=event-a13f6d47a4e8fb#company-updates">Amazon 与 Meta 据报就解除 Meta 购物智能体 Muse 接入 Amazon 商店的限制展开谈判。</a></li><li><a data-report-target="event-0388ebd338fcc8" href="?event=event-0388ebd338fcc8#industry-views">Guillermo Rauch 称用 fx 与 Gemini Neon、DeepSeek 子代理一次生成终端版 Finder “𝚕𝚜𝚡”。</a></li></ul>
+      </details><details class="topic-group"><summary><span>工程实践</span><b>3</b></summary>
+        <ul><li><a data-report-target="event-ef6ec06724b385" href="?event=event-ef6ec06724b385#technical-progress">Simon Willison 发布 datasette-mcp 0.4，为任意 Datasette 实例新增 /-/mcp MCP 服务器。</a></li><li><a data-report-target="event-3897241e9e063a" href="?event=event-3897241e9e063a#technical-progress">Simon Willison 发布 datasette-charts 0.4a0，按 Claude Opus 5.5 试建插件暴露的摩擦点改进图表插件钩子。</a></li><li><a data-report-target="event-dbf95b38d31d9d" href="?event=event-dbf95b38d31d9d#technical-progress">Unsloth 发布更新：Inkling 2 Mini 微调可提速 1.8 至 3.1 倍、显存占用减半。</a></li></ul>
       </details><details class="topic-group"><summary><span>AI + 行业赋能</span><b>0</b></summary>
         <p>本期暂无达到入选标准的新内容</p>
       </details><details class="topic-group"><summary><span>算力硬件与基础设施</span><b>0</b></summary>
@@ -3372,17 +3392,17 @@ time {
           <button class="is-active" type="button" role="tab" aria-selected="true" aria-controls="company-updates" data-tab-target="company-updates">
     <span>A</span>
     <strong>大厂动态</strong>
-    <em>2</em>
+    <em>6</em>
   </button>
           <button class="" type="button" role="tab" aria-selected="false" aria-controls="technical-progress" data-tab-target="technical-progress">
     <span>B</span>
     <strong>技术进展</strong>
-    <em>1</em>
+    <em>4</em>
   </button>
           <button class="" type="button" role="tab" aria-selected="false" aria-controls="industry-views" data-tab-target="industry-views">
     <span>C</span>
     <strong>行业观点</strong>
-    <em>0</em>
+    <em>2</em>
   </button>
         </nav>
         <div class="report-tab-panels">
@@ -3396,8 +3416,30 @@ time {
     </div>
     <div class="report-list">
       
-      <article id="event-7f1f0993aed149" data-item-id="7f1f0993aed149" class="report-item ">
+      <article id="event-784953d89aa4b1" data-item-id="784953d89aa4b1" class="report-item ">
         <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>公司/行业动态</em>
+            <em>AI 产品与工具</em>
+            <em>补录 · 2026-11-25 发布</em>
+            <a class="source-link" href="https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/25/openai-says-heavy-chatgpt-users-may-hit-limits-sooner-as-it-merges-chat-and-work/" target="_blank" rel="noreferrer">OpenAI 向部分 Pro 用户开放 ChatGPT 聊天与 Work 合并体验，两者将共用同一用量额度。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>OpenAI 已开始向一小部分 Pro 订阅用户推送 <b data-highlight style=color:#245b78>ChatGPT</b> 聊天与 Work 的合并体验，产品负责人 Thibault “Tibo” Sottiaux 在 X 上公布了这一消息。 </p><p>OpenAI 发言人对 TechCrunch 表示，合并后 Chat 与 Work 将共用同一个用量计量表，多数用户预计不会遇到更频繁的额度重置，<b data-highlight style=color:#80511f>但少数重度用户可能更早触及上限</b>。 使用 Instant 模型的对话仍保持不限量，也不计入共享额度；</p><p>按其支持页面，共享额度将在 12 月更大范围推行。 报道同时提到，Anthropic 已在 9 月将 Claude 与面向工作的 Cowork 并入统一界面，AI 公司正面临基础设施成本上升与能力需求增长的压力。</p></div></div>
+          <figure class="reader-figure" data-image-event-id="784953d89aa4b1" data-image-sha256="e1b3100cc13068694949c4668b20df54b304eb76539624c9ac0dbd51511b1455" data-company-priority-image><img src="https://luojinping.com/ai-daily/reading-images/e1b3100cc13068694949c4668b20df54b304eb76539624c9ac0dbd51511b1455.jpg" alt="OpenAI ChatGPT logo" width="1080" height="720" loading="lazy"></figure>
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这是 OpenAI 在 ChatGPT 内合并 Chat 与 Work 的第一步，如果 12 月按计划扩大推行，订阅额度细则将成为观察其付费方案价值与推理成本压力的直接指标。</p></div>
+  </div>
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-7f1f0993aed149" data-item-id="7f1f0993aed149" class="report-item ">
+        <span>02</span>
         
         <div>
           <div class="report-item-meta">
@@ -3408,18 +3450,62 @@ time {
             <a class="source-link" href="https://the-decoder.com/banned-nvidia-blackwell-chips-turn-up-in-a-shanghai-data-center-linked-to-alice-huang-bloomberg-reports/" target="_blank" rel="noopener noreferrer"><b>The Decoder</b></a>
           </div>
           <h3 data-field="title"><a href="https://the-decoder.com/banned-nvidia-blackwell-chips-turn-up-in-a-shanghai-data-center-linked-to-alice-huang-bloomberg-reports/" target="_blank" rel="noreferrer">彭博社调查称被禁的英伟达 Blackwell 芯片现身上海数据中心，两家中企在贷款文件中将其列为抵押物。</a></h3>
-          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 The Decoder 转述彭博社调查，两家中国公司将英伟达 <b data-highlight style=color:#245b78>Blackwell</b> 芯片安装在上海一处与 Alice Huang 相关的数据中心，细节来自提交给中国监管机构并经彭博社查阅的文件。 </p><p>文件显示，Shanghai Shuoyao 以一台 GB300-NVL72 机柜作为 9600 万元人民币（约 1400 万美元）贷款的抵押，Shanghai Kezhan 则在贷款文件中列出同一站点的 GB200 服务器；</p><p>未获美国许可向中国出口这些芯片属违法。 彭博社通过公开保修数据库中的序列号将机柜追溯到台湾厂商技嘉，并称 Shanghai Shuoyao 与新加坡 Megaspeed 关系密切，Megaspeed 已被美国以芯片走私嫌疑列入贸易黑名单。 </p><p>报道还称 Alice Huang 于 2023 年创立 Megaspeed，英伟达在四天内批准其为合作伙伴，该公司后来成为英伟达在东南亚的最大客户。</p></div></div>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 The Decoder 转述彭博社调查，两家中国公司将英伟达 <b data-highlight style=color:#245b78>Blackwell</b> 芯片安装在上海一处与 Alice Huang 相关的数据中心，<b data-highlight style=color:#275f45>细节来自提交给中国监管机构并经彭博社查阅的文件</b>。 </p><p>文件显示，Shanghai Shuoyao 以一台 GB300-NVL72 机柜作为 9600 万元人民币（约 1400 万美元）贷款的抵押，Shanghai Kezhan 则在贷款文件中列出同一站点的 GB200 服务器；</p><p>未获美国许可向中国出口这些芯片属违法。 彭博社通过公开保修数据库中的序列号将机柜追溯到台湾厂商技嘉，并称 Shanghai Shuoyao 与新加坡 Megaspeed 关系密切，Megaspeed 已被美国以芯片走私嫌疑列入贸易黑名单。 </p><p>报道还称 Alice Huang 于 2023 年创立 Megaspeed，英伟达在四天内批准其为合作伙伴，该公司后来成为英伟达在东南亚的最大客户。</p></div></div>
           
           <div class="memory-note">
-    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>据彭博查阅的申报文件，<b data-highlight style=color:#245b78>上海一家公司为9600万元贷款提出以GB300-NVL72机架作抵押，</b>另一家公司在贷款文件中列出同址的GB200服务器。向中国出口这类芯片须获美国许可，<b data-highlight style=color:#80511f>仅凭贷款文件不能断定出口时有无许可</b>。</p></div>
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这条报道的价值不在人物八卦，而在于把出口管制漏洞落到可核查的物证链条——监管备案中的设备抵押加公开保修数据库的序列号；但证据由彭博社单方调查构成、The Decoder 仅为转述，尚缺厂商与监管方确认。 </p><p>对算力采购方来说，更该评估的是这批设备的合法来源与可追溯性，而不是价格；黑名单落地后，中间商渠道能否持续供货存疑。</p></div>
   </div>
           
           <div class="report-actions">
             <span class="reading-time">预计阅读 2 分钟</span>
           </div>
         </div>
+      </article><article id="event-aa17b66d42c575" data-item-id="aa17b66d42c575" class="report-item ">
+        <span>03</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>模型/产品发布</em>
+            <em>AI 产品与工具</em>
+            <em>补录 · 2026-11-25 发布</em>
+            <a class="source-link" href="https://the-decoder.com/openai-wants-companies-to-trust-it-with-sensitive-work-by-promising-not-to-look-at-their-data/" target="_blank" rel="noopener noreferrer"><b>The Decoder</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://the-decoder.com/openai-wants-companies-to-trust-it-with-sensitive-work-by-promising-not-to-look-at-their-data/" target="_blank" rel="noreferrer">OpenAI 开始与首批企业客户试点此前公布的 Private Inference，称查询在可独立验证的隔离硬件上处理、公司无法访问客户数据。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>OpenAI 正在测试名为“<b data-highlight style=color:#245b78>Private Inference</b>”的新功能，企业可在其模型上运行查询，而 OpenAI 无法访问这些数据；CEO Sam Altman 表示，公司正与首批企业客户试点此前公布的服务。 </p><p>Altman 写道，更好的隐私让 AI 适用于更广泛的工作；负责该项目的 OpenAI 员工 Shekar 称这是迈向“private intelligence for everyone”的第一步，OpenAI 正在扩充所需算力。 </p><p>目前 Private Inference 面向企业客户，OpenAI 本就不将这类客户的数据用于训练；相比之下，消费者版 ChatGPT 的对话默认用于训练，除非用户选择退出。 </p><p>据 OpenAI 说法，Private Inference 的查询在可独立验证安全的专用隔离硬件上处理；Altman 还提到 Private Safety Processing，该系统让 OpenAI 在不存储客户数据的情况下扫描滥用。 </p><p>被标记内容加密后存入客户自有云，只有受保护的审查系统可读；报道称 Google 正以 Private AI Compute 走类似路径。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>该报道的回顾链接显示，Google 曾在 2025 年 11 月介绍面向 AI 推理的 Private AI Compute。 </p><p>对企业采购方而言，Private Inference 的价值不<b data-highlight style=color:#275f45>取决于模型名号，</b>而取决于隔离硬件与滥用审查能否由第三方独立验证，<b data-highlight style=color:#80511f>而非只依赖 OpenAI 自述</b>。</p></div>
+  </div>
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-3b32b75145a260" data-item-id="3b32b75145a260" class="report-item ">
+        <span>04</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>OpenAI</strong>
+            <em>公司/行业动态</em>
+            <em>行业 / 商业动态</em>
+            
+            <a class="source-link" href="https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/" target="_blank" rel="noopener noreferrer"><b>The Decoder</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://the-decoder.com/openai-countersues-apple-over-trade-secret-theft-and-alleged-coercion-of-shared-suppliers/" target="_blank" rel="noreferrer">OpenAI 在加州法院反诉 Apple，指控其窃取商业机密并胁迫两家公司共用的供应商。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 The Decoder 援引《金融时报》报道，OpenAI 已在加州法院对 Apple 提起诉讼，<b data-highlight style=color:#275f45>指控后者窃取商业机密并从事不公平商业行为</b>。 诉状称 Apple「胁迫和威胁」同时为两家公司供货的供应商，并利用市场力量压制竞争；</p><p>还指 Apple 鼓励员工把公司数据存入个人设备，再以此针对想离职的员工。 此次反诉针对的是 Apple 当年夏天提起的诉讼——该诉讼<b data-highlight style=color:#275f45>指控多名前员工向 OpenAI 泄露机密信息</b>；</p><p>此前 OpenAI 已完成对前 Apple 首席设计师 Jony Ive 工作室 io 的 64 亿美元收购，并正筹备自有设备以对标 Apple。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>报道提到，两家公司约两年前才宣布把 ChatGPT 集成进 iPhone 的合作，如今关系已转为互诉与自研硬件竞争。</p></div>
+  </div>
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 75 秒</span>
+          </div>
+        </div>
       </article><article id="event-c3c0051aaef8e7" data-item-id="c3c0051aaef8e7" class="report-item ">
-        <span>02</span>
+        <span>05</span>
         
         <div>
           <div class="report-item-meta">
@@ -3438,6 +3524,28 @@ time {
           
           <div class="report-actions">
             <span class="reading-time">预计阅读 65 秒</span>
+          </div>
+        </div>
+      </article><article id="event-a13f6d47a4e8fb" data-item-id="a13f6d47a4e8fb" class="report-item ">
+        <span>06</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Amazon</strong>
+            <em>公司/行业动态</em>
+            <em>Agent 技术</em>
+            <em>补录 · 2026-11-25 发布</em>
+            <a class="source-link" href="https://techcrunch.com/2026/11/25/amazon-and-meta-reportedly-in-talks-to-lift-blockade-on-ai-agent-muse/" target="_blank" rel="noopener noreferrer"><b>TechCrunch</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://techcrunch.com/2026/11/25/amazon-and-meta-reportedly-in-talks-to-lift-blockade-on-ai-agent-muse/" target="_blank" rel="noreferrer">Amazon 与 Meta 据报就解除 Meta 购物智能体 Muse 接入 Amazon 商店的限制展开谈判。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 TechCrunch 报道，Amazon 与 Meta 正就一项潜在协议进行谈判，该协议将允许 Meta 的 AI 智能体 <b data-highlight style=color:#245b78>Muse</b> 直接连接 Amazon 商店。 两个月前，Muse 用户在 Amazon 结账时收到错误提示、无法购买商品；</p><p>据 Fortune 引述知情人士，两家公司已就此进行多轮会谈。 目前仍在谈判的两个关键问题是搜索结果如何呈现以及广告如何处理，报道称 Amazon 的主要担忧之一是 Muse 这类第三方购物智能体可能影响其广告业务。 </p><p>Amazon CEO Andy Jassy 曾在 10 月表示很少顾客通过外部购物智能体下单；报道称任何协议都需两家公司 CEO 批准，Meta 与 Amazon 均未回应 TechCrunch 的置评请求。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>此前记录中 Amazon 一方强调外部购物智能体的实际下单量很少，<b data-highlight style=color:#80511f>本次报道显示其态度可能松动，</b>但协议仍需双方 CEO 批准且无官方确认，后续应以官方表态核实。</p></div>
+  </div>
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
           </div>
         </div>
       </article>
@@ -3477,9 +3585,7 @@ time {
         <div>
           <h4 data-field="title"><a href="https://huggingface.co/papers/2611.34232" target="_blank" rel="noreferrer">OS-Omni：跨平台长程计算机使用 Agent 基准</a></h4>
           <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>论文发布覆盖 Windows、Ubuntu、macOS、iOS、Android 与 Web 的跨平台长程工作流基准 OS-Omni v1。</p></div></div>
-          <div class="memory-note">
-    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>据作者介绍，OS-Omni首版供研究者评测通用计算机智能体，<b data-highlight style=color:#245b78>六个平台各有48项任务，</b>另有12项跨平台流程，仅配对桌面系统与安卓手机。基准按最终状态判定完成情况；作者报告的67.54个交互步骤来自人类测试，<b data-highlight style=color:#80511f>并非智能体成绩</b>。</p></div>
-  </div>
+          
           <div><em>Agent 基准</em><em>计算机使用</em><em>跨平台</em></div>
         </div>
       </article><article id="paper-3" data-paper-id="2611.34813" class="paper-digest-item has-thumbnail">
@@ -3497,9 +3603,7 @@ time {
         <div>
           <h4 data-field="title"><a href="https://huggingface.co/papers/2611.31619" target="_blank" rel="noreferrer">预测榜单能确立什么：零样本时间序列模型的分辨率报告</a></h4>
           <div class="ai-summary"><span class="reader-label">研究摘要</span><div class="reader-field" data-field="summary"><p>提出 Vernier 工具，从榜单已发布文件计算其可检测的最小差异（分辨率），并报告榜单无法区分的条目。</p></div></div>
-          <div class="memory-note">
-    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>作者用Vernier估算零样本预测榜单能区分多小的差距：GIFT-Eval的分辨率为6.8个名次，<b data-highlight style=color:#245b78>相邻条目仅差0.91个名次</b>。若据此选模型，不宜认定相邻者有优劣；作者报告，仅BOOM在将2554条序列视为独立来源时能分清前十名。</p></div>
-  </div>
+          
           <div><em>时间序列</em><em>基准评测</em><em>模型比较</em></div>
         </div>
       </article><article id="paper-5" data-paper-id="2611.34457" class="paper-digest-item has-thumbnail">
@@ -3514,7 +3618,71 @@ time {
       </article>
     </div>
   </article>
-      <div class="report-empty">今天没有足够明确的入选事件，先空着。</div>
+      <article id="event-ef6ec06724b385" data-item-id="ef6ec06724b385" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>datasette-mcp</strong>
+            <em>Agent/开发者基础设施</em>
+            <em>工程实践</em>
+            <em>补录 · 2026-11-27 发布</em>
+            <a class="source-link" href="https://simonwillison.net/2026/Nov/27/datasette-mcp/" target="_blank" rel="noopener noreferrer"><b>simonwillison.net</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://simonwillison.net/2026/Nov/27/datasette-mcp/" target="_blank" rel="noreferrer">Simon Willison 发布 datasette-mcp 0.4，为任意 Datasette 实例新增 /-/mcp MCP 服务器。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 Simon Willison 2026 年 11 月 27 日的发布说明，datasette-mcp 0.4 为任意 Datasette 实例<b data-highlight style=color:#275f45>新增了 /-/mcp MCP 服务器</b>。 </p><p>该版本同时修复了与 Datasette 1.0a44 的兼容性问题。</p></div></div>
+          
+          
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 25 秒</span>
+          </div>
+        </div>
+      </article><article id="event-3897241e9e063a" data-item-id="3897241e9e063a" class="report-item ">
+        <span>02</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>datasette-charts</strong>
+            <em>Agent/开发者基础设施</em>
+            <em>工程实践</em>
+            <em>补录 · 2026-11-27 发布</em>
+            <a class="source-link" href="https://simonwillison.net/2026/Nov/27/datasette-charts/" target="_blank" rel="noopener noreferrer"><b>simonwillison.net</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://simonwillison.net/2026/Nov/27/datasette-charts/" target="_blank" rel="noreferrer">Simon Willison 发布 datasette-charts 0.4a0，按 Claude Opus 5.5 试建插件暴露的摩擦点改进图表插件钩子。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#245b78>datasette-charts 0.4a0</b> 于 2026 年 11 月 27 日发布，该版本针对作者用 <b data-highlight style=color:#245b78>Claude Opus 5.5</b> 构建实验插件时发现的摩擦点调整了插件钩子设计。 </p><p>作者称这些改动应能让构建额外图表插件更加顺手，并同步上线 charts.datasette.io 网站，包含插件作者教程和核心图表与标注图库。 图库中每个图表都链接到 Datasette Lite 上的交互式演示。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>这是 Datasette 生态内的小型开源插件迭代，价值在于把第三方图表类型的扩展接口从设计摩擦中修整出来，<b data-highlight style=color:#80511f>而非底层模型能力变化</b>。</p></div>
+  </div>
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 55 秒</span>
+          </div>
+        </div>
+      </article><article id="event-dbf95b38d31d9d" data-item-id="dbf95b38d31d9d" class="report-item ">
+        <span>03</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Unsloth</strong>
+            <em>Agent/开发者基础设施</em>
+            <em>工程实践</em>
+            <em>补录 · 2026-11-25 发布</em>
+            <a class="source-link" href="https://github.com/unslothai/unsloth/releases/tag/v0.1.925-beta" target="_blank" rel="noopener noreferrer"><b>unsloth</b></a>
+          </div>
+          <h3 data-field="title"><a href="https://github.com/unslothai/unsloth/releases/tag/v0.1.925-beta" target="_blank" rel="noreferrer">Unsloth 发布更新：Inkling 2 Mini 微调可提速 1.8 至 3.1 倍、显存占用减半。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p><b data-highlight style=color:#275f45>Unsloth 发布更新，</b>称在 LoRA 或 QLoRA 下微调 Inkling 2 Mini 可提速 1.8 至 3.1 倍、显存占用减少 50%，并支持导出 GGUF 或合并的 16-bit 模型。 </p><p>该更新说明，在 Kaggle 免费 2 张 T4 上训练约每步 26 秒，但单张 15 GB T4 放不下；Inkling 2 Small 在 4-bit 下约需 290 GB 显存。 </p><p><b data-highlight style=color:#275f45>该发布还列出 T4 上的 Z-Image LoRA 训练每步快 1.7 倍，</b>adamw_8bit 在小批量下每步最多减少 12% 时间，并修复聊天微调评测等问题。</p></div></div>
+          
+          <div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>Unsloth 此次把 Inkling 2 Mini 文本微调、Z-Image 图像 LoRA 与聊天端修复放进同一发布，后续可继续观察其在低显存 GPU 上的复现表现。</p></div>
+  </div>
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 70 秒</span>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
           <section id="industry-views" class="report-section report-tab-panel " role="tabpanel">
@@ -3527,7 +3695,53 @@ time {
     </div>
     <div class="report-list">
       
-      <div class="report-empty">今天没有足够明确的入选事件，先空着。</div>
+      <article id="event-0388ebd338fcc8" data-item-id="0388ebd338fcc8" class="report-item ">
+        <span>01</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Guillermo Rauch</strong>
+            <em>行业动态</em>
+            <em>Agent 技术</em>
+            <em>补录 · 2026-11-25 发布</em>
+            <b>Guillermo Rauch</b>
+          </div>
+          <h3 class="social-original" data-field="original"><a href="https://x.com/rauchg/status/2125482861033824410" target="_blank" rel="noreferrer">Finder in the terminal.
+
+One-shotted with fx and Gemini Neon + DeepSeek subagents⁰.
+
+I instructed fx to use the Kitty graphics protocol¹ and build inline and interactive modes. It implemented CLI Quick Look of its own volition 😁
+
+⁰ DS actually did all the heavy lifting. This was very cheap! I just told it to use DS 1017 fast subagents.
+¹ This allows a CLI to essentially render anything! A full OS, if you will. I will.</a></h3><div class="social-translation"><span class="reader-label">译文</span><div class="reader-field" data-field="translation"><p>终端里的 Finder。 用 fx 和 Gemini Neon + DeepSeek 子代理⁰ 一次搞定。 我让 fx 使用 Kitty 图形协议¹，并构建内联和交互模式。</p><p>它自己主动实现了 CLI Quick Look 😁 ⁰ 实际上所有重活都是 DS 干的。这非常便宜！我只是让它使用 DS 1017 快速子代理。 ¹ 这能让 CLI 基本上渲染任何东西！可以说是一个完整的操作系统。我会的。</p></div></div><div class="memory-note">
+    <span class="reader-label">编辑解读</span><div class="reader-field" data-field="analysis"><p>对开发者而言，这个案例的看点是把多模型子代理与 Kitty 图形协议接起来做终端交互界面；但“一次成型”与低成本目前只是作者自述，缺少可复现产物。</p></div>
+  </div>
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 2 分钟</span>
+          </div>
+        </div>
+      </article><article id="event-0d29a9a3a89a66" data-item-id="0d29a9a3a89a66" class="report-item ">
+        <span>02</span>
+        
+        <div>
+          <div class="report-item-meta">
+            <strong>Google</strong>
+            <em>行业动态</em>
+            <em>行业观点</em>
+            <em>补录 · 2026-11-25 发布</em>
+            <b>theverge</b>
+          </div>
+          <h3 data-field="title"><a href="https://www.theverge.com/entertainment/1042221/google-my-channel-ai-video-patent" target="_blank" rel="noreferrer">据 The Verge 报道，Google 去年提交的个性化 AI 视频信息流专利 My Channel 已被驳回，仍可能申诉或修改后重新提交。</a></h3>
+          <div class="ai-summary"><span class="reader-label">事实摘要</span><div class="reader-field" data-field="summary"><p>据 <b data-highlight style=color:#245b78>The Verge</b> 报道，Google 去年提交了一项名为 <b data-highlight style=color:#245b78>My Channel</b> 的专利申请，设想基于公司掌握的用户信息生成个性化 AI 视频与广告信息流；该申请已被驳回，Google 仍可能申诉或提交修改版本。</p></div></div>
+          <figure class="reader-figure" data-image-event-id="0d29a9a3a89a66" data-image-sha256="7face73737dc52c0344584ed33974a040e5be42d6acdf6cff357a76f0da8a829"><img src="https://luojinping.com/ai-daily/reading-images/7face73737dc52c0344584ed33974a040e5be42d6acdf6cff357a76f0da8a829.png" alt="Screenshot 2026-11-25 at 11.34.07 AM" width="2239" height="1496" loading="lazy"></figure>
+          
+          
+          <div class="report-actions">
+            <span class="reading-time">预计阅读 35 秒</span>
+          </div>
+        </div>
+      </article>
     </div>
   </section>
         </div>

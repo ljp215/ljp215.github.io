@@ -12,9 +12,17 @@
     <meta property="og:title" content="AI 行业简报 2026-09-26">
     <meta property="og:description" content="今天筛出 14 个事件：大厂动态 5 条，技术进展 2 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。">
     <meta property="og:url" content="https://luojinping.com/ai-daily/2026-09-26">
-    <meta name="twitter:card" content="summary">
+    <meta property="og:image" content="https://luojinping.com/ai-daily/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:type" content="image/png">
+    <meta property="og:image:alt" content="AI 聚合日报">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:image" content="https://luojinping.com/ai-daily/og-image.png">
+    <meta name="twitter:image:alt" content="AI 聚合日报">
     <meta name="twitter:title" content="AI 行业简报 2026-09-26">
     <meta name="twitter:description" content="今天筛出 14 个事件：大厂动态 5 条，技术进展 2 条，行业观点 7 条；另读 Hugging Face Papers 5 篇。">
+    
     <link rel="icon" href="/ai-daily/icon.svg" type="image/svg+xml">
     <link rel="alternate icon" href="/ai-daily/icon.svg">
     <link rel="alternate" type="application/atom+xml" title="AI 聚合日报" href="/ai-daily/feed.xml">
@@ -56,6 +64,13 @@ select {
 
 button {
   cursor: pointer;
+}
+
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible {
+  outline: 2px solid var(--accent, #375);
+  outline-offset: 3px;
 }
 
 .app-shell {
@@ -2184,9 +2199,14 @@ time {
 }
 
 @media (max-width: 980px) {
+  /* Brief stays above the archive once the sidebar can no longer sit beside it. */
   .report-shell {
-    grid-template-columns: minmax(0, 1fr);
+    display: flex;
+    flex-direction: column;
   }
+
+  .report-page { order: 0; width: 100%; }
+  .report-history { order: 1; width: 100%; }
 
   .report-list,
   #company-updates .report-list,
@@ -2727,9 +2747,9 @@ time {
           <em>27 期</em>
         </summary>
         <div class="report-history-month-items">
-          <a href="/ai-daily/2026-11-28" class="" aria-label="2026-11-28，2 条">
+          <a href="/ai-daily/2026-11-28" class="" aria-label="2026-11-28，11 条">
             <time datetime="2026-11-28">28 日</time>
-            <em>2 条</em>
+            <em>11 条</em>
           </a><a href="/ai-daily/2026-11-27" class="" aria-label="2026-11-27，11 条">
             <time datetime="2026-11-27">27 日</time>
             <em>11 条</em>
